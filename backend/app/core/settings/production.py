@@ -2,7 +2,7 @@ from app.core.settings.app import AppSettings
 
 class ProductionAppSettings(AppSettings):
     debug: bool = False 
-    title: str = "FastAPI seleccion-cidenet backend production"
+    title: str = "FastAPI siga backend production"
     class Config:
         env_file = "prod.env"
     

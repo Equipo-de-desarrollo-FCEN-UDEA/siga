@@ -6,7 +6,7 @@ class DevelopmentAppSettings(AppSettings):
     
     debug: bool = True 
     
-    title: str = "FastAPI seleccion-cidenet backend development"
+    title: str = "FastAPI siga backend development"
     
     logging_level: int = logging.DEBUG
     
