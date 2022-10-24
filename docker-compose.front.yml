@@ -1,0 +1,44 @@
+version: '3,3'
+
+services:
+  db: 
+    container_name: 'db'
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - local-net
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+  
+  pgadmin:
+    container_name: 'pgadmin'
+    image: dpage/pgadmin4
+    ports:
+      - '80:80'
+    depends_on:
+      - db
+    env_file:
+      - .env
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - pgadmin
+    env_file:
+      - .env
+    restart: on-failure
+    networks:
+      - local-net
+    ports:
+      - "8000:8000"
+
+networks:
+  local-net:
+    driver: bridge

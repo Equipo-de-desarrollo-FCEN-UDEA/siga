@@ -1,0 +1,61 @@
+version: '3,3'
+
+volumes:
+  db:
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - backend
+
+  db: 
+    container_name: 'db'
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    env_file:
+      - prod.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+  
+  pgadmin:
+    container_name: 'pgadmin'
+    image: dpage/pgadmin4
+    expose:
+      - '8010'
+    ports:
+      - '8010:80'
+    depends_on:
+      - db
+    env_file:
+      - prod.env
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - pgadmin
+    env_file:
+      - prod.env
+    restart: on-failure
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+  
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    container_name: client
+    depends_on:
+      - backend
