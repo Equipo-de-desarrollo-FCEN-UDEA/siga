@@ -25,7 +25,7 @@ def login_access_token(
     OAuth2 compatible token login, get an access token for future requests
     """
     try:
-        user: models.Usuario = crud.usuario.authenticate(
+        user: models.User = crud.user.authenticate(
             db, email=form_data.username, identificacion=form_data.username, password=form_data.password)
         minutes = settings.access_token_expires_minutes
         access_token_expires = timedelta(

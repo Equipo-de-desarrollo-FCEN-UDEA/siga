@@ -15,17 +15,17 @@ settings = get_app_settings()
 
 client = TestClient(app)
 
-url = '/api/v1/usuario/'
+url = '/api/v1/user/'
 
 
-def test_api_usuario():
+def test_api_user():
     token = client.post(
         '/api/v1/login/access-token',
         data={
             "username": settings.first_superemployee_numeroidentificacion,
             "password": settings.first_superemployee_password}
     ).json()['access_token']
-    usuario = {
+    user = {
         "primerApellido": "RTPXRRDAVMPT",
         "segundoApellido": "MKWBYCBBZJNU",
         "primerNombre": "HLJXJTFIOSWHY",
@@ -40,7 +40,7 @@ def test_api_usuario():
 
     response = client.post(
         url=url,
-        json=usuario,
+        json=user,
         headers={'Authorization': f"Bearer {token}"}
     )
 
@@ -51,19 +51,19 @@ def test_api_usuario():
 
     response2 = client.post(
         url=url,
-        json=usuario,
+        json=user,
         headers={'Authorization': f"Bearer FakeToken"}
     )
 
     log.debug(delete.json())
 
-    usuarioget = client.get(
+    userget = client.get(
         url=url+str(1), headers={'Authorization': f"Bearer {token}"})
 
-    log.debug(usuarioget.json())
+    log.debug(userget.json())
 
     assert response.status_code == 201
     assert response2.status_code == 403
     assert delete.status_code == 200
-    assert usuarioget.json(
+    assert userget.json(
     )['primerNombre'] == settings.first_superemployee_primernombre

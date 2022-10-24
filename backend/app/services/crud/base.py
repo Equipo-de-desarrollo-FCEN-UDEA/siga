@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.domain.models.base import Base
 from app.domain.policies import base
-from app.domain.models import Usuario
+from app.domain.models import User
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -21,7 +21,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         self.model = model
         self.policy = policy
 
-    def get(self, db: Session, id: int, who: Usuario) -> Optional[ModelType]:
+    def get(self, db: Session, id: int, who: User) -> Optional[ModelType]:
         obj_db = db.query(self.model).filter(self.model.id == id).first()
         self.policy.get(who=who, to=obj_db)
         return obj_db
@@ -35,7 +35,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
     def get_multi(
         self,
         db: Session,
-        who: Usuario,
+        who: User,
         *,
         skip: int = 0,
         limit: int = 100
@@ -47,7 +47,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
     def create(
         self,
         db: Session,
-        who: Usuario,
+        who: User,
         *,
         obj_in: CreateSchemaType
     ) -> ModelType:
@@ -62,7 +62,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
     def update(
         self,
         db: Session,
-        who: Usuario,
+        who: User,
         *,
         db_obj: ModelType,
         obj_in: Union[UpdateSchemaType, Dict[str, Any]]
@@ -81,7 +81,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         db.refresh(db_obj)
         return db_obj
 
-    def delete(self, db: Session, who: Usuario, *, id: int) -> None:
+    def delete(self, db: Session, who: User, *, id: int) -> None:
         obj_db = db.query(self.model).get(id)
         self.policy.delete(who=who, to=obj_db)
         db.delete(obj_db)

@@ -35,10 +35,10 @@ def init_db(db: Session) -> None:
 
 
 
-    employee = crud.usuario.get_init(db=db, id=1)
+    employee = crud.user.get_init(db=db, id=1)
     if not employee:
-        log.info('Creando primer super usuario')
-        employee_in = schemas.UsuarioCreate(
+        log.info('Creando primer super user')
+        employee_in = schemas.UserCreate(
             primerApellido=settings.first_superemployee_primerapellido,
             segundoApellido=settings.first_superemployee_segundoapellido,
             primerNombre=settings.first_superemployee_primernombre,
@@ -51,5 +51,5 @@ def init_db(db: Session) -> None:
         )
                     # area_id=settings.first_superemployee_area_id,
         log.debug(employee_in.fechaIngreso)
-        employee = crud.usuario.create_init(db, obj_in=employee_in)
-        log.info('Primer super usuario creado')
+        employee = crud.user.create_init(db, obj_in=employee_in)
+        log.info('Primer super user creado')

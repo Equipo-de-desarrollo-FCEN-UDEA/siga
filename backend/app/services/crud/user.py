@@ -2,35 +2,35 @@ from typing import Any, Dict, Union
 
 from sqlalchemy.orm import Session
 
-from app.domain.schemas.usuario import UsuarioCreate, UsuarioUpdate
-from app.domain.models import Usuario
-from app.domain.policies.usuario import UsuarioPolicy
+from app.domain.schemas.user import UserCreate, UserUpdate
+from app.domain.models import User
+from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
-from app.domain.schemas.errors.usuario import Usuario401, Usuario404, UsuarioRegistrado
+from app.domain.schemas.errors.user import User401, User404, UserRegistrado
 from .base import CRUDBase
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
 
-class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]):
+class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
     def get_by_email(
         self, db: Session, correo: str
-    ) -> Usuario:
-        obj_db = db.query(Usuario).filter(Usuario.correo == correo).first()
+    ) -> User:
+        obj_db = db.query(User).filter(User.correo == correo).first()
         return obj_db
 
     def get_by_identificacion(
         self, db: Session, identificacion: str
-    ) -> Usuario:
-        obj_db = db.query(Usuario).filter(
-            Usuario.numeroIdentificacion == identificacion).first()
+    ) -> User:
+        obj_db = db.query(User).filter(
+            User.numeroIdentificacion == identificacion).first()
         return obj_db
 
     def get_multi(
         self,
         db: Session,
-        who: Usuario,
+        who: User,
         *,
         skip: int = 0,
         limit: int = 100,
@@ -50,14 +50,14 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
             search = search.upper()
             d = {column: search for column in columns}
             raw = [
-                db.query(Usuario).filter(
-                    getattr(Usuario, col).contains(f"{search}")).filter(Usuario.activo == activo).all()
+                db.query(User).filter(
+                    getattr(User, col).contains(f"{search}")).filter(User.activo == activo).all()
                 for col in columns
             ]
-            res = [usuario for usuarios in raw for usuario in usuarios]
+            res = [user for users in raw for user in users]
             return res
-        objs_db = db.query(Usuario).filter(
-            Usuario.activo == activo).offset(skip).limit(limit).all()
+        objs_db = db.query(User).filter(
+            User.activo == activo).offset(skip).limit(limit).all()
         self.policy.get_multi(who=who)
         return objs_db
 
@@ -66,11 +66,11 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
     def create_init(
         self,
         db: Session,
-        obj_in: UsuarioCreate
-    ) -> Usuario:
+        obj_in: UserCreate
+    ) -> User:
         log.debug(obj_in.password)
         hashed_password = get_password_hash(obj_in.password)
-        db_obj = Usuario(
+        db_obj = User(
             primerApellido=obj_in.primerApellido,
             segundoApellido=obj_in.segundoApellido,
             primerNombre=obj_in.primerNombre,
@@ -84,17 +84,17 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
             hashed_password=hashed_password,
             fechaIngreso=obj_in.fechaIngreso
         )
-        usuario: Usuario = self.get_by_identificacion(
+        user: User = self.get_by_identificacion(
             db, identificacion=obj_in.numeroIdentificacion)
-        if usuario:
-            raise UsuarioRegistrado
+        if user:
+            raise UserRegistrado
         log.debug(db_obj.fechaIngreso)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
         return db_obj
 
-    def update(self, db: Session, who: Usuario, *, db_obj: Usuario, obj_in: Union[UsuarioUpdate, Dict[str, Any]]) -> Usuario:
+    def update(self, db: Session, who: User, *, db_obj: User, obj_in: Union[UserUpdate, Dict[str, Any]]) -> User:
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
@@ -104,9 +104,9 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
     def create(
         self,
         db: Session,
-        obj_in: UsuarioCreate,
-        who: Usuario
-    ) -> Usuario:
+        obj_in: UserCreate,
+        who: User
+    ) -> User:
         self.policy.create(who=who)
         db_obj = self.create_init(db=db, obj_in=obj_in)
         return db_obj
@@ -116,9 +116,9 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
         db: Session,
         password: str,
         confirmPassword: str,
-        db_obj: Usuario,
-        who: Usuario
-    ) -> Usuario:
+        db_obj: User,
+        who: User
+    ) -> User:
         self.policy.update_password(
             who=who, to=db_obj, password=password, confirmpassword=confirmPassword
         )
@@ -134,24 +134,24 @@ class CRUDUsuario(CRUDBase[Usuario, UsuarioCreate, UsuarioUpdate, UsuarioPolicy]
         email: str = None,
         identificacion: str = None,
         password: str
-    ) -> Usuario:
-        user: Usuario = self.get_by_email(db, correo=email) or self.get_by_identificacion(
+    ) -> User:
+        user: User = self.get_by_email(db, correo=email) or self.get_by_identificacion(
             db, identificacion=identificacion)
         if not user:
-            raise Usuario404
+            raise User404
         if not user.activo:
-            raise Usuario404
+            raise User404
         if not check_password(password, user.hashed_password):
-            raise Usuario401
+            raise User401
         return user
 
-    def is_active(self, db: Session, *, user: Usuario) -> bool:
+    def is_active(self, db: Session, *, user: User) -> bool:
         return user.activo
 
-    def is_superuser(self, db: Session, *, user: Usuario) -> bool:
+    def is_superuser(self, db: Session, *, user: User) -> bool:
         return user.is_superuser
 
 
-policy = UsuarioPolicy()
+policy = UserPolicy()
 
-usuario = CRUDUsuario(Usuario, policy=policy)
+user = CRUDUser(User, policy=policy)

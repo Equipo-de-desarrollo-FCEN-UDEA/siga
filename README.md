@@ -14,4 +14,4 @@ docker compose -f docker-compose.prod.yml
 
 
 
-Para administrar la base de datos acceda a través de la url: localhost:8010, recuerde revisar las variables de entorno, por defecto el acceso a base de datos es usuario : simon@example.com, password : password
+Para administrar la base de datos acceda a través de la url: localhost:8010, recuerde revisar las variables de entorno, por defecto el acceso a base de datos es user : simon@example.com, password : password

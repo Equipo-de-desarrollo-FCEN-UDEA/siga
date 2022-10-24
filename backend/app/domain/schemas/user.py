@@ -10,7 +10,7 @@ log = get_logging(__name__)
 regex = "^[A-Z]*$"
 
 
-class UsuarioBase(BaseModel):
+class UserBase(BaseModel):
     primerApellido: str = Field(
         regex="^[A-Z ]*",
         min_length=3,
@@ -55,7 +55,7 @@ class UsuarioBase(BaseModel):
     is_superuser: Optional[bool] = False
 
 
-class UsuarioCreate(UsuarioBase):
+class UserCreate(UserBase):
     # correo: Optional[EmailStr]
 
     @validator('fechaIngreso')
@@ -63,7 +63,7 @@ class UsuarioCreate(UsuarioBase):
         log.debug('Estoy dentro de mes_antes')
         if not (datetime.now(timezone.utc) - timedelta(days=30) < v.astimezone()):
             raise ValueError(
-                "El usuario no se puede registar con más de un mes de ingresado")
+                "El user no se puede registar con más de un mes de ingresado")
         return v
     password: Optional[str]
 
@@ -75,11 +75,11 @@ class UsuarioCreate(UsuarioBase):
             return values['numeroIdentificacion']
         return v
 
-class UsuarioUpdate(UsuarioBase):
+class UserUpdate(UserBase):
     pass
 
 
-class UsuarioInDBBase(UsuarioBase):
+class UserInDBBase(UserBase):
     id: int
     correo: EmailStr
     activo: bool
@@ -90,9 +90,9 @@ class UsuarioInDBBase(UsuarioBase):
         orm_mode = True
 
 
-class UsuarioResponse(UsuarioInDBBase):
+class UserResponse(UserInDBBase):
     pass
 
 
-class UsuarioInDB(UsuarioInDBBase):
+class UserInDB(UserInDBBase):
     hashed_password: SecretStr

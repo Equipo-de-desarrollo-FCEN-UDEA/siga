@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from .base import Base
 
 
-class Usuario(Base):
+class User(Base):
     id = Column(Integer, primary_key=True)
     primerApellido = Column(String(20), nullable=False)
     segundoApellido = Column(String(20), nullable=False)

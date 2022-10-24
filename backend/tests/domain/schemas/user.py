@@ -3,11 +3,11 @@ from datetime import datetime, timedelta
 from pytest import raises
 from pydantic import ValidationError
 
-from app.domain.schemas import UsuarioCreate
+from app.domain.schemas import UserCreate
 
 
-def test_schema_usuario():
-    usuario1 = UsuarioCreate(
+def test_schema_user():
+    user1 = UserCreate(
         primerApellido="GARCIA",
         segundoApellido="LUJAN",
         primerNombre="SIMON",
@@ -17,14 +17,14 @@ def test_schema_usuario():
         area_id=2
     )
     #Contraseña automática
-    assert usuario1.password == usuario1.numeroIdentificacion 
+    assert user1.password == user1.numeroIdentificacion 
     #Activo automático
-    assert usuario1.activo == True
-    #No super usuario por defecto
-    assert usuario1.is_superuser == False
+    assert user1.activo == True
+    #No super user por defecto
+    assert user1.is_superuser == False
     #Regex
     with raises(ValueError):
-        UsuarioCreate(
+        UserCreate(
             primerApellido="GARCIA",
             segundoApellido="LUJAN",
             primerNombre="SIMOn",
@@ -34,7 +34,7 @@ def test_schema_usuario():
             area_id=2
         )
     with raises(ValueError):
-        UsuarioCreate(
+        UserCreate(
             primerApellido="GARCIA",
             segundoApellido="LUjAN",
             primerNombre="SIMON",
@@ -44,7 +44,7 @@ def test_schema_usuario():
             area_id=2
         )
     with raises(ValueError):
-        UsuarioCreate(
+        UserCreate(
             primerApellido="GARCIA",
             segundoApellido="LUJAN",
             primerNombre="SIMON",
@@ -54,7 +54,7 @@ def test_schema_usuario():
             area_id=2
         )
     with raises(ValidationError):
-        UsuarioCreate(
+        UserCreate(
             primerApellido="GARCIA",
             segundoApellido="LUJAN",
             primerNombre="SIMON",
@@ -65,7 +65,7 @@ def test_schema_usuario():
         )
     #Area mayor a 0
     with raises(ValueError):
-        UsuarioCreate(
+        UserCreate(
             primerApellido="GARCIA",
             segundoApellido="LUJAN",
             primerNombre="SIMON",

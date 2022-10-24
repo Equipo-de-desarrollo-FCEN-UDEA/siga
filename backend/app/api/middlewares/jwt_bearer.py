@@ -18,9 +18,9 @@ reusable_oauth2 = OAuth2PasswordBearer(
 )
 
 
-def get_current_usuario(
+def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
-) -> models.Usuario:
+) -> models.User:
     try:
         payload = jwt.decode(
             token, str(settings.secret_key), algorithms=[settings.algorithm]
@@ -31,24 +31,24 @@ def get_current_usuario(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         )
-    usuario = crud.usuario.get_init(db, id=token_data.sub)
-    if not usuario:
+    user = crud.user.get_init(db, id=token_data.sub)
+    if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return usuario
+    return user
 
 
-def get_current_active_usuario(
+def get_current_active_user(
     db: Session = Depends(get_db),
-    current_usuario: models.Usuario = Depends(get_current_usuario),
-) -> models.Usuario:
-    if not crud.usuario.is_active(db=db, user=current_usuario):
+    current_user: models.User = Depends(get_current_user),
+) -> models.User:
+    if not crud.user.is_active(db=db, user=current_user):
         raise HTTPException(status_code=400, detail="Inactive user")
-    return current_usuario
+    return current_user
 
-def get_current_active_superusuario(
+def get_current_active_superuser(
     db: Session = Depends(get_db),
-    current_usuario: models.Usuario = Depends(get_current_active_usuario)
-) -> models.Usuario:
-    if not crud.usuario.is_superuser(db= db, user=current_usuario):
+    current_user: models.User = Depends(get_current_active_user)
+) -> models.User:
+    if not crud.user.is_superuser(db= db, user=current_user):
         raise HTTPException(status_code = status.HTTP_403_FORBIDDEN, detail = "Not a superuser")
-    return current_usuario
+    return current_user

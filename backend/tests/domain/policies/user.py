@@ -5,22 +5,22 @@ from pytest import raises
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.domain.models import Usuario
+from app.domain.models import User
 from app.domain.models.base import Base
-from app.domain.policies.usuario import UsuarioPolicy
+from app.domain.policies.user import UserPolicy
 from app.domain.schemas.errors.base import BaseErrors
-from app.domain.schemas import UsuarioUpdate
+from app.domain.schemas import UserUpdate
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
 
-class TestPolicyUsuario:
+class TestPolicyUser:
     engine = create_engine('sqlite:///:memory:')
     Session = sessionmaker(bind=engine)
     # Base = declarative_base()
     session = Session()
-    usuario1 = {
+    user1 = {
         "primerApellido": "GARCIA",
         "segundoApellido": "LUJAN",
         "primerNombre": "SIMON",
@@ -32,7 +32,7 @@ class TestPolicyUsuario:
         "hashed_password": "Super secretpassword",
         "is_superuser": True
     }
-    usuario2 = {
+    user2 = {
         "primerApellido": "GARCIA",
         "segundoApellido": "LUJAN",
         "primerNombre": "SIMON",
@@ -45,7 +45,7 @@ class TestPolicyUsuario:
         "is_superuser": False
     }
 
-    to = UsuarioUpdate(
+    to = UserUpdate(
         primerApellido="UPDATE",
         segundoApellido="UPDATE",
         primerNombre="UPDATE",
@@ -59,16 +59,16 @@ class TestPolicyUsuario:
     def setup_method(self):
         log.debug("Setup")
         Base.metadata.create_all(self.engine)
-        self.session.add(Usuario(**self.usuario1))
-        self.session.add(Usuario(**self.usuario2))
+        self.session.add(User(**self.user1))
+        self.session.add(User(**self.user2))
         self.session.commit()
 
-    def test_usuario_policy(self):
-        result1: Usuario = self.session.query(
-            Usuario).where(Usuario.id == 1).first()
-        result2: Usuario = self.session.query(
-            Usuario).where(Usuario.id == 2).first()
-        policy = UsuarioPolicy()
+    def test_user_policy(self):
+        result1: User = self.session.query(
+            User).where(User.id == 1).first()
+        result2: User = self.session.query(
+            User).where(User.id == 2).first()
+        policy = UserPolicy()
         with raises(BaseErrors):
             policy.create(result2)
         with raises(BaseErrors):
