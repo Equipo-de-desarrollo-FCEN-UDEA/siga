@@ -15,7 +15,7 @@ class AppSettings(BaseAppSettings):
     openapi_prefix: str = ""
     openapi_url: str = "/openapi.json"
     redoc_url: str = "/redoc"
-    title: str = "FastAPI seleccion-cidenet backend"
+    title: str = "FastAPI Siga backend"
     version: str = "0.0.0"
 
     api_prefix_v1: str = "/api/v1"
@@ -31,9 +31,6 @@ class AppSettings(BaseAppSettings):
     postgres_user: str
     postgres_password: str
     postgres_db: str
-
-    areas: list[str] = ['Administracion', 'Financiera', 'Compras',
-                  'Infraestructura', 'Operacion', 'Talento Humano', 'Servicios Varios']
 
     # first_superemployee_correo : str
     first_superemployee_password: str
