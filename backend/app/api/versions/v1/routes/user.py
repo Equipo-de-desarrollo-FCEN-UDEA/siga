@@ -1,8 +1,7 @@
 from typing import Any, Dict, List, Union
 
-from fastapi import APIRouter, Depends, status, HTTPException, Body
+from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
 
 from sqlalchemy.orm import Session
 
@@ -17,15 +16,13 @@ router = APIRouter()
 log = get_logging(__name__)
 
 
-@router.post("/",
-             status_code=201,
-             response_model=schemas.UserResponse
-             )
+# Este decorador nos permite generar un endpoint de tipo post
+@router.post("/", status_code=201,
+             response_model=schemas.UserResponse)
 def create_user(
     *,
     db: Session = Depends(db.get_db),
-    super_user: models.User = Depends(
-        jwt_bearer.get_current_active_superuser),
+    super_user: models.User = Depends(jwt_bearer.get_current_active_superuser),
     user: schemas.UserCreate
 ) -> Any:
     """
@@ -33,6 +30,7 @@ def create_user(
 
         params: user: UserCreate
     """
+    # Esta descripción de la función es importante en algunos casos, como para explicar qué recibe el backend
     try:
         db_user = crud.user.create(
             db=db, obj_in=user, who=super_user)
@@ -42,11 +40,13 @@ def create_user(
         HTTPException(status_code=422, detail=str(e))
     except ValueError as e:
         HTTPException(status_code=422, detail=str(e))
-    log.debug(db_user.__dict__)
+
+    # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return db_user
 
 
-@router.get("/", status_code=200, response_model=List[schemas.UserResponse])
+@router.get("/", status_code=200,
+            response_model=List[schemas.UserResponse])
 def read_users(
     *,
     db: Session = Depends(db.get_db),
@@ -70,7 +70,8 @@ def read_users(
     return db_user
 
 
-@router.get("/{id}", status_code=200, response_model=schemas.UserResponse)
+@router.get("/{id}", status_code=200,
+            response_model=schemas.UserResponse)
 def read_user(
     *,
     db: Session = Depends(db.get_db),
@@ -94,13 +95,14 @@ def read_user(
     return db_user
 
 
-@router.put("/{id}", status_code=200, response_model=schemas.UserResponse)
+@router.put("/{id}", status_code=200,
+            response_model=schemas.UserResponse)
 def update_user(
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_superuser),
-    user_in: Union[schemas.UserUpdate, Dict[str,Any]],
+    user_in: Union[schemas.UserUpdate, Dict[str, Any]],
     id: int
 ) -> schemas.UserResponse:
     """
@@ -114,7 +116,8 @@ def update_user(
     return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
 
 
-@router.put("/{id}/new-password", status_code=200, response_model=schemas.UserResponse)
+@router.put("/{id}/new-password", status_code=200,
+            response_model=schemas.UserResponse)
 def update_user_password(
     *,
     db: Session = Depends(db.get_db),

@@ -1,3 +1,4 @@
+from functools import lru_cache
 import logging
 
 from .config import get_app_settings
@@ -5,6 +6,7 @@ from .config import get_app_settings
 settings = get_app_settings()
 
 
+#Aquí generamos un filtro de acuerdo al nivel del logging
 class Filter(logging.Filter):
     def filter(self, record):
         if record.levelno == settings.logging_level:
@@ -12,6 +14,7 @@ class Filter(logging.Filter):
         return True
 
 
+#Le damos formato a los tipos de logings que manejemos
 class Format(logging.Formatter):
     grey = "\x1b[38;21m"
     yellow = "\x1b[33;21m"
@@ -38,6 +41,8 @@ class Format(logging.Formatter):
         return formatter.format(record)
 
 
+#Exportamos el logging con toda la configuración anterior
+@lru_cache
 def get_logging(mod_name: str) -> logging.Logger:
     log = logging.getLogger(mod_name)
     handler = logging.StreamHandler()
@@ -45,4 +50,3 @@ def get_logging(mod_name: str) -> logging.Logger:
     log.addHandler(handler)
     log.setLevel(settings.logging_level)
     return log
-

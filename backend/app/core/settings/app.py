@@ -1,21 +1,21 @@
-from datetime import datetime
 import logging
 from typing import Any, Dict, Optional, Tuple
 
-from loguru import logger
-from pydantic import PostgresDsn, SecretStr, validator, RedisDsn
+from pydantic import PostgresDsn, SecretStr, validator, RedisDsn, MongoDsn
 
 from app.core.settings.base import BaseAppSettings
 
 
 class AppSettings(BaseAppSettings):
+    # En esta clase de pydantic nos dedicamos a generar la configuración de la aplicación,
+    # pydantic automaticammente leerá las variables de entorno con las que encuentre similitud
     debug: bool = False
     docs_url: str = "/docs"
     openapi_prefix: str = ""
     openapi_url: str = "/openapi.json"
     redoc_url: str = "/redoc"
     title: str = "FastAPI Siga backend"
-    version: str = "0.0.0"
+    version: str = "1.0.0"
 
     api_prefix_v1: str = "/api/v1"
 
@@ -53,6 +53,9 @@ class AppSettings(BaseAppSettings):
     logging_level: int = logging.INFO
     loggers: Tuple[str, str] = ("uvicorn.asgi", "uvicorn.access")
 
+    # En este validador de pydantic que nos sirve para asignar valores a ciertas variables
+    # o también para hacer una validación mas rigurosa, de esta manera estamos generando el Dsn
+    # por el que nos vamos a conectar a la base de datos de postgresql
     @validator("database_url", pre=True)
     def validate_database_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return PostgresDsn.build(
@@ -63,6 +66,7 @@ class AppSettings(BaseAppSettings):
             path=f"/{values.get('postgres_db')}",
         )
 
+    # Al igual que la anterior generamos el Dsn para redis
     @validator("redis_url", pre=True)
     def validate_redis_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return RedisDsn.build(
@@ -71,10 +75,12 @@ class AppSettings(BaseAppSettings):
             path=f"/{values.get('redis_path')}"
         )
 
+    # Esta clase le dice a pydantic dónde buscará el archivo de entorno y cómo deverá leerlo
     class Config:
         validate_assignment = True
         env_file_encoding = 'utf-8'
 
+    # El decorador property simplemente nos devolverá un diccionario con los datos de nuestra aplicación
     @property
     def fastapi_kwargs(self) -> Dict[str, Any]:
         return {

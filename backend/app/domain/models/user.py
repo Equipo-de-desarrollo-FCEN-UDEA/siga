@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from .base import Base
 
 
+#Creamos el modelo usuario
 class User(Base):
     id = Column(Integer, primary_key=True)
     primerApellido = Column(String(20), nullable=False)

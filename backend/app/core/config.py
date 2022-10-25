@@ -6,12 +6,14 @@ from app.core.settings.app import AppSettings
 from app.core.settings.base import AppEnv, BaseAppSettings
 from app.core.settings import DevelopmentAppSettings, ProductionAppSettings, TestingAppSettings
 
-environments : Dict[AppEnv, Type[AppSettings]] = {
+environments: Dict[AppEnv, Type[AppSettings]] = {
     AppEnv.Development: DevelopmentAppSettings,
     AppEnv.Production: ProductionAppSettings,
     AppEnv.Testing: TestingAppSettings
 }
 
+
+# Aquí generamos la configuración de la aplicación y la almacenamos en la caché de python
 @lru_cache
 def get_app_settings() -> AppSettings:
     app_env = BaseAppSettings().env

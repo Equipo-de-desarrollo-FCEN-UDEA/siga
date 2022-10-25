@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from sqlalchemy.orm import Session
-from sqlalchemy.ext.declarative import declarative_base
 
 from app.domain import schemas
 from app.services import crud
@@ -13,14 +12,15 @@ log = get_logging(__name__)
 
 settings = get_app_settings()
 
+
+# Aquí inicializamos la base de datos
 def init_db(db: Session) -> None:
     log.info('Conectándose a la base de datos')
 
+    # Creamos las datos en caso de que no estén creadas
     base.Base.metadata.create_all(bind=session.engine)
 
     log.info('Conexión establecida')
-
-    
 
     # areas = crud.area.get_init(db=db, id=1)
 
@@ -33,8 +33,7 @@ def init_db(db: Session) -> None:
     #         area_out = crud.area.create_init(db=db, obj_in=area_in)
     #     log.info('Datos iniciales tablas inicializados')
 
-
-
+    # Creamos el admin en caso de que no esté creado aún
     employee = crud.user.get_init(db=db, id=1)
     if not employee:
         log.info('Creando primer super user')
@@ -49,7 +48,7 @@ def init_db(db: Session) -> None:
             is_superuser=True,
             password=settings.first_superemployee_password,
         )
-                    # area_id=settings.first_superemployee_area_id,
+        # area_id=settings.first_superemployee_area_id,
         log.debug(employee_in.fechaIngreso)
         employee = crud.user.create_init(db, obj_in=employee_in)
         log.info('Primer super user creado')

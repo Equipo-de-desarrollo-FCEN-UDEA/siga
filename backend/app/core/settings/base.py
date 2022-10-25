@@ -2,6 +2,7 @@ from enum import Enum
 
 from pydantic import BaseSettings
 
+#Esta clase simplemente nos ayudará a entregar el archivo de entorno dependiendo el caso
 class AppEnv(Enum):
     Development: str = "development"
     Production: str = "production"
