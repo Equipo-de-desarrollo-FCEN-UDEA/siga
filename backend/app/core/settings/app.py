@@ -3,10 +3,9 @@ import logging
 from typing import Any, Dict, Optional, Tuple
 
 from loguru import logger
-from pydantic import PostgresDsn, SecretStr, validator
+from pydantic import PostgresDsn, SecretStr, validator, RedisDsn
 
 from app.core.settings.base import BaseAppSettings
-
 
 
 class AppSettings(BaseAppSettings):
@@ -32,6 +31,9 @@ class AppSettings(BaseAppSettings):
     postgres_password: str
     postgres_db: str
 
+    redis_server: str
+    redis_path: str
+
     # first_superemployee_correo : str
     first_superemployee_password: str
     first_superemployee_segundoapellido: str
@@ -43,6 +45,8 @@ class AppSettings(BaseAppSettings):
     first_superemployee_area_id: int
 
     database_url: Optional[PostgresDsn] = None
+
+    redis_url: Optional[RedisDsn] = None
 
     algorithm: str
 
@@ -57,6 +61,14 @@ class AppSettings(BaseAppSettings):
             password=values.get('postgres_password'),
             host=values.get('postgres_server'),
             path=f"/{values.get('postgres_db')}",
+        )
+
+    @validator("redis_url", pre=True)
+    def validate_redis_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        return RedisDsn.build(
+            scheme="redis",
+            host=values.get('redis_server'),
+            path=f"/{values.get('redis_path')}"
         )
 
     class Config:
