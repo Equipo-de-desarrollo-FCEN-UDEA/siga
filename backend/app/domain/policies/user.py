@@ -2,7 +2,7 @@ from typing import Union, Dict, Any
 
 from app.domain.models import User
 from app.domain.schemas.user import UserCreate
-from app.domain.schemas.errors.user import User401, User404, UserContrasenasDiferentes
+from app.domain.errors.user import User401, User404, UserContrasenasDiferentes
 from app.domain.schemas import UserUpdate
 from .base import Base
 
@@ -25,7 +25,7 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
         return None
 
     def create(self, who: User) -> None:
-        if not who.is_superuser:
+        if not who.rol_id == 1:
             raise User401
         return None
 

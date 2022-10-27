@@ -6,20 +6,27 @@ from sqlalchemy.orm import relationship
 
 from .base import Base
 
+if TYPE_CHECKING:
+    from .department import Department
 
-#Creamos el modelo usuario
+
+# Creamos el modelo usuario
 class User(Base):
     id = Column(Integer, primary_key=True)
-    primerApellido = Column(String(20), nullable=False)
-    segundoApellido = Column(String(20), nullable=False)
-    primerNombre = Column(String(20), nullable=False)
-    otrosNombres = Column(String(50), nullable=True)
-    pais = Column(String(255), nullable=False)
-    numeroIdentificacion = Column(String(20), nullable=False, unique=True)
-    # correo = Column(String(300), nullable=False, unique=True)
-    fechaIngreso = Column(DateTime, nullable=False)
+    lastNames = Column(String(50), nullable=False)
+    names = Column(String(50), nullable=False)
+    identificationNumber = Column(String(20), nullable=False, unique=True)
+    email = Column(String(100), nullable=False)
+    active = Column(Boolean, default=True)
+    scale = Column(String(50), nullable=False)
+    phone = Column(String(50), nullable=True)
+    office = Column(String(5), nullable=True)
+    vinculationType = Column(String(50), nullable=False)
     hashed_password = Column(String(300), nullable=False)
-    activo = Column(Boolean, default=True)
-    is_superuser = Column(Boolean, default=False)
-    created_at = Column(DateTime(timezone=True), default = func.now())
-    updated_at = Column(String(255), onupdate=func.now())
+    rol_id = Column(Integer, nullable=False)
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    #Relaciones
+    department_id = Column(Integer, ForeignKey("department.id"))
+    department = relationship("Department", back_populates="users")

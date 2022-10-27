@@ -7,73 +7,53 @@ from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
-regex = "^[A-Z]*$"
+regex = "^[A-Z ]*$"
 
 
 class UserBase(BaseModel):
-    primerApellido: str = Field(
-        regex="^[A-Z ]*",
-        min_length=3,
-        max_length=20,
-    )
-
-    segundoApellido: str = Field(
+    lastNames: str = Field(
         regex=regex,
         min_length=3,
-        max_length=20
+        max_length=50,
     )
 
-    primerNombre: str = Field(
+    names: str = Field(
         regex=regex,
-        min_length=3,
-        max_length=20
-    )
-
-    otrosNombres: Optional[str] = Field(
-        regex="^[A-Z ]*",
         min_length=3,
         max_length=50
     )
 
-    pais: str = Field(
-        regex="^[A-Z ]*",
+    identificationNumber: str = Field(
+        regex="^[A-Z-0-9 ]*$",
         min_length=3,
-        max_length=50
+        max_length=20
     )
 
-    numeroIdentificacion: str = Field(
-        regex="^[A-Za-z0-9-]*$",
+    email: str = Field(
         min_length=1,
-        max_length=20
+        max_length=100
     )
 
-    fechaIngreso: datetime
-    # area_id: int = Field(
-    #     gt=0
-    # )
-    activo: Optional[bool] = True
-    is_superuser: Optional[bool] = False
+    active: bool = True
+    scale: str = Field(max_length=50)
+    phone: Optional[str] = Field(max_length=50)
+    office: Optional[str] = Field(max_length=5)
+    vinculationType: str = Field(max_length=50)
+    department_id: int
+    rol_id: int
 
 
 class UserCreate(UserBase):
-    # correo: Optional[EmailStr]
-
-    @validator('fechaIngreso')
-    def mes_antes(cls, v: datetime):
-        log.debug('Estoy dentro de mes_antes')
-        if not (datetime.now(timezone.utc) - timedelta(days=30) < v.astimezone()):
-            raise ValueError(
-                "El user no se puede registar con más de un mes de ingresado")
-        return v
     password: Optional[str]
 
     @validator('password', always=True)
     def generate_password(cls, v, values, **kwargs):
         if not v:
-            if not 'numeroIdentificacion' in values:
+            if not 'identificationNumber' in values:
                 raise ValueError
-            return values['numeroIdentificacion']
+            return values['identificationNumber']
         return v
+
 
 class UserUpdate(UserBase):
     pass
@@ -81,8 +61,6 @@ class UserUpdate(UserBase):
 
 class UserInDBBase(UserBase):
     id: int
-    correo: EmailStr
-    activo: bool
     created_at: datetime
     updated_at: Optional[datetime]
 

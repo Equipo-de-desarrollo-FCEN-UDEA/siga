@@ -1,13 +1,13 @@
 from datetime import timedelta
 
-from fastapi import Depends, APIRouter, Body, HTTPException
+from fastapi import Depends, APIRouter, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.orm import Session
 
 from app.services import crud
 from app.domain import models, schemas
-from app.domain.schemas.errors.base import BaseErrors
+from app.domain.errors.base import BaseErrors
 from app.services.security import jwt
 from app.core.config import get_app_settings
 from app.api.middlewares import db
@@ -26,7 +26,7 @@ def login_access_token(
     """
     try:
         user: models.User = crud.user.authenticate(
-            db, email=form_data.username, identificacion=form_data.username, password=form_data.password)
+            db, email=form_data.username, identification=form_data.username, password=form_data.password)
         minutes = settings.access_token_expires_minutes
         access_token_expires = timedelta(
             minutes=minutes)

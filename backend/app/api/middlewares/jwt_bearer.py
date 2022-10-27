@@ -44,13 +44,3 @@ def get_current_active_user(
     if not crud.user.is_active(db=db, user=current_user):
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
-
-
-#Esta función obtiene el si el usuario es o no admin
-def get_current_active_superuser(
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_active_user)
-) -> models.User:
-    if not crud.user.is_superuser(db= db, user=current_user):
-        raise HTTPException(status_code = status.HTTP_403_FORBIDDEN, detail = "Not a superuser")
-    return current_user

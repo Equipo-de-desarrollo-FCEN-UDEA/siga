@@ -27,6 +27,7 @@ def run_app():
     log.debug(settings.redis_url)
 
     init_db(db)
+    db.close()
     return application
 
 

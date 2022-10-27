@@ -36,13 +36,13 @@ class AppSettings(BaseAppSettings):
 
     # first_superemployee_correo : str
     first_superemployee_password: str
-    first_superemployee_segundoapellido: str
-    first_superemployee_primerapellido: str
-    first_superemployee_primernombre: str
-    first_superemployee_otrosnombres: str = None
-    first_superemployee_pais: str
-    first_superemployee_numeroidentificacion: str
-    first_superemployee_area_id: int
+    first_superemployee_last_names: str
+    first_superemployee_names: str
+    first_superemployee_email: str
+    first_superemployee_identification_number: str
+    first_superemployee_department_id: int
+    first_superemployee_vinculation_type: str
+    first_superemployee_rol_id: int
 
     database_url: Optional[PostgresDsn] = None
 
