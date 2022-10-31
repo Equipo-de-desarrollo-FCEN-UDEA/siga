@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, List
 
 from sqlalchemy.orm import Session, joinedload
 
@@ -42,7 +42,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         limit: int = 100,
         search: str | None = '',
         active: bool = True,
-    ) -> Any:
+    ) -> List[User]:
         self.policy.get_multi(who=who)
         columns = [
             'names',
@@ -76,7 +76,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         obj_in: UserCreate
     ) -> User:
         self.policy.create()
-        log.debug(obj_in.password)
         hashed_password = get_password_hash(obj_in.password)
         data = dict(obj_in)
         del data['password']

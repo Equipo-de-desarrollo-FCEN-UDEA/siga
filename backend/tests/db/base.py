@@ -1,18 +1,13 @@
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.domain.models import User
 from app.db import base
-from app.domain import schemas
-from app.domain.policies.user import UserPolicy
-from app.domain.errors.base import BaseErrors
-from app.domain.schemas import UserUpdate
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
 
-class TestBasePolicy:
+class TestBaseDB:
     engine = create_engine('sqlite:///:memory:')
     Session = sessionmaker(bind=engine)
     # Base = declarative_base()

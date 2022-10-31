@@ -92,6 +92,12 @@ init_departments: List[schemas.DepartmentCreate] = [
         description='Instituto de Física',
         coordEmail='coordfisica@udea.edu.co',
         school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='Ingeniería de sistemas',
+        description='Ingeniería de sistemas',
+        coordEmail='coordsistemas@udea.edu.co',
+        school_id=3
     )
 ]
 

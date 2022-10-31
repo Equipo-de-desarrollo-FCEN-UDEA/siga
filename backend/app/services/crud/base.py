@@ -61,7 +61,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         db_obj: ModelType,
         obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> ModelType:
-        self.policy.update(who=who, to=db_obj)
+        self.policy.update(who=who, to=db_obj, obj_in=obj_in)
         obj_data = db_obj.__dict__
         if isinstance(obj_in, dict):
             update_data = obj_in

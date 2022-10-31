@@ -1,4 +1,4 @@
-from typing import Type, TypeVar, Generic
+from typing import Type, TypeVar, Generic, Union, Dict, Any
 from pydantic import BaseModel
 
 from app.domain.models import base, User
@@ -24,7 +24,8 @@ class Base(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def update(
         self, who: User,
-        to: Type[ModelType]
+        to: Type[ModelType],
+        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
     ) -> None:
         pass
 

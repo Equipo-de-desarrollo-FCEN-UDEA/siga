@@ -30,12 +30,15 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
         pass
 
     def update(self, who: User, obj_in: Union[UserUpdate, Dict[str, Any]], to: User) -> None:
-        if not isinstance(obj_in, Dict):
-            obj_in = dict(obj_in)
+        if isinstance(obj_in, dict):
+            update_data = obj_in
+        else:
+            update_data = obj_in.dict(exclude_unset=True)
         if not (who.rol.scope < 9) and not (who.id == to.id):
             raise User401
-        if who.id == to.id and obj_in['active'] != to.active:
-            raise User401
+        if 'active' in update_data:
+            if who.id == to.id and update_data['active'] != to.active:
+                raise User401
         return None
 
     def update_password(self, who: User, to: User, password, confirmpassword) -> None:
