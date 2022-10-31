@@ -22,7 +22,6 @@ log = get_logging(__name__)
 def create_user(
     *,
     db: Session = Depends(db.get_db),
-    user: models.User = Depends(jwt_bearer.get_current_active_user),
     user_in: schemas.UserCreate
 ) -> Any:
     """
@@ -32,14 +31,13 @@ def create_user(
     """
     # Esta descripción de la función es importante en algunos casos, como para explicar qué recibe el backend
     try:
-        db_user = crud.user.create(
-            db=db, obj_in=user_in, who=user)
+        db_user = crud.user.create(db=db, obj_in=user_in)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     except KeyError as e:
-        HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e))
     except ValueError as e:
-        HTTPException(status_code=422, detail=str(e))
+        raise HTTPException(status_code=422, detail=str(e))
 
     # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return db_user
@@ -55,7 +53,7 @@ def read_users(
     skip: int = 0,
     limit: int = 100,
     search: str | None = '',
-    activo: bool | None = True,
+    active: bool | None = True,
 ) -> Any:
     """
     Endpoint to read all users.
@@ -64,7 +62,7 @@ def read_users(
     """
     try:
         db_user = crud.user.get_multi(
-            db=db, skip=skip, limit=limit, who=user, search=search, activo=activo)
+            db=db, skip=skip, limit=limit, who=user, search=search, active=active)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_user

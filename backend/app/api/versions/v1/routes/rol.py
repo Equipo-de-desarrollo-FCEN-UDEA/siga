@@ -12,8 +12,8 @@ from app.services import crud
 router = APIRouter()
 
 
-@router.get("/intern", status_code=200, response_model=List[schemas.SchoolInDB])
-def read_schools_intern(
+@router.get("/", status_code=200, response_model=List[schemas.RolInDB])
+def read_deparment(
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
@@ -22,33 +22,13 @@ def read_schools_intern(
     limit: int = 100
 ) -> Any:
     """
-    Endpoint to read all schools.
+    Endpoint to read all roles.
 
         params: skip: int, limit: int
     """
     try:
-        db_schools = crud.school.get_multi_intern(
+        db_empleado = crud.rol.get_multi(
             db=db, skip=skip, limit=limit, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
-    return db_schools
-
-
-@router.get("/", status_code=200, response_model=List[schemas.SchoolInDB])
-def read_schools(
-    *,
-    db: Session = Depends(db.get_db),
-    skip: int = 0,
-    limit: int = 100
-) -> Any:
-    """
-    Endpoint to read all schools.
-
-        params: skip: int, limit: int
-    """
-    try:
-        db_schools = crud.school.get_multi(
-            db=db, skip=skip, limit=limit)
-    except BaseErrors as e:
-        raise HTTPException(status_code=e.code, detail=e.detail)
-    return db_schools
+    return db_empleado

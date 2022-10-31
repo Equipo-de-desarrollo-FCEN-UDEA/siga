@@ -1,6 +1,6 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.domain.schemas.user import UserCreate, UserUpdate
 from app.domain.models import User
@@ -14,6 +14,12 @@ log = get_logging(__name__)
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
+    def get_middleware(
+        self, db: Session, id: int
+    ) -> Optional[User]:
+        obj_db = db.query(User).filter(User.id == id).first()
+        return obj_db
+
     def get_by_email(
         self, db: Session, email: str
     ) -> User:
@@ -35,39 +41,41 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         skip: int = 0,
         limit: int = 100,
         search: str | None = '',
-        activo: bool = True,
+        active: bool = True,
     ) -> Any:
+        self.policy.get_multi(who=who)
         columns = [
-            'primerNombre',
-            'otrosNombres',
-            'primerApellido',
-            'segundoApellido',
-            'numeroIdentificacion',
-            'pais',
-            'correo'
+            'names',
+            'lastNames',
+            'identificationNumber',
+            'email'
         ]
         if search:
             search = search.upper()
-            d = {column: search for column in columns}
             raw = [
                 db.query(User).filter(
-                    getattr(User, col).contains(f"{search}")).filter(User.activo == activo).all()
+                    getattr(User, col).contains(f"{search}")).filter(User.active == active).all()
                 for col in columns
             ]
             res = [user for users in raw for user in users]
             return res
-        objs_db = db.query(User).filter(
-            User.activo == activo).offset(skip).limit(limit).all()
-        self.policy.get_multi(who=who)
+
+        objs_db = db.query(User)\
+            .filter(User.active == active)\
+            .offset(skip)\
+            .limit(limit)\
+            .all()
+
         return objs_db
 
-
     # No debe ser expuesta en ningún momento, se hace para uso interno de la aplicación
-    def create_init(
+
+    def create(
         self,
         db: Session,
         obj_in: UserCreate
     ) -> User:
+        self.policy.create()
         log.debug(obj_in.password)
         hashed_password = get_password_hash(obj_in.password)
         data = dict(obj_in)
@@ -89,16 +97,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         else:
             update_data = obj_in.dict(exclude_unset=True)
         return super().update(db, db_obj=db_obj, who=who, obj_in=update_data)
-
-    def create(
-        self,
-        db: Session,
-        obj_in: UserCreate,
-        who: User
-    ) -> User:
-        self.policy.create(who=who)
-        db_obj = self.create_init(db=db, obj_in=obj_in)
-        return db_obj
 
     def update_password(
         self,

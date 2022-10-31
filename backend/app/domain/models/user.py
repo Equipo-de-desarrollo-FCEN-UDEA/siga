@@ -8,6 +8,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .department import Department
+    from .rol import Rol
 
 
 # Creamos el modelo usuario
@@ -21,12 +22,14 @@ class User(Base):
     scale = Column(String(50), nullable=False)
     phone = Column(String(50), nullable=True)
     office = Column(String(5), nullable=True)
+    identificationType = Column(String(10), nullable=False)
     vinculationType = Column(String(50), nullable=False)
     hashed_password = Column(String(300), nullable=False)
-    rol_id = Column(Integer, nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    
-    #Relaciones
+
+    # relations
     department_id = Column(Integer, ForeignKey("department.id"))
     department = relationship("Department", back_populates="users")
+    rol_id = Column(Integer, ForeignKey("rol.id"))
+    rol = relationship("Rol", back_populates="users")

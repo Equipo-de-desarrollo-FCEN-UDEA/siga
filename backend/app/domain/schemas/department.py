@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 
+from .school import SchoolResponse
+
+
 class DepartmentBase(BaseModel):
     name: str
     description: str
@@ -20,3 +23,8 @@ class DeparmentInDB(DepartmentBase):
 
     class Config:
         orm_mode = True
+
+
+class DepartmentResponse(DeparmentInDB):
+    school: SchoolResponse
+

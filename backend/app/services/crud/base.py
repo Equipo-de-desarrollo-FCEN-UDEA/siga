@@ -26,12 +26,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         self.policy.get(who=who, to=obj_db)
         return obj_db
 
-    def get_init(
-        self, db: Session, id: int
-    ) -> Optional[ModelType]:
-        obj_db = db.query(self.model).filter(self.model.id == id).first()
-        return obj_db
-
     def get_multi(
         self,
         db: Session,

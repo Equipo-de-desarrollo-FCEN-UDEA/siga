@@ -21,3 +21,7 @@ class SchoolInDB(SchoolBase):
 
     class Config:
         orm_mode = True
+
+
+class SchoolResponse(SchoolInDB):
+    pass

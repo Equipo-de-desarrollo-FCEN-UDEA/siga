@@ -1,76 +1,65 @@
-from datetime import datetime, timedelta
-
 from pytest import raises
-from pydantic import ValidationError
 
 from app.domain.schemas import UserCreate
 
 
 def test_schema_user():
     user1 = UserCreate(
-        primerApellido="GARCIA",
-        segundoApellido="LUJAN",
-        primerNombre="SIMON",
-        pais="COLOMBIA",
-        numeroIdentificacion="CC-1001987844",
-        fechaIngreso=datetime.now(),
-        area_id=2
+        names="SIMON DE LA ROSA",
+        lastNames="GARCIA LUJAN",
+        identificationNumber="1234567890",
+        email="simon.garcial@udea.edu.co",
+        scale="Vinculado",
+        vinculationType="TIEMPO COMPLETO",
+        department_id=1,
+        rol_id=1
     )
-    #Contraseña automática
-    assert user1.password == user1.numeroIdentificacion 
-    #Activo automático
-    assert user1.activo == True
-    #No super user por defecto
-    assert user1.is_superuser == False
-    #Regex
+    # Contraseña automática
+    assert user1.password == user1.identificationNumber
+    # Activo automático
+    assert user1.active == True
+    assert user1.identificationType == 'CC'
+    # Regex correo
     with raises(ValueError):
         UserCreate(
-            primerApellido="GARCIA",
-            segundoApellido="LUJAN",
-            primerNombre="SIMOn",
-            pais="COLOMBIA",
-            numeroIdentificacion="CC-1001987844",
-            fechaIngreso=datetime.now(),
-            area_id=2
+            names="SIMON DE LA ROSA",
+            lastNames="GARCIA LUJAN",
+            identificationNumber="1231233",
+            email="simon.garcial@gmail.com",
+            scale="Vinculado",
+            department_id=1,
+            rol_id=1
         )
+    # Regex apellido
     with raises(ValueError):
         UserCreate(
-            primerApellido="GARCIA",
-            segundoApellido="LUjAN",
-            primerNombre="SIMON",
-            pais="COLOMBIA",
-            numeroIdentificacion="CC-1001987844",
-            fechaIngreso=datetime.now(),
-            area_id=2
+            names="SIMON DE LA ROSA",
+            lastNames="GARCIA LUjAN",
+            identificationNumber="1234567890",
+            email="simon.garcial@udea.edu.co",
+            scale="Vinculado",
+            department_id=1,
+            rol_id=1
         )
+    # Regex cédula
     with raises(ValueError):
         UserCreate(
-            primerApellido="GARCIA",
-            segundoApellido="LUJAN",
-            primerNombre="SIMON",
-            pais="COLOMBIA",
-            numeroIdentificacion="CC-1001987844",
-            fechaIngreso=datetime.now() - timedelta(50),
-            area_id=2
+            names="SIMON DE LA ROSA",
+            lastNames="GARCIA LUJAN",
+            identificationNumber="1234567890+",
+            email="simon.garcial@udea.edu.co",
+            scale="Vinculado",
+            department_id=1,
+            rol_id=1
         )
-    with raises(ValidationError):
-        UserCreate(
-            primerApellido="GARCIA",
-            segundoApellido="LUJAN",
-            primerNombre="SIMON",
-            pais="COLOMBIA",
-            numeroIdentificacion="CC-1001987844.+",
-            fechaIngreso=datetime.now() - timedelta(50),
-            area_id=0
-        )
-    #Area mayor a 0
+    # Area mayor a 0
     with raises(ValueError):
         UserCreate(
-            primerApellido="GARCIA",
-            segundoApellido="LUJAN",
-            primerNombre="SIMON",
-            pais="COLOMBIA",
-            numeroIdentificacion="CC-1001987844",
-            fechaIngreso=datetime.now() - timedelta(50),
-            area_id=0
+            names="SIMON DE LA ROSA",
+            lastNames="GARCIA LUJAN",
+            identificationNumber="1234567890",
+            email="simon.garcial@udea.edu.co",
+            scale="Vinculado",
+            department_id=1,
+            rol_id=1
         )

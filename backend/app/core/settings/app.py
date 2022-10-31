@@ -63,7 +63,7 @@ class AppSettings(BaseAppSettings):
             user=values.get('postgres_user'),
             password=values.get('postgres_password'),
             host=values.get('postgres_server'),
-            path=f"/{values.get('postgres_db')}",
+            path=f"/{values.get('postgres_db')}"
         )
 
     # Al igual que la anterior generamos el Dsn para redis

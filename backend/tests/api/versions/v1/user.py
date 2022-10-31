@@ -2,7 +2,7 @@ from datetime import datetime
 from http.client import HTTPException
 
 from fastapi.testclient import TestClient
-from pytest import raises
+from pytest import raises, mark
 
 from app.main import app
 from app.core.logging import get_logging
@@ -17,31 +17,34 @@ client = TestClient(app)
 
 url = '/api/v1/user/'
 
-
 def test_api_user():
     token = client.post(
         '/api/v1/login/access-token',
         data={
-            "username": settings.first_superemployee_numeroidentificacion,
+            "username": settings.first_superemployee_email,
             "password": settings.first_superemployee_password}
     ).json()['access_token']
+    log.debug(token)
     user = {
-        "primerApellido": "RTPXRRDAVMPT",
-        "segundoApellido": "MKWBYCBBZJNU",
-        "primerNombre": "HLJXJTFIOSWHY",
-        "otrosNombres": "WRVLJQXXXTDNSTVC",
-        "pais": "KPQE",
-        "numeroIdentificacion": "Lvy9eCRmc-2QSHKiFLkE",
-        "fechaIngreso": "2022-10-16T01:12:21.251Z",
-        "area_id": 1
+        "lastNames": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
+        "names": "JOUKWONLOUGKQUCZPGTQALAYF EEKWW MGYIELZAGUMNQHUUGD",
+        "identificationNumber": "UZYRTUJDVMLL270C",
+        "email": "test.api@udea.edu.co",
+        "active": True,
+        "scale": "string",
+        "phone": "string",
+        "office": "strin",
+        "vinculationType": "string",
+        "department_id": 3,
+        "rol_id": 9,
+        "password": "string"
     }
 
     log.debug(token)
 
     response = client.post(
         url=url,
-        json=user,
-        headers={'Authorization': f"Bearer {token}"}
+        json=user
     )
 
     log.debug(response.json())
@@ -51,8 +54,7 @@ def test_api_user():
 
     response2 = client.post(
         url=url,
-        json=user,
-        headers={'Authorization': f"Bearer FakeToken"}
+        json=user
     )
 
     log.debug(delete.json())
@@ -63,7 +65,10 @@ def test_api_user():
     log.debug(userget.json())
 
     assert response.status_code == 201
-    assert response2.status_code == 403
+    # assert response2.status_code == 403
     assert delete.status_code == 200
     assert userget.json(
-    )['primerNombre'] == settings.first_superemployee_primernombre
+    )['names'] == settings.first_superemployee_names
+
+    delete = client.delete(
+        url=url+f"{response2.json()['id']}", headers={'Authorization': f"Bearer {token}"})

@@ -3,11 +3,12 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, validator, EmailStr, SecretStr
 
+from .department import DepartmentResponse
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
-regex = "^[A-Z ]*$"
+regex = "^[A-ZÁÉÍÓÚáéíóúñÑ ]*$"
 
 
 class UserBase(BaseModel):
@@ -24,23 +25,30 @@ class UserBase(BaseModel):
     )
 
     identificationNumber: str = Field(
-        regex="^[A-Z-0-9 ]*$",
+        regex="^[A-Z0-9]*$",
         min_length=3,
         max_length=20
     )
 
     email: str = Field(
+        regex="^([a-zA-Z]+(.[a-zA-Z]+)+)@udea.edu.co$",
         min_length=1,
         max_length=100
     )
 
+    identificationType: Optional[str] = Field(
+        regex=regex,
+        min_length=1,
+        max_length=10,
+        default="CC"
+    )
     active: bool = True
     scale: str = Field(max_length=50)
     phone: Optional[str] = Field(max_length=50)
     office: Optional[str] = Field(max_length=5)
     vinculationType: str = Field(max_length=50)
-    department_id: int
-    rol_id: int
+    department_id: int = Field(gt=0)
+    rol_id: int = Field(gt=0)
 
 
 class UserCreate(UserBase):
@@ -69,7 +77,7 @@ class UserInDBBase(UserBase):
 
 
 class UserResponse(UserInDBBase):
-    pass
+    department: Optional[DepartmentResponse]
 
 
 class UserInDB(UserInDBBase):
