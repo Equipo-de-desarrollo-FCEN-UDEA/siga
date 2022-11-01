@@ -9,6 +9,7 @@ from .base import Base
 if TYPE_CHECKING:
     from .department import Department
     from .rol import Rol
+    from .application import Application
 
 
 # Creamos el modelo usuario
@@ -33,3 +34,4 @@ class User(Base):
     department = relationship("Department", back_populates="users")
     rol_id = Column(Integer, ForeignKey("rol.id"))
     rol = relationship("Rol", back_populates="users")
+    applications = relationship("Application", back_populates="user")

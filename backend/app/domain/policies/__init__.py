@@ -2,3 +2,8 @@ from .rol import RolPolicy
 from .deparment import DepartmentPolicy
 from .school import SchoolPolicy
 from .user import UserPolicy
+from .state import StatePolicy
+from .application import ApplicationPolicy
+from .application_subtype import ApplicationSubTypePolicy
+from .application_type import ApplicationTypePolicy
+from .application_state import Application_statePolicy

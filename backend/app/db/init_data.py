@@ -143,9 +143,102 @@ init_rols: List[schemas.DepartmentCreate] = [
         description='Usuario empleado',
         scope=11
     ),
-    schemas.RolUpdate(
+    schemas.RolCreate(
         name='Estudiante',
         description='Estudiante',
         scope=13
+    )
+]
+
+
+init_states: List[schemas.StateCreate] = [
+    schemas.StateCreate(
+        name='SOLICITADA'
+    ),
+    schemas.StateCreate(
+        name='VISTO BUENO'
+    ),
+    schemas.StateCreate(
+        name='APROBADA'
+    ),
+    schemas.StateCreate(
+        name='RECHAZADA COORDINACIÓN'
+    ),
+    schemas.StateCreate(
+        name='RECHAZADA DECANATO'
+    ),
+    schemas.StateCreate(
+        name='FINALIZADA'
+    ),
+    schemas.StateCreate(
+        name='EN CREACIÓN'
+    ),
+    schemas.StateCreate(
+        name='EN CURSO'
+    )
+]
+
+init_applicationType: List[schemas.ApplicationTypeCreate] = [
+    schemas.ApplicationTypeCreate(
+        name="PERMISO",
+        description="Permisos"
+    ),
+    schemas.ApplicationTypeCreate(
+        name="COMISIÓN",
+        description="Comisiones"
+    ),
+    schemas.ApplicationTypeCreate(
+        name="DEDICACIÓN EXCLUSIVA",
+        description="Dedicaciones exclusivas"
+    )
+]
+
+init_applicationSubType: List[schemas.ApplicationSubTypeCreate] = [
+    schemas.ApplicationSubTypeCreate(
+        name="Licencia de maternidad",
+        applicationType_id=1,
+        extra={"days": 126}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Licencia de paternidad",
+        applicationType_id=1,
+        extra={"days": 8}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Cumpleaños",
+        applicationType_id=1,
+        extra={"days": 1}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Luto",
+        applicationType_id=1,
+        extra={"days": 5}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Calamidad doméstica",
+        applicationType_id=1,
+        extra={"days": 12}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Licencia no remunerada",
+        applicationType_id=1,
+        extra={"days": 60}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Permiso remunerado",
+        applicationType_id=1,
+        extra={"days": 3}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Comisión de servicios",
+        applicationType_id=2
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Comisión de estudios",
+        applicationType_id=2
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Dedicación",
+        applicationType_id=3
     )
 ]

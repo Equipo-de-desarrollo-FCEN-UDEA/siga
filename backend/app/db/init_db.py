@@ -57,4 +57,30 @@ def init_db(db: Session) -> None:
             conn.execute(table.insert().values(**db_obj))
         log.info('Roles iniciales creados')
 
+    @event.listens_for(base.State.__table__, 'after_create')
+    def init_state(table, conn, *args, **kwargs):
+        from .init_data import init_states
+        for state in init_states:
+            db_obj = dict(state)
+            conn.execute(table.insert().values(**db_obj))
+        log.info('Estados iniciales de las solicitudes creados')
+    
+    @event.listens_for(base.ApplicationType.__table__, 'after_create')
+    def init_application_type(table, conn, *args, **kwargs):
+        from .init_data import init_applicationType
+        for type in init_applicationType:
+            db_obj = dict(type)
+            conn.execute(table.insert().values(**db_obj))
+        log.info('Tipos iniciales de las solicitudes creados')
+
+    @event.listens_for(base.ApplicationSubType.__table__, 'after_create')
+    def init_application_sub_type(table, conn, *args, **kwargs):
+        from .init_data import init_applicationSubType
+        for subType in init_applicationSubType:
+            db_obj = dict(subType)
+            conn.execute(table.insert().values(**db_obj))
+        log.info('subtipos iniciales de las solicitudes creados')
+
+
+
     base.Base.metadata.create_all(bind=session.engine)

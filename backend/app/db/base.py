@@ -1,6 +1,13 @@
 from app.domain.models.base import Base
-from app.domain.models.user import User
-from app.domain.models.department import Department
-from app.domain.models.school import School
-from app.domain.models.rol import Rol
-#Para que se puedan crear las tablas
+from app.domain.models import (
+    User,
+    Department,
+    School,
+    Rol,
+    State,
+    Application,
+    ApplicationSubType,
+    ApplicationType,
+    Application_state
+)
+# Para que se puedan crear las tablas
