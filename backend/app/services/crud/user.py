@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional, Union, List
+from time import sleep
 
 from sqlalchemy.orm import Session, joinedload
 
@@ -9,6 +10,7 @@ from app.services.security import get_password_hash, check_password
 from app.domain.errors.user import User401, User404, UserRegistrado
 from .base import CRUDBase
 from app.core.logging import get_logging
+from app.celery_worker import Celery
 
 log = get_logging(__name__)
 
@@ -33,6 +35,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             User.identificationNumber == identification).first()
         return obj_db
 
+    @Celery.task
     def get_multi(
         self,
         db: Session,
@@ -43,6 +46,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         search: str | None = '',
         active: bool = True,
     ) -> List[User]:
+        sleep(5)
         self.policy.get_multi(who=who)
         queries = [User.active == active, Rol.scope > who.rol.scope]
 
