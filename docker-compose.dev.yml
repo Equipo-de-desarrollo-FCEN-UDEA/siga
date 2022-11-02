@@ -41,6 +41,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: celery -A app.celery_worker.celery worker --loglevel=info
+    env_file:
+      - .env
     volumes:
       - ./celery-data:/usr/src/server
     environment:
@@ -48,6 +50,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - redis
+      - backend
     networks:
       - local-net
   
@@ -57,6 +60,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: celery -A app.celery_worker.celery flower --port=5555
+    env_file:
+      - .env
     volumes:
       - ./app:/usr/src/server
     ports:

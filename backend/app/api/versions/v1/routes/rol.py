@@ -12,7 +12,7 @@ from app.services import crud
 router = APIRouter()
 
 
-@router.get("/", status_code=200, response_model=List[schemas.RolInDB])
+@router.get("/", status_code=200, response_model=List[schemas.RolResponse])
 def read_deparment(
     *,
     db: Session = Depends(db.get_db),

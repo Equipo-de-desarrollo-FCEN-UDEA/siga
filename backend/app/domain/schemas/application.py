@@ -23,3 +23,7 @@ class ApplicationInDB(ApplicationUpdate):
 
     class Config:
         orm_mode = True
+
+
+class ApplicationResponse(ApplicationInDB):
+    pass
