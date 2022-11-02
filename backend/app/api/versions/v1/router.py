@@ -24,4 +24,4 @@ api_route.include_router(rol.router, prefix="/rol", tags=["rol"])
 api_route.include_router(application_type.router,
                          prefix='/application-type', tags=['application-types'])
 api_route.include_router(
-    application.router, prefix="application", tags=["application"])
+    application.router, prefix="/application", tags=["application"])
