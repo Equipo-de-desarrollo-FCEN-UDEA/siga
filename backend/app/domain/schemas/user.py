@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
-from typing import Optional
+from typing import List, Optional
+from app.domain.schemas.application import ApplicationInDB
 
 from pydantic import BaseModel, Field, validator, EmailStr, SecretStr
 

@@ -14,10 +14,10 @@ class ApplicationCreate(ApplicationBase):
 
 
 class ApplicationUpdate(ApplicationBase):
-    pass
+    filed: bool | None
 
 
-class ApplicationInDB(ApplicationBase):
+class ApplicationInDB(ApplicationUpdate):
     id: int
     created_at: datetime
 

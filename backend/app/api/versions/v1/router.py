@@ -1,10 +1,13 @@
 from fastapi import APIRouter
 
-from app.api.versions.v1.routes import (user,
-                                        auth,
-                                        department,
-                                        school,
-                                        rol)
+from app.api.versions.v1.routes import (
+    user,
+    auth,
+    department,
+    school,
+    rol,
+    application_type
+)
 
 # APIRouter de fastapi nos permite generar endpoints o en su defecto con el método include_router incluir toda una ruta
 api_route = APIRouter()
@@ -17,3 +20,5 @@ api_route.include_router(
     school.router, prefix='/school', tags=["schools"])
 
 api_route.include_router(rol.router, prefix="/rol", tags=["rol"])
+api_route.include_router(application_type.router,
+                         prefix='/application-type', tags=['application-types'])

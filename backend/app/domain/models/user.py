@@ -18,7 +18,7 @@ class User(Base):
     lastNames = Column(String(50), nullable=False)
     names = Column(String(50), nullable=False)
     identificationNumber = Column(String(20), nullable=False, unique=True)
-    email = Column(String(100), nullable=False)
+    email = Column(String(100), nullable=False, unique=True)
     active = Column(Boolean, default=True)
     scale = Column(String(50), nullable=False)
     phone = Column(String(50), nullable=True)

@@ -18,5 +18,6 @@ class Application_state(Base):
 
     # relations
     application_id = Column(Integer, ForeignKey("application.id"))
+    application = relationship("Application", back_populates="application_state")
     state_id = Column(Integer, ForeignKey("state.id"))
     state = relationship("State", back_populates="application_state")

@@ -1,4 +1,8 @@
+from typing import List
+
 from pydantic import BaseModel
+
+from .application_subtype import ApplicationSubTypeInDB
 
 
 class ApplicationTypeBase(BaseModel):
@@ -19,3 +23,7 @@ class ApplicationTypeInDB(ApplicationTypeBase):
 
     class Config:
         orm_mode = True
+
+
+class ApplicationTypeResponse(ApplicationTypeInDB):
+    applicationSubType: List[ApplicationSubTypeInDB]

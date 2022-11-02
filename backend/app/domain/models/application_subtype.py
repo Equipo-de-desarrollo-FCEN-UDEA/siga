@@ -18,5 +18,5 @@ class ApplicationSubType(Base):
     # Relations
     applicationType_id = Column(Integer, ForeignKey("applicationtype.id"))
     applicationType = relationship(
-        "ApplicationType", back_populates="applicationsubtypes")
-    applications = relationship("Application", back_populates="applicationsubtype")
+        "ApplicationType", back_populates="applicationSubType")
+    applications = relationship("Application", back_populates="applicationSubType")

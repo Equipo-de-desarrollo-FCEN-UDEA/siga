@@ -15,7 +15,7 @@ settings = get_app_settings()
 
 
 # Aquí inicializamos la base de datos
-def init_db(db: Session) -> None:
+def init_db() -> None:
 
     @event.listens_for(base.Base.metadata, 'after_create')
     def receive_after_create(target, connection, tables, **kw):

@@ -20,20 +20,20 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         lastNames='FCEN',
         names='DECANO DE',
-        identificationNumber='NOAPLICA',
+        identificationNumber='DECANOFCEN',
         scale='Decanatura',
         vinculationType='Tiempo completo',
         department_id=2,
         rol_id=3,
         email='fcen@udea.edu.co',
-        password='decanofcen'
+        password='123'
     ),
     schemas.UserCreate(
         lastNames='GARCÍA LUJÁN',
         names='SIMÓN',
         identificationNumber='1001987844',
         scale='Estudiante',
-        vinculationType='No aplica',
+        vinculationType='NO APLICA',
         department_id=3,
         rol_id=9,
         email='simon.garcial@udea.edu.co',
@@ -48,6 +48,50 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=7,
         email='muñoz.fake@udea.edu.co',
+        password='123'
+    ),
+    schemas.UserCreate(
+        lastNames='MUÑOS ACEVEDO',
+        names='JUAN CARLOSDOS',
+        identificationNumber='9876543211',
+        scale='VINCULADO',
+        vinculationType='TIEMPO COMPLETO',
+        department_id=4,
+        rol_id=7,
+        email='muñoz.fakedos@udea.edu.co',
+        password='123'
+    ),
+    schemas.UserCreate(
+        lastNames='QUIMICA',
+        names='PROFESOR',
+        identificationNumber='1239845651',
+        scale='VINCULADO',
+        vinculationType='TIEMPO COMPLETO',
+        department_id=5,
+        rol_id=7,
+        email='profesor.quimica@udea.edu.co',
+        password='123'
+    ),
+    schemas.UserCreate(
+        lastNames='COORDINADOR',
+        names='QUIMICA',
+        identificationNumber='COORDQUIMICA',
+        scale='VINCULADO',
+        vinculationType='TIEMPO COMPLETO',
+        department_id=5,
+        rol_id=5,
+        email='coordquimica@udea.edu.co',
+        password='123'
+    ),
+    schemas.UserCreate(
+        lastNames='COORDINADOR',
+        names='FISICA',
+        identificationNumber='COORDFISICA',
+        scale='VINCULADO',
+        vinculationType='TIEMPO COMPLETO',
+        department_id=3,
+        rol_id=5,
+        email='coordfisica@udea.edu.co',
         password='123'
     )
 ]
@@ -94,10 +138,16 @@ init_departments: List[schemas.DepartmentCreate] = [
         school_id=2
     ),
     schemas.DepartmentCreate(
-        name='Ingeniería de sistemas',
+        name='SISTEMAS',
         description='Ingeniería de sistemas',
         coordEmail='coordsistemas@udea.edu.co',
         school_id=3
+    ),
+    schemas.DepartmentCreate(
+        name='QUÍMICA',
+        description='Departamento de química',
+        coordEmail="coordquimica@udea.edu.co",
+        school_id=2
     )
 ]
 

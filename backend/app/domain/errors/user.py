@@ -16,7 +16,7 @@ User404 = UserErrors(404, "User no encontrado")
 User422 = UserErrors(422, "Esta entidad no se puede procesar")
 
 UserRegistrado = UserErrors(
-    409, "Este user no se puede registras, su número de identificación se encuentra ya registrado")
+    409, "Este user no se puede registrar, su número de identificación o correo electrónico se encuentra ya registrado")
 
 UserContrasenasDiferentes = UserErrors(
     422, "Las contraseñas no coinciden"

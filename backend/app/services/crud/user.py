@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union, List
 from sqlalchemy.orm import Session, joinedload
 
 from app.domain.schemas.user import UserCreate, UserUpdate
-from app.domain.models import User
+from app.domain.models import User, Rol, Department
 from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
 from app.domain.errors.user import User401, User404, UserRegistrado
@@ -44,27 +44,41 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         active: bool = True,
     ) -> List[User]:
         self.policy.get_multi(who=who)
-        columns = [
-            'names',
-            'lastNames',
-            'identificationNumber',
-            'email'
-        ]
+        queries = [User.active == active, Rol.scope > who.rol.scope]
+
+        if who.rol.scope == 7:
+            queries += [Department.id == who.department.id]
+
+        if who.rol.scope == 5:
+            queries += [Department.school_id == who.department.school_id]
+
         if search:
+            columns = [
+                'names',
+                'lastNames',
+                'identificationNumber',
+                'email'
+            ]
             search = search.upper()
             raw = [
-                db.query(User).filter(
-                    getattr(User, col).contains(f"{search}")).filter(User.active == active).all()
+                db.query(User)
+                .join(Rol)
+                .join(Department)
+                .filter(getattr(User, col).contains(f"{search}"))
+                .filter(*queries)
+                .all()
                 for col in columns
             ]
             res = [user for users in raw for user in users]
             return res
 
-        objs_db = db.query(User)\
-            .filter(User.active == active)\
-            .offset(skip)\
-            .limit(limit)\
-            .all()
+        objs_db = (db.query(User)
+                   .join(Rol)
+                   .join(Department)
+                   .filter(*queries)
+                   .offset(skip)
+                   .limit(limit)
+                   .all())
 
         return objs_db
 
@@ -82,7 +96,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         data['hashed_password'] = hashed_password
         db_obj = User(**data)
         user: User = self.get_by_identificacion(
-            db, identification=obj_in.identificationNumber)
+            db, identification=obj_in.identificationNumber) or self.get_by_email(db=db, email=obj_in.email)
         if user:
             raise UserRegistrado
         db.add(db_obj)
