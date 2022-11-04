@@ -20,6 +20,7 @@ class AppSettings(BaseAppSettings):
     api_prefix_v1: str = "/api/v1"
 
     access_token_expires_minutes: int
+    reset_password_expire_token: int
 
     max_connection_count: int = 10
     min_connection_count: int = 10
@@ -43,6 +44,13 @@ class AppSettings(BaseAppSettings):
     first_superemployee_department_id: int
     first_superemployee_vinculation_type: str
     first_superemployee_rol_id: int
+
+    #SMTP
+    smtp_user_email: str
+    smtp_user_password: SecretStr
+    smtp_host_email: str
+    smtp_port_email: int
+    smtp_from_email: str
 
     database_url: Optional[PostgresDsn] = None
 

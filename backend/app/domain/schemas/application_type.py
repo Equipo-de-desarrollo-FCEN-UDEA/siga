@@ -1,8 +1,6 @@
-from typing import List
+from typing import List, Any, Optional
 
 from pydantic import BaseModel
-
-from .application_subtype import ApplicationSubTypeInDB
 
 
 class ApplicationTypeBase(BaseModel):
@@ -26,4 +24,4 @@ class ApplicationTypeInDB(ApplicationTypeBase):
 
 
 class ApplicationTypeResponse(ApplicationTypeInDB):
-    applicationSubType: List[ApplicationSubTypeInDB]
+    applicationSubType: Optional[List[Any]]

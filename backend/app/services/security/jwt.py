@@ -33,3 +33,24 @@ def check_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(plain_password: str) -> str:
     return pwd_context.hash(plain_password)
+
+
+def password_reset_token(email: str) -> str:
+    expires = datetime.utcnow() + timedelta(settings.reset_password_expire_token)
+    token = jwt.encode(
+        {"exp": expires, "sub": email}, 
+        settings.secret_key._secret_value, 
+        algorithm=settings.algorithm
+    )
+    return token
+
+
+def get_email_reset_password(
+    token: str,
+) -> str:
+    try:
+        decoded_token = jwt.decode(
+            token, settings.secret_key._secret_value, algorithms=["HS256"])
+        return decoded_token["sub"]
+    except jwt.JWTError:
+        return None

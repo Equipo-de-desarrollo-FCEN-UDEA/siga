@@ -1,3 +1,4 @@
+from .msg import Msg
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB
 from .token import TokenPayload, Token
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse

@@ -28,8 +28,8 @@ def read_applications(
         jwt_bearer.get_current_active_user),
     skip: int = 0,
     limit: int = 100,
-    search: str | None = '',
-    active: bool | None = True,
+    # search: str | None = '',
+    # active: bool | None = True,
 ) -> Any:
     """
     Endpoint to read all applications.
@@ -38,7 +38,7 @@ def read_applications(
     """
     try:
         db_application = crud.application.get_multi(
-            db=db, skip=skip, limit=limit, who=current_user, search=search, active=active)
+            db=db, skip=skip, limit=limit, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_application
@@ -47,11 +47,11 @@ def read_applications(
 @router.get("/{id}", status_code=200,
             response_model=schemas.ApplicationResponse)
 def read_application(
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
-        jwt_bearer.get_current_active_user),
-    id: int
+        jwt_bearer.get_current_active_user)
 ) -> schemas.ApplicationResponse:
     """
     Endpoint to read an application.
@@ -66,14 +66,13 @@ def read_application(
     return db_application
 
 
-
 @router.delete("/{id}", status_code=200)
 def delete_application(
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
-        jwt_bearer.get_current_active_user),
-    id: int
+        jwt_bearer.get_current_active_user)
 ) -> Any:
     """
     Endpoint to delete an application.
@@ -86,9 +85,28 @@ def delete_application(
         raise HTTPException(status_code=e.code, detail=e.detail)
 
     try:
-        db_application = crud.application.delete(db=db, id=id, who=current_user)
+        db_application = crud.application.delete(
+            db=db, id=id, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return JSONResponse(status_code=status.HTTP_200_OK, content={
         'detail': 'application deleted'
     })
+
+
+@router.post("/", response_model=schemas.ApplicationResponse)
+def get_application(
+    application: schemas.ApplicationCreate,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user)
+) -> schemas.ApplicationResponse:
+    """
+    Endpoint to create an application
+    """
+    try:
+        db_obj = crud.application.create(db, current_user, obj_in=application)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    return db_obj

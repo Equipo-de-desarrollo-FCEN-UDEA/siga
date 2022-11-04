@@ -1,11 +1,15 @@
 from datetime import datetime
+from typing import Optional, List
 
 from pydantic import BaseModel
+
+from .application_subtype import ApplicationSubTypeInside
+from .application_state import Application_stateResponse
 
 
 class ApplicationBase(BaseModel):
     mongo_id: int
-    application_subtype_id: int
+    applicationSubType_id: int
     user_id: int
 
 
@@ -26,4 +30,5 @@ class ApplicationInDB(ApplicationUpdate):
 
 
 class ApplicationResponse(ApplicationInDB):
-    pass
+    applicationSubType: Optional[ApplicationSubTypeInside]
+    application_state: Optional[List[Application_stateResponse]]

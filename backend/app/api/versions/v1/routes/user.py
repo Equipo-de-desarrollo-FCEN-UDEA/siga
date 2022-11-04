@@ -2,7 +2,6 @@ from typing import Any, Dict, List, Union
 
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
-
 from sqlalchemy.orm import Session
 
 from app.api.middlewares import db, jwt_bearer
