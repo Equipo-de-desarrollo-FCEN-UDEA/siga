@@ -1,6 +1,6 @@
 from pytest import raises
 
-from app.domain.models import User
+from app.domain.models import User, Rol
 from app.domain.policies.user import UserPolicy
 from app.domain.errors.base import BaseErrors
 from app.core.logging import get_logging
@@ -12,11 +12,11 @@ log = get_logging(__name__)
 class TestUserPolicy(TestBaseDB):
     def test_user_policy(self):
         admin: User = self.session.query(
-            User).where(User.rol_id == 1).first()
+            User).join(Rol).where(Rol.scope== 1).first()
         student: User = self.session.query(
-            User).where(User.rol_id == 9).first()
+            User).join(Rol).where(Rol.scope == 13).first()
         professor: User = self.session.query(
-            User).where(User.rol_id == 7).first()
+            User).join(Rol).where(Rol.scope == 9).first()
 
         policy = UserPolicy()
         with raises(BaseErrors):

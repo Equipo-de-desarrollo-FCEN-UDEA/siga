@@ -35,7 +35,7 @@ init_users: List[schemas.UserCreate] = [
         scale='Estudiante',
         vinculationType='NO APLICA',
         department_id=3,
-        rol_id=9,
+        rol_id=11,
         email='simon.garcial@udea.edu.co',
         password='123'
     ),
@@ -46,7 +46,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=3,
-        rol_id=7,
+        rol_id=9,
         email='muñoz.fake@udea.edu.co',
         password='123'
     ),
@@ -57,7 +57,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=4,
-        rol_id=7,
+        rol_id=9,
         email='muñoz.fakedos@udea.edu.co',
         password='123'
     ),
@@ -68,7 +68,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=5,
-        rol_id=7,
+        rol_id=9,
         email='profesor.quimica@udea.edu.co',
         password='123'
     ),
@@ -79,7 +79,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=5,
-        rol_id=5,
+        rol_id=7,
         email='coordquimica@udea.edu.co',
         password='123'
     ),
@@ -90,7 +90,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=3,
-        rol_id=5,
+        rol_id=7,
         email='coordfisica@udea.edu.co',
         password='123'
     ),
@@ -101,7 +101,7 @@ init_users: List[schemas.UserCreate] = [
         scale='VINCULADO',
         vinculationType='TIEMPO COMPLETO',
         department_id=3,
-        rol_id=8,
+        rol_id=10,
         email='empleado.fisica@udea.edu.co',
         password='123'
     ),
@@ -181,8 +181,18 @@ init_rols: List[schemas.DepartmentCreate] = [
     ),
     schemas.RolCreate(
         name='Secretaria',
-        description='Secretaria Decanatura',
+        description='Secretaria decanatura',
         scope=5
+    ),
+    schemas.RolCreate(
+        name='Director',
+        description='Director del instituto',
+        scope=6
+    ),
+    schemas.RolCreate(
+        name='Secretaria',
+        description='Secretaria dirección',
+        scope=6
     ),
     schemas.RolCreate(
         name='Coordinador',
@@ -191,7 +201,7 @@ init_rols: List[schemas.DepartmentCreate] = [
     ),
     schemas.RolCreate(
         name='Secretaria',
-        description='Secreataria Coordinación',
+        description='Secreataria coordinación',
         scope=7
     ),
     schemas.RolCreate(
