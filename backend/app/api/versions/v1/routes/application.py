@@ -28,7 +28,9 @@ def read_applications(
         jwt_bearer.get_current_active_user),
     skip: int = 0,
     limit: int = 100,
-    # search: str | None = '',
+    search: str | None = '',
+    type: int = 0,
+    filed: bool = False
     # active: bool | None = True,
 ) -> Any:
     """
@@ -38,7 +40,7 @@ def read_applications(
     """
     try:
         db_application = crud.application.get_multi(
-            db=db, skip=skip, limit=limit, who=current_user)
+            db=db, skip=skip, limit=limit, who=current_user, search=search, type=type, filed=filed)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_application

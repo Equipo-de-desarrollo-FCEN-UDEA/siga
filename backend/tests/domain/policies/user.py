@@ -1,4 +1,4 @@
-from pytest import raises, mark
+from pytest import raises
 
 from app.domain.models import User
 from app.domain.policies.user import UserPolicy
@@ -9,7 +9,7 @@ from tests.db.base import TestBaseDB
 log = get_logging(__name__)
 
 
-class TestPolicyUser(TestBaseDB):
+class TestUserPolicy(TestBaseDB):
     def test_user_policy(self):
         admin: User = self.session.query(
             User).where(User.rol_id == 1).first()

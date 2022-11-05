@@ -40,7 +40,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: celery -A app.celery_worker.celery worker --loglevel=info
+    command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
       - .env
     volumes:
@@ -59,7 +59,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: celery -A app.celery_worker.celery flower --port=5555
+    command: celery -A app.core.celery_worker.celery flower --port=5555
     env_file:
       - .env
     volumes:

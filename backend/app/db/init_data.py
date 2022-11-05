@@ -93,7 +93,18 @@ init_users: List[schemas.UserCreate] = [
         rol_id=5,
         email='coordfisica@udea.edu.co',
         password='123'
-    )
+    ),
+    schemas.UserCreate(
+        lastNames='EMPLEADO',
+        names='FISICA',
+        identificationNumber='EMPLEADOFISICA',
+        scale='VINCULADO',
+        vinculationType='TIEMPO COMPLETO',
+        department_id=3,
+        rol_id=8,
+        email='empleado.fisica@udea.edu.co',
+        password='123'
+    ),
 ]
 
 init_schools: List[schemas.SchoolCreate] = [

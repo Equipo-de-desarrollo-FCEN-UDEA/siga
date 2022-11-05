@@ -35,7 +35,7 @@ def login_access_token(
             user.id, expires_delta=access_token_expires
         )
         response = schemas.Token(access_token=access_token,
-                                token_type='bearer', expires=minutes/24/60)
+                                 token_type='bearer', expires=minutes/24/60)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response
@@ -46,15 +46,16 @@ def recover_password(email: str, db: Session = Depends(db.get_db)) -> dict:
     """
     Password Recovery
     """
-    user = crud.user.get_by_email(db, email=email)
-
+    user = crud.user.get_by_email(
+        db, email=email) or crud.user.get_by_identificacion(db, identification=email)
     if not user:
         raise HTTPException(
             status_code=404,
-            detail="The user with this username does not exist in the system.",
+            detail="El usuario con este correo o número de identificación no está registrado en el sistema",
         )
-    password_reset_token = jwt.password_reset_token(email=email)
-    recovery_password_email.apply_async(args=('simon3640xd@gmail.com', 'Test email'))
+    password_reset_token = jwt.password_reset_token(email=user.email)
+    recovery_password_email.apply_async(
+        args=('simon3640xd@gmail.com', 'Test email'))
     return {"msg": password_reset_token}
 
 
@@ -67,7 +68,10 @@ def reset_password(
     """
     Reset password
     """
-    email = jwt.get_email_reset_password(token)
+    try:
+        email = jwt.decode_token(token).sub
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
     if not email:
         raise HTTPException(status_code=400, detail="Invalid token")
     user = crud.user.get_by_email(db, email=email)

@@ -1,7 +1,6 @@
 from typing import Any, Dict, Optional, Union, List
-from time import sleep
 
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session
 
 from app.domain.schemas.user import UserCreate, UserUpdate
 from app.domain.models import User, Rol, Department
@@ -24,12 +23,14 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
     def get_by_email(
         self, db: Session, email: str
     ) -> User:
+        email = email.upper()
         obj_db = db.query(User).filter(User.email == email).first()
         return obj_db
 
     def get_by_identificacion(
         self, db: Session, identification: str
     ) -> User:
+        identification = identification.upper()
         obj_db = db.query(User).filter(
             User.identificationNumber == identification).first()
         return obj_db
@@ -138,10 +139,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
     ) -> User:
         user: User = self.get_by_email(db, email=email) or self.get_by_identificacion(
             db, identification=identification)
-        if not user:
-            raise User404
-        if not user.active:
-            raise User404
         if not check_password(password, user.hashed_password):
             raise User401
         return user

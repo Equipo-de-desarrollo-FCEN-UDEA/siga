@@ -17,7 +17,7 @@ class Application(Base):
     id = Column(Integer, primary_key=True)
     mongo_id = Column(Integer, nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
-    filed = Column(Boolean, default=True)
+    filed = Column(Boolean, default=False)
     
     #Relaciones
     user_id = Column(Integer, ForeignKey("user.id"))

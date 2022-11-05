@@ -1,11 +1,11 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt
-from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from app.services import crud
-from app.domain import models, schemas
+from app.domain import models
+from app.domain.errors.base import BaseErrors
+from app.services.security.jwt import decode_token
 from app.core.config import get_app_settings
 from .db import get_db
 
@@ -21,18 +21,15 @@ def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
-        payload = jwt.decode(
-            token, str(settings.secret_key), algorithms=[settings.algorithm]
-        )
-        token_data = schemas.TokenPayload(**payload)
-    except (jwt.JWTError, ValidationError):
+        token_data = decode_token(token=token)
+    except BaseErrors as e:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials",
+            status_code=e.code,
+            detail=e.detail,
         )
     user = crud.user.get_middleware(db, id=token_data.sub)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return user
 
 
@@ -44,4 +41,3 @@ def get_current_active_user(
     if not crud.user.is_active(db=db, user=current_user):
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
-

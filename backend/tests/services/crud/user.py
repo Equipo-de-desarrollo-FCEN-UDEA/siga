@@ -2,6 +2,7 @@ from app.services.crud import user
 from app.domain.schemas import UserCreate
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
+from app.services.security.jwt import check_password
 from tests.db.base import TestBaseDB
 
 settings = get_app_settings()
@@ -9,7 +10,7 @@ settings = get_app_settings()
 log = get_logging(__name__)
 
 
-class TestCrud(TestBaseDB):
+class TestUserCrud(TestBaseDB):
 
     def test_user_service(self):
         user_by_email = user.get_by_email(
@@ -41,9 +42,10 @@ class TestCrud(TestBaseDB):
         user_updated = user.update(
             db=self.session, who=user_by_email, db_obj=user_created, obj_in={"active": False, "name": 'pepito suarez'})
 
-        assert user_by_email.email == settings.first_superemployee_email
-        assert user_by_id.identificationNumber == settings.first_superemployee_identification_number
+        assert user_by_email.email == settings.first_superemployee_email.upper()
+        assert user_by_id.identificationNumber == settings.first_superemployee_identification_number.upper()
         assert len(multi_user) > 1
-        assert user_created.email == 'fing@udea.edu.co'
+        assert user_created.email == 'fing@udea.edu.co'.upper()
         assert user_authenticate.email == user_by_email.email
         assert user_updated.active == False
+        assert check_password('newpassword', user_new_password.hashed_password)

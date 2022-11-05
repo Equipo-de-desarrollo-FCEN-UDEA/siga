@@ -1,15 +1,14 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 from typing import List, Optional
-from app.domain.schemas.application import ApplicationInDB
 
-from pydantic import BaseModel, Field, validator, EmailStr, SecretStr
+from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
-regex = "^[A-ZÁÉÍÓÚáéíóúñÑ ]*$"
+regex = "^[A-Za-zÁÉÍÓÚáéíóúñÑ ]*$"
 
 
 class UserBase(BaseModel):
@@ -62,6 +61,11 @@ class UserCreate(UserBase):
                 raise ValueError
             return values['identificationNumber']
         return v
+    
+    # We force upper case for search engine optimization
+    @validator('names', 'lastNames', 'identificationNumber', 'email')
+    def convert_upper(cls, value):
+        return value.upper()
 
 
 class UserUpdate(UserBase):
@@ -79,6 +83,7 @@ class UserInDBBase(UserBase):
 
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
+    email: str
 
 
 class UserInDB(UserInDBBase):

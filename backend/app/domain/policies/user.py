@@ -12,11 +12,21 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     def __init__(self) -> None:
         pass
 
+    def get_by_email_id(self, to: User):
+        if not to:
+            raise User404
+
     def get(self, who: User, to: User) -> None:
         if not (who.rol.scope < 9) and not (who.id == to.id):
             raise User401
         if not (who.rol.scope <= to.rol.scope):
             raise User401
+        if who.rol.scope == 7:
+            if not (to.department_id == who.department_id):
+                raise User401
+        if who.rol.scope == 5:
+            if not (to.department.school_id == who.department.school_id):
+                raise User401
         if not to:
             raise User404
         return None

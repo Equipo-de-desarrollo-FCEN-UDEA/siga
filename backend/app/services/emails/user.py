@@ -1,16 +1,18 @@
 import smtplib
+import time
 
 from jinja2 import Environment, FileSystemLoader
 from email.message import EmailMessage
 
 from .templates import templatesdir
-from app.celery_worker import celery
+from app.core.celery_worker import celery
 
 
 env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
 def recovery_password_email(to:str, subject:str):
+    time.sleep(15)
     template = env.get_template('user.recovery.password.html')
     render = template.render({
         "user": {"names":'Simón'},

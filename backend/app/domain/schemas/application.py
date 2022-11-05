@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from .application_subtype import ApplicationSubTypeInside
 from .application_state import Application_stateResponse
+from .user import UserResponse
 
 
 class ApplicationBase(BaseModel):
@@ -32,3 +33,4 @@ class ApplicationInDB(ApplicationUpdate):
 class ApplicationResponse(ApplicationInDB):
     applicationSubType: Optional[ApplicationSubTypeInside]
     application_state: Optional[List[Application_stateResponse]]
+    user: UserResponse
