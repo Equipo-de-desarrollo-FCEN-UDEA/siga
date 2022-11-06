@@ -57,11 +57,11 @@ def init_db() -> None:
             conn.execute(table.insert().values(**db_obj))
         log.info('Roles iniciales creados')
 
-    @event.listens_for(base.State.__table__, 'after_create')
-    def init_state(table, conn, *args, **kwargs):
-        from .init_data import init_states
-        for state in init_states:
-            db_obj = dict(state)
+    @event.listens_for(base.Status.__table__, 'after_create')
+    def init_status(table, conn, *args, **kwargs):
+        from .init_data import init_statuss
+        for status in init_statuss:
+            db_obj = dict(status)
             conn.execute(table.insert().values(**db_obj))
         log.info('Estados iniciales de las solicitudes creados')
     

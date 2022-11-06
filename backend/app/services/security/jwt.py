@@ -23,7 +23,7 @@ def create_access_token(
         )
     token = jwt.encode(
         {"exp": expires, "sub": str(subject)},
-        str(settings.secret_key),
+        settings.secret_key._secret_value,
         algorithm=settings.algorithm
     )
     return token

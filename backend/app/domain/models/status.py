@@ -5,13 +5,13 @@ from sqlalchemy.orm import relationship
 from .base import Base
 
 if TYPE_CHECKING:
-    from .application_state import Application_state
+    from .application_status import Application_status
 
 
-class State(Base):
+class Status(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
     description = Column(String(255), nullable=True)
 
     # relations
-    application_state = relationship("Application_state", back_populates="state")
+    application_status = relationship("Application_status", back_populates="status")

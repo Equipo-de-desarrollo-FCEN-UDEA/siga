@@ -36,11 +36,11 @@ def read_application_types(
 
 @router.get("/{id}", status_code=200, response_model=schemas.ApplicationTypeResponse)
 def read_application_type(
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user),
-    id: int
 ) -> Any:
     """
     Endpoint to read one Application type.

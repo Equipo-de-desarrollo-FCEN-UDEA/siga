@@ -9,7 +9,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .user import User
-    from .application_state import Application_state
+    from .application_status import Application_status
     from .application_subtype import ApplicationSubType
 
 
@@ -25,4 +25,4 @@ class Application(Base):
     applicationSubType_id = Column(Integer, ForeignKey("applicationsubtype.id"))
     applicationSubType = relationship("ApplicationSubType", back_populates="applications")
 
-    application_state = relationship("Application_state", back_populates="application")
+    application_status = relationship("Application_status", back_populates="application")

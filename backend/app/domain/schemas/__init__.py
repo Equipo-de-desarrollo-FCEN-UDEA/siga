@@ -4,11 +4,11 @@ from .token import TokenPayload, Token
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
 from .school import SchoolCreate, SchoolUpdate, SchoolInDB
 from .rol import RolInDB, RolCreate, RolUpdate, RolResponse
-from .state import StateCreate, StateUpdate, StateInDB
+from .status import StatusCreate, StatusUpdate, StatusInDB
 from .application import ApplicationCreate, ApplicationUpdate, ApplicationResponse
 from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
                                ApplicationTypeUpdate, ApplicationTypeResponse)
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,
                                   ApplicationSubTypeInDB)
-from .application_state import (Application_stateCreate, Application_stateInDB,
-                                Application_stateUpdate)
+from .application_status import (Application_statusCreate, Application_statusInDB,
+                                Application_statusUpdate)

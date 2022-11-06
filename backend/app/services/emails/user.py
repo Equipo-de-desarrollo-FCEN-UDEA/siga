@@ -12,7 +12,6 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
 def recovery_password_email(to:str, subject:str):
-    time.sleep(15)
     template = env.get_template('user.recovery.password.html')
     render = template.render({
         "user": {"names":'Simón'},

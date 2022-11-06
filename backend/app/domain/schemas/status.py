@@ -1,20 +1,20 @@
 from pydantic import BaseModel
 
 
-class StateBase(BaseModel):
+class StatusBase(BaseModel):
     name: str
     description: str | None
 
 
-class StateCreate(StateBase):
+class StatusCreate(StatusBase):
     pass
 
 
-class StateUpdate(StateBase):
+class StatusUpdate(StatusBase):
     pass
 
 
-class StateInDB(StateBase):
+class StatusInDB(StatusBase):
     id: int
 
     class Config:

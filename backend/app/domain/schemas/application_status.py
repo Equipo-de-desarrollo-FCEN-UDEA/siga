@@ -3,33 +3,33 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from .state import StateInDB
+from .status import StatusInDB
 
 
-class Application_stateBase(BaseModel):
+class Application_statusBase(BaseModel):
     application_id: int
-    state_id: int
+    status_id: int
     observation: Optional[str] = Field(max_length=50)
 
 
-class Application_stateCreate(Application_stateBase):
+class Application_statusCreate(Application_statusBase):
     pass
 
 
-class Application_stateUpdate(Application_stateBase):
+class Application_statusUpdate(Application_statusBase):
     pass
 
 
-class Application_stateInDB(Application_stateBase):
+class Application_statusInDB(Application_statusBase):
     id: int
     created_at: Optional[datetime]
 
     class Config:
         orm_mode = True
 
-class Application_stateResponse(BaseModel):
+class Application_statusResponse(BaseModel):
     created_at: Optional[datetime] #No puede ser opcional, cambiar luego
-    state: Optional[StateInDB]
+    status: Optional[StatusInDB]
 
     class Config:
         orm_mode = True

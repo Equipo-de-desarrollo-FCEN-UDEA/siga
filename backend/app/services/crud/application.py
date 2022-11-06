@@ -2,8 +2,8 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from app.domain.models import Application, User, ApplicationSubType, Application_state, Department
-from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_stateCreate
+from app.domain.models import Application, User, ApplicationSubType, Application_status, Department
+from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_statusCreate
 from app.domain.policies import ApplicationPolicy
 from app.core.logging import get_logging
 from .base import CRUDBase
@@ -75,15 +75,15 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
         db_obj = super().create(db, who, obj_in=obj_in)
-        application_state = Application_stateCreate(
+        application_status = Application_statusCreate(
             application_id=db_obj.id,
-            state_id=1,
+            status_id=1,
             observation='Solicitud creada'
         )
-        state_obj = Application_state(**dict(application_state))
-        db.add(state_obj)
+        status_obj = Application_status(**dict(application_status))
+        db.add(status_obj)
         db.commit()
-        db.refresh(state_obj)
+        db.refresh(status_obj)
         return db_obj
 
 

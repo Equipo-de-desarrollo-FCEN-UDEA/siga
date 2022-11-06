@@ -1,13 +1,8 @@
-from datetime import datetime
-from http.client import HTTPException
-
 from fastapi.testclient import TestClient
-from pytest import raises, mark
 
 from app.main import app
 from app.core.logging import get_logging
 from app.core.config import get_app_settings
-from app.domain.schemas import Token
 
 log = get_logging(__name__)
 

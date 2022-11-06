@@ -4,7 +4,7 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 from .application_subtype import ApplicationSubTypeInside
-from .application_state import Application_stateResponse
+from .application_status import Application_statusResponse
 from .user import UserResponse
 
 
@@ -32,5 +32,5 @@ class ApplicationInDB(ApplicationUpdate):
 
 class ApplicationResponse(ApplicationInDB):
     applicationSubType: Optional[ApplicationSubTypeInside]
-    application_state: Optional[List[Application_stateResponse]]
+    application_status: Optional[List[Application_statusResponse]]
     user: UserResponse

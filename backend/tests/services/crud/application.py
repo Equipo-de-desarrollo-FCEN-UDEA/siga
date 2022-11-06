@@ -47,7 +47,7 @@ class TestApplicationCrud(TestBaseDB):
 
         applications_coord = application.get_multi(db=self.session, who=coord)
 
-        assert application_created.application_state[0].state_id == 1
+        assert application_created.application_status[0].status_id == 1
         assert len(applications_professor) == 1
         assert len(applications_student) == 0
         assert len(applications_admin) > 0

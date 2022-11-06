@@ -42,7 +42,7 @@ def login_access_token(
 
 
 @router.post("/password-recovery/{email}", response_model=schemas.Msg)
-def recover_password(email: str, db: Session = Depends(db.get_db)) -> dict:
+def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     """
     Password Recovery
     """
@@ -63,6 +63,7 @@ def recover_password(email: str, db: Session = Depends(db.get_db)) -> dict:
 def reset_password(
     token: str = Body(...),
     new_password: str = Body(...),
+    *,
     db: Session = Depends(db.get_db)
 ) -> dict:
     """

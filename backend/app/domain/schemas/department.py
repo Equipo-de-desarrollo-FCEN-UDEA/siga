@@ -27,4 +27,3 @@ class DeparmentInDB(DepartmentBase):
 
 class DepartmentResponse(DeparmentInDB):
     school: SchoolResponse
-

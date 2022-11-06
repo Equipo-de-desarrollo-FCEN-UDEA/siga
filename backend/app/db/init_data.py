@@ -222,29 +222,29 @@ init_rols: List[schemas.DepartmentCreate] = [
 ]
 
 
-init_states: List[schemas.StateCreate] = [
-    schemas.StateCreate(
+init_statuss: List[schemas.StatusCreate] = [
+    schemas.StatusCreate(
         name='SOLICITADA'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='VISTO BUENO'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='APROBADA'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='RECHAZADA COORDINACIÓN'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='RECHAZADA DECANATO'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='FINALIZADA'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='EN CREACIÓN'
     ),
-    schemas.StateCreate(
+    schemas.StatusCreate(
         name='EN CURSO'
     )
 ]

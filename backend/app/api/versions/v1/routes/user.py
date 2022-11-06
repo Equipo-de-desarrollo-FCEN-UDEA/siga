@@ -70,11 +70,11 @@ def read_users(
 @router.get("/{id}", status_code=200,
             response_model=schemas.UserResponse)
 def read_user(
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
-        jwt_bearer.get_current_active_user),
-    id: int
+        jwt_bearer.get_current_active_user)
 ) -> schemas.UserResponse:
     """
     Endpoint to read an user.
@@ -95,12 +95,12 @@ def read_user(
 @router.put("/{id}", status_code=200,
             response_model=schemas.UserResponse)
 def update_user(
+    id: int,
+    user_in: Union[schemas.UserUpdate, Dict[str, Any]],
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user),
-    user_in: Union[schemas.UserUpdate, Dict[str, Any]],
-    id: int
 ) -> schemas.UserResponse:
     """
     Endpoint to update an user.
@@ -116,13 +116,13 @@ def update_user(
 @router.put("/{id}/new-password", status_code=200,
             response_model=schemas.UserResponse)
 def update_user_password(
+    password: str,
+    confirmpassword: str,
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user),
-    password: str,
-    confirmpassword: str,
-    id: int
 ) -> schemas.UserResponse:
     """
     Endpoint to update an user.
@@ -139,11 +139,11 @@ def update_user_password(
 
 @router.delete("/{id}", status_code=200)
 def delete_user(
+    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user),
-    id: int
 ) -> Any:
     """
     Endpoint to delete an user.

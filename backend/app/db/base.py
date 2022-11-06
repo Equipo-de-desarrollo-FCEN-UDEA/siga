@@ -4,10 +4,10 @@ from app.domain.models import (
     Department,
     School,
     Rol,
-    State,
+    Status,
     Application,
     ApplicationSubType,
     ApplicationType,
-    Application_state
+    Application_status
 )
 # Para que se puedan crear las tablas

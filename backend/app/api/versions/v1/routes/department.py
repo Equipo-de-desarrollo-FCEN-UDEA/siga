@@ -36,9 +36,9 @@ def read_deparment_intern(
 
 @router.get("/{school_id}", status_code=200, response_model=List[schemas.DeparmentInDB])
 def read_deparment(
+    school_id: int,
     *,
     db: Session = Depends(db.get_db),
-    school_id: int,
     skip: int = 0,
     limit: int = 100
 ) -> Any:
