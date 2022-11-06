@@ -24,4 +24,4 @@ class ApplicationTypeInDB(ApplicationTypeBase):
 
 
 class ApplicationTypeResponse(ApplicationTypeInDB):
-    applicationSubType: Optional[List[Any]]
+    application_sub_type: Optional[List[Any]]

@@ -9,4 +9,4 @@ class CRUDApplicationSubType(CRUDBase[ApplicationSubType, ApplicationSubTypeCrea
 
 policy = ApplicationSubTypePolicy()
 
-applicationSubType = CRUDApplicationSubType(ApplicationSubType, policy=policy)
+application_sub_type = CRUDApplicationSubType(ApplicationSubType, policy=policy)

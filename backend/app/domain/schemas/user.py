@@ -12,7 +12,7 @@ regex = "^[A-Za-zÁÉÍÓÚáéíóúñÑ ]*$"
 
 
 class UserBase(BaseModel):
-    lastNames: str = Field(
+    last_names: str = Field(
         regex=regex,
         min_length=3,
         max_length=50,
@@ -24,7 +24,7 @@ class UserBase(BaseModel):
         max_length=50
     )
 
-    identificationNumber: str = Field(
+    identificaction_number: str = Field(
         regex="^[A-Z0-9]*$",
         min_length=3,
         max_length=20
@@ -36,7 +36,7 @@ class UserBase(BaseModel):
         max_length=100
     )
 
-    identificationType: Optional[str] = Field(
+    identification_type: Optional[str] = Field(
         regex=regex,
         min_length=1,
         max_length=10,
@@ -46,7 +46,7 @@ class UserBase(BaseModel):
     scale: str = Field(max_length=50)
     phone: Optional[str] = Field(max_length=50)
     office: Optional[str] = Field(max_length=5)
-    vinculationType: str = Field(max_length=50)
+    vinculation_type: str = Field(max_length=50)
     department_id: int = Field(gt=0)
     rol_id: int = Field(gt=0)
 
@@ -57,13 +57,13 @@ class UserCreate(UserBase):
     @validator('password', always=True)
     def generate_password(cls, v, values, **kwargs):
         if not v:
-            if not 'identificationNumber' in values:
+            if not 'identificaction_number' in values:
                 raise ValueError
-            return values['identificationNumber']
+            return values['identificaction_number']
         return v
     
     # We force upper case for search engine optimization
-    @validator('names', 'lastNames', 'identificationNumber', 'email')
+    @validator('names', 'last_names', 'identificaction_number', 'email')
     def convert_upper(cls, value):
         return value.upper()
 

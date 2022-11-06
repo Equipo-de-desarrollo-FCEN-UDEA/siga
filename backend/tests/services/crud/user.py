@@ -20,11 +20,11 @@ class TestUserCrud(TestBaseDB):
         multi_user = user.get_multi(db=self.session, who=user_by_email)
 
         user_create = UserCreate(
-            lastNames='FING',
+            last_names='FING',
             names='DECANO DE',
-            identificationNumber='NO9APLICA',
+            identificaction_number='NO9APLICA',
             scale='Decanatura',
-            vinculationType='Tiempo completo',
+            vinculation_type='Tiempo completo',
             department_id=4,
             rol_id=3,
             email='fing@udea.edu.co',
@@ -43,7 +43,7 @@ class TestUserCrud(TestBaseDB):
             db=self.session, who=user_by_email, db_obj=user_created, obj_in={"active": False, "name": 'pepito suarez'})
 
         assert user_by_email.email == settings.first_superemployee_email.upper()
-        assert user_by_id.identificationNumber == settings.first_superemployee_identification_number.upper()
+        assert user_by_id.identificaction_number == settings.first_superemployee_identification_number.upper()
         assert len(multi_user) > 1
         assert user_created.email == 'fing@udea.edu.co'.upper()
         assert user_authenticate.email == user_by_email.email

@@ -21,15 +21,15 @@ def test_api_user():
     ).json()['access_token']
     log.debug(token)
     user = {
-        "lastNames": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
+        "last_names": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
         "names": "JOUKWONLOUGKQUCZPGTQALAYF EEKWW MGYIELZAGUMNQHUUGD",
-        "identificationNumber": "UZYRTUJDVMLL270C",
+        "identificaction_number": "UZYRTUJDVMLL270C",
         "email": "test.api@udea.edu.co",
         "active": True,
         "scale": "string",
         "phone": "string",
         "office": "strin",
-        "vinculationType": "string",
+        "vinculation_type": "string",
         "department_id": 3,
         "rol_id": 9,
         "password": "string"

@@ -67,16 +67,16 @@ def init_db() -> None:
     
     @event.listens_for(base.ApplicationType.__table__, 'after_create')
     def init_application_type(table, conn, *args, **kwargs):
-        from .init_data import init_applicationType
-        for type in init_applicationType:
+        from .init_data import init_application_type
+        for type in init_application_type:
             db_obj = dict(type)
             conn.execute(table.insert().values(**db_obj))
         log.info('Tipos iniciales de las solicitudes creados')
 
     @event.listens_for(base.ApplicationSubType.__table__, 'after_create')
     def init_application_sub_type(table, conn, *args, **kwargs):
-        from .init_data import init_applicationSubType
-        for subType in init_applicationSubType:
+        from .init_data import init_application_sub_type
+        for subType in init_application_sub_type:
             db_obj = dict(subType)
             conn.execute(table.insert().values(**db_obj))
         log.info('subtipos iniciales de las solicitudes creados')

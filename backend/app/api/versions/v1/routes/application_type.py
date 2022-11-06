@@ -27,11 +27,11 @@ def read_application_types(
         params: skip: int, limit: int
     """
     try:
-        db_applicationTypes = crud.applicationType.get_multi(
+        db_application_types = crud.application_type.get_multi(
             db=db, who=current_user, skip=skip, limit=limit)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
-    return db_applicationTypes
+    return db_application_types
 
 
 @router.get("/{id}", status_code=200, response_model=schemas.ApplicationTypeResponse)
@@ -48,8 +48,8 @@ def read_application_type(
         params: id:int
     """
     try:
-        db_applicationType = crud.applicationType.get(
+        db_application_type = crud.application_type.get(
             db=db, id=id, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
-    return db_applicationType
+    return db_application_type

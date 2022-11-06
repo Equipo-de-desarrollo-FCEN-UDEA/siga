@@ -7,7 +7,7 @@ from .application_type import ApplicationTypeInDB
 
 class ApplicationSubTypeBase(BaseModel):
     name: str
-    applicationType_id: int
+    application_type_id: int
     extra: Optional[Any]
 
 
@@ -27,4 +27,4 @@ class ApplicationSubTypeInDB(ApplicationSubTypeBase):
 
 
 class ApplicationSubTypeInside(ApplicationSubTypeInDB):
-    applicationType: Optional[ApplicationTypeInDB]
+    application_type: Optional[ApplicationTypeInDB]

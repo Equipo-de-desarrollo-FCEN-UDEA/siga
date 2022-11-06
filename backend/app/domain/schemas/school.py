@@ -4,8 +4,8 @@ from pydantic import BaseModel
 class SchoolBase(BaseModel):
     name: str
     description: str
-    costCenter: int
-    emailDean: str
+    cost_center: int
+    email_dean: str
 
 
 class SchoolCreate(SchoolBase):

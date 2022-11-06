@@ -4,5 +4,5 @@ from .school import school
 from .rol import rol
 from .status import status
 from .application import application
-from .application_type import applicationType
-from.application_subtype import applicationSubType
+from .application_type import application_type
+from.application_subtype import application_sub_type

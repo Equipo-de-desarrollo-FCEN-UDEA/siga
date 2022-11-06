@@ -29,7 +29,7 @@ class TestApplicationCrud(TestBaseDB):
 
         application_permission = ApplicationCreate(
             mongo_id=1,
-            applicationSubType_id=3,
+            application_sub_type_id=3,
             user_id=professor.id
         )
 

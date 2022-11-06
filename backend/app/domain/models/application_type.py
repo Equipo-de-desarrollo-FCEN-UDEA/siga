@@ -15,5 +15,5 @@ class ApplicationType(Base):
     description = Column(String(50), nullable=False)
 
     # relations
-    applicationSubType = relationship(
-        "ApplicationSubType", back_populates="applicationType")
+    application_sub_type = relationship(
+        "ApplicationSubType", back_populates="application_type")

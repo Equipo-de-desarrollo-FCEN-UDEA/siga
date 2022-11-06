@@ -24,21 +24,21 @@ class TestApplicationPolicy(TestBaseDB):
         # application type permission, cant be schedule by student
         application_permission = ApplicationCreate(
             mongo_id=1,
-            applicationSubType_id=3,
+            application_sub_type_id=3,
             user_id=student.id
         )
 
         # application type commission, cant be schedule by student
         application_commission = ApplicationCreate(
             mongo_id=2,
-            applicationSubType_id=8,
+            application_sub_type_id=8,
             user_id=professor.id
         )
 
         # application type dedication, cant be schedule by student or employee
         application_dedication = ApplicationCreate(
             mongo_id=2,
-            applicationSubType_id=10,
+            application_sub_type_id=10,
             user_id=professor.id
         )
 

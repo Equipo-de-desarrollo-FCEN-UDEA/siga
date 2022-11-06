@@ -22,7 +22,7 @@ class Application(Base):
     #Relaciones
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="applications")
-    applicationSubType_id = Column(Integer, ForeignKey("applicationsubtype.id"))
-    applicationSubType = relationship("ApplicationSubType", back_populates="applications")
+    application_sub_type_id = Column(Integer, ForeignKey("applicationsubtype.id"))
+    application_sub_type = relationship("ApplicationSubType", back_populates="applications")
 
     application_status = relationship("Application_status", back_populates="application")

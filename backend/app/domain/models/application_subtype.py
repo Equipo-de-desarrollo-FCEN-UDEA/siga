@@ -16,7 +16,7 @@ class ApplicationSubType(Base):
     extra = Column(JSON, nullable=True)
 
     # Relations
-    applicationType_id = Column(Integer, ForeignKey("applicationtype.id"))
-    applicationType = relationship(
-        "ApplicationType", back_populates="applicationSubType")
-    applications = relationship("Application", back_populates="applicationSubType")
+    application_type_id = Column(Integer, ForeignKey("applicationtype.id"))
+    application_type = relationship(
+        "ApplicationType", back_populates="application_sub_type")
+    applications = relationship("Application", back_populates="application_sub_type")

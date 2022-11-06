@@ -7,99 +7,99 @@ settings = get_app_settings()
 
 init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
-        lastNames=settings.first_superemployee_last_names,
+        last_names=settings.first_superemployee_last_names,
         names=settings.first_superemployee_names,
-        identificationNumber=settings.first_superemployee_identification_number,
+        identificaction_number=settings.first_superemployee_identification_number,
         scale=settings.first_superemployee_vinculation_type,
-        vinculationType=settings.first_superemployee_vinculation_type,
+        vinculation_type=settings.first_superemployee_vinculation_type,
         department_id=settings.first_superemployee_department_id,
         rol_id=settings.first_superemployee_rol_id,
         email=settings.first_superemployee_email,
         password=settings.first_superemployee_password
     ),
     schemas.UserCreate(
-        lastNames='FCEN',
+        last_names='FCEN',
         names='DECANO DE',
-        identificationNumber='DECANOFCEN',
+        identificaction_number='DECANOFCEN',
         scale='Decanatura',
-        vinculationType='Tiempo completo',
+        vinculation_type='Tiempo completo',
         department_id=2,
         rol_id=3,
         email='fcen@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='GARCÍA LUJÁN',
+        last_names='GARCÍA LUJÁN',
         names='SIMÓN',
-        identificationNumber='1001987844',
+        identificaction_number='1001987844',
         scale='Estudiante',
-        vinculationType='NO APLICA',
+        vinculation_type='NO APLICA',
         department_id=3,
         rol_id=11,
         email='simon.garcial@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='MUÑOS ACEVEDO',
+        last_names='MUÑOS ACEVEDO',
         names='JUAN CARLOS',
-        identificationNumber='987654321',
+        identificaction_number='987654321',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=3,
         rol_id=9,
         email='muñoz.fake@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='MUÑOS ACEVEDO',
+        last_names='MUÑOS ACEVEDO',
         names='JUAN CARLOSDOS',
-        identificationNumber='9876543211',
+        identificaction_number='9876543211',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=4,
         rol_id=9,
         email='muñoz.fakedos@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='QUIMICA',
+        last_names='QUIMICA',
         names='PROFESOR',
-        identificationNumber='1239845651',
+        identificaction_number='1239845651',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=5,
         rol_id=9,
         email='profesor.quimica@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='COORDINADOR',
+        last_names='COORDINADOR',
         names='QUIMICA',
-        identificationNumber='COORDQUIMICA',
+        identificaction_number='COORDQUIMICA',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=5,
         rol_id=7,
         email='coordquimica@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='COORDINADOR',
+        last_names='COORDINADOR',
         names='FISICA',
-        identificationNumber='COORDFISICA',
+        identificaction_number='COORDFISICA',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=3,
         rol_id=7,
         email='coordfisica@udea.edu.co',
         password='123'
     ),
     schemas.UserCreate(
-        lastNames='EMPLEADO',
+        last_names='EMPLEADO',
         names='FISICA',
-        identificationNumber='EMPLEADOFISICA',
+        identificaction_number='EMPLEADOFISICA',
         scale='VINCULADO',
-        vinculationType='TIEMPO COMPLETO',
+        vinculation_type='TIEMPO COMPLETO',
         department_id=3,
         rol_id=10,
         email='empleado.fisica@udea.edu.co',
@@ -111,20 +111,20 @@ init_schools: List[schemas.SchoolCreate] = [
     schemas.SchoolCreate(
         name='ADMIN',
         description='ADMIN',
-        costCenter=0,
-        emailDean='simongarcia3640@gmail.com'
+        cost_center=0,
+        email_dean='simongarcia3640@gmail.com'
     ),
     schemas.SchoolCreate(
         name='FCEN',
         description='Facultad de ciencias exactas y naturales',
-        costCenter=21402601,
-        emailDean='fcen@udea.edu.co'
+        cost_center=21402601,
+        email_dean='fcen@udea.edu.co'
     ),
     schemas.SchoolCreate(
         name='FING',
         description='Facultad de ingeniería',
-        costCenter=21301601,
-        emailDean='fing@udea.edu.co'
+        cost_center=21301601,
+        email_dean='fing@udea.edu.co'
     )
 ]
 
@@ -133,31 +133,34 @@ init_departments: List[schemas.DepartmentCreate] = [
     schemas.DepartmentCreate(
         name='ADMIN',
         description='Administradores',
-        coordEmail='simongarcia3640@gmail.com',
+        coord_email='simongarcia3640@gmail.com',
         school_id=1
     ),
     schemas.DepartmentCreate(
         name='DECANATURA',
         description='Departamento decanatura',
-        coordEmail='fcen@udea.edu.co',
+        coord_email='fcen@udea.edu.co',
         school_id=2
     ),
     schemas.DepartmentCreate(
         name='FISICA',
         description='Instituto de Física',
-        coordEmail='coordfisica@udea.edu.co',
-        school_id=2
+        coord_email='coordfisica@udea.edu.co',
+        school_id=2,
+        cost_center=21401202
     ),
     schemas.DepartmentCreate(
         name='SISTEMAS',
-        description='Ingeniería de sistemas',
-        coordEmail='coordsistemas@udea.edu.co',
-        school_id=3
+        description='Departamento de ingeniería de sistemas',
+        coord_email='coordsistemas@udea.edu.co',
+        school_id=3,
+        cost_center=21301209
     ),
     schemas.DepartmentCreate(
         name='QUÍMICA',
-        description='Departamento de química',
-        coordEmail="coordquimica@udea.edu.co",
+        description='Instituto de química',
+        coord_email="coordquimica@udea.edu.co",
+        cost_center=21401204,
         school_id=2
     )
 ]
@@ -249,7 +252,7 @@ init_statuss: List[schemas.StatusCreate] = [
     )
 ]
 
-init_applicationType: List[schemas.ApplicationTypeCreate] = [
+init_application_type: List[schemas.ApplicationTypeCreate] = [
     schemas.ApplicationTypeCreate(
         name="PERMISO",
         description="Permisos"
@@ -264,52 +267,52 @@ init_applicationType: List[schemas.ApplicationTypeCreate] = [
     )
 ]
 
-init_applicationSubType: List[schemas.ApplicationSubTypeCreate] = [
+init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Licencia de maternidad",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 126}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Licencia de paternidad",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 8}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Cumpleaños",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 1}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Luto",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 5}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Calamidad doméstica",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 12}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Licencia no remunerada",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 60}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Permiso remunerado",
-        applicationType_id=1,
+        application_type_id=1,
         extra={"days": 3}
     ),
     schemas.ApplicationSubTypeCreate(
         name="Comisión de servicios",
-        applicationType_id=2
+        application_type_id=2
     ),
     schemas.ApplicationSubTypeCreate(
         name="Comisión de estudios",
-        applicationType_id=2
+        application_type_id=2
     ),
     schemas.ApplicationSubTypeCreate(
         name="Dedicación",
-        applicationType_id=3
+        application_type_id=3
     )
 ]

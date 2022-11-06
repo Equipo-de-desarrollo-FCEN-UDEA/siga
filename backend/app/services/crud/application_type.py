@@ -9,4 +9,4 @@ class CRUDApplicationType(CRUDBase[ApplicationType, ApplicationTypeCreate, Appli
 
 policy = ApplicationTypePolicy()
 
-applicationType = CRUDApplicationType(ApplicationType, policy=policy)
+application_type = CRUDApplicationType(ApplicationType, policy=policy)

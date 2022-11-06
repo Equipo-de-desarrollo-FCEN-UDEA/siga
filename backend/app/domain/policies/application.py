@@ -21,13 +21,13 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         return None
 
     def create(self, who: User, to: ApplicationCreate) -> None:
-        applicationSubType = to.applicationSubType_id
-        if (applicationSubType in [1, 2, 3, 4, 5, 6, 7]
+        application_sub_type = to.application_sub_type_id
+        if (application_sub_type in [1, 2, 3, 4, 5, 6, 7]
                 and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Permiso
             raise Application401
-        if (applicationSubType in [8, 9]
+        if (application_sub_type in [8, 9]
                 and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Comision
             raise Application401
-        if (applicationSubType == 10 and not (who.rol.scope == 7)):
+        if (application_sub_type == 10 and not (who.rol.scope == 7)):
             raise Application401
         return None

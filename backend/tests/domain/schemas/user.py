@@ -6,25 +6,25 @@ from app.domain.schemas import UserCreate
 def test_schema_user():
     user1 = UserCreate(
         names="SIMON DE LA ROSA",
-        lastNames="GARCIA LUJAN",
-        identificationNumber="1234567890",
+        last_names="GARCIA LUJAN",
+        identificaction_number="1234567890",
         email="simon.garcial@udea.edu.co",
         scale="Vinculado",
-        vinculationType="TIEMPO COMPLETO",
+        vinculation_type="TIEMPO COMPLETO",
         department_id=1,
         rol_id=1
     )
     # Contraseña automática
-    assert user1.password == user1.identificationNumber
+    assert user1.password == user1.identificaction_number
     # Activo automático
     assert user1.active == True
-    assert user1.identificationType == 'CC'
+    assert user1.identification_type == 'CC'
     # Regex correo
     with raises(ValueError):
         UserCreate(
             names="SIMON DE LA ROSA",
-            lastNames="GARCIA LUJAN",
-            identificationNumber="1231233",
+            last_names="GARCIA LUJAN",
+            identificaction_number="1231233",
             email="simon.garcial@gmail.com",
             scale="Vinculado",
             department_id=1,
@@ -34,8 +34,8 @@ def test_schema_user():
     with raises(ValueError):
         UserCreate(
             names="SIMON DE LA ROSA",
-            lastNames="GARCIA LUjAN",
-            identificationNumber="1234567890",
+            last_names="GARCIA LUjAN",
+            identificaction_number="1234567890",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,
@@ -45,8 +45,8 @@ def test_schema_user():
     with raises(ValueError):
         UserCreate(
             names="SIMON DE LA ROSA",
-            lastNames="GARCIA LUJAN",
-            identificationNumber="1234567890+",
+            last_names="GARCIA LUJAN",
+            identificaction_number="1234567890+",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,
@@ -56,8 +56,8 @@ def test_schema_user():
     with raises(ValueError):
         UserCreate(
             names="SIMON DE LA ROSA",
-            lastNames="GARCIA LUJAN",
-            identificationNumber="1234567890",
+            last_names="GARCIA LUJAN",
+            identificaction_number="1234567890",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,

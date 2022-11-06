@@ -10,7 +10,7 @@ from .user import UserResponse
 
 class ApplicationBase(BaseModel):
     mongo_id: int
-    applicationSubType_id: int
+    application_sub_type_id: int
     user_id: int
 
 
@@ -31,6 +31,6 @@ class ApplicationInDB(ApplicationUpdate):
 
 
 class ApplicationResponse(ApplicationInDB):
-    applicationSubType: Optional[ApplicationSubTypeInside]
+    application_sub_type: Optional[ApplicationSubTypeInside]
     application_status: Optional[List[Application_statusResponse]]
     user: UserResponse

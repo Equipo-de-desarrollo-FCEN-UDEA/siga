@@ -14,8 +14,8 @@ class School(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     description = Column(String(100), nullable=True)
-    costCenter = Column(Integer, nullable=False)
-    emailDean = Column(String(200), nullable=False)
+    cost_center = Column(Integer, nullable=False)
+    email_dean = Column(String(200), nullable=False)
 
     #Relations
     departments = relationship("Department", back_populates="school")

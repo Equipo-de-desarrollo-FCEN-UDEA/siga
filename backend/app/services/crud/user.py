@@ -32,7 +32,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
     ) -> User:
         identification = identification.upper()
         obj_db = db.query(User).filter(
-            User.identificationNumber == identification).first()
+            User.identificaction_number == identification).first()
         return obj_db
 
     def get_multi(
@@ -57,8 +57,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         if search:
             columns = [
                 'names',
-                'lastNames',
-                'identificationNumber',
+                'last_names',
+                'identificaction_number',
                 'email'
             ]
             search = search.upper()
@@ -98,7 +98,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         data['hashed_password'] = hashed_password
         db_obj = User(**data)
         user: User = self.get_by_identificacion(
-            db, identification=obj_in.identificationNumber) or self.get_by_email(db=db, email=obj_in.email)
+            db, identification=obj_in.identificaction_number) or self.get_by_email(db=db, email=obj_in.email)
         if user:
             raise UserRegistrado
         db.add(db_obj)

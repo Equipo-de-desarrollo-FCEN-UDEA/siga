@@ -27,7 +27,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
         if type:
-            queries += [ApplicationSubType.applicationType_id == type]
+            queries += [ApplicationSubType.application_type_id == type]
 
         if who.rol.scope >= 9:
             queries += [User.id == who.id]
@@ -44,8 +44,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if search:
             columns = [
                 'names',
-                'lastNames',
-                'identificationNumber',
+                'last_names',
+                'identificaction_number',
                 'email'
             ]
             search = search.upper()
