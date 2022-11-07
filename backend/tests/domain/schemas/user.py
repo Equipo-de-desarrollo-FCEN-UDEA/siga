@@ -17,7 +17,7 @@ def test_schema_user():
     # Contraseña automática
     assert user1.password == user1.identificaction_number
     # Activo automático
-    assert user1.active == True
+    assert user1.active == False
     assert user1.identification_type == 'CC'
     # Regex correo
     with raises(ValueError):

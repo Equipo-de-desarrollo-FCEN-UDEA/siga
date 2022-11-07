@@ -27,13 +27,21 @@ class AppSettings(BaseAppSettings):
 
     secret_key: SecretStr
 
+    # postgres
     postgres_server: str
     postgres_user: str
     postgres_password: str
     postgres_db: str
 
+    # redis
     redis_server: str
     redis_path: str
+
+    #mongo
+    mongo_server: str
+    mongo_initdb_root_username: str
+    mongo_initdb_root_password: str
+    mongo_initdb_database: str
 
     # first_superemployee_correo : str
     first_superemployee_password: str
@@ -52,9 +60,11 @@ class AppSettings(BaseAppSettings):
     smtp_port_email: int
     smtp_from_email: str
 
-    database_url: Optional[PostgresDsn] = None
+    database_uri: Optional[PostgresDsn] = None
 
-    redis_url: Optional[RedisDsn] = None
+    redis_uri: Optional[RedisDsn] = None
+
+    mongo_uri: Optional[MongoDsn] = None
 
     algorithm: str
 
@@ -64,8 +74,8 @@ class AppSettings(BaseAppSettings):
     # En este validador de pydantic que nos sirve para asignar valores a ciertas variables
     # o también para hacer una validación mas rigurosa, de esta manera estamos generando el Dsn
     # por el que nos vamos a conectar a la base de datos de postgresql
-    @validator("database_url", pre=True)
-    def validate_database_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    @validator("database_uri", pre=True)
+    def validate_database_uri(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return PostgresDsn.build(
             scheme="postgresql",
             user=values.get('postgres_user'),
@@ -75,12 +85,21 @@ class AppSettings(BaseAppSettings):
         )
 
     # Al igual que la anterior generamos el Dsn para redis
-    @validator("redis_url", pre=True)
-    def validate_redis_url(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+    @validator("redis_uri", pre=True)
+    def validate_redis_uri(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return RedisDsn.build(
             scheme="redis",
             host=values.get('redis_server'),
             path=f"/{values.get('redis_path')}"
+        )
+    
+    @validator('mongo_uri', pre=True)
+    def validate_mongo_uri(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
+        return MongoDsn.build(
+            scheme='mongodb',
+            host=values.get('mongo_server'),
+            user=values.get('mongo_initdb_root_username'),
+            password=values.get('mongo_initdb_root_password')
         )
 
     # Esta clase le dice a pydantic dónde buscará el archivo de entorno y cómo deverá leerlo

@@ -6,7 +6,7 @@ from app.domain.schemas.user import UserCreate, UserUpdate
 from app.domain.models import User, Rol, Department
 from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
-from app.domain.errors.user import User401, User404, UserRegistrado
+from app.domain.errors.user import user_401, user_404, user_registered
 from .base import CRUDBase
 from app.core.logging import get_logging
 
@@ -27,7 +27,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         obj_db = db.query(User).filter(User.email == email).first()
         return obj_db
 
-    def get_by_identificacion(
+    def get_by_identification(
         self, db: Session, identification: str
     ) -> User:
         identification = identification.upper()
@@ -97,10 +97,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         del data['password']
         data['hashed_password'] = hashed_password
         db_obj = User(**data)
-        user: User = self.get_by_identificacion(
+        user: User = self.get_by_identification(
             db, identification=obj_in.identificaction_number) or self.get_by_email(db=db, email=obj_in.email)
-        if user:
-            raise UserRegistrado
+        self.policy.create(to=user)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
@@ -137,10 +136,11 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         identification: str = None,
         password: str
     ) -> User:
-        user: User = self.get_by_email(db, email=email) or self.get_by_identificacion(
+        user: User = self.get_by_email(db, email=email) or self.get_by_identification(
             db, identification=identification)
+        self.policy.authenticate(who=user)
         if not check_password(password, user.hashed_password):
-            raise User401
+            raise user_401
         return user
 
     def is_active(self, db: Session, *, user: User) -> bool:

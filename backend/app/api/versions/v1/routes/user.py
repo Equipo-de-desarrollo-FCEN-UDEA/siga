@@ -9,6 +9,8 @@ from app.domain import models, schemas
 from app.domain.errors.base import BaseErrors
 from app.services import crud
 from app.core.logging import get_logging
+from app.services.emails.user import confirm_email
+from app.services.security.jwt import email_token
 
 router = APIRouter()
 
@@ -38,6 +40,8 @@ def create_user(
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
+    token = email_token(db_user.email)
+    confirm_email.apply_async(args=(db_user.names, db_user.email, token))
     # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return db_user
 

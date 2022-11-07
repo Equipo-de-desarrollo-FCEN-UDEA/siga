@@ -9,7 +9,7 @@ from app.services import crud
 from app.domain import models, schemas
 from app.domain.errors.base import BaseErrors
 from app.services.security import jwt
-from app.services.emails.user import recovery_password_email
+from app.services.emails.user import recovery_password_email, confirm_email
 from app.core.config import get_app_settings
 from app.api.middlewares import db
 
@@ -18,12 +18,15 @@ settings = get_app_settings()
 router = APIRouter()
 
 
+# Route for authenticate users, authentication can be with email or identification number
 @router.post("/access-token", response_model=schemas.Token)
 def login_access_token(
     db: Session = Depends(db.get_db), form_data: OAuth2PasswordRequestForm = Depends()
 ):
     """
     OAuth2 compatible token login, get an access token for future requests
+
+        authentication can be with email or identification number
     """
     try:
         user: models.User = crud.user.authenticate(
@@ -41,24 +44,26 @@ def login_access_token(
     return response
 
 
+# Route for recovery password with email or identification
 @router.post("/password-recovery/{email}", response_model=schemas.Msg)
 def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     """
     Password Recovery
     """
     user = crud.user.get_by_email(
-        db, email=email) or crud.user.get_by_identificacion(db, identification=email)
+        db, email=email) or crud.user.get_by_identification(db, identification=email)
     if not user:
         raise HTTPException(
             status_code=404,
             detail="El usuario con este correo o número de identificación no está registrado en el sistema",
         )
-    password_reset_token = jwt.password_reset_token(email=user.email)
+    email_token = jwt.email_token(email=user.email)
     recovery_password_email.apply_async(
-        args=('simon3640xd@gmail.com', 'Test email'))
-    return {"msg": password_reset_token}
+        args=(user.names, user.email, email_token))
+    return {"msg": email_token}
 
 
+# Route for reset password
 @router.post("/reset-password/", response_model=schemas.Msg)
 def reset_password(
     token: str = Body(...),
@@ -68,6 +73,10 @@ def reset_password(
 ) -> dict:
     """
     Reset password
+
+    Params: 
+        token: str
+        new_password: str
     """
     try:
         email = jwt.decode_token(token).sub
@@ -88,3 +97,56 @@ def reset_password(
     db.add(user)
     db.commit()
     return {"msg": "Contraseña actualizada correctamente"}
+
+
+# Route for request an activation email
+@router.post("/activate-email/{email}", response_model=schemas.Msg)
+def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
+    """
+    activate email
+    
+    Query params:
+        email: str
+    """
+    user = crud.user.get_by_email(
+        db, email=email) or crud.user.get_by_identification(db, identification=email)
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="El usuario con este correo o número de identificación no está registrado en el sistema",
+        )
+    email_token = jwt.email_token(email=user.email)
+    confirm_email.apply_async(
+        args=(user.names, user.email, email_token))
+    return {"msg": email_token}
+
+
+# Route for activate the account with the mailed token
+@router.post("/activate-account/", response_model=schemas.Msg)
+def reset_password(
+    token: str = Body(...),
+    *,
+    db: Session = Depends(db.get_db)
+) -> dict:
+    """
+    Activate account:
+    
+    Params:
+        token: str
+    """
+    try:
+        email = jwt.decode_token(token).sub
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    if not email:
+        raise HTTPException(status_code=400, detail="Invalid token")
+    user = crud.user.get_by_email(db, email=email)
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="El usuario con ese correo electrónico no existe",
+        )
+    user.active = True
+    db.add(user)
+    db.commit()
+    return {"msg": "Cuenta activada correctamente"}

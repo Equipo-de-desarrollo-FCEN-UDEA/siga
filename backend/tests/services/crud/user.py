@@ -15,7 +15,7 @@ class TestUserCrud(TestBaseDB):
     def test_user_service(self):
         user_by_email = user.get_by_email(
             db=self.session, email=settings.first_superemployee_email)
-        user_by_id = user.get_by_identificacion(
+        user_by_id = user.get_by_identification(
             db=self.session, identification=settings.first_superemployee_identification_number)
         multi_user = user.get_multi(db=self.session, who=user_by_email)
 

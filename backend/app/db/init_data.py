@@ -15,6 +15,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=settings.first_superemployee_department_id,
         rol_id=settings.first_superemployee_rol_id,
         email=settings.first_superemployee_email,
+        active=True,
         password=settings.first_superemployee_password
     ),
     schemas.UserCreate(
@@ -26,6 +27,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=2,
         rol_id=3,
         email='fcen@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -37,6 +39,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=11,
         email='simon.garcial@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -48,6 +51,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=9,
         email='muñoz.fake@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -59,6 +63,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=9,
         email='muñoz.fakedos@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -70,6 +75,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=9,
         email='profesor.quimica@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -81,6 +87,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=7,
         email='coordquimica@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -92,6 +99,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=7,
         email='coordfisica@udea.edu.co',
+        active=True,
         password='123'
     ),
     schemas.UserCreate(
@@ -103,6 +111,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=10,
         email='empleado.fisica@udea.edu.co',
+        active=True,
         password='123'
     ),
 ]

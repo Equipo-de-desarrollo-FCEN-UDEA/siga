@@ -10,6 +10,8 @@ from app.api.versions.v1.routes import (
     application
 )
 
+from app.api.versions.v1.routes.applications import permiso
+
 # APIRouter de fastapi nos permite generar endpoints o en su defecto con el método include_router incluir toda una ruta
 api_route = APIRouter()
 api_route.include_router(user.router, prefix="/user", tags=["user"])
@@ -25,3 +27,5 @@ api_route.include_router(application_type.router,
                          prefix='/application-type', tags=['application-types'])
 api_route.include_router(
     application.router, prefix="/application", tags=["application"])
+api_route.include_router(
+    permiso.app, prefix="/test_permiso", tags=['Test Permiso'])

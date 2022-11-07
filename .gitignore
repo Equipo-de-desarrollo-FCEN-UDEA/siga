@@ -133,6 +133,7 @@ dmypy.json
 .pyre/
 
 postgres-data/
+mongo-data/
 
 
 .DS_Store

@@ -19,7 +19,7 @@ class User(Base):
     names = Column(String(50), nullable=False)
     identificaction_number = Column(String(20), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
-    active = Column(Boolean, default=True)
+    active = Column(Boolean, default=False)
     scale = Column(String(50), nullable=False)
     phone = Column(String(50), nullable=True)
     office = Column(String(5), nullable=True)
