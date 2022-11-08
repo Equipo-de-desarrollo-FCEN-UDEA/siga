@@ -40,6 +40,7 @@
                 <tr>
                     <th>id</th>
                     <th> Nombre completo</th>
+                    <th> Rol</th>
                     <th> Correo</th>
                     <th> Identificación</th>
                     <th> Departamento</th>
@@ -59,6 +60,7 @@
                     <td>{{user.names + ' ' + user.last_names |
                         titlecase}}
                     </td>
+                    <td>{{user.rol.name}}</td>
                     <td>{{user.email | lowercase}}</td>
                     <td>{{user.identificaction_number | lowercase}}</td>
                     <td>{{user.department.name}}</td>
