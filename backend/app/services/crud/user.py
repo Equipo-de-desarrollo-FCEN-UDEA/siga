@@ -14,12 +14,15 @@ log = get_logging(__name__)
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
+
+    # 
     def get_middleware(
         self, db: Session, id: int
     ) -> Optional[User]:
         obj_db = db.query(User).filter(User.id == id).first()
         return obj_db
 
+    #
     def get_by_email(
         self, db: Session, email: str
     ) -> User:
@@ -27,6 +30,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         obj_db = db.query(User).filter(User.email == email).first()
         return obj_db
 
+    #
     def get_by_identificacion(
         self, db: Session, identification: str
     ) -> User:
@@ -35,6 +39,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             User.identificaction_number == identification).first()
         return obj_db
 
+    #
     def get_multi(
         self,
         db: Session,
