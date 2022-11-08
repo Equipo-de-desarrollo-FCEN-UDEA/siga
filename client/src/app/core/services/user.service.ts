@@ -32,7 +32,7 @@ export class UserService {
     let params = new HttpParams()
     params = params.append('skip', skip);
     params = params.append('limit', limit);
-    params = params.append('activo', active);
+    params = params.append('active', active);
     if (search) {
       params = params.append('search', search);
     }

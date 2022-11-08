@@ -4,11 +4,11 @@ from pydantic import BaseModel
 class RolBase(BaseModel):
     name: str
     description: str
+    scope: int
     
 
 
 class RolCreate(RolBase):
-    scope: int
     pass
 
 
