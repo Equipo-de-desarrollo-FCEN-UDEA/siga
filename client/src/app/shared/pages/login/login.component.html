@@ -1,0 +1,55 @@
+<div class="container d-flex justify-content-center align-items-center p-0 ">
+    <!-- <img src="../../../../assets/logosimbolo-vertical.png" alt="Logo vertical de la universidad de antioquia" class="mt-4" style="width:40%"> -->
+    <div class="card p-0 shadow">
+        <h1 class="mt-4 text-wrap">
+            <strong>SIGA </strong><strong class='title'>UdeA</strong>
+        </h1>
+        <h5 class="mt-2 p-1 text-wrap" style="color:black">
+            Sistema Integrado de Gestión Administrativa
+        </h5>
+
+        <hr />
+
+        <div class="card-body">
+            <h4 style="color:rgba(50, 50, 50, 0.874)">Iniciar sesión</h4>
+            <form need-validation novalidate [formGroup]="form" (ngSubmit)="submit()">
+
+                <!-- <div [ngbCollapse]="!isCollapsed" id="Login"> -->
+                <div>
+                    <div class="form px-4 pt-1 m-2">
+
+                        <!-- CORREO -->
+                        <div class="formfloatig m-2">
+                            <input id="Correo-input" type="text" class="form-control" placeholder=" "
+                                formControlName="username"
+                                autofocus />
+                            <label for="Correo-input" class="formLabel">Correo institucional o cédula
+                            </label>
+                        </div>
+
+                        <!-- CONTRASENA -->
+                        <div class="formfloatig m-2">
+                            <input id="Contraseña" type="password" class="form-control" placeholder=" "
+                                formControlName="password" />
+                            <label for="Contraseña" class="formLabel">Contraseña</label>
+                        </div>
+
+
+                        <!-- OLVIDO CONTRASENA -->
+                        <div class="d-flex justify-content-start">
+                            <a routerLink="../recuperar-contrasena" class="btn btn-link link-success pr-0">¿Olvidaste tu
+                                contraseña?</a>
+                        </div>
+
+
+                        <div class="d-grid gap-2 col-12">
+                            <button id="btn-sub" (submit)="(true)" class="btn btn-dark btn-submit">
+                                <span *ngIf="isLoading | async" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true" alt="Smiley"></span>
+                                Ingresar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>

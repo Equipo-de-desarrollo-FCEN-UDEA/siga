@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  ruta: 'http://localhost:8000/api/v1/',
+  rute: 'http://localhost:8001/api/v1/',
   cookieToken: 'token'
 };
