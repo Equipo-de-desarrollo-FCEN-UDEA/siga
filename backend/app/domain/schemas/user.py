@@ -42,7 +42,7 @@ class UserBase(BaseModel):
         max_length=10,
         default="CC"
     )
-    active: bool = True
+    active: bool = False
     scale: str = Field(max_length=50)
     phone: Optional[str] = Field(max_length=50)
     office: Optional[str] = Field(max_length=5)

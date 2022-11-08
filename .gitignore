@@ -106,6 +106,7 @@ celery-data/
 # Environments
 .env
 .venv
+prod.env
 env/
 venv/
 ENV/
@@ -133,6 +134,7 @@ dmypy.json
 .pyre/
 
 postgres-data/
+mongo-data/
 
 
 .DS_Store

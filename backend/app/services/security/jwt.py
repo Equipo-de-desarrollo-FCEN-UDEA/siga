@@ -37,7 +37,7 @@ def get_password_hash(plain_password: str) -> str:
     return pwd_context.hash(plain_password)
 
 
-def password_reset_token(email: str) -> str:
+def email_token(email: str) -> str:
     expires = datetime.utcnow() + timedelta(settings.reset_password_expire_token)
     token = jwt.encode(
         {"exp": expires, "sub": email},

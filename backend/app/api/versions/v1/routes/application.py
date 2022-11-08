@@ -16,9 +16,6 @@ router = APIRouter()
 log = get_logging(__name__)
 
 
-# Este decorador nos permite generar un endpoint de tipo post
-
-
 @router.get("/", status_code=200,
             response_model=List[schemas.ApplicationResponse])
 def read_applications(
@@ -31,7 +28,6 @@ def read_applications(
     search: str | None = '',
     type: int = 0,
     filed: bool = False
-    # active: bool | None = True,
 ) -> Any:
     """
     Endpoint to read all applications.

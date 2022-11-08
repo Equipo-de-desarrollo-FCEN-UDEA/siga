@@ -14,6 +14,19 @@ services:
       - local-net
     volumes:
       - ./db/postgres-data:/var/lib/postgresql/data
+    
+  mongo:
+    container_name: 'mongo'
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    env_file:
+      - .env
+    networks:
+      - local-net
+    volumes:
+      - ./db/mongo-data:/data/db
   
   pgadmin:
     container_name: 'pgadmin'
@@ -43,8 +56,6 @@ services:
     command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
       - .env
-    volumes:
-      - ./celery-data:/usr/src/server
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -62,8 +73,6 @@ services:
     command: celery -A app.core.celery_worker.celery flower --port=5555
     env_file:
       - .env
-    volumes:
-      - ./app:/usr/src/server
     ports:
       - "5555:5555"
     environment:
@@ -79,7 +88,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     depends_on:
-      - pgadmin
+      - db
+      - mongo
     env_file:
       - .env
     restart: on-failure
