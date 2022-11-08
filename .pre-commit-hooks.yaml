@@ -1,0 +1,7 @@
+-   id: trailing-whitespace
+    name: trim trailing whitespace
+    description: trims trailing whitespace.
+    entry: trailing-whitespace-fixer
+    language: python
+    types: [text]
+    stages: [commit, push, manual]
