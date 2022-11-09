@@ -245,10 +245,7 @@ init_statuss: List[schemas.StatusCreate] = [
         name='APROBADA'
     ),
     schemas.StatusCreate(
-        name='RECHAZADA COORDINACIÓN'
-    ),
-    schemas.StatusCreate(
-        name='RECHAZADA DECANATO'
+        name='RECHAZADA'
     ),
     schemas.StatusCreate(
         name='FINALIZADA'

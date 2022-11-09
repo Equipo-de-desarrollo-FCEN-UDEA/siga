@@ -1,7 +1,7 @@
 from pytest import raises
 
-from app.domain.models import User, Application, Rol
-from app.domain.schemas import ApplicationCreate
+from app.domain.models import User, Application, Rol, Application_status
+from app.domain.schemas import ApplicationCreate, Application_statusCreate
 from app.domain.policies.application import ApplicationPolicy
 from app.domain.errors.base import BaseErrors
 from app.core.logging import get_logging
@@ -41,6 +41,25 @@ class TestApplicationPolicy(TestBaseDB):
             application_sub_type_id=10,
             user_id=professor.id
         )
+        application_permission_professor = ApplicationCreate(
+            mongo_id=1,
+            application_sub_type_id=3,
+            user_id=professor.id
+        )
+
+        permission = Application(**dict(application_permission_professor))
+        self.session.add(permission)
+        self.session.commit()
+        self.session.refresh(permission)
+
+        visto_bueno_status = Application_status(**dict(Application_statusCreate(
+            application_id=permission.id, status_id=2, observation="Visto bueno")))
+        self.session.add(visto_bueno_status)
+        self.session.commit()
+        self.session.refresh(visto_bueno_status)
+
+        log.debug(permission.application_status[-1].status.name)
+
 
         policy = ApplicationPolicy()
 
@@ -55,3 +74,10 @@ class TestApplicationPolicy(TestBaseDB):
 
         with raises(BaseErrors):
             policy.create(who=employee, to=application_dedication)
+
+        with raises(BaseErrors):
+            policy.delete(who=professor, to=permission)
+
+        with raises(BaseErrors):
+            policy.delete(who=employee, to=permission)
+        

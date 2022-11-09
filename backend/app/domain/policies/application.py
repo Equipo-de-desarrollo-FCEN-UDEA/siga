@@ -36,3 +36,14 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         if (application_sub_type == 10 and not (who.rol.scope == 7)):  # Dedicación
             raise application_401
         return None
+
+    def delete(self, who: User, to: Application) -> None:
+        app_status = to.application_status[-1].status.name
+        
+        if not (who.id == to.user_id):
+            raise application_404
+        
+        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA'):
+            raise application_404
+        
+        return None

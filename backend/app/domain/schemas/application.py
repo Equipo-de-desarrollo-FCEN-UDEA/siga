@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Any
 
 from pydantic import BaseModel
 
@@ -9,7 +9,7 @@ from .user import UserResponse
 
 
 class ApplicationBase(BaseModel):
-    mongo_id: int
+    mongo_id: Any
     application_sub_type_id: int
     user_id: int
 
@@ -30,7 +30,11 @@ class ApplicationInDB(ApplicationUpdate):
         orm_mode = True
 
 
-class ApplicationResponse(ApplicationInDB):
+class ApplicationMultiResponse(ApplicationInDB):
     application_sub_type: Optional[ApplicationSubTypeInside]
     application_status: Optional[List[Application_statusResponse]]
     user: UserResponse
+
+
+class ApplicationResponse(ApplicationMultiResponse):
+    model: Any

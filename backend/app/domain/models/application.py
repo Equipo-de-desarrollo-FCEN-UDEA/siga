@@ -1,4 +1,3 @@
-from email.policy import default
 from typing import TYPE_CHECKING
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
@@ -15,7 +14,7 @@ if TYPE_CHECKING:
 
 class Application(Base):
     id = Column(Integer, primary_key=True)
-    mongo_id = Column(Integer, nullable=False)
+    mongo_id = Column(String(255), nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     filed = Column(Boolean, default=False)
     
