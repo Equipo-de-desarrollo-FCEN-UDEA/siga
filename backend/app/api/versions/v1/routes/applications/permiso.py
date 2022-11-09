@@ -1,4 +1,5 @@
 from typing import List
+from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic.session import AIOSession
@@ -7,40 +8,41 @@ from odmantic import Model, ObjectId
 from app.api.middlewares import mongo_db
 
 
-class Tree(Model):
-    name: str
-    average_size: float
-    discovery_year: int
+class Permiso(Model):
+    date_start: datetime
+    date_end: datetime
+    justification: str
+    documents: list[str] | None
 
 
 app = APIRouter()
 
 
-@app.put("/trees/", response_model=Tree)
-async def create_tree(tree: Tree, *, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
+@app.put("/Permisos/", response_model=Permiso)
+async def create_Permiso(Permiso: Permiso, *, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
     # await engine.start()
-    await engine.save(tree)
-    return tree
+    await engine.save(Permiso)
+    return Permiso
 
 
-@ app.get("/trees/", response_model=List[Tree])
-async def get_trees(*, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
+@ app.get("/Permisos/", response_model=List[Permiso])
+async def get_Permisos(*, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
     # await engine.start()
-    trees = await engine.find(Tree)
-    return trees
+    Permisos = await engine.find(Permiso)
+    return Permisos
 
 
-@ app.get("/trees/count", response_model=int)
-async def count_trees(*, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
+@ app.get("/Permisos/count", response_model=int)
+async def count_Permisos(*, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
     # await engine.start()
-    count = await engine.count(Tree)
+    count = await engine.count(Permiso)
     return count
 
 
-@ app.get("/trees/{id}", response_model=Tree)
-async def get_tree_by_id(id: ObjectId, *, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
+@ app.get("/Permisos/{id}", response_model=Permiso)
+async def get_Permiso_by_id(id: ObjectId, *, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
     # await engine.start()
-    tree = await engine.find_one(Tree, Tree.id == id)
-    if tree is None:
+    Permiso = await engine.find_one(Permiso, Permiso.id == id)
+    if Permiso is None:
         raise HTTPException(404)
-    return tree
+    return Permiso
