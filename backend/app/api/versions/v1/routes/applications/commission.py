@@ -7,7 +7,7 @@ from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
 from app.services import crud
 from app.domain.models import Commission, User, Application
-from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg
+from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg, CommissionResponse, ApplicationResponse
 from app.domain.errors import BaseErrors
 
 
@@ -16,14 +16,14 @@ router = APIRouter()
 log = get_logging(__name__)
 
 
-@router.post("/", response_model=Commission)
+@router.post("/", response_model=CommissionResponse)
 async def create_commission(
     comission: CommissionCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> Commission:
+) -> CommissionResponse:
     """
     Endpoint to create a application type Commission
 
@@ -45,18 +45,60 @@ async def create_commission(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
         await engine.remove(Commission, Commission.id == comission_created.id)
-        raise HTTPException(e.code, e.detail)
+        return HTTPException(e.code, e.detail)
+    except ValueError as e:
+        await engine.remove(Commission, Commission.id == comission_created.id)
+        return HTTPException(422, e)
     except Exception:
         await engine.remove(Commission, Commission.id == comission_created.id)
-    return comission_created
+        return HTTPException(422, "Algo ocurrió mal")
+    application = ApplicationResponse.from_orm(application)
+    response = CommissionResponse(
+        **dict(application),
+        commission=comission_created
+    )
+    return response
 
 
 @router.get("/", response_model=list[Commission])
-async def get_commission(*,
+async def get_commissions(*,
                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[Commission]:
 
     comissiones = await engine.find(Commission)
     return comissiones
+
+
+@router.get("/{id}", response_model=Commission)
+async def get_comission(
+    id: int, 
+    *, 
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+    ) -> Commission:
+    """
+    Endpoint to ger a comission model from mongo
+
+        path-params:
+            -id: int, this is the id of the application, not of mongo
+        
+        response:
+            -body: Commission
+    """
+    try:
+        application = crud.application.get(db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+        if application:
+            comission = await crud.comission.get(engine, id=mongo_id)
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    application = ApplicationResponse.from_orm(application)
+    response = CommissionResponse(
+        **dict(application),
+        commission=comission
+    )
+    log.debug(dict(response))
+    return comission
 
 
 @router.put("/{id}", response_model=Commission)
@@ -87,9 +129,10 @@ async def update_comission(
         application = crud.application.update(
             db, current_user, db_obj=application, obj_in={})
         mongo_id = ObjectId(application.mongo_id)
-        current_comission = await crud.comission.get(engine, id=mongo_id)
-        updated_comission = await crud.comission.update(
-            engine, db_obj=current_comission, obj_in=commission)
+        if application:
+            current_comission = await crud.comission.get(engine, id=mongo_id)
+            updated_comission = await crud.comission.update(
+                engine, db_obj=current_comission, obj_in=commission)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return updated_comission
@@ -103,6 +146,15 @@ async def delete_commission(
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
 ) -> Msg:
+    """
+    Endpoint to delete an application of type comission
+
+        params:
+            -id: int, this is the id of the application and not of mongo
+        
+        response:
+            -msg: Msg
+    """
     try:
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)

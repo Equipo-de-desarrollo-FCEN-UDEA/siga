@@ -37,4 +37,4 @@ class ApplicationMultiResponse(ApplicationInDB):
 
 
 class ApplicationResponse(ApplicationMultiResponse):
-    model: Any
+    pass

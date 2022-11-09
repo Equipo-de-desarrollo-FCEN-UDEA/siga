@@ -47,11 +47,13 @@ class TestApplicationPolicy(TestBaseDB):
             user_id=professor.id
         )
 
+        # We make an permission application for test the delete policy
         permission = Application(**dict(application_permission_professor))
         self.session.add(permission)
         self.session.commit()
         self.session.refresh(permission)
-
+        
+        # We make a status type VISTO BUENO for the permission application
         visto_bueno_status = Application_status(**dict(Application_statusCreate(
             application_id=permission.id, status_id=2, observation="Visto bueno")))
         self.session.add(visto_bueno_status)
@@ -81,3 +83,8 @@ class TestApplicationPolicy(TestBaseDB):
         with raises(BaseErrors):
             policy.delete(who=employee, to=permission)
         
+        with raises(BaseErrors):
+            policy.update(who=professor, to=permission, obj_in={"update schema": True})
+
+        with raises(BaseErrors):
+            policy.update(who=employee, to=permission, obj_in={"update schema": True})
