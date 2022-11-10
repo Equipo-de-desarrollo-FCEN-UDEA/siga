@@ -11,7 +11,7 @@ from app.api.versions.v1.routes import (
     application_status
 )
 
-from app.api.versions.v1.routes.applications import permiso
+from app.api.versions.v1.routes.applications import permiso, commission
 
 # APIRouter de fastapi nos permite generar endpoints o en su defecto con el método include_router incluir toda una ruta
 # Routes app
@@ -33,5 +33,7 @@ api_route.include_router(application_status.router,
                          prefix="/application-status", tags=['application-status'])
 
 # Applications
-api_route.include_router(
-    permiso.app, prefix="/test_permiso", tags=['Test Permiso'])
+api_route.include_router(permiso.app,
+                         prefix="/test_permiso", tags=['Test Permiso'])
+api_route.include_router(commission.router,
+                         prefix="/commission", tags=['commission'])

@@ -46,3 +46,9 @@ async def get_Permiso_by_id(id: ObjectId, *, engine: AIOSession = Depends(mongo_
     if Permiso is None:
         raise HTTPException(404)
     return Permiso
+
+@app.delete("/Permisos/{id}")
+async def delete(id: ObjectId, *, engine: AIOSession = Depends(mongo_db.get_mongo_db)):
+    # await engine.start()
+    await engine.remove(Permiso, Permiso.id == id)
+    return {"msg": "Eliminado"}
