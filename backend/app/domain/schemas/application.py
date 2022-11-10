@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional, List, Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from .application_subtype import ApplicationSubTypeInside
 from .application_status import Application_statusResponse
@@ -33,6 +33,9 @@ class ApplicationInDB(ApplicationUpdate):
 class ApplicationMultiResponse(ApplicationInDB):
     application_sub_type: Optional[ApplicationSubTypeInside]
     application_status: Optional[List[Application_statusResponse]]
+    @validator('application_status')
+    def last_status(cls, v, values, **kwargs):
+        return [v[-1]]
     user: UserResponse
 
 

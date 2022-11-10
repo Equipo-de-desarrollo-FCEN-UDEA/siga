@@ -70,7 +70,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .offset(skip)
                    .limit(limit)
                    .all())
-
+        
         return objs_db
 
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:

@@ -68,14 +68,14 @@ async def get_commissions(*,
     return comissiones
 
 
-@router.get("/{id}", response_model=Commission)
+@router.get("/{id}", response_model=CommissionResponse)
 async def get_comission(
     id: int, 
     *, 
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-    ) -> Commission:
+    ) -> CommissionResponse:
     """
     Endpoint to ger a comission model from mongo
 
@@ -98,7 +98,7 @@ async def get_comission(
         commission=comission
     )
     log.debug(dict(response))
-    return comission
+    return response
 
 
 @router.put("/{id}", response_model=Commission)
