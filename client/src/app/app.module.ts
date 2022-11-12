@@ -16,6 +16,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 
+import { registerLocaleData } from '@angular/common';
+import {LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs, 'es');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +52,8 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
       multi: true
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [AppComponent]
 })

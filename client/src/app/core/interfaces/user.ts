@@ -36,5 +36,5 @@ export interface UserInDBBase extends UserBase{
 
 export interface UserResponse extends UserInDBBase{
     department: DepartmentResponse;
-    rol: RolResponse
+    rol: RolResponse;
 }
