@@ -6,14 +6,40 @@
     </div>
 
     <hr />
+    <div *ngIf="application$ | async as application">
+        <div class="row regular-row">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Solicitante</div>
+            <div class="col-xs-12 col-sm-6">
+                {{ application.user.names + ' ' + application.user.last_names | titlecase}}
+            </div>
+        </div>
 
-    <div *ngIf="application$ | async as application" class="row regular-row">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Solicitante</div>
-        <div class="col-xs-12 col-sm-6">
-            {{ application?.user?.names! + application?.user?.last_names | titlecase}}
+        <div class="row regular-row">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Tipo de {{title}}</div>
+
+            <div class="col-xs-12 col-sm-6">{{ application.application_sub_type.name }}</div>
+        </div>
+        <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Fecha de Creación</div>
+
+            <div class="col-xs-12 col-sm-6">
+                {{ application.created_at | date: "fullDate" }}
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+    <router-outlet></router-outlet>
+
+    <hr>
+    <button type="button" class="btn btn-success btn-block col-12 mt-3" (click)="historyStatus = !historyStatus">
+        Ver Historial de estados
+    </button>
+    <div *ngIf="application$ | async as application">
+        <div class="row regular-row">
+            <app-status-history *ngIf="historyStatus" [status]="application.application_status"></app-status-history>
         </div>
     </div>
 
 </div>
-
-<router-outlet></router-outlet>

@@ -17,13 +17,15 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public text$ = new Observable<string>();
 
+  public historyStatus = false;
+
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
     private cdRef: ChangeDetectorRef
   ) { 
     this.title = this.route.snapshot.firstChild?.data['title'];
-    this.text$ = this.comSvc.application;
+    this.application$ = this.comSvc.application;
   }
 
   ngOnInit(): void {

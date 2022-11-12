@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Application } from '@interfaces/application';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -6,13 +7,13 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ComService {
 
-  public application: Subject<string> = new Subject();
+  public application: Subject<Application> = new Subject();
 
   constructor() { 
   }
 
 
-  push(data: string) {
+  push(data: Application) {
     this.application.next(data);
   }
 

@@ -15,7 +15,7 @@ export class PermissionComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.comSvc.push('Algo');
+    // this.comSvc.push('Algo');
   }
 
 }

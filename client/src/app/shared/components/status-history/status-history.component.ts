@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ApplicationStatus } from '@interfaces/application_status';
 
 @Component({
   selector: 'app-status-history',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusHistoryComponent implements OnInit {
 
+  @Input() status: ApplicationStatus[] | undefined;
   constructor() { }
 
   ngOnInit(): void {

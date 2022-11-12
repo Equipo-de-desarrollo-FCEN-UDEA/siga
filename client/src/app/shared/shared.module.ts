@@ -19,7 +19,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    StatusHistoryComponent
   ]
 })
 export class SharedModule { }
