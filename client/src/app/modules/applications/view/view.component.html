@@ -1,0 +1,19 @@
+<div class="containerInside card shadow mt-5 bg-white rounded p-5">
+    <div class="row header-row">
+        <div class="col">
+            <span class="text-secondary">{{title | uppercase}}</span>
+        </div>
+    </div>
+
+    <hr />
+
+    <div *ngIf="application$ | async as application" class="row regular-row">
+        <div class="col-xs-12 col-sm-6 label fw-bold">Solicitante</div>
+        <div class="col-xs-12 col-sm-6">
+            {{ application?.user?.names! + application?.user?.last_names | titlecase}}
+        </div>
+    </div>
+
+</div>
+
+<router-outlet></router-outlet>
