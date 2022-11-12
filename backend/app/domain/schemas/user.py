@@ -17,6 +17,7 @@ class UserBase(BaseModel):
         regex=regex,
         min_length=3,
         max_length=50,
+        
     )
 
     names: str = Field(
@@ -59,7 +60,7 @@ class UserCreate(UserBase):
     def generate_password(cls, v, values, **kwargs):
         if not v:
             if not 'identificaction_number' in values:
-                raise ValueError
+                raise ValueError("No tiene número de identificación")
             return values['identificaction_number']
         return v
     
