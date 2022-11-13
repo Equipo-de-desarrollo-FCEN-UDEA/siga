@@ -12,7 +12,7 @@ log = get_logging(__name__)
 
 class TestApplicationCrud(TestBaseDB):
 
-    def test_user_service(self):
+    def test_application_service(self):
         admin: User = self.session.query(
             User).join(Rol).filter(Rol.scope == 1).first()
         professor: User = self.session.query(
