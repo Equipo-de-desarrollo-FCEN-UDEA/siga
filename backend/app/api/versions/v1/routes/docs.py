@@ -30,7 +30,7 @@ def upload_doc(files: list[UploadFile],
             contents += [temp_file]
             files_paths += []
         except Exception:
-            return HTTPException(
+            raise HTTPException(
                 422, f"Los documentos no se pudieron subir, {file.filename} está corrupto")
     
     for content, file in zip (contents, files):
@@ -48,10 +48,10 @@ def get_doc(key: str, current_user: User = Depends(get_current_active_user)):
         result = s3.get_data_from_s3_bucket(settings.aws_bucket_name, key)
     except Exception as e:
         if hasattr(e, "message"):
-            return HTTPException(
+            raise HTTPException(
                 status_code=e.message["response"]["Error"]["Code"],
                 detail=e.message["response"]["Error"]["Message"],
             )
         else:
-            return HTTPException(status_code=500, detail=str(e))
+            raise HTTPException(status_code=500, detail=str(e))
     return StreamingResponse(content=result["Body"].iter_chunks())

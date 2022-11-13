@@ -1,5 +1,6 @@
 from typing import List
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.domain.models import Application, User, ApplicationSubType, Application_status, Department
@@ -51,6 +52,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             search = search.upper()
             raw = [
                 db.query(Application)
+                .order_by(desc(Application.id))
                 .join(User)
                 .join(ApplicationSubType)
                 .join(Department)
@@ -61,8 +63,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             ]
             res = [user for users in raw for user in users]
             return res
-        
+
         objs_db = (db.query(Application)
+                   .order_by(desc(Application.id))
                    .join(User)
                    .join(ApplicationSubType)
                    .join(Department)
@@ -70,7 +73,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .offset(skip)
                    .limit(limit)
                    .all())
-        
+
         return objs_db
 
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
@@ -85,7 +88,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         db.commit()
         db.refresh(status_obj)
         return db_obj
-
 
 
 policy = ApplicationPolicy()

@@ -11,7 +11,7 @@ log = get_logging(__name__)
 
 
 class TestApplicationPolicy(TestBaseDB):
-    def test_user_policy(self):
+    def test_application_policy(self):
         admin: User = self.session.query(
             User).join(Rol).filter(Rol.scope == 1).first()
         student: User = self.session.query(

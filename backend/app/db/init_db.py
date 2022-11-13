@@ -69,7 +69,7 @@ def init_db() -> None:
     def init_application_type(table, conn, *args, **kwargs):
         from .init_data import init_application_type
         for type in init_application_type:
-            db_obj = dict(type)
+            db_obj = dict(type.dict())
             conn.execute(table.insert().values(**db_obj))
         log.info('Tipos iniciales de las solicitudes creados')
 

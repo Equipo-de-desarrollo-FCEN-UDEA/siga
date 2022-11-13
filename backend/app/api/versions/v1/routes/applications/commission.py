@@ -45,13 +45,13 @@ async def create_commission(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
         await engine.remove(Commission, Commission.id == comission_created.id)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except ValueError as e:
         await engine.remove(Commission, Commission.id == comission_created.id)
-        return HTTPException(422, e)
+        raise HTTPException(422, e)
     except Exception:
         await engine.remove(Commission, Commission.id == comission_created.id)
-        return HTTPException(422, "Algo ocurrió mal")
+        raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
         **dict(application),

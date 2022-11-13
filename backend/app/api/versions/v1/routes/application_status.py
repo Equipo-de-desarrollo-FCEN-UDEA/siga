@@ -17,7 +17,8 @@ def create_application_status(
     current_user: User = Depends(jwt_bearer.get_current_active_user)
 ) -> Application_statusInDB:
     try:
-        application_status_response = crud.application_status.create(db, current_user, obj_in=application_status)
+        application = crud.application.get(db, current_user, id=application_status.application_id)
+        response = crud.application_status.create(db, current_user, obj_in=application_status, to=application)
     except BaseErrors as e:
-        HTTPException(status_code=e.code, detail=e.detail)
-    return application_status_response
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    return response

@@ -43,14 +43,14 @@ def read_applications(
 
 
 @router.get("/{id}", status_code=200,
-            response_model=schemas.ApplicationMultiResponse)
+            response_model=schemas.ApplicationResponse)
 def read_application(
     id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user)
-) -> schemas.ApplicationMultiResponse:
+) -> schemas.ApplicationResponse:
     """
     Endpoint to read an application.
 
