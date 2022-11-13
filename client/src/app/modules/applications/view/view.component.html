@@ -42,4 +42,74 @@
         </div>
     </div>
 
+    <div class="row header-row mt-3">
+        <div class="col">
+            <span class="text-secondary">ACCIONES</span>
+        </div>
+    </div>
+    <hr>
+    
+    <div class="status-control" *ngIf="(isSuperUser | async)" >
+        <form [formGroup]="form" (submit)="submit()">
+            <div class="row regular-row mt-4 align-items-baseline">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  Observación *
+                </div>
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <textarea
+                      id="floatingjustificacion"
+                      formControlName="observation"
+                      class="form-control"
+                      type="justificacion"
+                      placeholder=" "
+                      rows="5"
+                    ></textarea>
+                    <label for="floatingjustificacion" class="formLabel">
+                      Observación
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-row d-md-flex justify-content-md-end">
+                <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
+                    <button class="btn btn-danger" type="button" (click)="decline()">
+                    <span *ngIf="(isLoading | async)"  class="spinner-border spinner-border-sm" ></span>
+                    Rechazar
+                    </button>
+                </div>
+                
+                <div         
+                class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
+                <button
+                    type="submit"
+                    class="btn btn-success"
+                >
+                    Aprobar
+                </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="user-control" *ngIf="!(isSuperUser | async)">
+        <div class="footer-row d-md-flex justify-content-md-end" *ngIf="application$ | async as application">
+            <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
+              <button class="btn btn-danger">
+                <span *ngIf="(isLoading | async)"  class="spinner-border spinner-border-sm" ></span>
+                Eliminar
+              </button>
+            </div>
+            <div         
+              class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
+              <button
+                type="button"
+                class="btn btn-warning"
+              >
+                Editar
+              </button>
+            </div>
+          </div>
+    </div>
+
 </div>

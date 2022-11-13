@@ -48,7 +48,7 @@ class TestApplication_statusPolicy(TestBaseDB):
         # This will raise and break test if coord cant apply status
         status = policy.create(coord, to=permission)
 
-        assert status is None
+        assert status == 'VISTO BUENO'
 
         with raises(BaseErrors):
             # dean cant aprobe without permission be in VISTO BUENO or RECHAZADA status
