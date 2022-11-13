@@ -22,7 +22,8 @@ export class AuthService {
     private router: Router,
     private userSvc: UserService
   ) { 
-    this.isLoggedIn()
+    this.isLoggedIn();
+    // this.isSuperUser();
   }
 
   public Logged = new Subject<boolean>();
@@ -65,7 +66,7 @@ export class AuthService {
 
   isSuperUser(){
     this.userSvc.getUser(0).subscribe(
-      data => this.isSuperUser$.next(data.rol_id < 9)
+      data => this.isSuperUser$.next(data.rol.scope < 9)
     )
   }
 }
