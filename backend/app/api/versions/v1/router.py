@@ -8,7 +8,8 @@ from app.api.versions.v1.routes import (
     rol,
     application_type,
     application,
-    application_status
+    application_status,
+    docs
 )
 
 from app.api.versions.v1.routes.applications import permiso, commission
@@ -37,3 +38,6 @@ api_route.include_router(permiso.app,
                          prefix="/test_permiso", tags=['Test Permiso'])
 api_route.include_router(commission.router,
                          prefix="/commission", tags=['commission'])
+
+# Documents
+api_route.include_router(docs.router, prefix="/docs", tags=['docs'])
