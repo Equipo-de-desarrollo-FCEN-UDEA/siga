@@ -11,4 +11,8 @@ from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,
                                   ApplicationSubTypeInDB)
 from .application_status import (Application_statusCreate, Application_statusInDB,
-                                Application_statusUpdate)
+                                 Application_statusUpdate)
+
+
+from .applications import (PermissionCreate, PermissionUpdate,
+                           PermissionResponse)
