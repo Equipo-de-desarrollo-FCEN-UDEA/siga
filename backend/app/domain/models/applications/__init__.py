@@ -1,1 +1,1 @@
-from .permission import Permission
+from .commission import Commission

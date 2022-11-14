@@ -7,4 +7,4 @@ from .application import Application
 from .application_type import ApplicationType
 from .application_subtype import ApplicationSubType
 from .application_status import Application_status
-from .applications import Permission
+from .applications import Commission

@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 
 from .application_subtype import ApplicationSubTypeInside
 from .application_status import Application_statusResponse
@@ -9,7 +9,7 @@ from .user import UserResponse
 
 
 class ApplicationBase(BaseModel):
-    mongo_id: int
+    mongo_id: Any
     application_sub_type_id: int
     user_id: int
 
@@ -36,3 +36,9 @@ class ApplicationResponse(ApplicationInDB):
     application_sub_type: Optional[ApplicationSubTypeInside]
     application_status: Optional[List[Application_statusResponse]]
     user: UserResponse
+
+
+class ApplicationMultiResponse(ApplicationResponse):
+    @validator('application_status')
+    def last_status(cls, v, values, **kwargs):
+        return [v[-1]]
