@@ -30,14 +30,13 @@ class ApplicationInDB(ApplicationUpdate):
         orm_mode = True
 
 
-class ApplicationMultiResponse(ApplicationInDB):
+class ApplicationResponse(ApplicationInDB):
     application_sub_type: Optional[ApplicationSubTypeInside]
     application_status: Optional[List[Application_statusResponse]]
-    @validator('application_status')
-    def last_status(cls, v, values, **kwargs):
-        return [v[-1]]
     user: UserResponse
 
 
-class ApplicationResponse(ApplicationMultiResponse):
-    pass
+class ApplicationMultiResponse(ApplicationResponse):
+    @validator('application_status')
+    def last_status(cls, v, values, **kwargs):
+        return [v[-1]]

@@ -18,6 +18,8 @@ class TestUserPolicy(TestBaseDB):
         professor: User = self.session.query(
             User).join(Rol).where(Rol.scope == 9).first()
 
+        log.debug(admin.__dict__)
+
         policy = UserPolicy()
         with raises(BaseErrors):
             policy.get(who=student, to=admin)

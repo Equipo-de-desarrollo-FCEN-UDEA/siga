@@ -261,15 +261,29 @@ init_statuss: List[schemas.StatusCreate] = [
 init_application_type: List[schemas.ApplicationTypeCreate] = [
     schemas.ApplicationTypeCreate(
         name="PERMISO",
-        description="Permisos"
+        description="Permisos",
+        status_flux=[
+            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+        ]
     ),
     schemas.ApplicationTypeCreate(
         name="COMISIÓN",
-        description="Comisiones"
+        description="Comisiones",
+        status_flux=[
+            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(status='VISTO BUENO', scope=[6, 7]),
+            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+        ]
     ),
     schemas.ApplicationTypeCreate(
         name="DEDICACIÓN EXCLUSIVA",
-        description="Dedicaciones exclusivas"
+        description="Dedicaciones exclusivas",
+        status_flux=[
+            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+        ]
     )
 ]
 
