@@ -71,13 +71,14 @@
             [ngClass]="{
               'is-invalid': isInvalidForm('application_sub_type_id')
             }"
+            *ngIf="applicationType$ | async as applicationType"
           >
-            <option value="" disabled selected>Tipo de comisión</option>
+            <option value="0" disabled selected>Tipo de comisión</option>
             <option
-              [value]="tipo.id | number"
-              *ngFor="let tipo of comision_type$ | async"
+              [ngValue]="tipo.id | number"
+              *ngFor="let tipo of applicationType.application_sub_type"
             >
-              {{ tipo.nombre }}
+              {{ tipo.name }}
             </option>
           </select>
 
@@ -258,6 +259,22 @@
               [ngClass]="{ 'is-invalid': isInvalidForm('lenguage') }"
             />
             <label for="floatingidioma" class="formLabel"> Idioma </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">País</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingcountry"
+              formControlName="country"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('country') }"
+            />
+            <label for="floatingcountry" class="formLabel"> País </label>
           </div>
         </div>
       </div>

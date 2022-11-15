@@ -6,7 +6,7 @@ import { CreateComponent } from './create.component';
 
 const routes: Routes = [
   { 
-    path: ':id', 
+    path: '', 
     component: CreateComponent,
     children: [
       {

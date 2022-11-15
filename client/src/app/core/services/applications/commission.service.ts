@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class CommissionService {
 
-  private urlEndPoint: string = environment.rute + 'commission/'
+  private urlEndPoint: string = environment.route + 'commission/'
 
   constructor(
     private http: HttpClient

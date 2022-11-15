@@ -11,7 +11,7 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private prefix = environment.rute + 'login/access-token';
+  private prefix = environment.route + 'login/access-token';
   private cookieToken = environment.cookieToken
 
   public isLoggedIn$ : Subject<boolean> = new Subject();

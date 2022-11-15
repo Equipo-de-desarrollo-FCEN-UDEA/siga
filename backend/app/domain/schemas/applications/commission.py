@@ -7,12 +7,15 @@ from app.domain.schemas.application import ApplicationResponse
 
 class CommissionBase(BaseModel):
     country: str
-    state: str
-    city: str
+    state: str | None
+    city: str | None
     start_date: datetime
     end_date: datetime
-    lenguage: str
+    lenguage: str | None
     justification: str
+    documents: list[str]
+    
+
 
 
 class CommissionCreate(CommissionBase):
@@ -29,5 +32,10 @@ class CommissionUpdate(CommissionBase):
     pass
 
 
-class CommissionResponse(ApplicationResponse):
+class ComissionInDB(CommissionBase):
+    resolution: str | None
+    cumplido: str | None
+
+
+class CommissionResponse(ComissionInDB):
     commission: CommissionBase

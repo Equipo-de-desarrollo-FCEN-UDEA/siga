@@ -4,9 +4,12 @@ from odmantic import Model
 
 class Commission(Model):
     country: str
-    state: str
-    city: str
+    state: str | None
+    city: str | None
     start_date: datetime
     end_date: datetime
-    lenguage: str
+    lenguage: str | None
     justification: str
+    documents: list[str] | None
+    resolution: str | None
+    cumplido: str | None

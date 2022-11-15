@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ApplicationTypesService } from '@services/application-types.service';
 import { LoaderService } from '@services/loader.service';
 
 @Component({
@@ -30,7 +31,9 @@ export class CommissionComponent implements OnInit {
 
   public comision_type$: any;
 
-  public isLoading = this.loaderSvc.isLoading
+  public isLoading = this.loaderSvc.isLoading;
+
+  public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
   constructor(
     private fb: FormBuilder,
@@ -40,13 +43,13 @@ export class CommissionComponent implements OnInit {
     private router: Router,
     private cd: ChangeDetectorRef,
 
-    private loaderSvc: LoaderService
+    private loaderSvc: LoaderService,
+    private applicationTypeSvc: ApplicationTypesService
   ) {
-
    }
 
    public form = this.fb.group({
-    application_sub_type_id: [NaN, [Validators.required]],
+    application_sub_type_id: [0, [Validators.required]],
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
@@ -60,7 +63,7 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
-    console.log('enviado')
+    console.log(this.form.value)
   }
 
   // --------------------------------------
