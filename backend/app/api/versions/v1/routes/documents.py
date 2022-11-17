@@ -1,4 +1,5 @@
 from io import BytesIO
+from uuid import uuid1
 
 from fastapi import APIRouter, File, UploadFile, Response, HTTPException, Depends
 from fastapi.responses import FileResponse, StreamingResponse
@@ -19,7 +20,7 @@ router = APIRouter()
 def upload_doc(files: list[UploadFile],
                      current_user: User = Depends(get_current_active_user)):
     contents: list[BytesIO] = []
-    files_paths: list[str] = []
+    files_paths: list[dict] = []
 
     for file in files:
         try:
@@ -34,11 +35,11 @@ def upload_doc(files: list[UploadFile],
                 422, f"Los documentos no se pudieron subir, {file.filename} está corrupto")
     
     for content, file in zip (contents, files):
-        path = f'user_{current_user.id}/' + file.filename
+        path = f'user_{current_user.id}/{uuid1()}' + file.filename
         response = s3.push_data_to_s3_bucket(settings.aws_bucket_name, content,
                                     file_name=path, content_type=file.content_type)
         if response:
-            files_paths += [path]
+            files_paths += [{"path" : path , "name": file.filename}]
     return {"files_paths": files_paths}
 
 

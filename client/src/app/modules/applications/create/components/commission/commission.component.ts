@@ -1,9 +1,15 @@
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommissionCreate } from '@interfaces/applications/commission';
+import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { CommissionService } from '@services/applications/commission.service';
+import { DocumentsService } from '@services/documents.service';
 import { LoaderService } from '@services/loader.service';
+import { switchMap } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-commission',
@@ -23,6 +29,7 @@ export class CommissionComponent implements OnInit {
   // Files 
   public files : any[] = [];
   public archivos = [1];
+  public documents: file_path[] = []
 
   // For handle errors
   public clicked = 0;
@@ -44,7 +51,9 @@ export class CommissionComponent implements OnInit {
     private cd: ChangeDetectorRef,
 
     private loaderSvc: LoaderService,
-    private applicationTypeSvc: ApplicationTypesService
+    private applicationTypeSvc: ApplicationTypesService,
+    private commissionSvc: CommissionService,
+    private documentsSvc: DocumentsService
   ) {
    }
 
@@ -53,28 +62,59 @@ export class CommissionComponent implements OnInit {
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
-    start_date: ['', [Validators.required]],
-    end_date: ['', [Validators.required]],
+    start_date: [new Date(), [Validators.required]],
+    end_date: [new Date(), [Validators.required]],
     lenguage: ['', [Validators.required, Validators.maxLength(50)]],
-    justification: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]]
-   })
+    justification: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
+    documents: [this.documents]
+   
+  })
 
   ngOnInit(): void {
   }
 
   submit() {
-    console.log(this.form.value)
+    let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+    if (this.files.length > 0) {
+      commission = this.documentsSvc.postDocument(this.files as File[]).pipe(
+        switchMap((data: DocumentsResponse) => {
+          if (data) {
+            this.form.patchValue({
+              documents: data.files_paths
+            })
+          }
+          console.log(this.form.value)
+          return this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+        })
+      )
+    }
+    console.log(this.form.value as CommissionCreate)
+    commission.subscribe(
+      data => {
+        Swal.fire(
+          {
+            title: 'La comisión se creó correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            // buttonsStyling: false,
+            // customClass: {
+            //   confirmButton: 'button is-success is-rounded'
+            // }
+          }
+        ).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['../'])
+          }
+        })
+      }
+    )
+
   }
 
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
   
-  // inRange(fecha_1 : any, fecha_2 : any){
-  //   fecha_1 = new Date(this.formatter.format(fecha_1));
-  //   fecha_2 = new Date(this.formatter.format(fecha_2));
-  //   return DiasHabiles(fecha_1, fecha_2) > this.dias_permiso;
-  // }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
@@ -87,8 +127,8 @@ export class CommissionComponent implements OnInit {
     }
 
     this.form.patchValue({
-      start_date : this.formatter.format(this.fromDate),
-      end_date : this.formatter.format(this.toDate)
+      start_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
+      end_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
     });
   }
 

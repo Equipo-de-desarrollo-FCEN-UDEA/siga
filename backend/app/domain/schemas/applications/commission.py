@@ -1,3 +1,4 @@
+from typing import Any
 from datetime import datetime
 
 from pydantic import BaseModel, validator, Field
@@ -12,8 +13,8 @@ class CommissionBase(BaseModel):
     start_date: datetime
     end_date: datetime
     lenguage: str | None
-    justification: str
-    documents: list[str]
+    justification: str = Field(max_length=300, min_length=30)
+    documents: list[Any] | None
     
 
 
@@ -37,5 +38,5 @@ class ComissionInDB(CommissionBase):
     cumplido: str | None
 
 
-class CommissionResponse(ComissionInDB):
+class CommissionResponse(ApplicationResponse):
     commission: CommissionBase

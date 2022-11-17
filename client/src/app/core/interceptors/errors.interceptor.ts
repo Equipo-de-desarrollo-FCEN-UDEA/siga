@@ -27,12 +27,23 @@ export class ErrorsInterceptor implements HttpInterceptor {
               icon: 'error'
             })
           } else {
-            Swal.fire({
-              title: 'Error',
-              text: _error.error.detail,
-              confirmButtonText: 'Aceptar',
-              icon: 'error'
-            })
+            if (_error.status == 422) {
+              console.log(_error)
+              Swal.fire({
+                title: 'Error',
+                text: _error.error.detail[0].msg,
+                confirmButtonText: 'Aceptar',
+                icon: 'error'
+              })
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: _error.error.detail,
+                confirmButtonText: 'Aceptar',
+                icon: 'error'
+              })
+            }
+            
           }
           return throwError(_error.error.message);
         }
