@@ -6,7 +6,7 @@ import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { CommissionService } from '@services/applications/commission.service';
-import { DocumentsService } from '@services/documents.service';
+import { DocumentService } from '@services/document.service';
 import { LoaderService } from '@services/loader.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -53,7 +53,7 @@ export class CommissionComponent implements OnInit {
     private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
-    private documentsSvc: DocumentsService
+    private documentService: DocumentService
   ) {
    }
 
@@ -76,7 +76,7 @@ export class CommissionComponent implements OnInit {
   submit() {
     let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
     if (this.files.length > 0) {
-      commission = this.documentsSvc.postDocument(this.files as File[]).pipe(
+      commission = this.documentService.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
           if (data) {
             this.form.patchValue({

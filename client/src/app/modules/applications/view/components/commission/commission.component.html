@@ -35,9 +35,10 @@
         <div class="col-xs-12 col-sm-6">
           <ul>
             <li *ngFor="let doc of commission.documents">
-              <span class="link-success cursor"
+              <span class="link-success cursor" (click)="openDocument(doc.path)"
                 >{{ doc.name }}&nbsp;&nbsp;</span
               >&nbsp;
+              {{doc.path}}
             </li>
           </ul>
         </div>
