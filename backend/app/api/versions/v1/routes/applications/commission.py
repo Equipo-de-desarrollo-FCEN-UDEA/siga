@@ -34,7 +34,6 @@ async def create_commission(
             - Commission
     """
     try:
-        log.debug(comission)
         comission_created = await crud.comission.create(db=engine,
                                                         obj_in=Commission(**dict(comission)))
         application = ApplicationCreate(
