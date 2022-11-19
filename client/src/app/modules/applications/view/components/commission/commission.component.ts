@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Application } from '@interfaces/application';
 import { CommissionInDB, CommissionResponse } from '@interfaces/applications/commission';
 import { CommissionService } from '@services/applications/commission.service';
+import { DocumentService } from '@services/document.service';
 import { ComService } from '../../connection/com.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class CommissionComponent implements OnInit {
   constructor(
     private commissionSvc: CommissionService,
     private comSvc: ComService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private documentService: DocumentService
   ) {
     this.route.parent?.params.subscribe(
       params => {
@@ -39,6 +41,12 @@ export class CommissionComponent implements OnInit {
         this.application = application
         this.comSvc.push(this.application)
       }
+    )
+  }
+
+  openDocument(path:string) {
+    this.documentService.getDocument(path).subscribe(
+      res => window.open(window.URL.createObjectURL(res))
     )
   }
 
