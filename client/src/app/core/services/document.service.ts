@@ -30,4 +30,10 @@ export class DocumentService {
     return this.http.get(this.urlEndPoint, { responseType: 'blob', params: params })
   }
 
+  deleteDocument(path: string) {
+    let params = new HttpParams()
+    params = params.append('key', path)
+    return this.http.delete(this.urlEndPoint, { params: params })
+  }
+
 }
