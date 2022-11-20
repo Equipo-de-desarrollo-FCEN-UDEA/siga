@@ -29,6 +29,7 @@ export class CommissionComponent implements OnInit {
   public files: any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
+  public documentsToDelete: string[] = []
 
   // For handle errors
   public clicked = 0;
@@ -55,7 +56,7 @@ export class CommissionComponent implements OnInit {
     private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
-    private documentService: DocumentService
+    private documentSvc: DocumentService
   ) {
 
   }
@@ -93,9 +94,12 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
-    let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+    let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+    for (let path of this.documentsToDelete) {
+      this.documentSvc.deleteDocument(path).subscribe().unsubscribe()
+    }
     if (this.files.length > 0) {
-      commission = this.documentService.postDocument(this.files as File[]).pipe(
+      commission = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
           if (data) {
             this.documents = this.documents.concat(data.files_paths)
@@ -103,7 +107,7 @@ export class CommissionComponent implements OnInit {
               documents: this.documents
             })
           }
-          return this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+          return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
         })
       )
     }
@@ -112,13 +116,9 @@ export class CommissionComponent implements OnInit {
       data => {
         Swal.fire(
           {
-            title: 'La comisión se creó correctamente',
+            title: 'La comisión se actualizó correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar',
-            // buttonsStyling: false,
-            // customClass: {
-            //   confirmButton: 'button is-success is-rounded'
-            // }
           }
         ).then((result) => {
           if (result.isConfirmed) {
@@ -205,6 +205,24 @@ export class CommissionComponent implements OnInit {
       this.archivos.splice(index, 1);
     };
     this.files.splice(index, 1);
+  }
+
+  deleteDocument(path: string, i: number) {
+    Swal.fire({
+      title: "Eliminar documento",
+      text: "¿Está seguro de querer eliminar este documento?, no podrá recuperarlo",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Eliminar",
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3AB795'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.documentsToDelete = this.documentsToDelete.concat([path]);
+        this.documents.splice(i, 1);
+      }
+    })
+
   }
 
   validSize() {

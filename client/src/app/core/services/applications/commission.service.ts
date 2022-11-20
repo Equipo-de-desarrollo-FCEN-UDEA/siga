@@ -23,4 +23,8 @@ export class CommissionService {
     return this.http.post(this.urlEndPoint, body)
   }
 
+  putCommission(body: CommissionCreate, id: number) {
+    return this.http.put(this.urlEndPoint + id, body)
+  }
+
 }
