@@ -56,3 +56,20 @@ def get_doc(key: str, current_user: User = Depends(get_current_active_user)):
         else:
             raise HTTPException(status_code=500, detail=str(e))
     return StreamingResponse(content=result["Body"].iter_chunks(), media_type=result["ContentType"])
+
+
+@router.delete("/")
+def delete_doc(key: str, current_user: User = Depends(get_current_active_user)):
+    try:
+        delete = s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=key)
+    except Exception as e:
+        if hasattr(e, "message"):
+            raise HTTPException(
+                status_code=e.message["response"]["Error"]["Code"],
+                detail=e.message["response"]["Error"]["Message"],
+            )
+        else:
+            raise HTTPException(status_code=500, detail=str(e))
+    if not delete:
+        raise HTTPException(status_code=401, detail="No se pudo eliminar el archivo, intenta nuevamente")
+    return {"msg": "Archivo eliminado con éxito"}
