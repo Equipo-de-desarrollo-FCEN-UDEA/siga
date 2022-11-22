@@ -1,16 +1,21 @@
+//angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '@shared/pages/login/login.component';
 
-const routes: Routes = [
+
+const ROUTES: Routes = [
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) 
+  },
+  {
+    path: '**',
+    redirectTo: 'auth'
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

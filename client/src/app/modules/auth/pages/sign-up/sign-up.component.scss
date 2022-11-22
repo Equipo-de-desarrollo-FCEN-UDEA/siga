@@ -1,0 +1,43 @@
+.containerInside{
+  width: 75%;
+  min-height: 10vh!important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  align-items: unset;
+  margin-bottom: 6em!important;
+}
+
+.btn-submit {
+  color: #fff;
+  border-color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 105, 55, 1) 0%,
+    rgba(2, 105, 55, 1) 0%,
+    rgba(53, 143, 57, 1) 100%
+  );
+}.btn-submit:hover {
+  transition: all 0.5s ease-out;
+  background-color: #fff;
+}
+
+.error {
+  color: red;
+}
+
+@media screen and (max-width: 920px){
+  .containerInside {
+    width: 95%!important;
+
+   }
+  }
+
+  .btn-success {
+    background-color: #43b649;
+  }
+
+  .selectLabel{
+    left: 1.4em;
+    }
