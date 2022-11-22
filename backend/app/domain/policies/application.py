@@ -35,15 +35,21 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
                remunerated_permissions: int = 0) -> None:
 
         application_sub_type = to.application_sub_type_id
-        if (application_sub_type in [1, 2, 3, 4, 5, 6, 7]
-                and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Permiso
+
+        # Permiso
+        if (application_sub_type in [1, 2, 3, 4, 5, 6, 7] and
+                (not (who.rol.scope == 11 or who.rol.scope == 9)
+                 or remunerated_permissions >= 1)):
+            
             raise application_401
 
+        # Comisión
         if (application_sub_type in [8, 9]
-                and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Comisión
+                and not (who.rol.scope == 11 or who.rol.scope == 9)):
             raise application_401
 
-        if (application_sub_type == 10 and not (who.rol.scope == 7)):  # Dedicación
+        # Dedicación
+        if (application_sub_type == 10 and not (who.rol.scope == 7)):
             raise application_401
 
         return None

@@ -32,23 +32,39 @@ async def create_permission(
                 - Permission
     """
     try:
-        # En la BD de mongo    
-        permission_created = await crud.permission.create(db=engine,
-                                                          obj_in=Permission(**dict(permission)))
+        # Verificar numero de permisos remunerados
+        # Si es más de uno no debe crear otro
+        # multi_paid_permissions = await crud.permission.get_multi_paid_permissions(engine=engine, db=db,
+        #                                                                           who=current_user,
+        #                                                                           type=permission.application_sub_type_id)
+
+        # approved_permissions = crud.permission.get_approved_permissions(db=db,
+        #                                                                 who=current_user,
+        #                                                                 type_permission=permission.application_sub_type_id)
+
+        remunerated_permissions = crud.permission.get_approved_permissions(
+            db=db, who=current_user, type_permission=permission.application_sub_type_id)
+
+        # En la BD de mongo
+        permission_created = await crud.permission.create(
+            db=db,
+            who=current_user,
+            obj_in=Permission(**dict(permission)))
 
         print('permission_created---------------', permission_created)
-              
-        # En la BD de PostgreSQL                                        
+
+        # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(permission_created.id),
             application_sub_type_id=permission.application_sub_type_id,
-            user_id=current_user.id
+            user_id=current_user.id,
         )
 
         application = crud.application.create(
             db=db,
             who=current_user,
-            obj_in=application
+            obj_in=application,
+            remunerated_permissions=remunerated_permissions
         )
 
     # 422 (Unprocessable Entity)
@@ -61,14 +77,14 @@ async def create_permission(
     except Exception:
         await engine.remove(Permission, Permission.id == permission_created.id)
         return HTTPException(422, "Algo ocurrió mal")
-    
+
     application = ApplicationResponse.from_orm(application)
-    
+
     response = PermissionResponse(
         **dict(application),
         permission=permission_created
     )
-    log.debug(application, response)
+    log.debug(application)
     return response
 
 
@@ -106,21 +122,21 @@ async def get_permission(
                 - Permission
     """
     try:
-        application = crud.application.get(db, current_user, id=id)
+        application = crud.application.get(db=db, who=current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    
+
     # from_orm: must be used to create the model instance
     application = ApplicationResponse.from_orm(application)
     response = PermissionResponse(
         **dict(application),
         permission=permission
     )
-    log.debug(application, response)
-    log.info(application, response)
+    log.debug(application)
+    log.info(response)
     return response
 
 
@@ -144,8 +160,10 @@ async def put_permission(
                 - Permission
     """
     try:
-        application: Application = crud.application.get(db=db, id=id, who=current_user)
-        application = crud.application.update(db=db, who=current_user, db_obj=application, obj_in={})
+        application: Application = crud.application.get(
+            db=db, id=id, who=current_user)
+        application = crud.application.update(
+            db=db, who=current_user, db_obj=application, obj_in={})
         mongo_id = ObjectId(application.mongo_id)
 
         if application:
@@ -179,11 +197,11 @@ async def put_permission(
         mongo_id = ObjectId(application.mongo_id)
         # Delete from PostgreSQL
         delete = crud.application.delete(db=db, who=current_user, id=id)
-        
+
         if delete:
             # Delete from mongo
             await crud.permission.delete(db=engine, id=mongo_id)
-        
+
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return Msg(msg="¡Permiso eliminado correctamente!")

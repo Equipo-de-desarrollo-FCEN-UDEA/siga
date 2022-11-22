@@ -76,7 +76,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         return objs_db
 
-    def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
+    def create(self, db: Session, who: User, obj_in: ApplicationCreate, remunerated_permissions: int=0) -> Application:
+        self.policy.create(self, who=who.id, to=obj_in, remunerated_permissions=remunerated_permissions)
         db_obj = super().create(db, who, obj_in=obj_in)
         application_status = Application_statusCreate(
             application_id=db_obj.id,

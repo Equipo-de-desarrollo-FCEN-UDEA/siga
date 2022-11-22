@@ -14,8 +14,6 @@ class PermissionBase(BaseModel):
 class PermissionCreate(PermissionBase):
     application_sub_type_id: int
 
-    #@validator("application_sub_type_id")
-
 
 class PermissionUpdate(PermissionBase):
     pass

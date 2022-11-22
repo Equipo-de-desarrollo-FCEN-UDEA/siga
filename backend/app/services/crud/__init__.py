@@ -8,3 +8,4 @@ from .application_type import application_type
 from .application_subtype import application_sub_type
 from .application_status import application_status
 from .applications import comission
+from .applications import permission

@@ -20,7 +20,6 @@ class CRUDBase(Generic[ModelType, UpdateSchema]):
 
     async def create(self, db: AIOSession,
                      *, obj_in: Type[ModelType]) -> Type[ModelType]:
-
         return await db.save(obj_in)
 
     async def update(

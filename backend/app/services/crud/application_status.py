@@ -10,16 +10,6 @@ from sqlalchemy.orm import Session
 
 
 class CRUDApplication_status(CRUDBase[Application_status, Application_statusCreate, Application_statusUpdate, Application_statusPolicy]):
-<<<<<<< HEAD
-    
-    def create(self, db: Session, who: User, *, obj_in: Application_statusCreate) -> Application_status:
-        self.policy.create(who)
-        #db_obj = super().create(db, who, obj_in=obj_in)
-        db.add(obj_in)
-        db.commit()
-        db.refresh(obj_in)
-        return obj_in
-=======
     def create(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application) -> Application_status:
         next_status = self.policy.create(who=who, to=to)
         status = db.query(Status).where(Status.name == next_status).first()
@@ -31,7 +21,6 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
         db.commit()
         db.refresh(db_obj)
         return db_obj
->>>>>>> bb18674809afdb96160eed4ca75f0504062d2788
 
 
 policy = Application_statusPolicy()
