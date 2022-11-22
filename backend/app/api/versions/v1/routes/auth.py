@@ -60,7 +60,7 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     email_token = jwt.email_token(email=user.email)
     recovery_password_email.apply_async(
         args=(user.names, user.email, email_token))
-    return {"msg": email_token}
+    return {"msg": "El correo para recuperar la contraseña fue enviado correctamente"}
 
 
 # Route for reset password
@@ -115,10 +115,15 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
             status_code=404,
             detail="El usuario con este correo o número de identificación no está registrado en el sistema",
         )
+    if user.active:
+        raise HTTPException(
+            status_code=403,
+            detail="El usuario con este correo o número de identificación ya está activo",
+        )
     email_token = jwt.email_token(email=user.email)
     confirm_email.apply_async(
         args=(user.names, user.email, email_token))
-    return {"msg": email_token}
+    return {"msg": "El correo de confirmación de correo fue enviado correctamente"}
 
 
 # Route for activate the account with the mailed token

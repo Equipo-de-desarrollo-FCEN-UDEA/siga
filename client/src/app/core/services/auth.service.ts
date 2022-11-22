@@ -11,17 +11,17 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private prefix = environment.route + 'login/access-token';
+  private urlEndPoint = environment.route + 'login/';
   private cookieToken = environment.cookieToken
 
-  public isLoggedIn$ : Subject<boolean> = new Subject();
+  public isLoggedIn$: Subject<boolean> = new Subject();
 
   constructor(
     private http: HttpClient,
     private cookieSvc: CookieService,
     private router: Router,
     private userSvc: UserService
-  ) { 
+  ) {
     this.isLoggedIn();
     // this.isSuperUser();
   }
@@ -37,15 +37,36 @@ export class AuthService {
       }
     );
     const body = `username=${auth.username}&password=${auth.password}`;
-    return this.http.post<Token>(this.prefix, body, { headers: headers }).pipe(
+    return this.http.post<Token>(this.urlEndPoint + 'access-token', body, { headers: headers }).pipe(
       map(
-      (data: Token) => {
-        this.cookieSvc.delete(`${this.cookieToken}`, '/', '/')
-        this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires)
-        this.Logged.next(true);
-      }
-    ))
+        (data: Token) => {
+          this.cookieSvc.delete(`${this.cookieToken}`, '/', '/')
+          this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires)
+          this.Logged.next(true);
+        }
+      ))
   }
+
+
+  passwordRecovery(email: string) {
+    return this.http.post(this.urlEndPoint + 'password-recovery/' + email, {})
+  }
+
+
+  resetPassword(password: string, token: string) {
+    return this.http.post(this.urlEndPoint + 'reset-password/', { token: token, new_password: password })
+  }
+
+
+  sendActivateEmail(email: string) {
+    return this.http.post(this.urlEndPoint + 'activate-email/' + email, {})
+  }
+
+
+  activateEmail(token: string) {
+    return this.http.post(this.urlEndPoint + 'activate-account/', token)
+  }
+  
 
   isLoggedIn() {
     const tokenCheck = this.cookieSvc.check(`_${this.cookieToken}`)
@@ -53,9 +74,11 @@ export class AuthService {
     return tokenCheck
   }
 
+
   getToken(): string {
     return this.cookieSvc.get(`_${this.cookieToken}`)
   }
+
 
   logOut() {
     this.cookieSvc.deleteAll()
@@ -64,7 +87,8 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
 
-  isSuperUser(){
+
+  isSuperUser() {
     this.userSvc.getUser(0).subscribe(
       data => this.isSuperUser$.next(data.rol.scope < 9)
     )
