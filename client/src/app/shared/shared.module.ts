@@ -11,7 +11,6 @@ import { SharedRoutingModule } from './shared-routing.module';
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
 
-
 @NgModule({
   declarations: [
     StatusHistoryComponent,
