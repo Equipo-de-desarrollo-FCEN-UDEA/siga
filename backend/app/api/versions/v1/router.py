@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.versions.v1.routes import (
+    documents,
     user,
     auth,
     department,
@@ -8,8 +9,7 @@ from app.api.versions.v1.routes import (
     rol,
     application_type,
     application,
-    application_status,
-    docs
+    application_status
 )
 
 from app.api.versions.v1.routes.applications import permission, commission
@@ -28,9 +28,10 @@ api_route.include_router(
 api_route.include_router(rol.router, prefix="/rol", tags=["rol"])
 api_route.include_router(application_type.router,
                          prefix='/application-type', tags=['application-types'])
-api_route.include_router(
-    application.router, prefix="/application", tags=["application"])
 
+
+api_route.include_router(application.router,
+                         prefix="/application", tags=["application"])
 api_route.include_router(application_status.router,
                          prefix="/application-status", tags=['application-status'])
 
@@ -40,5 +41,8 @@ api_route.include_router(commission.router,
 api_route.include_router(
     permission.router, prefix="/permission", tags=['permission'])
 
+api_route.include_router(
+    permission.router, prefix="/permission", tags=['permission'])                         
+
 # Documents
-api_route.include_router(docs.router, prefix="/docs", tags=['docs'])
+api_route.include_router(documents.router, prefix="/documents", tags=['documents'])

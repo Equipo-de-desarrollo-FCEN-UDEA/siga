@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class ApplicationService {
 
-  private urlEndPoint: string = environment.rute + 'application/'
+  private urlEndPoint: string = environment.route + 'application/'
 
   constructor(
     private http: HttpClient,

@@ -1,3 +1,4 @@
+from typing import Any
 from datetime import datetime
 
 from pydantic import BaseModel, validator, Field
@@ -7,12 +8,15 @@ from app.domain.schemas.application import ApplicationResponse
 
 class CommissionBase(BaseModel):
     country: str
-    state: str
-    city: str
+    state: str | None
+    city: str | None
     start_date: datetime
     end_date: datetime
-    lenguage: str
-    justification: str
+    lenguage: str | None
+    justification: str = Field(max_length=300, min_length=30)
+    documents: list[Any] | None
+    
+
 
 
 class CommissionCreate(CommissionBase):
@@ -27,6 +31,11 @@ class CommissionCreate(CommissionBase):
 
 class CommissionUpdate(CommissionBase):
     pass
+
+
+class ComissionInDB(CommissionBase):
+    resolution: str | None
+    cumplido: str | None
 
 
 class CommissionResponse(ApplicationResponse):

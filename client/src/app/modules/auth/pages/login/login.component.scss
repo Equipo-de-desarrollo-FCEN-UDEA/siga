@@ -1,0 +1,33 @@
+.text-center {
+  text-align: center;
+}
+
+.container {
+  margin: 5em;
+}
+
+.title {
+  color: #026937;
+}
+
+.btn-submit {
+  color: #fff;
+  border-color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 105, 55, 1) 0%,
+    rgba(2, 105, 55, 1) 0%,
+    rgba(53, 143, 57, 1) 100%
+  );
+}.btn-submit:hover {
+  transition: all 0.5s ease-out;
+  background-color: #fff;
+}
+
+a {
+  padding: 0;
+}
+
+.invalid {
+  color: red;
+}

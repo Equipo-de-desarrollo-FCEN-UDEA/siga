@@ -72,9 +72,10 @@
                 </div>
               </div>
               <div class="footer-row d-md-flex justify-content-md-end">
+                <span *ngIf="(isLoading | async)"  class="spinner-border spinner-border-sm" ></span>
                 <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
                     <button class="btn btn-danger" type="button" (click)="decline()">
-                    <span *ngIf="(isLoading | async)"  class="spinner-border spinner-border-sm" ></span>
+
                     Rechazar
                     </button>
                 </div>

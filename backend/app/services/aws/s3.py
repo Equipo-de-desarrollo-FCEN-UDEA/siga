@@ -25,9 +25,12 @@ class AmazonS3:
             return False
         return True
 
-    def delete_contents_s3_bucket(self, bucket_name, file_name):
-        self.s3.Object(bucket_name, file_name).delete()
-        self.show_contents_s3_bucket(bucket_name)
+    def delete_contents_s3_bucket(self, bucket_name, file_name) -> bool:
+        try:
+            self.s3.Object(bucket_name, file_name).delete()
+        except ClientError as e:
+            return False
+        return True
 
     def get_data_from_s3_bucket(self, bucket_name, file_name):
         return self.s3.Object(bucket_name, file_name).get()

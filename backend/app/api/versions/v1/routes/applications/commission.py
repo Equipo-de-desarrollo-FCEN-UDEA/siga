@@ -56,6 +56,7 @@ async def create_commission(
         await engine.remove(Commission, Commission.id == comission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
+    log.debug(comission_created)
     response = CommissionResponse(
         **dict(application),
         commission=comission_created

@@ -31,7 +31,7 @@ Con lo anterior le bastaría para desarrollar sin ningún inconveniente, sin emb
 
 ### Para crear un ambiente virtual con poetry
 
-Lo primero que se debe hacer es instalar poetry https://python-poetry.org/docs/#installation 
+Lo primero que se debe hacer es instalar poetry https://ython-poetry.org/docs/#installation 
 
 Una vez tenga instalado poetry le recomiendo seguir la guía para añadir el bin a la terminal y poder ejecutar comandos de poetry, para verificar que poetry quedó bien instalado haga uso del comando
 
