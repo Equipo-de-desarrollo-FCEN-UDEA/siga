@@ -10,37 +10,42 @@ import dateutil.parser
 
 from app.domain.models import Permission, Application, User, Application_status
 from app.domain.schemas import PermissionUpdate, PermissionCreate, ApplicationCreate
-from app.domain.policies import ApplicationPolicy
-#from app.domain.policies.applications.permission import
+from app.domain.policies.applications.permission import PermissionPolicy
+# from app.domain.policies.applications.permission import
 from app.services.crud.application import CRUDBase
 
 log = get_logging(__name__)
 
 
-class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, ApplicationPolicy]):
-
-    # def __init__(self, model: Permission, policy: ApplicationPolicy):
-    #     """Factory crud with odm"""
-    #     self.model = model
-    #     self.policy = policy
+class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, PermissionPolicy]):
 
     # Buscar numero de permisos remunerados en el semestre
-    # Si es más de uno no debe crear otro
+    # Si es más de uno no debe poder crear otro
 
-    # async def create(self,
-    #     db: Session,
-    #     engine: AIOSession,
-    #     who: User,
-    #     obj_in: PermissionCreate,
-    #     type_permission: int = 0
-    #     ) -> Permission:
+    async def create(
+        self,
+        db: Session,
+        engine: AIOSession,
+        who: User,
+        obj_in: PermissionCreate,
+        type_permission: int = 0
+    ) -> PermissionCreate:
 
-    #     permissions_user = self.get_approved_permissions(db=db, who=who, type_permission=type_permission)
-    #     remunerated_permissions = await self.get_remunerated_permissions(engine=engine, permissions_user=permissions_user)
+        permissions_user = self.get_approved_permissions(db=db,
+                                                         who=who,
+                                                         type_permission=type_permission)
 
-    #     #self.policy.create(self=PermissionCreate, who=who.id, to=obj_in, remunerated_permissions=remunerated_permissions)
+        log.debug('permissions_user', permissions_user)
 
-    #     return await remunerated_permissions
+        remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
+                                                                         permissions_user=permissions_user)
+
+        log.debug('remunerated_permissions', remunerated_permissions)
+
+        self.policy.create(
+            self, remunerated_permissions=remunerated_permissions)
+
+        return await engine.save(obj_in)
 
     def get_approved_permissions(
         self,
@@ -55,9 +60,10 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Ap
         if type_permission == 7:
 
             # Application_status.status_id == 3 es APROBADO
+            # Join tablas Application_status y Application por id
             permissions_user = db.query(Application.mongo_id).join(
                 Application_status, Application.id == Application_status.application_id).\
-                filter(Application_status.status_id == 1).\
+                filter(Application_status.status_id == 3).\
                 filter(Application.application_sub_type_id == 7).\
                 filter(Application.user_id == who.id).all()
 
@@ -69,16 +75,12 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Ap
 
     async def get_remunerated_permissions(
         self,
-        db: Session,
         engine: AIOSession,
-        who: User,
-        type_permission: int = 0
+        permissions_user: list
     ) -> int:
 
-        #remunerated_permissions = 0
-        permissions_user = self.get_approved_permissions(
-            db=db, who=who, type_permission=type_permission)
-
+        # Verificar numero de permisos remunerados aprobados en el semestre
+        remunerated_permissions = 0
         if len(permissions_user) > 0:
 
             today = datetime.now()
@@ -166,7 +168,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Ap
     #     return permissions_user
 
 
-permission = CRUDPermission(Permission, ApplicationPolicy)
+permission = CRUDPermission(Permission, PermissionPolicy)
 
 # policy = ApplicationPolicy()
 

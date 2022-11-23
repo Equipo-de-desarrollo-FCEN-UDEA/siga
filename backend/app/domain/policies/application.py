@@ -31,15 +31,13 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         return None
 
     # Who can create a application of a subtype
-    def create(self, who: User, to: ApplicationCreate,
-               remunerated_permissions: int = 0) -> None:
+    def create(self, who: User, to: ApplicationCreate) -> None:
 
         application_sub_type = to.application_sub_type_id
 
         # Permiso
         if (application_sub_type in [1, 2, 3, 4, 5, 6, 7] and
-                (not (who.rol.scope == 11 or who.rol.scope == 9)
-                 or remunerated_permissions >= 1)):
+                not (who.rol.scope == 11 or who.rol.scope == 9)):
             
             raise application_401
 

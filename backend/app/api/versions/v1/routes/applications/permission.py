@@ -9,6 +9,7 @@ from app.services import crud
 from app.domain.models import Permission, User, Application
 from app.domain.schemas import ApplicationCreate, PermissionResponse, PermissionUpdate, PermissionCreate, Msg, ApplicationResponse
 from app.domain.errors import BaseErrors
+from app.domain.errors.applications.permission import PermissionErrors
 
 router = APIRouter()
 
@@ -16,14 +17,13 @@ log = get_logging(__name__)
 
 
 # ------ CREAR UN PERMISO ------
-@router.post("/", response_model=PermissionResponse, status_code=201)
+@router.post("/", status_code=201)
 async def create_permission(
     permission: PermissionCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
-    db: Session = Depends(db.get_db)
-) -> PermissionResponse:
+    db: Session = Depends(db.get_db)):
     """
         Endpoint to create a application type Permission
             params:
@@ -32,26 +32,17 @@ async def create_permission(
                 - Permission
     """
     try:
-        # Verificar numero de permisos remunerados
-        # Si es más de uno no debe crear otro
-        # multi_paid_permissions = await crud.permission.get_multi_paid_permissions(engine=engine, db=db,
-        #                                                                           who=current_user,
-        #                                                                           type=permission.application_sub_type_id)
-
-        # approved_permissions = crud.permission.get_approved_permissions(db=db,
-        #                                                                 who=current_user,
-        #                                                                 type_permission=permission.application_sub_type_id)
-
-        remunerated_permissions = crud.permission.get_approved_permissions(
-            db=db, who=current_user, type_permission=permission.application_sub_type_id)
+        permission_created = None
 
         # En la BD de mongo
         permission_created = await crud.permission.create(
             db=db,
+            engine=engine,
             who=current_user,
-            obj_in=Permission(**dict(permission)))
-
-        print('permission_created---------------', permission_created)
+            obj_in=Permission(**dict(permission)),
+            type_permission=permission.application_sub_type_id)
+        
+        log.debug('permission_created', permission_created)
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(
@@ -59,32 +50,39 @@ async def create_permission(
             application_sub_type_id=permission.application_sub_type_id,
             user_id=current_user.id,
         )
-
+        
         application = crud.application.create(
             db=db,
             who=current_user,
-            obj_in=application,
-            remunerated_permissions=remunerated_permissions
+            obj_in=application
+        )
+
+        application = ApplicationResponse.from_orm(application)
+
+        response = PermissionResponse(
+            **dict(application),
+            permission=permission_created
         )
 
     # 422 (Unprocessable Entity)
+    except PermissionErrors as e:
+        log.debug('PermissionErrors', e)
+        return HTTPException(e.code, e.detail)
     except BaseErrors as e:
-        await engine.remove(Permission, Permission.id == permission_created.id)
+        if permission_created is not None:
+            await engine.remove(Permission, Permission.id == permission_created.id)
+            log.debug('BaseErrors', e)
         return HTTPException(e.code, e.detail)
     except ValueError as e:
-        await engine.remove(Permission, Permission.id == permission_created.id)
+        log.debug('ValueError', e)
+        if permission_created is not None:
+            await engine.remove(Permission, Permission.id == permission_created.id)
         return HTTPException(422, e)
     except Exception:
-        await engine.remove(Permission, Permission.id == permission_created.id)
+        if permission_created is not None:
+            await engine.remove(Permission, Permission.id == permission_created.id)
         return HTTPException(422, "Algo ocurrió mal")
 
-    application = ApplicationResponse.from_orm(application)
-
-    response = PermissionResponse(
-        **dict(application),
-        permission=permission_created
-    )
-    log.debug(application)
     return response
 
 
