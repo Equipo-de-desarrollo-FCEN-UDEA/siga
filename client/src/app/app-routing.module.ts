@@ -2,15 +2,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivateAccountComponent } from '@shared/pages/activate-account/activate-account.component';
-import { LoginComponent } from '@shared/pages/login/login.component';
 import { ResetPasswordComponent } from '@shared/pages/reset-password/reset-password.component';
 
 
 const ROUTES: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent
-  },
   {
     path:'recuperar-contrasena/:token',
     component: ResetPasswordComponent
@@ -29,6 +24,11 @@ const ROUTES: Routes = [
     loadChildren: () => import('./modules/applications/applications.module')
     .then(m => m.ApplicationsModule) 
   },
+  {
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module')
+    .then(m => m.AuthModule)
+  }
 ];
 
 @NgModule({
