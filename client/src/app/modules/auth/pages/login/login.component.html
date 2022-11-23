@@ -88,7 +88,7 @@
                 class="btn btn-submit btn-submit p-1"
               >
                 <span
-                  *ngIf="loading"
+                  *ngIf="isLoading | async"
                   class="spinner-border spinner-border-sm"
                   role="status"
                   aria-hidden="true"
