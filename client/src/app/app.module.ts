@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './shared/pages/not-found/not-found.component';
 import { LoginComponent } from './shared/pages/login/login.component';
-import { RecoveryPasswordComponent } from './shared/pages/recovery-password/recovery-password.component';
 import { SignupComponent } from './shared/pages/signup/signup.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
@@ -19,6 +18,8 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { registerLocaleData } from '@angular/common';
 import {LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
+import { ResetPasswordComponent } from '@shared/pages/reset-password/reset-password.component';
+import { ActivateAccountComponent } from '@shared/pages/activate-account/activate-account.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -26,10 +27,11 @@ registerLocaleData(localeEs, 'es');
     AppComponent,
     NotFoundComponent,
     LoginComponent,
-    RecoveryPasswordComponent,
     SignupComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ResetPasswordComponent,
+    ActivateAccountComponent
   ],
   imports: [
     BrowserModule,

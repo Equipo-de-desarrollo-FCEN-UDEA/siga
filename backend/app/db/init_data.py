@@ -39,7 +39,7 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=11,
         email='simon.garcial@udea.edu.co',
-        active=True,
+        active=False,
         password='123'
     ),
     schemas.UserCreate(

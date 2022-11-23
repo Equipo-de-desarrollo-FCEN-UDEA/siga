@@ -8,14 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
 @NgModule({
   declarations: [
-    StatusHistoryComponent
+    StatusHistoryComponent,
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     HttpClientModule,
