@@ -48,7 +48,7 @@ export class ResetPasswordComponent implements OnInit {
         res => {
           Swal.fire({
             title: 'Reestablecer contraseña',
-            text: 'Su contraseña se reestableció con éxito, igrese nuevamente a la plataforma',
+            text: res.msg,
             confirmButtonText: 'Continuar',
             icon: 'success'
           }).then((result) => {

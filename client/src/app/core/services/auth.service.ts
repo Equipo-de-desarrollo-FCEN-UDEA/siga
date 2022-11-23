@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { Auth, Token } from '@interfaces/auth';
+import { Msg } from '@interfaces/msg';
 import { CookieService } from 'ngx-cookie-service';
-import { map, Subject } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -48,23 +49,23 @@ export class AuthService {
   }
 
 
-  passwordRecovery(email: string) {
-    return this.http.post(this.urlEndPoint + 'password-recovery/' + email, {})
+  passwordRecovery(email: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'password-recovery/' + email, {})
   }
 
 
-  resetPassword(password: string, token: string) {
-    return this.http.post(this.urlEndPoint + 'reset-password/', { token: token, new_password: password })
+  resetPassword(password: string, token: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'reset-password/', { token: token, new_password: password })
   }
 
 
-  sendActivateEmail(email: string) {
-    return this.http.post(this.urlEndPoint + 'activate-email/' + email, {})
+  sendActivateEmail(email: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'activate-email/' + email, {})
   }
 
 
-  activateEmail(token: string) {
-    return this.http.post(this.urlEndPoint + 'activate-account/', token)
+  activateEmail(token: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'activate-account/', token)
   }
   
 

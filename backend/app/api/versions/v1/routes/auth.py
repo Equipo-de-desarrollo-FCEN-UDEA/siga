@@ -123,7 +123,7 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     email_token = jwt.email_token(email=user.email)
     confirm_email.apply_async(
         args=(user.names, user.email, email_token))
-    return {"msg": "El correo de confirmación de correo fue enviado correctamente"}
+    return {"msg": "El correo de activación fue enviado correctamente"}
 
 
 # Route for activate the account with the mailed token

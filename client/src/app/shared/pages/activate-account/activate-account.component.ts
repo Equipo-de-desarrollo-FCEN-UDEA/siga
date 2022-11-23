@@ -24,7 +24,7 @@ export class ActivateAccountComponent implements OnInit {
       next: res => {
         Swal.fire({
           title: 'Activación de cuenta',
-          text: 'Su cuenta se activó correctamente',
+          text: res.msg,
           icon: 'success',
           confirmButtonText: 'Continuar'
         }).then(
