@@ -60,7 +60,7 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     email_token = jwt.email_token(email=user.email)
     recovery_password_email.apply_async(
         args=(user.names, user.email, email_token))
-    return {"msg": "El correo para recuperar la contraseña fue enviado correctamente"}
+    return {"msg": f"El correo para recuperar la contraseña fue enviado correctamente a {user.email}"}
 
 
 # Route for reset password

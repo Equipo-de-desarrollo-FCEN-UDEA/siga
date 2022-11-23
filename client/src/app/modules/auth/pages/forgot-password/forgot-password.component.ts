@@ -1,7 +1,9 @@
 //angular 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Msg } from '@interfaces/msg';
 import { AuthService } from '@services/auth.service';
+import { LoaderService } from '@services/loader.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,11 +18,14 @@ export class ForgotPasswordComponent implements OnInit {
   public submitted: boolean = false;
   public error: string = "";
 
+  public isLoading = this.loaderSvc.isLoading;
+
   get f() { return this.form.controls; }
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -34,29 +39,16 @@ export class ForgotPasswordComponent implements OnInit {
 
     //return is the form is invalid
     if (this.form.invalid) { return; }
-
-    this.loading = true;
-
-    this.authService.forgotPassword(this.f['username'].value).subscribe({
-      next: (res:any) => {
+    this.authService.passwordRecovery(this.f['username'].value).subscribe({
+      next: (res:Msg) => {
         Swal.fire({
-          title: 'Una nueva contraseña fue enviada al correo electrónico'+ this.f['username'].value,
-          text: res.message,
+          title: 'Recuperar contraseña',
+          text: res.msg,
           icon: 'success',
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar'
         })
-      },
-      error: (err:any) => {
-        Swal.fire({
-          title: 'Algo ocurrió mal',
-          text: err.message,
-          icon: 'error',
-          showLoaderOnConfirm: true,
-          confirmButtonText: 'Aceptar'
-      })
       }
     })
-    this.loading = false;
   }
 }

@@ -9,6 +9,7 @@ import { UserCreate } from '@interfaces/user';
 
 //service
 import { AuthService } from '@services/auth.service';
+import { LoaderService } from '@services/loader.service';
 import Swal from 'sweetalert2';
 
 
@@ -27,12 +28,15 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(2)]],
   });
 
+  public isLoading = this.loaderSvc.isLoading;
+
   get f() { return this.loginForm.controls;}
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -42,15 +46,17 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitLogin() {
-    const USER : Auth = {
-      username: this.loginForm.value.usernameLogin || '',
-      password: this.loginForm.value.passwordLogin || ''
-    };
 
     this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
+
+    this.authService.login(this.loginForm.value as Auth).subscribe({
+      next: () => {
+        this.router.navigate(['/home'])
+      }
+    })
 
     this.loading = true;
      

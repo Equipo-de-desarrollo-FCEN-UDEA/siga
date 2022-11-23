@@ -20,17 +20,13 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { registerLocaleData } from '@angular/common';
 import {LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
-import { ResetPasswordComponent } from '@shared/pages/reset-password/reset-password.component';
-import { ActivateAccountComponent } from '@shared/pages/activate-account/activate-account.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
-    ResetPasswordComponent,
-    ActivateAccountComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

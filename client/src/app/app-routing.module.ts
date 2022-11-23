@@ -1,19 +1,9 @@
 //angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActivateAccountComponent } from '@shared/pages/activate-account/activate-account.component';
-import { ResetPasswordComponent } from '@shared/pages/reset-password/reset-password.component';
 
 
 const ROUTES: Routes = [
-  {
-    path:'recuperar-contrasena/:token',
-    component: ResetPasswordComponent
-  },
-  {
-    path: 'confirmar-correo/:token',
-    component: ActivateAccountComponent
-  },
   { 
     path: 'usuarios', 
     loadChildren: () => import('./modules/users/users.module')

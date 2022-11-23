@@ -53,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
             icon: 'success'
           }).then((result) => {
             if (result.isConfirmed){
-              this.router.navigate(['/login'])
+              this.router.navigate(['/auth/login'])
             }
           })
         }
