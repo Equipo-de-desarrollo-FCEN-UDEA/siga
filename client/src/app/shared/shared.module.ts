@@ -15,11 +15,12 @@ import { StatusHistoryComponent } from './components/status-history/status-histo
 @NgModule({
   declarations: [
     StatusHistoryComponent,
-
   ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     HttpClientModule,

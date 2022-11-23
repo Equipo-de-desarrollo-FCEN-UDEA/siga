@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
+from .rol import RolResponse
 
 log = get_logging(__name__)
 
@@ -16,6 +17,7 @@ class UserBase(BaseModel):
         regex=regex,
         min_length=3,
         max_length=50,
+        
     )
 
     names: str = Field(
@@ -58,7 +60,7 @@ class UserCreate(UserBase):
     def generate_password(cls, v, values, **kwargs):
         if not v:
             if not 'identificaction_number' in values:
-                raise ValueError
+                raise ValueError("No tiene número de identificación")
             return values['identificaction_number']
         return v
     
@@ -84,6 +86,7 @@ class UserInDBBase(UserBase):
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
     email: str
+    rol: RolResponse
 
 
 class UserInDB(UserInDBBase):

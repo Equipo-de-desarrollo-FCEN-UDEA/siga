@@ -1,0 +1,28 @@
+.btn-success {
+    background-color: #43b649;
+}
+
+.buttons {
+    width: fit-content;
+    margin: 0;
+}
+
+.btn-remove {
+    border-color: #fff;
+    color: #fff;
+    background-color: var(--032c);
+}
+
+.btn-remove:hover {
+    background-color: #d45f57;
+}
+
+.btn-add {
+    border-color: #fff;
+    color: #fff;
+    background-color: #43b649;
+}
+
+.btn-add:hover {
+    background-color: #79b97c;
+}
