@@ -1,11 +1,13 @@
+//angular
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+//routing
 import { AppRoutingModule } from './app-routing.module';
+
+//component
 import { AppComponent } from './app.component';
-import { NotFoundComponent } from './shared/pages/not-found/not-found.component';
-import { LoginComponent } from './shared/pages/login/login.component';
-import { SignupComponent } from './shared/pages/signup/signup.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
 import { SharedModule } from '@shared/shared.module';
@@ -25,9 +27,6 @@ registerLocaleData(localeEs, 'es');
 @NgModule({
   declarations: [
     AppComponent,
-    NotFoundComponent,
-    LoginComponent,
-    SignupComponent,
     HeaderComponent,
     FooterComponent,
     ResetPasswordComponent,
@@ -36,7 +35,8 @@ registerLocaleData(localeEs, 'es');
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   providers: [
     CookieService,

@@ -1,10 +1,12 @@
+//angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivateAccountComponent } from '@shared/pages/activate-account/activate-account.component';
 import { LoginComponent } from '@shared/pages/login/login.component';
 import { ResetPasswordComponent } from '@shared/pages/reset-password/reset-password.component';
 
-const routes: Routes = [
+
+const ROUTES: Routes = [
   {
     path: 'login',
     component: LoginComponent
@@ -30,7 +32,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(ROUTES)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

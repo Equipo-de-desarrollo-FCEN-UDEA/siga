@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { SharedRoutingModule } from './shared-routing.module';
-import { StatusHistoryComponent } from './components/status-history/status-history.component';
+//Angular Modules
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+//Modules
+import { SharedRoutingModule } from './shared-routing.module';
+
+//Components
+import { StatusHistoryComponent } from './components/status-history/status-history.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +25,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule,
-    StatusHistoryComponent,
-    NgbModule,
-    FormsModule
   ]
 })
 export class SharedModule { }

@@ -94,4 +94,11 @@ export class AuthService {
       data => this.isSuperUser$.next(data.rol.scope < 9)
     )
   }
+
+    
+  forgotPassword(username: string) {
+    return this.http.post(`${this.prefix}/restorePassword/${username}`, {
+      username:username,
+    });
+  }
 }
