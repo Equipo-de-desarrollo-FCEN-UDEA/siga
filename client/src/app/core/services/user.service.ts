@@ -10,7 +10,7 @@ import { Msg } from '@interfaces/msg';
 })
 export class UserService {
 
-  urlEndpoint: string = environment.rute + 'user/'
+  urlEndpoint: string = environment.route + 'user/'
 
   constructor(
     private http: HttpClient

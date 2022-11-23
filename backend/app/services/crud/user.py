@@ -6,7 +6,7 @@ from app.domain.schemas.user import UserCreate, UserUpdate
 from app.domain.models import User, Rol, Department
 from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
-from app.domain.errors.user import user_401, user_404, user_registered
+from app.domain.errors.user import user_diferent_password
 from .base import CRUDBase
 from app.core.logging import get_logging
 
@@ -143,9 +143,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
     ) -> User:
         user: User = self.get_by_email(db, email=email) or self.get_by_identification(
             db, identification=identification)
-        self.policy.authenticate(who=user)
         if not check_password(password, user.hashed_password):
-            raise user_401
+            raise user_diferent_password
+        self.policy.authenticate(who=user)
         return user
 
     def is_active(self, db: Session, *, user: User) -> bool:

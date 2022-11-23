@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  template: `
+    <footer class="p-2">
+      ®Equipo de desarrollo de la Facultad de Ciencias Exactas y Naturales
+    </footer>
+  `,
+  styles: [
+    `
+      footer {
+        text-align: center;
+        background-color: rgba(2, 105, 55, 1);
+        color: #fff;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+      }
+    `,
+  ],
 })
-export class FooterComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class FooterComponent {}

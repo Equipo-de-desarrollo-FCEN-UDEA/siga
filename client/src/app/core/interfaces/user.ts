@@ -23,7 +23,6 @@ export interface UserCreate extends UserBase {
 
 
 export interface UserUpdate extends UserBase{
-
 }
 
 

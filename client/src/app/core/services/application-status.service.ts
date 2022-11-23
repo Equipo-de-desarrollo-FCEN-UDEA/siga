@@ -8,7 +8,7 @@ import { ApplicationStatusCreate } from '@interfaces/application_status';
 })
 export class ApplicationStatusService {
 
-  private urlEndpoint = environment.rute + 'application-status/'
+  private urlEndpoint = environment.route + 'application-status/'
 
   constructor(
     private http: HttpClient

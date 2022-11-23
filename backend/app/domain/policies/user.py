@@ -72,8 +72,9 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # Policie for authenticate user, if is inactive raise error
     def authenticate(self, who: User):
-        if not who.active:
-            raise user_inactive
         if not who:
             raise user_404
+        if not who.active:
+            raise user_inactive
+        
         

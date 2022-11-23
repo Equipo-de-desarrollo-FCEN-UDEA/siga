@@ -2,10 +2,15 @@ export interface ApplicationType {
     name: string;
     description: string;
     id: number;
-    status_flux: StatusFlux[];
 }
 
-export interface StatusFlux {
-    status: string;
-    scope: number[];
+export interface ApplicationSubType {
+    name: string;
+    application_type_id: number;
+    extra: any;
+    id: number;
+}
+
+export interface ApplicationTypeResponse extends ApplicationType {
+    application_sub_type: ApplicationSubType[]
 }
