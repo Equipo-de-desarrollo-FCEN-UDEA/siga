@@ -31,16 +31,18 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    //return is the form is invalid
-    if (this.form.invalid) { return; }
-
     this.loading = true;
-
+    
+    //return is the form is invalid
+    if (this.form.invalid) { 
+      this.loading = false;
+      return; 
+    }
+    
     this.authService.forgotPassword(this.f['username'].value).subscribe({
       next: (res:any) => {
         Swal.fire({
-          title: 'Una nueva contraseña fue enviada al correo electrónico'+ this.f['username'].value,
+          title: 'Una nueva contraseña fue enviada al correo electrónico '+ this.f['username'].value,
           text: res.message,
           icon: 'success',
           showLoaderOnConfirm: true,

@@ -9,6 +9,9 @@ import Swal from 'sweetalert2';
 //services
 import { UserService } from '@services/user.service';
 
+//data
+import { id_type } from '@shared/data/id_type';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -19,6 +22,7 @@ export class SignUpComponent {
   public error: string = '';
   public submitted: boolean = false;
 
+  public id_type = id_type
   public createUserForm: FormGroup = this.formBuilder.group({
     last_name: ['', Validators.required],
     name: ['', Validators.required],
@@ -35,9 +39,7 @@ export class SignUpComponent {
     confirm_password: [],
   });
 
-  get f() {
-    return this.createUserForm.controls;
-  }
+  get f() { return this.createUserForm.controls; }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,9 +62,7 @@ export class SignUpComponent {
     this.submitted = true;
 
     // verificacion de errores
-    if (this.createUserForm.invalid) {
-      return;
-    }
+    if (this.createUserForm.invalid) { return; }
 
     this.userService.postUser(this.createUserForm.value).subscribe({
       next: (res: any) => {

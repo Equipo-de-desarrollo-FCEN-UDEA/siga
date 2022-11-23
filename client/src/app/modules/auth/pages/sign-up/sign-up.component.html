@@ -87,8 +87,8 @@
                 'is-invalid': f['id_type'].errors && f['id_type'].touched
               }"
             >
-              <option [value]="tipo" *ngFor="let tipo">
-                {{ tipo | uppercase }}
+              <option [value]="type" *ngFor="let type of id_type">
+                {{ type | uppercase }}
               </option>
             </select>
           </div>
@@ -137,7 +137,7 @@
             <select
               class="form-select form-select-lg"
               id="rol_id"
-              formControlName="rol_id"
+              formControlName="rol"
               required
               placeholder=" "
               [ngClass]="{
