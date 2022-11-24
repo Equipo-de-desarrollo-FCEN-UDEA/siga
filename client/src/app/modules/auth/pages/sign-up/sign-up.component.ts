@@ -6,11 +6,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 //sweetalert2
 import Swal from 'sweetalert2';
 
+//rxjs
+import { Observable } from 'rxjs';
+
 //services
 import { UserService } from '@services/user.service';
+import { RolService } from '@services/rol.service';
+
+//interfaces
+import { RolBase } from '@interfaces/rol';
 
 //data
 import { id_type } from '@shared/data/id_type';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -22,15 +30,18 @@ export class SignUpComponent {
   public error: string = '';
   public submitted: boolean = false;
 
-  public id_type = id_type
+  public id_type = id_type;
+  public rol$: Observable<RolBase[]> = this.rolService.getRoles();
+
   public createUserForm: FormGroup = this.formBuilder.group({
-    last_name: ['', Validators.required],
-    name: ['', Validators.required],
+    last_names: ['', Validators.required],
+    names: ['', Validators.required],
     email: ['', [Validators.required]],
-    id_type: ['', Validators.required],
-    id: ['', Validators.required],
+    identification_type: ['', Validators.required],
+    identificaction_number: ['', Validators.required],
     phone_number: ['', Validators.required],
-    rol: ['', Validators.required],
+    rol_id: ['', Validators.required],
+    Faculty_id: ['', Validators.required],
     department_id: ['', Validators.required],
     password: [
       '',
@@ -47,14 +58,15 @@ export class SignUpComponent {
     private ngZone: NgZone,
     private router: Router,
 
-    private userService: UserService
+    private userService: UserService,
+    private rolService: RolService
   ) {}
 
   validatePassword() {
     return (
       this.createUserForm.get('password')?.touched &&
       this.createUserForm.get('password')?.value !=
-        this.createUserForm.get('confirm_password')?.value
+      this.createUserForm.get('confirm_password')?.value
     );
   }
 
@@ -73,7 +85,7 @@ export class SignUpComponent {
           confirmButtonColor: '#3AB795',
         });
         //ngZone: facilitate change detection
-        this.ngZone.run(() => this.router.navigateByUrl(`/home`));
+        this.ngZone.run(() => this.router.navigateByUrl(`../login`));
       },
       error: (err) => {
         if (err.status === 404 || err.status === 401) {

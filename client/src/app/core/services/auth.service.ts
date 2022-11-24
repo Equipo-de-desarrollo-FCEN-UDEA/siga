@@ -14,7 +14,6 @@ import { environment } from '@environments/environment';
 
 //interfaces
 import { Auth, Token } from '@interfaces/auth';
-import { UserResponse } from '@interfaces/user';
 
 //services
 import { UserService } from './user.service';
@@ -61,9 +60,9 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    const tokenCheck = this.cookieSvc.check(`_${this.cookieToken}`)
-    this.Logged.next(tokenCheck);
-    return tokenCheck
+    const TOKEN_CHECK = this.cookieSvc.check(`_${this.cookieToken}`)
+    this.Logged.next(TOKEN_CHECK);
+    return TOKEN_CHECK
   }
 
   getToken(): string {

@@ -39,23 +39,19 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/home']);
-    }
+    // if (this.authService.isLoggedIn()) {
+    //   this.router.navigate(['/home/home']);
+    // }
   }
 
   onSubmitLogin() {
-    const USER : Auth = {
-      username: this.loginForm.value.usernameLogin || '',
-      password: this.loginForm.value.passwordLogin || ''
-    };
     this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
     this.loading = true;  
-    this.authService.login(USER).subscribe({
+    this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home/home']);
       },
       error: (err) => {
         if (err.status === 404 || err.status === 401) {
