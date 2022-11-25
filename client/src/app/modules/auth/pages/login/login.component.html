@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-center align-items-center p-3 mt-5">
+  <!-- <img src="../../../../assets/logosimbolo-vertical.png" alt="Logo vertical de la universidad de antioquia" class="mt-4" style="width:40%"> -->
+  <div class="card p-0 shadow">
+    <div class="text-center">
+      <h1 class="mt-4 text-wrap">
+        <strong class="title">SIGA UdeA</strong>
+      </h1>
+      <div class="d-flex justify-content-center">
+        <h1 class="m-2 p-2 col-10 text-wrap fs-5 text-secondary">
+          Sistema Integrado de Gestión Administrativa
+        </h1>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <form
+        need-validation
+        novalidate
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmitLogin()"
+      >
+        <!-- <div [ngbCollapse]="!isCollapsed" id="Login"> -->
+        <div>
+          <div class="form px-4 pt-1 m-2">
+            <!-- email -->
+            <div class="formfloatig mt-3">
+              <input
+                id="username"
+                type="text"
+                class="form-control"
+                placeholder="Correo institucional"
+                formControlName="username"
+                autofocus
+                [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+              />
+            </div>
+
+            <!-- errors email -->
+            <div *ngIf="submitted && f['username'].errors" class="invalid">
+              <div *ngIf="submitted && f['username'].errors?.['required']">
+                El correo es requerido
+              </div>
+            </div>
+
+            <!-- password -->
+            <div class="formfloatig mt-3">
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                placeholder="Contraseña"
+                formControlName="password"
+                [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+              />
+            </div>
+
+            <!-- errors password -->
+            <div *ngIf="submitted && f['password'].errors" class="invalid">
+              <div *ngIf="submitted && f['password'].errors?.['required']">
+                La contraseña es requerida
+              </div>
+            </div>
+
+            <!-- forgot password -->
+            <div class="d-flex justify-content-start">
+              <a
+                [routerLink]="['../forgot-password']"
+                class="btn btn-link link-success"
+              >
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+
+            <!-- Signup -->
+            <div class="d-flex justify-content-start mt-2">
+              <span class="text-secondary">¿No estás registrado?</span>
+              <a
+                [routerLink]="['../sign-up']"
+                class="btn btn-link link-success"
+              >
+                Registrate
+              </a>
+            </div>
+            <div class="d-grid gap-2 col-12 mt-4 pb-4">
+              <button
+                id="btn-sub"
+                type="submit"
+                class="btn btn-submit btn-submit p-1"
+              >
+                <span
+                  *ngIf="isLoading | async"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Iniciar sesión
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
