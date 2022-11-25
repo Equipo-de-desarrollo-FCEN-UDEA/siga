@@ -8,6 +8,7 @@ from app.api.versions.v1.routes import (
     school,
     rol,
     application_type,
+    application_subtype,
     application,
     application_status
 )
@@ -26,9 +27,13 @@ api_route.include_router(
     school.router, prefix='/school', tags=["schools"])
 
 api_route.include_router(rol.router, prefix="/rol", tags=["rol"])
+
+# Type Applications
 api_route.include_router(application_type.router,
                          prefix='/application-type', tags=['application-types'])
 
+api_route.include_router(application_subtype.router,
+                         prefix='/application-sub-type', tags=['application-sub-types'])
 
 api_route.include_router(application.router,
                          prefix="/application", tags=["application"])

@@ -90,9 +90,7 @@ async def create_permission(
 @router.get("/", response_model=list[Permission])
 async def get_permissions(
     *,
-    current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
-    db: Session = Depends(db.get_db)
 ) -> list[Permission]:
     """
         Endpoint to get all applications of type Permission

@@ -4,14 +4,19 @@ from odmantic import Model, ObjectId
 from odmantic.session import AIOSession
 from pydantic import BaseModel
 
+from app.domain.policies import base
+
 ModelType = TypeVar("ModelType", bound=Model)
 UpdateSchema = TypeVar("UpdateSchema", bound=BaseModel)
+CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
+Policy = TypeVar("Policy", bound=base.Base)
 
 
-class CRUDBase(Generic[ModelType, UpdateSchema]):
-    def __init__(self, model: Type[ModelType]):
+class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchema, Policy]):
+    def __init__(self, model: Type[ModelType], policy: Type[Policy]):
         """Factory crud with odm"""
         self.model = model
+        self.policy = policy
 
     async def get(self, db: AIOSession,
                   *, id: ObjectId) -> Type[ModelType]:

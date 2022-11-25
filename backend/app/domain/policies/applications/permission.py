@@ -1,6 +1,6 @@
 from typing import Union, Dict, Any
 
-from app.domain.models import Permission, User
+from app.domain.models import Permission
 from app.domain.schemas import PermissionCreate, PermissionUpdate
 from app.domain.errors.applications.permission import *
 from app.domain.policies.base import Base

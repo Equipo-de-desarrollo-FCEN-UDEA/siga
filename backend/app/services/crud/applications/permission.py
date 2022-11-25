@@ -9,19 +9,19 @@ from datetime import datetime
 import dateutil.parser
 
 from app.domain.models import Permission, Application, User, Application_status
-from app.domain.schemas import PermissionUpdate, PermissionCreate, ApplicationCreate
+from app.domain.schemas import PermissionUpdate, PermissionCreate
 from app.domain.policies.applications.permission import PermissionPolicy
-# from app.domain.policies.applications.permission import
-from app.services.crud.application import CRUDBase
+from .base import CRUDBase
+
 
 log = get_logging(__name__)
 
 
 class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, PermissionPolicy]):
 
+    # ---------- CREATE PERMISSIONS ----------
     # Buscar numero de permisos remunerados en el semestre
     # Si es más de uno no debe poder crear otro
-
     async def create(
         self,
         db: Session,
@@ -42,10 +42,39 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
-        self.policy.create(
-            self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(self, remunerated_permissions=remunerated_permissions)
 
         return await engine.save(obj_in)
+
+    
+    # ---------- UPDATE PERMISSIONS ----------
+    # Buscar numero de permisos remunerados en el semestre
+    # Si es más de uno no debe poder crear otro
+    # async def update(
+    #     self,
+    #     db: Session,
+    #     engine: AIOSession,
+    #     who: User,
+    #     obj_in: PermissionCreate,
+    #     type_permission: int = 0
+    # ) -> PermissionCreate:
+
+    #     permissions_user = self.get_approved_permissions(db=db,
+    #                                                      who=who,
+    #                                                      type_permission=type_permission)
+
+    #     log.debug('permissions_user', permissions_user)
+
+    #     remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
+    #                                                                      permissions_user=permissions_user)
+
+    #     log.debug('remunerated_permissions', remunerated_permissions)
+
+    #     self.policy.create(self, remunerated_permissions=remunerated_permissions)
+
+    #     return await engine.save(obj_in)
+
+    # ---------- GET APPROVED PERMISSIONS ----------
 
     def get_approved_permissions(
         self,
@@ -72,6 +101,8 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
             log.debug('ids_mongo ObjectId', ids_mongo)
 
         return ids_mongo
+
+    # ---------- GET REMUNERATED PERMISSIONS ----------
 
     async def get_remunerated_permissions(
         self,
@@ -111,65 +142,5 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         return remunerated_permissions
 
-    # async def get_multi_paid_permissions(
-    #     self,
-    #     engine: AIOSession,
-    #     db: Session,
-    #     who: User,
-    #     type: int = 0
-    # ) -> int:
-
-    #     permissions_user = 0
-
-    #     log.debug('ApplicationSubType.name: ', self.model)
-
-    #     # 7: Permiso remunerado
-    #     if type == 7:
-
-    #         today = datetime.now()
-
-    #         log.debug('month: ', today, today.month, today.year)
-
-    #         if today.month < 7:
-    #             begin_semester = datetime.strptime(
-    #                 f'{today.year}-01-01', '%Y-%m-%d')
-    #             end_semester = datetime.strptime(
-    #                 f'{today.year}-06-30', '%Y-%m-%d')
-    #         else:
-    #             begin_semester = datetime.strptime(
-    #                 f'{today.year}-07-01', '%Y-%m-%d')
-    #             end_semester = datetime.strptime(
-    #                 f'{today.year}-12-31', '%Y-%m-%d')
-
-    #         log.debug('begin and end semester ', begin_semester, end_semester)
-
-    #         where = {
-    #             "start_date": {"$gt": begin_semester, "$lt": end_semester},
-    #         }
-
-    #         # Busca en MongoDB todos los permisos que empiezan en el semestre elegido
-    #         permissions_semester = await engine.find(self.model, where)
-    #         log.debug('permissions_semester: ', permissions_semester)
-
-    #         if len(permissions_semester) > 0:
-    #             ids_mongo = [str(obj.id) for obj in permissions_semester]
-    #             log.debug('ids_mongo', ids_mongo)
-
-    #             # Application_status.status_id == 3 es APROBADO
-    #             permissions_user = db.query(Application).join(
-    #                 Application_status, Application.id == Application_status.application_id).\
-    #                 filter(Application_status.status_id == 3).\
-    #                 filter(Application.application_sub_type_id == 7).\
-    #                 filter(Application.mongo_id.in_(ids_mongo)).\
-    #                 filter(Application.user_id == who.id).count()
-
-    #             log.debug('permissions_user', permissions_user)
-
-    #     return permissions_user
-
 
 permission = CRUDPermission(Permission, PermissionPolicy)
-
-# policy = ApplicationPolicy()
-
-# application_status = CRUDPermission(ApplicationPolicy, policy=policy)
