@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 })
 export class AuthService {
   private urlEndPoint = environment.route + 'login/';
-  private cookieToken = environment.cookieToken
+  private cookieToken = environment.cookieToken;
 
   public isLoggedIn$: Subject<boolean> = new Subject();
 
@@ -42,7 +42,7 @@ export class AuthService {
       map(
         (data: Token) => {
           this.cookieSvc.delete(`${this.cookieToken}`, '/', '/')
-          this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires)
+          this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires, '/')
           this.Logged.next(true);
         }
       ))

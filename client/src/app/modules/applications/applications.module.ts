@@ -7,8 +7,6 @@ import { ApplicationListComponent } from './pages/application-list/application-l
 
 @NgModule({
   declarations: [
-  
-  
     ApplicationListComponent
   ],
   imports: [

@@ -4,7 +4,7 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 
 const routes: Routes = [
   {
-    path: 'lista-usuarios',
+    path: 'lista',
     component: UserListComponent
   }
 ];
