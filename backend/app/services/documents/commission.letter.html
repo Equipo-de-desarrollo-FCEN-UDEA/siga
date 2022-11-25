@@ -1,0 +1,81 @@
+{% extends "letter.base.html" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+            <p class="subtitle">
+                C-{{consecutive}}
+            </p>
+        </div>
+
+    </header>
+    <section class="section">
+        <p class="text-center"><strong>RESOLUCIÓN DECANATO</strong></p>
+        <p class="text-center">
+            Por la cual se concede una {{application.application_sub_type.name}}
+        </p>
+        <p class="text-justify">
+            EL(LA) DECANO(A) DE LA facultad de ciencias exactas y naturales, en uso de sus
+            facultades legales y estatutarias y en especial las conferidas por el literal ñ, artículo 53
+            del Acuerdo Superior 1 de 1994; y los artículos 106 y 107 del Acuerdo Superior 083
+            del 22 de julio de 1996 (modificado por el Acuerdo Superior 441 del 28 de marzo de
+            2017) y
+        </p>
+        <p class="text-center"><strong>CONSIDERANDO</strong></p>
+        <p class="text-justify">
+            1. Que en los artículos 106 y 107 del Acuerdo Superior 083 del 22 de julio de 1996
+            (modificado por el Acuerdo Superior 441 del 28 de marzo de 2017), se estipulan las
+            condiciones para otorgar una Comision de estudio.
+            2. Que el artículo 53, literal ñ del Acuerdo Superior 1 de 1994, estipula que entre las
+            funciones del Decano de la Facultad, está la de “Autorizar permisos hasta por tres días
+            y hasta por dos veces al año, y conceder comisiones y licencias hasta por treinta días”
+            3. Que el(la) Decano(a) de la Facultad, una vez revisada la solicitud, así como los
+            compromisos asumidos por el(la) profesor(a) con la Universidad, recomendó
+            conceder la comisión de servicios al (a la) Profesor(a) Simón de la Rosa García
+            Luján .
+            En consecuencia,
+        </p>
+        <p class="text-center"><strong>RESUELVE</strong></p>
+
+        <p class="text-justify">
+            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.lastnames).title()}}, con
+            {{user.identification_type}} {{user.identification}}, adscrito al Instituto,
+            {{application.application_sub_type.name}} desde {{commission.start_date}}
+            hasta {{commission.end_date}}, para {{commission.justification}} por resolución C-{{consecutive}}.
+
+        </p>
+
+        <p>
+            Al reintegrarse a sus actividades deberá presentar ante la oficina de Decanato de la
+            Facultad, constancias que acrediten su cumplimiento.
+        </p>
+
+        <div class="signature">
+            <img src="{{signature}}" height="200px">
+            <p>
+                {{school.dean.title()}}
+            </p>
+        </div>
+    </section>
+</div>
+
+<div class="footer">
+    <div class="text-center">
+        <p>
+            DECANATO
+        </p>
+        <p>
+            Dirección: {{school.direction}}
+        </p>
+        <p>
+            Contacto: {{school.contact}}
+        </p>
+        <p>
+            Medellín, Colombia
+        </p>
+    </div>
+</div>
+
+{% endblock %}

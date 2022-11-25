@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carta</title>
+    <style>
+        @page {
+            size: A2;
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2em;
+        }
+
+        html {
+            font-size: 24px;
+        }
+
+        .footer {
+            width: 1341px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        body {
+            width: 1341px;
+            height: 1984px;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-justify {
+            text-align: justify;
+        }
+
+        .section {
+            margin: 1em;
+        }
+
+        .signature {
+            margin-top: auto;
+        }
+
+        .logo{
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    {% block content %} {% endblock %}
+</body>
+
+
+
+</html>
