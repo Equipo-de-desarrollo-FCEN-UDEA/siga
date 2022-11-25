@@ -1,0 +1,1 @@
+from .applications.commission import resolution_generation

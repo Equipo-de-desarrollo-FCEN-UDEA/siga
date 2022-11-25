@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud
+from app.services import crud, documents
 from app.domain.models import Commission, User, Application
 from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg, CommissionResponse, ApplicationResponse
 from app.domain.errors import BaseErrors
@@ -98,7 +98,7 @@ async def get_comission(
         **dict(application),
         commission=comission
     )
-    log.debug(dict(response))
+    documents.resolution_generation(user= current_user, commission=comission)
     return response
 
 
