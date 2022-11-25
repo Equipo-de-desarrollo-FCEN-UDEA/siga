@@ -1,0 +1,39 @@
+.text-center {
+  text-align: center;
+  margin-top: 5rem !important;
+}
+
+.card {
+  width: 100%;
+  color: #fff;
+  border-color: #fff;
+  background: rgb(2, 105, 55);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 105, 55, 1) 0%,
+    rgba(2, 105, 55, 1) 35%,
+    rgba(67, 182, 73, 1) 100%
+  );
+  border-radius: 5em;
+}
+.card:hover {
+  background: rgb(2, 105, 55);
+  background: linear-gradient(
+    90deg,
+    rgba(67, 182, 73, 1) 0%,
+    rgba(67, 182, 73, 1) 35%,
+    rgba(67, 182, 73, 1) 100%
+  );
+  cursor: pointer;
+}
+
+.card-link {
+  margin-left: 2em;
+  color: #fff;
+  cursor: pointer;
+}
+
+ul,
+li {
+  list-style: none;
+}

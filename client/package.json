@@ -20,6 +20,7 @@
     "@angular/router": "^14.2.7",
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@popperjs/core": "^2.11.6",
+    "@scss-extend/animate-scss": "^1.0.1",
     "bootstrap": "^5.2.2",
     "ngx-cookie-service": "^14.0.1",
     "rxjs": "~7.5.0",

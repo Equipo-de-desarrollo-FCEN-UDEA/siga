@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.authService.forgotPassword(this.f['username'].value).subscribe({
       next: (res:any) => {
         Swal.fire({
-          title: 'Una nueva contraseña fue enviada al correo electrónico '+ this.f['username'].value,
+          title: 'Se envió un link al correo ' + this.f['username'].value,
           text: res.message,
           icon: 'success',
           showLoaderOnConfirm: true,
