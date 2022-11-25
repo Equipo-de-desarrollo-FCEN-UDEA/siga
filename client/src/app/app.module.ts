@@ -29,7 +29,8 @@ registerLocaleData(localeEs, 'es');
     RecoveryPasswordComponent,
     SignupComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    
   ],
   imports: [
     BrowserModule,

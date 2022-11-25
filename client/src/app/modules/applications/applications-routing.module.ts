@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ApplicationListComponent } from './pages/application-list/application-list.component';
 
 const routes: Routes = [
+ 
+  {
+    path: 'lista',
+    component: ApplicationListComponent
+  },
+  
   { 
     path: 'ver', 
     loadChildren: () => import('./view/view.module')
