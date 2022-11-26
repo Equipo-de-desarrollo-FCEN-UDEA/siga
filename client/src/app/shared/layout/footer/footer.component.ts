@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-footer',
   template: `
-    <footer class="p-2">
+    <footer>
       ®Equipo de desarrollo de la Facultad de Ciencias Exactas y Naturales
     </footer>
   `,
   styles: [
     `
       footer {
+        height: 3em;
         text-align: center;
         background-color: rgba(2, 105, 55, 1);
         color: #fff;

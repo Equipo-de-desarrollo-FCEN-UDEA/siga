@@ -10,20 +10,21 @@
   background: rgb(2, 105, 55);
   background: linear-gradient(
     90deg,
-    rgba(2, 105, 55, 1) 0%,
-    rgba(2, 105, 55, 1) 35%,
-    rgba(67, 182, 73, 1) 100%
+    rgba(67, 182, 73, 0.8) 0%,
+    rgba(67, 182, 73, 0.9) 35%,
+    rgba(141, 198, 63, 1) 100%
   );
   border-radius: 5em;
 }
 .card:hover {
-  background: rgb(2, 105, 55);
-  background: linear-gradient(
-    90deg,
-    rgba(67, 182, 73, 1) 0%,
-    rgba(67, 182, 73, 1) 35%,
-    rgba(67, 182, 73, 1) 100%
-  );
+  transition: all 0.5s linear;
+  background: rgba(67, 182, 73, 0.8) 0%;
+  // background: linear-gradient(
+  //   90deg,
+  //   rgba(67, 182, 73, 1) 0%,
+  //   rgba(67, 182, 73, 1) 35%,
+  //   rgba(67, 182, 73, 1) 100%
+  // );
   cursor: pointer;
 }
 
@@ -36,4 +37,8 @@
 ul,
 li {
   list-style: none;
+}
+
+i {
+  font-size: 1.5em;
 }

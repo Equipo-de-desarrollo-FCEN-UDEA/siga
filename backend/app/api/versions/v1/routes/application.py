@@ -17,7 +17,7 @@ log = get_logging(__name__)
 
 
 @router.get("/", status_code=200,
-            response_model=List[schemas.ApplicationResponse])
+            response_model=List[schemas.ApplicationMultiResponse])
 def read_applications(
     *,
     db: Session = Depends(db.get_db),
@@ -92,14 +92,14 @@ def delete_application(
     })
 
 
-@router.post("/", response_model=schemas.ApplicationResponse)
+@router.post("/", response_model=schemas.ApplicationMultiResponse)
 def get_application(
     application: schemas.ApplicationCreate,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user)
-) -> schemas.ApplicationResponse:
+) -> schemas.ApplicationMultiResponse:
     """
     Endpoint to create an application
     """

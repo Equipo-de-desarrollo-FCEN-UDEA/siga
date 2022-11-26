@@ -28,7 +28,8 @@ class Application_statusInDB(Application_statusBase):
         orm_mode = True
 
 class Application_statusResponse(BaseModel):
-    created_at: Optional[datetime] #No puede ser opcional, cambiar luego
+    observation: str
+    created_at: datetime #No puede ser opcional, cambiar luego
     status: Optional[StatusInDB]
 
     class Config:

@@ -1,1 +1,36 @@
-<p>status-history works!</p>
+<div class="modal-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Estado</th>
+            <th scope="col">Fecha de Actualización</th>
+            <th scope="col">Observación</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="status">
+          <tr *ngFor="let estado of status">
+            <th>
+              <span
+                class="badge badge-pill pill"
+                [ngClass]="{
+                  'bg-solicitada':
+                  estado.status.name === 'SOLICITADA',
+                  'bg-aprobada': estado.status.name === 'APROBADA',
+                  'bg-visto-bueno':
+                  estado.status.name === 'VISTO BUENO',
+                  'bg-finalizada':
+                  estado.status.name === 'FINALIZADA',
+                  'bg-rechazada-decanato':
+                  estado.status.name === 'RECHAZADA DECANATO',
+                  'bg-rechazada-coordinacion':
+                  estado.status.name === 'RECHAZADA COORDINACIÓN'
+                }"
+              >{{estado.status.name}}</span>
+              <td>{{estado.created_at | date: "fullDate" }}</td>
+              <td>{{estado.observation}}</td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

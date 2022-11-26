@@ -11,7 +11,7 @@ import { Auth } from '@interfaces/auth';
 
 //service
 import { AuthService } from '@services/auth.service';
-
+import { LoaderService } from '@services/loader.service';
 
 
 @Component({
@@ -30,12 +30,15 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(2)]],
   });
 
+  public isLoading = this.loaderSvc.isLoading;
+
   get f() { return this.loginForm.controls;}
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {

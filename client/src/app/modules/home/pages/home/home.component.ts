@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+//angular
+import { Component } from '@angular/core';
+
+//services
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent{
 
-  constructor() {
-   }
+  public isSuperUser = this.authSvc.isSuperUser$;
 
-  ngOnInit(): void {
+  constructor(private authSvc:AuthService ) {
+    this.authSvc.isSuperUser();
   }
+
 
 }

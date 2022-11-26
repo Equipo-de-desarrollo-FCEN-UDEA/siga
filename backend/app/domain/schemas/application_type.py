@@ -3,9 +3,15 @@ from typing import List, Any, Optional
 from pydantic import BaseModel
 
 
+class StatusFlux(BaseModel):
+    status: str
+    scope: list[int]
+
+
 class ApplicationTypeBase(BaseModel):
     name: str
     description: str
+    status_flux: list[StatusFlux]
 
 
 class ApplicationTypeCreate(ApplicationTypeBase):

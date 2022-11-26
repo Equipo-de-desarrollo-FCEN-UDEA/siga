@@ -16,7 +16,7 @@ import { RolBase } from '@interfaces/rol';
 })
 export class RolService {
 
-  private urlEndPoint:string = environment.rute + 'rol';
+  private urlEndPoint:string = environment.route + 'rol';
 
   constructor(private http: HttpClient) { }
 

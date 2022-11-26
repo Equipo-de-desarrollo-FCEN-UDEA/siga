@@ -1,8 +1,16 @@
 //angular 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@services/auth.service';
+
+//Swal
 import Swal from 'sweetalert2';
+
+//interfaces
+import { Msg } from '@interfaces/msg';
+
+//services
+import { AuthService } from '@services/auth.service';
+import { LoaderService } from '@services/loader.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,11 +24,14 @@ export class ForgotPasswordComponent implements OnInit {
   public submitted: boolean = false;
   public error: string = "";
 
+  public isLoading = this.loaderSvc.isLoading;
+
   get f() { return this.form.controls; }
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -48,17 +59,7 @@ export class ForgotPasswordComponent implements OnInit {
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar'
         })
-      },
-      error: (err:any) => {
-        Swal.fire({
-          title: 'Algo ocurrió mal',
-          text: err.message,
-          icon: 'error',
-          showLoaderOnConfirm: true,
-          confirmButtonText: 'Aceptar'
-      })
       }
     })
-    this.loading = false;
   }
 }

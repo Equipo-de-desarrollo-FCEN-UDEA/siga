@@ -4,26 +4,27 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 //rxjs
-import { map, Subject } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 
-//ngx
+//service
 import { CookieService } from 'ngx-cookie-service';
+import { UserService } from './user.service';
 
 //environments
 import { environment } from '@environments/environment';
 
 //interfaces
 import { Auth, Token } from '@interfaces/auth';
+import { Msg } from '@interfaces/msg';
 
-//services
-import { UserService } from './user.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  private prefix = environment.rute + 'login';
+  private urlEndPoint = environment.route + 'login/';
   private cookieToken = environment.cookieToken;
 
   public isLoggedIn$ : Subject<boolean> = new Subject();
@@ -35,8 +36,10 @@ export class AuthService {
     private cookieSvc: CookieService,
     private router: Router,
     private userSvc: UserService
-  ) { 
-    this.isLoggedIn()
+  ) {
+    this.isLoggedIn();
+    this.logOut();
+    // this.isSuperUser();
   }
 
   login(auth: Auth) {
@@ -46,18 +49,36 @@ export class AuthService {
       }
     );
     const BODY = `username=${auth.username}&password=${auth.password}`;
-    return this.http.post<Token>(this.prefix + '/access-token', BODY, { headers: HEADERS }).pipe(
+    return this.http.post<Token>(this.urlEndPoint + 'access-token', BODY, { headers: HEADERS }).pipe(
       map(
       (data: Token) => {
         this.cookieSvc.delete(`${this.cookieToken}`, '/', '/');
         this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires);
-        // this.userSvc.getUser().subscribe((user:UserResponse) => {
-        //   localStorage.setItem('rol', user.rol_id.name);
-        // })
         this.Logged.next(true);
       }
     ));
   }
+
+
+  passwordRecovery(email: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'password-recovery/' + email, {})
+  }
+
+
+  resetPassword(password: string, token: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'reset-password/', { token: token, new_password: password })
+  }
+
+
+  sendActivateEmail(email: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'activate-email/' + email, {})
+  }
+
+
+  activateEmail(token: string): Observable<Msg> {
+    return this.http.post<Msg>(this.urlEndPoint + 'activate-account/', token)
+  }
+  
 
   isLoggedIn() {
     const TOKEN_CHECK = this.cookieSvc.check(`_${this.cookieToken}`)
@@ -65,9 +86,11 @@ export class AuthService {
     return TOKEN_CHECK
   }
 
+
   getToken(): string {
     return this.cookieSvc.get(`_${this.cookieToken}`)
   }
+
 
   logOut() {
     this.cookieSvc.deleteAll()
@@ -76,14 +99,15 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
 
-  isSuperUser(){
+
+  isSuperUser() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isSuperUser$.next(data.rol_id < 9)
+      data => this.isSuperUser$.next(data.rol.scope < 9)
     )
   }
 
   forgotPassword(username: string) {
-    return this.http.post(`${this.prefix}/password-recovery/${username}`, {
+    return this.http.post(`${this.urlEndPoint}password-recovery/${username}`, {
       username:username,
     });
   }

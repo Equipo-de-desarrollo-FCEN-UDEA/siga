@@ -1,0 +1,38 @@
+.containerInside {
+    width: 75%;
+    margin-bottom: 10em;
+    align-items: unset;
+    min-height: 50vh;
+}
+
+.btn-warning {
+    background-color: #f9a12c;
+}
+
+
+.btn-cumplido {
+    color: #fff;
+    background-color: #04351f;
+}
+
+.btn-cumplido:hover {
+    color: #fff;
+    background-color: #04351fe2;
+}
+
+.btn-light {
+    color: #fff;
+    background-color: #43b649;
+}
+
+@media screen and (max-width: 576px) {
+    .containerInside {
+        width: 95% !important;
+
+    }
+}
+
+.link-success {
+    text-decoration: underline;
+    cursor: pointer;
+}

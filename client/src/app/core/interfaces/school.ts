@@ -6,11 +6,11 @@ export interface SchoolBase {
 }
 
 
-export interface SchoolInDB {
+export interface SchoolInDB extends SchoolBase {
     id: number
 }
 
 
-export interface SchoolResponse {
+export interface SchoolResponse extends SchoolInDB {
     
 }
