@@ -49,30 +49,33 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
     
     # ---------- UPDATE PERMISSIONS ----------
     # Buscar numero de permisos remunerados en el semestre
-    # Si es más de uno no debe poder crear otro
-    # async def update(
-    #     self,
-    #     db: Session,
-    #     engine: AIOSession,
-    #     who: User,
-    #     obj_in: PermissionCreate,
-    #     type_permission: int = 0
-    # ) -> PermissionCreate:
+    # Si es más de uno no debe poder cambiarlo a remunerado
+    async def update(
+        self,
+        db: Session,
+        engine: AIOSession,
+        who: User,
+        *,
+        db_obj: Permission,
+        obj_in: PermissionUpdate,
+        type_permission: int = 0
+    ) -> Permission:
 
-    #     permissions_user = self.get_approved_permissions(db=db,
-    #                                                      who=who,
-    #                                                      type_permission=type_permission)
+        permissions_user = self.get_approved_permissions(db=db,
+                                                         who=who,
+                                                         type_permission=type_permission)
 
-    #     log.debug('permissions_user', permissions_user)
+        log.debug('permissions_user', permissions_user)
 
-    #     remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
-    #                                                                      permissions_user=permissions_user)
+        remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
+                                                                         permissions_user=permissions_user)
 
-    #     log.debug('remunerated_permissions', remunerated_permissions)
+        log.debug('remunerated_permissions', remunerated_permissions)
 
-    #     self.policy.create(self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(self, remunerated_permissions=remunerated_permissions)
 
-    #     return await engine.save(obj_in)
+        db_obj.update(obj_in)
+        return await engine.save(db_obj)
 
     # ---------- GET APPROVED PERMISSIONS ----------
 
@@ -92,7 +95,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
             # Join tablas Application_status y Application por id
             permissions_user = db.query(Application.mongo_id).join(
                 Application_status, Application.id == Application_status.application_id).\
-                filter(Application_status.status_id == 3).\
+                filter(Application_status.status_id == 1).\
                 filter(Application.application_sub_type_id == 7).\
                 filter(Application.user_id == who.id).all()
 

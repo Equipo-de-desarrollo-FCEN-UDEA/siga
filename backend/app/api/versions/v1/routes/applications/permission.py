@@ -19,11 +19,11 @@ log = get_logging(__name__)
 # ------ CREAR UN PERMISO ------
 @router.post("/", status_code=201)
 async def create_permission(
-    permission: PermissionCreate,
-    *,
-    current_user: User = Depends(jwt_bearer.get_current_active_user),
-    engine: AIOSession = Depends(mongo_db.get_mongo_db),
-    db: Session = Depends(db.get_db)):
+        permission: PermissionCreate,
+        *,
+        current_user: User = Depends(jwt_bearer.get_current_active_user),
+        engine: AIOSession = Depends(mongo_db.get_mongo_db),
+        db: Session = Depends(db.get_db)):
     """
         Endpoint to create a application type Permission
             params:
@@ -41,7 +41,7 @@ async def create_permission(
             who=current_user,
             obj_in=Permission(**dict(permission)),
             type_permission=permission.application_sub_type_id)
-        
+
         log.debug('permission_created', permission_created)
 
         # En la BD de PostgreSQL
@@ -50,7 +50,7 @@ async def create_permission(
             application_sub_type_id=permission.application_sub_type_id,
             user_id=current_user.id,
         )
-        
+
         application = crud.application.create(
             db=db,
             who=current_user,
@@ -149,7 +149,7 @@ async def put_permission(
     """
         Endpoint to update an application of type Permission
             params:
-                -body: CommissionUpdate
+                -body: PermissionUpdate
             path-params:
                 -id: int, this is the id of the application, not of mongo
             response:
@@ -158,16 +158,37 @@ async def put_permission(
     try:
         application: Application = crud.application.get(
             db=db, id=id, who=current_user)
-        application = crud.application.update(
-            db=db, who=current_user, db_obj=application, obj_in={})
-        mongo_id = ObjectId(application.mongo_id)
 
+        
         if application:
-            current_permission = await crud.permission.get(db=engine, id=mongo_id)
-            updated_permission = await crud.permission.update(db=engine, db_obj=current_permission, obj_in=permission)
+            mongo_id = ObjectId(application.mongo_id)
 
+            # En la BD de mongo
+            current_permission = await crud.permission.get(db=engine, id=mongo_id)
+
+            updated_permission = await crud.permission.update(
+                db=db,
+                engine=engine,
+                who=current_user,
+                db_obj=current_permission,
+                obj_in=permission,
+                type_permission=permission.application_sub_type_id)
+
+            # En PostgreSQL
+            application = crud.application.update(
+                db=db, who=current_user, db_obj=application, obj_in={})
+
+            log.debug('application update', application.application_sub_type_id)
+            
+    except PermissionErrors as e:
+        log.debug('PermissionErrors', e)
+        return HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
+    except ValueError as e:
+        return HTTPException(422, e.args)
+    except Exception:
+        return HTTPException(422, "Algo ocurrió mal")
 
     return updated_permission
 

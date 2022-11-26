@@ -82,8 +82,10 @@
         </option>
       </select>
     </div>
+
     <hr />
 
+    <!-- ALERT BOX -->
     <div class="alert alert-warning mt-3 mb-0" *ngIf="laboralDay > 0">
       <strong>¡Importante!</strong> Para este tipo de permiso solo puedes elegir
       hasta {{ laboralDay }} días hábiles
@@ -113,7 +115,12 @@
                 ((!fromDate || !toDate) && clicked !== 0) ||
                 selectDays(fromDate, toDate)
             }"
-            [attr.disabled]="form.get('application_sub_type_id')?.invalid ? '':null"
+            [attr.disabled]="
+              f['application_sub_type_id'].pristine ||
+              f['application_sub_type_id'].errors
+                ? ''
+                : null
+            "
           />
           <button
             #buttonEl
@@ -123,6 +130,11 @@
           >
             <i class="fa fa-calendar"> </i>
           </button>
+        </div>
+        <div *ngIf="submitted && f['end_date'].errors" class="invalid">
+          <div *ngIf="submitted  && f['end_date'].errors?.['required']">
+            Debes elegir unas fechas de inicio y fin
+          </div>
         </div>
       </div>
     </div>
@@ -140,10 +152,8 @@
         />
       </div>
     </div>
-    <div class="alert-danger alert" *ngIf="">
-      Seleccione unas fechas validas
-    </div>
 
+    <!-- JUSTIFICATION -->
     <div class="row regular-row mt-4">
       <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación *</div>
       <div class="col-sm-12 col-xs-12 col-md-8 col-12">
@@ -158,16 +168,24 @@
             required
             rows="5"
           ></textarea>
-          <label for="floatingjustification" class="formLabel"> </label>
+          <!-- errors justification -->
+          <div
+            *ngIf="
+              (submitted || f['justification'].touched) &&
+              f['justification'].errors
+            "
+            class="invalid"
+          >
+            <div
+              *ngIf="(submitted || f['justification'].touched) && (f['justification'].errors?.['required'] || 
+              f['justification'].errors?.['maxlength'] || f['justification'].errors?.['minlength'])"
+            >
+              La justificación debe tener al menos 30 caracteres y máximo 500
+              caracteres.
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="alert-danger alert mt-2" *ngIf="isInvalidForm('justification')">
-      Recuerda que la justificación debe tener al menos 30 caracteres y máximo
-      500 caracteres.
-    </div>
-    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
-      {{ error }}
     </div>
 
     <!--ARCHIVOS-->
@@ -185,10 +203,10 @@
     </div>
     <div class="formfloatig" style="display: flex; flex-direction: column">
       <div
-        *ngFor="let producto of archivos; last as isLast; let i = index"
+        *ngFor="let producto of document_new; last as isLast; let i = index"
         class="arrayLike formfloatig"
       >
-        <div class="archivos" style="width: auto; margin-left: 10px">
+        <div class="document_new" style="width: auto; margin-left: 10px">
           <label class="btn-btn-default is-hoverable">
             <div class="fa fa-upload fa-2x"></div>
             <input
@@ -213,14 +231,17 @@
           <button
             class="btn btn-circle btn-add btn-sm m-1"
             type="button"
-            (click)="archivos.push(1)"
-            *ngIf="isLast && archivos.length < 3"
+            (click)="document_new.push(1)"
+            *ngIf="isLast && document_new.length < 3"
           >
             <i class="fa fa-plus"></i>
           </button>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+    {{ error }}
   </div>
   <hr />
 </form>

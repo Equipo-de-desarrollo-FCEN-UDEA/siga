@@ -70,6 +70,32 @@
   }
   
   
+    
+  .ptitle{
+    color: #ffffff;
+    background-color: #026937;
+    padding: 0.5em;
+    border-radius: 0.2em;
+  }
+  
+
+  // BUTTONS 
+
+  .btn-submit {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(2, 105, 55, 1) 0%,
+      rgba(2, 105, 55, 1) 0%,
+      rgba(53, 143, 57, 1) 100%
+    );
+  }.btn-submit:hover {
+    transition: all 0.5s ease-out;
+    background-color: #fff;
+  }
+
+
   .buttons {
     width: fit-content;
     margin: 0;
@@ -98,12 +124,30 @@
   .btn-success {
     background-color: #43b649;
   }
-  
-  
-  .ptitle{
-    color: #ffffff;
-    background-color: #026937;
-    padding: 0.5em;
-    border-radius: 0.2em;
+
+
+  // BAGS 
+
+  .bg-requested {
+    background-color: #137598;
+}
+
+  .bg-ok {
+    background-color: #3AB795;
+}
+
+  .bg-approved {
+    background-color: #005F21;
+}
+
+  .bg-ended {
+      background-color: #6C767D;
   }
-  
+
+ .bg-rejected {
+    background-color: #FF6666;
+}
+
+.bg-in-creation {
+    background-color: #000000;
+}

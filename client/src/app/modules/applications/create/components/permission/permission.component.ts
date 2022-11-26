@@ -36,15 +36,13 @@ export class PermissionComponent {
 
   // Files
   public files: any[] = [];
-  public archivos = [1];
+  public document_new = [1];
   public documents: file_path[] = [];
 
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
-
-  public comision_type$: any;
 
   public isLoading = this.loaderSvc.isLoading;
 
@@ -61,7 +59,7 @@ export class PermissionComponent {
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,
-    private documentService: DocumentService
+    private documentSvc: DocumentService
   ) {
     this.fromDate = null;
     this.toDate = null;
@@ -98,7 +96,7 @@ export class PermissionComponent {
       this.form.value as PermissionCreate
     );
     if (this.files.length > 0) {
-      permission = this.documentService.postDocument(this.files as File[]).pipe(
+      permission = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
           if (data) {
             this.form.patchValue({
@@ -127,14 +125,9 @@ export class PermissionComponent {
           }
         });
       },
-      error: () => {
-        // if (err.status === 404 || err.status === 401) {
-        //   this.error = err.error.msg;
-        // }
-        // if (err.status === 400) {
-        //   this.error = err.error.message;
-        // }
-      },
+      error: (err)=> {
+        this.error = err
+      }
     });
 
   }
@@ -144,14 +137,13 @@ export class PermissionComponent {
   // --------------------------------------
 
   onApplicationSubType(event: Event) {
-    const ID_PERMISSION_TYPE = (event.target as HTMLInputElement)
-    console.log(ID_PERMISSION_TYPE.value, ID_PERMISSION_TYPE)
-    // this.SubTypeSvc.getApplicationSubType(+ID_PERMISSION_TYPE).subscribe({
-    //   next: (res) => {
-    //     console.log('res', res)
-    //     this.laboralDay = res.extra.days;
-    //   },
-    // });
+    // Obtener el value antes de los ':'  
+    const ID_PERMISSION_TYPE = (event.target as HTMLSelectElement).value.split(':')[0]
+    this.SubTypeSvc.getApplicationSubType(+ID_PERMISSION_TYPE).subscribe({
+      next: (res) => {
+        this.laboralDay = res.extra.days;
+      },
+    });
   }
 
   // --------------------------------------
@@ -265,8 +257,8 @@ export class PermissionComponent {
 
   // Eliminar achivos
   removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
+    if (this.document_new.length > 1) {
+      this.document_new.splice(index, 1);
     }
     this.files.splice(index, 1);
   }

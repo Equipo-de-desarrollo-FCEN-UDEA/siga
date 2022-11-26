@@ -1,6 +1,7 @@
+from typing import Any
 from datetime import datetime
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Field
 
 from app.domain.schemas.application import ApplicationResponse
 
@@ -8,7 +9,8 @@ from app.domain.schemas.application import ApplicationResponse
 class PermissionBase(BaseModel):
     start_date: datetime
     end_date: datetime
-    justification: str
+    justification: str = Field(max_length=300, min_length=30)
+    documents: list[Any] | None
 
 
 class PermissionCreate(PermissionBase):
@@ -16,7 +18,7 @@ class PermissionCreate(PermissionBase):
 
 
 class PermissionUpdate(PermissionBase):
-    pass
+    application_sub_type_id: int
 
 
 class PermissionResponse(ApplicationResponse):

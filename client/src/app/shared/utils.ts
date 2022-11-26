@@ -29,3 +29,8 @@ export function LaboralDays(startDate : Date, endDate : Date): number {
     }
     return result;
 }
+
+
+export function lastElement(elements:any[]):any{
+    return elements[elements.length-1]
+} 
