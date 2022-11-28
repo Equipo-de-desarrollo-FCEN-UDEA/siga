@@ -127,6 +127,12 @@
             class="btn btn-outline-secondary"
             (click)="datepicker.toggle(); clicked = clicked + 1"
             type="button"
+            [attr.disabled]="
+              f['application_sub_type_id'].pristine ||
+              f['application_sub_type_id'].errors
+                ? ''
+                : null
+            "
           >
             <i class="fa fa-calendar"> </i>
           </button>
@@ -201,12 +207,12 @@
     <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
       Los archivos no deben pesar más de 2 MB.
     </div>
-    <div class="formfloatig" style="display: flex; flex-direction: column">
+    <div class="col-sm-12 col-xs-12 col-md-12 col-12">
       <div
         *ngFor="let producto of document_new; last as isLast; let i = index"
-        class="arrayLike formfloatig"
+        class="arrayLike col-sm-12 col-xs-12 col-md-12 col-12"
       >
-        <div class="document_new" style="width: auto; margin-left: 10px">
+        <div class="document_new">
           <label class="btn-btn-default is-hoverable">
             <div class="fa fa-upload fa-2x"></div>
             <input

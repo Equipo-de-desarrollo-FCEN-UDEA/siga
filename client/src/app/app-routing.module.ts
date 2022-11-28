@@ -1,15 +1,19 @@
 //angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmpleadoGuard } from './core/guards/empleado.guard';
 
 const ROUTES: Routes = [
   {
+
     path: 'usuarios',
+    //canActivate: [EmpleadoGuard],
     loadChildren: () =>
       import('./modules/users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'solicitudes',
+    //canActivate: [EmpleadoGuard],
     loadChildren: () =>
       import('./modules/applications/applications.module').then(
         (m) => m.ApplicationsModule
@@ -17,6 +21,7 @@ const ROUTES: Routes = [
   },
   {
     path: 'home',
+    //canActivate: [EmpleadoGuard],
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) 
   },
   {
@@ -24,8 +29,10 @@ const ROUTES: Routes = [
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
-  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home/home', pathMatch: 'full' },
+  {
+    path: '**', redirectTo: 'auth'
+  }
 ];
 
 @NgModule({

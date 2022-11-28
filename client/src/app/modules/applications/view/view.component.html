@@ -38,7 +38,7 @@
 
   <button
     type="button"
-    class="btn btn-success btn-block col-12 mt-3"
+    class="btn btn-status btn-block col-12 mt-3"
     (click)="historyStatus = !historyStatus"
   >
     Ver Historial de estados
@@ -103,7 +103,7 @@
       *ngIf="application$ | async as application"
     >
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
-        <button class="btn btn-danger">
+        <button class="btn btn-outline-danger">
           <span
             *ngIf="isLoading | async"
             class="spinner-border spinner-border-sm"
@@ -112,7 +112,8 @@
         </button>
       </div>
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
-        <button type="button" class="btn btn-outline-warning">Editar</button>
+        <button class="btn btn-link link-success"
+        routerLink="/solicitudes/editar/{{id}}/{{title | lowercase}}">Editar</button>
       </div>
     </div>
   </div>

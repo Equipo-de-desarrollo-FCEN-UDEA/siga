@@ -29,7 +29,7 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public isLoading = this.loaderSvc.isLoading;
 
-  private id = 0;
+  public id = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,6 +77,7 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     )
 
   }
+
 
   decline() {
     this.applicationStatusSvc.postApplicationStatus({

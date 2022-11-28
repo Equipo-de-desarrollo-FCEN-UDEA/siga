@@ -1,24 +1,28 @@
-import { Component, NgZone } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommissionCreate } from '@interfaces/applications/commission';
-import { PermissionCreate } from '@interfaces/applications/permission';
-import { DocumentsResponse, file_path } from '@interfaces/documents';
 import {
   NgbDate,
   NgbDateStruct,
   NgbCalendar,
   NgbDateParserFormatter,
 } from '@ng-bootstrap/ng-bootstrap';
+import { switchMap } from 'rxjs';
+import Swal from 'sweetalert2';
+
+// Services
+import { PermissionCreate } from '@interfaces/applications/permission';
+import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { ApplicationSubTypeService } from '@services/application-sub-type.service';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { PermissionService } from '@services/applications/permission.service';
 import { DocumentService } from '@services/document.service';
 import { LoaderService } from '@services/loader.service';
+
+// Utils
 import { LaboralDays } from '@shared/utils';
-import { get } from 'http';
-import { Subject, Observable, switchMap } from 'rxjs';
-import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-permission',
@@ -52,7 +56,6 @@ export class PermissionComponent {
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
-    private ngZone: NgZone,
     private router: Router,
 
     private loaderSvc: LoaderService,
