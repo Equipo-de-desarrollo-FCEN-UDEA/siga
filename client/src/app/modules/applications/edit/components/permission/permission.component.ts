@@ -87,6 +87,7 @@ export class PermissionComponent implements OnInit {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.permissionSvc.getPermission(this.id).subscribe((data) => {
+        console.log(data)
         this.form.patchValue({
           // justification: data.permission.justification,
           // start_date: this.datepipe.transform(data.permission.start_date, 'YYYY-MM-dd'),
@@ -129,8 +130,8 @@ export class PermissionComponent implements OnInit {
             });
           }
           console.log(this.form.value);
-          return this.permissionSvc.postPermission(
-            this.form.value as PermissionCreate
+          return this.permissionSvc.putPermission(
+            this.form.value as PermissionCreate, this.id
           );
         })
       );
@@ -138,6 +139,7 @@ export class PermissionComponent implements OnInit {
     console.log(this.form.value as PermissionCreate);
     permission.subscribe({
       next: () => {
+        console.log('permission updated', permission)
         Swal.fire({
           title: 'Actualizado',
           text: '¡El permiso se actualizó con éxito!',
@@ -192,24 +194,34 @@ export class PermissionComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      this.form.patchValue({
+        start_date: new Date(
+          this.fromDate!.year,
+          this.fromDate!.month - 1,
+          this.fromDate!.day
+        )})
     } else if (this.fromDate && !this.toDate && date) {
+      //console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-    this.form.patchValue({
-      start_date: new Date(
-        this.fromDate.year,
-        this.fromDate.month - 1,
-        this.fromDate.day
-      ),
-      end_date: new Date(
+      this.form.patchValue({  end_date: new Date(
         this.toDate!.year,
         this.toDate!.month - 1,
         this.toDate!.day
       ),
     });
+    } else {
+      //console.log('else',  this.fromDate, this.toDate)
+      this.toDate = null;
+      this.fromDate = date;
+      this.form.patchValue({
+        start_date: new Date(
+          this.fromDate!.year,
+          this.fromDate!.month - 1,
+          this.fromDate!.day
+        )})
+    }
+
+
   }
 
   isHovered(date: NgbDate) {
