@@ -15,5 +15,7 @@ from .application_status import (Application_statusCreate, Application_statusInD
 from .applications import (
     CommissionCreate,
     CommissionResponse,
-    CommissionUpdate
+    CommissionUpdate,
+    ComissionInDB,
+    CommissionDocument
 )

@@ -4,7 +4,7 @@ import { RolResponse } from "./rol";
 export interface UserBase {
     last_names: string;
     names: string;
-    identificaction_number: string;
+    identification_number: string;
     email: string;
     identification_type: string;
     active?: boolean;

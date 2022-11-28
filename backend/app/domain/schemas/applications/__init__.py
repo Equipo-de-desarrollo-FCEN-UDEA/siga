@@ -1,1 +1,1 @@
-from .commission import CommissionCreate, CommissionResponse, CommissionUpdate
+from .commission import CommissionCreate, CommissionResponse, CommissionUpdate, ComissionInDB, CommissionDocument

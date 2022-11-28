@@ -93,12 +93,11 @@ async def get_comission(
             comission = await crud.comission.get(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    application = ApplicationResponse.from_orm(application)
+    application_response = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
-        **dict(application),
+        **dict(application_response),
         commission=comission
     )
-    documents.resolution_generation(user= current_user, commission=comission)
     return response
 
 

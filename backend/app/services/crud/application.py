@@ -46,7 +46,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             columns = [
                 'names',
                 'last_names',
-                'identificaction_number',
+                'identification_number',
                 'email'
             ]
             search = search.upper()

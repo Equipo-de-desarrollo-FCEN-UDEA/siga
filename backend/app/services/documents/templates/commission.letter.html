@@ -4,7 +4,7 @@
 <div>
     <header>
         <div class="header">
-            <img src="../../../assets/logos/{{image}}" class="logo">
+            <img src="{{image}}" class="logo">
             <p class="subtitle">
                 C-{{consecutive}}
             </p>
@@ -33,17 +33,16 @@
             y hasta por dos veces al año, y conceder comisiones y licencias hasta por treinta días”
             3. Que el(la) Decano(a) de la Facultad, una vez revisada la solicitud, así como los
             compromisos asumidos por el(la) profesor(a) con la Universidad, recomendó
-            conceder la comisión de servicios al (a la) Profesor(a) Simón de la Rosa García
-            Luján .
+            conceder la comisión de servicios al (a la) Profesor(a) {{(user.names + ' ' + user.last_names).title()}}.
             En consecuencia,
         </p>
         <p class="text-center"><strong>RESUELVE</strong></p>
 
         <p class="text-justify">
-            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.lastnames).title()}}, con
-            {{user.identification_type}} {{user.identification}}, adscrito al Instituto,
-            {{application.application_sub_type.name}} desde {{commission.start_date}}
-            hasta {{commission.end_date}}, para {{commission.justification}} por resolución C-{{consecutive}}.
+            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
+            {{user.identification_type}} {{user.identification_number}}, adscrito al Instituto,
+            {{application.application_sub_type.name}} desde el dia {{commission.start_date}}
+            hasta el dia {{commission.end_date}}, para {{commission.justification}} por resolución C-{{consecutive}}.
 
         </p>
 
@@ -53,7 +52,7 @@
         </p>
 
         <div class="signature">
-            <img src="../../../assets/signatures/{{signature}}" height="200px">
+            <img src="{{signature}}" height="200px">
             <p>
                 {{school.dean.title()}}
             </p>
