@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 //rxjs
 import { filter } from 'rxjs/internal/operators/filter';
 //interfaces
-import { UserBase } from '@interfaces/user';
+import { UserBase, UserResponse } from '@interfaces/user';
 //services
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
@@ -17,13 +17,16 @@ import { AuthService } from '@services/auth.service';
 export class HeaderComponent {
 
   public user: UserBase | undefined; 
+  public user_response: UserResponse | undefined;
   public currentURL: any;
+  public isSuperUser = this.authService.isSuperUser$;
 
   constructor(
     private router     : Router, 
     private userService: UserService,
     private authService: AuthService
   ) {
+    this.authService.isSuperUser();
 
     this.router.events
       .pipe(filter((res) => res instanceof NavigationEnd))
@@ -31,8 +34,8 @@ export class HeaderComponent {
         this.currentURL = this.router.url;
       });
 
-    this.userService.getUsers().subscribe((resUser) => {
-      //this.user = resUser;
+    this.userService.getUser().subscribe((resUser) => {
+      this.user = resUser;
     });
   }
 
