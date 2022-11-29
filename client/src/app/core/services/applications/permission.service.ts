@@ -26,4 +26,8 @@ export class PermissionService {
   putPermission(body: PermissionCreate, id: number) {
     return this.http.put(this.urlEndPoint + id, body)
   }
+
+  deletePermission(id: number) {
+    return this.http.delete(this.urlEndPoint + id)
+  }
 }

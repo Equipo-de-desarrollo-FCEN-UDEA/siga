@@ -29,7 +29,10 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public isLoading = this.loaderSvc.isLoading;
 
+  private activatedComponentReference: any;
+
   public id = 0;
+  public isDelete:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -95,8 +98,19 @@ export class ViewComponent implements OnInit, AfterViewChecked {
   }
 
 
-  delete(){
-    
+  // -----------------------------
+  // ---- DELETE APPLICATION -----
+  // -----------------------------
+  onActivate(componentRef: any) {
+    this.activatedComponentReference = componentRef
   }
+
+  delete(){
+    this.isDelete = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.delete(this.id);
+  }
+
+
 
 }
