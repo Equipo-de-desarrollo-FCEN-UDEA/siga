@@ -41,7 +41,7 @@ def create_user(
         raise HTTPException(status_code=422, detail=str(e))
 
     token = email_token(db_user.email)
-    confirm_email.apply_async(args=(db_user.names, db_user.email, token))
+    confirm_email.apply_async(args=(db_user.names, token, db_user.email))
     # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return db_user
 

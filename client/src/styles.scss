@@ -1,149 +1,156 @@
 .custom-day {
-    text-align: center;
-    padding: 0.185rem 0.25rem;
-    display: inline-block;
-    height: 2rem;
-    width: 2rem;
-  }
-  .custom-day.focused {
-    background-color: #e6e6e6;
-  }
-  .custom-day.range, .custom-day:hover {
-    background-color: #43B649;
-    color: white;
-  }
-  .custom-day.faded {
-    background-color: #43b649c0;
-  }
-  .containerInside{
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1em;
-    align-items: unset;
-    margin-bottom: 6em!important;
-  }
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
 
-  
-  @media screen and (max-width: 576px){
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: #43B649;
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: #43b649c0;
+}
+
+.containerInside {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  align-items: unset;
+  margin-bottom: 6em !important;
+}
+
+
+@media screen and (max-width: 576px) {
   :host ::ng-deep .ngb-dp-months {
     flex-flow: row wrap;
     justify-content: flex-start;
   }
+
   :host ::ng-deep .ngb-dp-month {
     flex: 1 0 auto;
   }
+
   .containerInside {
-    width: 95%!important;
-  
-   }
+    width: 95% !important;
+
   }
-  
-  
-  p {
-    text-align: center;
-    margin: 0;
-    color: green;
-  }
-  
-  .btn-dark {
+}
+
+
+p {
+  text-align: center;
+  margin: 0;
+  color: green;
+}
+
+.btn-dark {
   background-color: #43B649;
   border-color: #43B649;
-  }
-  
-  
-  .formLabel{
+}
+
+
+.formLabel {
   left: 1.7em;
-  }
-  
-  .selectLabel{
+}
+
+.selectLabel {
   left: 1.7em;
-  }
-  
-  .file-upload{
+}
+
+.file-upload {
   display: none;
-  }
-  
-  
-    
-  .ptitle{
-    color: #ffffff;
-    background-color: #026937;
-    padding: 0.5em;
-    border-radius: 0.2em;
-  }
-  
+}
 
-  // BUTTONS 
 
-  .btn-submit {
-    color: #fff;
-    border-color: #fff;
-    background: linear-gradient(
-      90deg,
+
+.ptitle {
+  color: #ffffff;
+  background-color: #026937;
+  padding: 0.5em;
+  border-radius: 0.2em;
+}
+
+
+// BUTTONS 
+
+.btn-submit {
+  color: #fff;
+  border-color: #fff;
+  background: linear-gradient(90deg,
       rgba(2, 105, 55, 1) 0%,
       rgba(2, 105, 55, 1) 0%,
-      rgba(53, 143, 57, 1) 100%
-    );
-  }.btn-submit:hover {
-    transition: all 0.5s ease-out;
-    background-color: #fff;
-  }
-
-
-  .buttons {
-    width: fit-content;
-    margin: 0;
-  }
-  
-  .btn-remove {
-    border-color: #fff;
-    color: #fff;
-    background-color: var(--032c);
-  }
-  
-  .btn-remove:hover {
-    background-color: #d45f57;
-  }
-  
-  .btn-add {
-    border-color: #fff;
-    color: #fff;
-    background-color: #43b649;
-  }
-  
-  .btn-add:hover {
-    background-color: #79b97c;
-  }
-  
-  .btn-success {
-    background-color: #43b649;
-  }
-
-
-  // BAGS 
-
-  .bg-requested {
-    background-color: #137598;
+      rgba(53, 143, 57, 1) 100%);
 }
 
-  .bg-ok {
-    background-color: #3AB795;
+.btn-submit:hover {
+  transition: all 0.5s ease-out;
+  background-color: #fff;
 }
 
-  .bg-approved {
-    background-color: #005F21;
+
+.buttons {
+  width: fit-content;
+  margin: 0;
 }
 
-  .bg-ended {
-      background-color: #6C767D;
-  }
+.btn-remove {
+  border-color: #fff;
+  color: #fff;
+  background-color: var(--032c);
+}
 
- .bg-rejected {
-    background-color: #FF6666;
+.btn-remove:hover {
+  background-color: #d45f57;
+}
+
+.btn-add {
+  border-color: #fff;
+  color: #fff;
+  background-color: #43b649;
+}
+
+.btn-add:hover {
+  background-color: #79b97c;
+}
+
+.btn-success {
+  background-color: #43b649;
+}
+
+
+// BAGS 
+
+.bg-requested {
+  background-color: #137598;
+}
+
+.bg-ok {
+  background-color: #3AB795;
+}
+
+.bg-approved {
+  background-color: #005F21;
+}
+
+.bg-ended {
+  background-color: #6C767D;
+}
+
+.bg-rejected {
+  background-color: #FF6666;
 }
 
 .bg-in-creation {
-    background-color: #000000;
+  background-color: #000000;
 }

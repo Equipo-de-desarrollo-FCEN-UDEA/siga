@@ -43,8 +43,8 @@
         </div>
       </div>
 
-    <div class="row regular-row mt-2">
+      <div class="row regular-row mt-2" *ngIf="commission.resolution">
         <div class="col-xs-12 col-sm-6 label fw-bold">Resolución</div>
-        <div class="col-6">resolución, falta </div>
-    </div>
+        <div class="col-6"> <span class="link-success cursor" (click)="openDocument(commission.resolution)">ver resolución</span> </div>
+      </div>
 </div>

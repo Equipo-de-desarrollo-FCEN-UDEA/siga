@@ -71,7 +71,8 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     } as ApplicationStatusCreate).subscribe(
       (data) => {
         Swal.fire({
-          title: "Se cambió el estado correctamente"
+          title: "Se cambió el estado correctamente",
+          icon: 'success'
         })
       }
     )
