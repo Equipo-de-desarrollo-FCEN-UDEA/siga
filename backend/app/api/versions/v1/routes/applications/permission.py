@@ -122,6 +122,7 @@ async def get_permission(
         mongo_id = ObjectId(application.mongo_id)
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
+            log.debug('permission in mongo', permission)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
@@ -137,7 +138,7 @@ async def get_permission(
 
 
 # ------ EDITAR UN PERMISO POR ID ------
-@router.put("/{id}", response_model=Permission)
+@router.put("/{id}", status_code=200)
 async def put_permission(
     id: int,
     permission: PermissionUpdate,
@@ -156,14 +157,17 @@ async def put_permission(
                 - Permission
     """
     try:
+        # GET In PostgreSQL
         application: Application = crud.application.get(
             db=db, id=id, who=current_user)
 
-        
         if application:
-            mongo_id = ObjectId(application.mongo_id)
+            
+            log.debug('obj_in que es', permission)
 
-            # En la BD de mongo
+            # In MongoDB
+            mongo_id = ObjectId(application.mongo_id)
+            
             current_permission = await crud.permission.get(db=engine, id=mongo_id)
 
             updated_permission = await crud.permission.update(
@@ -173,22 +177,27 @@ async def put_permission(
                 db_obj=current_permission,
                 obj_in=permission,
                 type_permission=permission.application_sub_type_id)
-
-            # En PostgreSQL
-            application = crud.application.update(
-                db=db, who=current_user, db_obj=application, obj_in={})
-
-            log.debug('application update', application.application_sub_type_id)
             
+            log.debug('updated_permission', updated_permission)
+            
+            # In PostgreSQL
+
+            application_updated = crud.application.update(
+                db=db, who=current_user, db_obj=application, obj_in=permission)
+           
+
+            log.debug('application update', application_updated)
+
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
+        #await crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
         return HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    except ValueError as e:
-        return HTTPException(422, e.args)
-    except Exception:
-        return HTTPException(422, "Algo ocurrió mal")
+    # except ValueError as e:
+    #     return HTTPException(422, e.args)
+    # except Exception:
+    #     return HTTPException(422, "Algo ocurrió mal")
 
     return updated_permission
 
@@ -210,7 +219,7 @@ async def put_permission(
                 - Msg: message
     """
     try:
-        application: Application = crud.permission.get(db=db, id=id)
+        application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         # Delete from PostgreSQL
         delete = crud.application.delete(db=db, who=current_user, id=id)

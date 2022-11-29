@@ -94,4 +94,9 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     )
   }
 
+
+  delete(){
+    
+  }
+
 }

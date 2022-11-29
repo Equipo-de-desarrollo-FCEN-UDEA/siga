@@ -170,4 +170,4 @@ async def delete_commission(
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    return Msg(msg="Comisión eliminada correctamente")
+    return Msg(msg="Permiso eliminado correctamente")
