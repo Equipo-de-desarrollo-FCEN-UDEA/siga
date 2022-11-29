@@ -24,7 +24,7 @@ class PermissionInDB(PermissionBase):
     resolution: str | None
 
 class PermissionResponse(ApplicationResponse):
-    permission: PermissionBase
+    permission: PermissionInDB
 
 
 class PermissionDocument(PermissionBase):

@@ -35,7 +35,7 @@ export class SuperempleadoGuard implements CanActivate {
 
     isSuperUser$.subscribe((data) => {
       if (!data) {
-        this.router.navigate(['/empleados/ver/0']);
+        // this.router.navigate(['/empleados/ver/0']);
       }
     });
 

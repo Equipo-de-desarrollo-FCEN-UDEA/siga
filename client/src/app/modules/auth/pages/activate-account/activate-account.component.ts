@@ -30,13 +30,13 @@ export class ActivateAccountComponent implements OnInit {
         }).then(
           response => {
             if (response.isConfirmed) {
-              this.router.navigate(['/login'])
+              this.router.navigate(['auth/login'])
             }
           }
         )
       },
       error: res => {
-        this.router.navigate(['/login'])
+        this.router.navigate(['auth/login'])
       }
     })
   }

@@ -352,7 +352,7 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         extra={"days": 60}
     ),
     schemas.ApplicationSubTypeCreate(
-        name="Permiso remunerado",
+        name="Licencia remunerada",
         application_type_id=1,
         extra={"days": 3}
     ),

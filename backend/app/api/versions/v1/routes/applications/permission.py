@@ -195,7 +195,7 @@ async def put_permission(
 
 # ------ ELIMINAR UN PERMISO ------
 @router.delete("/{id}", response_model=Msg)
-async def put_permission(
+async def delete_permission(
     id: int,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
