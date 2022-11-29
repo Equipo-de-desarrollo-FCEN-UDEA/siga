@@ -31,7 +31,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         return obj_db
 
     #
-    def get_by_identificacion(
+    def get_by_identification(
         self, db: Session, identification: str
     ) -> User:
         identification = identification.upper()

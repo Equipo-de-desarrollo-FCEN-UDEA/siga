@@ -19,3 +19,4 @@ from .applications import (
     ComissionInDB,
     CommissionDocument
 )
+from .applications import ( PermissionCreate, PermissionResponse, PermissionUpdate , PermissionDocument)

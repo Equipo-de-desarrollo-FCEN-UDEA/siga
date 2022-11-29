@@ -67,21 +67,21 @@ async def create_permission(
     # 422 (Unprocessable Entity)
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
             log.debug('BaseErrors', e)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except ValueError as e:
         log.debug('ValueError', e)
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
-        return HTTPException(422, e)
+        raise HTTPException(422, e)
     except Exception:
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
-        return HTTPException(422, "Algo ocurrió mal")
+        raise HTTPException(422, "Algo ocurrió mal")
 
     return response
 
@@ -182,13 +182,13 @@ async def put_permission(
             
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        return HTTPException(422, e.args)
+        raise HTTPException(422, e.args)
     except Exception:
-        return HTTPException(422, "Algo ocurrió mal")
+        raise HTTPException(422, "Algo ocurrió mal")
 
     return updated_permission
 

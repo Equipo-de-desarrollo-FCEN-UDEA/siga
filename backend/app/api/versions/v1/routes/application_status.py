@@ -30,9 +30,12 @@ async def create_application_status(
         # Commision
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):
-            await documents.resolution_generation(user=application.user, application=application, mong_db=engine)
+            await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
 
         # Permission
+        if (response.status.name == 'APROBADA' and
+                application.application_sub_type.application_type.name == "PERMISO"):
+            await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
 
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)

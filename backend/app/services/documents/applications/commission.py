@@ -8,7 +8,7 @@ from odmantic import ObjectId
 from odmantic.session import AIOSession
 
 from ..templates import templates_dir
-from app.domain.models import Commission, User, Application
+from app.domain.models import User, Application, Consecutive
 from app.domain.schemas import CommissionDocument, UserResponse, ApplicationResponse, SchoolInDB
 from app.core.logging import get_logging
 from app.core.config import get_app_settings
@@ -20,9 +20,7 @@ log = get_logging(__name__)
 
 settings = get_app_settings()
 
-
-
-async def resolution_generation(user: User, application: Application, mong_db: AIOSession) -> None:
+async def commission_resolution_generation(user: User, application: Application, mong_db: AIOSession) -> None:
 
     id = ObjectId(application.mongo_id)
 
@@ -42,23 +40,32 @@ async def resolution_generation(user: User, application: Application, mong_db: A
 
     commission = CommissionDocument(**commission.__dict__)
 
+    consecutive_list = await mong_db.find(Consecutive)
+
+    consecutive: Consecutive = consecutive_list[0] if consecutive_list else Consecutive(number=10000)
+
     data = {
         "image": f"logo_{user.department.school_id}.png",
         "signature": f"signature_{user.department.school_id}.png",
-        "date": datetime.now().strftime("%A %Y-%b-%d"),
+        "date": datetime.now().strftime("%A %d de %B del %Y"),
         "user": user.dict(),
         "school": school.dict(),
         "commission": commission.dict(),
-        "application": application.dict()
+        "application": application.dict(),
+        "consecutive": str(consecutive.number)[1:]
     }
 
-    generate_pdf_to_aws.apply_async(args=(data, path), serializer='json')
+    consecutive.number += 1 
+
+    await mong_db.save(consecutive)
+
+    generate_commission_pdf_to_aws.apply_async(args=(data, path), serializer='json')
 
     
     return None
 
 @celery.task
-def generate_pdf_to_aws(data: dict, path: str):
+def generate_commission_pdf_to_aws(data: dict, path: str):
     env = Environment(loader=FileSystemLoader(templates_dir))
     template = env.get_template('commission.letter.html')
     render = template.render(data)

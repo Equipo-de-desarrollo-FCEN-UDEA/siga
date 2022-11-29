@@ -114,6 +114,30 @@ init_users: List[schemas.UserCreate] = [
         active=True,
         password='123'
     ),
+    schemas.UserCreate(
+        last_names='COORDINADOR',
+        names='SISTEMAS',
+        identification_number='COORDSISTEMAS',
+        scale='VINCULADO',
+        vinculation_type='TIEMPO COMPLETO',
+        department_id=4,
+        rol_id=7,
+        email='coordsistemas@udea.edu.co',
+        active=True,
+        password='123'
+    ),
+    schemas.UserCreate(
+        last_names='DECANO',
+        names='FING',
+        identification_number='DECANOFING',
+        scale='VINCULADO',
+        vinculation_type='TIEMPO COMPLETO',
+        department_id=4,
+        rol_id=3,
+        email='decanofing@udea.edu.co',
+        active=True,
+        password='123'
+    ),
 ]
 
 init_schools: List[schemas.SchoolCreate] = [

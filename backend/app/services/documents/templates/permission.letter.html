@@ -13,9 +13,9 @@
             Señor(a):
         </p>
         <p>
-            {{(user.names + ' ' + user.lastnames).title()}}
+            {{(user.names + ' ' + user.last_names).title()}}
         </p>
-        <p><strong>{{user.identification}}</strong></p>
+        <p><strong>{{user.identification_number}}</strong></p>
 
     </header>
     <section class="section">
@@ -32,13 +32,13 @@
         <p class="text-center"><strong>RESUELVE</strong></p>
 
         <p class="text-justify">
-            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.lastnames).title()}}, con
-            {{user.identification_type}} {{user.identification}}, adscrito al Instituto, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
+            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
+            {{user.identification_type}} {{user.identification_number}}, adscrito al Instituto, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
             {{permission.end_date}}, para {{permission.justification}}
         </p>
 
         <div class="signature">
-            <img src="{{signature}}" height="200px">
+            <img src="{{signature}}" class="signature">
             <p>
                 {{school.dean.title()}}
             </p>

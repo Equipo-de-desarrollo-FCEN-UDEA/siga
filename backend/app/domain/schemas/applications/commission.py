@@ -45,4 +45,4 @@ class CommissionResponse(ApplicationResponse):
 class CommissionDocument(ComissionInDB):
     @validator("start_date", 'end_date')
     def stringdate(cls, v, values, **kwargs):
-        return v.strftime("%A %Y-%b-%d")
+        return v.strftime("%A %d de %B del %Y")
