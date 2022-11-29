@@ -1,0 +1,66 @@
+{% extends "letter.base.html" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+            <p class="subtitle">
+                Medellín, {{date}}
+            </p>
+        </div>
+        <p>
+            Señor(a):
+        </p>
+        <p>
+            {{(user.names + ' ' + user.last_names).title()}}
+        </p>
+        <p><strong>{{user.identification_number}}</strong></p>
+
+    </header>
+    <section class="section">
+        <p class="text-justify">
+            El(La) Decano(a) de la {{school.description.lower()}}, en uso de sus facultades
+            legales y estatutarias y en especial las conferidas por el literal ñ, artículo 53 del Acuerdo
+            Superior 1 de 1994; y los artículos 106 y 107 del Acuerdo Superior 083 del 22 de julio
+            de 1996 (modificado por el Acuerdo Superior 441 del 28 de marzo de 2017) y
+            1. Que el artículo 53, literal ñ del Acuerdo Superior 1 de 1994, estipula que entre las
+            funciones del Decano de la Facultad, está la de “Autorizar permisos hasta por tres días y
+            hasta por dos veces al año, y conceder comisiones y licencias hasta por treinta días”
+            2. Que el(la) Decano(a) de la Facultad, una vez revisada la solicitud.
+        </p>
+        <p class="text-center"><strong>RESUELVE</strong></p>
+
+        <p class="text-justify">
+            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
+            {{user.identification_type}} {{user.identification_number}}, adscrito al Instituto, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
+            {{permission.end_date}}, para {{permission.justification}}
+        </p>
+
+        <div class="signature">
+            <img src="{{signature}}" class="signature">
+            <p>
+                {{school.dean.title()}}
+            </p>
+        </div>
+    </section>
+</div>
+
+<div class="footer">
+    <div class="text-center">
+        <p>
+            DECANATO
+        </p>
+        <p>
+            Dirección: {{school.direction}}
+        </p>
+        <p>
+            Contacto: {{school.contact}}
+        </p>
+        <p>
+            Medellín, Colombia
+        </p>
+    </div>
+</div>
+
+{% endblock %}

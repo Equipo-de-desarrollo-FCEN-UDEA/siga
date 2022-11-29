@@ -9,7 +9,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names=settings.first_superemployee_last_names,
         names=settings.first_superemployee_names,
-        identificaction_number=settings.first_superemployee_identification_number,
+        identification_number=settings.first_superemployee_identification_number,
         scale=settings.first_superemployee_vinculation_type,
         vinculation_type=settings.first_superemployee_vinculation_type,
         department_id=settings.first_superemployee_department_id,
@@ -21,7 +21,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='FCEN',
         names='DECANO DE',
-        identificaction_number='DECANOFCEN',
+        identification_number='DECANOFCEN',
         scale='Decanatura',
         vinculation_type='Tiempo completo',
         department_id=2,
@@ -33,7 +33,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='GARCÍA LUJÁN',
         names='SIMÓN',
-        identificaction_number='1001987844',
+        identification_number='1001987844',
         scale='Estudiante',
         vinculation_type='NO APLICA',
         department_id=3,
@@ -45,7 +45,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='MUÑOS ACEVEDO',
         names='JUAN CARLOS',
-        identificaction_number='987654321',
+        identification_number='987654321',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=3,
@@ -57,7 +57,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='MUÑOS ACEVEDO',
         names='JUAN CARLOSDOS',
-        identificaction_number='9876543211',
+        identification_number='9876543211',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=4,
@@ -69,7 +69,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='QUIMICA',
         names='PROFESOR',
-        identificaction_number='1239845651',
+        identification_number='1239845651',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=5,
@@ -81,7 +81,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='COORDINADOR',
         names='QUIMICA',
-        identificaction_number='COORDQUIMICA',
+        identification_number='COORDQUIMICA',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=5,
@@ -93,7 +93,7 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='COORDINADOR',
         names='FISICA',
-        identificaction_number='COORDFISICA',
+        identification_number='COORDFISICA',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=3,
@@ -105,12 +105,36 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='EMPLEADO',
         names='FISICA',
-        identificaction_number='EMPLEADOFISICA',
+        identification_number='EMPLEADOFISICA',
         scale='VINCULADO',
         vinculation_type='TIEMPO COMPLETO',
         department_id=3,
         rol_id=10,
         email='empleado.fisica@udea.edu.co',
+        active=True,
+        password='123'
+    ),
+    schemas.UserCreate(
+        last_names='COORDINADOR',
+        names='SISTEMAS',
+        identification_number='COORDSISTEMAS',
+        scale='VINCULADO',
+        vinculation_type='TIEMPO COMPLETO',
+        department_id=4,
+        rol_id=7,
+        email='coordsistemas@udea.edu.co',
+        active=True,
+        password='123'
+    ),
+    schemas.UserCreate(
+        last_names='DECANO',
+        names='FING',
+        identification_number='DECANOFING',
+        scale='VINCULADO',
+        vinculation_type='TIEMPO COMPLETO',
+        department_id=4,
+        rol_id=3,
+        email='decanofing@udea.edu.co',
         active=True,
         password='123'
     ),
@@ -121,19 +145,28 @@ init_schools: List[schemas.SchoolCreate] = [
         name='ADMIN',
         description='ADMIN',
         cost_center=0,
-        email_dean='simongarcia3640@gmail.com'
+        email_dean='simongarcia3640@gmail.com',
+        contact='cel 3176840272',
+        direction='cra 12#345-67',
+        dean='Simon Garcia'
     ),
     schemas.SchoolCreate(
         name='FCEN',
         description='Facultad de ciencias exactas y naturales',
         cost_center=21402601,
-        email_dean='fcen@udea.edu.co'
+        email_dean='fcen@udea.edu.co',
+        direction='Ciudad Universitaria: Calle 67 N. o 53-108. Bloque 1, oficina 115 Recepción de correspondencia: Calle 70 N.o 52-21',
+        contact='Teléfonos: 219 56 00 NIT: 890.980.040-8 Apartado: 1226',
+        dean='Adriana Echavarria'
     ),
     schemas.SchoolCreate(
         name='FING',
         description='Facultad de ingeniería',
         cost_center=21301601,
-        email_dean='fing@udea.edu.co'
+        email_dean='fing@udea.edu.co',
+        direction='Calle 67 No. 53 108 Bloques 18, 19, 20 y 21, Medellín, Antioquia',
+        contact='Teléfonos: 2198130',
+        dean='decano ingenieroia'
     )
 ]
 

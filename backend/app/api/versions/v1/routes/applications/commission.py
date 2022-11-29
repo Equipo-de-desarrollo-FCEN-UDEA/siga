@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud
+from app.services import crud, documents
 from app.domain.models import Commission, User, Application
 from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg, CommissionResponse, ApplicationResponse
 from app.domain.errors import BaseErrors
@@ -96,12 +96,11 @@ async def get_comission(
             comission = await crud.comission.get(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    application = ApplicationResponse.from_orm(application)
+    application_response = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
-        **dict(application),
+        **dict(application_response),
         commission=comission
     )
-    log.debug(dict(response))
     return response
 
 

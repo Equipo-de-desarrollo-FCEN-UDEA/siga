@@ -15,6 +15,8 @@ from .application_status import (Application_statusCreate, Application_statusInD
 from .applications import (
     CommissionCreate,
     CommissionResponse,
-    CommissionUpdate
+    CommissionUpdate,
+    ComissionInDB,
+    CommissionDocument
 )
-from .applications import ( PermissionCreate, PermissionResponse, PermissionUpdate )
+from .applications import ( PermissionCreate, PermissionResponse, PermissionUpdate , PermissionDocument)

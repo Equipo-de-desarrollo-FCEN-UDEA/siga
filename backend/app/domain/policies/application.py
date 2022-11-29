@@ -61,7 +61,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
             raise application_401
 
         if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA'):
-            raise application_401
+            raise application_in_other_status
 
         return None
 
