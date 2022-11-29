@@ -8,3 +8,4 @@ settings = get_app_settings()
 client = AsyncIOMotorClient(settings.mongo_uri)
 
 engine = AIOEngine(client=client, database="siga")
+

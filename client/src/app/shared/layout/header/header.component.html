@@ -1,149 +1,3 @@
-<!-- <nav class="navbar navbar-expand-xl navbar-light d-flex justify-content-between p-3">
-  <button
-  class="navbar-toggler"
-  type="button"
-  data-bs-toggle="offcanvas"
-  data-bs-target="#offcanvasNavbar"
-  aria-controls="offcanvasNavbar"
-  >
-    <i class="fa fa-bars" style="color: rgb(255, 255, 255)"></i>
-  </button>
-
-  <div class="logo"> -->
-<!-- <a routerLink="/home">
-      <img [src]="prefix+'logos/'+'Logo+Facultad+de+Ciencias+Exactas+y+Naturales-blanco.png'" alt="Logo udea" width="180px" >
-    </a> -->
-<!-- </div>
-
-  <div class="">
-    <span>
-      Bienvenido usuario.nombre
-    </span>
-  </div>
-
-
-  <div class="offcanvas-body">
-    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-      <div class="ng-sidebar">
-        <div>
-          <div>
-            <div class="sidebar-header">
-              <span class="user-pic">
-                <i class="fas fa-user-circle"></i>
-              </span>
-            </div>
-            <div class="user-info">
-              <span class="user-name">
-                 usuario?.nombre 
-                <br />
-                 usuario?.apellido 
-              </span>
-              <br />
-              <span class="user-role">
-                <span class="user-status">
-                  <i class="fa fa-circle"></i>
-                </span>
-                 usuario?.roles?.nombre 
-              </span>
-            </div> -->
-<!-- sidebar-header  -->
-<!-- <hr
-              color="#f5f5f5"
-
-            />
-            <div
-              class="create-request"
-
-            >
-              <button
-                type="button"
-                class="btn-request dropdown-toggle w-75"
-                id="navbarScrollingDropdown"
-                data-bs-toggle="dropdown"
-              >
-                <span style="color: #ffff; margin: 0">
-                  <i class="fas fa-plus-circle"></i>
-                </span>
-                Crear Solicitud
-              </button>
-            </div> -->
-<!-- sidebar-search  -->
-<!-- <hr color="#f5f5f5" />
-            <div class="sidebar-menu">
-              <div class="header-menu">
-                <span>GENERAL</span>
-              </div>
-              <ul>
-                <li 
-                  type="button"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                  >
-                    <span>
-                      <i class="fa-solid fa-user-astronaut"></i>
-                      Mi Perfil
-                    </span>
-                </li>
-                <li 
-                  type="button"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                  [routerLink]="['/home']">
-                    <span>
-                      <i class="fas fa-home"></i>
-                      Solicitudes
-                    </span>
-                </li>
-              </ul>
-              <div
-
-                class="header-menu"
-              >
-                <span> ESPECÍFICO </span>
-              </div>
-              <ul
-
-              >
-                <li 
-                  type="button"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                  [routerLink]="['/usuarios/lista-usuarios']">
-                    <span>
-                      <i class="fa-solid fa-users"></i>
-                      Usuarios
-                    </span>
-                </li>
-                <li
-                  type="button"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close" 
-                  [routerLink]="['/usuarios/registrar-usuarios']">
-                    <span>
-                      <i class="fa-solid fa-user-group"></i>
-                      Registrar Usuarios
-                    </span>
-                </li>
-              </ul>
-            </div> -->
-<!-- sidebar-menu  -->
-<!-- sidebar-content  -->
-<!-- <div class="sidebar-footer">
-              <hr />
-              <a>
-                <span>
-                  <i class="fas fa-power-off"></i>
-                  Cerrar Sesi&oacute;n
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ul>
-  </div>
-</nav> -->
-
 <nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container-fluid">
     <button
@@ -157,8 +11,8 @@
     </button>
 
     <div class="">
-      <span>
-        Bienvenido usuario.nombre
+      <span style="color: #fff">
+        Bienvenido {{ user?.names }} {{ user?.last_names }}
       </span>
     </div>
     <div
@@ -168,53 +22,138 @@
       aria-labelledby="offcanvasDarkNavbarLabel"
     >
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-          Dark offcanvas
-        </h5>
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
         <button
           type="button"
-          class="btn-close btn-close-white"
+          class="btn-close text-reset"
+          style="margin-right: 1em"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
         ></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Dropdown
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
+          <div class="ng-sidebar">
+            <div>
+              <div>
+                <div class="sidebar-header">
+                  <span class="user-pic">
+                    <i class="fas fa-user-circle"></i>
+                  </span>
+                </div>
+                <div class="user-info">
+                  <span class="user-name">
+                    {{ user?.names }}
+                    <br />
+                    {{ user?.last_names }}
+                  </span>
+                  <br />
+                  <span class="user-role">
+                    <span class="user-status">
+                      <i class="fa fa-circle"></i>
+                    </span>
+                    {{ user_response?.rol?.name }}
+                  </span>
+                </div>
+                <!-- sidebar-header  -->
+                <div class="create-request" *ngIf="!(isSuperUser | async)">
+                  <hr />
+                  <button
+                    type="button"
+                    class="btn-request dropdown-toggle w-75"
+                    id="navbarScrollingDropdown"
+                    data-bs-toggle="dropdown"
+                  >
+                    <span style="color: #ffff; margin: 0">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                    Crear Solicitud
+                  </button>
+                  <hr />
+                </div>
+                <!-- sidebar-search  -->
+                <div class="sidebar-menu">
+                  <div class="header-menu">
+                    <span class="text-secondary">GENERAL</span>
+                  </div>
+                  <ul>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                      [routerLink]="['/home/home']"
+                    >
+                      <span>
+                        <i class="fas fa-home"></i>
+                        Inicio
+                      </span>
+                    </li>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    >
+                      <span>
+                        <i class="fa-solid fa-user-astronaut"></i>
+                        Mi Perfil
+                      </span>
+                    </li>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    >
+                      <span>
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        Solicitudes
+                      </span>
+                    </li>
+                  </ul>
+                  <div *ngIf="(isSuperUser | async)">
+                    <hr />
+                    <div class="header-menu">
+                      <span class="text-secondary"> ESPECÍFICO </span>
+                    </div>
+                    <ul>
+                      <li
+                        type="button"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      >
+                        <span>
+                          <i class="fa-solid fa-users"></i>
+                          Usuarios
+                        </span>
+                      </li>
+                      <li
+                        type="button"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                        [routerLink]="['/usuarios/lista-usuarios']"
+                      >
+                        <span>
+                          <i class="fa-solid fa-user-group"></i>
+                          Registrar Usuarios
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- sidebar-menu  -->
+                <!-- sidebar-content  -->
+                <div class="sidebar-footer">
+                  <hr />
+                  <a (click)="logOut()">
+                    <span>
+                      <i class="fas fa-power-off"></i>
+                      Cerrar Sesi&oacute;n
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </ul>
-        <form class="d-flex mt-3" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </div>

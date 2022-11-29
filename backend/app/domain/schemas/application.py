@@ -26,6 +26,8 @@ class ApplicationInDB(ApplicationUpdate):
     id: int
     created_at: datetime
 
+    # Pydantic models can be created from arbitrary class instances to 
+    # support models that map to ORM objects. 
     class Config:
         orm_mode = True
 

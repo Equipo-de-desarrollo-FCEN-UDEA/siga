@@ -3,14 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+//sweetalert2
+import Swal from 'sweetalert2';
+
 //interfaces
-import { Auth, Token } from '@interfaces/auth';
-import { UserCreate } from '@interfaces/user';
+import { Auth } from '@interfaces/auth';
 
 //service
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
-import Swal from 'sweetalert2';
 
 
 @Component({
@@ -19,6 +20,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
   public submitted: boolean = false;
   public loading: boolean = false;
   public form!: FormGroup;
@@ -41,40 +43,32 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home/home']);
     }
   }
 
   onSubmitLogin() {
-
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
-
+    this.loading = true;  
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        this.router.navigate(['/home'])
+        //this.router.navigate(['/solicitudes/ver/60/permiso']);
+        //this.router.navigate(['/solicitudes/editar/60/permiso']);
+        this.router.navigate(['/home/home']);
+      },
+      error: (err) => {
+        if (err.status === 404 || err.status === 401) {
+          this.error = 'Usuario o contraseña incorrectos';
+          Swal.fire({
+            title: 'Usuario o contraseña incorrectos',
+            confirmButtonText: 'Intentar de nuevo',
+            icon: 'warning'
+          })
+        }
       }
     })
-
-    this.loading = true;
-     
-    //TODO:INTERFAZ AUTH
-    // this.authService.login(USER).subscribe({
-    //   next: (res:Token) => {
-    //     this.router.navigate(['/home']);
-    //   },
-    // }),
-    // error: (err) => {
-    //   if (err.status === 404 || err.status === 401) {
-    //     this.error = 'Usuario o contraseña incorrectos';
-    //     Swal.fire({
-    //       title: 'Usuario o contraseña incorrectos',
-    //       confirmButtonText: 'Intentar de nuevo',
-    //       icon: 'warning'
-    //     })
-    //   }
-    // },
+    this.loading = false;
   }
 }

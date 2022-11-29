@@ -23,13 +23,13 @@
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Apellidos</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
-              id="last_name"
+              id="last_names"
               type="text"
               class="form-control"
               placeholder=" "
-              formControlName="last_name"
+              formControlName="last_names"
               [ngClass]="{
-                'is-invalid': f['last_name'].errors && f['last_name'].touched
+                'is-invalid': f['last_names'].errors && f['last_names'].touched
               }"
             />
           </div>
@@ -40,13 +40,13 @@
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Nombre</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
-              id="name"
+              id="names"
               type="text"
               class="form-control"
               placeholder=" "
-              formControlName="name"
+              formControlName="names"
               [ngClass]="{
-                'is-invalid': f['name'].errors && f['name'].touched
+                'is-invalid': f['names'].errors && f['names'].touched
               }"
             />
           </div>
@@ -79,16 +79,16 @@
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
-              id="id_type"
-              formControlName="id_type"
+              id="identification_type"
+              formControlName="identification_type"
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['id_type'].errors && f['id_type'].touched
+                'is-invalid': f['identification_type'].errors && f['identification_type'].touched
               }"
             >
-              <option [value]="tipo" *ngFor="let tipo">
-                {{ tipo | uppercase }}
+              <option [value]="type" *ngFor="let type of id_type">
+                {{ type | uppercase }}
               </option>
             </select>
           </div>
@@ -101,13 +101,15 @@
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
-              id="id"
-              formControlName="id"
+              id="identificaction_number"
+              formControlName="identificaction_number"
               type="text"
               class="form-control"
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['id'].errors && f['id'].touched
+                'is-invalid':
+                  f['identificaction_number'].errors &&
+                  f['identificaction_number'].touched
               }"
             />
           </div>
@@ -141,17 +143,42 @@
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['rol'].errors && f['rol'].touched
+                'is-invalid': f['rol_id'].errors && f['rol_id'].touched
               }"
             >
-              <option [value]="rol.id" *ngFor="let rol">
-                {{ rol.nombre | uppercase }}
+              <option [value]="rol" *ngFor="let rol of rol$ | async">
+                {{ rol.name | uppercase }}
               </option>
             </select>
           </div>
         </div>
 
-        <div class="row regular-row mt-4">
+        <!-- Facultad -->
+        <!-- <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Facultad
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="Faculty_id"
+              formControlName="Faculty_id"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  f['Faculty_id'].errors && f['Faculty_id'].touched
+              }"
+            >
+              <option *ngFor="let Faculty_id" [value]="Faculty_id">
+                {{ Faculty_id.nombre | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div> -->
+
+        <!-- Departamento/Instituto -->
+        <!-- <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Departamento/Instituto
           </div>
@@ -172,7 +199,7 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
 
         <hr />
 
