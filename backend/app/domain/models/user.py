@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 
 # Creamos el modelo usuario
 class User(Base):
+    #__tablename__='users'
     id = Column(Integer, primary_key=True)
     last_names = Column(String(50), nullable=False)
     names = Column(String(50), nullable=False)

@@ -26,3 +26,18 @@
 .btn-add:hover {
     background-color: #79b97c;
 }
+
+.btn-submit {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-submit:hover {
+    transition: all 0.5s ease-out;
+    background-color: rgba(67, 182, 73, 0.8) 0%,;
+  }
+

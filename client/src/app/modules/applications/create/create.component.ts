@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderService } from '@services/loader.service';
+import { Subject } from 'rxjs';
 import { CommissionComponent } from './components/commission/commission.component';
 
 @Component({
@@ -14,8 +16,12 @@ export class CreateComponent implements OnInit {
 
   private activatedComponentReference: any;
 
+  // Loader
+  isLoading: Subject<boolean> = this.loaderService.isLoading;
+
   constructor(
     private route: ActivatedRoute,
+    private loaderService: LoaderService,
   ) { 
     // We take the titile from the child data
     this.title = this.route.snapshot.firstChild?.data['title'];

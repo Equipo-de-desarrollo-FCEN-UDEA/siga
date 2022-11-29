@@ -41,6 +41,7 @@ export class CommissionComponent implements OnInit {
   public isLoading = this.loaderSvc.isLoading;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
+  
 
   public id: number = 0;
 
