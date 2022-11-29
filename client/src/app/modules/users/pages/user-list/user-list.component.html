@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
     <form [formGroup]="form" (submit)="search()">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-lg-8">
@@ -62,7 +62,7 @@
                     </td>
                     <td>{{user.rol.name}}</td>
                     <td>{{user.email | lowercase}}</td>
-                    <td>{{user.identificaction_number | lowercase}}</td>
+                    <td>{{user.identification_number | lowercase}}</td>
                     <td>{{user.department.name}}</td>
                     <td>{{user.department.school.name}}</td>
                     <td>{{user.active? 'Activo': 'Inactivo'}}</td>

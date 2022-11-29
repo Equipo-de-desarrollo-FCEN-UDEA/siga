@@ -24,7 +24,7 @@ def test_api_user():
     user = {
         "last_names": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
         "names": "JOUKWONLOUGKQUCZPGTQALAYF EEKWW MGYIELZAGUMNQHUUGD",
-        "identificaction_number": "UZYRTUJDVMLL270C",
+        "identification_number": "UZYRTUJDVMLL270C",
         "email": "test.api@udea.edu.co",
         "active": True,
         "scale": "string",

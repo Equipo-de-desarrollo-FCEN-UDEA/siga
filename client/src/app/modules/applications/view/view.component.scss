@@ -25,6 +25,8 @@
     background-color: #43b649;
 }
 
+
+
 @media screen and (max-width: 576px) {
     .containerInside {
         width: 95% !important;
@@ -36,3 +38,19 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+
+.btn-status {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-status:hover {
+    color: #fff;
+    background-color:#04351f;
+  }
+

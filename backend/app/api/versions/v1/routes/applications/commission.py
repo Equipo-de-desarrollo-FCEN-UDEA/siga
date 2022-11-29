@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud
+from app.services import crud, documents
 from app.domain.models import Commission, User, Application
 from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg, CommissionResponse, ApplicationResponse
 from app.domain.errors import BaseErrors
@@ -36,11 +36,14 @@ async def create_commission(
     try:
         comission_created = await crud.comission.create(db=engine,
                                                         obj_in=Commission(**dict(comission)))
+
+        log.debug('comission_created', comission_created)
         application = ApplicationCreate(
             mongo_id=str(comission_created.id),
             application_sub_type_id=comission.application_sub_type_id,
             user_id=current_user.id
         )
+        log.debug('application', application)
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
@@ -82,7 +85,7 @@ async def get_comission(
 
         path-params:
             -id: int, this is the id of the application, not of mongo
-        
+
         response:
             -body: Commission
     """
@@ -93,12 +96,11 @@ async def get_comission(
             comission = await crud.comission.get(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    application = ApplicationResponse.from_orm(application)
+    application_response = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
-        **dict(application),
+        **dict(application_response),
         commission=comission
     )
-    log.debug(dict(response))
     return response
 
 
@@ -152,7 +154,7 @@ async def delete_commission(
 
         params:
             -id: int, this is the id of the application and not of mongo
-        
+ 
         response:
             -msg: Msg
     """

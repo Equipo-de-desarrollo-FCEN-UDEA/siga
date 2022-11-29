@@ -7,5 +7,13 @@ RUN pip3 install -r requirements.txt
 COPY ./ ./app
 WORKDIR /app/
 
+
+RUN apt-get clean && apt-get update && apt-get install -y locales
+RUN sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales
+ENV LANG es_ES.UTF-8
+ENV LC_ALL es_ES.UTF-8
+
+
 CMD ["uvicorn", "app.main:app", "--host=0.0.0.0", "--port", "8000", "--reload"]
 

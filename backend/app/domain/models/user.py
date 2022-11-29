@@ -14,10 +14,11 @@ if TYPE_CHECKING:
 
 # Creamos el modelo usuario
 class User(Base):
+    #__tablename__='users'
     id = Column(Integer, primary_key=True)
     last_names = Column(String(50), nullable=False)
     names = Column(String(50), nullable=False)
-    identificaction_number = Column(String(20), nullable=False, unique=True)
+    identification_number = Column(String(20), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
     active = Column(Boolean, default=False)
     scale = Column(String(50), nullable=False)
