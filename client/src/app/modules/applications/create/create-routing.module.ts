@@ -9,15 +9,17 @@ const routes: Routes = [
     path: '', 
     component: CreateComponent,
     children: [
+      //permiso
       {
-        path: 'permiso',
+        path: '1',
         component: PermissionComponent,
         data: {
           title: 'Permiso'
         }
       },
+      //comision
       {
-        path: 'comision',
+        path: '2',
         component: CommissionComponent,
         data: {
           title: 'Comisión'

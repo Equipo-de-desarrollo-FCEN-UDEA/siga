@@ -1,5 +1,5 @@
 //angular
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -7,12 +7,15 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 //interfaces
-import { ApplicationType } from '@interfaces/application_type';
+import {
+  ApplicationType,
+  ApplicationTypeResponse,
+} from '@interfaces/application_type';
 
 //services
 import { ApplicationTypesService } from '@services/application-types.service';
 import { LoaderService } from '@services/loader.service';
-
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-application',
@@ -20,30 +23,38 @@ import { LoaderService } from '@services/loader.service';
   styleUrls: ['./create-application.component.scss'],
 })
 export class CreateApplicationComponent {
-
-
   public is_loading = this.loaderSvc.isLoading;
-  public submitted:boolean = false;
-  public form!: FormGroup;
+  public submitted: boolean = false;
 
-  public application_type$: Observable<ApplicationType[]> =
-    this.applicationType.getApplicationTypes();
+  public application_types$: Observable<ApplicationType[]> =
+    this.applicationTypeSvc.getApplicationTypes();
 
   public create_application_form: FormGroup = this.formBuilder.group({
-    application_type: ['', Validators.required]
+    application_type: ['', Validators.required],
   });
 
-  get f() { return this.create_application_form.controls; }
+  get f() {
+    return this.create_application_form.controls;
+  }
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private loaderSvc: LoaderService,
-    private applicationType: ApplicationTypesService
+    private applicationTypeSvc: ApplicationTypesService
   ) {}
 
   onSubmitApplication() {
+    this.submitted = true;
     if (this.create_application_form.invalid) { return; }
-  }
 
+    this.applicationTypeSvc.getApplicationTypes().subscribe({
+      next: () => {
+        this.router.navigate([
+          '/solicitudes/crear/' +
+            this.create_application_form.value.application_type
+        ]);
+      },
+    });
+  }
 }

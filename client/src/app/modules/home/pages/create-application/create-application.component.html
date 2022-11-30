@@ -18,8 +18,8 @@
         <div class="col-12">
           <select
             class="form-select form-select-lg"
-            id="identification_type"
-            formControlName="identification_type"
+            id="application_type"
+            formControlName="application_type"
             required
             placeholder=" "
             [ngClass]="{
@@ -28,12 +28,18 @@
             }"
           >
             <option
-              [value]="application_type"
-              *ngFor="let application_type of application_type$ | async"
+              [value]="application_type.id | number"
+              *ngFor="let application_type of application_types$ | async"
             >
               {{ application_type.name | uppercase }}
             </option>
           </select>
+        </div>
+      </div>
+
+      <div *ngIf="submitted && f['application_type'].errors" class="invalid">
+        <div *ngIf="submitted && f['application_type'].errors?.['required']">
+          Selecciona una solicitud
         </div>
       </div>
 
@@ -51,7 +57,12 @@
         </div>
 
         <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-          <button id="btn-sub" class="btn btn-submit">
+          <button
+            id="btn-sub"
+            class="btn btn-submit"
+            type="submit"
+            (submit)="(true)"
+          >
             <span
               *ngIf="is_loading | async"
               class="spinner-border spinner-border-sm"
