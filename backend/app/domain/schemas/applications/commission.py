@@ -49,5 +49,5 @@ class CommissionDocument(commissionInDB):
 
 
 class Compliment(BaseModel):
-    compliment: str
+    compliment: Any
     emails: list[str]
