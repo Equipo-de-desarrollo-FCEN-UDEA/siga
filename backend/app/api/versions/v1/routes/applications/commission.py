@@ -8,7 +8,7 @@ from app.core.logging import get_logging
 from app.services import crud, documents
 from app.domain.models import Commission, User, Application
 from app.domain.schemas import (ApplicationCreate, CommissionCreate,
-                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment)
+                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment, Application_statusCreate)
 from app.domain.errors import BaseErrors
 
 
@@ -55,7 +55,7 @@ async def create_commission(
         raise HTTPException(422, e)
     except Exception:
         await engine.remove(Commission, Commission.id == commission_created.id)
-        raise HTTPException(422, "Algo ocurrió mal")
+        raise HTTPException(422, "Algo ocurrió mal, ")
     application = ApplicationResponse.from_orm(application)
     log.debug(commission_created)
     response = CommissionResponse(
@@ -187,7 +187,10 @@ async def update_compliment(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
-                                                      id=mongo_id, compliment=compliment.compliment)
+                                                      id=mongo_id, compliment=compliment)
+        finalize_status = Application_statusCreate(
+            application_id=application.id, status_id=4, observation='El usuario ha subido el cumplido y ha finalizado la comisión')
+        status = crud.application_status.finalize(db, obj_in=finalize_status)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return commission

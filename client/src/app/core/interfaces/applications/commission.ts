@@ -17,10 +17,17 @@ export interface CommissionCreate {
 export interface CommissionInDB extends CommissionCreate {
     id: string;
     resolution?: string;
-    compliment?: string;
+    compliment?: ComplimentCreate;
 }
 
 
 export interface CommissionResponse extends Application {
     commission: CommissionInDB;
+}
+
+
+export interface ComplimentCreate {
+    documents: file_path[];
+    emails: string[];
+    observation: string;
 }

@@ -12,7 +12,7 @@ settings = get_app_settings()
 env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
-def acomplish_email(to_name: str, to_lname: str, acompl: str, token: str, email: str):
+def acomplish_email(to_name: str, to_lname: str, acompl: z, token: str, email: str):
     template = env.get_template("email.envio.cumplido.html")
 
     context = {
