@@ -71,6 +71,12 @@
           </div>
         </div>
 
+        <div *ngIf="f['email'].errors" class="invalid-feedback">
+          <div *ngIf="submitted && f['email'].errors?.['pattern']">
+            Ingresa tu correo institucional
+          </div>
+        </div>
+
         <!-- tipo ID -->
         <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
@@ -84,7 +90,9 @@
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['identification_type'].errors && f['identification_type'].touched
+                'is-invalid':
+                  f['identification_type'].errors &&
+                  f['identification_type'].touched
               }"
             >
               <option [value]="type" *ngFor="let type of id_type">
@@ -133,7 +141,7 @@
         </div>
 
         <!-- Vinculación -->
-        <div class="row regular-row mt-4">
+        <!-- <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Vinculación</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
@@ -151,13 +159,11 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
 
         <!-- Facultad -->
         <!-- <div class="row regular-row mt-4">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Facultad
-          </div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
@@ -166,12 +172,11 @@
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid':
-                  f['Faculty_id'].errors && f['Faculty_id'].touched
+                'is-invalid': f['Faculty_id'].errors && f['Faculty_id'].touched
               }"
             >
-              <option *ngFor="let Faculty_id" [value]="Faculty_id">
-                {{ Faculty_id.nombre | uppercase }}
+              <option *ngFor="let Faculty_id of departments$; let i = index" [value]="i">
+                {{ Faculty_id.name | uppercase }}
               </option>
             </select>
           </div>
