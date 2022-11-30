@@ -15,17 +15,14 @@ const ROUTES: Routes = [
     .then(m => m.ApplicationsModule) 
   },
   {
-    path: 'home',
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) 
-  },
-  {
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module')
     .then(m => m.AuthModule)
   },
   {
-    path: '**',
-    redirectTo: 'auth'
+    path: '',
+    loadChildren: () => import('./modules/home/home.module')
+    .then(m => m.HomeModule)
   }
 ];
 

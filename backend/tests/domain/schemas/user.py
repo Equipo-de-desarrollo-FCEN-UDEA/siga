@@ -7,7 +7,7 @@ def test_schema_user():
     user1 = UserCreate(
         names="SIMON DE LA ROSA",
         last_names="GARCIA LUJAN",
-        identificaction_number="1234567890",
+        identification_number="1234567890",
         email="simon.garcial@udea.edu.co",
         scale="Vinculado",
         vinculation_type="TIEMPO COMPLETO",
@@ -15,7 +15,7 @@ def test_schema_user():
         rol_id=1
     )
     # Contraseña automática
-    assert user1.password == user1.identificaction_number
+    assert user1.password == user1.identification_number
     # Activo automático
     assert user1.active == False
     assert user1.identification_type == 'CC'
@@ -24,7 +24,7 @@ def test_schema_user():
         UserCreate(
             names="SIMON DE LA ROSA",
             last_names="GARCIA LUJAN",
-            identificaction_number="1231233",
+            identification_number="1231233",
             email="simon.garcial@gmail.com",
             scale="Vinculado",
             department_id=1,
@@ -35,7 +35,7 @@ def test_schema_user():
         UserCreate(
             names="SIMON DE LA ROSA",
             last_names="GARCIA LUjAN",
-            identificaction_number="1234567890",
+            identification_number="1234567890",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,
@@ -46,7 +46,7 @@ def test_schema_user():
         UserCreate(
             names="SIMON DE LA ROSA",
             last_names="GARCIA LUJAN",
-            identificaction_number="1234567890+",
+            identification_number="1234567890+",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,
@@ -57,7 +57,7 @@ def test_schema_user():
         UserCreate(
             names="SIMON DE LA ROSA",
             last_names="GARCIA LUJAN",
-            identificaction_number="1234567890",
+            identification_number="1234567890",
             email="simon.garcial@udea.edu.co",
             scale="Vinculado",
             department_id=1,

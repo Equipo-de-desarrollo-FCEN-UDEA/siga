@@ -6,6 +6,9 @@ class SchoolBase(BaseModel):
     description: str
     cost_center: int
     email_dean: str
+    direction: str
+    contact: str
+    dean: str
 
 
 class SchoolCreate(SchoolBase):

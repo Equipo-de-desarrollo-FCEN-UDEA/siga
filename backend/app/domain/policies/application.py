@@ -31,19 +31,23 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         return None
 
     # Who can create a application of a subtype
-    def create(self, who: User, to: ApplicationCreate,
-               remunerated_permissions: int = 0) -> None:
+    def create(self, who: User, to: ApplicationCreate) -> None:
 
         application_sub_type = to.application_sub_type_id
-        if (application_sub_type in [1, 2, 3, 4, 5, 6, 7]
-                and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Permiso
+
+        # Permiso
+        if (application_sub_type in [1, 2, 3, 4, 5, 6, 7] and
+                not (who.rol.scope == 11 or who.rol.scope == 9)):
+            
             raise application_401
 
+        # Comisión
         if (application_sub_type in [8, 9]
-                and not (who.rol.scope == 11 or who.rol.scope == 9)):  # Comisión
+                and not (who.rol.scope == 11 or who.rol.scope == 9)):
             raise application_401
 
-        if (application_sub_type == 10 and not (who.rol.scope == 7)):  # Dedicación
+        # Dedicación
+        if (application_sub_type == 10 and not (who.rol.scope == 7)):
             raise application_401
 
         return None
@@ -57,7 +61,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
             raise application_401
 
         if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA'):
-            raise application_401
+            raise application_in_other_status
 
         return None
 

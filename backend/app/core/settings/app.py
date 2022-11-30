@@ -67,6 +67,10 @@ class AppSettings(BaseAppSettings):
     aws_region_name: str
     aws_bucket_name: str
 
+    # App
+
+    APP_DOMAIN: str
+
     database_uri: Optional[PostgresDsn] = None
 
     redis_uri: Optional[RedisDsn] = None

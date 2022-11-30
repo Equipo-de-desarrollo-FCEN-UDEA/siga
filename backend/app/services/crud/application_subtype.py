@@ -1,7 +1,7 @@
 from app.domain.models import ApplicationSubType
 from app.domain.schemas import ApplicationSubTypeCreate, ApplicationSubTypeUpdate
 from app.domain.policies import ApplicationSubTypePolicy
-from .base import CRUDBase
+from app.services.crud.base import CRUDBase
 
 
 class CRUDApplicationSubType(CRUDBase[ApplicationSubType, ApplicationSubTypeCreate, ApplicationSubTypeUpdate, ApplicationSubTypePolicy]):

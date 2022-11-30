@@ -1,1 +1,59 @@
-<p>permission works!</p>
+<div *ngIf="permission">
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ permission.start_date | date: "fullDate" }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ permission.end_date | date: "fullDate" }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Justificación</div>
+    <div class="col-xs-12 col-sm-6">{{ permission.justification }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">
+      Estado Actual del permiso
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <span
+        class="badge badge-pill pill"
+        [ngClass]="{
+          'bg-requested': current_status === 'SOLICITADA',
+          'bg-ok': current_status === 'VISTO BUENO',
+          'bg-approved': current_status === 'APROBADA',
+          'bg-rejected': current_status === 'RECHAZADA'
+        }"
+      >
+        {{ current_status }}
+      </span>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+    <div class="col-xs-12 col-sm-6">
+      <ul>
+        <li *ngFor="let doc of permission.documents">
+          <span class="link-success cursor" (click)="openDocument(doc.path)"
+            >{{ doc.name }}&nbsp;&nbsp;</span
+          >&nbsp;
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- RESOLUTION -->
+  <div class="row regular-row mt-2" *ngIf="permission.resolution">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Resolución</div>
+    <div class="col-6"> <span class="link-success cursor" (click)="openDocument(permission.resolution)">ver resolución</span> </div>
+  </div>
+</div>
