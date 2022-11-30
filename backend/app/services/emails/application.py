@@ -18,7 +18,7 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
 def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: str):
-    template = env.get_template("email.cambio.estado.html")
+    template = env.get_template("email.cambio.estado.html.j2")
     enlace = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
     context = {
         'req': {'tiposolicitud': tipo_solicitud, 'body': {'observacion': observacion}},
@@ -43,7 +43,7 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
 
 @celery.task
 def create_application_email(to_name: str, to_lname: str, tipo_solicitud: str, token: str, email: str):
-    template = env.get_template("email.creacion.solicitud.html")
+    template = env.get_template("email.creacion.solicitud.html.j2")
 
     context = {
         'user': {'nombre': to_name, 'apellido': to_lname},

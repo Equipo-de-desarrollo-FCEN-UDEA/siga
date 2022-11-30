@@ -1,6 +1,6 @@
-{% extends "email.base.html" %}
+{% extends 'email.base.html.j2' %}
 
-{% block title %}Validar correo{% endblock %}
+{% block title %}Cambio de estado{% endblock %}
 
 {% block content %}
     <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
@@ -15,7 +15,8 @@
                   <tbody>
                     <tr>
                       <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:center;color:#616161;">Hola, {{ user.nombre.title() }} <p>Bienvenid@ al Sistema Integrado de Gestion Administrativa</p>
+                        <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:center;color:#616161;">
+                          <p>Tienes una notificación del Sistema Integrado de Gestion Administrativa: Tu solicitud tiene una nueva actualización</p>
                         </div>
                       </td>
                     </tr>
@@ -41,8 +42,9 @@
                     <tr>
                       <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                         <div style="font-family:Roboto, Helvetica, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:left;color:#616161;">
-                          <p> Te informamos que tu usuario fue creado satisfactoriamente. Ahora haces parte del sistema de gestión de solicitudes de la Universidad de Antioquia. </p>
-                          <p>Generamos el siguiente enlace para que puedas activar tu cuenta: </p>
+                          <p> A su {{ req.tiposolicitud }} se le asignó estado de {{ estado.nombre }} agregando la siguiente observación: {{ req.body.observacion }}. </p>
+                          <p></p>
+                          <p>Para ver los detalles, consulta el siguiente enlace:</p>
                         </div>
                       </td>
                     </tr>
@@ -70,7 +72,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                           <tr>
                             <td align="center" bgcolor="#ffae00" role="presentation" style="border:none;border-radius:10px;cursor:auto;mso-padding-alt:10px 25px;background:#ffae00;" valign="middle">
-                              <a href="{{enlace}}" style="display:inline-block;background:#ffae00;color:#FFFFFF;font-family:Helvetica;font-size:14px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;" target="_blank"> Activa tu cuenta aquí </a>
+                              <a href={{ Enlace }} style="display:inline-block;background:#ffae00;color:#FFFFFF;font-family:Helvetica;font-size:14px;font-weight:bold;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px;mso-padding-alt:0px;border-radius:10px;" target="_blank"> Ver detalles en SIGA </a>
                             </td>
                           </tr>
                         </table>
@@ -85,4 +87,5 @@
         </tbody>
       </table>
     </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
 {% endblock content %}
