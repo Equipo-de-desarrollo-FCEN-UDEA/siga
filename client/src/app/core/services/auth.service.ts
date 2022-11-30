@@ -1,21 +1,35 @@
+//angular
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+//rxjs
+import { map, Observable, Subject } from 'rxjs';
+
+//service
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from './user.service';
+
+//environments
 import { environment } from '@environments/environment';
+
+//interfaces
 import { Auth, Token } from '@interfaces/auth';
 import { Msg } from '@interfaces/msg';
-import { CookieService } from 'ngx-cookie-service';
-import { map, Observable, Subject } from 'rxjs';
-import { UserService } from './user.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
   private urlEndPoint = environment.route + 'login/';
-  private cookieToken = environment.cookieToken
+  private cookieToken = environment.cookieToken;
 
-  public isLoggedIn$: Subject<boolean> = new Subject();
+  public isLoggedIn$ : Subject<boolean> = new Subject();
+  public Logged = new Subject<boolean>();
+  public isSuperUser$ = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -24,28 +38,25 @@ export class AuthService {
     private userSvc: UserService
   ) {
     this.isLoggedIn();
+    // this.logOut();
     // this.isSuperUser();
   }
 
-  public Logged = new Subject<boolean>();
-
-  public isSuperUser$ = new Subject<boolean>();
-
   login(auth: Auth) {
-    const headers = new HttpHeaders(
+    const HEADERS = new HttpHeaders(
       {
         'Content-Type': 'application/x-www-form-urlencoded',
       }
     );
-    const body = `username=${auth.username}&password=${auth.password}`;
-    return this.http.post<Token>(this.urlEndPoint + 'access-token', body, { headers: headers }).pipe(
+    const BODY = `username=${auth.username}&password=${auth.password}`;
+    return this.http.post<Token>(this.urlEndPoint + 'access-token', BODY, { headers: HEADERS }).pipe(
       map(
-        (data: Token) => {
-          this.cookieSvc.delete(`${this.cookieToken}`, '/', '/')
-          this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires)
-          this.Logged.next(true);
-        }
-      ))
+      (data: Token) => {
+        this.cookieSvc.delete(`${this.cookieToken}`, '/', '/');
+        this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires, '/');
+        this.Logged.next(true);
+      }
+    ));
   }
 
 
@@ -70,9 +81,9 @@ export class AuthService {
   
 
   isLoggedIn() {
-    const tokenCheck = this.cookieSvc.check(`_${this.cookieToken}`)
-    this.Logged.next(tokenCheck)
-    return tokenCheck
+    const TOKEN_CHECK = this.cookieSvc.check(`_${this.cookieToken}`)
+    this.Logged.next(TOKEN_CHECK);
+    return TOKEN_CHECK
   }
 
 
@@ -85,7 +96,7 @@ export class AuthService {
     this.cookieSvc.deleteAll()
     this.cookieSvc.delete(`${this.cookieToken}`)
     this.isLoggedIn()
-    this.router.navigate(['/login'])
+    this.router.navigate(['auth/login'])
   }
 
 
@@ -95,9 +106,8 @@ export class AuthService {
     )
   }
 
-    
   forgotPassword(username: string) {
-    return this.http.post(`${this.urlEndPoint}/restorePassword/${username}`, {
+    return this.http.post(`${this.urlEndPoint}password-recovery/${username}`, {
       username:username,
     });
   }

@@ -59,7 +59,7 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
         )
     email_token = jwt.email_token(email=user.email)
     recovery_password_email.apply_async(
-        args=(user.names, user.email, email_token))
+        args=(user.names, email_token, user.email))
     return {"msg": f"El correo para recuperar la contraseña fue enviado correctamente a {user.email}"}
 
 
@@ -101,10 +101,10 @@ def reset_password(
 
 # Route for request an activation email
 @router.post("/activate-email/{email}", response_model=schemas.Msg)
-def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
+def activate_email(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     """
     activate email
-    
+
     Query params:
         email: str
     """
@@ -121,8 +121,7 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
             detail="El usuario con este correo o número de identificación ya está activo",
         )
     email_token = jwt.email_token(email=user.email)
-    confirm_email.apply_async(
-        args=(user.names, user.email, email_token))
+    confirm_email.apply_async(args=(user.names, email_token, user.email))
     return {"msg": "El correo de activación fue enviado correctamente"}
 
 
@@ -135,7 +134,7 @@ def reset_password(
 ) -> dict:
     """
     Activate account:
-    
+
     Params:
         token: str
     """

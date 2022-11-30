@@ -1,5 +1,7 @@
 FROM python:3.10 as python-base
 
+
+# Poetry configuration
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     \
@@ -22,9 +24,17 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 FROM python-base as builder-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-        curl \
-        build-essential
+    curl \
+    build-essential
 
+# Idioma español
+RUN apt-get clean && apt-get update && apt-get install -y locales
+RUN sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales
+ENV LANG es_ES.UTF-8
+ENV LC_ALL es_ES.UTF-8
+
+# Poetry
 RUN curl -sSL https://install.python-poetry.org | python 
 
 WORKDIR $PYSETUP_PATH

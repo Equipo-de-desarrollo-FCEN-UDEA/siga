@@ -8,7 +8,6 @@ from app.db.init_db import init_db
 
 log = get_logging(__name__)
 
-
 def run_app():
     settings = get_app_settings()
     application = FastAPI(**settings.fastapi_kwargs)

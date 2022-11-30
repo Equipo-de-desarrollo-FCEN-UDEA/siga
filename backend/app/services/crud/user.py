@@ -14,12 +14,15 @@ log = get_logging(__name__)
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
+
+    # 
     def get_middleware(
         self, db: Session, id: int
     ) -> Optional[User]:
         obj_db = db.query(User).filter(User.id == id).first()
         return obj_db
 
+    #
     def get_by_email(
         self, db: Session, email: str
     ) -> User:
@@ -27,14 +30,16 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         obj_db = db.query(User).filter(User.email == email).first()
         return obj_db
 
+    #
     def get_by_identification(
         self, db: Session, identification: str
     ) -> User:
         identification = identification.upper()
         obj_db = db.query(User).filter(
-            User.identificaction_number == identification).first()
+            User.identification_number == identification).first()
         return obj_db
 
+    #
     def get_multi(
         self,
         db: Session,
@@ -58,7 +63,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             columns = [
                 'names',
                 'last_names',
-                'identificaction_number',
+                'identification_number',
                 'email'
             ]
             search = search.upper()
@@ -92,7 +97,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         obj_in: UserCreate
     ) -> User:
         user: User = self.get_by_identification(
-            db, identification=obj_in.identificaction_number) or self.get_by_email(db=db, email=obj_in.email)
+            db, identification=obj_in.identification_number) or self.get_by_email(db=db, email=obj_in.email)
         self.policy.create(to=user)
         hashed_password = get_password_hash(obj_in.password)
         data = dict(obj_in)

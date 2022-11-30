@@ -1,10 +1,16 @@
 //angular 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+//Swal
+import Swal from 'sweetalert2';
+
+//interfaces
 import { Msg } from '@interfaces/msg';
+
+//services
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgot-password',
@@ -36,14 +42,19 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    this.loading = true;
+    
     //return is the form is invalid
-    if (this.form.invalid) { return; }
-    this.authService.passwordRecovery(this.f['username'].value).subscribe({
-      next: (res:Msg) => {
+    if (this.form.invalid) { 
+      this.loading = false;
+      return; 
+    }
+    
+    this.authService.forgotPassword(this.f['username'].value).subscribe({
+      next: (res:any) => {
         Swal.fire({
-          title: 'Recuperar contraseña',
-          text: res.msg,
+          title: 'Se envió un link al correo ' + this.f['username'].value,
+          text: res.message,
           icon: 'success',
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar'

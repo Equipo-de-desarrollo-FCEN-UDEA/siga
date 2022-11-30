@@ -29,7 +29,7 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public isLoading = this.loaderSvc.isLoading;
 
-  private id = 0;
+  public id = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,12 +71,14 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     } as ApplicationStatusCreate).subscribe(
       (data) => {
         Swal.fire({
-          title: "Se cambió el estado correctamente"
+          title: "Se cambió el estado correctamente",
+          icon: 'success'
         })
       }
     )
 
   }
+
 
   decline() {
     this.applicationStatusSvc.postApplicationStatus({
