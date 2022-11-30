@@ -30,7 +30,7 @@ async def commission_resolution_generation(user: User, application: Application,
 
     user = UserResponse.from_orm(user)
 
-    commission = await crud.comission.get(mong_db, id=id,)
+    commission = await crud.commission.get(mong_db, id=id,)
 
     path = f'user_{user.id}/{uuid1()}' + 'resolucion.pdf'
 

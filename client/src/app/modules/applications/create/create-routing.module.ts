@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommissionComponent } from './components/commission/commission.component';
+import { ComplimentComponent } from './components/compliment/compliment.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CreateComponent } from './create.component';
 
@@ -11,7 +12,7 @@ const routes: Routes = [
     children: [
       //permiso
       {
-        path: '1',
+        path: 'permiso',
         component: PermissionComponent,
         data: {
           title: 'Permiso'
@@ -19,10 +20,17 @@ const routes: Routes = [
       },
       //comision
       {
-        path: '2',
+        path: 'comision',
         component: CommissionComponent,
         data: {
           title: 'Comisión'
+        }
+      },
+      {
+        path: 'cumplido/:id',
+        component: ComplimentComponent,
+        data: {
+          title: 'Cumplido'
         }
       }
     ]
