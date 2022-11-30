@@ -13,4 +13,4 @@ class Commission(Model):
     justification: str
     documents: list[Any] | None
     resolution: str | None
-    cumplido: str | None
+    compliment: str | None

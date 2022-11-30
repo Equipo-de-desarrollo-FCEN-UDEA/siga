@@ -17,7 +17,7 @@ export interface CommissionCreate {
 export interface CommissionInDB extends CommissionCreate {
     id: string;
     resolution?: string;
-    cumplido?: string;
+    compliment?: string;
 }
 
 
