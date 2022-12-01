@@ -20,7 +20,7 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
 def recovery_password_email(to_name: str, token: str, email: str):
-    template = env.get_template('email.recuperar.contraseña.html')
+    template = env.get_template('email.recuperar.contraseña.html.j2')
     link = f"http://{settings.APP_DOMAIN}/auth/recuperar-contrasena/{token}"
     context = {
     'user':{'nombre':to_name.title()},
@@ -43,7 +43,7 @@ def recovery_password_email(to_name: str, token: str, email: str):
 
 @celery.task
 def confirm_email(to_name: str, token: str, email: str):
-    template = env.get_template('email.validar.email.html')
+    template = env.get_template('email.validar.email.html.j2')
     link = f"http://{settings.APP_DOMAIN}/auth/confirmar-correo/{token}"
     context = {
     'user':{'nombre':to_name.title()},
