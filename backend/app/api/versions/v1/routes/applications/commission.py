@@ -5,10 +5,10 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, documents
+from app.services import crud, emails
 from app.domain.models import Commission, User, Application
 from app.domain.schemas import (ApplicationCreate, CommissionCreate,
-                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment, Application_statusCreate)
+                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment)
 from app.domain.errors import BaseErrors
 
 
@@ -55,7 +55,7 @@ async def create_commission(
         raise HTTPException(422, e)
     except Exception:
         await engine.remove(Commission, Commission.id == commission_created.id)
-        raise HTTPException(422, "Algo ocurrió mal, ")
+        raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
     log.debug(commission_created)
     response = CommissionResponse(
@@ -188,9 +188,13 @@ async def update_compliment(
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
                                                       id=mongo_id, compliment=compliment)
-        finalize_status = Application_statusCreate(
-            application_id=application.id, status_id=4, observation='El usuario ha subido el cumplido y ha finalizado la comisión')
-        status = crud.application_status.finalize(db, obj_in=finalize_status)
+        emails.applications.commission.compliment_email.apply_async(args=(
+            current_user.names,
+            current_user.last_names,
+            compliment.observation,
+            compliment.documents,
+            compliment.emails
+        ))
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return commission

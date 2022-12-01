@@ -4,6 +4,9 @@ from app.domain.models import Application, User
 from app.domain.errors.application import *
 from app.domain.schemas import ApplicationUpdate, ApplicationCreate
 from .base import Base
+from app.core.logging import get_logging
+
+log = get_logging(__name__)
 
 # Here we handle Applications policies
 
