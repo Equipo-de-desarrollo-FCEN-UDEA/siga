@@ -33,9 +33,15 @@ class CommissionUpdate(CommissionBase):
     pass
 
 
+class Compliment(BaseModel):
+    documents: list[Any]
+    emails: list[str]
+    observation: str = Field(max_length=300)
+
+
 class commissionInDB(CommissionBase):
     resolution: str | None
-    compliment: str | None
+    compliment: Compliment | None
 
 
 class CommissionResponse(ApplicationResponse):
@@ -48,6 +54,3 @@ class CommissionDocument(commissionInDB):
         return v.strftime("%A %d de %B del %Y")
 
 
-class Compliment(BaseModel):
-    compliment: Any
-    emails: list[str]

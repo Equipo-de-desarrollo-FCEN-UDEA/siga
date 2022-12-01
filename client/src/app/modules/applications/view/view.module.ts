@@ -6,6 +6,7 @@ import { ViewComponent } from './view.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CommissionComponent } from './components/commission/commission.component';
 import { SharedModule } from '@shared/shared.module';
+import { ComplimentComponent } from '../create/components/compliment/compliment.component';
 
 
 @NgModule({

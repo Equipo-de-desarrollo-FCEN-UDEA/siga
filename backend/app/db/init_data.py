@@ -166,7 +166,7 @@ init_schools: List[schemas.SchoolCreate] = [
         email_dean='fing@udea.edu.co',
         direction='Calle 67 No. 53 108 Bloques 18, 19, 20 y 21, Medellín, Antioquia',
         contact='Teléfonos: 2198130',
-        dean='decano ingenieroia'
+        dean='decano ingeniería'
     )
 ]
 
