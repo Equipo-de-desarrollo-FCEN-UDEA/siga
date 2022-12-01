@@ -145,5 +145,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         return remunerated_permissions
 
+policy = PermissionPolicy()
 
-permission = CRUDPermission(Permission, PermissionPolicy)
+permission = CRUDPermission(Permission, policy=policy)
