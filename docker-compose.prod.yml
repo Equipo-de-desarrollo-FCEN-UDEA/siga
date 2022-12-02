@@ -1,0 +1,86 @@
+version: '3.3'
+
+volumes:
+  db:
+
+services:
+  nginx:
+    image: simon3640/siga-nginx
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - backend
+    links:
+      - backend
+      - client
+    mem_limit: 100m
+
+  db: 
+    container_name: 'db'
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    env_file:
+      - prod.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+    mem_limit: 50m
+
+  mongo:
+    container_name: 'mongo'
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    env_file:
+      - .env
+    volumes:
+      - ./db/mongo-data:/data/db
+    mem_limit: 50m
+
+  backend:
+    image: simon3640/siga-backend
+    depends_on:
+      - db
+      - mongo
+    env_file:
+      - prod.env
+    restart: on-failure
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    mem_limit: 300m
+    
+  redis:
+    container_name: 'redis'
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
+    mem_limit: 50m
+    
+  celery_worker:
+    container_name: "celery_worker"
+    image: simon3640/siga-backend
+    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - backend
+    mem_limit: 350m
+  
+  client:
+    image: simon3640/siga-client
+    container_name: client
+    depends_on:
+      - backend
+    mem_limit: 300m
