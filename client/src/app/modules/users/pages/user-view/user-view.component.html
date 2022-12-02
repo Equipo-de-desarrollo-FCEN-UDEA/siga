@@ -1,4 +1,4 @@
-<div class="containerInside card shadow mt-5 bg-white rounded p-5 ">
+<div class="container containerInside card shadow mt-5 bg-white rounded p-5 ">
     <div class="row header-row">
       <div class="col">
         <!-- <p class="ptitle">Mi perfil</p> -->
@@ -9,97 +9,97 @@
     <div>
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Documento</div>
-      <div class="col-xs-12 col-sm-6"> {{ usuario?.tipo_identificacion }}</div>
+      <div class="col-xs-12 col-sm-6"> {{ user?.identification_type }}</div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Identificación</div>
-      <div class="col-sm-6 col-xs-12"> {{ usuario?.identificacion }}</div>
+      <div class="col-sm-6 col-xs-12"> {{ user?.identification_number }}</div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Nombre</div>
-      <div class="col-sm-6 col-xs-12"> {{ usuario?.nombre }}</div>
+      <div class="col-sm-6 col-xs-12"> {{ user?.names }}</div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Apellido</div>
-      <div class="col-sm-6 col-xs-12"> {{ usuario?.apellido }}</div>
+      <div class="col-sm-6 col-xs-12"> {{ user?.last_names }}</div>
     </div>
   
    <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Email</div>
-      <div class="col-sm-6 col-xs-12"> {{usuario?.correo }}</div>
+      <div class="col-sm-6 col-xs-12"> {{user?.email }}</div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Telefono</div>
-      <div class="col-sm-6 col-xs-12">{{usuario?.telefono}} </div>
+      <div class="col-sm-6 col-xs-12">{{user?.phone}} </div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Tipo de Vinculación</div>
-      <div class="col-sm-6 col-xs-12">{{usuario?.tipo_vinculacion}} </div>
+      <div class="col-sm-6 col-xs-12">{{user?.vinculation_type}} </div>
     </div>
   
   
     <!-- <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Oficina</div>
-      <div class="col-sm-6 col-xs-12">{{usuario?.oficina}} </div>
+      <div class="col-sm-6 col-xs-12">{{user?.oficina}} </div>
     </div> -->
   
     <div class="row regular-row">
       <div class="ccol-xs-12 col-sm-6 label fw-bold">Estado</div>
-      <div class="col-sm-6 col-xs-12">{{ usuario?.estado }}</div>
+      <div class="col-sm-6 col-xs-12">{{ user?.active }}</div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Escalafón</div>
-      <div class="col-sm-6 col-xs-12">{{usuario?.escalafon}} </div>
+      <div class="col-sm-6 col-xs-12">{{user?.scale}} </div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Rol</div>
-      <div class="col-sm-6 col-xs-12">{{usuario?.roles?.nombre}} </div>
+      <div class="col-sm-6 col-xs-12">{{user?.rol?.name}} </div>
     </div>
   
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Facultad</div>
       <div class="col-sm-6 col-xs-12">
-          {{ usuario?.departamentos?.facultades?.nombre }}
+          {{user?.department?.name}}
       </div>
     </div>
   
     <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold">Departamento</div>
-      <div class="col-sm-6 col-xs-12"> {{ usuario?.departamentos?.nombre }}</div>
-    </div>
+      <div class="col-sm-6 col-xs-12"> {{user?.department?.school?.name}}</div>
+    </div>  
   </div>
   
     <hr />
     <div class="footer-row d-md-flex justify-content-md-end mb-3">
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
         <button
-          *ngIf="actualUsuario?.id == id"
+          *ngIf="actualuser?.id == id"
           type="button"
           class="btn btn-green btn-success btn-block"
-          [routerLink]="['/usuarios/editar-contrasena', usuario?.id]"
+          routerLink="/usuarios/editar-contrasena"
         >
           Modificar Contraseña
         </button>
       </div>
   
-      <div 
+      <!-- <div 
         class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
         <button
           type="button"
           class="btn btn-warning btn-block"
-          [routerLink]="['/usuarios/editar-usuario', usuario?.id]"
+          routerLink="/usuarios/editar-usuario"
         >
           Editar Información
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="row footer-row"></div>
   </div>

@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserBase, UserResponse } from '@interfaces/user';
 import { LoaderService } from '@services/loader.service';
 import { UserService } from '@services/user.service';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-user-view',
@@ -15,9 +16,9 @@ import Swal from 'sweetalert2';
 
 
 export class UserViewComponent implements OnInit {
-  public rol : string = localStorage.getItem('rol') || '';
-  public user: UserBase | undefined;
-  public actualUser: UserBase | undefined;
+  // public rol : string = localStorage.getItem('rol') || '';
+  public user: UserResponse | undefined;
+  public actualUser: UserResponse | undefined;
   public userResponse!: UserResponse;
   public id : number | string = 0;
   constructor(
@@ -29,7 +30,7 @@ export class UserViewComponent implements OnInit {
     this.activateRoute.params.pipe(take(1)).subscribe(params => this.id = params['id']);
     this.activateRoute.params.subscribe({
       next: (params) => {
-      this.userService.getUser(this.id).subscribe(
+      this.userService.getUser(this.id as number).subscribe(
         {
           next: (resUser) => {
           this.user = resUser;
