@@ -15,9 +15,9 @@ deploy:
   region: sa-east-1
   app: siga
   env: Siga-env
-  access_key_id: $AWS_ACCESS_KEY
-  secred_access_key: $AWS_SECRET_KEY
-  bucket_name: "<<bucker_name>>"
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secred_access_key: $AWS_ACCESS_SECRET_KEY
+  bucket_name: "siga-bucket-develop"
   bucket_path: "docker"
   on:
     branch: main
