@@ -17,16 +17,18 @@
 
                 </div>
 
+               
+
+                
+
             </div>
             <p class="col-xs-5 col-lg-2">
-                <span>
-                    <select class="form-select" (change)="search()" formControlName="activo"
-                        placeholder="Super usuario">
-                        <option selected disabled>Estado</option>
-                        <option [ngValue]="true">Activo</option>
-                        <option [ngValue]="false">Inactivo</option>
-                    </select>
-                </span>
+                <select class="form-select" 
+                          style="width: auto">
+          <option value="0">No archivados</option>
+          <option value="1">Archivados</option>
+          <option value="2">Todos</option>
+        </select>
             </p>
             <!-- <p class="col-xs-5 col-lg-2"> -->
                 <!-- <a class="btn btn-primary" [routerLink]="['/users/crear']" type="button"> -->
