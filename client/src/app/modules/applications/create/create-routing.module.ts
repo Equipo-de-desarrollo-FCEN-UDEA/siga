@@ -10,6 +10,7 @@ const routes: Routes = [
     path: '', 
     component: CreateComponent,
     children: [
+      //permiso
       {
         path: 'permiso',
         component: PermissionComponent,
@@ -17,6 +18,7 @@ const routes: Routes = [
           title: 'Permiso'
         }
       },
+      //comision
       {
         path: 'comision',
         component: CommissionComponent,

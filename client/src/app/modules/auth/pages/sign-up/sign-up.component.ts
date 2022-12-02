@@ -1,5 +1,5 @@
 //angular
-import { Component, NgZone } from '@angular/core';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,13 +12,14 @@ import { Observable } from 'rxjs';
 //services
 import { UserService } from '@services/user.service';
 import { RolService } from '@services/rol.service';
+import { DepartmentService } from '@services/department.service';
 
 //interfaces
 import { RolBase } from '@interfaces/rol';
+import { DepartmentBase } from '@interfaces/department';
 
 //data
 import { id_type } from '@shared/data/id_type';
-
 
 @Component({
   selector: 'app-sign-up',
@@ -26,29 +27,35 @@ import { id_type } from '@shared/data/id_type';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
+
+  private is_email_valid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
+
   public loading: boolean = false;
   public error: string = '';
   public submitted: boolean = false;
 
   public id_type = id_type;
+
   public rol$: Observable<RolBase[]> = this.rolService.getRoles();
+  public departments$: Observable<DepartmentBase[]> = this.depatmentService.getDepartment() ;
 
   public createUserForm: FormGroup = this.formBuilder.group({
     last_names: ['', Validators.required],
     names: ['', Validators.required],
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     identification_type: ['', Validators.required],
     identificaction_number: ['', Validators.required],
     phone_number: ['', Validators.required],
-    rol_id: ['', Validators.required],
-    Faculty_id: ['', Validators.required],
-    department_id: ['', Validators.required],
+    // rol_id: ['', Validators.required],
+    //Faculty_id: ['', Validators.required],
+    // department_id: ['', Validators.required],
     password: [
       '',
       [Validators.required, Validators.minLength(8), Validators.maxLength(250)],
     ],
     confirm_password: [],
   });
+
 
   get f() { return this.createUserForm.controls; }
 
@@ -59,7 +66,8 @@ export class SignUpComponent {
     private router: Router,
 
     private userService: UserService,
-    private rolService: RolService
+    private rolService: RolService,
+    private depatmentService: DepartmentService
   ) {}
 
   validatePassword() {

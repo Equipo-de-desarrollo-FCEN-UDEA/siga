@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
   templateUrl: './commission.component.html',
   styleUrls: ['./commission.component.scss']
 })
-export class CommissionComponent implements OnInit {
+export class CommissionComponent {
 
 
   // Dates
@@ -70,8 +70,6 @@ export class CommissionComponent implements OnInit {
    
   })
 
-  ngOnInit(): void {
-  }
 
   submit() {
     let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
