@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { CommissionCreate, CommissionResponse } from '@interfaces/applications/commission';
+import { CommissionCreate, CommissionResponse, ComplimentCreate } from '@interfaces/applications/commission';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class CommissionService {
   ) { }
 
   getCommission(id: number): Observable<CommissionResponse> {
-    return this.http.get<CommissionResponse>(this.urlEndPoint+id)
+    return this.http.get<CommissionResponse>(this.urlEndPoint + id)
   }
 
   postCommission(body: CommissionCreate) {
@@ -27,8 +27,12 @@ export class CommissionService {
     return this.http.put(this.urlEndPoint + id, body)
   }
 
-  deleteCommission(id: number) {
+  deleteCommission(id: number){
     return this.http.delete(this.urlEndPoint + id)
+  }
+
+  putCompliment(body: ComplimentCreate, id: number) {
+    return this.http.put(this.urlEndPoint + 'compliment/' + id, body)
   }
 
 }

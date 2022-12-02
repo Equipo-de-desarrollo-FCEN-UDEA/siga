@@ -42,7 +42,9 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
-        self.policy.create(self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(remunerated_permissions=remunerated_permissions)
+
+        log.debug('salio de la policy', obj_in)
 
         return await engine.save(obj_in)
 
@@ -72,7 +74,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
-        self.policy.create(self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(remunerated_permissions=remunerated_permissions)
 
         db_obj.update(obj_in)
         return await engine.save(db_obj)
@@ -95,7 +97,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
             # Join tablas Application_status y Application por id
             permissions_user = db.query(Application.mongo_id).join(
                 Application_status, Application.id == Application_status.application_id).\
-                filter(Application_status.status_id == 1).\
+                filter(Application_status.status_id == 3).\
                 filter(Application.application_sub_type_id == 7).\
                 filter(Application.user_id == who.id).all()
 
@@ -145,5 +147,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         return remunerated_permissions
 
+policy = PermissionPolicy()
 
-permission = CRUDPermission(Permission, PermissionPolicy)
+permission = CRUDPermission(Permission, policy=policy)

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/home/home']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -54,9 +54,9 @@ export class LoginComponent implements OnInit {
     this.loading = true;  
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        this.router.navigate(['/solicitudes/ver/1/comision']);
+        //this.router.navigate(['/solicitudes/ver/1/comision']);
         //this.router.navigate(['/solicitudes/editar/60/permiso']);
-        //this.router.navigate(['/home/home']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         if (err.status === 404 || err.status === 401) {

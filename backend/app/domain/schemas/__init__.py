@@ -15,6 +15,12 @@ from .application_status import (Application_statusCreate, Application_statusInD
 from .applications import (
     CommissionCreate,
     CommissionResponse,
-    CommissionUpdate
+    CommissionUpdate,
+    commissionInDB,
+    CommissionDocument,
+    Compliment,
+    PermissionCreate,
+    PermissionResponse,
+    PermissionUpdate,
+    PermissionDocument
 )
-from .applications import ( PermissionCreate, PermissionResponse, PermissionUpdate )

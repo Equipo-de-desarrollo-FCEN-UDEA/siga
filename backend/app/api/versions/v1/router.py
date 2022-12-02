@@ -44,10 +44,7 @@ api_route.include_router(application_status.router,
 api_route.include_router(commission.router,
                          prefix="/commission", tags=['commission'])
 api_route.include_router(
-    permission.router, prefix="/permission", tags=['permission'])
-
-api_route.include_router(
-    permission.router, prefix="/permission", tags=['permission'])                         
+    permission.router, prefix="/permission", tags=['permission'])                      
 
 # Documents
 api_route.include_router(documents.router, prefix="/documents", tags=['documents'])

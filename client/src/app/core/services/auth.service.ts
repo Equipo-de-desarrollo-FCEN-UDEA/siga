@@ -38,7 +38,7 @@ export class AuthService {
     private userSvc: UserService
   ) {
     this.isLoggedIn();
-    this.logOut();
+    // this.logOut();
     // this.isSuperUser();
   }
 
@@ -53,7 +53,7 @@ export class AuthService {
       map(
       (data: Token) => {
         this.cookieSvc.delete(`${this.cookieToken}`, '/', '/');
-        this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires);
+        this.cookieSvc.set(`_${this.cookieToken}`, data.access_token, data.expires, '/');
         this.Logged.next(true);
       }
     ));
@@ -96,7 +96,7 @@ export class AuthService {
     this.cookieSvc.deleteAll()
     this.cookieSvc.delete(`${this.cookieToken}`)
     this.isLoggedIn()
-    this.router.navigate(['/login'])
+    this.router.navigate(['auth/login'])
   }
 
 

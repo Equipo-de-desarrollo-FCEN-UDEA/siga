@@ -20,6 +20,14 @@ class PermissionCreate(PermissionBase):
 class PermissionUpdate(PermissionBase):
     application_sub_type_id: int
 
+class PermissionInDB(PermissionBase):
+    resolution: str | None
 
 class PermissionResponse(ApplicationResponse):
-    permission: PermissionBase
+    permission: PermissionInDB
+
+
+class PermissionDocument(PermissionBase):
+    @validator("start_date", 'end_date')
+    def stringdate(cls, v, values, **kwargs):
+        return v.strftime("%A %d de %B del %Y")

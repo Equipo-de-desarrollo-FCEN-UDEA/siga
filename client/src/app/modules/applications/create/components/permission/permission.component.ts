@@ -124,7 +124,7 @@ export class PermissionComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['../']);
+            this.router.navigate(['/home']);
           }
         });
       },

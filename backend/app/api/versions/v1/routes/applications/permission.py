@@ -67,21 +67,21 @@ async def create_permission(
     # 422 (Unprocessable Entity)
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
             log.debug('BaseErrors', e)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except ValueError as e:
         log.debug('ValueError', e)
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
-        return HTTPException(422, e)
+        raise HTTPException(422, e)
     except Exception:
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
-        return HTTPException(422, "Algo ocurrió mal")
+        raise HTTPException(422, "Algo ocurrió mal")
 
     return response
 
@@ -204,7 +204,7 @@ async def put_permission(
 
 # ------ ELIMINAR UN PERMISO ------
 @router.delete("/{id}", response_model=Msg)
-async def put_permission(
+async def delete_permission(
     id: int,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
