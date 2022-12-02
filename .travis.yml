@@ -4,7 +4,7 @@ services:
   - docker
 
 after_success:
-  - docker build -t simon3640/siga ./backend/Dockerfile.prod
+  - docker build -t simon3640/siga -f ./backend/Dockerfile.prod ./backend
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
