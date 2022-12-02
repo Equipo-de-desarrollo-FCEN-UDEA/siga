@@ -1,4 +1,4 @@
-version: '3,3'
+version: '3.3'
 
 volumes:
   db:
@@ -25,25 +25,25 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ./db/postgres-data:/var/lib/postgresql/data
-  
-  pgadmin:
-    container_name: 'pgadmin'
-    image: dpage/pgadmin4
-    expose:
-      - '8010'
+
+  mongo:
+    container_name: 'mongo'
+    image: mongo:latest
+    restart: always
     ports:
-      - '8010:80'
-    depends_on:
-      - db
+      - '27017:27017'
     env_file:
-      - prod.env
-  
+      - .env
+    volumes:
+      - ./db/mongo-data:/data/db
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
     depends_on:
-      - pgadmin
+      - db
+      - mongo
     env_file:
       - prod.env
     restart: on-failure
@@ -51,6 +51,29 @@ services:
       - "8000"
     ports:
       - "8000:8000"
+    
+  redis:
+    container_name: 'redis'
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
+    
+  celery_worker:
+    container_name: "celery_worker"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    env_file:
+      - .env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - backend
   
   client:
     build:

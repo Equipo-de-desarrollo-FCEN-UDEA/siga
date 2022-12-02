@@ -101,7 +101,7 @@ export class CommissionComponent {
           }
         ).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/home'])
+            this.router.navigate([`/solicitudes/ver/${data.id}/comision`])
           }
         })
       }

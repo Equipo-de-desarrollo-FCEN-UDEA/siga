@@ -19,8 +19,8 @@ export class CommissionService {
     return this.http.get<CommissionResponse>(this.urlEndPoint + id)
   }
 
-  postCommission(body: CommissionCreate) {
-    return this.http.post(this.urlEndPoint, body)
+  postCommission(body: CommissionCreate): Observable<CommissionResponse> {
+    return this.http.post<CommissionResponse>(this.urlEndPoint, body)
   }
 
   putCommission(body: CommissionCreate, id: number) {
