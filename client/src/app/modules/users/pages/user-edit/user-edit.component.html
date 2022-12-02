@@ -1,5 +1,5 @@
-<form need-validation novalidate [formGroup]="updateUsuario" (ngSubmit)="submitUpdate()"
-  class="containerInside card shadow mt-5 bg-white rounded">
+<form need-validation novalidate [formGroup]="updateUserBase" (ngSubmit)="submitUpdate()"
+  class="container containerInside card shadow mt-5 bg-white rounded">
   <div class="p-4">
     <div class="card-body">
       <div class="row header-row P-2">
@@ -14,13 +14,13 @@
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Apellidos</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input 
-            id="apellido" 
+            id="last_names" 
             type="text" 
             class="form-control" 
             placeholder="" 
-            formControlName="apellido" 
+            formControlName="last_names" 
             [ngClass]="{
-              'is-invalid': f['apellido'].errors
+              'is-invalid': f['last_names'].errors
             }" />
           </div>
 
@@ -29,13 +29,13 @@
         </div>
         <div class="col-sm-12 col-xs-12 col-md-8 col-12">
           <input
-            id="nombre"
+            id="names"
             type="text"
             class="form-control"
             placeholder=""
-            formControlName="nombre"
+            formControlName="names"
             [ngClass]="{
-              'is-invalid': f['nombre'].errors
+              'is-invalid': f['names'].errors
             }"
           />
         </div>
@@ -47,9 +47,9 @@
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select class="form-select form-select-lg" id="floatingcampo_modalidad"
-              formControlName="tipo_identificacion" required>
-              <option [value]="tipo" *ngFor="let tipo of tiposId">
-                {{ tipo | uppercase }}
+              formControlName="identification_type" required>
+              <option [value]="type" *ngFor="let type of typesId">
+                {{ type | uppercase }}
               </option>
             </select>
             <label for="floatingcampo_modalidad" class="selectLabel" [ngClass]="{ isFill: true }"></label>
@@ -61,14 +61,14 @@
             Número de Identificación
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="identificacion" 
-            formControlName="identificacion" 
+            <input id="identification_number" 
+            formControlName="identification_number" 
             type="text" class="form-control" 
             placeholder=" "
               [ngClass]="{
-                'is-invalid': f['identificacion'].errors
+                'is-invalid': f['identification_number'].errors
               }" />
-            <label for="identificacion" class="formLabel"> </label>
+            <label for="identification_number" class="formLabel"> </label>
           </div>
         </div>
 
@@ -77,10 +77,10 @@
             Teléfono
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="telefono" formControlName="telefono" type="text" class="form-control" placeholder=" " [ngClass]="{
-                'is-invalid': f['telefono'].errors
+            <input id="phone" formControlName="phone" type="text" class="form-control" placeholder=" " [ngClass]="{
+                'is-invalid': f['phone'].errors
               }" />
-            <label for="telefono" class="formLabel"> </label>
+            <label for="phone" class="formLabel"> </label>
           </div>
         </div>
 
@@ -89,10 +89,10 @@
             Oficina
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="oficina" formControlName="oficina" type="text" class="form-control" placeholder=" " [ngClass]="{
-                'is-invalid': f['oficina'].errors
+            <input id="office" formControlName="office" type="text" class="form-control" placeholder=" " [ngClass]="{
+                'is-invalid': f['office'].errors
               }" />
-            <label for="telefono" class="formLabel"> </label>
+            <label for="office" class="formLabel"> </label>
           </div>
         </div>
 
@@ -101,53 +101,27 @@
             Tipo de Vinculación
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="tipo_vinculacion" formControlName="tipo_vinculacion" type="text" class="form-control"
+            <input id="vinculation_type" formControlName="vinculation_type" type="text" class="form-control"
               placeholder=" " [ngClass]="{
-                'is-invalid': f['tipo_vinculacion'].errors
+                'is-invalid': f['vinculation_type'].errors
               }" />
-            <label for="tipo_vinculacion" class="formLabel"> </label>
+            <label for="vinculation_type" class="formLabel"> </label>
           </div>
         </div>
-
-        <!--CREAR-->
-
-        <!-- <div class="row regular-row m-2 align-items-baseline">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Estado
-          </div>
-          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <select
-              class="form-select form-select-lg"
-              id="estados"
-              formControlName="estados"
-              required
-            >
-              <option [value]="estado" *ngFor="let estado of estados">
-                {{ estado | uppercase }}
-              </option>
-            </select>
-            <label for="estado" class="formLabel"> </label>
-            <label
-            for="estados"
-            class="selectLabel"
-            [ngClass]="{ isFill: true }"
-          ></label>
-          </div>
-        </div> -->
 
         <div class="row regular-row m-2 align-items-baseline" *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Cargo</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <select class="form-select form-select-lg" id="roles_id" formControlName="roles_id" required
+              <select class="form-select form-select-lg" id="rol_id" formControlName="rol_id" required
                 placeholder=" " [ngClass]="{
-                  'is-invalid': f['roles_id'].errors
+                  'is-invalid': f['rol_id'].errors
                 }">
                 <option [value]="rol.id" *ngFor="let rol of roles$ | async">
-                  {{ rol.nombre | uppercase }}
+                  {{ rol.name | uppercase }}
                 </option>
               </select>
-              <label for="roles_id" class="selectLabel" [ngClass]="{ isFill: true }">Cargo</label>
+              <label for="rol_id" class="selectLabel" [ngClass]="{ isFill: true }">Cargo</label>
             </div>
           </div>
         </div>
@@ -155,41 +129,26 @@
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Escalafón</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <select class="form-select form-select-lg" id="escalafon" formControlName="escalafon" required
+              <select class="form-select form-select-lg" id="scale" formControlName="scale" required
                 placeholder=" " [ngClass]="{
-                  'is-invalid': f['escalafon'].errors
+                  'is-invalid': f['scale'].errors
                 }">
-                <option [value]="escala" *ngFor="let escala of escalafon">
-                  {{ escala | uppercase }}
+                <option [value]="scal" *ngFor="let scal of scale">
+                  {{ scal | uppercase }}
                 </option>
               </select>
-              <label for="escalafon" class="selectLabel" [ngClass]="{ isFill: true }">Escalafón</label>
+              <label for="scale" class="selectLabel" [ngClass]="{ isFill: true }">Escalafón</label>
             </div>
           </div>
         </div>
-
-        <!-- <div class="row regular-row m-2 align-items-baseline">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Contraseña <span style="color:red">*</span></div>
-          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input
-            id="contrasena"
-            type="password"
-            class="form-control"
-            placeholder=" "
-            formControlName="contrasena"
-            [ngClass]="{
-              'is-invalid': f['contrasena'].errors
-            }"
-          />
-          </div>
-        </div> -->
+        
         <div class="alert alert-danger" *ngIf="error">
           {{error}}
         </div>
         <hr />
         <div class="footer-row d-md-flex justify-content-md-end mb-3">
           <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-            <button type="button" class="btn btn-secondary" [routerLink]="['/usuarios/ver-usuario', getId]">
+            <button type="button" class="btn btn-secondary" [routerLink]="['/users/user-view', getId]">
               Cancelar
             </button>
           </div>

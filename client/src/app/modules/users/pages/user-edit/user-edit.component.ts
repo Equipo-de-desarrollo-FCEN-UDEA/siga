@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { RolBase } from '@interfaces/rol';
-import { UserResponse, UserBase } from '@interfaces/user';
+import { UserResponse, UserBase, UserUpdate } from '@interfaces/user';
 import { DepartmentService } from '@services/department.service';
 import { LoaderService } from '@services/loader.service';
 import { RolService } from '@services/rol.service';
@@ -18,13 +18,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-edit.component.scss']
 })
 
-export class UserEditBaseComponent implements OnInit {
+export class UserEditComponent implements OnInit {
   public userRolBase!: UserBase;
   public userResponse : UserResponse | undefined;
 
   public scale = scale
   public id: Number | string = 0;
-  public id_type = id_type;
+  public typesId = id_type;
   public isLoading = this.loadingSvc.isLoading;
   public error: string = "";
   public submitted: boolean = false;
@@ -39,7 +39,6 @@ export class UserEditBaseComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     public activateRoute: ActivatedRoute,
-    public usuarioService: UserService,
     public loadingSvc: LoaderService,
     private departamentosSvc: DepartmentService,
     private rolesSvc: RolService
@@ -75,7 +74,7 @@ export class UserEditBaseComponent implements OnInit {
     phone: ['', [Validators.required]],
     office: [''],
     vinculation_type: ['', [Validators.required]],
-    department_id : ['', Validators.required],
+    department_id : [NaN, Validators.required],
     rol_id: [NaN, Validators.required],
     scale: ['', Validators.required]
   });
@@ -95,8 +94,8 @@ export class UserEditBaseComponent implements OnInit {
     if (this.updateUserBase.invalid) {
       return;
     }
-    const user = this.updateUserBase.value;
-    this.userSvc.updateUserBase({ id: this.getId, ...user })
+    const user = this.updateUserBase.value as UserUpdate;
+    this.userSvc.putUser(user, this.getId as number)
     .subscribe({
       next: (res: any) => {
         Swal.fire({
