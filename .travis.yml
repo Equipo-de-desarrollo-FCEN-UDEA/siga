@@ -1,0 +1,23 @@
+lenguage: generic
+
+services:
+  - docker
+
+after_success:
+  - docker build -t simon3640/siga
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push simon3640/siga
+
+deploy:
+  provider: elasticbeanstalk
+  region: sa-east-1
+  app: siga
+  env: Siga-env
+  access_key_id: $AWS_ACCESS_KEY
+  secred_access_key: $AWS_SECRET_KEY
+  bucket_name: "<<bucker_name>>"
+  bucket_path: "docker"
+  on:
+    branch: main
