@@ -283,6 +283,38 @@
       </div>
 
       <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Estado</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingstate"
+              formControlName="state"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('state') }"
+            />
+            <label for="floatingstate" class="formLabel">Estado</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Ciudad</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingcity"
+              formControlName="city"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('city') }"
+            />
+            <label for="floatingstate" class="formLabel">Ciudad</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
           Justificación *
         </div>
