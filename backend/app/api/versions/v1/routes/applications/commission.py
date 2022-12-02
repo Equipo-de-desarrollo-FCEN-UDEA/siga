@@ -5,9 +5,10 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, documents
+from app.services import crud, emails
 from app.domain.models import Commission, User, Application
-from app.domain.schemas import ApplicationCreate, CommissionCreate, CommissionUpdate, Msg, CommissionResponse, ApplicationResponse
+from app.domain.schemas import (ApplicationCreate, CommissionCreate,
+                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment)
 from app.domain.errors import BaseErrors
 
 
@@ -18,7 +19,7 @@ log = get_logging(__name__)
 
 @router.post("/", response_model=CommissionResponse)
 async def create_commission(
-    comission: CommissionCreate,
+    commission: CommissionCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
@@ -34,54 +35,54 @@ async def create_commission(
             - Commission
     """
     try:
-        comission_created = await crud.comission.create(db=engine,
-                                                        obj_in=Commission(**dict(comission)))
+        commission_created = await crud.commission.create(db=engine,
+                                                          obj_in=Commission(**dict(commission)))
 
-        log.debug('comission_created', comission_created)
+        log.debug('commission_created', commission_created)
         application = ApplicationCreate(
-            mongo_id=str(comission_created.id),
-            application_sub_type_id=comission.application_sub_type_id,
+            mongo_id=str(commission_created.id),
+            application_sub_type_id=commission.application_sub_type_id,
             user_id=current_user.id
         )
         log.debug('application', application)
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
-        await engine.remove(Commission, Commission.id == comission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        await engine.remove(Commission, Commission.id == comission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
     except Exception:
-        await engine.remove(Commission, Commission.id == comission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
-    log.debug(comission_created)
+    log.debug(commission_created)
     response = CommissionResponse(
         **dict(application),
-        commission=comission_created
+        commission=commission_created
     )
     return response
 
 
 @router.get("/", response_model=list[Commission])
 async def get_commissions(*,
-                         engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[Commission]:
+                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[Commission]:
 
-    comissiones = await engine.find(Commission)
-    return comissiones
+    commissiones = await engine.find(Commission)
+    return commissiones
 
 
 @router.get("/{id}", response_model=CommissionResponse)
-async def get_comission(
-    id: int, 
-    *, 
+async def get_commission(
+    id: int,
+    *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-    ) -> CommissionResponse:
+) -> CommissionResponse:
     """
-    Endpoint to ger a comission model from mongo
+    Endpoint to ger a commission model from mongo
 
         path-params:
             -id: int, this is the id of the application, not of mongo
@@ -93,19 +94,19 @@ async def get_comission(
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         if application:
-            comission = await crud.comission.get(engine, id=mongo_id)
+            commission = await crud.commission.get(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     application_response = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
         **dict(application_response),
-        commission=comission
+        commission=commission
     )
     return response
 
 
 @router.put("/{id}", response_model=Commission)
-async def update_comission(
+async def update_commission(
     id: int,
     commission: CommissionUpdate,
     *,
@@ -133,12 +134,12 @@ async def update_comission(
             db, current_user, db_obj=application, obj_in={})
         mongo_id = ObjectId(application.mongo_id)
         if application:
-            current_comission = await crud.comission.get(engine, id=mongo_id)
-            updated_comission = await crud.comission.update(
-                engine, db_obj=current_comission, obj_in=commission)
+            current_commission = await crud.commission.get(engine, id=mongo_id)
+            updated_commission = await crud.commission.update(
+                engine, db_obj=current_commission, obj_in=commission)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    return updated_comission
+    return updated_commission
 
 
 @router.delete("/{id}", response_model=Msg)
@@ -150,11 +151,11 @@ async def delete_commission(
     db: Session = Depends(db.get_db)
 ) -> Msg:
     """
-    Endpoint to delete an application of type comission
+    Endpoint to delete an application of type commission
 
         params:
             -id: int, this is the id of the application and not of mongo
- 
+
         response:
             -msg: Msg
     """
@@ -165,8 +166,35 @@ async def delete_commission(
         log.debug(delete)
         if delete:
             log.debug('Estamos en delete')
-            await crud.comission.delete(engine, id=mongo_id)
+            await crud.commission.delete(engine, id=mongo_id)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return Msg(msg="Comisión eliminada correctamente")
+
+
+@router.put('/compliment/{id}')
+async def update_compliment(
+    id: int,
+    compliment: Compliment,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> Commission:
+    try:
+        application: Application = crud.application.get(
+            db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+        commission = await crud.commission.compliment(engine,
+                                                      id=mongo_id, compliment=compliment)
+        emails.applications.commission.compliment_email.apply_async(args=(
+            current_user.names,
+            current_user.last_names,
+            compliment.observation,
+            compliment.documents,
+            compliment.emails
+        ))
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    return commission

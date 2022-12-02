@@ -5,16 +5,14 @@ volumes:
 
 services:
   nginx:
-    image: simon3640/siga-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
     ports:
       - "80:80"
     restart: always
     depends_on:
       - backend
-    links:
-      - backend
-      - client
-    mem_limit: 100m
 
   db: 
     container_name: 'db'
@@ -27,7 +25,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ./db/postgres-data:/var/lib/postgresql/data
-    mem_limit: 50m
 
   mongo:
     container_name: 'mongo'
@@ -39,10 +36,11 @@ services:
       - .env
     volumes:
       - ./db/mongo-data:/data/db
-    mem_limit: 50m
 
   backend:
-    image: simon3640/siga-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
     depends_on:
       - db
       - mongo
@@ -53,7 +51,6 @@ services:
       - "8000"
     ports:
       - "8000:8000"
-    mem_limit: 300m
     
   redis:
     container_name: 'redis'
@@ -62,11 +59,12 @@ services:
       - "6379:6379"
     depends_on:
       - db
-    mem_limit: 50m
     
   celery_worker:
     container_name: "celery_worker"
-    image: simon3640/siga-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
     command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
       - .env
@@ -76,11 +74,11 @@ services:
     depends_on:
       - redis
       - backend
-    mem_limit: 350m
   
   client:
-    image: simon3640/siga-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
     container_name: client
     depends_on:
       - backend
-    mem_limit: 300m

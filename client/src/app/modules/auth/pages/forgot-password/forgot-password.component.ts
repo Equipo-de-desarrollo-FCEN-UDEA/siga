@@ -1,4 +1,4 @@
-//angular 
+//angular
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -18,15 +18,16 @@ import { LoaderService } from '@services/loader.service';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
-
   public form!: FormGroup;
   public loading: boolean = false;
   public submitted: boolean = false;
-  public error: string = "";
+  public error: string = '';
 
   public isLoading = this.loaderSvc.isLoading;
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,30 +37,32 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]]
-    })
+      username: ['', [Validators.required]],
+    });
   }
 
   onSubmit() {
     this.submitted = true;
     this.loading = true;
-    
+
     //return is the form is invalid
-    if (this.form.invalid) { 
+    if (this.form.invalid) {
       this.loading = false;
-      return; 
+      return;
     }
-    
+
     this.authService.forgotPassword(this.f['username'].value).subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         Swal.fire({
-          title: 'Se envió un link al correo ' + this.f['username'].value,
+          title:
+            'Se envió un link para cambiar la contraseña al correo ' +
+            this.f['username'].value,
           text: res.message,
           icon: 'success',
           showLoaderOnConfirm: true,
-          confirmButtonText: 'Aceptar'
-        })
-      }
-    })
+          confirmButtonText: 'Aceptar',
+        });
+      },
+    });
   }
 }

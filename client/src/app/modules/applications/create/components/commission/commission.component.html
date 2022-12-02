@@ -247,7 +247,7 @@
       </div>
 
       <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Idioma</div>
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Idioma *</div>
         <div class="col-sm-12 col-xs-12 col-md-8">
           <div class="formfloatig">
             <input
@@ -258,13 +258,13 @@
               placeholder=" "
               [ngClass]="{ 'is-invalid': isInvalidForm('lenguage') }"
             />
-            <label for="floatingidioma" class="formLabel"> Idioma </label>
+            <label for="floatingidioma" class="formLabel"> Idioma *</label>
           </div>
         </div>
       </div>
 
       <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">País</div>
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">País *</div>
         <div class="col-sm-12 col-xs-12 col-md-8">
           <div class="formfloatig">
             <input
@@ -274,7 +274,39 @@
               placeholder=" "
               [ngClass]="{ 'is-invalid': isInvalidForm('country') }"
             />
-            <label for="floatingcountry" class="formLabel"> País </label>
+            <label for="floatingcountry" class="formLabel"> País *</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Estado</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingstate"
+              formControlName="state"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('state') }"
+            />
+            <label for="floatingstate" class="formLabel">Estado</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Ciudad</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingcity"
+              formControlName="city"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('city') }"
+            />
+            <label for="floatingstate" class="formLabel">Ciudad</label>
           </div>
         </div>
       </div>
@@ -294,9 +326,6 @@
               [ngClass]="{ 'is-invalid': isInvalidForm('justification') }"
               rows="5"
             ></textarea>
-            <label for="floatingjustificacion" class="formLabel">
-              Justificación
-            </label>
           </div>
         </div>
       </div>
@@ -319,10 +348,10 @@
       <div class="alert alert-danger" *ngIf="files.length > 0 && !validSize()">
         Los archivos no deben pesar más de 2 MB.
       </div>
-      <div class="formfloatig" style="display: flex; flex-direction: column">
+      <div class="formfloatig" style="flex-direction: column">
         <div
           *ngFor="let producto of archivos; last as isLast; let i = index"
-          class="arrayLike formfloatig"
+          class="arrayLike formfloatig d-flex justify-content-between"
         >
           <div class="archivos " style="width: auto; margin-left: 10px">
             <label class="btn-btn-default is-hoverable">
