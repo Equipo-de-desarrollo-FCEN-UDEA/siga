@@ -123,7 +123,7 @@ export class CommissionComponent implements OnInit {
           }
         ).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['../'])
+            this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
           }
         })
       }
