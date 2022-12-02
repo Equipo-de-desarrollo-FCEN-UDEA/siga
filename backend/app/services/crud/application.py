@@ -1,5 +1,6 @@
-from typing import List
+from typing import Any, Dict, List, Union
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.domain.models import Application, User, ApplicationSubType, Application_status, Department
@@ -45,12 +46,13 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             columns = [
                 'names',
                 'last_names',
-                'identificaction_number',
+                'identification_number',
                 'email'
             ]
             search = search.upper()
             raw = [
                 db.query(Application)
+                .order_by(desc(Application.id))
                 .join(User)
                 .join(ApplicationSubType)
                 .join(Department)
@@ -61,8 +63,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             ]
             res = [user for users in raw for user in users]
             return res
-        
+
         objs_db = (db.query(Application)
+                   .order_by(desc(Application.id))
                    .join(User)
                    .join(ApplicationSubType)
                    .join(Department)
@@ -74,7 +77,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         return objs_db
 
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
-        db_obj = super().create(db, who, obj_in=obj_in)
+        db_obj = super().create(db=db, who=who, obj_in=obj_in)
         application_status = Application_statusCreate(
             application_id=db_obj.id,
             status_id=1,
@@ -85,7 +88,19 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         db.commit()
         db.refresh(status_obj)
         return db_obj
-
+    
+    def update(self, db: Session, who: User, *, db_obj: Application, obj_in: Union[ApplicationUpdate, Dict[str, Any]]) -> Application:
+        db_obj = super().update(db, who, db_obj=db_obj, obj_in=obj_in)
+        application_status = Application_statusCreate(
+            application_id=db_obj.id,
+            status_id=1,
+            observation='Solicitud Actualizada'
+        )
+        status_obj = Application_status(**dict(application_status))
+        db.add(status_obj)
+        db.commit()
+        db.refresh(status_obj)
+        return db_obj
 
 
 policy = ApplicationPolicy()

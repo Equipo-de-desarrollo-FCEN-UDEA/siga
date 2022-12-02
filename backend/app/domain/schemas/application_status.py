@@ -9,7 +9,7 @@ from .status import StatusInDB
 class Application_statusBase(BaseModel):
     application_id: int
     status_id: int
-    observation: Optional[str] = Field(max_length=50)
+    observation: Optional[str] = Field(max_length=200)
 
 
 class Application_statusCreate(Application_statusBase):
@@ -28,7 +28,8 @@ class Application_statusInDB(Application_statusBase):
         orm_mode = True
 
 class Application_statusResponse(BaseModel):
-    created_at: Optional[datetime] #No puede ser opcional, cambiar luego
+    observation: str
+    created_at: datetime #No puede ser opcional, cambiar luego
     status: Optional[StatusInDB]
 
     class Config:

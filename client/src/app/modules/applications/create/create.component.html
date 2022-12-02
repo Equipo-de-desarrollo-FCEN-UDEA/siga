@@ -1,0 +1,40 @@
+<div class="containerInside container card shadow mt-5 bg-white rounded p-5">
+  <div class="row header-row mb-1">
+    <div class="col">
+      <span class="text-secondary spantext">CREAR {{ title | uppercase }}</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+
+  <div class="footer-row d-md-flex justify-content-md-end mb-3">
+    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        [routerLink]="['/home']"
+      >
+        Cancelar
+      </button>
+    </div>
+    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+      <button
+        class="btn btn-submit"
+        (submit)="(true)"
+        type="submit"
+        (click)="click()"
+        [disabled]=""
+      >
+        <span
+          class="spinner-border spinner-border-sm1"
+          role="status"
+          aria-hidden="true"
+          *ngIf="isLoading | async"
+        ></span
+        >Solicitar
+      </button>
+    </div>
+  </div>
+</div>

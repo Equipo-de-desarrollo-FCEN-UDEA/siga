@@ -1,27 +1,36 @@
 import smtplib
-from typing import Dict, Any
 
 from jinja2 import Environment, FileSystemLoader
 from email.message import EmailMessage
 
 from .templates import templatesdir
 from app.core.celery_worker import celery
-from app.domain.models import User
+from app.core.config import get_app_settings
+from app.core.logging import get_logging
 
+settings = get_app_settings() 
+
+log = get_logging(__name__)
+
+#Variables para el remitente del correo.
+_my_email = settings.smtp_user_email
+_my_pwd = settings.smtp_user_password._secret_value
 
 env = Environment(loader=FileSystemLoader(templatesdir))
 
-
 @celery.task
-def recovery_password_email(to: str, email: str, token: str):
-    template = env.get_template('user.recovery.password.html')
-    render = template.render({
-        "user": {"names": to},
-        "token": token
-    })
+def recovery_password_email(to_name: str, token: str, email: str):
+    template = env.get_template('email.recuperar.contraseña.html.j2')
+    link = f"http://{settings.APP_DOMAIN}/auth/recuperar-contrasena/{token}"
+    context = {
+    'user':{'nombre':to_name.title()},
+    'enlace': link
+    }
+
+    render = template.render(context)
     msg = EmailMessage()
     msg["Subject"] = "Recuperación de contraseña"
-    msg["From"] = "aplicacioncomisionesfcen@udea.edu.co"
+    msg["From"] = _my_email
     msg["To"] = email
     msg.set_content(
         render,
@@ -29,19 +38,23 @@ def recovery_password_email(to: str, email: str, token: str):
     )
 
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-        smtp.login("aplicacioncomisionesfcen@udea.edu.co", "gstyjqgrmvbglbqh")
+        smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
 
 @celery.task
-def confirm_email(to: str, email: str, token: str):
-    template = env.get_template('user.new.account.html')
-    render = template.render({
-        "user": {"names": to},
-        "token": token
-    })
+def confirm_email(to_name: str, token: str, email: str):
+    template = env.get_template('email.validar.email.html.j2')
+    link = f"http://{settings.APP_DOMAIN}/auth/confirmar-correo/{token}"
+    context = {
+    'user':{'nombre':to_name.title()},
+    'enlace': link
+    }
+
+
+    render = template.render(context)
     msg = EmailMessage()
-    msg["Subject"] = "Recuperación de contraseña"
-    msg["From"] = "aplicacioncomisionesfcen@udea.edu.co"
+    msg["Subject"] = "Confirmación correo"
+    msg["From"] = _my_email
     msg["To"] = email
     msg.set_content(
         render,
@@ -49,5 +62,6 @@ def confirm_email(to: str, email: str, token: str):
     )
 
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-        smtp.login("aplicacioncomisionesfcen@udea.edu.co", "gstyjqgrmvbglbqh")
+        log.debug(_my_pwd)
+        smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)

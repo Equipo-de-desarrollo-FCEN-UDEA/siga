@@ -1,9 +1,10 @@
 import { DepartmentResponse } from "./department";
+import { RolResponse } from "./rol";
 
 export interface UserBase {
     last_names: string;
     names: string;
-    identificaction_number: string;
+    identification_number: string;
     email: string;
     identification_type: string;
     active?: boolean;
@@ -22,7 +23,6 @@ export interface UserCreate extends UserBase {
 
 
 export interface UserUpdate extends UserBase{
-
 }
 
 
@@ -35,4 +35,5 @@ export interface UserInDBBase extends UserBase{
 
 export interface UserResponse extends UserInDBBase{
     department: DepartmentResponse;
+    rol: RolResponse;
 }

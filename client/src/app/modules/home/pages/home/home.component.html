@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="text-center mt-5">
+    <h1 class="text-secondary fs-1">Bienvenido a SIGA</h1>
+    <h1 class="text-secondary fs-4">
+      Sistema Integrado de Gestión Administrativa
+    </h1>
+  </div>
+
+  <div class="mt-4">
+    <span class="text-secondary fs-3">¿Qué deseas hacer hoy?</span>
+  </div>
+
+  <div class="d-flex justify-content-around mt-4 row">
+
+    <div class="col-10">
+      <span class="text-secondary">Solicitudes</span>
+      <hr style="margin: 0" />
+    </div>
+    <div class="d-grid gap-2 col-sm-6 col-md-4 col-lg-4 col-xl-4 p-2" *ngIf="!(isSuperUser | async)">
+      <div class="card shadow">
+        <div class="card-body"  [routerLink]="['../create-application']">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          <span class="card-link">CREAR SOLICITUD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2 col-sm-6 col-md-4 col-lg-4 col-xl-4 p-2">
+      <div class="card shadow">
+        <div class="card-body">
+          <i class="fa fa-book" aria-hidden="true"></i>
+          <span class="card-link">VER SOLICITUDES</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="d-flex justify-content-around mt-4 row" *ngIf="(isSuperUser | async)">
+
+    <div class="col-10">
+      <span class="text-secondary">Usuarios</span>
+      <hr style="margin: 0" />
+    </div>
+    <div class="d-grid gap-2 col-sm-6 col-md-4 col-lg-4 col-xl-4 p-2">
+      <div class="card shadow">
+        <div class="card-body">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <span class="card-link">REGISTRAR USUARIO</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-grid gap-2 col-sm-6 col-md-4 col-lg-4 col-xl-4 p-2">
+      <div class="card shadow">
+        <div class="card-body" [routerLink]="['/usuarios/lista']">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span class="card-link">VER USUARIOS</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

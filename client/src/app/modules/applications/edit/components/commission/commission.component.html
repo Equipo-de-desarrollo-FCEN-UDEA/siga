@@ -1,0 +1,426 @@
+<form
+    class="need-validation"
+    need-validation
+    novalidate
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+  >
+    <!-- DATEPICKER -->
+
+    <ng-template #footerTemplate>
+      <hr class="my-0" />
+      <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
+      <p *ngIf="!fromDate">Elige la primera fecha</p>
+      <button
+        class="btn btn-primary btn-sm m-2 float-start"
+        (click)="model = today; datepicker.close()"
+        type="button"
+      >
+        Hoy
+      </button>
+      <button
+        class="btn btn-secondary btn-sm m-2 float-end"
+        (click)="datepicker.close()"
+        type="button"
+      >
+        Cerrar
+      </button>
+    </ng-template>
+
+    <div class="dp-hidden position-absolute">
+      <div class="input-group">
+        <input
+          hidden
+          name="datepicker"
+          class="form-control"
+          ngbDatepicker
+          #datepicker="ngbDatepicker"
+          [autoClose]="'outside'"
+          (dateSelect)="onDateSelection($event)"
+          [displayMonths]="2"
+          [dayTemplate]="t"
+          outsideDays="hidden"
+          [startDate]="fromDate!"
+          tabindex="-1"
+          [footerTemplate]="footerTemplate"
+          placement="left"
+          [positionTarget]="buttonEl"
+        />
+        <ng-template #t let-date let-focused="focused">
+          <span
+            class="custom-day"
+            [class.focused]="focused"
+            [class.range]="isRange(date)"
+            [class.faded]="isHovered(date) || isInside(date)"
+            (mouseenter)="hoveredDate = date"
+            (mouseleave)="hoveredDate = null"
+          >
+            {{ date.day }}
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="row">
+        <div class="formfloatig">
+          <select
+            formControlName="application_sub_type_id"
+            class="form-control form-select-lg mb-3"
+            (change)="onChangeSolicitud($event)"
+            [ngClass]="{
+              'is-invalid': isInvalidForm('application_sub_type_id')
+            }"
+            *ngIf="applicationType$ | async as applicationType"
+          >
+            <option value="0" disabled selected>Tipo de comisión</option>
+            <option
+              [value]="tipo.id"
+              *ngFor="let tipo of applicationType.application_sub_type"
+            >
+              {{ tipo.name }}
+            </option>
+          </select>
+
+          <div *ngIf="isInvalidForm('application_sub_type_id')" class="invalid-feedback">
+            <!-- <div *ngIf="f['application_sub_type_id'].errors['required']">
+              Elige un tipo de comisión
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <hr />
+<!-- 
+      <div
+        class="row regular-row mt-4 align-items-baseline align-items-baseline"
+      >
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Pais *</div>
+        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+          <div class="formfloatig">
+            <select
+              class="form-select form-select-lg mb-3"
+              id="floatingpais"
+              formControlName="pais"
+              [ngClass]="{ 'is-invalid': isInvalidForm('pais') }"
+              (change)="onChangePais($event)"
+              placeholder=" "
+            >
+              <option [value]="i" *ngFor="let country of paises; let i = index">
+                {{ country.name }}
+              </option>
+            </select>
+
+            <label
+              for="floatingpais"
+              class="selectLabel"
+              [ngClass]="{ isFill: form.controls['pais'].valid }"
+            >
+              País de la comisión
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Departamento o Provincia</div>
+        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+          <div class="formfloatig">
+            <select
+              class="form-select form-select-lg mb-3"
+              id="floatingestado"
+              formControlName="provincia"
+              [ngClass]="{ 'is-invalid': isInvalidForm('provincia') }"
+              (change)="onChangeEstado($event)"
+              placeholder=" "
+            >
+              <option
+                [value]="i"
+                *ngFor="let provincia of provincias; let i = index"
+              >
+                {{ provincia.name }}
+              </option>
+            </select>
+            <label
+              for="floatingestado"
+              class="selectLabel"
+              [ngClass]="{
+                isFill: form.controls['provincia'].touched
+              }"
+            >
+              <span
+                *ngIf="isLoading | async"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              >
+              </span>
+              Provincia de la comisión</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Ciudad</div>
+        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+          <div class="formfloatig">
+            <select
+              class="form-select form-select-lg mb-3"
+              id="floatingciudad"
+              formControlName="ciudad"
+              [ngClass]="{ 'is-invalid': isInvalidForm('ciudad') }"
+              [disabled]="!form.controls['pais'].valid"
+              placeholder=" "
+            >
+              <option [value]="ciudad.name" *ngFor="let ciudad of ciudades">
+                {{ ciudad.name }}
+              </option>
+            </select>
+            <label
+              for="floatingpais"
+              class="selectLabel"
+              [ngClass]="{ isFill: form.controls['ciudad'].touched }"
+            >
+              <span
+                *ngIf="isLoading | async"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Ciudad de la comisión
+            </label>
+          </div>
+        </div>
+      </div> -->
+
+      <hr />
+
+      <hr />
+
+      <div class="row regular-row mt-4 ">
+        <span class="col-md-4 col-xs-12 col-sm-12 label">Fechas *</span>
+        <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
+          <div class="input-group">
+            <input
+              #dpFromDate
+              class="form-control"
+              type="text"
+              (click)="datepicker.toggle(); clicked = clicked + 1"
+              placeholder="yyyy-mm-dd"
+              name="dpFromDate"
+              formControlName="start_date"
+              (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+              [value]="
+                formatter.format(fromDate) ? formatter.format(fromDate) : null
+              "
+              [ngClass]="{ 'is-invalid': !fromDate && clicked !== 0 }"
+            />
+            <input
+              #dpToDate
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dpToDate"
+              formControlName="end_date"
+              [value]="formatter.format(toDate)"
+              (input)="toDate = validateInput(toDate, dpToDate.value)"
+              [value]="formatter.format(toDate) ? formatter.format(toDate) : null"
+              [ngClass]="{ 'is-invalid': !toDate && clicked !== 0 }"
+          />
+            <span
+              #buttonEl
+              class="btn btn-outline-secondary">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+          <div class="input-group" (click)="datepicker.toggle()">
+            <input
+              #dpToDate
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dpToDate"
+              formControlName="end_date"
+              [value]="formatter.format(toDate)"
+              (input)="toDate = validateInput(toDate, dpToDate.value)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Idioma</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingidioma"
+              formControlName="lenguage"
+              class="form-control"
+              type="idioma"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('lenguage') }"
+            />
+            <label for="floatingidioma" class="formLabel"> Idioma </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">País</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingcountry"
+              formControlName="country"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('country') }"
+            />
+            <label for="floatingcountry" class="formLabel"> País </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Estado</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingstate"
+              formControlName="state"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('state') }"
+            />
+            <label for="floatingstate" class="formLabel">Estado</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Ciudad</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingcity"
+              formControlName="city"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('city') }"
+            />
+            <label for="floatingstate" class="formLabel">Ciudad</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+          Justificación *
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <textarea
+              id="floatingjustificacion"
+              formControlName="justification"
+              class="form-control"
+              type="justificacion"
+              placeholder=" "
+              [ngClass]="{ 'is-invalid': isInvalidForm('justification') }"
+              rows="5"
+            ></textarea>
+            <label for="floatingjustificacion" class="formLabel">
+              Justificación
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="isInvalidForm('justification')">
+        Recuerda que la justificación debe tener al menos 30 caracteres y máximo
+        500 caracteres.
+      </div>
+
+      <!-- DOCUMENTOS -->
+
+
+    <div class="row regular-row mt-4" *ngIf="documents.length > 0">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Documentos</div>
+        <div class="col-sm-8">
+          <ul
+            *ngFor="let doc of documents; let i = index"
+            class="list-group"
+          >
+            <li [id]="i" class="list-group-item d-flex justify-content-between">
+              <span>{{ doc.name }}</span>
+              <span
+                style="width: fit-content; margin: 0"
+              >
+              <button
+              class="btn btn-circle"
+              type="button"
+              (click)="deleteDocument(doc.path, i)"
+            >
+              <i class="fa fa-times-circle"></i>
+              </button>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ARCHIVOS - DOCUMENTOS -->
+      <h6 class="mt-3">
+        <span class="text-muted">Archivos adjuntos a la solicitud</span>
+      </h6>
+      <div
+        class="alert alert-danger"
+        *ngIf="files.length > 0 && !validTipoArchivo()"
+      >
+        Ese tipo de archivo no es permitido.
+      </div>
+      <div class="alert alert-danger" *ngIf="files.length > 0 && !validSize()">
+        Los archivos no deben pesar más de 2 MB.
+      </div>
+      <div class="formfloatig" style="display: flex; flex-direction: column">
+        <div
+          *ngFor="let producto of archivos; last as isLast; let i = index"
+          class="arrayLike formfloatig"
+        >
+          <div class="archivos " style="width: auto; margin-left: 10px">
+            <label class="btn-btn-default is-hoverable">
+              <div class="fa fa-upload fa-2x"></div>
+              <input
+                [id]="i"
+                class="file-upload"
+                type="file"
+                (change)="onUpload($event, i)"
+              />
+              <label [for]="i" class="is-hoverable" style="margin-left: 10px">{{
+                files[i] ? files[i].name : "Subir archivo"
+              }}</label>
+            </label>
+          </div>
+          <div class="buttons">
+            <button
+              class="btn btn-circle btn-remove m-1"
+              type="button"
+              (click)="removeFile(i)"
+            >
+              <i class="fa fa-minus"></i>
+            </button>
+            <button
+              class="btn btn-circle btn-add m-1"
+              type="button"
+              (click)="archivos.push(1)"
+              *ngIf="isLast && archivos.length < 3"
+            >
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+  </form>

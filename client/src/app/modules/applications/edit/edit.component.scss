@@ -1,0 +1,43 @@
+.btn-success {
+    background-color: #43b649;
+}
+
+.buttons {
+    width: fit-content;
+    margin: 0;
+}
+
+.btn-remove {
+    border-color: #fff;
+    color: #fff;
+    background-color: var(--032c);
+}
+
+.btn-remove:hover {
+    background-color: #d45f57;
+}
+
+.btn-add {
+    border-color: #fff;
+    color: #fff;
+    background-color: #43b649;
+}
+
+.btn-add:hover {
+    background-color: #79b97c;
+}
+
+.btn-submit {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-submit:hover {
+    transition: all 0.5s ease-out;
+    background-color: rgba(67, 182, 73, 0.8) 0%,;
+  }
+

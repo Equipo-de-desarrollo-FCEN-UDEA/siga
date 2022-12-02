@@ -3,7 +3,7 @@ export interface Auth {
     password: string;
 }
 
-export interface Token {
+export interface Token{
     access_token: string;
     token_type: string;
     expires: number;

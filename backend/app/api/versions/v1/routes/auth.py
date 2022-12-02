@@ -59,8 +59,8 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
         )
     email_token = jwt.email_token(email=user.email)
     recovery_password_email.apply_async(
-        args=(user.names, user.email, email_token))
-    return {"msg": email_token}
+        args=(user.names, email_token, user.email))
+    return {"msg": f"El correo para recuperar la contraseña fue enviado correctamente a {user.email}"}
 
 
 # Route for reset password
@@ -101,10 +101,10 @@ def reset_password(
 
 # Route for request an activation email
 @router.post("/activate-email/{email}", response_model=schemas.Msg)
-def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
+def activate_email(email: str, *, db: Session = Depends(db.get_db)) -> dict:
     """
     activate email
-    
+
     Query params:
         email: str
     """
@@ -115,10 +115,14 @@ def recover_password(email: str, *, db: Session = Depends(db.get_db)) -> dict:
             status_code=404,
             detail="El usuario con este correo o número de identificación no está registrado en el sistema",
         )
+    if user.active:
+        raise HTTPException(
+            status_code=403,
+            detail="El usuario con este correo o número de identificación ya está activo",
+        )
     email_token = jwt.email_token(email=user.email)
-    confirm_email.apply_async(
-        args=(user.names, user.email, email_token))
-    return {"msg": email_token}
+    confirm_email.apply_async(args=(user.names, email_token, user.email))
+    return {"msg": "El correo de activación fue enviado correctamente"}
 
 
 # Route for activate the account with the mailed token
@@ -130,7 +134,7 @@ def reset_password(
 ) -> dict:
     """
     Activate account:
-    
+
     Params:
         token: str
     """

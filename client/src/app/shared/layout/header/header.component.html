@@ -1,1 +1,161 @@
-<p>header works!</p>
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasDarkNavbar"
+      aria-controls="offcanvasDarkNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="">
+      <span style="color: #fff">
+        Bienvenido {{ user?.names }} {{ user?.last_names }}
+      </span>
+    </div>
+    <div
+      class="offcanvas offcanvas-start text-bg-dark"
+      tabindex="-1"
+      id="offcanvasDarkNavbar"
+      aria-labelledby="offcanvasDarkNavbarLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          style="margin-right: 1em"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <div class="ng-sidebar">
+            <div>
+              <div>
+                <div class="sidebar-header">
+                  <span class="user-pic">
+                    <i class="fas fa-user-circle"></i>
+                  </span>
+                </div>
+                <div class="user-info">
+                  <span class="user-name">
+                    {{ user?.names }}
+                    <br />
+                    {{ user?.last_names }}
+                  </span>
+                  <br />
+                  <span class="user-role">
+                    <span class="user-status">
+                      <i class="fa fa-circle"></i>
+                    </span>
+                    {{ user_response?.rol?.name }}
+                  </span>
+                </div>
+                <!-- sidebar-header  -->
+                <div class="create-request" *ngIf="!(isSuperUser | async)">
+                  <hr />
+                  <button
+                    type="button"
+                    class="btn-request w-75"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                    [routerLink]="['/create-application']"
+                  >
+                    <span style="color: #ffff; margin: 0">
+                      <i class="fas fa-plus-circle"></i>
+                    </span>
+                    Crear Solicitud
+                  </button>
+                  <hr />
+                </div>
+                <!-- sidebar-search  -->
+                <div class="sidebar-menu">
+                  <div class="header-menu">
+                    <span class="text-secondary">GENERAL</span>
+                  </div>
+                  <ul>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                      [routerLink]="['/home']"
+                    >
+                      <span>
+                        <i class="fas fa-home"></i>
+                        Inicio
+                      </span>
+                    </li>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    >
+                      <span>
+                        <i class="fa-solid fa-user-astronaut"></i>
+                        Mi Perfil
+                      </span>
+                    </li>
+                    <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                    >
+                      <span>
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        Solicitudes
+                      </span>
+                    </li>
+                  </ul>
+                  <div *ngIf="(isSuperUser | async)">
+                    <hr />
+                    <div class="header-menu">
+                      <span class="text-secondary"> ESPECÍFICO </span>
+                    </div>
+                    <ul>
+                      <li
+                        type="button"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      >
+                        <span>
+                          <i class="fa-solid fa-users"></i>
+                          Usuarios
+                        </span>
+                      </li>
+                      <li
+                        type="button"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                        [routerLink]="['/usuarios/lista-usuarios']"
+                      >
+                        <span>
+                          <i class="fa-solid fa-user-group"></i>
+                          Registrar Usuarios
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- sidebar-menu  -->
+                <!-- sidebar-content  -->
+                <div class="sidebar-footer">
+                  <hr />
+                  <a (click)="logOut()">
+                    <span>
+                      <i class="fas fa-power-off"></i>
+                      Cerrar Sesi&oacute;n
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

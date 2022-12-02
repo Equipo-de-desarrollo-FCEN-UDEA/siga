@@ -1,4 +1,5 @@
 from functools import lru_cache
+from locale import setlocale, LC_TIME
 
 from typing import Type, Dict
 
@@ -11,6 +12,9 @@ environments: Dict[AppEnv, Type[AppSettings]] = {
     AppEnv.Production: ProductionAppSettings,
     AppEnv.Testing: TestingAppSettings
 }
+
+
+setlocale(LC_TIME, 'es_ES.UTF-8')
 
 
 # Aquí generamos la configuración de la aplicación y la almacenamos en la caché de python

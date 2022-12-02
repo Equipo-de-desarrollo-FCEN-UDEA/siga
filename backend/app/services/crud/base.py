@@ -21,7 +21,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         self.model = model
         self.policy = policy
 
-    def get(self, db: Session, id: int, who: User) -> Optional[ModelType]:
+    def get(self, db: Session, who: User, *, id:int) -> Optional[ModelType]:
         obj_db = db.query(self.model).filter(self.model.id == id).first()
         self.policy.get(who=who, to=obj_db)
         return obj_db
@@ -75,8 +75,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         db.refresh(db_obj)
         return db_obj
 
-    def delete(self, db: Session, who: User, *, id: int) -> None:
+    def delete(self, db: Session, who: User, *, id: int) -> bool:
         obj_db = db.query(self.model).get(id)
         self.policy.delete(who=who, to=obj_db)
         db.delete(obj_db)
         db.commit()
+        return True

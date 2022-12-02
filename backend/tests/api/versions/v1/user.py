@@ -12,6 +12,7 @@ client = TestClient(app)
 
 url = '/api/v1/user/'
 
+
 def test_api_user():
     token = client.post(
         '/api/v1/login/access-token',
@@ -23,7 +24,7 @@ def test_api_user():
     user = {
         "last_names": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
         "names": "JOUKWONLOUGKQUCZPGTQALAYF EEKWW MGYIELZAGUMNQHUUGD",
-        "identificaction_number": "UZYRTUJDVMLL270C",
+        "identification_number": "UZYRTUJDVMLL270C",
         "email": "test.api@udea.edu.co",
         "active": True,
         "scale": "string",
@@ -60,7 +61,6 @@ def test_api_user():
     log.debug(userget.json())
 
     assert response.status_code == 201
-    # assert response2.status_code == 403
     assert delete.status_code == 200
     assert userget.json(
     )['names'] == settings.first_superemployee_names

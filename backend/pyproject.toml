@@ -22,6 +22,9 @@ gunicorn = "^20.1.0"
 celery = {extras = ["redis"], version = "^5.2.7"}
 Jinja2 = "^3.1.2"
 odmantic = "^0.9.0"
+httpx = "^0.23.0"
+boto3 = "^1.26.8"
+weasyprint = "^57.1"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -1,0 +1,8 @@
+{% extends "email.base.html.j2" %}
+{% block content %}
+
+<p>Hola {{user.names}}, Bienvenido a nuestro sistema de gestión de solicitudes SIGA, generamos el siguiente enlace para que puedas
+    activar tu cuenta {{token}}</p>
+<a class="button is-rounded is-link" ref="http://siga-fcen/recovery-password/token?={{token}}">Cambiar contraseña</a>
+
+{% endblock %}

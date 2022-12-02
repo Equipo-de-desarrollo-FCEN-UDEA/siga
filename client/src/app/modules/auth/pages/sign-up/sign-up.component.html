@@ -1,0 +1,306 @@
+<form
+  need-validation
+  novalidate
+  [formGroup]="createUserForm"
+  (ngSubmit)="onSubmit()"
+  class="containerInside container card shadow mt-5 bg-white rounded"
+>
+  <div class="p-4">
+    <div class="card-body">
+      <div class="row header-row P-2">
+        <div class="col">
+          <span class="text-secondary">REGISTRATE</span>
+        </div>
+      </div>
+      <hr />
+      <div class="alert alert-warning">
+        <strong>¡Importante!</strong> Antes de enviar, verifica que la
+        información se ingresó correctamente.
+      </div>
+      <div class="form">
+        <!-- apellidos -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Apellidos</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              id="last_names"
+              type="text"
+              class="form-control"
+              placeholder=" "
+              formControlName="last_names"
+              [ngClass]="{
+                'is-invalid': f['last_names'].errors && f['last_names'].touched
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- nombre -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Nombre</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              id="names"
+              type="text"
+              class="form-control"
+              placeholder=" "
+              formControlName="names"
+              [ngClass]="{
+                'is-invalid': f['names'].errors && f['names'].touched
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Correo Institucional -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Correo Institucional
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              formControlName="email"
+              id="email"
+              type="text"
+              class="form-control"
+              placeholder="ejemplo@udea.edu.co"
+              [ngClass]="{
+                'is-invalid': f['email'].errors && f['email'].touched
+              }"
+            />
+          </div>
+        </div>
+
+        <div *ngIf="f['email'].errors" class="invalid-feedback">
+          <div *ngIf="submitted && f['email'].errors?.['pattern']">
+            Ingresa tu correo institucional
+          </div>
+        </div>
+
+        <!-- tipo ID -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Tipo de Identificación
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="identification_type"
+              formControlName="identification_type"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  f['identification_type'].errors &&
+                  f['identification_type'].touched
+              }"
+            >
+              <option [value]="type" *ngFor="let type of id_type">
+                {{ type | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Número de Identificación -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Número de Identificación
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              id="identificaction_number"
+              formControlName="identificaction_number"
+              type="text"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  f['identificaction_number'].errors &&
+                  f['identificaction_number'].touched
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Telefono -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              id="phone_number"
+              formControlName="phone_number"
+              type="number"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  f['phone_number'].errors && f['phone_number'].touched
+              }"
+            />
+          </div>
+        </div>
+
+        <!-- Vinculación -->
+        <!-- <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Vinculación</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="rol_id"
+              formControlName="rol_id"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['rol_id'].errors && f['rol_id'].touched
+              }"
+            >
+              <option [value]="rol" *ngFor="let rol of rol$ | async">
+                {{ rol.name | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div> -->
+
+        <!-- Facultad -->
+        <!-- <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="Faculty_id"
+              formControlName="Faculty_id"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['Faculty_id'].errors && f['Faculty_id'].touched
+              }"
+            >
+              <option *ngFor="let Faculty_id of departments$; let i = index" [value]="i">
+                {{ Faculty_id.name | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div> -->
+
+        <!-- Departamento/Instituto -->
+        <!-- <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Departamento/Instituto
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="department_id"
+              formControlName="department_id"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  f['department_id'].errors && f['department_id'].touched
+              }"
+            >
+              <option *ngFor="let department" [value]="department.id">
+                {{ department.nombre | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div> -->
+
+        <hr />
+
+        <!-- Contraseña -->
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Contraseña</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <div class="formfloatig">
+              <input
+                id="password"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                placeholder=" "
+                [ngClass]="{
+                  'is-invalid': f['password'].errors && f['password'].touched
+                }"
+              />
+              <div
+                class="invalid-feedback"
+                [ngClass]="{
+                  'is-invalid': f['password'].errors && f['password'].touched
+                }"
+              >
+                <!-- <div
+                  class="alert alert-danger"
+                  *ngIf="f['password'].errors['minlength']"
+                >
+                  La contraseña debe contener mínimo 8 caracteres
+                </div>
+                <div
+                  class="alert alert-danger"
+                  *ngIf="f['contrasena'].errors['maxlength']"
+                >
+                  La contraseña es demasiado larga
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Confirmar Contraseña
+          </div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <div class="formfloatig">
+              <input
+                id="confirm_password"
+                type="password"
+                class="form-control"
+                formControlName="confirm_password"
+                placeholder=" "
+              />
+              <span class="error" *ngIf="validatePassword()">
+                Las contraseñas no coinciden
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+
+        <hr />
+
+        <div class="footer-row d-md-flex justify-content-md-end mb-3">
+          <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              [routerLink]="['../login']"
+            >
+              Cancelar
+            </button>
+          </div>
+
+          <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+            <button
+              id="btn-sub"
+              (submit)="(true)"
+              class="btn btn-success"
+              [disabled]="validatePassword() || createUserForm.invalid"
+            >
+              <span
+                *ngIf="loading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Confirmar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

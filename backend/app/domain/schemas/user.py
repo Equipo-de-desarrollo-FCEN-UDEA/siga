@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
+from .rol import RolResponse
 
 log = get_logging(__name__)
 
@@ -16,6 +17,7 @@ class UserBase(BaseModel):
         regex=regex,
         min_length=3,
         max_length=50,
+        
     )
 
     names: str = Field(
@@ -24,7 +26,7 @@ class UserBase(BaseModel):
         max_length=50
     )
 
-    identificaction_number: str = Field(
+    identification_number: str = Field(
         regex="^[A-Z0-9]*$",
         min_length=3,
         max_length=20
@@ -57,13 +59,13 @@ class UserCreate(UserBase):
     @validator('password', always=True)
     def generate_password(cls, v, values, **kwargs):
         if not v:
-            if not 'identificaction_number' in values:
-                raise ValueError
-            return values['identificaction_number']
+            if not 'identification_number' in values:
+                raise ValueError("No tiene número de identificación")
+            return values['identification_number']
         return v
     
     # We force upper case for search engine optimization
-    @validator('names', 'last_names', 'identificaction_number', 'email')
+    @validator('names', 'last_names', 'identification_number', 'email')
     def convert_upper(cls, value):
         return value.upper()
 
@@ -84,6 +86,7 @@ class UserInDBBase(UserBase):
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
     email: str
+    rol: RolResponse
 
 
 class UserInDB(UserInDBBase):

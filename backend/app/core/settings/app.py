@@ -37,7 +37,7 @@ class AppSettings(BaseAppSettings):
     redis_server: str
     redis_path: str
 
-    #mongo
+    # mongo
     mongo_server: str
     mongo_initdb_root_username: str
     mongo_initdb_root_password: str
@@ -53,12 +53,23 @@ class AppSettings(BaseAppSettings):
     first_superemployee_vinculation_type: str
     first_superemployee_rol_id: int
 
-    #SMTP
+    # SMTP
     smtp_user_email: str
     smtp_user_password: SecretStr
     smtp_host_email: str
     smtp_port_email: int
     smtp_from_email: str
+
+    # AWS
+    aws_user: str
+    aws_access_key_id: str
+    aws_access_secret_key: str
+    aws_region_name: str
+    aws_bucket_name: str
+
+    # App
+
+    APP_DOMAIN: str
 
     database_uri: Optional[PostgresDsn] = None
 
@@ -92,7 +103,7 @@ class AppSettings(BaseAppSettings):
             host=values.get('redis_server'),
             path=f"/{values.get('redis_path')}"
         )
-    
+
     @validator('mongo_uri', pre=True)
     def validate_mongo_uri(cls, v: Optional[str], values: Dict[str, Any]) -> Any:
         return MongoDsn.build(
