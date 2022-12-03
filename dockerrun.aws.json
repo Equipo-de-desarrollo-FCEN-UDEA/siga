@@ -1,0 +1,131 @@
+{
+    "AWSEBDockerrunVersion":2,
+    "containerDefinitions": [
+        {
+            "essential": true,
+            "image": "simon3640/siga-backend",
+            "memory": 300,
+            "name": "backend",
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "hostPort": 8000
+                }
+            ]
+        },
+        {
+            "command": [
+                "celery",
+                "-A",
+                "app.core.celery_worker.celery",
+                "worker",
+                "--loglevel=info"
+            ],
+            "environment": [
+                {
+                    "name": "CELERY_BROKER_URL",
+                    "value": "redis://redis:6379/0"
+                },
+                {
+                    "name": "CELERY_RESULT_BACKEND",
+                    "value": "redis://redis:6379/0"
+                }
+            ],
+            "essential": true,
+            "image": "simon3640/siga-backend",
+            "memory": 350,
+            "name": "celery_worker"
+        },
+        {
+            "essential": true,
+            "image": "simon3640/siga-client",
+            "memory": 300,
+            "name": "client"
+        },
+        {
+            "environment": [
+                {
+                    "name": "PGDATA",
+                    "value": "/var/lib/postgresql/data/pgdata"
+                }
+            ],
+            "essential": true,
+            "image": "postgres:latest",
+            "memory": 50,
+            "mountPoints": [
+                {
+                    "containerPath": "/var/lib/postgresql/data",
+                    "sourceVolume": "_DbPostgres-Data"
+                }
+            ],
+            "name": "db",
+            "portMappings": [
+                {
+                    "containerPort": 5432,
+                    "hostPort": 5432
+                }
+            ]
+        },
+        {
+            "essential": true,
+            "image": "mongo:latest",
+            "memory": 50,
+            "mountPoints": [
+                {
+                    "containerPath": "/data/db",
+                    "sourceVolume": "_DbMongo-Data"
+                }
+            ],
+            "name": "mongo",
+            "portMappings": [
+                {
+                    "containerPort": 27017,
+                    "hostPort": 27017
+                }
+            ]
+        },
+        {
+            "essential": true,
+            "image": "simon3640/siga-nginx",
+            "links": [
+                "backend",
+                "client"
+            ],
+            "memory": 100,
+            "name": "nginx",
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80
+                }
+            ]
+        },
+        {
+            "essential": true,
+            "image": "redis:latest",
+            "memory": 50,
+            "name": "redis",
+            "portMappings": [
+                {
+                    "containerPort": 6379,
+                    "hostPort": 6379
+                }
+            ]
+        }
+    ],
+    "family": "",
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "./db/postgres-data"
+            },
+            "name": "_DbPostgres-Data"
+        },
+        {
+            "host": {
+                "sourcePath": "./db/mongo-data"
+            },
+            "name": "_DbMongo-Data"
+        }
+    ]
+}
