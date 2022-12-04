@@ -76,9 +76,9 @@
   }
   
   .btn-remove {
+    background-color: red;
     border-color: #fff;
     color: #fff;
-    background-color: var(--032c);
   }
   
   .btn-remove:hover {
@@ -107,3 +107,7 @@
     border-radius: 0.2em;
   }
   
+
+  .invalid {
+    color: rgb(216, 36, 36);
+  }

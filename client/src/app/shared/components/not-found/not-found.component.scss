@@ -1,0 +1,40 @@
+.body{
+    background: rgba(240, 244, 245, 0.959);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container-404{
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    position: center;
+  }
+  
+  .boton{
+    display: inline-block;
+    margin-top: 15px;
+    background: rgba(183, 192, 194, 0.959);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+  
+  }
+
+  .btn-submit {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-submit:hover {
+    transition: all 0.5s ease-out;
+    background-color: rgba(67, 182, 73, 0.8) 0%,;
+  }

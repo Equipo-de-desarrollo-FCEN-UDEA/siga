@@ -44,11 +44,11 @@
       </div>
 
 
-        <!-- ARCHIVOS - DOCUMENTOS -->
+      <!-- ARCHIVOS - DOCUMENTOS -->
       <h6 class="mt-3">
           <span class="text-muted">Archivo de cumplido</span>
       </h6>
-      <div class="alert alert-danger" *ngIf="files.length > 0 && !validTipoArchivo()">
+      <div class="alert alert-danger" *ngIf="files.length > 0 && !validFileType()">
         Ese tipo de archivo no es permitido.
       </div>
       <div class="alert-danger alert" *ngIf="files.length>0 && !validSize()">

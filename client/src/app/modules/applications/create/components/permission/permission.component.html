@@ -6,7 +6,6 @@
   (ngSubmit)="submit()"
 >
   <!-- DATEPICKER -->
-
   <ng-template #footerTemplate>
     <hr class="my-0" />
     <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
@@ -69,7 +68,9 @@
         class="form-control form-select-lg mb-3"
         (change)="onApplicationSubType($event)"
         [ngClass]="{
-          'is-invalid': isInvalidForm('application_sub_type_id')
+          'is-invalid':
+            (submitted && f['application_sub_type_id'].errors) ||
+            isInvalidForm('application_sub_type_id')
         }"
         *ngIf="applicationType$ | async as applicationType"
       >
@@ -112,6 +113,7 @@
             "
             [ngClass]="{
               'is-invalid':
+                (submitted && f['start_date'].errors) ||
                 ((!fromDate || !toDate) && clicked !== 0) ||
                 selectDays(fromDate, toDate)
             }"
@@ -207,10 +209,10 @@
     <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
       Los archivos no deben pesar más de 2 MB.
     </div>
-    <div class="col-sm-12 col-xs-12 col-md-12 col-12">
+    <div class="formfloatig" style="flex-direction: column">
       <div
         *ngFor="let producto of document_new; last as isLast; let i = index"
-        class="arrayLike col-sm-12 col-xs-12 col-md-12 col-12"
+        class="arrayLike formfloatig d-flex justify-content-between"
       >
         <div class="document_new">
           <label class="btn-btn-default is-hoverable">

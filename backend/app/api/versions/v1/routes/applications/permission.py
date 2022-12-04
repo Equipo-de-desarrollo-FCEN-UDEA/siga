@@ -8,7 +8,7 @@ from app.core.logging import get_logging
 from app.services import crud
 from app.domain.models import Permission, User, Application
 from app.domain.schemas import ApplicationCreate, PermissionResponse, PermissionUpdate, PermissionCreate, Msg, ApplicationResponse
-from app.domain.errors import BaseErrors
+from app.domain.errors import BaseErrors, ApplicationErrors
 from app.domain.errors.applications.permission import PermissionErrors
 
 router = APIRouter()
@@ -123,10 +123,12 @@ async def get_permission(
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
             log.debug('permission in mongo', permission)
+        
+    # except ApplicationErrors as e:
+    #     raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
-    # from_orm: must be used to create the model instance
     application = ApplicationResponse.from_orm(application)
     response = PermissionResponse(
         **dict(application),
@@ -162,12 +164,12 @@ async def put_permission(
             db=db, id=id, who=current_user)
 
         if application:
-            
+
             log.debug('obj_in que es', permission)
 
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
-            
+
             current_permission = await crud.permission.get(db=engine, id=mongo_id)
 
             updated_permission = await crud.permission.update(
@@ -177,20 +179,19 @@ async def put_permission(
                 db_obj=current_permission,
                 obj_in=permission,
                 type_permission=permission.application_sub_type_id)
-            
+
             log.debug('updated_permission', updated_permission)
-            
+
             # In PostgreSQL
 
             application_updated = crud.application.update(
                 db=db, who=current_user, db_obj=application, obj_in=permission)
-           
 
             log.debug('application update', application_updated)
 
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
-        #await crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
+        # await crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
         return HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)

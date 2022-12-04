@@ -97,7 +97,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
             # Join tablas Application_status y Application por id
             permissions_user = db.query(Application.mongo_id).join(
                 Application_status, Application.id == Application_status.application_id).\
-                filter(Application_status.status_id == 3).\
+                filter(Application_status.status_id == 1).\
                 filter(Application.application_sub_type_id == 7).\
                 filter(Application.user_id == who.id).all()
 
