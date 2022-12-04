@@ -42,6 +42,13 @@ export class CommissionComponent {
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
+    
+  // --------------------------------------------------
+  // ----------- MANEJO DE ERRORES EN EL FORM ---------
+  // --------------------------------------------------
+
+  get f() { return this.form.controls; }
+
   constructor(
     private fb: FormBuilder,
     private calendar : NgbCalendar,
@@ -155,13 +162,6 @@ export class CommissionComponent {
   }
 
 
-  
-  // --------------------------------------------------
-  // ----------- MANEJO DE ERRORES EN EL FORM ---------
-  // --------------------------------------------------
-  get f() {
-    return this.form.controls;
-  }
 
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
