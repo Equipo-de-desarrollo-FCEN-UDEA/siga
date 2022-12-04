@@ -60,9 +60,10 @@
                   <hr />
                   <button
                     type="button"
-                    class="btn-request dropdown-toggle w-75"
-                    id="navbarScrollingDropdown"
-                    data-bs-toggle="dropdown"
+                    class="btn-request w-75"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                    [routerLink]="['/create-application']"
                   >
                     <span style="color: #ffff; margin: 0">
                       <i class="fas fa-plus-circle"></i>
@@ -81,7 +82,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
-                      [routerLink]="['/home/home']"
+                      [routerLink]="['/home']"
                     >
                       <span>
                         <i class="fas fa-home"></i>

@@ -9,7 +9,7 @@ from .status import StatusInDB
 class Application_statusBase(BaseModel):
     application_id: int
     status_id: int
-    observation: Optional[str] = Field(max_length=50)
+    observation: Optional[str] = Field(max_length=200)
 
 
 class Application_statusCreate(Application_statusBase):

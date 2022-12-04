@@ -3,7 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Application } from '@interfaces/application';
 import { CommissionInDB, CommissionResponse } from '@interfaces/applications/commission';
 import { CommissionService } from '@services/applications/commission.service';
+import { AuthService } from '@services/auth.service';
 import { DocumentService } from '@services/document.service';
+import { lastElement } from '@shared/utils';
 import { ComService } from '../../connection/com.service';
 
 @Component({
@@ -19,11 +21,21 @@ export class CommissionComponent implements OnInit {
 
   public application: Application | undefined = undefined;
 
+  public current_status: string = '';
+
+  public today = new Date();
+
+  public end_date = new Date();
+
+  public isSuperUser$ = this.authSvc.isSuperUser$;
+
   constructor(
+    private route: ActivatedRoute,
+
     private commissionSvc: CommissionService,
     private comSvc: ComService,
-    private route: ActivatedRoute,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private authSvc: AuthService
   ) {
     this.route.parent?.params.subscribe(
       params => {
@@ -37,9 +49,12 @@ export class CommissionComponent implements OnInit {
     this.commissionSvc.getCommission(this.id).subscribe(
       (app: CommissionResponse) => {
         const {commission, ...application} = app;
-        this.commission = commission
-        this.application = application
-        this.comSvc.push(this.application)
+        this.commission = commission;
+        this.application = application;
+
+        this.current_status = lastElement(application.application_status).status.name;
+        this.comSvc.push(this.application);
+        this.end_date = new Date(commission.end_date)
       }
     )
   }

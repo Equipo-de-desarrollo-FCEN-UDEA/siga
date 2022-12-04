@@ -1,50 +1,97 @@
 <div *ngIf="commission">
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
 
-        <div class="col-xs-12 col-sm-6">
-            {{ commission.start_date| date: "fullDate" }}
-        </div>
+    <div class="col-xs-12 col-sm-6">
+      {{ commission.start_date| date: "fullDate" }}
     </div>
+  </div>
 
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
-        <div class="col-xs-12 col-sm-6">
-            {{ commission.end_date | date: "fullDate" }}
-        </div>
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ commission.end_date | date: "fullDate" }}
     </div>
+  </div>
 
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Idioma</div>
-        <div class="col-xs-12 col-sm-6">{{ commission.lenguage }}</div>
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Idioma</div>
+    <div class="col-xs-12 col-sm-6">{{ commission.lenguage }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Lugar</div>
+    <div class="col-xs-12 col-sm-6">{{ commission.country + ', ' + commission.state + ', ' + commission.city |
+      titlecase }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Justificación</div>
+    <div class="col-xs-12 col-sm-6">{{ commission.justification }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">
+      Estado actual de la comisión
     </div>
-
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Lugar</div>
-        <div class="col-xs-12 col-sm-6">{{ commission.country + ', ' + commission.state + ', ' + commission.city |
-            titlecase }}</div>
+    <div class="col-xs-12 col-sm-6">
+      <span class="badge badge-pill pill" [ngClass]="{
+            'bg-requested': current_status === 'SOLICITADA',
+            'bg-ok': current_status === 'VISTO BUENO',
+            'bg-approved': current_status === 'APROBADA',
+            'bg-rejected': current_status === 'RECHAZADA'
+          }">
+        {{ current_status }}
+      </span>
     </div>
+  </div>
 
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Justificación</div>
-        <div class="col-xs-12 col-sm-6">{{ commission.justification }}</div>
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+    <div class="col-xs-12 col-sm-6">
+      <ul>
+        <li *ngFor="let doc of commission.documents">
+          <span class="link-success cursor" (click)="openDocument(doc.path)">{{ doc.name }}&nbsp;&nbsp;</span>&nbsp;
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <div class="row regular-row mt-2">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
-        <div class="col-xs-12 col-sm-6">
-          <ul>
-            <li *ngFor="let doc of commission.documents">
-              <span class="link-success cursor" (click)="openDocument(doc.path)"
-                >{{ doc.name }}&nbsp;&nbsp;</span
-              >&nbsp;
-            </li>
-          </ul>
-        </div>
+  <div class="row regular-row mt-2" *ngIf="commission.resolution">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Resolución</div>
+    <div class="col-6"> <span class="link-success cursor" (click)="openDocument(commission.resolution)"><ul><li>Ver resolución</li></ul></span> </div>
+  </div>
+
+  <div class="cumplido" *ngIf="commission.compliment">
+    <div class="row header-row mt-3">
+      <div class="col">
+        <span class="text-secondary">Cumplido</span>
       </div>
+    </div>
+    <hr />
 
-      <div class="row regular-row mt-2" *ngIf="commission.resolution">
-        <div class="col-xs-12 col-sm-6 label fw-bold">Resolución</div>
-        <div class="col-6"> <span class="link-success cursor" (click)="openDocument(commission.resolution)">ver resolución</span> </div>
+    <div class="row regular-row mt-2">
+      <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+      <div class="col-6">
+        <ul>
+          <li *ngFor="let doc of commission.compliment.documents">
+            <span class="link-success cursor" (click)="openDocument(doc.path)">{{ doc.name }}&nbsp;&nbsp;</span>&nbsp;
+          </li>
+        </ul>
       </div>
+    </div>
+
+    <div class="row regular-row mt-2">
+      <div class="col-xs-12 col-sm-6 label fw-bold">Información complementaria</div>
+      <div class="col-xs-12 col-sm-6">{{ commission.compliment.observation }}</div>
+    </div>
+
+  </div>
+
+  <div class="row regular-row mt-2"
+    *ngIf="commission.compliment == undefined && current_status == 'APROBADA' && end_date < today && !(isSuperUser$ |async)">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Cumplido</div>
+    <div class="col-6"> <button class="btn btn-outline-warning"> Subir cumplido </button> </div>
+  </div>
+
 </div>

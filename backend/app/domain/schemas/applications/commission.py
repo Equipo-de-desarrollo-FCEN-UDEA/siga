@@ -33,16 +33,24 @@ class CommissionUpdate(CommissionBase):
     pass
 
 
-class ComissionInDB(CommissionBase):
+class Compliment(BaseModel):
+    documents: list[Any]
+    emails: list[str]
+    observation: str = Field(max_length=300)
+
+
+class commissionInDB(CommissionBase):
     resolution: str | None
-    cumplido: str | None
+    compliment: Compliment | None
 
 
 class CommissionResponse(ApplicationResponse):
-    commission: ComissionInDB
+    commission: commissionInDB
 
 
-class CommissionDocument(ComissionInDB):
+class CommissionDocument(commissionInDB):
     @validator("start_date", 'end_date')
     def stringdate(cls, v, values, **kwargs):
         return v.strftime("%A %d de %B del %Y")
+
+

@@ -195,7 +195,7 @@
     </div>
 
     <!--ARCHIVOS-->
-    <h6 class="mt-3">
+    <h6 class="mt-3 text-center">
       <span class="text-muted">Archivos adjuntos del permiso</span>
     </h6>
     <div
@@ -207,10 +207,12 @@
     <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
       Los archivos no deben pesar más de 2 MB.
     </div>
+
+
     <div class="col-sm-12 col-xs-12 col-md-12 col-12">
       <div
         *ngFor="let producto of document_new; last as isLast; let i = index"
-        class="arrayLike col-sm-12 col-xs-12 col-md-12 col-12"
+        class="arrayLike d-flex justify-content-between col-sm-12 col-xs-12 col-md-12 col-12"
       >
         <div class="document_new">
           <label class="btn-btn-default is-hoverable">

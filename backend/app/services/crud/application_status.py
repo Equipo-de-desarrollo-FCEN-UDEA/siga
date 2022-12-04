@@ -22,6 +22,16 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
         db.refresh(db_obj)
         return db_obj
 
+    def finalize(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application) -> Application_status:
+        status = db.query(Status).where(Status.name == 'FINALIZADA').first()
+        obj_in_data = dict(obj_in)
+        obj_in_data['status_id'] = status.id
+        db_obj = Application_status(**obj_in_data)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+
 
 policy = Application_statusPolicy()
 

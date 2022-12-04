@@ -1,21 +1,4 @@
-.custom-day {
-    text-align: center;
-    padding: 0.185rem 0.25rem;
-    display: inline-block;
-    height: 2rem;
-    width: 2rem;
-  }
-  .custom-day.focused {
-    background-color: #e6e6e6;
-  }
-  .custom-day.range, .custom-day:hover {
-    background-color: #43b649;
-    color: white;
-  }
-  .custom-day.faded {
-    background-color: #43b649aa;
-  }
-  .containerInside{
+.containerInside{
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -29,9 +12,8 @@
   margin-top: 0;
   padding: 1em 0.5em;
   }
-
-
-@media screen and (max-width: 576px){
+  
+  @media screen and (max-width: 576px){
   :host ::ng-deep .ngb-dp-months {
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -41,41 +23,50 @@
   }
   .containerInside {
     width: 95%!important;
+   
+   }
   }
-}
-
-
+  
+  
+  p {
+    text-align: center; 
+    margin: 0; 
+    color: green;
+  }
+  
+  .btn-dark {
+  background-color: #43B649;
+  border-color: #43B649;
+  } 
+  
+  
   .formLabel{
   left: 1.7em;
   }
-
+  
   .selectLabel{
   left: 1.7em;
   }
-
+  
   .file-upload{
   display: none;
   }
-
-  .invalid {
-    color: rgb(216, 36, 36);
-  }
-
+  
+  
   .buttons {
-    width: fit-content;
+    width: fit-content; 
     margin: 0;
   }
-
+  
   .btn-remove {
-    background-color: red;
     border-color: #fff;
     color: #fff;
+    background-color: var(--032c);
   }
   
   .btn-remove:hover {
     background-color: #d45f57;
   }
-
   
   .btn-add {
     border-color: #fff;
@@ -85,14 +76,8 @@
   
   .btn-add:hover {
     background-color: #79b97c;
-  } 
-
-  .custom-day.invalidChoosen {
-    background-color: #d45f57;
-    color: white
   }
-
-  .custom-day.invalidRange {
-    background-color: #d45f57;
-    color: white
+  
+  .btn-success {
+    background-color: #43b649;
   }

@@ -16,7 +16,11 @@ from .applications import (
     CommissionCreate,
     CommissionResponse,
     CommissionUpdate,
-    ComissionInDB,
-    CommissionDocument
+    commissionInDB,
+    CommissionDocument,
+    Compliment,
+    PermissionCreate,
+    PermissionResponse,
+    PermissionUpdate,
+    PermissionDocument
 )
-from .applications import ( PermissionCreate, PermissionResponse, PermissionUpdate , PermissionDocument)

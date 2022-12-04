@@ -1,0 +1,36 @@
+.containerInside {
+  width: 50%;
+  min-height: 10vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  align-items: unset;
+  margin-bottom: 6em !important;
+  margin-top: 6em!important;
+}
+
+@media screen and (max-width: 920px) {
+  .containerInside {
+    width: 95% !important;
+  }
+}
+
+.btn-submit {
+  color: #fff;
+  border-color: #fff;
+  background: linear-gradient(
+    90deg,
+    rgba(67, 182, 73, 0.8) 0%,
+    rgba(67, 182, 73, 0.9) 35%,
+    rgba(141, 198, 63, 1) 100%
+  );
+}
+.btn-submit:hover {
+  transition: all 0.5s ease-out;
+  background-color: #fff;
+}
+
+.invalid {
+  color:red;
+}
