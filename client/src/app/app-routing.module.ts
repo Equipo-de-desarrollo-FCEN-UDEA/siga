@@ -1,18 +1,27 @@
 //angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmpleadoGuard } from './core/guards/empleado.guard';
 
 
 const ROUTES: Routes = [
-  { 
-    path: 'usuarios', 
+  {
+    path: 'usuarios',
+    canActivate: [EmpleadoGuard],
     loadChildren: () => import('./modules/users/users.module')
-    .then(m => m.UsersModule) 
+      .then(m => m.UsersModule)
   },
-  { 
-    path: 'solicitudes', 
+  {
+    path: 'solicitudes',
+    canActivate: [EmpleadoGuard],
     loadChildren: () => import('./modules/applications/applications.module')
-    .then(m => m.ApplicationsModule) 
+      .then(m => m.ApplicationsModule)
+  },
+  {
+    path: 'home',
+    canActivate: [EmpleadoGuard],
+    loadChildren: () => import('./modules/home/home.module')
+    .then(m => m.HomeModule)
   },
   {
     path: 'auth',
@@ -21,8 +30,12 @@ const ROUTES: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/home/home.module')
-    .then(m => m.HomeModule)
+    redirectTo: 'home',
+    pathMatch: 'prefix'
+  },
+  {
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 

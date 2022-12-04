@@ -67,24 +67,25 @@
   }
 
   .btn-remove {
+    background-color: red;
     border-color: #fff;
     color: #fff;
-    background-color: #d45f57;
   }
-
+  
   .btn-remove:hover {
     background-color: #d45f57;
   }
 
+  
   .btn-add {
     border-color: #fff;
     color: #fff;
     background-color: #43b649;
   }
-
+  
   .btn-add:hover {
     background-color: #79b97c;
-  }
+  } 
 
   .custom-day.invalidChoosen {
     background-color: #d45f57;

@@ -1,0 +1,28 @@
+h5{
+    padding: 0;
+  }
+  
+  .botones{
+    margin-top: 10px;
+  }
+  
+  .containerInside {
+    width: 75%;
+    margin-bottom: 10em;
+    align-items: unset;
+    min-height: 10vh;
+    width: 50em;
+  }
+  
+  
+  .btn-success {
+    background-color: #43b649;
+  }
+  
+  
+  @media (max-width: 920px) {
+    .containerInside {
+        width: 95%;
+    }
+  }
+  

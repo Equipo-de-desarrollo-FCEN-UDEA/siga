@@ -14,10 +14,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
-  constructor(
-    private authService: AuthService,
-    private router: Router
-    ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -27,7 +24,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
       catchError((_error: HttpErrorResponse) => {
         let errMsg = '';
 
-        switch ( _error.status ) {
+        switch (_error.status) {
           case 500:
             Swal.fire({
               title: 'Error del servidor',
@@ -35,7 +32,23 @@ export class ErrorsInterceptor implements HttpInterceptor {
               confirmButtonText: 'Aceptar',
               icon: 'error',
             });
-              break;
+            break;
+          case 401:
+            this.router.navigate(['/home']);
+            break;
+          case 403:
+            console.log(_error);
+            Swal.fire({
+              title: 'Error',
+              text: _error.error.detail,
+              confirmButtonText: 'Aceptar',
+              icon: 'error',
+              confirmButtonColor: '#3AB795',
+            });
+            break;
+          case 404:
+            this.router.navigate(['/not-found']);
+            break;
           case 422:
             console.log(_error);
             Swal.fire({
@@ -45,61 +58,48 @@ export class ErrorsInterceptor implements HttpInterceptor {
               icon: 'error',
               confirmButtonColor: '#3AB795',
             });
-              break;
-          case 401 || 403:
-            console.log(_error);
+            break;
+          default:
             Swal.fire({
               title: 'Error',
               text: _error.error.detail,
               confirmButtonText: 'Aceptar',
               icon: 'error',
               confirmButtonColor: '#3AB795',
-            }); 
-              break;
-          case 404:
-            this.router.navigate(['/not-found']);
-            break
-          default: 
-          Swal.fire({
-            title: 'Error',
-            text: _error.error.detail,
-            confirmButtonText: 'Aceptar',
-            icon: 'error',
-            confirmButtonColor: '#3AB795',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              if (
-                _error.error.detail ==
-                'Tu cuenta no se encuentra activa, recuerda revisar tu correo para activarla o pide correo de activación nuevamente'
-              ) {
-                Swal.fire({
-                  title: 'Enviar correo de activación',
-                  text: 'Correo o cédula:',
-                  input: 'text',
-                  inputAttributes: {
-                    autocapitalize: 'off',
-                  },
-                  showCancelButton: true,
-                  confirmButtonText: 'Enviar',
-                  showLoaderOnConfirm: true,
-                  preConfirm: (email) => {
-                    return this.authService
-                      .sendActivateEmail(email)
-                      .subscribe((res: Msg) => {
-                        Swal.fire({
-                          title: 'Correo de activación',
-                          text: res.msg,
-                          icon: 'success',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                if (
+                  _error.error.detail ==
+                  'Tu cuenta no se encuentra activa, recuerda revisar tu correo para activarla o pide correo de activación nuevamente'
+                ) {
+                  Swal.fire({
+                    title: 'Enviar correo de activación',
+                    text: 'Correo o cédula:',
+                    input: 'text',
+                    inputAttributes: {
+                      autocapitalize: 'off',
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Enviar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (email) => {
+                      return this.authService
+                        .sendActivateEmail(email)
+                        .subscribe((res: Msg) => {
+                          Swal.fire({
+                            title: 'Correo de activación',
+                            text: res.msg,
+                            icon: 'success',
+                          });
                         });
-                      });
-                  },
-                  allowOutsideClick: () => !Swal.isLoading(),
-                });
+                    },
+                    allowOutsideClick: () => !Swal.isLoading(),
+                  });
+                }
               }
-            }
-          });
-              break;
-       }
+            });
+            break;
+        }
 
         // if (_error.status == 500) {
         //   Swal.fire({
@@ -127,7 +127,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
         //         confirmButtonText: 'Aceptar',
         //         icon: 'error',
         //         confirmButtonColor: '#3AB795',
-        //       }); 
+        //       });
         //     } else {
         //       if (_error.status == 404) {
         //         this.router.navigate(['/not-found']);
@@ -172,10 +172,9 @@ export class ErrorsInterceptor implements HttpInterceptor {
         //         });
         //       }
 
-              
         //     }
 
-        //   }  
+        //   }
         // }
         return throwError(_error.error.message);
       })

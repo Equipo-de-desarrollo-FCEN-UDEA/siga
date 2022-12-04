@@ -6,17 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CreateApplicationComponent } from './pages/create-application/create-application.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'create-application', component: CreateApplicationComponent },
-  { path: 'not-found', component: NotFoundComponent }
-
-  // { path: '**', redirectTo: 'home'},
+  { path: '', component: HomeComponent },
+  {
+    path: 'create-application',
+    canActivate: [EmpleadoGuard],
+    component: CreateApplicationComponent,
+  },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: '/home'},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

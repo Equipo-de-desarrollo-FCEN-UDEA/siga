@@ -26,7 +26,8 @@ registerLocaleData(localeEs, 'es');
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { UserCreate, UserResponse, UserUpdate } from '@interfaces/user';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 import { Msg } from '@interfaces/msg';
 
 @Injectable({
@@ -13,12 +15,24 @@ export class UserService {
   urlEndpoint: string = environment.route + 'user/'
 
   constructor(
+    private cookie: CookieService,
+    private route: Router,
     private http: HttpClient
   ) { }
 
-  // service for get an user with id, default is 0 that return himself
-  getUser(id: number = 0): Observable<UserResponse> {
+  // service for get an user with id, doesn't have a default value to return
+  getUser(id: number=0): Observable<UserResponse> {
     return this.http.get<UserResponse>(this.urlEndpoint + id);
+  }
+
+  getActualUser() {
+    if (this.cookie.check('user')) {
+      const basicUser = JSON.parse(this.cookie.get('user'));
+      return basicUser;
+    } else {
+      this.route.navigate(['/login']);
+      return false;
+    }
   }
 
   // service to get a list o users, with default path params
