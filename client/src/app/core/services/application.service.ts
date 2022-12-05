@@ -25,7 +25,8 @@ export class ApplicationService {
     skip: number = 0,
     limit: number = 100,
     filed: boolean | null = null,
-    search?: string
+    search?: string,
+    type_id: number | null = null
   ): Observable<Application[]> 
   {
     let params = new HttpParams()
@@ -36,6 +37,9 @@ export class ApplicationService {
     }
     if (search) {
       params = params.append('search', search);
+    }
+    if (type_id) {
+      params = params.append('type', type_id)
     }
     return this.http.get<Application[]>(this.urlEndPoint, { params: params });
   }
