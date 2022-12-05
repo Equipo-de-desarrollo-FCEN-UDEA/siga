@@ -70,7 +70,7 @@ export class PermissionComponent {
 
   // Form permiso
   public form = this.formBuilder.group({
-    application_sub_type_id: [0, [Validators.required]],
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     justification: [
@@ -124,7 +124,7 @@ export class PermissionComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['../']);
+            this.router.navigate(['/home']);
           }
         });
       },

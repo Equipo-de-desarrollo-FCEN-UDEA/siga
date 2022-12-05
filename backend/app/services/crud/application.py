@@ -76,6 +76,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         return objs_db
 
+
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
         db_obj = super().create(db=db, who=who, obj_in=obj_in)
         application_status = Application_statusCreate(

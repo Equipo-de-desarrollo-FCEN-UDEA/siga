@@ -27,6 +27,10 @@ export class CommissionService {
     return this.http.put(this.urlEndPoint + id, body)
   }
 
+  deleteCommission(id: number){
+    return this.http.delete(this.urlEndPoint + id)
+  }
+
   putCompliment(body: ComplimentCreate, id: number) {
     return this.http.put(this.urlEndPoint + 'compliment/' + id, body)
   }

@@ -29,7 +29,8 @@ export class EmpleadoGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.authSvc.isLoggedIn()) {
-      // this.router.navigate(['auth/login']);
+      console.log('esta en guard')
+      this.router.navigate(['auth/login']);
     }
     return this.authSvc.isLoggedIn();
   }

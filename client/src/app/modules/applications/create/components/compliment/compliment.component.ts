@@ -122,7 +122,7 @@ export class ComplimentComponent implements OnInit {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
 
-  validTipoArchivo() {
+  validFileType() {
     const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
 
     let flag;
