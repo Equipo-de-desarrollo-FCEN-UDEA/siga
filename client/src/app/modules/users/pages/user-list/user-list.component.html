@@ -78,7 +78,7 @@
           <td>{{ user.active ? "Activo" : "Inactivo" }}</td>
           <td>
             <button
-              [routerLink]="['actualizar/' + user.id]"
+              [routerLink]="['/usuarios/editar/' + user.id]"
               (click)="$event.stopPropagation()"
               class="btn btn-light btn-sm"
               type="button"

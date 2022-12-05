@@ -80,6 +80,15 @@
         </div>
       </div>
       <div class="footer-row d-md-flex justify-content-md-end">
+        <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+        </div>
         <span
           *ngIf="isLoading | async"
           class="spinner-border spinner-border-sm"
@@ -102,6 +111,15 @@
       class="footer-row d-md-flex justify-content-md-end"
       *ngIf="application$ | async as application"
     >
+    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+    </div>
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
         <button class="btn btn-outline-danger">
           <span

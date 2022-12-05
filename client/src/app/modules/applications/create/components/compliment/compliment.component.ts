@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -132,6 +133,8 @@ export class ComplimentComponent implements OnInit {
     return flag;
 
   }
+
+
 
 
   // ----------------------------------------

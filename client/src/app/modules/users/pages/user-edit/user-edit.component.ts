@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { RolBase } from '@interfaces/rol';
@@ -41,7 +42,8 @@ export class UserEditComponent implements OnInit {
     public activateRoute: ActivatedRoute,
     public loadingSvc: LoaderService,
     private departamentosSvc: DepartmentService,
-    private rolesSvc: RolService
+    private rolesSvc: RolService,
+    private location: Location
   ) {
     this.roles$ = this.rolesSvc.getRoles();
     this.activateRoute.params.pipe(take(1)).subscribe(params => this.getId = params['id']);
@@ -116,5 +118,9 @@ export class UserEditComponent implements OnInit {
       }
     }
     );
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Application } from '../../../../core/interfaces/application';
+import { Application } from '@interfaces/application';
 import { LoaderService } from '@services/loader.service';
-import { ApplicationService } from '../../../../core/services/application.service';
+import { ApplicationService } from '@services/application.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '@services/auth.service';
 
 
 
@@ -21,18 +22,22 @@ export class ApplicationListComponent implements OnInit {
 
   public page = 1;
 
-  public limit = 5;
+  public limit = 10;
 
   private skip = (this.page - 1) * this.limit;
   
   public isLoading = this.loaderSvc.isLoading;
 
+  public isSuperUser$ = this.authSvc.isSuperUser$;
+
   constructor(
     private applicationsSvc: ApplicationService,
     private router: Router,
     private loaderSvc: LoaderService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authSvc: AuthService
   ) { 
+    this.authSvc.isSuperUser();
     this.applications$ = this.applicationsSvc.getApplications(this.skip, this.limit)
   }
 

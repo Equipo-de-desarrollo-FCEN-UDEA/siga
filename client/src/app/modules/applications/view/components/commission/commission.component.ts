@@ -37,6 +37,7 @@ export class CommissionComponent implements OnInit {
     private documentService: DocumentService,
     private authSvc: AuthService
   ) {
+    this.authSvc.isSuperUser()
     this.route.parent?.params.subscribe(
       params => {
         this.id = params['id']

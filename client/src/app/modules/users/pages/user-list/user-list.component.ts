@@ -18,7 +18,7 @@ export class UserListComponent implements OnInit {
 
   public page = 1;
 
-  public limit = 5;
+  public limit = 10;
 
   private skip = (this.page - 1) * this.limit;
 

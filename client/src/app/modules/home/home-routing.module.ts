@@ -9,8 +9,6 @@ import { CreateApplicationComponent } from './pages/create-application/create-ap
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'create-application', component: CreateApplicationComponent },
-
-  // { path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({

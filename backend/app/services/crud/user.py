@@ -77,7 +77,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return res
+            return [*set(res)]
 
         objs_db = (db.query(User)
                    .join(Rol)
