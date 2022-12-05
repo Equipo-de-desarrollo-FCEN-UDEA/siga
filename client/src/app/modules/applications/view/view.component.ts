@@ -81,8 +81,15 @@ export class ViewComponent implements OnInit, AfterViewChecked {
       (data) => {
         Swal.fire({
           title: "Se cambió el estado correctamente",
-          icon: 'success'
-        })
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
 
@@ -99,7 +106,13 @@ export class ViewComponent implements OnInit, AfterViewChecked {
         Swal.fire({
           title: "La solicitud se rechazó correctamente",
           confirmButtonText: "Aceptar"
-        })
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
   }

@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="containerInside card shadow p-3 pr-5" style="width: 35%">
+      <div class="card-body">
+        <p class="text-secondary">Reenviar correo de activación</p>
+        <hr />
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Correo Institucional o cédula</label>
+            <input
+              type="text"
+              formControlName="username"
+              class="form-control"
+              placeholder="ejemplo@udea.edu.co"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
+            />
+          </div>
+  
+          <!-- errors email -->
+          <div *ngIf="submitted && f['username'].errors" class="invalid">
+            <div *ngIf="submitted && f['username'].errors?.['required']">
+              El correo es requerido
+            </div>
+          </div>
+  
+          <div class="footer-row d-md-flex justify-content-md-end mb-3">
+            <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+              <a type="button" class="btn btn-outline-secondary" [routerLink]="['../login']">
+                Cancelar
+              </a>
+            </div>
+  
+            <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+              <button
+                id="btn-sub"
+                (submit)="(true)"
+                [disabled]="loading"
+                class="btn btn-submit"
+              >
+                <span
+                  *ngIf="isLoading | async"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Enviar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

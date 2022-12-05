@@ -1,23 +1,16 @@
-//angular
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-//Swal
-import Swal from 'sweetalert2';
-
-//interfaces
-import { Msg } from '@interfaces/msg';
-
-//services
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
+  selector: 'app-resend-email',
+  templateUrl: './resend-email.component.html',
+  styleUrls: ['./resend-email.component.scss']
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ResendEmailComponent implements OnInit {
+
   public form!: FormGroup;
   public loading: boolean = false;
   public submitted: boolean = false;
@@ -51,11 +44,11 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.sendActivateEmail(this.f['username'].value).subscribe({
+    this.authService.forgotPassword(this.f['username'].value).subscribe({
       next: (res: any) => {
         Swal.fire({
           title:
-            'Se envió un link para activar tu cuenta al correo ' +
+            'Se envió un link para cambiar la contraseña al correo ' +
             this.f['username'].value,
           text: res.message,
           icon: 'success',

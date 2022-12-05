@@ -59,7 +59,7 @@
 
   <div class="row regular-row mt-2" *ngIf="commission.resolution">
     <div class="col-xs-12 col-sm-6 label fw-bold">Resolución</div>
-    <div class="col-6"> <span class="link-success cursor" (click)="openDocument(commission.resolution)"><ul><li>Ver resolución</li></ul></span> </div>
+    <div class="col-6">  <span class="link-success cursor" (click)="openDocument(commission.resolution)"><ul><li>Ver resolución</li></ul></span> </div>
   </div>
 
   <div class="cumplido" *ngIf="commission.compliment">
@@ -93,5 +93,10 @@
     <div class="col-xs-12 col-sm-6 label fw-bold">Cumplido</div>
     <div class="col-6"> <button class="btn btn-outline-warning" [routerLink]="['/solicitudes/crear/cumplido/' + application!.id]"> Subir cumplido </button> </div>
   </div>
+
+  <span
+      *ngIf="(isLoading$ | async)"
+      class="spinner-border spinner-border-sm"
+    ></span>
 
 </div>
