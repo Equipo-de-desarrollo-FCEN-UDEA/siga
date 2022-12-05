@@ -1,7 +1,4 @@
-version: '3.3'
-
-volumes:
-  db:
+version: '3'
 
 services:
   nginx:
@@ -13,6 +10,10 @@ services:
     restart: always
     depends_on:
       - backend
+    links:
+      - backend
+      - client
+    mem_limit: 100m
 
   db: 
     container_name: 'db'
@@ -20,12 +21,12 @@ services:
     ports:
       - '5432:5432'
     env_file:
-      - prod.env
+      - .env
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ./db/postgres-data:/var/lib/postgresql/data
-
+    
   mongo:
     container_name: 'mongo'
     image: mongo:latest
@@ -37,21 +38,6 @@ services:
     volumes:
       - ./db/mongo-data:/data/db
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.prod
-    depends_on:
-      - db
-      - mongo
-    env_file:
-      - prod.env
-    restart: on-failure
-    expose:
-      - "8000"
-    ports:
-      - "8000:8000"
-    
   redis:
     container_name: 'redis'
     image: redis:latest
@@ -59,7 +45,7 @@ services:
       - "6379:6379"
     depends_on:
       - db
-    
+
   celery_worker:
     container_name: "celery_worker"
     build:
@@ -75,10 +61,23 @@ services:
       - redis
       - backend
   
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - db
+      - mongo
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    
   client:
     build:
       context: ./client
       dockerfile: Dockerfile.prod
-    container_name: client
     depends_on:
       - backend
+    mem_limit: 300m

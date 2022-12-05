@@ -70,7 +70,7 @@ export class PermissionComponent {
 
   // Form permiso
   public form = this.formBuilder.group({
-    application_sub_type_id: [0, [Validators.required]],
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     justification: [
@@ -115,7 +115,7 @@ export class PermissionComponent {
     }
     console.log(this.form.value as PermissionCreate);
     permission.subscribe({
-      next: () => {
+      next: (data) => {
         Swal.fire({
           title: 'Creada',
           text: '¡El permiso se creó con éxito!',
@@ -124,7 +124,7 @@ export class PermissionComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['../']);
+            this.router.navigate([`/solicitudes/ver/${data.id}/permiso`])
           }
         });
       },

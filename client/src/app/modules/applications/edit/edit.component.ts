@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,6 +15,7 @@ export class EditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location
   ) { 
     // We take the titile from the child data
     this.title = this.route.snapshot.firstChild?.data['title'];
@@ -24,6 +26,10 @@ export class EditComponent implements OnInit {
 
   onActivate(componentRef: any) {
     this.activatedComponentReference = componentRef
+  }
+
+  cancel() {
+    this.location.back();
   }
 
   click() {

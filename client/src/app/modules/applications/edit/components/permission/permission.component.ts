@@ -136,9 +136,8 @@ export class PermissionComponent implements OnInit {
         })
       );
     }
-    console.log(this.form.value as PermissionCreate);
     permission.subscribe({
-      next: () => {
+      next: (res) => {
         console.log('permission updated', permission)
         Swal.fire({
           title: 'Actualizado',
@@ -148,7 +147,7 @@ export class PermissionComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['../']);
+            this.router.navigate(['solicitudes/ver/'+this.id+'/permiso']);
           }
         });
       },

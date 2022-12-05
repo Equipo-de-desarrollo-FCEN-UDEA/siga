@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,7 +29,8 @@ export class UserListComponent implements OnInit {
     private userSvc: UserService,
     private router: Router,
     private loaderSvc: LoaderService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
   ) {
     this.users$ = this.userSvc.getUsers(this.skip, this.limit)
 
@@ -76,6 +78,10 @@ export class UserListComponent implements OnInit {
       this.form.value.activo!, 
       this.form.value.search!
     );
+  }
+
+  cancel() {
+    this.location.back();
   }
 
   // eliminar(id: number) {

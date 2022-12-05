@@ -1,3 +1,5 @@
+import { DepartmentInDB } from "./department";
+
 export interface SchoolBase {
     name: string;
     description: string;

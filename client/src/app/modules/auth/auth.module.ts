@@ -13,6 +13,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
+import { ResendEmailComponent } from './pages/resend-email/resend-email.component';
 
 
 
@@ -23,7 +24,8 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
     ForgotPasswordComponent,
     NotFoundComponent,
     ResetPasswordComponent,
-    ActivateAccountComponent
+    ActivateAccountComponent,
+    ResendEmailComponent
   ],
   imports: [
     CommonModule,

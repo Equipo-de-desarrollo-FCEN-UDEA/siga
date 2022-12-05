@@ -84,6 +84,10 @@
   .btn-remove:hover {
     background-color: #d45f57;
   }
+
+  .invalid {
+    color: rgb(216, 36, 36);
+  }
   
   .btn-add {
     border-color: #fff;
@@ -107,3 +111,7 @@
     border-radius: 0.2em;
   }
   
+
+  .invalid {
+    color: rgb(216, 36, 36);
+  }

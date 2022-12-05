@@ -14,23 +14,24 @@ log = get_logging(__name__)
 class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate]):
     # who can see an Application of another user
     def get(self, who: User, to: Application) -> None:
-        if not (who.rol.scope < 9) and not (who.id == to.user.id):
-            raise application_401
-
-        if not (who.rol.scope <= to.user.rol.scope):
-            raise application_401
-
-        if who.rol.scope == 7 or who.rol.scope == 6:
-            if not (to.user.department_id == who.department_id):
-                raise application_401
-
-        if who.rol.scope == 5:
-            if not (to.user.department.school_id == who.department.school_id):
-                raise application_401
 
         if not to:
             raise application_404
 
+        elif not (who.rol.scope < 9) and not (who.id == to.user.id):
+            raise application_401
+
+        elif not (who.rol.scope <= to.user.rol.scope):
+            raise application_401
+
+        elif who.rol.scope == 7 or who.rol.scope == 6:
+            if not (to.user.department_id == who.department_id):
+                raise application_401
+
+        elif who.rol.scope == 5:
+            if not (to.user.department.school_id == who.department.school_id):
+                raise application_401
+            
         return None
 
     # Who can create a application of a subtype

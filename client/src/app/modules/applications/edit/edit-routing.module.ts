@@ -22,9 +22,19 @@ const routes: Routes = [
         data: {
           title: 'Comisión'
         }
-      }
-    ]
-  }
+      },
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'prefix'
+      },
+    ],
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'prefix'
+  },
 ];
 
 @NgModule({

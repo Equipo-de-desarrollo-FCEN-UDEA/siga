@@ -16,10 +16,15 @@ import { DepartmentService } from '@services/department.service';
 
 //interfaces
 import { RolBase } from '@interfaces/rol';
-import { DepartmentBase } from '@interfaces/department';
+import { DepartmentBase, DepartmentInDB } from '@interfaces/department';
 
 //data
 import { id_type } from '@shared/data/id_type';
+import { SchoolService } from '@services/school.service';
+import { SchoolResponse } from '@interfaces/school';
+import { scale } from '@shared/data/scale';
+import { UserCreate } from '@interfaces/user';
+import { vinculation_type } from '@shared/data/vinculation';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,30 +35,37 @@ export class SignUpComponent {
 
   private is_email_valid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
 
+  public scale = scale;
+
+  public vinculation_types = vinculation_type;
+
   public loading: boolean = false;
   public error: string = '';
   public submitted: boolean = false;
 
   public id_type = id_type;
 
-  public rol$: Observable<RolBase[]> = this.rolService.getRoles();
-  public departments$: Observable<DepartmentBase[]> = this.depatmentService.getDepartment() ;
+  public departments$!: Observable<DepartmentInDB[]>;
+
+  public rol$: Observable<RolBase[]> = this.rolService.getExposeRoles();
+  public schools$: Observable<SchoolResponse[]> = this.schoolSvc.getExposeSchools();
 
   public createUserForm: FormGroup = this.formBuilder.group({
     last_names: ['', Validators.required],
     names: ['', Validators.required],
     email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     identification_type: ['', Validators.required],
-    identificaction_number: ['', Validators.required],
+    identification_number: ['', Validators.required],
     phone_number: ['', Validators.required],
-    // rol_id: ['', Validators.required],
-    //Faculty_id: ['', Validators.required],
-    // department_id: ['', Validators.required],
+    rol_id: [NaN, Validators.required],
+    department_id: ['', Validators.required],
     password: [
       '',
       [Validators.required, Validators.minLength(8), Validators.maxLength(250)],
     ],
     confirm_password: [],
+    scale: ['', Validators.required],
+    vinculation_type: ['', Validators.required]
   });
 
 
@@ -67,8 +79,9 @@ export class SignUpComponent {
 
     private userService: UserService,
     private rolService: RolService,
-    private depatmentService: DepartmentService
-  ) {}
+    private depatmentService: DepartmentService,
+    private schoolSvc: SchoolService
+  ) { }
 
   validatePassword() {
     return (
@@ -84,7 +97,9 @@ export class SignUpComponent {
     // verificacion de errores
     if (this.createUserForm.invalid) { return; }
 
-    this.userService.postUser(this.createUserForm.value).subscribe({
+    console.log(this.createUserForm.value)
+
+    this.userService.postUser(this.createUserForm.value as UserCreate).subscribe({
       next: (res: any) => {
         Swal.fire({
           title: 'Creado',
@@ -104,5 +119,9 @@ export class SignUpComponent {
         }
       },
     });
+  }
+
+  nextDepartment(event: any) {
+    this.departments$ = this.depatmentService.getExposeDepartment(event.target.value as number)
   }
 }

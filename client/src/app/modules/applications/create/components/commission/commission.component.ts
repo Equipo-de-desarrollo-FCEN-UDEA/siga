@@ -42,6 +42,13 @@ export class CommissionComponent {
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
+    
+  // --------------------------------------------------
+  // ----------- MANEJO DE ERRORES EN EL FORM ---------
+  // --------------------------------------------------
+
+  get f() { return this.form.controls; }
+
   constructor(
     private fb: FormBuilder,
     private calendar : NgbCalendar,
@@ -58,7 +65,7 @@ export class CommissionComponent {
    }
 
    public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required]],
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
@@ -72,6 +79,12 @@ export class CommissionComponent {
 
 
   submit() {
+    this.submitted = true;
+
+    // Se detiene aqui si el formulario es invalido
+    if (this.form.invalid) {
+      return;
+    }
     let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
     if (this.files.length > 0) {
       commission = this.documentService.postDocument(this.files as File[]).pipe(
@@ -87,24 +100,20 @@ export class CommissionComponent {
       )
     }
     console.log(this.form.value as CommissionCreate)
-    commission.subscribe(
-      data => {
+    commission.subscribe({
+      next: data => {
         Swal.fire(
           {
             title: 'La comisión se creó correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar',
-            // buttonsStyling: false,
-            // customClass: {
-            //   confirmButton: 'button is-success is-rounded'
-            // }
           }
         ).then((result) => {
           if (result.isConfirmed) {
             this.router.navigate([`/solicitudes/ver/${data.id}/comision`])
           }
         })
-      }
+      }}
     )
 
   }
@@ -155,13 +164,6 @@ export class CommissionComponent {
   }
 
 
-  
-  // --------------------------------------------------
-  // ----------- MANEJO DE ERRORES EN EL FORM ---------
-  // --------------------------------------------------
-  get f() {
-    return this.form.controls;
-  }
 
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
@@ -190,7 +192,7 @@ export class CommissionComponent {
     return size < 2 * 1024 * 1024;
   }
 
-  validTipoArchivo() {
+  validFileType() {
     const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
     
     let flag = true; 

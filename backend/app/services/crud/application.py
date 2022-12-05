@@ -21,7 +21,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         skip: int = 0,
         limit: int = 100,
         search: str = '',
-        filed: bool = False,
+        filed: bool | None = None,
         type: int = 0
     ) -> List[Application]:
         queries = []
@@ -34,7 +34,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             queries += [User.id == who.id]
 
         if who.rol.scope < 9:
-            queries += [Application.filed == filed]
+            if filed is not None:
+                queries += [Application.filed == filed]
 
         if who.rol.scope == 7:
             queries += [User.department_id == who.department.id]
@@ -75,6 +76,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .all())
 
         return objs_db
+
 
     def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
         db_obj = super().create(db=db, who=who, obj_in=obj_in)

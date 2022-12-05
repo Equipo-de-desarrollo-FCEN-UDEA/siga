@@ -1,0 +1,41 @@
+h5{
+    padding: 0;
+}
+.informacion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.botones{
+    margin-top: 10px;
+}
+
+.containerInside {
+    margin-bottom: 10em;
+    align-items: unset;
+    min-height: 10vh;
+    width: 70%;
+
+  }
+
+  .btn-warning {
+    background-color: #f9a12c;
+  }
+
+  @media (max-width: 576px) {
+    .containerInside {
+        width: 95%;
+    }
+  }
+
+  .ptitle{
+    color: #ffffff;
+    background-color: #026937;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    text-align: center;
+  }
+

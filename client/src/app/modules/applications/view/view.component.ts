@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -29,13 +30,17 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public isLoading = this.loaderSvc.isLoading;
 
+  private activatedComponentReference: any;
+
   public id = 0;
+  public isDelete:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
+    private location: Location,
 
     private authSvc: AuthService,
     private loaderSvc: LoaderService,
@@ -59,6 +64,10 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     
   }
 
+  cancel() {
+    this.location.back();
+  }
+
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges()
   }
@@ -72,8 +81,15 @@ export class ViewComponent implements OnInit, AfterViewChecked {
       (data) => {
         Swal.fire({
           title: "Se cambió el estado correctamente",
-          icon: 'success'
-        })
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
 
@@ -90,9 +106,31 @@ export class ViewComponent implements OnInit, AfterViewChecked {
         Swal.fire({
           title: "La solicitud se rechazó correctamente",
           confirmButtonText: "Aceptar"
-        })
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
   }
+
+
+  // -----------------------------
+  // ---- DELETE APPLICATION -----
+  // -----------------------------
+  onActivate(componentRef: any) {
+    this.activatedComponentReference = componentRef
+  }
+
+  delete(){
+    this.isDelete = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.delete(this.id);
+  }
+
+
 
 }

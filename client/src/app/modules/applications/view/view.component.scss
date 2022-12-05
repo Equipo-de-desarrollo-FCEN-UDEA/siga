@@ -21,10 +21,25 @@
 }
 
 .btn-light {
-    color: #fff;
-    background-color: #43b649;
+    color: #43b649;
+    background-color: #fff;
 }
 
+
+  
+.btn-add {
+    border-color: #fff;
+    color: #fff;
+    background-color: #43b649;
+  }
+  
+  .btn-add:hover {
+    background-color: #79b97c;
+  }
+  
+  .btn-success {
+    background-color: #43b649;
+  }
 
 
 @media screen and (max-width: 576px) {

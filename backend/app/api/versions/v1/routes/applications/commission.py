@@ -7,8 +7,14 @@ from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
 from app.services import crud, emails
 from app.domain.models import Commission, User, Application
-from app.domain.schemas import (ApplicationCreate, CommissionCreate,
-                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment)
+from app.domain.schemas import (ApplicationCreate,
+                                CommissionCreate,
+                                CommissionUpdate,
+                                Msg,
+                                CommissionResponse,
+                                ApplicationResponse,
+                                Compliment,
+                                Application_statusCreate)
 from app.domain.errors import BaseErrors
 
 
@@ -188,6 +194,10 @@ async def update_compliment(
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
                                                       id=mongo_id, compliment=compliment)
+        if commission:
+            status = Application_statusCreate(
+                application_id=application.id, status_id=5, observation="El usuario subió el cumplido")
+            crud.application_status.finalize(db, obj_in=status)
         emails.applications.commission.compliment_email.apply_async(args=(
             current_user.names,
             current_user.last_names,

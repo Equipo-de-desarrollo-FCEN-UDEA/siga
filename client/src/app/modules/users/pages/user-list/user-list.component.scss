@@ -1,0 +1,28 @@
+.containerInside {
+  width: 85%;
+  margin-bottom: 10em;
+  align-items: unset;
+  min-height: 50vh;
+  margin-top: 5em!important;
+}
+
+@media screen and (max-width: 576px) {
+  .containerInside {
+      width: 95% !important;
+
+  }
+}
+
+hr{
+  margin: 0!important;
+}
+
+.btn-light {
+  color: #fff;
+  background-color: #43b649;
+}
+
+
+.search{
+  padding: 0!important;
+}
