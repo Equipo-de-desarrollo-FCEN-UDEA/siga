@@ -44,13 +44,11 @@ async def create_commission(
         commission_created = await crud.commission.create(db=engine,
                                                           obj_in=Commission(**dict(commission)))
 
-        log.debug('commission_created', commission_created)
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
             user_id=current_user.id
         )
-        log.debug('application', application)
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
@@ -63,7 +61,6 @@ async def create_commission(
         await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
-    log.debug(commission_created)
     response = CommissionResponse(
         **dict(application),
         commission=commission_created
