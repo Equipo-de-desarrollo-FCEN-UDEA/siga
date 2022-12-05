@@ -7,6 +7,7 @@ import { ApplicationService } from '@services/application.service';
 import { Observable } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { Location } from '@angular/common';
+import { ApplicationTypesService } from '@services/application-types.service';
 
 
 
@@ -19,18 +20,19 @@ import { Location } from '@angular/common';
 })
 export class ApplicationListComponent implements OnInit {
 
-  public applications$= new Observable<Application[]>();
+  public applications$ = new Observable<Application[]>();
 
   public page = 1;
 
   public limit = 10;
 
   private skip = (this.page - 1) * this.limit;
-  
+
   public isLoading = this.loaderSvc.isLoading;
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
+  public application_types$ = this.applicationTypeSvc.getApplicationTypes();
   constructor(
     private applicationsSvc: ApplicationService,
     private router: Router,
@@ -38,37 +40,39 @@ export class ApplicationListComponent implements OnInit {
     private fb: FormBuilder,
     private authSvc: AuthService,
     private location: Location,
-  ) { 
+    private applicationTypeSvc: ApplicationTypesService
+  ) {
     this.authSvc.isSuperUser();
     this.applications$ = this.applicationsSvc.getApplications(this.skip, this.limit, false)
   }
 
   form = this.fb.group({
     search: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    activo: [false]
+    activo: [false],
+    type: [null]
   })
 
   ngOnInit(): void {
   }
 
-  nextPage(){
+  nextPage() {
     this.page++;
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(
-      this.skip, 
-      this.limit, 
-      this.form.value.activo!, 
+      this.skip,
+      this.limit,
+      this.form.value.activo!,
       this.form.value.search!
     );
   }
 
-  prevPage(){
+  prevPage() {
     this.page--;
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(
-      this.skip, 
+      this.skip,
       this.limit,
-      this.form.value.activo!, 
+      this.form.value.activo!,
       this.form.value.search!
     );
   }
@@ -79,10 +83,11 @@ export class ApplicationListComponent implements OnInit {
     this.page = 1
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(
-      this.skip, 
+      this.skip,
       this.limit,
-      this.form.value.activo!, 
-      this.form.value.search!
+      this.form.value.activo!,
+      this.form.value.search!,
+      this.form.value.type!
     );
   }
 
