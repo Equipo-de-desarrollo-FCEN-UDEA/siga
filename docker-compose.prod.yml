@@ -5,7 +5,7 @@ volumes:
 
 services:
   nginx:
-    image: simon3640/siga-nginx
+    image: simon3640/siga-nginx:latest
     ports:
       - "80:80"
     restart: always
@@ -42,7 +42,7 @@ services:
     mem_limit: 50m
 
   backend:
-    image: simon3640/siga-backend
+    image: simon3640/siga-backend:latest
     depends_on:
       - db
       - mongo
@@ -79,7 +79,7 @@ services:
     mem_limit: 350m
   
   client:
-    image: simon3640/siga-client
+    image: simon3640/siga-client:latest
     container_name: client
     depends_on:
       - backend
