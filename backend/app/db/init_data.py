@@ -192,18 +192,32 @@ init_departments: List[schemas.DepartmentCreate] = [
         cost_center=21401202
     ),
     schemas.DepartmentCreate(
-        name='SISTEMAS',
-        description='Departamento de ingeniería de sistemas',
-        coord_email='coordsistemas@udea.edu.co',
-        school_id=3,
-        cost_center=21301209
-    ),
-    schemas.DepartmentCreate(
         name='QUÍMICA',
         description='Instituto de química',
         coord_email="coordquimica@udea.edu.co",
         cost_center=21401204,
         school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='BIOLOGÍA',
+        description='Instituto de biología',
+        coord_email="coordbiologia@udea.edu.co",
+        cost_center=21401203,
+        school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='MATEMATICAS',
+        description='Instituto de matemáticas',
+        coord_email="coordmatematicas@udea.edu.co",
+        cost_center=21401201,
+        school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='SISTEMAS',
+        description='Departamento de ingeniería de sistemas',
+        coord_email='coordsistemas@udea.edu.co',
+        school_id=3,
+        cost_center=21301209
     )
 ]
 

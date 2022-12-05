@@ -34,6 +34,13 @@ export class ErrorsInterceptor implements HttpInterceptor {
             });
             break;
           case 401:
+            Swal.fire({
+              title: 'Error',
+              text: _error.error.detail,
+              confirmButtonText: 'Aceptar',
+              icon: 'error',
+              confirmButtonColor: '#3AB795',
+            });
             this.router.navigate(['/home']);
             break;
           case 403:

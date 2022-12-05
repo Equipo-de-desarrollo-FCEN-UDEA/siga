@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component  } from '@angular/core';
+
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserBase, UserResponse } from '@interfaces/user';
-import { LoaderService } from '@services/loader.service';
+import { UserResponse } from '@interfaces/user';
 import { UserService } from '@services/user.service';
-import { Observable, take } from 'rxjs';
+import { take } from 'rxjs';
 import Swal from 'sweetalert2';
 
 
@@ -15,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 
 
-export class UserViewComponent implements OnInit {
+export class UserViewComponent {
   // public rol : string = localStorage.getItem('rol') || '';
   public user: UserResponse | undefined;
   public actualUser: UserResponse | undefined;
@@ -52,8 +51,4 @@ export class UserViewComponent implements OnInit {
     });
     this.actualUser = this.userService.getActualUser()
    }
-
-  ngOnInit(): void {
-    
-  }
 }

@@ -93,7 +93,7 @@ export class AuthService {
 
 
   logOut() {
-    this.cookieSvc.deleteAll()
+    this.cookieSvc.deleteAll('/')
     this.cookieSvc.delete(`${this.cookieToken}`, '/', '/')
     this.isLoggedIn()
     this.router.navigate(['auth/login'])
