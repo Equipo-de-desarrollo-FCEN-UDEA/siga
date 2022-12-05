@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 
 //interfaces
-import { DepartmentInDB } from '@interfaces/department';
+import { DepartmentBase, DepartmentInDB } from '@interfaces/department';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
-  getDepartment():Observable<DepartmentInDB[]> {
-    return this.http.get<DepartmentInDB[]>(this.urlEndPoint);
+  getDepartment():Observable<DepartmentBase[]> {
+    return this.http.get<DepartmentBase[]>(this.urlEndPoint);
   }
 }

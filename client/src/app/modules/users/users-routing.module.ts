@@ -15,7 +15,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'edita',
+    path: 'editar',
     component: UserEditComponent
   }
 

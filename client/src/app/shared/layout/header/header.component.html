@@ -52,7 +52,7 @@
                     <span class="user-status">
                       <i class="fa fa-circle"></i>
                     </span>
-                    {{ user_response?.rol?.name }}
+                    {{user?.rol?.name}}
                   </span>
                 </div>
                 <!-- sidebar-header  -->
@@ -93,6 +93,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
+                      [routerLink]="['/usuarios/vista']"
                     >
                       <span>
                         <i class="fa-solid fa-user-astronaut"></i>
@@ -103,6 +104,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
+                      [routerLink]="['/solicitudes/lista']"
                     >
                       <span>
                         <i class="fa fa-book" aria-hidden="true"></i>

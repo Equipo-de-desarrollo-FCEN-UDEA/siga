@@ -13,13 +13,16 @@ import { Observable } from 'rxjs';
 import { UserService } from '@services/user.service';
 import { RolService } from '@services/rol.service';
 import { DepartmentService } from '@services/department.service';
+import { SchoolService } from '@services/school.service';
 
 //interfaces
 import { RolBase } from '@interfaces/rol';
 import { DepartmentBase } from '@interfaces/department';
+import { SchoolBase } from '@interfaces/school';
 
 //data
 import { id_type } from '@shared/data/id_type';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -37,7 +40,8 @@ export class SignUpComponent {
   public id_type = id_type;
 
   public rol$: Observable<RolBase[]> = this.rolService.getRoles();
-  public departments$: Observable<DepartmentBase[]> = this.depatmentService.getDepartment() ;
+  public departments$: Observable<DepartmentBase[]> = this.depatmentService.getDepartment();
+  public schools$: Observable<SchoolBase[]> = this.schoolService.getSchools();
 
   public createUserForm: FormGroup = this.formBuilder.group({
     last_names: ['', Validators.required],
@@ -45,10 +49,10 @@ export class SignUpComponent {
     email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     identification_type: ['', Validators.required],
     identificaction_number: ['', Validators.required],
-    phone_number: ['', Validators.required],
-    // rol_id: ['', Validators.required],
-    //Faculty_id: ['', Validators.required],
-    // department_id: ['', Validators.required],
+    //phone_number: ['', Validators.required],
+    rol_id: ['', Validators.required],
+    school_id: ['', Validators.required],
+    department_id: ['', Validators.required],
     password: [
       '',
       [Validators.required, Validators.minLength(8), Validators.maxLength(250)],
@@ -67,7 +71,8 @@ export class SignUpComponent {
 
     private userService: UserService,
     private rolService: RolService,
-    private depatmentService: DepartmentService
+    private depatmentService: DepartmentService,
+    private schoolService: SchoolService
   ) {}
 
   validatePassword() {

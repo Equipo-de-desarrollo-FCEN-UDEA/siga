@@ -124,7 +124,7 @@
         </div>
 
         <!-- Telefono -->
-        <div class="row regular-row mt-4">
+        <!-- <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
@@ -138,10 +138,10 @@
               }"
             />
           </div>
-        </div>
+        </div> -->
 
         <!-- Vinculación -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Vinculación</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
@@ -159,31 +159,31 @@
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
 
         <!-- Facultad -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
-              id="Faculty_id"
-              formControlName="Faculty_id"
+              id="school_id"
+              formControlName="school_id"
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['Faculty_id'].errors && f['Faculty_id'].touched
+                'is-invalid': f['school_id'].errors && f['school_id'].touched
               }"
             >
-              <option *ngFor="let Faculty_id of departments$; let i = index" [value]="i">
-                {{ Faculty_id.name | uppercase }}
+              <option *ngFor="let schools of schools$ | async; let i = index" [value]="i">
+                {{ schools.name | uppercase }}
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
 
         <!-- Departamento/Instituto -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Departamento/Instituto
           </div>
@@ -199,12 +199,12 @@
                   f['department_id'].errors && f['department_id'].touched
               }"
             >
-              <option *ngFor="let department" [value]="department.id">
-                {{ department.nombre | uppercase }}
+              <option *ngFor="let department of departments$ | async; let i = index" [value]="i">
+                {{ department.name | uppercase }}
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
 
         <hr />
 

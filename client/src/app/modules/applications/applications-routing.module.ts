@@ -11,16 +11,16 @@ const routes: Routes = [
   
   { 
     path: 'ver', 
-    loadChildren: () => import('./view/view.module')
+    loadChildren: () => import('./pages/view/view.module')
     .then(m => m.ViewModule) 
   },
   { 
     path: 'crear', 
-    loadChildren: () => import('./create/create.module')
+    loadChildren: () => import('./pages/create/create.module')
     .then(m => m.CreateModule) },
   { 
     path: 'editar', 
-    loadChildren: () => import('./edit/edit.module')
+    loadChildren: () => import('./pages/edit/edit.module')
     .then(m => m.EditModule) 
   }
 ];

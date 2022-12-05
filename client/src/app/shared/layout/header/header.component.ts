@@ -16,7 +16,7 @@ import { AuthService } from '@services/auth.service';
 })
 export class HeaderComponent {
 
-  public user: UserBase | undefined; 
+  public user: UserResponse | undefined;
   public user_response: UserResponse | undefined;
   public currentURL: any;
   public isSuperUser = this.authService.isSuperUser$;
