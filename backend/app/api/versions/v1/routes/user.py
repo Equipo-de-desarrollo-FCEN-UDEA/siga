@@ -24,7 +24,7 @@ def create_user(
     *,
     db: Session = Depends(db.get_db),
     user_in: schemas.UserCreate
-) -> Any:
+) -> schemas.UserResponse:
     """
     Endpoint to create a new user.
 

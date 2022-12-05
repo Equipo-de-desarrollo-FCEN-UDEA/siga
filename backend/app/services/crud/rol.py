@@ -10,11 +10,13 @@ from .base import CRUDBase
 
 log = get_logging(__name__)
 
+
 class CRUDRol(CRUDBase[Rol, RolCreate, RolUpdate, RolPolicy]):
     def get_multi(
         self,
         db: Session,
-        who: User, *,
+        who: User,
+        *,
         skip: int = 0,
         limit: int = 100
     ) -> List[Rol]:
@@ -24,8 +26,22 @@ class CRUDRol(CRUDBase[Rol, RolCreate, RolUpdate, RolPolicy]):
             offset(skip).\
             limit(limit).\
             all()
-            
+
         return objs_db
+
+    def get_expose(
+        self,
+        db: Session,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> List[Rol]:
+        return (db.
+                query(Rol).
+                filter(Rol.scope >= 9).
+                offset(skip).
+                limit(limit).
+                all())
 
 
 policy = RolPolicy()

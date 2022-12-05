@@ -20,7 +20,7 @@ export class PermissionService {
   }
 
   postPermission(body: PermissionCreate) {
-    return this.http.post(this.urlEndPoint, body)
+    return this.http.post<PermissionResponse>(this.urlEndPoint, body)
   }
 
   putPermission(body: PermissionCreate, id: number) {

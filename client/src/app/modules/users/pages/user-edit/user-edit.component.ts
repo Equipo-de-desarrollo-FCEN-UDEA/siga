@@ -46,23 +46,13 @@ export class UserEditComponent implements OnInit {
     private location: Location
   ) {
     this.roles$ = this.rolesSvc.getRoles();
-    this.activateRoute.params.pipe(take(1)).subscribe(params => this.getId = params['id']);
+    this.activateRoute.params.subscribe(params => this.getId = params['id']);
 
     this.userSvc.getUser(this.getId as number).subscribe({
       next: res => {
         this.userResponse = res;
         this.updateUserBase.patchValue(this.userResponse);
-       },
-      error: (err) => {
-        if (err.status == 401) {
-          Swal.fire({
-            title: 'No autorizado',
-            text: 'No estás autorizado para ver este sitio',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
-          }).then(() => this.router.navigate(['/']));
-        }
-      }
+       }
     }
     );
   }
@@ -73,7 +63,7 @@ export class UserEditComponent implements OnInit {
     last_names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     identification_type: ['', [Validators.required, Validators.maxLength(250)]],
     identification_number: [' ', [Validators.required, Validators.min(1000), Validators.max(999999999999)]],
-    phone: ['', [Validators.required]],
+    phone: [''],
     office: [''],
     vinculation_type: ['', [Validators.required]],
     department_id : [NaN, Validators.required],
@@ -91,11 +81,11 @@ export class UserEditComponent implements OnInit {
   }
 
   submitUpdate() {
-
+    console.log('submit')
     // verificacion de errores
-    if (this.updateUserBase.invalid) {
-      return;
-    }
+    // if (this.updateUserBase.invalid) {
+    //   return;
+    // }
     const user = this.updateUserBase.value as UserUpdate;
     this.userSvc.putUser(user, this.getId as number)
     .subscribe({

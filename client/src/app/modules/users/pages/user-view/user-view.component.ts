@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,11 +25,15 @@ export class UserViewComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private activateRoute: ActivatedRoute,  //Preguntar a Jhon
+    private location: Location
 
   ) {
     const userSvc = this.activateRoute.params.pipe(
       switchMap(
-        params => this.userService.getUser(params['id'])
+        params => {
+          this.id = params['id']
+          return this.userService.getUser(params['id'])
+        }
       )
     );
     userSvc.subscribe(
@@ -40,5 +45,9 @@ export class UserViewComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

@@ -24,17 +24,23 @@ export class ApplicationService {
    getApplications(
     skip: number = 0,
     limit: number = 100,
-    active: boolean = true,
+    filed: boolean | null = null,
     search?: string
   ): Observable<Application[]> 
   {
     let params = new HttpParams()
     params = params.append('skip', skip);
     params = params.append('limit', limit);
-    params = params.append('active', active);
+    if (filed !== null) {
+      params = params.append('filed', filed);
+    }
     if (search) {
       params = params.append('search', search);
     }
     return this.http.get<Application[]>(this.urlEndPoint, { params: params });
+  }
+
+  fileApplication(id: number) {
+    return this.http.put<Application>(this.urlEndPoint + id, {})
   }
 }

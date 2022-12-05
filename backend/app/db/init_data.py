@@ -310,14 +310,14 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
         ]
     ),
-    schemas.ApplicationTypeCreate(
-        name="DEDICACIÓN EXCLUSIVA",
-        description="dedicacion",
-        status_flux=[
-            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
-        ]
-    )
+    # schemas.ApplicationTypeCreate(
+    #     name="DEDICACIÓN EXCLUSIVA",
+    #     description="dedicacion",
+    #     status_flux=[
+    #         schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
+    #         schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+    #     ]
+    # )
 ]
 
 init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
@@ -364,8 +364,8 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         name="Comisión de estudios",
         application_type_id=2
     ),
-    schemas.ApplicationSubTypeCreate(
-        name="Dedicación",
-        application_type_id=3
-    )
+    # schemas.ApplicationSubTypeCreate(
+    #     name="Dedicación",
+    #     application_type_id=3
+    # )
 ]

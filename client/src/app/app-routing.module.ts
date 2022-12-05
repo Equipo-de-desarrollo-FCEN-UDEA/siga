@@ -18,12 +18,6 @@ const ROUTES: Routes = [
       .then(m => m.ApplicationsModule)
   },
   {
-    path: 'home',
-    canActivate: [EmpleadoGuard],
-    loadChildren: () => import('./modules/home/home.module')
-    .then(m => m.HomeModule)
-  },
-  {
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module')
     .then(m => m.AuthModule)
@@ -33,8 +27,6 @@ const ROUTES: Routes = [
     canActivate: [EmpleadoGuard],
     loadChildren: () => import('./modules/home/home.module')
     .then(m => m.HomeModule)
-    redirectTo: 'home',
-    pathMatch: 'prefix'
   },
   {
     path: '**',

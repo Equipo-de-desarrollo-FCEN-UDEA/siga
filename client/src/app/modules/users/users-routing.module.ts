@@ -8,7 +8,7 @@ import { SuperempleadoGuard } from 'src/app/core/guards/superempleado.guard';
 const routes: Routes = [
   {
     path: 'lista',
-    // canActivate: [SuperempleadoGuard],
+    canActivate: [SuperempleadoGuard],
     component: UserListComponent
   },
   {

@@ -34,7 +34,14 @@ export class ErrorsInterceptor implements HttpInterceptor {
             });
             break;
           case 401:
-            this.router.navigate(['/home']);
+            Swal.fire({
+              title: 'Error',
+              text: _error.error.detail,
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            }).then(
+              res => this.router.navigate(['/home'])
+            )
             break;
           case 403:
             console.log(_error);
@@ -47,7 +54,14 @@ export class ErrorsInterceptor implements HttpInterceptor {
             });
             break;
           case 404:
-            this.router.navigate(['/not-found']);
+            Swal.fire({
+              title: 'Error',
+              text: _error.error.detail,
+              confirmButtonText: 'Aceptar',
+              icon: 'error'
+            }).then(
+              res => this.router.navigate(['/home'])
+            )
             break;
           case 422:
             console.log(_error);

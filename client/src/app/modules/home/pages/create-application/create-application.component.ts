@@ -16,6 +16,7 @@ import {
 import { ApplicationTypesService } from '@services/application-types.service';
 import { LoaderService } from '@services/loader.service';
 import { ThisReceiver } from '@angular/compiler';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-application',
@@ -41,7 +42,8 @@ export class CreateApplicationComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private loaderSvc: LoaderService,
-    private applicationTypeSvc: ApplicationTypesService
+    private applicationTypeSvc: ApplicationTypesService,
+    private location: Location
   ) {}
 
   onSubmitApplication() {
@@ -57,4 +59,9 @@ export class CreateApplicationComponent {
       },
     });
   }
+
+  cancel() {
+    this.location.back();
+  }
+
 }

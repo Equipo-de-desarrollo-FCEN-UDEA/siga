@@ -34,7 +34,7 @@ def read_schools_intern(
     return db_schools
 
 
-@router.get("/", status_code=200, response_model=List[schemas.SchoolInDB])
+@router.get("/", status_code=200, response_model=List[schemas.SchoolResponse])
 def read_schools(
     *,
     db: Session = Depends(db.get_db),

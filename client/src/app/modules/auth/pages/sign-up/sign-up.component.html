@@ -109,15 +109,15 @@
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
-              id="identificaction_number"
-              formControlName="identificaction_number"
+              id="identification_number"
+              formControlName="identification_number"
               type="text"
               class="form-control"
               placeholder=" "
               [ngClass]="{
                 'is-invalid':
-                  f['identificaction_number'].errors &&
-                  f['identificaction_number'].touched
+                  f['identification_number'].errors &&
+                  f['identification_number'].touched
               }"
             />
           </div>
@@ -141,7 +141,7 @@
         </div>
 
         <!-- Vinculación -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Vinculación</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
@@ -154,36 +154,77 @@
                 'is-invalid': f['rol_id'].errors && f['rol_id'].touched
               }"
             >
-              <option [value]="rol" *ngFor="let rol of rol$ | async">
+              <option [value]="rol.id" *ngFor="let rol of rol$ | async">
                 {{ rol.name | uppercase }}
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
+
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Tipo de vinculación</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="vinculation_type"
+              formControlName="vinculation_type"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['vinculation_type'].errors && f['vinculation_type'].touched
+              }"
+            >
+              <option [value]="vinculation" *ngFor="let vinculation of vinculation_types">
+                {{ vinculation | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+
+        <div class="row regular-row mt-4">
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Escalafón</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <select
+              class="form-select form-select-lg"
+              id="scale"
+              formControlName="scale"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['scale'].errors && f['scale'].touched
+              }"
+            >
+              <option [value]="scal" *ngFor="let scal of scale">
+                {{ scal | uppercase }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
 
         <!-- Facultad -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4" *ngIf="schools$ | async as schools">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
+              #mySelect
               id="Faculty_id"
-              formControlName="Faculty_id"
               required
               placeholder=" "
-              [ngClass]="{
-                'is-invalid': f['Faculty_id'].errors && f['Faculty_id'].touched
-              }"
+              (change)="nextDepartment($event)"
             >
-              <option *ngFor="let Faculty_id of departments$; let i = index" [value]="i">
-                {{ Faculty_id.name | uppercase }}
+            <option [value]="null" selected disabled>Facultad</option>
+              <option *ngFor="let school of schools; let i = index" [value]="school.id">
+                {{ school.description | titlecase }}
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
 
         <!-- Departamento/Instituto -->
-        <!-- <div class="row regular-row mt-4">
+        <div class="row regular-row mt-4" *ngIf="departments$ | async as departments">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Departamento/Instituto
           </div>
@@ -199,12 +240,12 @@
                   f['department_id'].errors && f['department_id'].touched
               }"
             >
-              <option *ngFor="let department" [value]="department.id">
-                {{ department.nombre | uppercase }}
+              <option *ngFor="let department of departments" [value]="department.id">
+                {{ department.name | uppercase }}
               </option>
             </select>
           </div>
-        </div> -->
+        </div>
 
         <hr />
 
