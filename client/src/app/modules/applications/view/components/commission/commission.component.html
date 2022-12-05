@@ -91,7 +91,7 @@
   <div class="row regular-row mt-2"
     *ngIf="commission.compliment == undefined && current_status == 'APROBADA' && end_date < today && !(isSuperUser$ |async)">
     <div class="col-xs-12 col-sm-6 label fw-bold">Cumplido</div>
-    <div class="col-6"> <button class="btn btn-outline-warning"> Subir cumplido </button> </div>
+    <div class="col-6"> <button class="btn btn-outline-warning" [routerLink]="['/solicitudes/crear/cumplido/' + application!.id]"> Subir cumplido </button> </div>
   </div>
 
 </div>

@@ -10,9 +10,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="">
+    <div [routerLink]="['/home']" class="cursor">
       <span style="color: #fff">
-        Bienvenido {{ user?.names }} {{ user?.last_names }}
+        Bienvenido {{ user?.names + ' ' + user?.last_names | titlecase}}
       </span>
     </div>
     <div
@@ -37,7 +37,7 @@
             <div>
               <div>
                 <div class="sidebar-header">
-                  <span class="user-pic">
+                  <span class="user-pic cursor" [routerLink]="['/usuarios/ver/0']">
                     <i class="fas fa-user-circle"></i>
                   </span>
                 </div>
@@ -49,7 +49,10 @@
                   </span>
                   <br />
                   <span class="user-role">
-                    <span class="user-status">
+                    <span [ngClass]="{
+                      'user-status-active': user?.active, 
+                      'user-status-inactive': !user?.active
+                    }">
                       <i class="fa fa-circle"></i>
                     </span>
                     {{ user_response?.rol?.name }}
@@ -93,6 +96,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
+                      [routerLink]="['/usuarios/ver/0']"
                     >
                       <span>
                         <i class="fa-solid fa-user-astronaut"></i>
@@ -103,6 +107,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
+                      [routerLink]="['/solicitudes/lista']"
                     >
                       <span>
                         <i class="fa fa-book" aria-hidden="true"></i>
@@ -120,21 +125,11 @@
                         type="button"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
+                        [routerLink]="['/usuarios/lista']"
                       >
                         <span>
                           <i class="fa-solid fa-users"></i>
                           Usuarios
-                        </span>
-                      </li>
-                      <li
-                        type="button"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                        [routerLink]="['/usuarios/lista-usuarios']"
-                      >
-                        <span>
-                          <i class="fa-solid fa-user-group"></i>
-                          Registrar Usuarios
                         </span>
                       </li>
                     </ul>

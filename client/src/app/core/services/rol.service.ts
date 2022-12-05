@@ -16,11 +16,16 @@ import { RolBase } from '@interfaces/rol';
 })
 export class RolService {
 
-  private urlEndPoint:string = environment.route + 'rol';
+  private urlEndPoint:string = environment.route + 'rol/';
 
   constructor(private http: HttpClient) { }
 
   getRoles():Observable<RolBase[]> {
     return this.http.get<RolBase[]>(this.urlEndPoint);
   }
+
+  getExposeRoles(): Observable <RolBase[]> {
+    return this.http.get<RolBase[]>(this.urlEndPoint + 'expose');
+  }
+
 }

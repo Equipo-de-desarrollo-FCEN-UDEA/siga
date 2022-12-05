@@ -100,24 +100,20 @@ export class CommissionComponent {
       )
     }
     console.log(this.form.value as CommissionCreate)
-    commission.subscribe(
-      data => {
+    commission.subscribe({
+      next: data => {
         Swal.fire(
           {
             title: 'La comisión se creó correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar',
-            // buttonsStyling: false,
-            // customClass: {
-            //   confirmButton: 'button is-success is-rounded'
-            // }
           }
         ).then((result) => {
           if (result.isConfirmed) {
             this.router.navigate([`/solicitudes/ver/${data.id}/comision`])
           }
         })
-      }
+      }}
     )
 
   }

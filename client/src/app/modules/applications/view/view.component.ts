@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -39,6 +40,7 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     private comSvc: ComService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
+    private location: Location,
 
     private authSvc: AuthService,
     private loaderSvc: LoaderService,
@@ -60,6 +62,10 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     
+  }
+
+  cancel() {
+    this.location.back();
   }
 
   ngAfterViewChecked(): void {
