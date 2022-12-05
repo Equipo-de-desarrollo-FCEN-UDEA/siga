@@ -44,4 +44,13 @@ export class CreateComponent implements OnInit {
   cancel() {
     this.location.back();
   }
+
+  invalidForm() {
+    const childRouteComp = this.activatedComponentReference;
+    let validSize = !childRouteComp.validSize();
+    let validFileType = !childRouteComp.validFileType();
+
+    return validSize || validFileType
+  }
+
 }

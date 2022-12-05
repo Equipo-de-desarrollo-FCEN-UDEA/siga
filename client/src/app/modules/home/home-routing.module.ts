@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 //component
 import { HomeComponent } from './pages/home/home.component';
 import { CreateApplicationComponent } from './pages/create-application/create-application.component';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -13,6 +15,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

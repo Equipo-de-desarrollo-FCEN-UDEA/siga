@@ -42,7 +42,9 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
-        self.policy.create(self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(remunerated_permissions=remunerated_permissions)
+
+        log.debug('salio de la policy', obj_in)
 
         return await engine.save(obj_in)
 
@@ -72,7 +74,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
-        self.policy.create(self, remunerated_permissions=remunerated_permissions)
+        self.policy.create(remunerated_permissions=remunerated_permissions)
 
         db_obj.update(obj_in)
         return await engine.save(db_obj)

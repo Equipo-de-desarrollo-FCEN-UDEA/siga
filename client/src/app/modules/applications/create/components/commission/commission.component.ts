@@ -65,7 +65,7 @@ export class CommissionComponent {
    }
 
    public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required]],
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
@@ -79,6 +79,12 @@ export class CommissionComponent {
 
 
   submit() {
+    this.submitted = true;
+
+    // Se detiene aqui si el formulario es invalido
+    if (this.form.invalid) {
+      return;
+    }
     let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
     if (this.files.length > 0) {
       commission = this.documentService.postDocument(this.files as File[]).pipe(
@@ -190,7 +196,7 @@ export class CommissionComponent {
     return size < 2 * 1024 * 1024;
   }
 
-  validTipoArchivo() {
+  validFileType() {
     const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
     
     let flag = true; 

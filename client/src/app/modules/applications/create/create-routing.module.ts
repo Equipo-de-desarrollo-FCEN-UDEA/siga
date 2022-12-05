@@ -16,7 +16,7 @@ const routes: Routes = [
         component: PermissionComponent,
         data: {
           title: 'Permiso'
-        }
+        },
       },
       //comision
       {
@@ -32,9 +32,19 @@ const routes: Routes = [
         data: {
           title: 'Cumplido'
         }
-      }
+      },
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'prefix'
+      },
     ]
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'prefix'
+  },
 ];
 
 @NgModule({
