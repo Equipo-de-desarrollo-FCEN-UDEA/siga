@@ -17,14 +17,14 @@
                 </div>
 
             </div>
-            <p class="col-xs-5 col-lg-2">
+            <p class="col-xs-5 col-lg-2" *ngIf="context.isSuperUser">
                 <select class="form-select" style="width: auto" formControlName="activo" (change)="search()">
                     <option [ngValue]="false" selected>No archivados</option>
                     <option [ngValue]="true">Archivados</option>
                     <option [ngValue]="null">Todos</option>
                 </select>
             </p>
-            <p class="col-xs-5 col-lg-2" *ngIf="context.isSuperUser">
+            <p class="col-xs-5 col-lg-2" >
                 <select class="form-select" style="width: auto" formControlName="type" (change)="search()">
                     <option [ngValue]="null" selected>Todos los tipos</option>
                     <option *ngFor="let application_type of application_types$ | async" [ngValue]="application_type.id">{{application_type.name | titlecase}}</option>
