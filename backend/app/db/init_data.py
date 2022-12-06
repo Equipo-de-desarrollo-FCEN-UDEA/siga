@@ -190,7 +190,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         description = 'Departamento Vicedecanatura de la Facultad de Ciencias Exactas y Naturales',
         coord_email = 'vicedecacen@udea.edu.co',
         school_id = 2,
-        cost_center = 00000
+        cost_center = 21402601
     ),
     schemas.DepartmentCreate(
         name = 'MATEMÁTICAS',
@@ -230,18 +230,88 @@ init_departments: List[schemas.DepartmentCreate] = [
     schemas.DepartmentCreate(
         name='VICEDECANATURA FING',
         description='Departamento Vicedecanatura de la Facultad de Ingeniería',
-        coord_email='decaingenieria@udea.edu.co',
+        coord_email='vicedecaingenieria@udea.edu.co',
         school_id=3,
         cost_center=21301601
     ),
     schemas.DepartmentCreate(
         name='SISTEMAS',
         description='Departamento de Ingeniería de Sistemas',
-        coord_email='coordsistemas@udea.edu.co',
+        coord_email='jingsistemas@udea.edu.co',
         school_id=3,
         cost_center=21301209
     ),
-    
+    schemas.DepartmentCreate(
+        name='QUÍMICA',
+        description='Departamento de Ingeniería Química',
+        coord_email='pregradoingquimica@udea.edu.co',
+        school_id=3,
+        cost_center=21301205
+    ),
+    schemas.DepartmentCreate(
+        name='BIOINGENIERÍA',
+        description='Departamento de Bioingeniería',
+        coord_email='john.ochoa@udea.edu.co',
+        school_id=3,
+        cost_center=21301211
+    ),
+    schemas.DepartmentCreate(
+        name='INDUSTRIAL',
+        description='Departamento de Ingeniería Industrial',
+        coord_email='pregradoingindustrial@udea.edu.co',
+        school_id=3,
+        cost_center=21301203
+    ),
+    schemas.DepartmentCreate(
+        name='ELECTRÓNICA',
+        description='Departamento de Ingeniería Electrónica',
+        coord_email='augusto.salazar@udea.edu.co',
+        school_id=3,
+        cost_center=21301210
+    ),
+    schemas.DepartmentCreate(
+        name='ELÉCTRICA',
+        description='Departamento de Ingeniería Eléctrica',
+        coord_email='jingelectrica@udea.edu.co',
+        school_id=3,
+        cost_center=21301208
+    ),
+    schemas.DepartmentCreate(
+        name='AMBIENTAL',
+        description='Departamento de Ingeniería Sanitaria y Ambiental',
+        coord_email='jambiental@udea.edu.co',
+        school_id=3,
+        cost_center=21301206
+    ),
+    schemas.DepartmentCreate(
+        name='TELECOMUNICACIONES',
+        description='Programa de Ingeniería de Telecomunicaciones',
+        coord_email='augusto.salazar@udea.edu.co',
+        school_id=3,
+        cost_center=21301202
+    ),
+    schemas.DepartmentCreate(
+        name='MECÁNICA',
+        description='Programa de Ingeniería Mecánica',
+        coord_email='pedro.leon@udea.edu.co',
+        school_id=3,
+        cost_center=21301207
+    ),
+    schemas.DepartmentCreate(
+        name='MATERIALES',
+        description='Programa de Ingeniería de Materiales',
+        coord_email='francisco.herrera@udea.edu.co',
+        school_id=3,
+        cost_center=21301204
+    ),
+    schemas.DepartmentCreate(
+        name='CIVIL',
+        description='Programa de Ingeniería Civil',
+        coord_email='jambiental@udea.edu.co',
+        school_id=3,
+        cost_center=21301201
+    ),
+
 ]
 
 
