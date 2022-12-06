@@ -152,21 +152,21 @@ init_schools: List[schemas.SchoolCreate] = [
     ),
     schemas.SchoolCreate(
         name='FCEN',
-        description='Facultad de ciencias exactas y naturales',
+        description='Facultad de Ciencias Exactas y Naturales',
         cost_center=21402601,
-        email_dean='fcen@udea.edu.co',
+        email_dean='decaexactas@udea.edu.co',
         direction='Ciudad Universitaria: Calle 67 N. o 53-108. Bloque 1, oficina 115 Recepción de correspondencia: Calle 70 N.o 52-21',
         contact='Teléfonos: 219 56 00 NIT: 890.980.040-8 Apartado: 1226',
-        dean='Adriana Echavarria'
+        dean='Adriana Echavarría Isaza'
     ),
     schemas.SchoolCreate(
         name='FING',
-        description='Facultad de ingeniería',
+        description='Facultad de Ingeniería',
         cost_center=21301601,
-        email_dean='fing@udea.edu.co',
+        email_dean='decaingenieria@udea.edu.co',
         direction='Calle 67 No. 53 108 Bloques 18, 19, 20 y 21, Medellín, Antioquia',
         contact='Teléfonos: 2198130',
-        dean='decano ingeniería'
+        dean='Jesús Francisco Vargas Bonilla'
     )
 ]
 
@@ -179,32 +179,69 @@ init_departments: List[schemas.DepartmentCreate] = [
         school_id=1
     ),
     schemas.DepartmentCreate(
-        name='DECANATURA',
-        description='Departamento decanatura',
-        coord_email='fcen@udea.edu.co',
-        school_id=2
+        name='DECANATURA FCEN',
+        description='Departamento Decanatura de la Facultad de Ciencias Exactas y Naturales',
+        coord_email='decaexactas@udea.edu.co',
+        school_id=2,
+        cost_center=21402601
     ),
     schemas.DepartmentCreate(
-        name='FISICA',
+        name = 'VICEDECANATURA FCEN',
+        description = 'Departamento Vicedecanatura de la Facultad de Ciencias Exactas y Naturales',
+        coord_email = 'vicedecacen@udea.edu.co',
+        school_id = 2,
+        cost_center = 00000
+    ),
+    schemas.DepartmentCreate(
+        name = 'MATEMÁTICAS',
+        description = 'Instituto de Matemáticas',
+        coord_email = "institutomatematicas@udea.edu.co",
+        cost_center = 21401201,
+        school_id = 2,
+    ),
+    schemas.DepartmentCreate(
+        name='FÍSICA',
         description='Instituto de Física',
-        coord_email='coordfisica@udea.edu.co',
+        coord_email='institutofisica@udea.edu.co',
         school_id=2,
         cost_center=21401202
     ),
     schemas.DepartmentCreate(
+        name = 'BIOLOGÍA',
+        description = 'Instituto de Biología',
+        coord_email = "institutobiologia@udea.edu.co",
+        cost_center = 21401203,
+        school_id = 2,
+    ),
+    schemas.DepartmentCreate(
+        name='QUÍMICA',
+        description='Instituto de Química',
+        coord_email="institutoquimica@udea.edu.co",
+        cost_center=21401204,
+        school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='DECANATURA FING',
+        description='Departamento Decanatura de la Facultad de Ingeniería',
+        coord_email='decaingenieria@udea.edu.co',
+        school_id=3,
+        cost_center=21301601
+    ),
+    schemas.DepartmentCreate(
+        name='VICEDECANATURA FING',
+        description='Departamento Vicedecanatura de la Facultad de Ingeniería',
+        coord_email='decaingenieria@udea.edu.co',
+        school_id=3,
+        cost_center=21301601
+    ),
+    schemas.DepartmentCreate(
         name='SISTEMAS',
-        description='Departamento de ingeniería de sistemas',
+        description='Departamento de Ingeniería de Sistemas',
         coord_email='coordsistemas@udea.edu.co',
         school_id=3,
         cost_center=21301209
     ),
-    schemas.DepartmentCreate(
-        name='QUÍMICA',
-        description='Instituto de química',
-        coord_email="coordquimica@udea.edu.co",
-        cost_center=21401204,
-        school_id=2
-    )
+    
 ]
 
 
