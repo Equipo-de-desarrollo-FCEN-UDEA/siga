@@ -52,13 +52,17 @@ async def create_commission(
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('ValueError')
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
-    except Exception:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+    except Exception as e:
+        log.error('Exception')
+        log.error(e)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
