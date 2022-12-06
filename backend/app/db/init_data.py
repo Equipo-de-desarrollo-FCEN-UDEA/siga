@@ -18,17 +18,104 @@ init_users: List[schemas.UserCreate] = [
         active=True,
         password=settings.first_superemployee_password
     ),
+    #FCEN
     schemas.UserCreate(
         last_names='FCEN',
         names='DECANO DE',
         identification_number='DECANOFCEN',
         scale='Decanatura',
         vinculation_type='Tiempo completo',
-        department_id=2,
+        department_id=3,
+        rol_id=3,
+        email='decaexactas@udea.edu.co',
+        active= True,
+        password= settings.decano_fcen_password
+    ),
+    schemas.UserCreate(
+        last_names='FCEN',
+        names='SECRETARIA DECANO DE',
+        identification_number='DECANOFCEN',
+        scale='Decanatura',
+        vinculation_type='Tiempo completo',
+        department_id=3,
+        rol_id=4,
+        email='decaexactas@udea.edu.co',
+        active= True,
+        password= settings.secretaria_decano_fcen_password
+    ),
+    #FISICA
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='DIRECTOR DE',
+        identification_number='DIRECTORFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=5,
+        email='institutofisica@udea.edu.co',
+        active= True,
+        password= settings.director_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN FÍSICA',
+        names='SECRETARIA DE',
+        identification_number='SECRETARIAFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=6,
+        email='institutofisica@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_fisica_password
+    ),
+
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='COORDINADOR POSGRADO DE ',
+        identification_number='COORDINADORPOSGRADOFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='posgradosfisica@udea.edu.co',
+        active= True,
+        password= settings.coordinador_posgrado_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='SECRETARIA POSGRADO DE ',
+        identification_number='SECRETARIAPOSGRADOFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=8,
+        email='posgradosfisica@udea.edu.co',
+        active= True,
+        password= settings.secretaria_coordinador_posgrado_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='COORDINADOR PREGRADO DE ',
+        identification_number='FISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='pregradofisica@udea.edu.co',
+        active= True,
+        password= settings.coordinador_pregrado_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='FING',
+        names='DECANO DE',
+        identification_number='DECANOFING',
+        scale='Decanatura',
+        vinculation_type='Tiempo completo',
+        department_id=3,
         rol_id=3,
         email='fcen@udea.edu.co',
-        active=True,
-        password='123'
+        active= True,
+        password= settings.decano_fing_password
     ),
     schemas.UserCreate(
         last_names='GARCÍA LUJÁN',
@@ -179,6 +266,14 @@ init_departments: List[schemas.DepartmentCreate] = [
         school_id=1
     ),
     schemas.DepartmentCreate(
+        name='SISTEMAS',
+        description='Departamento de ingeniería de sistemas',
+        coord_email='coordsistemas@udea.edu.co',
+        school_id=3,
+        cost_center=21301209
+    ),
+
+    schemas.DepartmentCreate(
         name='DECANATURA',
         description='Departamento decanatura',
         coord_email='fcen@udea.edu.co',
@@ -191,13 +286,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         school_id=2,
         cost_center=21401202
     ),
-    schemas.DepartmentCreate(
-        name='SISTEMAS',
-        description='Departamento de ingeniería de sistemas',
-        coord_email='coordsistemas@udea.edu.co',
-        school_id=3,
-        cost_center=21301209
-    ),
+    
     schemas.DepartmentCreate(
         name='QUÍMICA',
         description='Instituto de química',

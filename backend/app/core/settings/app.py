@@ -53,6 +53,30 @@ class AppSettings(BaseAppSettings):
     first_superemployee_vinculation_type: str
     first_superemployee_rol_id: int
 
+    # PASSWORD_USERS_DECANOS_FCEN
+    decano_fcen_password: str
+    secretaria_decano_fcen_password: str
+    
+    # PASSWORD_USERS_FISICA_FCEN
+    director_fisica_password: str
+    secretaria_director_fisica_password: str
+    coordinador_posgrado_fisica_password: str
+    secretaria_coordinador_posgrado_fisica_password:str
+    coordinador_pregrado_fisica_password: str
+
+    # PASSWORD_USERS_MATEMÁTICAS
+    # director_matematicas_password: str
+    # secretaria_director_matematicas_password: str
+    # coordinador_posgrado_matematicas_password: str
+    # secretaria_coordinador_posgrado_matematicas_password:str
+    # coordinador_pregrado_matematicas_password: str
+    
+
+
+
+    
+
+
     # SMTP
     smtp_user_email: str
     smtp_user_password: SecretStr
