@@ -378,120 +378,133 @@ init_users: List[schemas.UserCreate] = [
         identification_number='DECANOFING',
         scale='Decanatura',
         vinculation_type='Tiempo completo',
-        department_id=3,
+        department_id=10,
         rol_id=3,
-        email='fcen@udea.edu.co',
+        email='pruebadecaingenieria@udea.edu.co',
         active= True,
         password= settings.decano_fing_password
     ),
+
     schemas.UserCreate(
-        last_names='GARCÍA LUJÁN',
-        names='SIMÓN',
-        identification_number='1001987844',
-        scale='Estudiante',
-        vinculation_type='NO APLICA',
-        department_id=3,
-        rol_id=11,
-        email='simon.garcial@udea.edu.co',
-        active=False,
-        password='123'
+        last_names='FING',
+        names='SECRETARIA DECANO DE',
+        identification_number='SECREDECANOFING',
+        scale='Decanatura',
+        vinculation_type='Tiempo completo',
+        department_id=10,
+        rol_id=4,
+        email='apoyodecaingenieria@udea.edu.co',
+        active= True,
+        password= settings.secretaria_decano_fing_password
     ),
-    schemas.UserCreate(
-        last_names='MUÑOS ACEVEDO',
-        names='JUAN CARLOS',
-        identification_number='987654321',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=3,
-        rol_id=9,
-        email='muñoz.fake@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='MUÑOS ACEVEDO',
-        names='JUAN CARLOSDOS',
-        identification_number='9876543211',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=4,
-        rol_id=9,
-        email='muñoz.fakedos@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='QUIMICA',
-        names='PROFESOR',
-        identification_number='1239845651',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=5,
-        rol_id=9,
-        email='profesor.quimica@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='COORDINADOR',
-        names='QUIMICA',
-        identification_number='COORDQUIMICA',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=5,
-        rol_id=7,
-        email='coordquimica@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='COORDINADOR',
-        names='FISICA',
-        identification_number='COORDFISICA',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=3,
-        rol_id=7,
-        email='coordfisica@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='EMPLEADO',
-        names='FISICA',
-        identification_number='EMPLEADOFISICA',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=3,
-        rol_id=10,
-        email='empleado.fisica@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='COORDINADOR',
-        names='SISTEMAS',
-        identification_number='COORDSISTEMAS',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=4,
-        rol_id=7,
-        email='coordsistemas@udea.edu.co',
-        active=True,
-        password='123'
-    ),
-    schemas.UserCreate(
-        last_names='DECANO',
-        names='FING',
-        identification_number='DECANOFING',
-        scale='VINCULADO',
-        vinculation_type='TIEMPO COMPLETO',
-        department_id=4,
-        rol_id=3,
-        email='decanofing@udea.edu.co',
-        active=True,
-        password='123'
-    ),
+    # schemas.UserCreate(
+    #     last_names='GARCÍA LUJÁN',
+    #     names='SIMÓN',
+    #     identification_number='1001987844',
+    #     scale='Estudiante',
+    #     vinculation_type='NO APLICA',
+    #     department_id=3,
+    #     rol_id=11,
+    #     email='simon.garcial@udea.edu.co',
+    #     active=False,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='MUÑOS ACEVEDO',
+    #     names='JUAN CARLOS',
+    #     identification_number='987654321',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=3,
+    #     rol_id=9,
+    #     email='muñoz.fake@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='MUÑOS ACEVEDO',
+    #     names='JUAN CARLOSDOS',
+    #     identification_number='9876543211',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=4,
+    #     rol_id=9,
+    #     email='muñoz.fakedos@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='QUIMICA',
+    #     names='PROFESOR',
+    #     identification_number='1239845651',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=5,
+    #     rol_id=9,
+    #     email='profesor.quimica@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='COORDINADOR',
+    #     names='QUIMICA',
+    #     identification_number='COORDQUIMICA',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=5,
+    #     rol_id=7,
+    #     email='coordquimica@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='COORDINADOR',
+    #     names='FISICA',
+    #     identification_number='COORDFISICA',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=3,
+    #     rol_id=7,
+    #     email='coordfisica@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='EMPLEADO',
+    #     names='FISICA',
+    #     identification_number='EMPLEADOFISICA',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=3,
+    #     rol_id=10,
+    #     email='empleado.fisica@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='COORDINADOR',
+    #     names='SISTEMAS',
+    #     identification_number='COORDSISTEMAS',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=4,
+    #     rol_id=7,
+    #     email='coordsistemas@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
+    # schemas.UserCreate(
+    #     last_names='DECANO',
+    #     names='FING',
+    #     identification_number='DECANOFING',
+    #     scale='VINCULADO',
+    #     vinculation_type='TIEMPO COMPLETO',
+    #     department_id=4,
+    #     rol_id=3,
+    #     email='decanofing@udea.edu.co',
+    #     active=True,
+    #     password='123'
+    # ),
 ]
 
 init_schools: List[schemas.SchoolCreate] = [
@@ -532,6 +545,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         coord_email='simongarcia3640@gmail.com',
         school_id=1
     ),
+    #FCEN
     schemas.DepartmentCreate(
         name='DECANATURA FCEN',
         description='Departamento Decanatura de la Facultad de Ciencias Exactas y Naturales',
@@ -588,6 +602,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         cost_center=21402601,
         school_id=2
     ),
+    #FING
     schemas.DepartmentCreate(
         name='DECANATURA FING',
         description='Departamento Decanatura de la Facultad de Ingeniería',
