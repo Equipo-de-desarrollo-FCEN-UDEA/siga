@@ -34,12 +34,12 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='FCEN',
         names='SECRETARIA DECANO DE',
-        identification_number='DECANOFCEN',
+        identification_number='SECREDECANOFCEN',
         scale='Decanatura',
         vinculation_type='Tiempo completo',
         department_id=3,
         rol_id=4,
-        email='decaexactas@udea.edu.co',
+        email='apoyodecanatoexactas@udea.edu.co',
         active= True,
         password= settings.secretaria_decano_fcen_password
     ),
@@ -90,7 +90,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=4,
         rol_id=6,
-        email='institutofisica@udea.edu.co',
+        email='apoyoinstitutomatematicas@udea.edu.co',
         active= True,
         password= settings.secretaria_director_matematicas_password
     ),
@@ -115,7 +115,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=4,
         rol_id=8,
-        email='posgradosmatematicas@udea.edu.co',
+        email='apoyoposgradosmatematicas@udea.edu.co',
         active= True,
         password= settings.secretaria_coordinador_posgrado_matematicas_password
     ),
@@ -152,7 +152,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=5,
         rol_id=6,
-        email='institutofisica@udea.edu.co',
+        email='apoyoinstitutofisica@udea.edu.co',
         active= True,
         password= settings.secretaria_director_fisica_password
     ),
@@ -177,7 +177,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=5,
         rol_id=8,
-        email='posgradosfisica@udea.edu.co',
+        email='apoyoposgradosfisica@udea.edu.co',
         active= True,
         password= settings.secretaria_coordinador_posgrado_fisica_password
     ),
@@ -215,7 +215,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=6,
         rol_id=6,
-        email='institutobiologia@udea.edu.co',
+        email='apoyoinstitutobiologia@udea.edu.co',
         active= True,
         password= settings.secretaria_director_biologia_password
     ),
@@ -240,7 +240,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=6,
         rol_id=8,
-        email='posgradosbiologia@udea.edu.co',
+        email='apoyoposgradosbiologia@udea.edu.co',
         active= True,
         password= settings.secretaria_coordinador_posgrado_biologia_password
     ),
@@ -278,7 +278,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=7,
         rol_id=6,
-        email='institutoquimica@udea.edu.co',
+        email='apoyoinstitutoquimica@udea.edu.co',
         active= True,
         password= settings.secretaria_director_quimica_password
     ),
@@ -341,7 +341,7 @@ init_users: List[schemas.UserCreate] = [
         vinculation_type='Tiempo completo',
         department_id=8,
         rol_id=6,
-        email='coordinacionextensionfcen@udea.edu.co',
+        email='apoyocoordinacionextensionfcen@udea.edu.co',
         active= True,
         password= settings.secretaria_director_extension_password
     ),
