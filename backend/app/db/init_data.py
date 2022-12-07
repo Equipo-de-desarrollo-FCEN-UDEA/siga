@@ -18,14 +18,14 @@ init_users: List[schemas.UserCreate] = [
         active=True,
         password=settings.first_superemployee_password
     ),
-    #FCEN
+    #DECANATURA FCEN
     schemas.UserCreate(
         last_names='FCEN',
         names='DECANO DE',
         identification_number='DECANOFCEN',
         scale='Decanatura',
         vinculation_type='Tiempo completo',
-        department_id=3,
+        department_id=2,
         rol_id=3,
         email='decaexactas@udea.edu.co',
         active= True,
@@ -43,6 +43,94 @@ init_users: List[schemas.UserCreate] = [
         active= True,
         password= settings.secretaria_decano_fcen_password
     ),
+    #VICEDECANATURA FCEN
+    schemas.UserCreate(
+        last_names='FCEN',
+        names='VICEDECANO DE',
+        identification_number='VICEDECANOFCEN',
+        scale='Decanatura',
+        vinculation_type='Tiempo completo',
+        department_id=3,
+        rol_id=5,
+        email='vicedecacen@udea.edu.co',
+        active= True,
+        password= settings.vicedecano_fcen_password
+    ),
+    schemas.UserCreate(
+        last_names='FCEN',
+        names='SECRETARIA VICEDECANO DE',
+        identification_number='SECREVICEDECANOFCEN',
+        scale='Decanatura',
+        vinculation_type='Tiempo completo',
+        department_id=3,
+        rol_id=6,
+        email='apoyovicedecaexactas@udea.edu.co',
+        active= True,
+        password= settings.secretaria_vicedecano_fcen_password
+    ),
+
+     #MATEMÁTICAS
+    schemas.UserCreate(
+        last_names='MATEMÁTICAS',
+        names='DIRECTOR DE',
+        identification_number='DIRECTORMATEMATICAS',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=5,
+        email='institutomatematicas@udea.edu.co',
+        active= True,
+        password= settings.director_matematicas_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN MATEMÁTICAS',
+        names='SECRETARIA DE',
+        identification_number='SECREMATEMATICAS',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=6,
+        email='institutofisica@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_matematicas_password
+    ),
+
+    schemas.UserCreate(
+        last_names='MATEMÁTICAS',
+        names='COORDINADOR POSGRADO DE ',
+        identification_number='COORDPOSMATEMATICAS',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='posgradosmatematicas@udea.edu.co',
+        active= True,
+        password= settings.coordinador_posgrado_matematicas_password
+    ),
+    schemas.UserCreate(
+        last_names='MATEMÁTICAS',
+        names='SECRETARIA POSGRADO DE ',
+        identification_number='SECREPOSMATEMATICAS',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=8,
+        email='posgradosmatematicas@udea.edu.co',
+        active= True,
+        password= settings.secretaria_coordinador_posgrado_matematicas_password
+    ),
+    schemas.UserCreate(
+        last_names='MATEMÁTICAS',
+        names='COORDINADOR PREGRADO DE ',
+        identification_number='COORDPREMATEMATICAS',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='pregradomatematicas@udea.edu.co',
+        active= True,
+        password= settings.coordinador_pregrado_matematicas_password
+    ),
     #FISICA
     schemas.UserCreate(
         last_names='FÍSICA',
@@ -50,7 +138,7 @@ init_users: List[schemas.UserCreate] = [
         identification_number='DIRECTORFISICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=5,
         rol_id=5,
         email='institutofisica@udea.edu.co',
         active= True,
@@ -59,10 +147,10 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='DIRECCIÓN FÍSICA',
         names='SECRETARIA DE',
-        identification_number='SECRETARIAFISICA',
+        identification_number='SECREFISICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=5,
         rol_id=6,
         email='institutofisica@udea.edu.co',
         active= True,
@@ -72,10 +160,10 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='FÍSICA',
         names='COORDINADOR POSGRADO DE ',
-        identification_number='COORDINADORPOSGRADOFISICA',
+        identification_number='COORDPOSFISICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=5,
         rol_id=7,
         email='posgradosfisica@udea.edu.co',
         active= True,
@@ -84,10 +172,10 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='FÍSICA',
         names='SECRETARIA POSGRADO DE ',
-        identification_number='SECRETARIAPOSGRADOFISICA',
+        identification_number='SECREPOSFISICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=5,
         rol_id=8,
         email='posgradosfisica@udea.edu.co',
         active= True,
@@ -96,77 +184,191 @@ init_users: List[schemas.UserCreate] = [
     schemas.UserCreate(
         last_names='FÍSICA',
         names='COORDINADOR PREGRADO DE ',
-        identification_number='FISICA',
+        identification_number='COORDPREFISICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=5,
         rol_id=7,
         email='pregradofisica@udea.edu.co',
         active= True,
         password= settings.coordinador_pregrado_fisica_password
     ),
 
-    #QUÍMICA
+    #BIOLOGÍA
     schemas.UserCreate(
-        last_names='QUÍMICA',
+        last_names='BIOLOGÍA',
         names='DIRECTOR DE',
-        identification_number='DIRECTORFISICA',
+        identification_number='DIRECTORBIOLOGIA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=6,
+        rol_id=5,
+        email='institutobiologia@udea.edu.co',
+        active= True,
+        password= settings.director_biologia_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN BIOLOGÍA',
+        names='SECRETARIA DE',
+        identification_number='SECREBIOLOGIA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=6,
+        rol_id=6,
+        email='institutobiologia@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_biologia_password
+    ),
+
+    schemas.UserCreate(
+        last_names='BIOLOGÍA',
+        names='COORDINADOR POSGRADO DE ',
+        identification_number='COORDPOSBIOLOGIA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=6,
+        rol_id=7,
+        email='posgradosbiologia@udea.edu.co',
+        active= True,
+        password= settings.coordinador_posgrado_biologia_password
+    ),
+    schemas.UserCreate(
+        last_names='BIOLOGÍA',
+        names='SECRETARIA POSGRADO DE ',
+        identification_number='SECREPOSBIOLOGIA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=6,
+        rol_id=8,
+        email='posgradosbiologia@udea.edu.co',
+        active= True,
+        password= settings.secretaria_coordinador_posgrado_biologia_password
+    ),
+    schemas.UserCreate(
+        last_names='BIOLOGÍA',
+        names='COORDINADOR PREGRADO DE ',
+        identification_number='COORDPREBIOLOGIA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=6,
+        rol_id=7,
+        email='pregradobiologia@udea.edu.co',
+        active= True,
+        password= settings.coordinador_pregrado_biologia_password
+    ),
+
+    #QUÍMICA
+   schemas.UserCreate(
+        last_names='QUÍMICA',
+        names='DIRECTOR DE',
+        identification_number='DIRECTORQUIMICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=7,
         rol_id=5,
         email='institutoquimica@udea.edu.co',
         active= True,
-        password= settings.director_fisica_password
+        password= settings.director_quimica_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN QUÍMICA',
         names='SECRETARIA DE',
-        identification_number='SECRETARIAFISICA',
+        identification_number='SECREQUIMICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=7,
         rol_id=6,
         email='institutoquimica@udea.edu.co',
         active= True,
-        password= settings.secretaria_director_fisica_password
+        password= settings.secretaria_director_quimica_password
     ),
 
     schemas.UserCreate(
         last_names='QUÍMICA',
         names='COORDINADOR POSGRADO DE ',
-        identification_number='COORDINADORPOSGRADOFISICA',
+        identification_number='COORDPOSQUIMICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=7,
         rol_id=7,
-        email='posgradosfisica@udea.edu.co',
+        email='posgradosquimica@udea.edu.co',
         active= True,
-        password= settings.coordinador_posgrado_fisica_password
+        password= settings.coordinador_posgrado_quimica_password
     ),
     schemas.UserCreate(
-        last_names='FÍSICA',
+        last_names='QUÍMICA',
         names='SECRETARIA POSGRADO DE ',
-        identification_number='SECRETARIAPOSGRADOFISICA',
+        identification_number='SECREPOSQUIMICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=7,
         rol_id=8,
-        email='posgradosfisica@udea.edu.co',
+        email='apoyo.posgradosquimica@udea.edu.co',
         active= True,
-        password= settings.secretaria_coordinador_posgrado_fisica_password
+        password= settings.secretaria_coordinador_posgrado_quimica_password
     ),
     schemas.UserCreate(
-        last_names='FÍSICA',
+        last_names='QUÍMICA',
         names='COORDINADOR PREGRADO DE ',
-        identification_number='FISICA',
+        identification_number='COORDPREQUIMICA',
         scale='VINCULADO',
         vinculation_type='Tiempo completo',
-        department_id=4,
+        department_id=7,
         rol_id=7,
-        email='pregradofisica@udea.edu.co',
+        email='pregradoquimica@udea.edu.co',
         active= True,
-        password= settings.coordinador_pregrado_fisica_password
+        password= settings.coordinador_pregrado_quimica_password
+    ),
+
+    #EXTENSION_FCEN
+    schemas.UserCreate(
+        last_names='EXTENSIÓN FCEN',
+        names='DIRECTOR DE',
+        identification_number='DIRECTOREXTENSION',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=8,
+        rol_id=5,
+        email='coordinacionextensionfcen@udea.edu.co',
+        active= True,
+        password= settings.director_extension_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN EXTENSIÓN FCEN',
+        names='SECRETARIA DE',
+        identification_number='SECREEXTENSION',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=8,
+        rol_id=6,
+        email='coordinacionextensionfcen@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_extension_password
+    ),
+    #CIEN_FCEN
+    schemas.UserCreate(
+        last_names='CIEN FCEN',
+        names='DIRECTOR DE',
+        identification_number='DIRECTORCIEN',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=9,
+        rol_id=5,
+        email='cien@udea.edu.co',
+        active= True,
+        password= settings.director_cien_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN CIEN FCEN',
+        names='SECRETARIA DE',
+        identification_number='SECRECIEN',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=9,
+        rol_id=6,
+        email='apoyocien@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_cien_password
     ),
 
     #FING
@@ -370,6 +572,20 @@ init_departments: List[schemas.DepartmentCreate] = [
         description='Instituto de Química',
         coord_email="institutoquimica@udea.edu.co",
         cost_center=21401204,
+        school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='EXTENSION FCEN',
+        description='Centreo de Extensión',
+        coord_email="coordinacionextensionfcen@udea.edu.co",
+        cost_center=21402601,
+        school_id=2
+    ),
+    schemas.DepartmentCreate(
+        name='CIEN FCEN',
+        description='Centreo de Investigación',
+        coord_email="cien@udea.edu.co",
+        cost_center=21402601,
         school_id=2
     ),
     schemas.DepartmentCreate(

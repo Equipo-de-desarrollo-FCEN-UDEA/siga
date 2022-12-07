@@ -56,7 +56,18 @@ class AppSettings(BaseAppSettings):
     # PASSWORD_USERS_DECANOS_FCEN
     decano_fcen_password: str
     secretaria_decano_fcen_password: str
+
+    #PASSWORD_USERS_VICEDECANO_FCEN
+    vicedecano_fcen_password:str
+    secretaria_vicedecano_fcen_password:str
     
+    # PASSWORD_USERS_MATEMÁTICAS_FCEN
+    director_matematicas_password: str
+    secretaria_director_matematicas_password: str
+    coordinador_posgrado_matematicas_password: str
+    secretaria_coordinador_posgrado_matematicas_password:str
+    coordinador_pregrado_matematicas_password: str
+
     # PASSWORD_USERS_FISICA_FCEN
     director_fisica_password: str
     secretaria_director_fisica_password: str
@@ -64,19 +75,28 @@ class AppSettings(BaseAppSettings):
     secretaria_coordinador_posgrado_fisica_password:str
     coordinador_pregrado_fisica_password: str
 
-    # PASSWORD_USERS_MATEMÁTICAS
-    # director_matematicas_password: str
-    # secretaria_director_matematicas_password: str
-    # coordinador_posgrado_matematicas_password: str
-    # secretaria_coordinador_posgrado_matematicas_password:str
-    # coordinador_pregrado_matematicas_password: str
+    # PASSWORD_USERS_BIOLOGÍA_FCEN
+    director_biologia_password: str
+    secretaria_director_biologia_password: str
+    coordinador_posgrado_biologia_password: str
+    secretaria_coordinador_posgrado_biologia_password:str
+    coordinador_pregrado_biologia_password: str
+
+    # PASSWORD_USERS_QUÍMICA_FCEN
+    director_quimica_password: str
+    secretaria_director_quimica_password: str
+    coordinador_posgrado_quimica_password: str
+    secretaria_coordinador_posgrado_quimica_password:str
+    coordinador_pregrado_quimica_password: str
+
+    # PASSWORD_USERS_EXTENSIÓN_FCEN
+    director_extension_password: str
+    secretaria_director_extension_password: str
+
+    # PASSWORD_USERS_EXTENSIÓN_FCEN
+    director_cien_password: str
+    secretaria_director_cien_password: str
     
-
-
-
-    
-
-
     # SMTP
     smtp_user_email: str
     smtp_user_password: SecretStr
