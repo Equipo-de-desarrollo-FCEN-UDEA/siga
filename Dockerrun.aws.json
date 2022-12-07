@@ -68,7 +68,7 @@
         },
         {
             "essential": true,
-            "image": "mongo:latest",
+            "image": "mongo:4.4",
             "memory": 50,
             "mountPoints": [
                 {
