@@ -105,6 +105,71 @@ init_users: List[schemas.UserCreate] = [
         active= True,
         password= settings.coordinador_pregrado_fisica_password
     ),
+
+    #QUÍMICA
+    schemas.UserCreate(
+        last_names='QUÍMICA',
+        names='DIRECTOR DE',
+        identification_number='DIRECTORFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=5,
+        email='institutoquimica@udea.edu.co',
+        active= True,
+        password= settings.director_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='DIRECCIÓN QUÍMICA',
+        names='SECRETARIA DE',
+        identification_number='SECRETARIAFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=6,
+        email='institutoquimica@udea.edu.co',
+        active= True,
+        password= settings.secretaria_director_fisica_password
+    ),
+
+    schemas.UserCreate(
+        last_names='QUÍMICA',
+        names='COORDINADOR POSGRADO DE ',
+        identification_number='COORDINADORPOSGRADOFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='posgradosfisica@udea.edu.co',
+        active= True,
+        password= settings.coordinador_posgrado_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='SECRETARIA POSGRADO DE ',
+        identification_number='SECRETARIAPOSGRADOFISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=8,
+        email='posgradosfisica@udea.edu.co',
+        active= True,
+        password= settings.secretaria_coordinador_posgrado_fisica_password
+    ),
+    schemas.UserCreate(
+        last_names='FÍSICA',
+        names='COORDINADOR PREGRADO DE ',
+        identification_number='FISICA',
+        scale='VINCULADO',
+        vinculation_type='Tiempo completo',
+        department_id=4,
+        rol_id=7,
+        email='pregradofisica@udea.edu.co',
+        active= True,
+        password= settings.coordinador_pregrado_fisica_password
+    ),
+
+    #FING
     schemas.UserCreate(
         last_names='FING',
         names='DECANO DE',
