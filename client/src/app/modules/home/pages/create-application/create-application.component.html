@@ -28,7 +28,7 @@
             }"
           >
             <option
-              [value]="application_type.id | number"
+              [value]="application_type.description"
               *ngFor="let application_type of application_types$ | async"
             >
               {{ application_type.name | uppercase }}
@@ -50,7 +50,7 @@
           <a
             type="button"
             class="btn btn-outline-secondary"
-            [routerLink]="['../home']"
+            (click)="cancel()"
           >
             Cancelar
           </a>

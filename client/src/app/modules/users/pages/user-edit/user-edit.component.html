@@ -78,7 +78,7 @@
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input id="phone" formControlName="phone" type="text" class="form-control" placeholder=" " [ngClass]="{
-                'is-invalid': f['phone'].errors
+                'is-invalid': f['phone'].invalid
               }" />
             <label for="phone" class="formLabel"> </label>
           </div>
@@ -117,7 +117,7 @@
                 placeholder=" " [ngClass]="{
                   'is-invalid': f['rol_id'].errors
                 }">
-                <option [value]="rol.id" *ngFor="let rol of roles$ | async">
+                <option [ngValue]="rol.id" *ngFor="let rol of roles$ | async">
                   {{ rol.name | uppercase }}
                 </option>
               </select>
@@ -148,7 +148,7 @@
         <hr />
         <div class="footer-row d-md-flex justify-content-md-end mb-3">
           <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-            <button type="button" class="btn btn-secondary" [routerLink]="['/users/user-view', getId]">
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
               Cancelar
             </button>
           </div>

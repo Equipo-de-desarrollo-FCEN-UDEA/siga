@@ -18,7 +18,7 @@ import { AuthService } from '@services/auth.service';
   providedIn: 'root',
 })
 export class EmpleadoGuard implements CanActivate {
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(private authSvc: AuthService, private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -29,7 +29,6 @@ export class EmpleadoGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.authSvc.isLoggedIn()) {
-      console.log('esta en guard')
       this.router.navigate(['auth/login']);
     }
     return this.authSvc.isLoggedIn();

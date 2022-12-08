@@ -24,7 +24,7 @@ class User(Base):
     scale = Column(String(50), nullable=False)
     phone = Column(String(50), nullable=True)
     office = Column(String(5), nullable=True)
-    identification_type = Column(String(10), nullable=False)
+    identification_type = Column(String(100), nullable=False)
     vinculation_type = Column(String(50), nullable=False)
     hashed_password = Column(String(300), nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())

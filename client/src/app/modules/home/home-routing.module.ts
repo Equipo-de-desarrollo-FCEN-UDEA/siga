@@ -9,14 +9,8 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  {
-    path: 'create-application',
-    canActivate: [EmpleadoGuard],
-    component: CreateApplicationComponent,
-  },
-  { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: '/home'},
+  { path: 'home', component: HomeComponent },
+  { path: 'create-application', component: CreateApplicationComponent },
 ];
 
 @NgModule({

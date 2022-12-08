@@ -7,8 +7,14 @@ from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
 from app.services import crud, emails
 from app.domain.models import Commission, User, Application
-from app.domain.schemas import (ApplicationCreate, CommissionCreate,
-                                CommissionUpdate, Msg, CommissionResponse, ApplicationResponse, Compliment)
+from app.domain.schemas import (ApplicationCreate,
+                                CommissionCreate,
+                                CommissionUpdate,
+                                Msg,
+                                CommissionResponse,
+                                ApplicationResponse,
+                                Compliment,
+                                Application_statusCreate)
 from app.domain.errors import BaseErrors
 
 
@@ -38,26 +44,27 @@ async def create_commission(
         commission_created = await crud.commission.create(db=engine,
                                                           obj_in=Commission(**dict(commission)))
 
-        log.debug('commission_created', commission_created)
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
             user_id=current_user.id
         )
-        log.debug('application', application)
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('ValueError')
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
-    except Exception:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+    except Exception as e:
+        log.error('Exception')
+        log.error(e)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
-    log.debug(commission_created)
     response = CommissionResponse(
         **dict(application),
         commission=commission_created
@@ -188,6 +195,10 @@ async def update_compliment(
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
                                                       id=mongo_id, compliment=compliment)
+        if commission:
+            status = Application_statusCreate(
+                application_id=application.id, status_id=5, observation="El usuario subió el cumplido")
+            crud.application_status.finalize(db, obj_in=status)
         emails.applications.commission.compliment_email.apply_async(args=(
             current_user.names,
             current_user.last_names,

@@ -2,7 +2,7 @@ from .msg import Msg
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB
 from .token import TokenPayload, Token
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
-from .school import SchoolCreate, SchoolUpdate, SchoolInDB
+from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse
 from .rol import RolInDB, RolCreate, RolUpdate, RolResponse
 from .status import StatusCreate, StatusUpdate, StatusInDB
 from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiResponse, ApplicationResponse

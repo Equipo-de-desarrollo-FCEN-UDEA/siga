@@ -1,12 +1,13 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Application } from '@interfaces/application';
 import { ApplicationStatusCreate } from '@interfaces/application_status';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
 
@@ -41,7 +42,7 @@ export class ViewComponent implements AfterViewChecked {
     private comSvc: ComService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
-    private router: Router,
+    private location: Location,
 
     private authSvc: AuthService,
     private loaderSvc: LoaderService,
@@ -62,6 +63,10 @@ export class ViewComponent implements AfterViewChecked {
   })
 
 
+  cancel() {
+    this.location.back();
+  }
+
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges()
   }
@@ -80,9 +85,15 @@ export class ViewComponent implements AfterViewChecked {
       (data) => {
         Swal.fire({
           title: "Se cambió el estado correctamente",
-          icon: 'success'
-        })
-        this.router.navigate(['../'])
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
 
@@ -103,9 +114,13 @@ export class ViewComponent implements AfterViewChecked {
         Swal.fire({
           title: "La solicitud se rechazó correctamente",
           confirmButtonText: "Aceptar"
-        })
-        this.router.navigate(['../'])
-
+        }).then(
+          (result) => {
+            if (result.isConfirmed){
+              this.location.back();
+            }
+          }
+        )
       }
     )
   }

@@ -116,8 +116,8 @@ export class PermissionComponent implements OnDestroy{
       );
     }
     console.log(this.form.value as PermissionCreate);
-    this.suscription = permission.subscribe({
-      next: () => {
+    permission.subscribe({
+      next: (data) => {
         Swal.fire({
           title: 'Creada',
           text: '¡El permiso se creó con éxito!',
@@ -126,7 +126,7 @@ export class PermissionComponent implements OnDestroy{
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/home']);
+            this.router.navigate([`/solicitudes/ver/${data.id}/permiso`])
           }
         });
       },
