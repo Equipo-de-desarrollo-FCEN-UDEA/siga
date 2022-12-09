@@ -18,6 +18,7 @@ after_success:
 
   - docker push simon3640/siga-nginx
 
+notifications:
   slack: $SLACK_NAME:$SLACK_TOKEN
   on_success: always
   on_failure: always
