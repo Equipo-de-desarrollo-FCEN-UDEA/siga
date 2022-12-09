@@ -698,7 +698,7 @@ init_departments: List[schemas.DepartmentCreate] = [
 ]
 
 
-init_rols: List[schemas.DepartmentCreate] = [
+init_rols: List[schemas.RolCreate] = [
     schemas.RolCreate(
         name='Admin',
         description='Administrador',
