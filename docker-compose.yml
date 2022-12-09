@@ -1,20 +1,6 @@
 version: '3'
 
 services:
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.prod
-    ports:
-      - "80:80"
-    restart: always
-    depends_on:
-      - backend
-    links:
-      - backend
-      - client
-    mem_limit: 100m
-
   db: 
     container_name: 'db'
     image: postgres:latest
@@ -24,6 +10,8 @@ services:
       - .env
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - local-net
     volumes:
       - ./db/postgres-data:/var/lib/postgresql/data
     
@@ -35,14 +23,28 @@ services:
       - '27017:27017'
     env_file:
       - .env
+    networks:
+      - local-net
     volumes:
       - ./db/mongo-data:/data/db
+  
+  pgadmin:
+    container_name: 'pgadmin'
+    image: dpage/pgadmin4
+    ports:
+      - '80:80'
+    depends_on:
+      - db
+    env_file:
+      - .env
 
   redis:
     container_name: 'redis'
     image: redis:latest
     ports:
       - "6379:6379"
+    networks:
+      - local-net
     depends_on:
       - db
 
@@ -50,7 +52,7 @@ services:
     container_name: "celery_worker"
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
       - .env
@@ -60,24 +62,44 @@ services:
     depends_on:
       - redis
       - backend
+    networks:
+      - local-net
+  
+  flower:
+    container_name: "flower"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: celery -A app.core.celery_worker.celery flower --port=5555
+    env_file:
+      - .env
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - celery_worker
+    networks:
+      - local-net
   
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     depends_on:
       - db
       - mongo
     env_file:
       - .env
     restart: on-failure
+    networks:
+      - local-net
     ports:
-      - "8000:8000"
-    
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.prod
-    depends_on:
-      - backend
-    mem_limit: 300m
+      - "8001:8000"
+    volumes:
+      - ./backend:/app
+
+networks:
+  local-net:
+    driver: bridge

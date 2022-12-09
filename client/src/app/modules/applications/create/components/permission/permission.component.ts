@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -29,7 +29,7 @@ import { LaboralDays } from '@shared/utils';
   templateUrl: './permission.component.html',
   styleUrls: ['./permission.component.scss'],
 })
-export class PermissionComponent implements OnDestroy{
+export class PermissionComponent{
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -137,9 +137,6 @@ export class PermissionComponent implements OnDestroy{
 
   }
 
-  ngOnDestroy(): void {
-    this.suscription.unsubscribe();
-  }
 
   // --------------------------------------
   // --------- TIPOS DE PERMISOS  ---------

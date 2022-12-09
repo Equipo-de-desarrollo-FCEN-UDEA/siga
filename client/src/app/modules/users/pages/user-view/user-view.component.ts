@@ -35,6 +35,7 @@ export class UserViewComponent {
     );
     userSvc.subscribe(
       (user) => {
+        console.log(user)
         this.user = user
       }
     );
