@@ -9,5 +9,5 @@ class DevelopmentAppSettings(AppSettings):
     title: str = "FastAPI siga backend development"
     logging_level: int = logging.DEBUG
 
-    class Config:
+    class Config(AppSettings.Config):
         env_file = ".env"
