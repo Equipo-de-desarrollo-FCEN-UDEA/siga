@@ -122,6 +122,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
+/db
 
 .dist/
 
@@ -139,6 +140,10 @@ mongo-data/
 
 .DS_Store
 
+profesores.py
+
 #Node
 client/package.lock.json
 client/package.json
+
+Siga-brasil.pem
