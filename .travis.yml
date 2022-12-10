@@ -9,11 +9,17 @@ after_success:
   - docker push simon3640/siga-backend
   - docker push simon3640/siga-client
   - docker push simon3640/siga-nginx
+  
+  
 notifications:
   slack: $SLACK_NAME:$SLACK_TOKEN
+
 deploy:
   provider: script
   script: ssh -i ./Siga-brasil.pem root@138.68.163.126 bash deploy.sh
+  on:
+    branches: main
+
 before_install:
   - openssl aes-256-cbc -K $encrypted_f19bd43112f0_key -iv $encrypted_f19bd43112f0_iv
     -in Siga-brasil.pem.enc -out Siga-brasil.pem -d
