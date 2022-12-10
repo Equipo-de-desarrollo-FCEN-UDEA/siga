@@ -10,13 +10,13 @@ after_success:
   - docker push simon3640/siga-client
   - docker push simon3640/siga-nginx
   
-  
+
 notifications:
   slack: $SLACK_NAME:$SLACK_TOKEN
 
 deploy:
   provider: script
-  script: ssh -i ./Siga-brasil.pem root@138.68.163.126 bash deploy.sh
+  script: ssh -i ./Siga-brasil.pem ubuntu@18.228.135.12  bash deploy.sh
   on:
     branches: main
 
