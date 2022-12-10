@@ -30,7 +30,7 @@ export class UserService {
       const basicUser = JSON.parse(this.cookie.get('user'));
       return basicUser;
     } else {
-      this.route.navigate(['/login']);
+      this.route.navigate(['auth/login']);
       return false;
     }
   }

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -122,7 +123,7 @@ export class ComplimentComponent implements OnInit {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
 
-  validTipoArchivo() {
+  validFileType() {
     const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
 
     let flag;
@@ -132,6 +133,8 @@ export class ComplimentComponent implements OnInit {
     return flag;
 
   }
+
+
 
 
   // ----------------------------------------

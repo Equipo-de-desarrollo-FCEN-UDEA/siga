@@ -5,4 +5,4 @@ class PermissionErrors(BaseErrors):
     pass
 
 
-permission_401 = PermissionErrors(401, "No se puede pedir más de un permiso remunerado por semestre")
+permission_401 = PermissionErrors(403, "No se puede pedir más de un permiso remunerado por semestre")

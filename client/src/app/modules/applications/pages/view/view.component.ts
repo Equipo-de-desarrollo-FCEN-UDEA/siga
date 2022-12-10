@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -29,13 +30,17 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public isLoading = this.loaderSvc.isLoading;
 
+  private activatedComponentReference: any;
+
   public id = 0;
+  public isDelete:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
+    private location: Location,
 
     private authSvc: AuthService,
     private loaderSvc: LoaderService,
@@ -57,6 +62,10 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     
+  }
+
+  cancel() {
+    this.location.back();
   }
 
   ngAfterViewChecked(): void {
@@ -94,5 +103,21 @@ export class ViewComponent implements OnInit, AfterViewChecked {
       }
     )
   }
+
+
+  // -----------------------------
+  // ---- DELETE APPLICATION -----
+  // -----------------------------
+  onActivate(componentRef: any) {
+    this.activatedComponentReference = componentRef
+  }
+
+  delete(){
+    this.isDelete = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.delete(this.id);
+  }
+
+
 
 }

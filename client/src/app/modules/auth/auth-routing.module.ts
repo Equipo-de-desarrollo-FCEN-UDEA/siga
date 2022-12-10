@@ -34,7 +34,7 @@ const ROUTES: Routes = [
   {
     path: 'confirmar-correo/:token',
     component: ActivateAccountComponent
-  }
+  },
 ];
 
 @NgModule({

@@ -27,7 +27,7 @@ def read_applications(
     limit: int = 100,
     search: str | None = '',
     type: int = 0,
-    filed: bool = False
+    filed: bool | None = None
 ) -> Any:
     """
     Endpoint to read all applications.
@@ -105,6 +105,28 @@ def get_application(
     """
     try:
         db_obj = crud.application.create(db, current_user, obj_in=application)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    return db_obj
+
+
+@router.put("/{id}", response_model=schemas.ApplicationResponse)
+def filed(
+    id: int,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user
+    )
+) -> schemas.ApplicationResponse:
+    """
+    Endpoint to file an application
+    """
+    try:
+        db_obj = crud.application.get(db, current_user, id=id)
+        db_obj.filed = not db_obj.filed
+        db.commit()
+        db.refresh(db_obj)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_obj

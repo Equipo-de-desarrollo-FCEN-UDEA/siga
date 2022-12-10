@@ -1,22 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-//environment
 import { environment } from '@environments/environment';
-import { SchoolBase } from '@interfaces/school';
-import { Observable } from 'rxjs/internal/Observable';
-
+import { SchoolResponse } from '@interfaces/school';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchoolService {
 
-  private urlEndPoint:string = environment.route + 'school/intern';
+  private urlEndpoint = environment.route + 'school/'
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  constructor(private http: HttpClient) { }
-
-  getSchools():Observable<SchoolBase[]> {
-    return this.http.get<SchoolBase[]>(this.urlEndPoint);
+  getExposeSchools() {
+    return this.http.get<SchoolResponse[]>(this.urlEndpoint)
   }
+
 }

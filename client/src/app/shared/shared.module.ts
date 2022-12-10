@@ -13,10 +13,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     StatusHistoryComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,

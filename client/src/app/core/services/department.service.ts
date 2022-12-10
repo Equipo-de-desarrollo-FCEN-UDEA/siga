@@ -14,11 +14,16 @@ import { DepartmentBase, DepartmentInDB } from '@interfaces/department';
 })
 export class DepartmentService {
 
-  private urlEndPoint:string = environment.route + 'department/intern';
+  private urlEndPoint:string = environment.route + 'department/';
 
   constructor(private http: HttpClient) { }
 
-  getDepartment():Observable<DepartmentBase[]> {
-    return this.http.get<DepartmentBase[]>(this.urlEndPoint);
+  getDepartment():Observable<DepartmentInDB[]> {
+    return this.http.get<DepartmentInDB[]>(this.urlEndPoint + 'intern');
   }
+
+  getExposeDepartment(id: number) {
+    return this.http.get<DepartmentInDB[]>(this.urlEndPoint + id)
+  }
+
 }

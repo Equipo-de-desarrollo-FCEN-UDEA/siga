@@ -12,15 +12,15 @@ const routes: Routes = [
     children: [
       //permiso
       {
-        path: '1',
+        path: 'permiso',
         component: PermissionComponent,
         data: {
           title: 'Permiso'
-        }
+        },
       },
       //comision
       {
-        path: '2',
+        path: 'comision',
         component: CommissionComponent,
         data: {
           title: 'Comisión'
@@ -32,9 +32,19 @@ const routes: Routes = [
         data: {
           title: 'Cumplido'
         }
-      }
+      },
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'prefix'
+      },
     ]
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'prefix'
+  },
 ];
 
 @NgModule({

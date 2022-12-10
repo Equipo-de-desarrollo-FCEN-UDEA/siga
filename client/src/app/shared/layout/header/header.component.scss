@@ -82,9 +82,14 @@ ul, li{
       color: #43B649;
     }
 
-      .user-status {
+      .user-status-active {
         font-size: 15px;
         color: rgb(255, 255, 0);
+      }
+
+      .user-status-inactive {
+        font-size: 15px;
+        color: rgb(141, 141, 141);
       }
   /************ button request ********************/
   .create-request {
