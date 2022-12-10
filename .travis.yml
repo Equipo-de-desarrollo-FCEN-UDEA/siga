@@ -12,13 +12,13 @@ after_success:
   
 
 notifications:
-  slack: $SLACK_NAME:$SLACK_TOKEN
+  - slack: $SLACK_NAME:$SLACK_TOKEN
 
 deploy:
-  provider: script
-  script: ssh -i ./Siga-brasil.pem ubuntu@18.228.135.12  bash deploy.sh
-  on:
-    branches: main
+  - provider: script
+    script: ssh -i ./Siga-brasil.pem ubuntu@18.228.135.12  bash deploy.sh
+    on:
+     branches: main
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_f19bd43112f0_key -iv $encrypted_f19bd43112f0_iv
