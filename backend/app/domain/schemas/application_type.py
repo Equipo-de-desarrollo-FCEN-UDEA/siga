@@ -12,6 +12,7 @@ class ApplicationTypeBase(BaseModel):
     name: str
     description: str
     status_flux: list[StatusFlux]
+    who_can: list[int]
 
 
 class ApplicationTypeCreate(ApplicationTypeBase):

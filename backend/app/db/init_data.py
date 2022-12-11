@@ -18,7 +18,7 @@ init_users: List[schemas.UserCreate] = [
         active=True,
         password=settings.first_superemployee_password
     ),
-    #DECANATURA FCEN
+    # DECANATURA FCEN
     schemas.UserCreate(
         last_names='FCEN',
         names='DECANO DE',
@@ -28,8 +28,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=2,
         rol_id=3,
         email='decaexactas@udea.edu.co',
-        active= True,
-        password= settings.decano_fcen_password
+        active=True,
+        password=settings.decano_fcen_password
     ),
     schemas.UserCreate(
         last_names='FCEN',
@@ -40,10 +40,10 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=4,
         email='apoyodecanatoexactas@udea.edu.co',
-        active= True,
-        password= settings.secretaria_decano_fcen_password
+        active=True,
+        password=settings.secretaria_decano_fcen_password
     ),
-    #VICEDECANATURA FCEN
+    # VICEDECANATURA FCEN
     schemas.UserCreate(
         last_names='FCEN',
         names='VICEDECANO DE',
@@ -53,8 +53,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=5,
         email='vicedecacen@udea.edu.co',
-        active= True,
-        password= settings.vicedecano_fcen_password
+        active=True,
+        password=settings.vicedecano_fcen_password
     ),
     schemas.UserCreate(
         last_names='FCEN',
@@ -65,11 +65,11 @@ init_users: List[schemas.UserCreate] = [
         department_id=3,
         rol_id=6,
         email='apoyovicedecaexactas@udea.edu.co',
-        active= True,
-        password= settings.secretaria_vicedecano_fcen_password
+        active=True,
+        password=settings.secretaria_vicedecano_fcen_password
     ),
 
-     #MATEMÁTICAS
+    # MATEMÁTICAS
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
         names='DIRECTOR DE',
@@ -79,8 +79,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=5,
         email='institutomatematicas@udea.edu.co',
-        active= True,
-        password= settings.director_matematicas_password
+        active=True,
+        password=settings.director_matematicas_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN MATEMÁTICAS',
@@ -91,8 +91,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=6,
         email='apoyoinstitutomatematicas@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_matematicas_password
+        active=True,
+        password=settings.secretaria_director_matematicas_password
     ),
 
     schemas.UserCreate(
@@ -104,8 +104,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=7,
         email='posgradosmatematicas@udea.edu.co',
-        active= True,
-        password= settings.coordinador_posgrado_matematicas_password
+        active=True,
+        password=settings.coordinador_posgrado_matematicas_password
     ),
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
@@ -116,8 +116,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=8,
         email='apoyoposgradosmatematicas@udea.edu.co',
-        active= True,
-        password= settings.secretaria_coordinador_posgrado_matematicas_password
+        active=True,
+        password=settings.secretaria_coordinador_posgrado_matematicas_password
     ),
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
@@ -128,10 +128,10 @@ init_users: List[schemas.UserCreate] = [
         department_id=4,
         rol_id=7,
         email='pregradomatematicas@udea.edu.co',
-        active= True,
-        password= settings.coordinador_pregrado_matematicas_password
+        active=True,
+        password=settings.coordinador_pregrado_matematicas_password
     ),
-    #FISICA
+    # FISICA
     schemas.UserCreate(
         last_names='FÍSICA',
         names='DIRECTOR DE',
@@ -141,8 +141,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=5,
         email='institutofisica@udea.edu.co',
-        active= True,
-        password= settings.director_fisica_password
+        active=True,
+        password=settings.director_fisica_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN FÍSICA',
@@ -153,8 +153,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=6,
         email='apoyoinstitutofisica@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_fisica_password
+        active=True,
+        password=settings.secretaria_director_fisica_password
     ),
 
     schemas.UserCreate(
@@ -166,8 +166,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=7,
         email='posgradosfisica@udea.edu.co',
-        active= True,
-        password= settings.coordinador_posgrado_fisica_password
+        active=True,
+        password=settings.coordinador_posgrado_fisica_password
     ),
     schemas.UserCreate(
         last_names='FÍSICA',
@@ -178,8 +178,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=8,
         email='apoyoposgradosfisica@udea.edu.co',
-        active= True,
-        password= settings.secretaria_coordinador_posgrado_fisica_password
+        active=True,
+        password=settings.secretaria_coordinador_posgrado_fisica_password
     ),
     schemas.UserCreate(
         last_names='FÍSICA',
@@ -190,11 +190,11 @@ init_users: List[schemas.UserCreate] = [
         department_id=5,
         rol_id=7,
         email='pregradofisica@udea.edu.co',
-        active= True,
-        password= settings.coordinador_pregrado_fisica_password
+        active=True,
+        password=settings.coordinador_pregrado_fisica_password
     ),
 
-    #BIOLOGÍA
+    # BIOLOGÍA
     schemas.UserCreate(
         last_names='BIOLOGÍA',
         names='DIRECTOR DE',
@@ -204,8 +204,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=6,
         rol_id=5,
         email='institutobiologia@udea.edu.co',
-        active= True,
-        password= settings.director_biologia_password
+        active=True,
+        password=settings.director_biologia_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN BIOLOGÍA',
@@ -216,8 +216,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=6,
         rol_id=6,
         email='apoyoinstitutobiologia@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_biologia_password
+        active=True,
+        password=settings.secretaria_director_biologia_password
     ),
 
     schemas.UserCreate(
@@ -229,8 +229,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=6,
         rol_id=7,
         email='posgradosbiologia@udea.edu.co',
-        active= True,
-        password= settings.coordinador_posgrado_biologia_password
+        active=True,
+        password=settings.coordinador_posgrado_biologia_password
     ),
     schemas.UserCreate(
         last_names='BIOLOGÍA',
@@ -241,8 +241,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=6,
         rol_id=8,
         email='apoyoposgradosbiologia@udea.edu.co',
-        active= True,
-        password= settings.secretaria_coordinador_posgrado_biologia_password
+        active=True,
+        password=settings.secretaria_coordinador_posgrado_biologia_password
     ),
     schemas.UserCreate(
         last_names='BIOLOGÍA',
@@ -253,12 +253,12 @@ init_users: List[schemas.UserCreate] = [
         department_id=6,
         rol_id=7,
         email='pregradobiologia@udea.edu.co',
-        active= True,
-        password= settings.coordinador_pregrado_biologia_password
+        active=True,
+        password=settings.coordinador_pregrado_biologia_password
     ),
 
-    #QUÍMICA
-   schemas.UserCreate(
+    # QUÍMICA
+    schemas.UserCreate(
         last_names='QUÍMICA',
         names='DIRECTOR DE',
         identification_number='DIRECTORQUIMICA',
@@ -267,8 +267,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=7,
         rol_id=5,
         email='institutoquimica@udea.edu.co',
-        active= True,
-        password= settings.director_quimica_password
+        active=True,
+        password=settings.director_quimica_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN QUÍMICA',
@@ -279,8 +279,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=7,
         rol_id=6,
         email='apoyoinstitutoquimica@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_quimica_password
+        active=True,
+        password=settings.secretaria_director_quimica_password
     ),
 
     schemas.UserCreate(
@@ -292,8 +292,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=7,
         rol_id=7,
         email='posgradosquimica@udea.edu.co',
-        active= True,
-        password= settings.coordinador_posgrado_quimica_password
+        active=True,
+        password=settings.coordinador_posgrado_quimica_password
     ),
     schemas.UserCreate(
         last_names='QUÍMICA',
@@ -304,8 +304,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=7,
         rol_id=8,
         email='apoyo.posgradosquimica@udea.edu.co',
-        active= True,
-        password= settings.secretaria_coordinador_posgrado_quimica_password
+        active=True,
+        password=settings.secretaria_coordinador_posgrado_quimica_password
     ),
     schemas.UserCreate(
         last_names='QUÍMICA',
@@ -316,11 +316,11 @@ init_users: List[schemas.UserCreate] = [
         department_id=7,
         rol_id=7,
         email='pregradoquimica@udea.edu.co',
-        active= True,
-        password= settings.coordinador_pregrado_quimica_password
+        active=True,
+        password=settings.coordinador_pregrado_quimica_password
     ),
 
-    #EXTENSION_FCEN
+    # EXTENSION_FCEN
     schemas.UserCreate(
         last_names='EXTENSIÓN FCEN',
         names='DIRECTOR DE',
@@ -330,8 +330,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=8,
         rol_id=5,
         email='coordinacionextensionfcen@udea.edu.co',
-        active= True,
-        password= settings.director_extension_password
+        active=True,
+        password=settings.director_extension_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN EXTENSIÓN FCEN',
@@ -342,10 +342,10 @@ init_users: List[schemas.UserCreate] = [
         department_id=8,
         rol_id=6,
         email='apoyocoordinacionextensionfcen@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_extension_password
+        active=True,
+        password=settings.secretaria_director_extension_password
     ),
-    #CIEN_FCEN
+    # CIEN_FCEN
     schemas.UserCreate(
         last_names='CIEN FCEN',
         names='DIRECTOR DE',
@@ -355,8 +355,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=9,
         rol_id=5,
         email='cien@udea.edu.co',
-        active= True,
-        password= settings.director_cien_password
+        active=True,
+        password=settings.director_cien_password
     ),
     schemas.UserCreate(
         last_names='DIRECCIÓN CIEN FCEN',
@@ -367,11 +367,11 @@ init_users: List[schemas.UserCreate] = [
         department_id=9,
         rol_id=6,
         email='apoyocien@udea.edu.co',
-        active= True,
-        password= settings.secretaria_director_cien_password
+        active=True,
+        password=settings.secretaria_director_cien_password
     ),
 
-    #FING
+    # FING
     schemas.UserCreate(
         last_names='FING',
         names='DECANO DE',
@@ -381,8 +381,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=10,
         rol_id=3,
         email='pruebadecaingenieria@udea.edu.co',
-        active= True,
-        password= settings.decano_fing_password
+        active=True,
+        password=settings.decano_fing_password
     ),
 
     schemas.UserCreate(
@@ -394,8 +394,8 @@ init_users: List[schemas.UserCreate] = [
         department_id=10,
         rol_id=4,
         email='apoyodecaingenieria@udea.edu.co',
-        active= True,
-        password= settings.secretaria_decano_fing_password
+        active=True,
+        password=settings.secretaria_decano_fing_password
     ),
     # schemas.UserCreate(
     #     last_names='GARCÍA LUJÁN',
@@ -545,7 +545,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         coord_email='simongarcia3640@gmail.com',
         school_id=1
     ),
-    #FCEN
+    # FCEN
     schemas.DepartmentCreate(
         name='DECANATURA FCEN',
         description='Departamento Decanatura de la Facultad de Ciencias Exactas y Naturales',
@@ -554,18 +554,18 @@ init_departments: List[schemas.DepartmentCreate] = [
         cost_center=21402601
     ),
     schemas.DepartmentCreate(
-        name = 'VICEDECANATURA FCEN',
-        description = 'Departamento Vicedecanatura de la Facultad de Ciencias Exactas y Naturales',
-        coord_email = 'vicedecacen@udea.edu.co',
-        school_id = 2,
-        cost_center = 21402601
+        name='VICEDECANATURA FCEN',
+        description='Departamento Vicedecanatura de la Facultad de Ciencias Exactas y Naturales',
+        coord_email='vicedecacen@udea.edu.co',
+        school_id=2,
+        cost_center=21402601
     ),
     schemas.DepartmentCreate(
-        name = 'MATEMÁTICAS',
-        description = 'Instituto de Matemáticas',
-        coord_email = "institutomatematicas@udea.edu.co",
-        cost_center = 21401201,
-        school_id = 2,
+        name='MATEMÁTICAS',
+        description='Instituto de Matemáticas',
+        coord_email="institutomatematicas@udea.edu.co",
+        cost_center=21401201,
+        school_id=2,
     ),
     schemas.DepartmentCreate(
         name='FÍSICA',
@@ -575,11 +575,11 @@ init_departments: List[schemas.DepartmentCreate] = [
         cost_center=21401202
     ),
     schemas.DepartmentCreate(
-        name = 'BIOLOGÍA',
-        description = 'Instituto de Biología',
-        coord_email = "institutobiologia@udea.edu.co",
-        cost_center = 21401203,
-        school_id = 2,
+        name='BIOLOGÍA',
+        description='Instituto de Biología',
+        coord_email="institutobiologia@udea.edu.co",
+        cost_center=21401203,
+        school_id=2,
     ),
     schemas.DepartmentCreate(
         name='QUÍMICA',
@@ -602,7 +602,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         cost_center=21402601,
         school_id=2
     ),
-    #FING
+    # FING
     schemas.DepartmentCreate(
         name='DECANATURA FING',
         description='Departamento Decanatura de la Facultad de Ingeniería',
@@ -699,56 +699,67 @@ init_departments: List[schemas.DepartmentCreate] = [
 
 
 init_rols: List[schemas.RolCreate] = [
+    # 1
     schemas.RolCreate(
         name='Admin',
         description='Administrador',
         scope=1
     ),
+    # 2
     schemas.RolCreate(
         name='Vicerrectoría',
         description='Vicerrectoría de docencia',
         scope=3
     ),
+    # 3
     schemas.RolCreate(
         name='Decano',
         description='Decano de la facultad',
         scope=5
     ),
+    # 4
     schemas.RolCreate(
         name='Secretaria',
         description='Secretaria decanatura',
         scope=5
     ),
+    # 5
     schemas.RolCreate(
         name='Director',
         description='Director del instituto',
         scope=6
     ),
+    # 6
     schemas.RolCreate(
         name='Secretaria',
         description='Secretaria dirección',
         scope=6
     ),
+    # 7
     schemas.RolCreate(
         name='Coordinador',
         description='Coordinador del instituto',
         scope=7
     ),
+    # 8
     schemas.RolCreate(
         name='Secretaria',
         description='Secreataria coordinación',
         scope=7
     ),
+    # 9
     schemas.RolCreate(
         name='Profesor',
         description='Usuario profesor',
         scope=9
     ),
+    # 10
     schemas.RolCreate(
         name='Empleado',
         description='Usuario empleado',
         scope=11
     ),
+    # 11
     schemas.RolCreate(
         name='Estudiante',
         description='Estudiante',
@@ -786,19 +797,25 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         name="PERMISO",
         description="permiso",
         status_flux=[
-            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
-            schemas.application_type.StatusFlux(status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[6, 7]),
             schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
-        ]
+        ],
+        who_can=[9, 11]
     ),
     schemas.ApplicationTypeCreate(
         name="COMISIÓN",
         description="comision",
         status_flux=[
-            schemas.application_type.StatusFlux(status="SOLICITADA", scope=[0]),
-            schemas.application_type.StatusFlux(status='VISTO BUENO', scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status='VISTO BUENO', scope=[6, 7]),
             schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
-        ]
+        ],
+        who_can=[9, 11]
     ),
     # schemas.ApplicationTypeCreate(
     #     name="DEDICACIÓN EXCLUSIVA",

@@ -233,7 +233,7 @@ async def update_compliment(
             current_user.last_names,
             compliment.observation,
             compliment.documents,
-            compliment.emails
+            compliment.emails #+ [current_user.department.school.email_dean]
         ))
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)

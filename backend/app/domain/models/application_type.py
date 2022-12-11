@@ -14,6 +14,7 @@ class ApplicationType(Base):
     name = Column(String(50), nullable=False)
     description = Column(String(50), nullable=False)
     status_flux = Column(JSON, nullable=False)
+    who_can = Column(JSON, nullable=False)
 
     # relations
     application_sub_type = relationship(

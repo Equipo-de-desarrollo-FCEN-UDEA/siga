@@ -9,7 +9,7 @@ from app.domain.schemas.application import ApplicationResponse
 class PermissionBase(BaseModel):
     start_date: datetime
     end_date: datetime
-    justification: str = Field(max_length=300, min_length=30)
+    justification: str = Field(max_length=500, min_length=30)
     documents: list[Any] | None
 
 

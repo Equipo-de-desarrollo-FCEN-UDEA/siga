@@ -55,9 +55,8 @@ export class ForgotPasswordComponent implements OnInit {
       next: (res: any) => {
         Swal.fire({
           title:
-            'Se envió un link para activar tu cuenta al correo ' +
-            this.f['email'].value,
-          text: res.message,
+            'Recuperación de contraseña',
+          text: res.msg,
           icon: 'success',
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar',

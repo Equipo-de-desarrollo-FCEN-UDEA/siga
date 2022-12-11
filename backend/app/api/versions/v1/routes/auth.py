@@ -122,7 +122,7 @@ def activate_email(email: str, *, db: Session = Depends(db.get_db)) -> dict:
         )
     email_token = jwt.email_token(email=user.email)
     confirm_email.apply_async(args=(user.names, email_token, user.email))
-    return {"msg": "El correo de activación fue enviado correctamente"}
+    return {"msg": f"El correo de activación fue enviado a {user.email}"}
 
 
 # Route for activate the account with the mailed token

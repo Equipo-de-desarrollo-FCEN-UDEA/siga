@@ -36,8 +36,8 @@ export class UserEditComponent {
   public submitted: boolean = false;
   public rol: string = localStorage.getItem('rol') || '';
 
-  public rol$: Observable<RolBase[]> = this.rolService.getExposeRoles();
-  private isCorreoValid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
+  public rol$: Observable<RolBase[]> = this.rolService.getRoles();
+  private is_email_valid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
   public getId: Number | string = 0;
 
 
@@ -50,7 +50,6 @@ export class UserEditComponent {
 
     private rolService: RolService,
     private userSvc: UserService,
-    private rolesSvc: RolService,
     private location: Location
   ) {
     //this.roles$ = this.rolesSvc.getRoles();
@@ -67,7 +66,7 @@ export class UserEditComponent {
   }
 
  updateUserBase = this.fb.group({
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     last_names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     identification_type: ['', [Validators.required, Validators.maxLength(250)]],

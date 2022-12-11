@@ -24,7 +24,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         elif not (who.rol.scope <= to.user.rol.scope):
             raise application_401
 
-        elif who.rol.scope == 7 or who.rol.scope == 6:
+        elif (who.rol.scope == 7) or (who.rol.scope == 6):
             if not (to.user.department_id == who.department_id):
                 raise application_401
 
