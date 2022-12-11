@@ -29,7 +29,7 @@ import { LaboralDays } from '@shared/utils';
   templateUrl: './permission.component.html',
   styleUrls: ['./permission.component.scss'],
 })
-export class PermissionComponent {
+export class PermissionComponent{
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -51,6 +51,7 @@ export class PermissionComponent {
   public isLoading = this.loaderSvc.isLoading;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
+  public suscription: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,6 +68,7 @@ export class PermissionComponent {
     this.fromDate = null;
     this.toDate = null;
   }
+
 
   // Form permiso
   public form = this.formBuilder.group({
@@ -134,6 +136,7 @@ export class PermissionComponent {
     });
 
   }
+
 
   // --------------------------------------
   // --------- TIPOS DE PERMISOS  ---------

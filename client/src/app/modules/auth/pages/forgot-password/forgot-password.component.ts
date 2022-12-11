@@ -37,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
     });
   }
 
@@ -51,12 +51,12 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.sendActivateEmail(this.f['username'].value).subscribe({
+    this.authService.forgotPassword(this.f['email'].value).subscribe({
       next: (res: any) => {
         Swal.fire({
           title:
             'Se envió un link para activar tu cuenta al correo ' +
-            this.f['username'].value,
+            this.f['email'].value,
           text: res.message,
           icon: 'success',
           showLoaderOnConfirm: true,

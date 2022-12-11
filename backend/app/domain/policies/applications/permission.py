@@ -16,6 +16,6 @@ class PermissionPolicy(Base[Permission, PermissionCreate, PermissionUpdate]):
 
         # Permisos remunerados son igual o mayor a 1
         if remunerated_permissions >= 1:
-            raise permission_401
+            raise permission_403
         
         return None

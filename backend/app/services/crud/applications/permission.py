@@ -28,6 +28,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         engine: AIOSession,
         who: User,
         obj_in: PermissionCreate,
+        start_date: datetime,
         type_permission: int = 0
     ) -> PermissionCreate:
 
@@ -38,7 +39,8 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         log.debug('permissions_user', permissions_user)
 
         remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
-                                                                         permissions_user=permissions_user)
+                                                                         permissions_user=permissions_user,
+                                                                         start_date=start_date)
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
@@ -60,8 +62,9 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         *,
         db_obj: Permission,
         obj_in: PermissionUpdate,
-        type_permission: int = 0
-    ) -> Permission:
+        type_permission: int = 0,
+        start_date: datetime
+    ) -> PermissionUpdate:
 
         permissions_user = self.get_approved_permissions(db=db,
                                                          who=who,
@@ -70,11 +73,14 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         log.debug('permissions_user', permissions_user)
 
         remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
-                                                                         permissions_user=permissions_user)
+                                                                         permissions_user=permissions_user,
+                                                                         start_date=start_date)
 
         log.debug('remunerated_permissions', remunerated_permissions)
 
         self.policy.create(remunerated_permissions=remunerated_permissions)
+
+        log.debug('salio de la policy', obj_in)
 
         db_obj.update(obj_in)
         return await engine.save(db_obj)
@@ -97,7 +103,7 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
             # Join tablas Application_status y Application por id
             permissions_user = db.query(Application.mongo_id).join(
                 Application_status, Application.id == Application_status.application_id).\
-                filter(Application_status.status_id == 1).\
+                filter(Application_status.status_id == 3).\
                 filter(Application.application_sub_type_id == 7).\
                 filter(Application.user_id == who.id).all()
 
@@ -112,27 +118,28 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
     async def get_remunerated_permissions(
         self,
         engine: AIOSession,
-        permissions_user: list
+        permissions_user: list,
+        start_date: datetime
     ) -> int:
 
         # Verificar numero de permisos remunerados aprobados en el semestre
         remunerated_permissions = 0
         if len(permissions_user) > 0:
 
-            today = datetime.now()
+            #today = datetime.now()
 
-            log.debug('month: ', today, today.month, today.year)
+            log.debug('month: ', start_date, start_date.month, start_date.year)
 
-            if today.month < 7:
+            if start_date.month < 7:
                 begin_semester = dateutil.parser.isoparse(
-                    f'{today.year}-01-01T00:00:00.000Z')
+                    f'{start_date.year}-01-01T00:00:00.000Z')
                 end_semester = dateutil.parser.isoparse(
-                    f'{today.year}-06-30T00:00:00.000Z')
+                    f'{start_date.year}-06-30T00:00:00.000Z')
             else:
                 begin_semester = dateutil.parser.isoparse(
-                    f'{today.year}-07-01T00:00:00.000Z')
+                    f'{start_date.year}-07-01T00:00:00.000Z')
                 end_semester = dateutil.parser.isoparse(
-                    f'{today.year}-12-31T00:00:00.000Z')
+                    f'{start_date.year}-12-31T00:00:00.000Z')
 
             log.debug('begin and end semester ', begin_semester, end_semester)
 

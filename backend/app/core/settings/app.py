@@ -63,6 +63,7 @@ class AppSettings(BaseAppSettings):
     first_superemployee_vinculation_type: str
     first_superemployee_rol_id: int
     decano_fing_password: str
+    
     # PASSWORD_USERS_DECANOS_FCEN
     decano_fcen_password: str
     secretaria_decano_fcen_password: str
