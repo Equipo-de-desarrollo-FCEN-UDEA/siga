@@ -29,18 +29,25 @@ def login_access_token(
         authentication can be with email or identification number
     """
     try:
+        user = crud.user.get_by_email(
+        db, email=form_data.username) or crud.user.get_by_identification(db, identification=form_data.username)
+        if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="El correo o la contraseña están erradas",
+            )
         user: models.User = crud.user.authenticate(
             db, email=form_data.username, identification=form_data.username, password=form_data.password)
+        minutes = settings.access_token_expires_minutes
+        access_token_expires = timedelta(
+            minutes=minutes)
+        access_token = jwt.create_access_token(
+            user.id, expires_delta=access_token_expires
+        )
+        response = schemas.Token(access_token=access_token,
+                                 token_type='bearer', expires=minutes/24/60)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
-    minutes = settings.access_token_expires_minutes
-    access_token_expires = timedelta(
-        minutes=minutes)
-    access_token = jwt.create_access_token(
-        user.id, expires_delta=access_token_expires
-    )
-    response = schemas.Token(access_token=access_token,
-                             token_type='bearer', expires=minutes/24/60)
     return response
 
 
