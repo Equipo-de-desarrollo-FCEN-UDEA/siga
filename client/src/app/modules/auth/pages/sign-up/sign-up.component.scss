@@ -1,5 +1,4 @@
 .containerInside{
-  width: 75%;
   min-height: 10vh!important;
   display: flex;
   flex-direction: column;
@@ -23,9 +22,6 @@
   background-color: #fff;
 }
 
-.error {
-  color: red;
-}
 
 @media screen and (max-width: 920px){
   .containerInside {
@@ -41,3 +37,7 @@
   .selectLabel{
     left: 1.4em;
     }
+
+.invalid {
+  color: rgb(216, 36, 36);
+}

@@ -30,7 +30,7 @@ class CommissionCreate(CommissionBase):
 
 
 class CommissionUpdate(CommissionBase):
-    pass
+    application_sub_type_id: int
 
 
 class Compliment(BaseModel):

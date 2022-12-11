@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Application } from '@interfaces/application';
@@ -7,7 +7,7 @@ import { ApplicationStatusCreate } from '@interfaces/application_status';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
 
@@ -16,7 +16,7 @@ import { ComService } from './connection/com.service';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
-export class ViewComponent implements OnInit, AfterViewChecked {
+export class ViewComponent implements AfterViewChecked {
 
   public title:string = '';
 
@@ -34,6 +34,8 @@ export class ViewComponent implements OnInit, AfterViewChecked {
 
   public id = 0;
   public isDelete:boolean = false;
+  public submitted:boolean = false;
+  public isDecline:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,9 +62,6 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     observation: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(300)]]
   })
 
-  ngOnInit(): void {
-    
-  }
 
   cancel() {
     this.location.back();
@@ -72,7 +71,12 @@ export class ViewComponent implements OnInit, AfterViewChecked {
     this.cdRef.detectChanges()
   }
 
+
+  // -----------------------------
+  // ---- APROVED APPLICATION -----
+  // -----------------------------
   submit() {
+    this.submitted=true;
     this.applicationStatusSvc.postApplicationStatus({
       "application_id": this.id,
       "observation": this.form.value.observation!,
@@ -96,7 +100,11 @@ export class ViewComponent implements OnInit, AfterViewChecked {
   }
 
 
+  // -----------------------------
+  // ---- DECLINE APPLICATION -----
+  // -----------------------------
   decline() {
+    this.isDecline=true;
     this.applicationStatusSvc.postApplicationStatus({
       "application_id": this.id,
       "observation": this.form.value.observation!,

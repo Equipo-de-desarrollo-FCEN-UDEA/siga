@@ -38,7 +38,8 @@ export class ErrorsInterceptor implements HttpInterceptor {
               title: 'Error',
               text: _error.error.detail,
               icon: 'error',
-              confirmButtonText: 'Aceptar'
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#3AB795',
             }).then(
               res => this.router.navigate(['/home'])
             )

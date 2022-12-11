@@ -112,7 +112,7 @@ async def get_commission(
     return response
 
 
-@router.put("/{id}", response_model=Commission)
+@router.put("/{id}", status_code=200)
 async def update_commission(
     id: int,
     commission: CommissionUpdate,
@@ -133,19 +133,48 @@ async def update_commission(
         response:
             -body: Commission
     """
+    # try:
+    #     application: Application = crud.application.get(
+    #         db, current_user, id=id)
+    #     # For apply policies it will end if some policy is not ok
+    #     application = crud.application.update(
+    #         db, current_user, db_obj=application, obj_in={})
+    #     mongo_id = ObjectId(application.mongo_id)
+    #     if application:
+    #         current_commission = await crud.commission.get(engine, id=mongo_id)
+    #         updated_commission = await crud.commission.update(
+    #             engine, db_obj=current_commission, obj_in=commission)
+    # except BaseErrors as e:
+    #     raise HTTPException(e.code, e.detail)
+    # return updated_commission
+
     try:
+        # GET In PostgreSQL
         application: Application = crud.application.get(
-            db, current_user, id=id)
-        # For apply policies it will end if some policy is not ok
-        application = crud.application.update(
-            db, current_user, db_obj=application, obj_in={})
-        mongo_id = ObjectId(application.mongo_id)
+            db=db, id=id, who=current_user)
+
         if application:
+
+            log.debug('obj_in que es', commission)
+
+            # In MongoDB
+            mongo_id = ObjectId(application.mongo_id)
+
             current_commission = await crud.commission.get(engine, id=mongo_id)
-            updated_commission = await crud.commission.update(
-                engine, db_obj=current_commission, obj_in=commission)
+
+            updated_commission = await crud.commission.update(engine, db_obj=current_commission, obj_in=commission)
+
+            log.debug('updated_commission', updated_commission)
+
+            # In PostgreSQL
+            application_updated = crud.application.update(
+                db=db, who=current_user, db_obj=application, obj_in=commission)
+
+            log.debug('application update', application_updated)
+
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
+
     return updated_commission
 
 

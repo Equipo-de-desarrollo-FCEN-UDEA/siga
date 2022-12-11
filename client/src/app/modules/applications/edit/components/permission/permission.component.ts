@@ -152,6 +152,7 @@ export class PermissionComponent implements OnInit {
         });
       },
       error: (err) => {
+        console.log('salio error', err)
         this.error = err;
       },
     });

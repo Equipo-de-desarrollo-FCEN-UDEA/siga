@@ -55,8 +55,8 @@ export class SignUpComponent {
     names: ['', Validators.required],
     email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     identification_type: ['', Validators.required],
-    identification_number: ['', Validators.required],
-    phone_number: ['', Validators.required],
+    identification_number: ['', [Validators.required, Validators.pattern("^[A-Z0-9]*$")]],
+    phone: ['', Validators.required],
     rol_id: [NaN, Validators.required],
     department_id: ['', Validators.required],
     password: [

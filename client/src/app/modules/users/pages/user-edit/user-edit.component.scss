@@ -7,16 +7,23 @@ h5{
   }
   
   .containerInside {
-    width: 75%;
     margin-bottom: 10em;
     align-items: unset;
     min-height: 10vh;
     width: 50em;
   }
   
-  
-  .btn-success {
-    background-color: #43b649;
+  .btn-submit {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-submit:hover {
+    background-color: #000;
   }
   
   
