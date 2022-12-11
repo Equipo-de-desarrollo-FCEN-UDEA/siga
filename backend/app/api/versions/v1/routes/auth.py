@@ -31,16 +31,16 @@ def login_access_token(
     try:
         user: models.User = crud.user.authenticate(
             db, email=form_data.username, identification=form_data.username, password=form_data.password)
-        minutes = settings.access_token_expires_minutes
-        access_token_expires = timedelta(
-            minutes=minutes)
-        access_token = jwt.create_access_token(
-            user.id, expires_delta=access_token_expires
-        )
-        response = schemas.Token(access_token=access_token,
-                                 token_type='bearer', expires=minutes/24/60)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
+    minutes = settings.access_token_expires_minutes
+    access_token_expires = timedelta(
+        minutes=minutes)
+    access_token = jwt.create_access_token(
+        user.id, expires_delta=access_token_expires
+    )
+    response = schemas.Token(access_token=access_token,
+                             token_type='bearer', expires=minutes/24/60)
     return response
 
 
