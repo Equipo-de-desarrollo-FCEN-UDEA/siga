@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +23,8 @@ export class NewPasswordComponent implements OnInit {
     private userSvc: UserService,
     private loaderSvc: LoaderService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { 
     this.route.params.subscribe(
       params => {
@@ -47,13 +49,13 @@ export class NewPasswordComponent implements OnInit {
       this.userSvc.newPassword(this.form.value.newPassword!, this.form.value.repeatNewPassword!).subscribe(
         res => {
           Swal.fire({
-            title: 'Reestablecer contraseña',
+            title: 'Cambio de contraseña',
             text: 'Su contraseña se cambió correctamente',
             confirmButtonText: 'Continuar',
             icon: 'success'
           }).then((result) => {
             if (result.isConfirmed){
-              this.router.navigate(['auth/login'])
+              this.router.navigate(['/home'])
             }
           })
         }
@@ -63,6 +65,10 @@ export class NewPasswordComponent implements OnInit {
 
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
+  }
+
+  cancel() {
+    this.location.back()
   }
 
 }

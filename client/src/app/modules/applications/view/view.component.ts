@@ -26,7 +26,7 @@ export class ViewComponent implements AfterViewChecked {
 
   public historyStatus = false;
 
-  public isSuperUser = this.authSvc.isSuperUser$;
+  public isSuperUser$ = this.authSvc.isSuperUser$;
 
   public isLoading = this.loaderSvc.isLoading;
 

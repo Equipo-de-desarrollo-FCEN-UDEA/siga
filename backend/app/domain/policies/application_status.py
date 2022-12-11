@@ -13,7 +13,11 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
                 next_status = i+1
         if not (actual_status == 'RECHAZADA'):
             if not (who.rol.scope in status_fluxes[next_status]['scope']):
-                raise Application_statusErrors(403, detail=f"No puedes aprobar o rechazar hasta que la solicitud no esté en {status_fluxes[next_status]['status']}")
+                status = ''
+                for i, flux in enumerate(status_fluxes):
+                    if who.rol.scope in flux["scope"]:
+                        status = status_fluxes[i-1]['status']
+                raise Application_statusErrors(403, detail=f"No puedes tomar acción sobre esta solicitud, solo puedes tomar acción cuando la solicitud está en estado {status}")
         if actual_status == 'RECHAZADA':
             actual_status = to.application_status[-2].status.name
             for i, flux in enumerate(status_fluxes):
