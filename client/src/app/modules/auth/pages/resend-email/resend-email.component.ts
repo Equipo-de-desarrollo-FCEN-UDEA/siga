@@ -44,13 +44,12 @@ export class ResendEmailComponent implements OnInit {
       return;
     }
 
-    this.authService.forgotPassword(this.f['username'].value).subscribe({
+    this.authService.sendActivateEmail(this.f['username'].value).subscribe({
       next: (res: any) => {
         Swal.fire({
           title:
-            'Se envió un link para cambiar la contraseña al correo ' +
-            this.f['username'].value,
-          text: res.message,
+            'Correo de activación',
+          text: res.msg,
           icon: 'success',
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar',

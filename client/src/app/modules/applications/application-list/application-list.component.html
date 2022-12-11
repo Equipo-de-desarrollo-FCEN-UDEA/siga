@@ -102,6 +102,15 @@
             </tfoot>
         </table>
         <div class="footer-row d-md-flex justify-content-md-end mb-3">
+            <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+                <a
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="cancel()"
+                >
+                  Cancelar
+                </a>
+            </div>
             <div *ngIf="!context.isSuperUser" class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
                 <button class="btn btn-submit" type="button" [routerLink]="['/create-application']" [disabled]="
                 ">

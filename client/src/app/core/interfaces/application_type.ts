@@ -2,6 +2,7 @@ export interface ApplicationType {
     name: string;
     description: string;
     id: number;
+    who_can: string[]
 }
 
 export interface ApplicationSubType {
@@ -12,5 +13,5 @@ export interface ApplicationSubType {
 }
 
 export interface ApplicationTypeResponse extends ApplicationType {
-    application_sub_type: ApplicationSubType[]
+    application_sub_type: ApplicationSubType[];
 }
