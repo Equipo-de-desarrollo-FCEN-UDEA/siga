@@ -1,29 +1,26 @@
 lenguage: generic
 services:
-  - docker  
+- docker
 after_success:
-  - docker build -t simon3640/siga-backend -f ./backend/Dockerfile.prod ./backend
-  - docker build -t simon3640/siga-client -f ./client/Dockerfile.prod ./client
-  - docker build -t simon3640/siga-nginx -f ./nginx/Dockerfile.prod ./nginx
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push simon3640/siga-backend
-  - docker push simon3640/siga-client
-  - docker push simon3640/siga-nginx
-  
-
+- docker build -t simon3640/siga-backend -f ./backend/Dockerfile.prod ./backend
+- docker build -t simon3640/siga-client -f ./client/Dockerfile.prod ./client
+- docker build -t simon3640/siga-nginx -f ./nginx/Dockerfile.prod ./nginx
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+- docker push simon3640/siga-backend
+- docker push simon3640/siga-client
+- docker push simon3640/siga-nginx
 notifications:
-  - slack: $SLACK_NAME:$SLACK_TOKEN
-
+  slack:
+    secure: PhrxqWHs6rHGdUj28kKKeACfXw77g4eu4U8x/FNag1zJ0FRntKQ8Ar6nAXykZrywa1F4B4uxKMJBkRwFRMoL3YEgSaLbAlI7HPS4BIX93Um7W8tQoBs2PJ04Pe/lWI5fi7FZ52y93V4D5cZRRSgtXK5lPBst7Y+ss7qUGWiSOOrr9TfwcfBlzAuupNDFW+MM2OlanLpWP0IwE/mQsAMMf36eyD/mc97cON40KGlOSYgP9FJvzaqMvRP9j4lQTEPD9Xphe+4OVTniaOsXfd6fQpbyyGR3tLdq7/XP8PUWtQvFa6C87XneYstOsxBoxOhfkHidjno3wRVzIg3QK39AszsFhjuJ5dq4JeGaqS9LbtQM/p81XZdsRJcpdLdx9RMTgfOa2XvShs8oom3N0qpYie0KxOMkyYEx04spNkzd+XfAxQoPqt8rEhmfIBJjqwI17p0TOepx5WAJX+UdBF7JKOtoNCz64L+EO6LwXD2IAbMGIE0pa0iTmTfY4tjOVzBjVvMA8qUDWaXe6JE6z/Y5rAuJRopQFNDkND7PbZBBzrdLF6ewc+CJaCBEf4HKrTXsJqaX5zSejgLwgimu+8MEqUrvOe8j5J+MiCmCsfUqKYP33QRBHDD8QkiOm92L4mPiZWq3ubatcCzXUtDQa6ijYhRcfSHBIhGYyVW7FDa5w+o=
 deploy:
-  - provider: script
-    script: ssh -i ./Siga-brasil.pem ubuntu@18.228.135.12  bash deploy.sh
-    on:
-     branches: main
-
+- provider: script
+  script: ssh -i ./Siga-brasil.pem ubuntu@$SERVER_IP_ADDRESS  bash deploy.sh
+  on:
+    branch: main
 before_install:
-  - openssl aes-256-cbc -K $encrypted_f19bd43112f0_key -iv $encrypted_f19bd43112f0_iv
-    -in Siga-brasil.pem.enc -out Siga-brasil.pem -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 ./Siga-brasil.pem
-  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-  - ssh-add ./Siga-brasil.pem
+- openssl aes-256-cbc -K $encrypted_f19bd43112f0_key -iv $encrypted_f19bd43112f0_iv
+  -in Siga-brasil.pem.enc -out Siga-brasil.pem -d
+- eval "$(ssh-agent -s)"
+- chmod 600 ./Siga-brasil.pem
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./Siga-brasil.pem
