@@ -55,7 +55,7 @@
                     }">
                       <i class="fa fa-circle"></i>
                     </span>
-                    {{ user_response?.rol?.name }}
+                    {{user?.rol?.name}}
                   </span>
                 </div>
                 <!-- sidebar-header  -->
@@ -96,7 +96,7 @@
                       type="button"
                       data-bs-dismiss="offcanvas"
                       aria-label="Close"
-                      [routerLink]="['/usuarios/ver/0']"
+                      [routerLink]="['/usuarios/ver/id']"
                     >
                       <span>
                         <i class="fa-solid fa-user-astronaut"></i>
@@ -121,6 +121,17 @@
                       <span class="text-secondary"> ESPECÍFICO </span>
                     </div>
                     <ul>
+                      <li
+                      type="button"
+                      data-bs-dismiss="offcanvas"
+                      aria-label="Close"
+                      [routerLink]="['/usuarios']"
+                    >
+                      <span>
+                        <i class="fa-solid fa-user"></i>
+                        Registrar Usuario
+                      </span>
+                    </li>
                       <li
                         type="button"
                         data-bs-dismiss="offcanvas"

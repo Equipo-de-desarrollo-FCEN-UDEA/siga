@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { CreateRoutingModule } from './create-routing.module';
-import { CreateComponent } from './create.component';
+import { EditRoutingModule } from './edit-routing.module';
+import { EditComponent } from './edit.component';
 import { CommissionComponent } from './components/commission/commission.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
-import { ComplimentComponent } from './components/compliment/compliment.component';
+import { FullTimeComponent } from './components/full-time/full-time.component';
 
 
 @NgModule({
   declarations: [
-    CreateComponent,
+    EditComponent,
     CommissionComponent,
     PermissionComponent,
-    ComplimentComponent
+    FullTimeComponent
   ],
   imports: [
     CommonModule,
-    CreateRoutingModule,
+    EditRoutingModule,
     SharedModule
   ]
 })
-export class CreateModule { }
+export class EditModule { }

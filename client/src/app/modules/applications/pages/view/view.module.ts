@@ -7,13 +7,15 @@ import { PermissionComponent } from './components/permission/permission.componen
 import { CommissionComponent } from './components/commission/commission.component';
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from '../create/components/compliment/compliment.component';
+import { FullTimeComponent } from './components/full-time/full-time.component';
 
 
 @NgModule({
   declarations: [
     ViewComponent,
     PermissionComponent,
-    CommissionComponent
+    CommissionComponent,
+    FullTimeComponent
   ],
   imports: [
     CommonModule,
