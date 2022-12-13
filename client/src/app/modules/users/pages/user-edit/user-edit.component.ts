@@ -12,6 +12,7 @@ import { scale } from '@shared/data/scale';
 import { id_type } from '@shared/data/id_type';
 import { Observable, take } from 'rxjs';
 import Swal from 'sweetalert2';
+import { vinculation_type } from '@shared/data/vinculation';
 
 @Component({
   selector: 'app-user-edit',
@@ -19,37 +20,44 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-edit.component.scss']
 })
 
-export class UserEditComponent implements OnInit {
+export class UserEditComponent {
   public userRolBase!: UserBase;
   public userResponse : UserResponse | undefined;
 
-  public scale = scale
+
   public id: Number | string = 0;
+
   public typesId = id_type;
+  public vinculation_types = vinculation_type;
+  public scale = scale;
+  
   public isLoading = this.loadingSvc.isLoading;
   public error: string = "";
   public submitted: boolean = false;
   public rol: string = localStorage.getItem('rol') || '';
-  public roles$: Observable<RolBase[]>
-  private isCorreoValid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
+
+  public rol$: Observable<RolBase[]> = this.rolService.getRoles();
+  private is_email_valid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
   public getId: Number | string = 0;
 
 
   constructor(
-    private userSvc: UserService,
     private router: Router,
     private fb: FormBuilder,
     public activateRoute: ActivatedRoute,
     public loadingSvc: LoaderService,
     private departamentosSvc: DepartmentService,
-    private rolesSvc: RolService,
+
+    private rolService: RolService,
+    private userSvc: UserService,
     private location: Location
   ) {
-    this.roles$ = this.rolesSvc.getRoles();
+    //this.roles$ = this.rolesSvc.getRoles();
     this.activateRoute.params.subscribe(params => this.getId = params['id']);
 
     this.userSvc.getUser(this.getId as number).subscribe({
       next: res => {
+        console.log(res)
         this.userResponse = res;
         this.updateUserBase.patchValue(this.userResponse);
        }
@@ -58,7 +66,7 @@ export class UserEditComponent implements OnInit {
   }
 
  updateUserBase = this.fb.group({
-    email: ['', [Validators.required, Validators.pattern(this.isCorreoValid)]],
+    email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     last_names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     identification_type: ['', [Validators.required, Validators.maxLength(250)]],
@@ -71,21 +79,17 @@ export class UserEditComponent implements OnInit {
     scale: ['', Validators.required]
   });
 
-  ngOnInit(): void {
-
-   
-  }
 
   get f() {
     return this.updateUserBase.controls;
   }
 
   submitUpdate() {
-    console.log('submit')
     // verificacion de errores
-    // if (this.updateUserBase.invalid) {
-    //   return;
-    // }
+    if (this.updateUserBase.invalid) {
+      console.log('¡esrta en error')
+      return;
+    }
     const user = this.updateUserBase.value as UserUpdate;
     this.userSvc.putUser(user, this.getId as number)
     .subscribe({
@@ -95,16 +99,10 @@ export class UserEditComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'Aceptar'
         }).then(() => {
-          this.router.navigate(['usuarios/ver-usuario', this.getId])
+          this.router.navigate(['usuarios/ver/', this.getId])
         })
       },
       error: (err: any) => {
-        if (err.status === 404 || err.status === 401) {
-          this.error = err.error.msg;
-        }
-        if (err.status === 400) {
-          this.error = err.error.message;
-        }
       }
     }
     );

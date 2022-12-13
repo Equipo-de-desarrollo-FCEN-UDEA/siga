@@ -74,7 +74,7 @@
         }"
         *ngIf="applicationType$ | async as applicationType"
       >
-        <option value="0" disabled selected>Tipo de permiso</option>
+        <option value="0" disabled selected>Elige un tipo de permiso</option>
         <option
           [ngValue]="tipo.id | number"
           *ngFor="let tipo of applicationType.application_sub_type"

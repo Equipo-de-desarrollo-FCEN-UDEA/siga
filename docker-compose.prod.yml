@@ -2,18 +2,50 @@ version: '3.3'
 
 volumes:
   db:
+  certs:
+  html:
+  vhostd:
 
 services:
-  nginx:
-    image: simon3640/siga-nginx
+  nginx-jwilder:
+    image: jwilder/nginx-proxy
+    restart: always
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-jwilder:rw
+
+  nginx:
+    image: simon3640/siga-nginx:latest
+    expose:
+      - "80"
     restart: always
     depends_on:
       - backend
     links:
       - backend
       - client
+    volumes:
+      - /www:/usr/share/nginx/html:ro
+    environment:
+      - VIRTUAL_HOST=siga-fcen.com,www.siga-fcen.com
+      - LETSENCRYPT_HOST=siga-fcen.com
+      - LETSENCRYPT_EMAIL=simon.garcial@udea.edu.co
     mem_limit: 100m
 
   db: 
@@ -31,18 +63,18 @@ services:
 
   mongo:
     container_name: 'mongo'
-    image: mongo:latest
+    image: mongo:4.4
     restart: always
     ports:
       - '27017:27017'
     env_file:
-      - .env
+      - prod.env
     volumes:
       - ./db/mongo-data:/data/db
-    mem_limit: 50m
+    mem_limit: 150m
 
   backend:
-    image: simon3640/siga-backend
+    image: simon3640/siga-backend:latest
     depends_on:
       - db
       - mongo
@@ -69,7 +101,7 @@ services:
     image: simon3640/siga-backend
     command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
-      - .env
+      - prod.env
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -79,7 +111,7 @@ services:
     mem_limit: 350m
   
   client:
-    image: simon3640/siga-client
+    image: simon3640/siga-client:latest
     container_name: client
     depends_on:
       - backend

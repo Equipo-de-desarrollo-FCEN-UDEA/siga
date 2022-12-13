@@ -40,7 +40,8 @@ async def create_permission(
             engine=engine,
             who=current_user,
             obj_in=Permission(**dict(permission)),
-            type_permission=permission.application_sub_type_id)
+            type_permission=permission.application_sub_type_id,
+            start_date=permission.start_date)
 
         log.debug('permission_created', permission_created)
 
@@ -123,7 +124,7 @@ async def get_permission(
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
             log.debug('permission in mongo', permission)
-        
+
     # except ApplicationErrors as e:
     #     raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
@@ -140,7 +141,7 @@ async def get_permission(
 
 
 # ------ EDITAR UN PERMISO POR ID ------
-@router.put("/{id}", status_code=200)
+@router.put("/{id}", status_code=201)
 async def put_permission(
     id: int,
     permission: PermissionUpdate,
@@ -148,7 +149,7 @@ async def put_permission(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> Permission:
+):
     """
         Endpoint to update an application of type Permission
             params:
@@ -159,6 +160,7 @@ async def put_permission(
                 - Permission
     """
     try:
+
         # GET In PostgreSQL
         application: Application = crud.application.get(
             db=db, id=id, who=current_user)
@@ -178,7 +180,8 @@ async def put_permission(
                 who=current_user,
                 db_obj=current_permission,
                 obj_in=permission,
-                type_permission=permission.application_sub_type_id)
+                type_permission=permission.application_sub_type_id,
+                start_date=permission.start_date)
 
             log.debug('updated_permission', updated_permission)
 
@@ -189,16 +192,14 @@ async def put_permission(
 
             log.debug('application update', application_updated)
 
+
     except PermissionErrors as e:
         log.debug('PermissionErrors', e)
-        # await crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
-        return HTTPException(e.code, e.detail)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     # except ValueError as e:
     #     return HTTPException(422, e.args)
-    # except Exception:
-    #     return HTTPException(422, "Algo ocurrió mal")
 
     return updated_permission
 

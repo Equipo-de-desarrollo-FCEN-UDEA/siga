@@ -44,26 +44,27 @@ async def create_commission(
         commission_created = await crud.commission.create(db=engine,
                                                           obj_in=Commission(**dict(commission)))
 
-        log.debug('commission_created', commission_created)
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
             user_id=current_user.id
         )
-        log.debug('application', application)
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+        log.error('ValueError')
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
-    except Exception:
-        await engine.remove(Commission, Commission.id == commission_created.id)
+    except Exception as e:
+        log.error('Exception')
+        log.error(e)
+        # await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
-    log.debug(commission_created)
     response = CommissionResponse(
         **dict(application),
         commission=commission_created
@@ -111,7 +112,7 @@ async def get_commission(
     return response
 
 
-@router.put("/{id}", response_model=Commission)
+@router.put("/{id}", status_code=200)
 async def update_commission(
     id: int,
     commission: CommissionUpdate,
@@ -132,19 +133,48 @@ async def update_commission(
         response:
             -body: Commission
     """
+    # try:
+    #     application: Application = crud.application.get(
+    #         db, current_user, id=id)
+    #     # For apply policies it will end if some policy is not ok
+    #     application = crud.application.update(
+    #         db, current_user, db_obj=application, obj_in={})
+    #     mongo_id = ObjectId(application.mongo_id)
+    #     if application:
+    #         current_commission = await crud.commission.get(engine, id=mongo_id)
+    #         updated_commission = await crud.commission.update(
+    #             engine, db_obj=current_commission, obj_in=commission)
+    # except BaseErrors as e:
+    #     raise HTTPException(e.code, e.detail)
+    # return updated_commission
+
     try:
+        # GET In PostgreSQL
         application: Application = crud.application.get(
-            db, current_user, id=id)
-        # For apply policies it will end if some policy is not ok
-        application = crud.application.update(
-            db, current_user, db_obj=application, obj_in={})
-        mongo_id = ObjectId(application.mongo_id)
+            db=db, id=id, who=current_user)
+
         if application:
+
+            log.debug('obj_in que es', commission)
+
+            # In MongoDB
+            mongo_id = ObjectId(application.mongo_id)
+
             current_commission = await crud.commission.get(engine, id=mongo_id)
-            updated_commission = await crud.commission.update(
-                engine, db_obj=current_commission, obj_in=commission)
+
+            updated_commission = await crud.commission.update(engine, db_obj=current_commission, obj_in=commission)
+
+            log.debug('updated_commission', updated_commission)
+
+            # In PostgreSQL
+            application_updated = crud.application.update(
+                db=db, who=current_user, db_obj=application, obj_in=commission)
+
+            log.debug('application update', application_updated)
+
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
+
     return updated_commission
 
 
@@ -203,7 +233,7 @@ async def update_compliment(
             current_user.last_names,
             compliment.observation,
             compliment.documents,
-            compliment.emails
+            compliment.emails #+ [current_user.department.school.email_dean]
         ))
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)

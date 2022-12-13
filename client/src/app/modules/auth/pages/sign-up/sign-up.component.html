@@ -72,7 +72,7 @@
         </div>
 
         <div *ngIf="f['email'].errors" class="invalid-feedback">
-          <div *ngIf="submitted && f['email'].errors?.['pattern']">
+          <div *ngIf="f['email'].touched && f['email'].errors?.['pattern']">
             Ingresa tu correo institucional
           </div>
         </div>
@@ -116,7 +116,7 @@
               placeholder=" "
               [ngClass]="{
                 'is-invalid':
-                  f['identification_number'].errors &&
+                  (f['identification_number'].errors || f['identification_number'].errors?.['pattern']) &&
                   f['identification_number'].touched
               }"
             />
@@ -128,13 +128,12 @@
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
-              id="phone_number"
-              formControlName="phone_number"
+              id="phone"
+              formControlName="phone"
               type="number"
               class="form-control"
               [ngClass]="{
-                'is-invalid':
-                  f['phone_number'].errors && f['phone_number'].touched
+                'is-invalid': f['phone'].errors && f['phone'].touched
               }"
             />
           </div>
@@ -162,7 +161,9 @@
         </div>
 
         <div class="row regular-row mt-4">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Tipo de vinculación</div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Tipo de vinculación
+          </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
@@ -171,16 +172,19 @@
               required
               placeholder=" "
               [ngClass]="{
-                'is-invalid': f['vinculation_type'].errors && f['vinculation_type'].touched
+                'is-invalid':
+                  f['vinculation_type'].errors && f['vinculation_type'].touched
               }"
             >
-              <option [value]="vinculation" *ngFor="let vinculation of vinculation_types">
+              <option
+                [value]="vinculation"
+                *ngFor="let vinculation of vinculation_types"
+              >
                 {{ vinculation | uppercase }}
               </option>
             </select>
           </div>
         </div>
-        
 
         <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Escalafón</div>
@@ -201,11 +205,12 @@
             </select>
           </div>
         </div>
-        
 
         <!-- Facultad -->
         <div class="row regular-row mt-4" *ngIf="schools$ | async as schools">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Elige tu facultad
+          </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
@@ -215,8 +220,11 @@
               placeholder=" "
               (change)="nextDepartment($event)"
             >
-            <option [value]="null" selected disabled>Facultad</option>
-              <option *ngFor="let school of schools; let i = index" [value]="school.id">
+              <option [value]="null" selected disabled>Facultad</option>
+              <option
+                *ngFor="let school of schools; let i = index"
+                [value]="school.id"
+              >
                 {{ school.description | titlecase }}
               </option>
             </select>
@@ -224,7 +232,10 @@
         </div>
 
         <!-- Departamento/Instituto -->
-        <div class="row regular-row mt-4" *ngIf="departments$ | async as departments">
+        <div
+          class="row regular-row mt-4"
+          *ngIf="departments$ | async as departments"
+        >
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Departamento/Instituto
           </div>
@@ -240,7 +251,10 @@
                   f['department_id'].errors && f['department_id'].touched
               }"
             >
-              <option *ngFor="let department of departments" [value]="department.id">
+              <option
+                *ngFor="let department of departments"
+                [value]="department.id"
+              >
                 {{ department.name | uppercase }}
               </option>
             </select>
@@ -267,21 +281,23 @@
               <div
                 class="invalid-feedback"
                 [ngClass]="{
-                  'is-invalid': f['password'].errors && f['password'].touched
+                  'is-invalid': (f['password'].errors?.['required'] || 
+                  f['password'].errors?.['maxlength']) && f['password'].touched
                 }"
               >
-                <!-- <div
-                  class="alert alert-danger"
-                  *ngIf="f['password'].errors['minlength']"
+                <div
+                  class="invalid"
+                  *ngIf="(f['password'].errors?.['required'] || 
+                  f['password'].errors?.['minlength']) && f['password'].touched"
                 >
                   La contraseña debe contener mínimo 8 caracteres
                 </div>
                 <div
-                  class="alert alert-danger"
-                  *ngIf="f['contrasena'].errors['maxlength']"
+                  class="invalid"
+                  *ngIf=" (f['password'].errors?.['maxlength']) && f['password'].touched"
                 >
                   La contraseña es demasiado larga
-                </div> -->
+                </div>
               </div>
             </div>
           </div>
@@ -300,7 +316,7 @@
                 formControlName="confirm_password"
                 placeholder=" "
               />
-              <span class="error" *ngIf="validatePassword()">
+              <span class="invalid" *ngIf="validatePassword()">
                 Las contraseñas no coinciden
               </span>
             </div>

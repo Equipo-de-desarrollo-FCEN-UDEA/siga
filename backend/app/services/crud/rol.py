@@ -22,7 +22,7 @@ class CRUDRol(CRUDBase[Rol, RolCreate, RolUpdate, RolPolicy]):
     ) -> List[Rol]:
         objs_db = db.\
             query(Rol).\
-            filter(Rol.scope > who.rol.scope).\
+            filter(Rol.scope >= who.rol.scope).\
             offset(skip).\
             limit(limit).\
             all()

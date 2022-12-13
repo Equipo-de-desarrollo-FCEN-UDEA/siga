@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class Department(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
-    description = Column(String(50), nullable=False)
+    description = Column(String(100), nullable=False)
     coord_email = Column(String(100), nullable=False)
     cost_center = Column(Integer, nullable=True)
 

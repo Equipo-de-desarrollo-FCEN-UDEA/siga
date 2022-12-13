@@ -13,7 +13,7 @@ class CommissionBase(BaseModel):
     start_date: datetime
     end_date: datetime
     lenguage: str | None
-    justification: str = Field(max_length=300, min_length=30)
+    justification: str = Field(max_length=500, min_length=30)
     documents: list[Any] | None
     
 
@@ -30,7 +30,7 @@ class CommissionCreate(CommissionBase):
 
 
 class CommissionUpdate(CommissionBase):
-    pass
+    application_sub_type_id: int
 
 
 class Compliment(BaseModel):

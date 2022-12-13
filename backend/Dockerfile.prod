@@ -41,7 +41,12 @@ RUN poetry install --only main
 FROM python-base as production
 ENV FASTAPI_ENV=production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
-COPY . .
+COPY ./ ./app
+COPY /app/core/settings/base-production.py /app/app/core/settings/base.py
+
+
+WORKDIR /app/
+
 
 RUN apt-get clean && apt-get update && apt-get install -y locales
 RUN sed -i -e 's/# es_ES.UTF-8 UTF-8/es_ES.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -52,5 +57,5 @@ ENV LANGUAGE es_ES:es
 ENV LC_ALL es_ES.UTF-8
 
 EXPOSE 8000
-CMD ["gunicorn","--bind=0.0.0.0:8000", "-k", "uvicorn.workers.UvicornWorker", "app.main:app"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "-w", "1", "--bind=0.0.0.0:8000", "app.main:app"]
 # CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

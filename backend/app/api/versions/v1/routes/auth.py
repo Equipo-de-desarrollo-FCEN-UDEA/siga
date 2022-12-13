@@ -29,6 +29,13 @@ def login_access_token(
         authentication can be with email or identification number
     """
     try:
+        user = crud.user.get_by_email(
+        db, email=form_data.username) or crud.user.get_by_identification(db, identification=form_data.username)
+        if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="El correo o la contraseña están erradas",
+            )
         user: models.User = crud.user.authenticate(
             db, email=form_data.username, identification=form_data.username, password=form_data.password)
         minutes = settings.access_token_expires_minutes
@@ -122,7 +129,7 @@ def activate_email(email: str, *, db: Session = Depends(db.get_db)) -> dict:
         )
     email_token = jwt.email_token(email=user.email)
     confirm_email.apply_async(args=(user.names, email_token, user.email))
-    return {"msg": "El correo de activación fue enviado correctamente"}
+    return {"msg": f"El correo de activación fue enviado a {user.email}"}
 
 
 # Route for activate the account with the mailed token

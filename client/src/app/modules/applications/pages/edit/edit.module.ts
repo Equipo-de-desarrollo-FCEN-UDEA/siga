@@ -6,13 +6,15 @@ import { EditComponent } from './edit.component';
 import { CommissionComponent } from './components/commission/commission.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
+import { FullTimeComponent } from './components/full-time/full-time.component';
 
 
 @NgModule({
   declarations: [
     EditComponent,
     CommissionComponent,
-    PermissionComponent
+    PermissionComponent,
+    FullTimeComponent
   ],
   imports: [
     CommonModule,

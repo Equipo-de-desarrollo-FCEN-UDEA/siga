@@ -43,10 +43,10 @@
     </div>
   
   
-    <!-- <div class="row regular-row">
+    <div class="row regular-row">
       <div class="col-xs-12 col-sm-6 label fw-bold ">Oficina</div>
-      <div class="col-sm-6 col-xs-12">{{user?.oficina}} </div>
-    </div> -->
+      <div class="col-sm-6 col-xs-12">{{user?.office}} </div>
+    </div>
   
     <div class="row regular-row">
       <div class="ccol-xs-12 col-sm-6 label fw-bold">Estado</div>
@@ -83,28 +83,18 @@
         <button
           *ngIf="id == 0"
           type="button"
-          class="btn  btn-light"
-          routerLink="/usuarios/editar-contrasena"
+          class="btn btn-green btn-outline-success btn-block"
+          [routerLink]="['/usuarios/editar-contrasena']"
         >
           Modificar Contraseña
         </button>
-      </div>
-
-      <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-        <a
-          type="button"
-          class="btn btn-outline-secondary"
-          (click)="cancel()"
-        >
-          Cancelar
-        </a>
       </div>
   
       <div 
         class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
         <button
           type="button"
-          class="btn btn-warning btn-block"
+          class="btn btn-submit"
           [routerLink]="['/usuarios/editar/'+ user?.id]"
         >
           Editar Información

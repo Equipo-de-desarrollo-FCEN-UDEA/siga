@@ -265,7 +265,7 @@
     </div>
 
     <!--ARCHIVOS-->
-    <h6 class="mt-3">
+    <h6 class="mt-3 text-center">
       <span class="text-muted">Archivos adjuntos del permiso</span>
     </h6>
     <div
@@ -280,7 +280,7 @@
     <div class="formfloatig" style="display: flex; flex-direction: column">
       <div
         *ngFor="let producto of document_new; last as isLast; let i = index"
-        class="arrayLike formfloatig"
+        class="arrayLike formfloatig d-flex justify-content-between"
       >
         <div class="archivos" style="width: auto; margin-left: 10px">
           <label class="btn-btn-default is-hoverable">

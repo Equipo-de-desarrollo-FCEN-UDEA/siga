@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional, Union, List
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.domain.schemas.user import UserCreate, UserUpdate
@@ -15,7 +16,7 @@ log = get_logging(__name__)
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
 
-    # 
+    #
     def get_middleware(
         self, db: Session, id: int
     ) -> Optional[User]:
@@ -51,7 +52,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         active: bool = True,
     ) -> List[User]:
         self.policy.get_multi(who=who)
-        queries = [User.active == active, Rol.scope > who.rol.scope]
+        queries = [User.active == active, Rol.scope >= who.rol.scope]
 
         if who.rol.scope == 7:
             queries += [Department.id == who.department.id]
@@ -69,6 +70,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             search = search.upper()
             raw = [
                 db.query(User)
+                .order_by(desc(User.id))
                 .join(Rol)
                 .join(Department)
                 .filter(getattr(User, col).contains(f"{search}"))
@@ -80,6 +82,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             return [*set(res)]
 
         objs_db = (db.query(User)
+                   .order_by(desc(User.id))
                    .join(Rol)
                    .join(Department)
                    .filter(*queries)

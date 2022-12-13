@@ -1,5 +1,10 @@
-<form need-validation novalidate [formGroup]="updateUserBase" (ngSubmit)="submitUpdate()"
-  class="container containerInside card shadow mt-5 bg-white rounded">
+<form
+  need-validation
+  novalidate
+  [formGroup]="updateUserBase"
+  (ngSubmit)="submitUpdate()"
+  class="container containerInside card shadow mt-5 bg-white rounded"
+>
   <div class="p-4">
     <div class="card-body">
       <div class="row header-row P-2">
@@ -13,46 +18,53 @@
         <div class="row regular-row m-2 align-items-baseline">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Apellidos</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input 
-            id="last_names" 
-            type="text" 
-            class="form-control" 
-            placeholder="" 
-            formControlName="last_names" 
-            [ngClass]="{
-              'is-invalid': f['last_names'].errors
-            }" />
+            <input
+              id="last_names"
+              type="text"
+              class="form-control"
+              placeholder=""
+              formControlName="last_names"
+              [ngClass]="{
+                'is-invalid': f['last_names'].errors && f['last_names'].touched
+              }"
+            />
           </div>
 
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-          Nombre
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Nombre</div>
+          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+            <input
+              id="names"
+              type="text"
+              class="form-control"
+              placeholder=""
+              formControlName="names"
+              [ngClass]="{
+                'is-invalid': f['names'].errors && f['names'].touched
+              }"
+            />
+          </div>
         </div>
-        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-          <input
-            id="names"
-            type="text"
-            class="form-control"
-            placeholder=""
-            formControlName="names"
-            [ngClass]="{
-              'is-invalid': f['names'].errors
-            }"
-          />
-        </div>
-      </div>
 
         <div class="row regular-row m-2 align-items-baseline">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Tipo de Identificación
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <select class="form-select form-select-lg" id="floatingcampo_modalidad"
-              formControlName="identification_type" required>
+            <select
+              class="form-select form-select-lg"
+              id="floatingcampo_modalidad"
+              formControlName="identification_type"
+              required
+            >
               <option [value]="type" *ngFor="let type of typesId">
                 {{ type | uppercase }}
               </option>
             </select>
-            <label for="floatingcampo_modalidad" class="selectLabel" [ngClass]="{ isFill: true }"></label>
+            <label
+              for="floatingcampo_modalidad"
+              class="selectLabel"
+              [ngClass]="{ isFill: true }"
+            ></label>
           </div>
         </div>
 
@@ -61,101 +73,158 @@
             Número de Identificación
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="identification_number" 
-            formControlName="identification_number" 
-            type="text" class="form-control" 
-            placeholder=" "
+            <input
+              id="identification_number"
+              formControlName="identification_number"
+              type="text"
+              class="form-control"
+              placeholder=" "
               [ngClass]="{
-                'is-invalid': f['identification_number'].errors
-              }" />
-            <label for="identification_number" class="formLabel"> </label>
+                'is-invalid':
+                  f['identification_number'].errors &&
+                  f['identification_number'].touched
+              }"
+            />
           </div>
         </div>
 
         <div class="row regular-row m-2 align-items-baseline">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Teléfono
-          </div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="phone" formControlName="phone" type="text" class="form-control" placeholder=" " [ngClass]="{
-                'is-invalid': f['phone'].invalid
-              }" />
-            <label for="phone" class="formLabel"> </label>
+            <input
+              id="phone"
+              formControlName="phone"
+              type="text"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['phone'].errors && f['phone'].touched
+              }"
+            />
           </div>
         </div>
 
         <div class="row regular-row m-2 align-items-baseline">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Oficina
-          </div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Oficina</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="office" formControlName="office" type="text" class="form-control" placeholder=" " [ngClass]="{
-                'is-invalid': f['office'].errors
-              }" />
-            <label for="office" class="formLabel"> </label>
+            <input
+              id="office"
+              formControlName="office"
+              type="text"
+              class="form-control"
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid': f['office'].errors && f['office'].touched
+              }"
+            />
           </div>
         </div>
 
-        <div *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')" class="row regular-row m-2 align-items-baseline">
+        <div
+          *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')"
+          class="row regular-row m-2 align-items-baseline"
+        >
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
             Tipo de Vinculación
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input id="vinculation_type" formControlName="vinculation_type" type="text" class="form-control"
-              placeholder=" " [ngClass]="{
-                'is-invalid': f['vinculation_type'].errors
-              }" />
-            <label for="vinculation_type" class="formLabel"> </label>
+            <select
+              class="form-select form-select-lg"
+              id="vinculation_type"
+              formControlName="vinculation_type"
+              required
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  f['vinculation_type'].errors && f['vinculation_type'].touched
+              }"
+            >
+              <option
+                [value]="vinculation"
+                *ngFor="let vinculation of vinculation_types"
+              >
+                {{ vinculation | uppercase }}
+              </option>
+            </select>
           </div>
         </div>
 
-        <div class="row regular-row m-2 align-items-baseline" *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')">
+        <div
+          class="row regular-row m-2 align-items-baseline"
+          *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')"
+        >
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Cargo</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <select class="form-select form-select-lg" id="rol_id" formControlName="rol_id" required
-                placeholder=" " [ngClass]="{
-                  'is-invalid': f['rol_id'].errors
-                }">
-                <option [ngValue]="rol.id" *ngFor="let rol of roles$ | async">
+              <select
+                class="form-select form-select-lg"
+                id="rol_id"
+                formControlName="rol_id"
+                required
+                placeholder=" "
+                [ngClass]="{
+                  'is-invalid': f['rol_id'].errors && f['rol_id'].touched
+                }"
+              >
+                <option [value]="rol.id" *ngFor="let rol of rol$ | async">
                   {{ rol.name | uppercase }}
                 </option>
               </select>
-              <label for="rol_id" class="selectLabel" [ngClass]="{ isFill: true }">Cargo</label>
             </div>
           </div>
         </div>
-        <div class="row regular-row m-2 align-items-baseline" *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')">
+        <div
+          class="row regular-row m-2 align-items-baseline"
+          *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')"
+        >
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Escalafón</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <select class="form-select form-select-lg" id="scale" formControlName="scale" required
-                placeholder=" " [ngClass]="{
-                  'is-invalid': f['scale'].errors
-                }">
+              <select
+                class="form-select form-select-lg"
+                id="scale"
+                formControlName="scale"
+                required
+                placeholder=" "
+                [ngClass]="{
+                  'is-invalid': f['scale'].errors && f['scale'].touched
+                }"
+              >
                 <option [value]="scal" *ngFor="let scal of scale">
                   {{ scal | uppercase }}
                 </option>
               </select>
-              <label for="scale" class="selectLabel" [ngClass]="{ isFill: true }">Escalafón</label>
             </div>
           </div>
         </div>
-        
+
         <div class="alert alert-danger" *ngIf="error">
-          {{error}}
+          {{ error }}
         </div>
         <hr />
         <div class="footer-row d-md-flex justify-content-md-end mb-3">
           <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="cancel()"
+            >
               Cancelar
             </button>
           </div>
           <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-            <button type="submit" id="btn-sub" (submit)="(true)" class="btn btn-success">
-              <span *ngIf="isLoading | async" class="spinner-border spinner-border-sm" role="status"
-                aria-hidden="true"></span>
+            <button
+              type="submit"
+              id="btn-sub"
+              (submit)="(true)"
+              class="btn btn-submit"
+            >
+              <span
+                *ngIf="isLoading | async"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
               Confirmar
             </button>
           </div>

@@ -37,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
     });
   }
 
@@ -51,13 +51,12 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.forgotPassword(this.f['username'].value).subscribe({
+    this.authService.forgotPassword(this.f['email'].value).subscribe({
       next: (res: any) => {
         Swal.fire({
           title:
-            'Se envió un link para cambiar la contraseña al correo ' +
-            this.f['username'].value,
-          text: res.message,
+            'Recuperación de contraseña',
+          text: res.msg,
           icon: 'success',
           showLoaderOnConfirm: true,
           confirmButtonText: 'Aceptar',

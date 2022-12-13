@@ -41,7 +41,7 @@ class UserBase(BaseModel):
     identification_type: Optional[str] = Field(
         regex=regex,
         min_length=1,
-        max_length=10,
+        max_length=100,
         default="CC"
     )
     active: bool = False

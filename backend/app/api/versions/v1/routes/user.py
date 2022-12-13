@@ -117,12 +117,11 @@ def update_user(
     return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
 
 
-@router.put("/{id}/new-password", status_code=200,
+@router.patch("/new-password", status_code=200,
             response_model=schemas.UserResponse)
 def update_user_password(
     password: str,
     confirmpassword: str,
-    id: int,
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
@@ -132,7 +131,8 @@ def update_user_password(
     Endpoint to update an user.
     """
     try:
-        user = crud.user.get(db=db, id=id, who=current_user)
+        user = crud.user.get(db=db, id=current_user.id, who=current_user)
+        log.debug(user.__dict__)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
 

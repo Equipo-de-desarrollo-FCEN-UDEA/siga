@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   public loading: boolean = false;
   public form!: FormGroup;
   public error:string = '';
+  public activation: boolean = false;
   public loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(2)]],
     password: ['', [Validators.required, Validators.minLength(2)]],
@@ -59,6 +60,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       },
       error: (err) => {
+        this.activation = true;
         if (err.status === 404 || err.status === 401) {
           this.error = 'Usuario o contraseña incorrectos';
           Swal.fire({
