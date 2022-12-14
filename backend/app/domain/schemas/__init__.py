@@ -1,6 +1,6 @@
 from .msg import Msg
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB
-from .token import TokenPayload, Token
+from .token import Token, TokenPayload
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
 from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse
 from .rol import RolInDB, RolCreate, RolUpdate, RolResponse
@@ -11,7 +11,7 @@ from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,
                                   ApplicationSubTypeInDB)
 from .application_status import (Application_statusCreate, Application_statusInDB,
-                                Application_statusUpdate)
+                                 Application_statusUpdate)
 from .applications import (
     CommissionCreate,
     CommissionResponse,
@@ -22,5 +22,12 @@ from .applications import (
     PermissionCreate,
     PermissionResponse,
     PermissionUpdate,
-    PermissionDocument
+    PermissionDocument,
+    FullTimeCreate,
+    FullTimeUpdate,
+    FullTimeResponse,
+    FullTimeInDB,
+    WorkPlan,
+    ViceFormat,
+    InitialLetter
 )
