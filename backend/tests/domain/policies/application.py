@@ -35,8 +35,8 @@ class TestApplicationPolicy(TestBaseDB):
             user_id=professor.id
         )
 
-        # application type dedication, cant be schedule by student or employee
-        application_dedication = ApplicationCreate(
+        # application type full_time, cant be schedule by student or employee
+        application_full_time = ApplicationCreate(
             mongo_id=2,
             application_sub_type_id=10,
             user_id=professor.id
@@ -72,10 +72,10 @@ class TestApplicationPolicy(TestBaseDB):
             policy.create(who=student, to=application_commission)
 
         with raises(BaseErrors):
-            policy.create(who=student, to=application_dedication)
+            policy.create(who=student, to=application_full_time)
 
         with raises(BaseErrors):
-            policy.create(who=employee, to=application_dedication)
+            policy.create(who=employee, to=application_full_time)
 
         with raises(BaseErrors):
             policy.delete(who=professor, to=permission)
