@@ -135,20 +135,6 @@ async def update_full_time(
         response:
             -body: full_time
     """
-    # try:
-    #     application: Application = crud.application.get(
-    #         db, current_user, id=id)
-    #     # For apply policies it will end if some policy is not ok
-    #     application = crud.application.update(
-    #         db, current_user, db_obj=application, obj_in={})
-    #     mongo_id = ObjectId(application.mongo_id)
-    #     if application:
-    #         current_full_time = await crud.full_time.get(engine, id=mongo_id)
-    #         updated_full_time = await crud.full_time.update(
-    #             engine, db_obj=current_full_time, obj_in=full_time)
-    # except BaseErrors as e:
-    #     raise HTTPException(e.code, e.detail)
-    # return updated_full_time
 
     try:
         # GET In PostgreSQL
