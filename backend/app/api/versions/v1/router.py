@@ -49,4 +49,4 @@ api_route.include_router(commission.router,
 api_route.include_router(permission.router,
                          prefix="/permission", tags=['permission'])
 api_route.include_router(full_time.router,
-                         prefix='/full_time', tags=['full_time'])
+                         prefix='/full-time', tags=['full_time'])
