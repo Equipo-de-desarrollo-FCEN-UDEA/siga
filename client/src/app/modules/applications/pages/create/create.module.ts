@@ -8,13 +8,6 @@ import { PermissionComponent } from './components/permission/permission.componen
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
 
-//Dedicacion Exclusiva 
-import { FullTimeComponent } from './components/full-time/full-time.component';
-import { StartLetterComponent } from './components/full-time/pages/start-letter/start-letter.component';
-import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
-import { InstitutionalDevelopmentPlanComponent } from './components/full-time/pages/institutional-development-plan/institutional-development-plan.component';
-import { FullTimeFormatComponent } from './components/full-time/pages/full-time-format/full-time-format.component';
-import { StatusComponent } from './components/full-time/pages/status/status.component';
 
 
 @NgModule({
@@ -23,12 +16,6 @@ import { StatusComponent } from './components/full-time/pages/status/status.comp
     CommissionComponent,
     PermissionComponent,
     ComplimentComponent,
-    FullTimeComponent,
-    StartLetterComponent,
-    WorkplanComponent,
-    InstitutionalDevelopmentPlanComponent,
-    FullTimeFormatComponent,
-    StatusComponent,
   ],
   imports: [
     CommonModule,
