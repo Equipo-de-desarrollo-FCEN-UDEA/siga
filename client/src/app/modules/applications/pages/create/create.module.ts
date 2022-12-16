@@ -1,23 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EditRoutingModule } from './edit-routing.module';
-import { EditComponent } from './edit.component';
+import { CreateRoutingModule } from './create-routing.module';
+import { CreateComponent } from './create.component';
 import { CommissionComponent } from './components/commission/commission.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
+import { ComplimentComponent } from './components/compliment/compliment.component';
+
 
 
 @NgModule({
   declarations: [
-    EditComponent,
+    CreateComponent,
     CommissionComponent,
-    PermissionComponent
+    PermissionComponent,
+    ComplimentComponent,
   ],
   imports: [
     CommonModule,
-    EditRoutingModule,
+    CreateRoutingModule,
     SharedModule
   ]
 })
-export class EditModule { }
+export class CreateModule { }

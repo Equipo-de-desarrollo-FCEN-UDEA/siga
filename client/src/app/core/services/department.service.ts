@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 
 //interfaces
-import { DepartmentInDB } from '@interfaces/department';
+import { DepartmentBase, DepartmentInDB } from '@interfaces/department';
 
 @Injectable({
   providedIn: 'root'

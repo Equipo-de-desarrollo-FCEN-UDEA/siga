@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommissionComponent } from './components/commission/commission.component';
 import { ComplimentComponent } from './components/compliment/compliment.component';
+import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CreateComponent } from './create.component';
 
@@ -25,6 +26,10 @@ const routes: Routes = [
         data: {
           title: 'Comisión'
         }
+      },
+      {
+        path: 'plan-de-trabajo',
+        component: WorkplanComponent
       },
       {
         path: 'cumplido/:id',

@@ -1,0 +1,121 @@
+<div class="container card shadow containerInside mt-5 p-3">
+  <div class="mb-3 p-2 d-flex justify-content-between"></div>
+
+  <form [formGroup]="form" (submit)="search()">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-8">
+        <div class="row">
+          <div class="col-6 mb-3">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="search"
+              [ngClass]="{ 'is-loading': (isLoading | async) }"
+              placeholder="Buscar"
+            />
+          </div>
+          <div class="col-2 search">
+            <button class="btn btn-warning" type="submit" (submit)="(true)">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <hr/>  
+  <div class="table-responsive-lg">
+    <table
+      *ngIf="applications$ | async as applications"
+      class="table table-striped table-hover table-borderless table-responsive"
+    >
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Solicitud</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>Departamento</th>
+          <th>Facultad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider ">
+        <tr *ngIf="applications.length == 0" style="width: 100%">
+          <td colspan="7">No se encontraron resultados</td>
+        </tr>
+        <tr
+          [routerLink]="[
+            'solicitudes/ver/' +
+              application.id +
+              '/' +
+              application.application_sub_type.application_type.name
+          ]"
+          *ngFor="let application of applications"
+        >
+          <th>{{ application.id }}</th>
+          <td>{{ application.application_sub_type.name }}</td>
+          <td>{{ application.application_status[0].status.name }}</td>
+          <td>{{ application.created_at | date : "yyyy-MM-dd" }}</td>
+          <td>{{ application.user.names }}</td>
+          <td>{{ application.user.last_names }}</td>
+          <td>{{ application.user.department.name }}</td>
+          <td>{{ application.user.department.school.name }}</td>
+
+          <!-- <td>{{user.names + ' ' + user.last_names | -->
+          <!-- titlecase}} -->
+          <!-- </td> -->
+          <!-- <td>{{user.rol.name}}</td> -->
+          <!-- <td>{{user.email | lowercase}}</td> -->
+          <!-- <td>{{user.identificaction_number | lowercase}}</td> -->
+          <!-- <td>{{user.department.name}}</td> -->
+          <!-- <td>{{user.department.school.name}}</td> -->
+          <!-- <td>{{user.active? 'Activo': 'Inactivo'}}</td> -->
+          <!-- <td> -->
+          <!-- <button [routerLink]="['actualizar/'+user.id]" (click)="$event.stopPropagation()"
+                            class="btn btn-outline-primary btn-sm" type="button">
+                            <i class="fas fa-edit"></i>
+                        </button> -->
+          <!-- <button (click)="eliminar(user.id);$event.stopPropagation()"
+                        class="button is-danger is-small is-rounded is-outlined " type="button">
+                        <i class="fas fa-trash"></i>
+                    </button> -->
+          <!-- </td> -->
+        </tr>
+        
+      </tbody> 
+      <tfoot>
+        <tr style="width: 100%">
+          <td colspan="7">
+            <button
+              [disabled]="page == 1"
+              class="btn btn-outline-primary btn-sm"
+              type="button"
+              (click)="prevPage()"
+            >
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            {{ page }}
+            <button
+              [disabled]="applications.length != limit"
+              class="btn btn-outline-primary btn-sm"
+              type="button"
+              (click)="nextPage()"
+            >
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </td>
+          <div class="col-xs-5 col-lg-2">
+            <select class="form-select" style="width: auto">
+              <option value="0">No archivados</option>
+              <option value="1">Archivados</option>
+              <option value="2">Todos</option>
+            </select>
+          </div>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
