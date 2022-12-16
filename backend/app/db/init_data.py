@@ -1,4 +1,5 @@
 from typing import List
+import datetime
 
 from app.domain import schemas
 from app.core.config import get_app_settings
@@ -827,6 +828,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
     # )
 ]
 
+
 init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Licencia de maternidad",
@@ -875,4 +877,25 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     #     name="Dedicación",
     #     application_type_id=3
     # )
+]
+
+init_holidays: List[schemas.HolidaysCreate] = [
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,1,1)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,1,9)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,3,20)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,4,6)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,4,7)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,5,1)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,5,22)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,6,12)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,6,19)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,7,3)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,7,20)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,8,7)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,8,21)), 
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,10,16)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,11,6)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,11,13)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,12,8)),
+    schemas.HolidaysCreate(holiday_date=datetime.datetime(2023,12,25)),
 ]

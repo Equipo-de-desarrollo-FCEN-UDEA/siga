@@ -24,3 +24,5 @@ from .applications import (
     PermissionUpdate,
     PermissionDocument
 )
+
+from .holidays import (HolidaysBase, HolidaysCreate)
