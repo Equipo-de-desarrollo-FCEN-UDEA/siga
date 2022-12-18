@@ -9,6 +9,6 @@ from app.domain.models import (
     ApplicationSubType,
     ApplicationType,
     Application_status,
-    Holidays
+    Holiday
 )
 # Para que se puedan crear las tablas

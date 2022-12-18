@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -21,6 +21,8 @@ import { LoaderService } from '@services/loader.service';
 
 // Utils
 import { LaboralDays } from '@shared/utils';
+import { HolidayService } from '@services/holiday.service';
+import { Holiday } from '@interfaces/holiday';
 
 
 
@@ -29,7 +31,7 @@ import { LaboralDays } from '@shared/utils';
   templateUrl: './permission.component.html',
   styleUrls: ['./permission.component.scss'],
 })
-export class PermissionComponent{
+export class PermissionComponent implements AfterViewInit{
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -48,10 +50,15 @@ export class PermissionComponent{
   public error = '';
   public submitted = false;
 
+  // loader
   public isLoading = this.loaderSvc.isLoading;
 
+  // type 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
   public suscription: any;
+
+  // holidays
+  public holidays: Holiday[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,10 +70,20 @@ export class PermissionComponent{
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,
-    private documentSvc: DocumentService
+    private documentSvc: DocumentService,
+    private holidaySvc: HolidayService
   ) {
     this.fromDate = null;
     this.toDate = null;
+  }
+
+
+  ngAfterViewInit(): void {
+    this.holidaySvc.getHolidays().subscribe({
+      next: (data) =>{
+        this.holidays = data;
+      }
+    })
   }
 
 
@@ -93,7 +110,7 @@ export class PermissionComponent{
     this.submitted = true;
 
     // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+    if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
       return;
     }
 
@@ -161,7 +178,8 @@ export class PermissionComponent{
       return (
         LaboralDays(
           new Date(this.formatter.format(fromDate)),
-          new Date(this.formatter.format(toDate))
+          new Date(this.formatter.format(toDate)),
+          this.holidays
         ) > this.laboralDay
       );
     } else {

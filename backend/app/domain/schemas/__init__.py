@@ -32,5 +32,5 @@ from .applications import (
     InitialLetter
 )
 
-from .holidays import (HolidaysBase, HolidaysCreate)
+from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
 

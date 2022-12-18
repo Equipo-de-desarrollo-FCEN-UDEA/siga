@@ -7,3 +7,4 @@ from .application import ApplicationPolicy
 from .application_subtype import ApplicationSubTypePolicy
 from .application_type import ApplicationTypePolicy
 from .application_status import Application_statusPolicy
+from .holiday import HolidayPolicy

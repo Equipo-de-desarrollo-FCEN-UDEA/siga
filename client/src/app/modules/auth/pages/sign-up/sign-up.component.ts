@@ -114,12 +114,12 @@ export class SignUpComponent {
         this.ngZone.run(() => this.router.navigateByUrl(`../login`));
       },
       error: (err) => {
-        if (err.status === 404 || err.status === 401) {
-          this.error = err.error.msg;
-        }
-        if (err.status === 400) {
-          this.error = err.error.message;
-        }
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = err.error.msg;
+        // }
+        // if (err.status === 400) {
+        //   this.error = err.error.message;
+        // }
       },
     });
   }
