@@ -5,6 +5,7 @@ from .base import Base
 
 
 class Application_statusPolicy(Base[Application_status, Application_statusCreate, Application_statusUpdate]):
+    
     def create(self, who: User, to: Application) -> str:
         status_fluxes = to.application_sub_type.application_type.status_flux
         actual_status = to.application_status[-1].status.name
@@ -25,3 +26,5 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
                     next_status = i+1
             return status_fluxes[next_status]['status']
         return status_fluxes[next_status]['status']
+
+

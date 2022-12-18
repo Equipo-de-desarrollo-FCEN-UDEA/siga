@@ -93,21 +93,25 @@ export class PermissionComponent implements OnInit, AfterViewInit {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.permissionSvc.getPermission(this.id).subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         this.form.patchValue({
-          // justification: data.permission.justification,
-          // start_date: this.datepipe.transform(data.permission.start_date, 'YYYY-MM-dd'),
-          // end_date: this.datepipe.transform(data.permission.end_date, 'YYYY-MM-dd'),
           ...data.permission,
           application_sub_type_id: data.application_sub_type_id,
         });
-        console.log(data.permission.documents);
+        // console.log(data.permission);
         this.documents = data.permission.documents!;
+
+        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+          next: (res) => {
+            this.laboralDay = res.extra.days;
+          },
+        });
       });
     });
   }
 
   ngAfterViewInit(): void {
+
     this.holidaySvc.getHolidays().subscribe({
       next: (data) => {
         this.holidays = data;
@@ -209,6 +213,7 @@ export class PermissionComponent implements OnInit, AfterViewInit {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
+      console.log('!this.fromDate && !this.toDate')
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -218,8 +223,26 @@ export class PermissionComponent implements OnInit, AfterViewInit {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      //console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
+      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
+      this.form.patchValue({
+        end_date: new Date(
+          this.toDate.year,
+          this.toDate.month - 1,
+          this.toDate.day
+        ),
+      });
+    } else {
+      console.log('else',  this.fromDate, this.toDate)
+      this.toDate = null;
+      this.fromDate = date
+      this.form.patchValue({
+        start_date: new Date(
+          this.fromDate.year,
+          this.fromDate.month - 1,
+          this.fromDate.day
+        ),
+      });
       this.form.patchValue({
         end_date: new Date(
           this.toDate!.year,
@@ -227,19 +250,9 @@ export class PermissionComponent implements OnInit, AfterViewInit {
           this.toDate!.day
         ),
       });
-    } else {
-      //console.log('else',  this.fromDate, this.toDate)
-      this.toDate = null;
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
     }
   }
+
 
   isHovered(date: NgbDate) {
     return (
