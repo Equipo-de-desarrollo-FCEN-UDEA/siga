@@ -63,7 +63,9 @@
             <label
               for="floatingcampo_modalidad"
               class="selectLabel"
-              [ngClass]="{ isFill: true }"
+              [ngClass]="{
+                'is-invalid': f['identification_type'].errors 
+              }"
             ></label>
           </div>
         </div>

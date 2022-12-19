@@ -90,7 +90,7 @@ export class PermissionComponent{
     this.submitted = true;
 
     // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+    if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
       return;
     }
 
