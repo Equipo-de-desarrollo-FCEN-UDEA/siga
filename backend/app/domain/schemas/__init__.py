@@ -29,5 +29,9 @@ from .applications import (
     FullTimeInDB,
     WorkPlan,
     ViceFormat,
-    InitialLetter
+    InitialLetter,
+    HourAvalResponse,
+    HourAvalUpdate,
+    HourAvalCreate,
+    HourAvalInDB
 )

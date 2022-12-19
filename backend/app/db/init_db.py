@@ -1,9 +1,7 @@
 from app.services.security.jwt import get_password_hash
 
-from sqlalchemy.orm import Session
 from sqlalchemy import event
 
-from app.domain import schemas
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
 from app.db import session, base
@@ -24,7 +22,7 @@ def init_db() -> None:
 
     @event.listens_for(base.Department.__table__, 'after_create')
     def init_department(table, conn, *args, **kwargs):
-        from .init_data import init_departments
+        from .init_data.departments import init_departments
         for department in init_departments:
             db_obj = dict(department)
             conn.execute(table.insert().values(**db_obj))
@@ -32,7 +30,7 @@ def init_db() -> None:
 
     @event.listens_for(base.User.__table__, 'after_create')
     def init_user(table, conn, *args, **kwargs):
-        from .init_data import init_users
+        from .init_data.users import init_users
         for user in init_users:
             db_obj = dict(user)
             db_obj['hashed_password'] = get_password_hash(
@@ -43,7 +41,7 @@ def init_db() -> None:
 
     @event.listens_for(base.School.__table__, 'after_create')
     def init_school(table, conn, *args, **kwargs):
-        from .init_data import init_schools
+        from .init_data.schools import init_schools
         for school in init_schools:
             db_obj = dict(school)
             conn.execute(table.insert().values(**db_obj))
@@ -51,7 +49,7 @@ def init_db() -> None:
 
     @event.listens_for(base.Rol.__table__, 'after_create')
     def init_rol(table, conn, *args, **kwargs):
-        from .init_data import init_rols
+        from .init_data.roles import init_rols
         for rol in init_rols:
             db_obj = dict(rol)
             conn.execute(table.insert().values(**db_obj))
@@ -59,15 +57,15 @@ def init_db() -> None:
 
     @event.listens_for(base.Status.__table__, 'after_create')
     def init_status(table, conn, *args, **kwargs):
-        from .init_data import init_statuss
-        for status in init_statuss:
+        from .init_data.status import init_status
+        for status in init_status:
             db_obj = dict(status)
             conn.execute(table.insert().values(**db_obj))
         log.info('Estados iniciales de las solicitudes creados')
     
     @event.listens_for(base.ApplicationType.__table__, 'after_create')
     def init_application_type(table, conn, *args, **kwargs):
-        from .init_data import init_application_type
+        from .init_data.applications import init_application_type
         for type in init_application_type:
             db_obj = dict(type.dict())
             conn.execute(table.insert().values(**db_obj))
@@ -75,7 +73,7 @@ def init_db() -> None:
 
     @event.listens_for(base.ApplicationSubType.__table__, 'after_create')
     def init_application_sub_type(table, conn, *args, **kwargs):
-        from .init_data import init_application_sub_type
+        from .init_data.applications import init_application_sub_type
         for subType in init_application_sub_type:
             db_obj = dict(subType)
             conn.execute(table.insert().values(**db_obj))

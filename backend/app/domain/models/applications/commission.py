@@ -3,6 +3,7 @@ from typing import Any
 
 from odmantic import Model
 
+
 class Commission(Model):
     country: str
     state: str | None
