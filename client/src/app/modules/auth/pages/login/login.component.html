@@ -96,12 +96,6 @@
                 type="submit"
                 class="btn btn-submit btn-submit p-1"
               >
-                <span
-                  *ngIf="isLoading | async"
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
                 Iniciar sesión
               </button>
             </div>
@@ -112,3 +106,6 @@
     </div>
   </div>
 </div>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

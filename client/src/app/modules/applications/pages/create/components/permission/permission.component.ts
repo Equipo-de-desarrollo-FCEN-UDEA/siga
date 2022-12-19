@@ -48,8 +48,6 @@ export class PermissionComponent{
   public error = '';
   public submitted = false;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
   public suscription: any;
 
@@ -59,7 +57,6 @@ export class PermissionComponent{
     public formatter: NgbDateParserFormatter,
     private router: Router,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,

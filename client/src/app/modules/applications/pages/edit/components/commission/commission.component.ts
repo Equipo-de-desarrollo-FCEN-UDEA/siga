@@ -38,8 +38,6 @@ export class CommissionComponent implements OnInit {
 
   public comision_type$: any;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
   
 
@@ -54,7 +52,6 @@ export class CommissionComponent implements OnInit {
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService

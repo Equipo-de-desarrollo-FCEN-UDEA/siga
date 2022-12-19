@@ -219,12 +219,6 @@
               (submit)="(true)"
               class="btn btn-submit"
             >
-              <span
-                *ngIf="isLoading | async"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
               Confirmar
             </button>
           </div>
@@ -233,3 +227,6 @@
     </div>
   </div>
 </form>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

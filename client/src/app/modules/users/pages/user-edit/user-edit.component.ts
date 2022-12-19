@@ -31,7 +31,6 @@ export class UserEditComponent {
   public vinculation_types = vinculation_type;
   public scale = scale;
   
-  public isLoading = this.loadingSvc.isLoading;
   public error: string = "";
   public submitted: boolean = false;
   public rol: string = localStorage.getItem('rol') || '';
@@ -45,7 +44,6 @@ export class UserEditComponent {
     private router: Router,
     private fb: FormBuilder,
     public activateRoute: ActivatedRoute,
-    public loadingSvc: LoaderService,
     private departamentosSvc: DepartmentService,
 
     private rolService: RolService,

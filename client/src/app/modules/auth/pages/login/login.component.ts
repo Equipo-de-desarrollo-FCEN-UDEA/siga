@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(2)]],
   });
 
-  public isLoading = this.loaderSvc.isLoading;
 
   get f() { return this.loginForm.controls;}
 
@@ -39,7 +38,6 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {

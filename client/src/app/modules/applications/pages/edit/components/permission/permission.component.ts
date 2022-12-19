@@ -45,8 +45,6 @@ export class PermissionComponent implements OnInit {
 
   public id: number = 0;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
 
   constructor(
@@ -57,7 +55,6 @@ export class PermissionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,
