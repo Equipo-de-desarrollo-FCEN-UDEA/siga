@@ -52,17 +52,17 @@ async def create_commission(
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
-        # await engine.remove(Commission, Commission.id == commission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
         log.error('ValueError')
-        # await engine.remove(Commission, Commission.id == commission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
     except Exception as e:
         log.error('Exception')
         log.error(e)
-        # await engine.remove(Commission, Commission.id == commission_created.id)
+        await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
     response = CommissionResponse(
@@ -133,20 +133,6 @@ async def update_commission(
         response:
             -body: Commission
     """
-    # try:
-    #     application: Application = crud.application.get(
-    #         db, current_user, id=id)
-    #     # For apply policies it will end if some policy is not ok
-    #     application = crud.application.update(
-    #         db, current_user, db_obj=application, obj_in={})
-    #     mongo_id = ObjectId(application.mongo_id)
-    #     if application:
-    #         current_commission = await crud.commission.get(engine, id=mongo_id)
-    #         updated_commission = await crud.commission.update(
-    #             engine, db_obj=current_commission, obj_in=commission)
-    # except BaseErrors as e:
-    #     raise HTTPException(e.code, e.detail)
-    # return updated_commission
 
     try:
         # GET In PostgreSQL
@@ -168,7 +154,7 @@ async def update_commission(
 
             # In PostgreSQL
             application_updated = crud.application.update(
-                db=db, who=current_user, db_obj=application, obj_in=commission)
+                db, current_user, db_obj=application, obj_in=commission)
 
             log.debug('application update', application_updated)
 

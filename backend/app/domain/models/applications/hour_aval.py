@@ -12,3 +12,4 @@ class HourAval(Model):
     role: str
     another_applicants: list[Any]
     letter_path: str | None
+    objectives: list[str]

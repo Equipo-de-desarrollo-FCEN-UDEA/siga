@@ -9,6 +9,7 @@ from app.domain.schemas.application import ApplicationResponse
 class Applicant(BaseModel):
     identification_number: str
     acepted: bool | None
+    role: str
     
 
 class HourAvalBase(BaseModel):
@@ -18,6 +19,7 @@ class HourAvalBase(BaseModel):
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
     another_applicants: list[Applicant]
+    objectives: list[str]
 
 
 class HourAvalCreate(HourAvalBase):

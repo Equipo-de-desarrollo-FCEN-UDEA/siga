@@ -41,15 +41,18 @@ async def create_hour_aval(
     """
     try:
         hour_aval_created = await crud.hour_aval.create(db=engine,
-                                                          obj_in=HourAval(**dict(hour_aval)))
+                                                        obj_in=HourAval(**dict(hour_aval)))
 
         application = ApplicationCreate(
             mongo_id=str(hour_aval_created.id),
             application_sub_type_id=hour_aval.application_sub_type_id,
             user_id=current_user.id
         )
+        if not hour_aval.another_applicants:
+            application = crud.application.create(
+                db, current_user, application)
         application = crud.application.create(
-            db=db, who=current_user, obj_in=application)
+            db, current_user, application, status=6, observation="Solicitud a la espera de confirmación otros profesores")
     except BaseErrors as e:
         await engine.remove(hour_aval, hour_aval.id == hour_aval_created.id)
         log.error('BaseErrors')
@@ -73,7 +76,7 @@ async def create_hour_aval(
 
 @router.get("/", response_model=list[HourAval])
 async def get_hour_avals(*,
-                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[HourAval]:
+                         engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[HourAval]:
 
     hour_avales = await engine.find(HourAval)
     return hour_avales
@@ -197,3 +200,21 @@ async def delete_hour_aval(
         raise HTTPException(e.code, e.detail)
     return Msg(msg="Comisión eliminada correctamente")
 
+
+@router.put('/confirm/{id}', response_model=Msg)
+async def confirm_user(
+    id: int,
+    token: str,
+    *,
+    current_user=Depends(jwt_bearer.get_current_active_user),
+    db: Session = Depends(db.get_db),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db)
+) -> Msg:
+    try:
+        application: Application = crud.application.get(
+            db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+        hour_aval = await crud.hour_aval.confirm(engine,
+                                                 id=mongo_id)
+    except Exception:
+        return None
