@@ -65,9 +65,9 @@ export class PermissionComponent implements OnInit {
         window.open(window.URL.createObjectURL(res));
       },
       error: (err) => {
-        if (err.status === 404 || err.status === 401) {
-          this.error = err.error.msg;
-        }
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = err.error.msg;
+        // }
       },
     });
   }
@@ -102,9 +102,9 @@ export class PermissionComponent implements OnInit {
             });
           },
           error: (err) => {
-            if (err.status === 404 || err.status === 401) {
-              this.error = err
-            }
+            // if (err.status === 404 || err.status === 401) {
+            //   this.error = err
+            // }
           },
         });
       }

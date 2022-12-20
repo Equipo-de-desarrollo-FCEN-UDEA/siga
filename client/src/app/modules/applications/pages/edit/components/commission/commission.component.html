@@ -210,7 +210,11 @@
               [value]="
                 formatter.format(fromDate) ? formatter.format(fromDate) : null
               "
-              [ngClass]="{ 'is-invalid': !fromDate && clicked !== 0 }"
+              [ngClass]="{
+                'is-invalid':
+                  (submitted && f['start_date'].errors) ||
+                  (!fromDate && clicked !== 0)
+              }"
             />
             <input
               #dpToDate
@@ -221,7 +225,11 @@
               [value]="formatter.format(toDate)"
               (input)="toDate = validateInput(toDate, dpToDate.value)"
               [value]="formatter.format(toDate) ? formatter.format(toDate) : null"
-              [ngClass]="{ 'is-invalid': !toDate && clicked !== 0 }"
+              [ngClass]="{
+                'is-invalid':
+                  (submitted && f['end_date'].errors) ||
+                  (!toDate && clicked !== 0)
+              }"
           />
             <span
               #buttonEl

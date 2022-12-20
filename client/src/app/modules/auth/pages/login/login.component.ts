@@ -61,14 +61,14 @@ export class LoginComponent implements OnInit {
       },
       error: (err) => {
         this.activation = true;
-        if (err.status === 404 || err.status === 401) {
-          this.error = 'Usuario o contraseña incorrectos';
-          Swal.fire({
-            title: 'Usuario o contraseña incorrectos',
-            confirmButtonText: 'Intentar de nuevo',
-            icon: 'warning'
-          })
-        }
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = 'Usuario o contraseña incorrectos';
+        //   Swal.fire({
+        //     title: 'Usuario o contraseña incorrectos',
+        //     confirmButtonText: 'Intentar de nuevo',
+        //     icon: 'warning'
+        //   })
+        // }
       }
     })
     this.loading = false;
