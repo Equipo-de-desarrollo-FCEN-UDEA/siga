@@ -42,7 +42,6 @@ export class SignUpComponent {
 
   public vinculation_types = vinculation_type;
 
-  public loading: boolean = false;
   public error: string = '';
 
   public id_type = id_type;
