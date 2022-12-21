@@ -106,7 +106,6 @@ export class PermissionComponent implements AfterViewInit{
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
-    if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
       return;
     }
 
