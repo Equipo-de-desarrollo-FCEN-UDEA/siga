@@ -17,12 +17,8 @@ export class CreateComponent implements OnInit {
 
   private activatedComponentReference: any;
 
-  // Loader
-  isLoading: Subject<boolean> = this.loaderService.isLoading;
-
   constructor(
     private route: ActivatedRoute,
-    private loaderService: LoaderService,
     private location: Location
   ) { 
     // We take the titile from the child data

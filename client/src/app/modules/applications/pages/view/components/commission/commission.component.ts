@@ -36,8 +36,6 @@ export class CommissionComponent implements OnInit {
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
-  public isLoading$ = this.loaderSvc.isLoading;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -46,7 +44,6 @@ export class CommissionComponent implements OnInit {
     private comSvc: ComService,
     private documentService: DocumentService,
     private authSvc: AuthService,
-    private loaderSvc: LoaderService
   ) {
     this.authSvc.isSuperUser()
     this.route.parent?.params.subscribe(
@@ -105,9 +102,6 @@ export class CommissionComponent implements OnInit {
             });
           },
           error: (err) => {
-            // if (err.status === 404 || err.status === 401) {
-            //   this.error = err
-            // }
           },
         });
       }

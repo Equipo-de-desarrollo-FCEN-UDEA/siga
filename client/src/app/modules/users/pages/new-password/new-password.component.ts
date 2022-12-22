@@ -14,14 +14,12 @@ import Swal from 'sweetalert2';
   styleUrls: ['./new-password.component.scss']
 })
 export class NewPasswordComponent implements OnInit {
-  public isLoading = this.loaderSvc.isLoading;
 
   private token = '';
 
   constructor(
     private fb: FormBuilder,
     private userSvc: UserService,
-    private loaderSvc: LoaderService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location

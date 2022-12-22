@@ -11,12 +11,12 @@ user_401 = UserErrors(401, "No autorizado")
 
 user_403 = UserErrors(403, "Metodo no autorizado")
 
-user_404 = UserErrors(404, "User no encontrado")
+user_404 = UserErrors(404, "Usuario no encontrado")
 
 user_422 = UserErrors(422, "Esta entidad no se puede procesar")
 
 user_registered = UserErrors(
-    409, "Este user no se puede registrar, su número de identificación o correo electrónico se encuentra ya registrado")
+    409, "No se puede registrar. Su número de identificación o correo electrónico se encuentra ya registrado")
 
 user_diferent_password = UserErrors(
     401, "El correo o la contraseña están erradas"

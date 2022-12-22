@@ -28,18 +28,16 @@ export class ApplicationListComponent implements OnInit {
 
   private skip = (this.page - 1) * this.limit;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
   public application_types$ = this.applicationTypeSvc.getApplicationTypes();
   constructor(
-    private applicationsSvc: ApplicationService,
     private router: Router,
-    private loaderSvc: LoaderService,
     private fb: FormBuilder,
-    private authSvc: AuthService,
     private location: Location,
+    
+    private authSvc: AuthService,
+    private applicationsSvc: ApplicationService,
     private applicationTypeSvc: ApplicationTypesService
   ) {
     this.authSvc.isSuperUser();
