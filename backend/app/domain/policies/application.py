@@ -55,8 +55,8 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
             raise application_401
 
         # Aval horas grupos de investigación
-        if (application_sub_type == 11 and not (who.rol.scope == 9)):
-            raise application_401
+        # if (application_sub_type == 11) and not (who.rol.scope == 9):
+        #     raise application_401
 
         return None
 

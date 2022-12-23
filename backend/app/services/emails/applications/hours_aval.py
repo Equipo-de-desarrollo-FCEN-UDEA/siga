@@ -14,7 +14,7 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 
 @celery.task
 def hours_aval_email(aval: Dict[str, Any], applicant: Dict[str, Any], email: str, id: int, token: str):
-    template = env.get_template("email.envio.cumplido.html.j2")
+    template = env.get_template("email.confirmacion.aval.html.j2")
 
     context = {
         'applicant': applicant,
@@ -24,9 +24,9 @@ def hours_aval_email(aval: Dict[str, Any], applicant: Dict[str, Any], email: str
 
     render = template.render(context)
     msg = EmailMessage()
-    msg["Subject"] = "Envío de cumplido"
+    msg["Subject"] = "Confirmación aval de horas para grupos de investigación"
     msg["From"] = settings.smtp_user_email
-    msg["To"] = ', '.join(email)
+    msg["To"] = email
     msg.set_content(
         render,
         subtype="html"

@@ -16,6 +16,7 @@ class HourAvalBase(BaseModel):
     time: int = Field(gt=1, lt=12)
     hours_week: int
     description: str = Field(min_length=30, max_length=500)
+    announcement: str
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
     another_applicants: list[Applicant]

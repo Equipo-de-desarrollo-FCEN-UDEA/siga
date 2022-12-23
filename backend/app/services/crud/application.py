@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Union
+from datetime import datetime
 
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
@@ -22,7 +23,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         limit: int = 100,
         search: str = '',
         filed: bool | None = None,
-        type: int = 0
+        type: int = 0,
+        date_1: datetime | None = None,
+        date_2: datetime | None = None
     ) -> List[Application]:
         queries = []
 
@@ -42,6 +45,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         if who.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
+        
+        if date_1 and date_2:
+            queries += [Application.created_at >= date_1, Application.created_at <= date_2]
 
         if search:
             columns = [

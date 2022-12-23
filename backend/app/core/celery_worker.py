@@ -7,11 +7,10 @@ from app.core.config import get_app_settings
 settings = get_app_settings()
 
 include = [
-    "app.services.emails.user",
+    "app.services.emails",
+
     "app.services.documents.applications.commission",
-    "app.services.documents.applications.permission",
-    "app.services.emails.application",
-    "app.services.emails.applications.commission"
+    "app.services.documents.applications.permission"
 ]
 
 celery = Celery('tasks', broker=settings.redis_uri,

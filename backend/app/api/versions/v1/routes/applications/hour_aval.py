@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud
+from app.services import crud, emails, security
 from app.domain.models import HourAval, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 HourAvalCreate,
@@ -52,19 +52,29 @@ async def create_hour_aval(
             application = crud.application.create(
                 db, current_user, application)
         application = crud.application.create(
-            db, current_user, application, status=6, observation="Solicitud a la espera de confirmación otros profesores")
+            db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
+        
+        
+        for applicant in hour_aval.another_applicants:
+            token = security.jwt.email_token(applicant.identification_number)
+            user = crud.user.get_by_identification(db, applicant.identification_number)
+            log.debug(user.__dict__)
+            emails.hours_aval_email(hour_aval.dict(), applicant.dict(), 'heidy.velez@udea.edu.co', application.id, token)
     except BaseErrors as e:
-        await engine.remove(hour_aval, hour_aval.id == hour_aval_created.id)
+        if hour_aval_created:
+            await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
         log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
         log.error('ValueError')
-        await engine.remove(hour_aval, hour_aval.id == hour_aval_created.id)
+        if hour_aval_created:
+            await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
         raise HTTPException(422, e)
     except Exception as e:
         log.error('Exception')
         log.error(e)
-        await engine.remove(hour_aval, hour_aval.id == hour_aval_created.id)
+        if hour_aval_created:
+            await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
     response = HourAvalResponse(
@@ -201,7 +211,7 @@ async def delete_hour_aval(
     return Msg(msg="Comisión eliminada correctamente")
 
 
-@router.put('/confirm/{id}', response_model=Msg)
+@router.put('/{id}/confirm/', response_model=Msg)
 async def confirm_user(
     id: int,
     token: str,

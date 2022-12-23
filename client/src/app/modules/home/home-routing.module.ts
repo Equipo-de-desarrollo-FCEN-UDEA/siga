@@ -9,7 +9,7 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'create-application', component: CreateApplicationComponent },
 ];
 
