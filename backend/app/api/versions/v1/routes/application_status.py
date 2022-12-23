@@ -4,7 +4,7 @@ from odmantic.session import AIOSession
 
 from app.api.middlewares import db, jwt_bearer, mongo_db
 from app.services import crud, documents, emails
-from app.domain.schemas import Application_statusCreate, Application_statusInDB
+from app.domain.schemas import Application_statusCreate, Application_statusInDB, CronJobCreate
 from app.domain.models import User
 from app.domain.errors import BaseErrors
 
@@ -38,6 +38,28 @@ async def create_application_status(
             await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
         emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                      application_status.observation, response.status.name, application.id, application.user.email))
+
+        # Full time
+        if (response.status.name == 'APROBADA' and
+                application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            
+            
+            #activity_traking
+
+            if application.activity_traking.date_1:
+
+
+                #cron = se crea 2 cron con las fecha de fin que viene de la aplicación 
+                cron  = CronJobCreate(
+                send_date = application.activity_traking.date_1,
+                template = "email.informe.dedicacion.html.j2",
+                user_email = application.user.email
+                )
+                
+                await crud.cron_job.create(db=db, who=current_user, obj_in=cron)
+        
+    
+    
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response
