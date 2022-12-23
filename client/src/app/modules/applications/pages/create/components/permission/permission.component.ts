@@ -50,10 +50,6 @@ export class PermissionComponent implements AfterViewInit{
   public error = '';
   public submitted = false;
 
-  // loader
-  public isLoading = this.loaderSvc.isLoading;
-
-  // type 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
   public suscription: any;
 
@@ -66,7 +62,6 @@ export class PermissionComponent implements AfterViewInit{
     public formatter: NgbDateParserFormatter,
     private router: Router,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,

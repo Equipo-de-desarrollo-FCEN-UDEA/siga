@@ -14,6 +14,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
 import { ResendEmailComponent } from './pages/resend-email/resend-email.component';
+import { SharedModule } from '@shared/shared.module';
 
 
 
@@ -30,7 +31,8 @@ import { ResendEmailComponent } from './pages/resend-email/resend-email.componen
   imports: [
     CommonModule,
     AuthRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

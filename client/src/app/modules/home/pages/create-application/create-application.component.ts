@@ -24,7 +24,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-application.component.scss'],
 })
 export class CreateApplicationComponent {
-  public is_loading = this.loaderSvc.isLoading;
+
   public submitted: boolean = false;
 
   public application_types$: Observable<ApplicationType[]> =
@@ -41,7 +41,7 @@ export class CreateApplicationComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private loaderSvc: LoaderService,
+    
     private applicationTypeSvc: ApplicationTypesService,
     private location: Location
   ) {}

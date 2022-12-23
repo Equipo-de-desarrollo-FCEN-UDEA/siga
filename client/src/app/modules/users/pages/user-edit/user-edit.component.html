@@ -63,7 +63,9 @@
             <label
               for="floatingcampo_modalidad"
               class="selectLabel"
-              [ngClass]="{ isFill: true }"
+              [ngClass]="{
+                'is-invalid': f['identification_type'].errors 
+              }"
             ></label>
           </div>
         </div>
@@ -219,12 +221,6 @@
               (submit)="(true)"
               class="btn btn-submit"
             >
-              <span
-                *ngIf="isLoading | async"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
               Confirmar
             </button>
           </div>
@@ -233,3 +229,6 @@
     </div>
   </div>
 </form>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

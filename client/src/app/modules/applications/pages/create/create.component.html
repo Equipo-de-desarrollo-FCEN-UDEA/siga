@@ -26,15 +26,11 @@
         type="submit"
         (click)="click()"
         [disabled]="invalidForm()"
-      >
-        <span
-          class="spinner-border spinner-border-sm1"
-          role="status"
-          aria-hidden="true"
-          *ngIf="isLoading | async"
-        ></span
-        >Solicitar
+      > Solicitar
       </button>
     </div>
   </div>
 </div>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

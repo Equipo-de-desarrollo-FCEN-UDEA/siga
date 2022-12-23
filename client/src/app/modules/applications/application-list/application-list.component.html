@@ -11,7 +11,6 @@
               type="text"
               class="form-control"
               formControlName="search"
-              [ngClass]="{ 'is-loading': (isLoading | async) }"
               placeholder="Buscar"
             />
           </div>
@@ -152,3 +151,6 @@
     </table>
   </div>
 </div>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

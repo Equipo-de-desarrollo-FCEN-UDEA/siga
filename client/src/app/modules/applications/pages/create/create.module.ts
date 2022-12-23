@@ -11,16 +11,16 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
 
 
 @NgModule({
-  declarations: [
-    CreateComponent,
-    CommissionComponent,
-    PermissionComponent,
-    ComplimentComponent,
-  ],
-  imports: [
-    CommonModule,
-    CreateRoutingModule,
-    SharedModule
-  ]
+    declarations: [
+        CreateComponent,
+        CommissionComponent,
+        PermissionComponent,
+        ComplimentComponent,
+    ],
+    imports: [
+        CommonModule,
+        CreateRoutingModule,
+        SharedModule
+    ]
 })
 export class CreateModule { }

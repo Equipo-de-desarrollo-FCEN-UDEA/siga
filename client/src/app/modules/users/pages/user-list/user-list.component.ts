@@ -23,12 +23,9 @@ export class UserListComponent implements OnInit {
 
   private skip = (this.page - 1) * this.limit;
 
-  public isLoading = this.loaderSvc.isLoading;
 
   constructor(
     private userSvc: UserService,
-    private router: Router,
-    private loaderSvc: LoaderService,
     private fb: FormBuilder,
     private location: Location
   ) {
