@@ -11,7 +11,8 @@ include = [
     "app.services.documents.applications.commission",
     "app.services.documents.applications.permission",
     "app.services.emails.application",
-    "app.services.emails.applications.commission"
+    "app.services.emails.applications.commission",
+    "app.services.emails.cron_notifications.full_time"
 ]
 
 celery = Celery('tasks', broker=settings.redis_uri,

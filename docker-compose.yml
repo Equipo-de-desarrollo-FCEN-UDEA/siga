@@ -64,6 +64,21 @@ services:
       - backend
     networks:
       - local-net
+
+  # celery-beat:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   container_name: celery-beat
+  #   command: celery -A app.core.celery_worker.celery beat --loglevel=info
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://redis:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis:6379/0
+  #   depends_on:
+  #     - redis
+  #     - backend
   
   flower:
     container_name: "flower"
@@ -80,6 +95,7 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - celery_worker
+      - celery-beat
     networks:
       - local-net
   
