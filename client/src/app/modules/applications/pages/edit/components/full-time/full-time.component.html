@@ -1,1 +1,39 @@
-<p>full-time works!</p>
+<!-- CARTA -->
+<div class="row regular-row mt-4 align-items-baseline">
+  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Carta de Inicio *</div>
+  <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="formfloatig">
+      <button class="btn btn-outline-success">Carta de Inicio</button>
+    </div>
+    <!-- errors -->
+    <div *ngIf="isInvalidForm()" class="invalid">
+      Debes diligenciar la carta de inicio
+    </div>
+  </div>
+</div>
+
+<div class="row regular-row mt-4 align-items-baseline">
+  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Formato de vicerrectoría *</div>
+  <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="formfloatig">
+      <button class="btn btn-outline-success">Formato de vicerrectoría</button>
+    </div>
+    <!-- errors -->
+    <div *ngIf="isInvalidForm()" class="invalid">
+      Debes diligenciar el formato de vicerrectoría
+    </div>
+  </div>
+</div>
+
+<div class="row regular-row mt-4 align-items-baseline">
+  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Plan de trabajo *</div>
+  <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="formfloatig">
+      <button class="btn btn-outline-success">Plan de trabajo</button>
+    </div>
+    <!-- errors -->
+    <div *ngIf="isInvalidForm()" class="invalid">
+      Debes diligenciar el plan de trabajo
+    </div>
+  </div>
+</div>

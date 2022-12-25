@@ -19,7 +19,7 @@ export class FullTimeService {
 
 
   postFullTime(fullTime: FullTimeCreate) {
-    this.http.post<FulltimeResponse>(this.urlEndPoint, fullTime)
+    return this.http.post<FulltimeResponse>(this.urlEndPoint, fullTime)
   }
 
   getFullTime(id: number) {
@@ -31,7 +31,7 @@ export class FullTimeService {
   }
 
   deleteFullTime(id: number) {
-    this.http.delete(this.urlEndPoint + id)
+    return this.http.delete(this.urlEndPoint + id)
   }
 
   putLetter(letter: InitialLetter, id: number) {

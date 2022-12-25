@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
+import { DocumentService } from '@services/document.service';
 
 @Component({
   selector: 'app-full-time',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FullTimeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+
+    private fullTimeSvc: FullTimeService,
+    private documentSvc: DocumentService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+
+  openDocument(path:string) {
+    this.documentSvc.getDocument(path).subscribe(
+      res => window.open(window.URL.createObjectURL(res))
+    )
+  }
+
+  isInvalidForm(){
+
   }
 
 }

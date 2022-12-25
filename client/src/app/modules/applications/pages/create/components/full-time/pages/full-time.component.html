@@ -1,1 +1,29 @@
-<p>full-time works!</p>
+<form
+  class="need-validation"
+  need-validation
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <div class="row">
+    <!-- TITULO -->
+    <div class="row regular-row mt-4 align-items-baseline">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Titulo *</div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig">
+          <input
+            id="floatingtitulo"
+            formControlName="title"
+            class="form-control"
+            type="title"
+            placeholder=" "
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['title'].errors) || isInvalidForm('title')
+            }"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

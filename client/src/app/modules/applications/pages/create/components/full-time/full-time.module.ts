@@ -8,6 +8,8 @@ import { InstitutionalDevelopmentPlanComponent } from './pages/institutional-dev
 import { StartLetterComponent } from './pages/start-letter/start-letter.component';
 import { StatusComponent } from './pages/status/status.component';
 import { WorkplanComponent } from './pages/workplan/workplan.component';
+import { SharedModule } from '@shared/shared.module';
+
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { WorkplanComponent } from './pages/workplan/workplan.component';
   ],
   imports: [
     CommonModule,
-    FullTimeRoutingModule
+    FullTimeRoutingModule,
+    SharedModule,
   ]
 })
 export class FullTimeModule { }

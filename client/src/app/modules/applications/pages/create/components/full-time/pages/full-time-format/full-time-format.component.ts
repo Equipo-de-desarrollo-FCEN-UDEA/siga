@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-full-time-format',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FullTimeFormatComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+
+
+  ) { }
 
   ngOnInit(): void {
+    
   }
 
 }
