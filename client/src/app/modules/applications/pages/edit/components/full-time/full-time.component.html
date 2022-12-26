@@ -1,9 +1,17 @@
+<!-- ALERT BOX -->
+<div class="alert alert-warning mt-3 mb-0">
+  Para solicitar la dedicación debes diligenciar los 3 formatos y dar clic en actualizar.
+</div>
+
+
 <!-- CARTA -->
 <div class="row regular-row mt-4 align-items-baseline">
   <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Carta de Inicio *</div>
   <div class="col-sm-12 col-xs-12 col-md-8">
     <div class="formfloatig">
-      <button class="btn btn-outline-success">Carta de Inicio</button>
+      <button class="btn btn-outline-success"
+      [routerLink]=""
+      >Carta de Inicio</button>
     </div>
     <!-- errors -->
     <div *ngIf="isInvalidForm()" class="invalid">

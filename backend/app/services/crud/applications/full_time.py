@@ -27,6 +27,10 @@ class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePo
         db_obj = await db.save(full_time)
         return db_obj
 
+    async def request(self, db: AIOSession, *, id: ObjectId):
+        full_time = await db.find_one(FullTime, FullTime.id == id)
+        return len(full_time.documents) 
+
 policy = FullTimePolicy()
 
 full_time = CRUDFullTime(FullTime, policy=policy)
