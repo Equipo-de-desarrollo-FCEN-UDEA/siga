@@ -11,6 +11,11 @@ const routes: Routes = [
     path: '', 
     component: CreateComponent,
     children: [
+      {
+        path: 'dedicacion', 
+        loadChildren: () => import('./components/full-time/full-time.module')
+        .then(m => m.FullTimeModule) 
+      },
       //permiso
       {
         path: 'permiso',
@@ -26,10 +31,6 @@ const routes: Routes = [
         data: {
           title: 'Comisión'
         }
-      },
-      {
-        path: 'plan-de-trabajo',
-        component: WorkplanComponent
       },
       {
         path: 'cumplido/:id',
