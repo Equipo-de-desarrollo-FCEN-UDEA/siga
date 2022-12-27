@@ -56,7 +56,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
-    private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
 

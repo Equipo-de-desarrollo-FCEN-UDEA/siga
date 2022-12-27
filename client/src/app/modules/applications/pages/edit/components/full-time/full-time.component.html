@@ -1,6 +1,7 @@
 <!-- ALERT BOX -->
 <div class="alert alert-warning mt-3 mb-0">
-  Para solicitar la dedicación debes diligenciar los 3 formatos y dar clic en actualizar.
+  Tu dedicación exclusiva está <strong>en creación</strong>. Para solicitarla debes diligenciar 
+  los 3 formatos y dar clic en actualizar.
 </div>
 
 
@@ -14,7 +15,7 @@
       >Carta de Inicio</button>
     </div>
     <!-- errors -->
-    <div *ngIf="isInvalidForm()" class="invalid">
+    <div *ngIf="submitted && isInvalidForm()" class="invalid">
       Debes diligenciar la carta de inicio
     </div>
   </div>
@@ -27,7 +28,7 @@
       <button class="btn btn-outline-success">Formato de vicerrectoría</button>
     </div>
     <!-- errors -->
-    <div *ngIf="isInvalidForm()" class="invalid">
+    <div *ngIf="submitted && isInvalidForm()" class="invalid">
       Debes diligenciar el formato de vicerrectoría
     </div>
   </div>
@@ -40,7 +41,7 @@
       <button class="btn btn-outline-success">Plan de trabajo</button>
     </div>
     <!-- errors -->
-    <div *ngIf="isInvalidForm()" class="invalid">
+    <div *ngIf="submitted && isInvalidForm()" class="invalid">
       Debes diligenciar el plan de trabajo
     </div>
   </div>

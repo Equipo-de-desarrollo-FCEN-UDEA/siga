@@ -8,6 +8,7 @@ from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
+
 class Application_statusPolicy(Base[Application_status, Application_statusCreate, Application_statusUpdate]):
 
     def create(self, who: User, to: Application) -> str:
@@ -32,7 +33,7 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
             return status_fluxes[next_status]['status']
         return status_fluxes[next_status]['status']
 
-    def request(self, who: User, to: Application, docs:int) -> str:
+    def request(self, who: User, to: Application, current: any) -> str:
         status_fluxes = to.application_sub_type.application_type.status_flux
         actual_status = to.application_status[-1].status.name
 
@@ -42,11 +43,11 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
 
         if to.user_id != who.id:
             raise Application_statusErrors(
-                    403, detail=f"No puedes tomar acción sobre esta solicitud")
+                403, detail=f"No puedes tomar acción sobre esta solicitud")
 
         if actual_status == 'EN CREACIÓN':
-            
-            if docs < 3 and to.application_sub_type.application_type.name == 'DEDICACIÓN EXCLUSIVA': 
+
+            if current.initial_letter == None and current.vice_format == None and current.work_plan == None and to.application_sub_type.application_type.name == 'DEDICACIÓN EXCLUSIVA':
                 raise Application_statusErrors(
                     403, detail=f"Debes diligenciar los 3 formatos para solicitar la dedicación")
 

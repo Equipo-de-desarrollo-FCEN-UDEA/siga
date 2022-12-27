@@ -146,23 +146,17 @@ async def update_full_time(
 
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
-
-            # current_full_time = await crud.full_time.get(engine, id=mongo_id)
-            docs_full_time = await crud.full_time.request(engine, id=mongo_id)
+            current_full_time = await crud.full_time.get(engine, id=mongo_id)
 
             # updated_full_time = await crud.full_time.update(engine, db_obj=current_full_time, obj_in=full_time)
-
-            # log.debug('updated_full_time', updated_full_time)
 
             # In PostgreSQL
             # application_updated = crud.application.update(
             #     db=db, who=current_user, db_obj=application, obj_in=full_time)
 
-            # log.debug('application update', application_updated)
-
             status = Application_statusCreate(
                 application_id=application.id, status_id=1, observation="Dedicación exclusiva solicitada")
-            crud.application_status.request(db, who=current_user ,obj_in=status, to=application, docs=docs_full_time)
+            crud.application_status.request(db, who=current_user ,obj_in=status, to=application, current=current_full_time)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
