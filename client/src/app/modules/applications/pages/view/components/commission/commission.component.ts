@@ -12,7 +12,6 @@ import { AuthService } from '@services/auth.service';
 import { DocumentService } from '@services/document.service';
 import { lastElement } from '@shared/utils';
 import { ComService } from '../../connection/com.service';
-import { LoaderService } from '@services/loader.service';
 
 @Component({
   selector: 'app-commission',

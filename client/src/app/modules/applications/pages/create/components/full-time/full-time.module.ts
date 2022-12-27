@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { FullTimeRoutingModule } from './full-time-routing.module';
 import { FullTimeFormatComponent } from './pages/full-time-format/full-time-format.component';
-import { FullTimeComponent } from './pages/full-time.component';
+import { FullTimeComponent } from './full-time.component';
 import { InstitutionalDevelopmentPlanComponent } from './pages/institutional-development-plan/institutional-development-plan.component';
 import { StartLetterComponent } from './pages/start-letter/start-letter.component';
 import { StatusComponent } from './pages/status/status.component';
 import { WorkplanComponent } from './pages/workplan/workplan.component';
+import { SharedModule } from '@shared/shared.module';
+
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { WorkplanComponent } from './pages/workplan/workplan.component';
   ],
   imports: [
     CommonModule,
-    FullTimeRoutingModule
+    FullTimeRoutingModule,
+    SharedModule,
   ]
 })
 export class FullTimeModule { }

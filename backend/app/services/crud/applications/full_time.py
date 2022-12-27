@@ -27,6 +27,7 @@ class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePo
         db_obj = await db.save(full_time)
         return db_obj
 
+
 policy = FullTimePolicy()
 
 full_time = CRUDFullTime(FullTime, policy=policy)

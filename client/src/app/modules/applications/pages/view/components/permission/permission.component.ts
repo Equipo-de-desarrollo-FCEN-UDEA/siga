@@ -48,12 +48,15 @@ export class PermissionComponent implements OnInit {
       .getPermission(this.id)
       .subscribe((app: PermissionResponse) => {
         const { permission, ...application } = app;
+        console.log(app)
         this.permission = permission;
         this.application = application;
         
         this.current_status = lastElement(application.application_status).status.name;
         this.comSvc.push(this.application);
       });
+
+      
   }
 
   // -----------------------------------------

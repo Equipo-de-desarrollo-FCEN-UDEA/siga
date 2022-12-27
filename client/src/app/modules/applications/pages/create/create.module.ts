@@ -7,6 +7,7 @@ import { CommissionComponent } from './components/commission/commission.componen
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
+import { FullTimeModule } from './components/full-time/full-time.module';
 
 
 
@@ -20,7 +21,8 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
     imports: [
         CommonModule,
         CreateRoutingModule,
-        SharedModule
+        SharedModule,
+        FullTimeModule
     ]
 })
 export class CreateModule { }
