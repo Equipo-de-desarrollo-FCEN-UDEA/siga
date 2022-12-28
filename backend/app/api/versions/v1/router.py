@@ -10,7 +10,8 @@ from app.api.versions.v1.routes import (
     application_type,
     application_subtype,
     application,
-    application_status
+    application_status,
+    holiday
 )
 
 from app.api.versions.v1.routes.applications import permission, commission, full_time
@@ -43,10 +44,14 @@ api_route.include_router(application_status.router,
 api_route.include_router(documents.router,
                          prefix="/documents", tags=['documents'])
 
+# Holidays
+api_route.include_router(holiday.router,
+                         prefix="/holiday", tags=["holiday"])
+
 # Applications
 api_route.include_router(commission.router,
                          prefix="/commission", tags=['commission'])
 api_route.include_router(permission.router,
                          prefix="/permission", tags=['permission'])
 api_route.include_router(full_time.router,
-                         prefix='/full-time', tags=['full_time'])
+                         prefix='/full-time', tags=['full-time'])

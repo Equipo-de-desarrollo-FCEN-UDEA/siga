@@ -9,6 +9,7 @@ import { HomeRoutingModule } from './home-routing.module';
 //component
 import { HomeComponent } from './pages/home/home.component';
 import { CreateApplicationComponent } from './pages/create-application/create-application.component';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CreateApplicationComponent } from './pages/create-application/create-ap
   imports: [
     CommonModule,
     HomeRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class HomeModule { }

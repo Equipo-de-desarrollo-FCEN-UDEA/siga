@@ -48,12 +48,15 @@ export class PermissionComponent implements OnInit {
       .getPermission(this.id)
       .subscribe((app: PermissionResponse) => {
         const { permission, ...application } = app;
+        console.log(app)
         this.permission = permission;
         this.application = application;
         
         this.current_status = lastElement(application.application_status).status.name;
         this.comSvc.push(this.application);
       });
+
+      
   }
 
   // -----------------------------------------
@@ -65,9 +68,9 @@ export class PermissionComponent implements OnInit {
         window.open(window.URL.createObjectURL(res));
       },
       error: (err) => {
-        if (err.status === 404 || err.status === 401) {
-          this.error = err.error.msg;
-        }
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = err.error.msg;
+        // }
       },
     });
   }
@@ -102,9 +105,9 @@ export class PermissionComponent implements OnInit {
             });
           },
           error: (err) => {
-            if (err.status === 404 || err.status === 401) {
-              this.error = err
-            }
+            // if (err.status === 404 || err.status === 401) {
+            //   this.error = err
+            // }
           },
         });
       }

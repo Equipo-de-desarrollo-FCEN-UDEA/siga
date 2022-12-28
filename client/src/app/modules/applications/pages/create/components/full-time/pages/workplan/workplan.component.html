@@ -1,1 +1,191 @@
-<p>workplan works!</p>
+<div class="mt-2 plan-trabajo">
+  <form
+    novalidate
+    [formGroup]="f_workplan"
+    (ngSubmit)="onSubmit()"
+    class="need-validation"
+  >
+    <div class="row justify-content-center">
+      <!-- Información del plan de trabajo general -->
+      <div
+        class="card card-plan-general col-lg-5 col-ms-6 col-xs-12 shadow p-2 m-2 h-25"
+      >
+        <h6>
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="Información sobre cómo llenar estos campos del formu"
+            ></i>
+            Información del plan de trabajo general
+          </span>
+        </h6>
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
+            <div class="formfloatig">
+              <input
+                id="floating_semester"
+                type="text"
+                formControlName="semester"
+                class="form-control"
+                placeholder=" "
+              />
+              <label for="floating_semester" class="formLabel">Semestre</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
+            <div class="formfloatig">
+              <input
+                id="floating_register"
+                type="number"
+                formControlName="register"
+                class="form-control"
+                placeholder=" "
+              />
+              <label for="floating_register" class="formLabel">Registro</label>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
+            <div class="formfloatig">
+              <input
+                id="floating_part_time"
+                type="number"
+                formControlName="part_time"
+                class="form-control"
+                placeholder=" "
+              />
+              <label for="floating_part_time" class="formLabel"
+                >Tiempo parcial horas mes</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /.actividades_docencia -->
+      <div
+        id="c1"
+        class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2"
+      >
+        <h6>
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de docencia, por cada actividad haga click sobre el botón +"
+            ></i>
+            Actividades de docencia
+          </span>
+        </h6>
+        <div style="width: 100%" formArrayName="teaching_activities">
+          <div
+            *ngFor="
+              let activity of teachingActivitiesArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
+            <div class="row activity_form">
+              <div
+                class="lineGroup col-xs-12 col-md-12 col-lg-6"
+                formGroupName="activity_identification"
+              >
+                <div class="row">
+                  <div class="col-12" *ngIf="i == 0">
+                    <span>Identificación actividad</span>
+                    <hr />
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
+                    <input
+                      id="floating_code{{ i }}"
+                      type="text"
+                      formControlName="code"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label for="floating_code{{ i }}" class="formLabel"
+                      >Código</label
+                    >
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
+                    <input
+                      id="floating_group{{ i }}"
+                      type="text"
+                      formControlName="group"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label for="floating_group{{ i }}" class="formLabel"
+                      >Grupo</label
+                    >
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
+                    <input
+                      id="floating_name{{ i }}"
+                      type="text"
+                      formControlName="name"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label for="floating_name{{ i }}" class="formLabel"
+                      >Nombre</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12 col-lg-5"
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
+              >
+                <div class="row" style="margin-left: 0px">
+                  <div class="col-12" style="text-align: center" *ngIf="i == 0">
+                    <span>Estudiantes</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
+                    <input
+                      id="floating_number_students{{ i }}"
+                      type="number"
+                      formControlName="number_students"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label
+                      for="floating_number_students{{ i }}"
+                      class="formLabel"
+                      >Cantidad</label
+                    >
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
+                    <input
+                      id="floating_level{{ i }}"
+                      type="text"
+                      formControlName="level"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label for="floating_level{{ i }}" class="formLabel"
+                      >Nivel</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+            
+            </div>
+          </div>
+        </div>
+
+        <div style="width: 100%" formArrayName="teaching_activities"></div>
+      </div>
+    </div>
+  </form>
+</div>

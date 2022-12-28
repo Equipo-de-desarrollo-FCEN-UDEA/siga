@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+  db: 
+    container_name: 'db'
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    env_file:
+      - prod.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+    
+  mongo:
+    container_name: 'mongo'
+    image: mongo:4.4
+    restart: always
+    ports:
+      - '27018:27017'
+    env_file:
+      - prod.env
+    volumes:
+      - ./db/mongo-data:/data/db
+  
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - backend
+    links:
+      - backend
+      - client
+    mem_limit: 100m
+
+  redis:
+    container_name: 'redis'
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
+
+  celery_worker:
+    container_name: "celery_worker"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    env_file:
+      - prod.env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - backend
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - db
+      - mongo
+    env_file:
+      - prod.env
+    restart: on-failure
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    container_name: client
+    depends_on:
+      - backend
+    mem_limit: 300m

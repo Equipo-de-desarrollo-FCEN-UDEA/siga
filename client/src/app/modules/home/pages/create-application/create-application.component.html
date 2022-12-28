@@ -47,11 +47,7 @@
       <!-- buttons -->
       <div class="footer-row d-md-flex justify-content-md-end mb-3">
         <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-          <a
-            type="button"
-            class="btn btn-outline-secondary"
-            (click)="cancel()"
-          >
+          <a type="button" class="btn btn-outline-secondary" (click)="cancel()">
             Cancelar
           </a>
         </div>
@@ -63,12 +59,6 @@
             type="submit"
             (submit)="(true)"
           >
-            <span
-              *ngIf="is_loading | async"
-              class="spinner-border spinner-border-sm"
-              role="status"
-              aria-hidden="true"
-            ></span>
             Continuar
           </button>
         </div>
@@ -76,3 +66,6 @@
     </div>
   </div>
 </form>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

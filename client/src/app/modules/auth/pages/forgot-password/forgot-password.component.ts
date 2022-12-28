@@ -23,7 +23,6 @@ export class ForgotPasswordComponent implements OnInit {
   public submitted: boolean = false;
   public error: string = '';
 
-  public isLoading = this.loaderSvc.isLoading;
 
   get f() {
     return this.form.controls;
@@ -31,8 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private loaderSvc: LoaderService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {

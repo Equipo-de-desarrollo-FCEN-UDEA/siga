@@ -16,8 +16,6 @@ export class ResendEmailComponent implements OnInit {
   public submitted: boolean = false;
   public error: string = '';
 
-  public isLoading = this.loaderSvc.isLoading;
-
   get f() {
     return this.form.controls;
   }
@@ -25,7 +23,6 @@ export class ResendEmailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private loaderSvc: LoaderService
   ) {}
 
   ngOnInit(): void {

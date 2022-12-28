@@ -85,60 +85,12 @@
     <hr />
 
     <!-- ALERT BOX -->
-    <div class="alert alert-warning mt-3 mb-0" *ngIf="laboralDay > 0">
+    <div class="alert alert-warning mt-3 mb-0">
       <strong>¡Importante!</strong> Para este tipo de permiso solo puedes elegir
       hasta {{ laboralDay }} días hábiles
     </div>
 
-    <!-- DATES -->
-    <!-- <div class="mt-4 row regular-row align-items-baseline">
-      <span class="col-md-4 col-xs-12 col-sm-12 label mb-2">Fechas *</span>
-      <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
-        <div class="input-group">
-          <input
-            #dpFromDate
-            class="form-control"
-            type="text"
-            (click)="datepicker.toggle(); clicked = clicked + 1"
-            placeholder="aaaa-mm-dd - aaaa-mm-dd"
-            name="dpFromDate"
-            formControlName="start_date"
-            (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-            [value]="
-              formatter.format(fromDate)
-                ? formatter.format(fromDate) + ' - ' + formatter.format(toDate)
-                : null
-            "
-            [ngClass]="{
-              'is-invalid':
-                ((!fromDate || !toDate) && clicked !== 0) ||
-                selectDays(fromDate, toDate)
-            }"
-            [attr.disabled]="
-              f['application_sub_type_id'].pristine ||
-              f['application_sub_type_id'].errors
-                ? ''
-                : null
-            "
-          />
-          <button
-            #buttonEl
-            class="btn btn-outline-secondary"
-            (click)="datepicker.toggle(); clicked = clicked + 1"
-            type="button"
-          >
-            <i class="fa fa-calendar"> </i>
-          </button>
-        </div>
-        <div *ngIf="submitted && f['end_date'].errors" class="invalid">
-          <div *ngIf="submitted  && f['end_date'].errors?.['required']">
-            Debes elegir unas fechas de inicio y fin
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="row regular-row mt-4 ">
+    <div class="row regular-row mt-4">
       <span class="col-md-4 col-xs-12 col-sm-12 label">Fechas *</span>
       <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
         <div class="input-group">
@@ -165,31 +117,30 @@
             [value]="formatter.format(toDate)"
             (input)="toDate = validateInput(toDate, dpToDate.value)"
             [value]="formatter.format(toDate) ? formatter.format(toDate) : null"
-            [ngClass]="{ 'is-invalid': !toDate && clicked !== 0 }"
-        />
-          <span
-            #buttonEl
-            class="btn btn-outline-secondary">
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['start_date'].errors) ||
+                ((!fromDate || !toDate) && clicked !== 0) ||
+                selectDays(fromDate, toDate)
+            }"
+          />
+          <span #buttonEl class="btn btn-outline-secondary">
             <i class="fa fa-calendar"></i>
           </span>
         </div>
-      </div>
-      <!-- <div class="col-sm-6 col-xs-6 col-md-6" hidden>
-        <div class="input-group" (click)="datepicker.toggle()">
-          <input
-            #dpToDate
-            class="form-control"
-            placeholder="yyyy-mm-dd"
-            name="dpToDate"
-            formControlName="end_date"
-            [value]="formatter.format(toDate)"
-            (input)="toDate = validateInput(toDate, dpToDate.value)"
-          />
-        </div>
-      </div> -->
-      <div *ngIf="submitted && f['end_date'].errors" class="invalid">
-        <div *ngIf="submitted  && f['end_date'].errors?.['required']">
-          Debes elegir unas fechas de inicio y fin
+        <!-- errors dates -->
+        <div
+          *ngIf="
+            (submitted && f['start_date'].errors) ||
+            ((!fromDate || !toDate) && clicked !== 0) ||
+            selectDays(fromDate, toDate)
+          "
+          class="invalid"
+        >
+          <div *ngIf="selectDays(fromDate, toDate)">
+            La cantidad de días elegidos sobrepasa los permitidos para este tipo
+            de permiso
+          </div>
         </div>
       </div>
     </div>

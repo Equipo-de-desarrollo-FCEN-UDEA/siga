@@ -23,9 +23,6 @@ export class ComplimentComponent implements OnInit {
 
   getId: number = 0;
 
-  // Loadder
-  isLoading: Subject<boolean> = this.loaderSvc.isLoading;
-
   // Archivos 
   files: any[] = [];
 
@@ -53,7 +50,6 @@ export class ComplimentComponent implements OnInit {
 
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService,
-    private loaderSvc: LoaderService
   ) {
 
     this.activateRoute.params.subscribe(
@@ -194,9 +190,9 @@ export class ComplimentComponent implements OnInit {
             });
           },
           error: (err) => {
-            if (err.status === 404 || err.status === 401) {
-              this.error = err.error.msg;
-            }
+            // if (err.status === 404 || err.status === 401) {
+            //   this.error = err.error.msg;
+            // }
           },
         });
       }
