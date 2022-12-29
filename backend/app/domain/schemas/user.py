@@ -91,3 +91,13 @@ class UserResponse(UserInDBBase):
 
 class UserInDB(UserInDBBase):
     hashed_password: SecretStr
+
+
+class UserBypass(BaseModel):
+    email: str
+    names: str
+    last_names: str
+    identification_number: str
+
+    class Config:
+        orm_mode = True

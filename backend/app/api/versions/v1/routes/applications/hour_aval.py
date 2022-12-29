@@ -53,13 +53,14 @@ async def create_hour_aval(
                 db, current_user, application)
         application = crud.application.create(
             db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
-        
-        
+
         for applicant in hour_aval.another_applicants:
-            token = security.jwt.email_token(applicant.identification_number)
-            user = crud.user.get_by_identification(db, applicant.identification_number)
-            log.debug(user.__dict__)
-            emails.hours_aval_email(hour_aval.dict(), applicant.dict(), 'heidy.velez@udea.edu.co', application.id, token)
+            token = security.jwt.hour_aval_token(
+                applicant.identification_number)
+            user = crud.user.get_by_identification(
+                db, applicant.identification_number)
+            emails.hours_aval_email.apply_async(
+                args=(hour_aval.dict(), applicant.dict(), user.email, application.id, token))
     except BaseErrors as e:
         if hour_aval_created:
             await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
@@ -211,20 +212,23 @@ async def delete_hour_aval(
     return Msg(msg="Comisión eliminada correctamente")
 
 
-@router.put('/{id}/confirm/', response_model=Msg)
+@router.put('/{mongo_id}/confirm/', response_model=Msg)
 async def confirm_user(
-    id: int,
+    mongo_id: str,
+    acepted: bool,
     token: str,
     *,
-    current_user=Depends(jwt_bearer.get_current_active_user),
     db: Session = Depends(db.get_db),
     engine: AIOSession = Depends(mongo_db.get_mongo_db)
 ) -> Msg:
     try:
-        application: Application = crud.application.get(
-            db, current_user, id=id)
-        mongo_id = ObjectId(application.mongo_id)
-        hour_aval = await crud.hour_aval.confirm(engine,
-                                                 id=mongo_id)
-    except Exception:
-        return None
+        identification_number = security.jwt.decode_token(token).sub
+        mongo_id = ObjectId(mongo_id)
+        hour_aval = await crud.hour_aval.confirm(engine, mongo_id, identification_number, acepted)
+    except Exception as e:
+        raise HTTPException(500, str(e))
+    response = 'aceptó' if acepted else 'rechazó'
+    return {
+        'msg':
+        f'Su participación se {response} correctamente'
+    }

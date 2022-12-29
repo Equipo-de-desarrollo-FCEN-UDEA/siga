@@ -6,14 +6,19 @@ from app.domain.schemas.application import ApplicationResponse
 # -Helper Models-
 # ---------------
 
+
 class Applicant(BaseModel):
     identification_number: str
-    acepted: bool | None
+    acepted: bool | None = None
     role: str
-    
+
+# --------------
+# ----Model-----
+# --------------
+
 
 class HourAvalBase(BaseModel):
-    time: int = Field(gt=1, lt=12)
+    time: int = Field(gt=1, lt=48)
     hours_week: int
     description: str = Field(min_length=30, max_length=500)
     announcement: str

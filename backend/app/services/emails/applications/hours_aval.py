@@ -15,11 +15,12 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 @celery.task
 def hours_aval_email(aval: Dict[str, Any], applicant: Dict[str, Any], email: str, id: int, token: str):
     template = env.get_template("email.confirmacion.aval.html.j2")
-
+    link = f'http://{settings.APP_DOMAIN}/confirmaciones/{id}/confirmar/aval-horas/{token}/'
     context = {
         'applicant': applicant,
         'aval': aval,
-        'enlace': f'{settings.APP_DOMAIN}/confirmaciones/{id}/confirmar/aval-horas/{token}'
+        'enlace_aceptar': link + str(1),
+        'enlace_rechazar': link + str(0)
     }
 
     render = template.render(context)

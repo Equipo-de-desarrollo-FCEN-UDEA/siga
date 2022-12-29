@@ -1,6 +1,11 @@
 from typing import Any
 
-from odmantic import Model
+from odmantic import Model, EmbeddedModel
+
+class Applicant(EmbeddedModel):
+    identification_number: str
+    acepted: bool | None = None
+    role: str
 
 
 class HourAval(Model):
@@ -10,6 +15,6 @@ class HourAval(Model):
     announcement: str
     entity: str | None
     role: str
-    another_applicants: list[Any]
+    another_applicants: list[Applicant]
     letter_path: str | None
     objectives: list[str]

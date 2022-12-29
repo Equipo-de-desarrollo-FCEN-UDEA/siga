@@ -21,6 +21,7 @@ class AppSettings(BaseAppSettings):
 
     access_token_expires_minutes: int
     reset_password_expire_token: int
+    aval_confirm_expire_token: int
 
     max_connection_count: int = 10
     min_connection_count: int = 10
