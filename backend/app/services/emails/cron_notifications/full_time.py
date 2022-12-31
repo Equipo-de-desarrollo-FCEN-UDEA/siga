@@ -1,59 +1,102 @@
-import smtplib
-from datetime import datetime
+# import smtplib
+# from datetime import datetime
 
-from jinja2 import Environment, FileSystemLoader
-from email.message import EmailMessage
+# from jinja2 import Environment, FileSystemLoader
+# from email.message import EmailMessage
 
-from ..templates import templatesdir
-from celery.schedules import crontab
-from app.core.celery_worker import celery
-from app.core.config import get_app_settings
-from fastapi import Depends
-from app.api.middlewares import db
+# from ..templates import templatesdir
+# from celery.schedules import crontab
+from celery import shared_task
+# from celery import current_task
+from app.core.celery_worker import celery_app
+# from time import sleep
+# from app.core.config import get_app_settings
+# from fastapi import Depends
+# from app.api.middlewares import db
 
-from app.services import crud
+# from app.services import crud
 
-from sqlalchemy.orm import Session
+# from sqlalchemy.orm import Session
 
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
-settings = get_app_settings()
+# settings = get_app_settings()
 
 # Variables para el remitente del correo.
-_my_email = settings.smtp_user_email
-_my_pwd = settings.smtp_user_password._secret_value
+# _my_email = settings.smtp_user_email
+# _my_pwd = settings.smtp_user_password._secret_value
 
-env = Environment(loader=FileSystemLoader(templatesdir))
+# env = Environment(loader=FileSystemLoader(templatesdir))
 
-database = Depends(db.get_db)
+# database = Depends(db.get_db)
 
-@celery.on_after_configure.connect
-def setup_periodic_tasks(sender, **kwargs):
-
-    # cron_jobs = crud.cron_job.get_multi(db=db)
-
-    # log.debug('cron_jobs', cron_jobs)
-
-    # Calls test('world') every 30 seconds
-    # sender.add_periodic_task(30.0, notifications.s(db=db, tipo_solicitud=tipo_solicitud,
-    #                          date=date, id=id, email=email, template=template, subject=subject), expires=10)
-
-    sender.add_periodic_task(30.0, notifications.s(db=database), expires=10)
-
-    # Executes every Monday morning at 7:30 am
-    # sender.add_periodic_task(
-    #     crontab(hour=7, minute=30, day_of_week=1),
-    #     notifications.s(db=database),
-    # )
+# @celery.on_after_configure.connect
+# def setup_periodic_tasks(sender, **kwargs):
+#     sender.add_periodic_task(30.0, notifications2.s(), name='add every 10',options={'queue': 'task-queue'})
 
 
-@celery.task(bind=True)
-#def notifications(db: Session, tipo_solicitud: str, date: datetime, id: int, email: str, template: str, subject: str):
-def notifications(db: Session):
+
+#@shared_task(bind=True, name='notifications')
+# @celery.task(queue="test-queue", name="app.services.emails.cron_notifications.full_time.notifications")
+# def notifications()-> str:
+#     print("Task started")
+#     log.info("celeryyyyyyyyy")
+#     # cron_jobs = crud.cron_job.get_multi(db=database)
+#     # log.debug('cron_jobs', cron_jobs)
+#     for i in range(1, 11):
+#         sleep(1)
+#         current_task.update_state(state='PROGRESS',
+#                                   meta={'process_percent': i*10})
+#     return {
+#         "message": "Hello world!!!"
+#     }
    
-    cron_jobs = crud.cron_job.get_multi(db=db)
-    log.debug('cron_jobs', cron_jobs)
+# @celery.task(bind=True)
+# def notifications2()-> str:
+#     print("Task started 2222")
+#     log.info("celeryyyyyyyyy 222")
+#     # cron_jobs = crud.cron_job.get_multi(db=database)
+#     # log.debug('cron_jobs', cron_jobs)
+#     for i in range(1, 11):
+#         sleep(1)
+#         current_task.update_state(state='PROGRESS',
+#                                   meta={'process_percent': i*10})
+#     return {
+#         "message": "Hello world!!! 222"
+#     }
+    
+
+
+# -----------------------
+
+@shared_task(bind=True)
+@celery_app.task(acks_late=True, queue="test-queue")
+def notifications()-> str:
+    print("Task started")
+    log.info("celeryyyyyyyyy")
+    return {
+        "message": "Hello world!!!"
+    }
+    
+
+# -----------------------
+
+
+# @celery_app.task(acks_late=True, queue="test-queue")
+# def notifications2()-> str:
+#     print("Task started 2222")
+#     return "done"
+
+# @celery_app.on_after_configure.connect
+# def setup_periodic_tasks(sender, **kwargs):
+#     sender.add_periodic_task(30.0, notifications2.s(), name='add every 30')
+
+
+
+
+
+
 
     # template = env.get_template(template)
     # url = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"

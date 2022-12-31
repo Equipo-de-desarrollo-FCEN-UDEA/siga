@@ -22,6 +22,8 @@ class CRUDCronJob(CRUDBase[CronJob, CronJobCreate, CronJobUpdate, CronJobPolicy]
     def get_multi(self, db: Session) -> List[CronJob]:
 
         today = date.now()
+
+        log.debug('today',today)
         
         #Busca en cronjob todos mensajes que se deben enviar ese dia
         db_objs = db.\
