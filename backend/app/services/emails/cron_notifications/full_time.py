@@ -1,23 +1,22 @@
 # import smtplib
 # from datetime import datetime
+# from time import sleep
 
 # from jinja2 import Environment, FileSystemLoader
 # from email.message import EmailMessage
-
 # from ..templates import templatesdir
+
 # from celery.schedules import crontab
 from celery import shared_task
 # from celery import current_task
 from app.core.celery_worker import celery_app
-# from time import sleep
-# from app.core.config import get_app_settings
+
 # from fastapi import Depends
 # from app.api.middlewares import db
-
 # from app.services import crud
-
 # from sqlalchemy.orm import Session
 
+# from app.core.config import get_app_settings
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
@@ -30,42 +29,6 @@ log = get_logging(__name__)
 # env = Environment(loader=FileSystemLoader(templatesdir))
 
 # database = Depends(db.get_db)
-
-# @celery.on_after_configure.connect
-# def setup_periodic_tasks(sender, **kwargs):
-#     sender.add_periodic_task(30.0, notifications2.s(), name='add every 10',options={'queue': 'task-queue'})
-
-
-
-#@shared_task(bind=True, name='notifications')
-# @celery.task(queue="test-queue", name="app.services.emails.cron_notifications.full_time.notifications")
-# def notifications()-> str:
-#     print("Task started")
-#     log.info("celeryyyyyyyyy")
-#     # cron_jobs = crud.cron_job.get_multi(db=database)
-#     # log.debug('cron_jobs', cron_jobs)
-#     for i in range(1, 11):
-#         sleep(1)
-#         current_task.update_state(state='PROGRESS',
-#                                   meta={'process_percent': i*10})
-#     return {
-#         "message": "Hello world!!!"
-#     }
-   
-# @celery.task(bind=True)
-# def notifications2()-> str:
-#     print("Task started 2222")
-#     log.info("celeryyyyyyyyy 222")
-#     # cron_jobs = crud.cron_job.get_multi(db=database)
-#     # log.debug('cron_jobs', cron_jobs)
-#     for i in range(1, 11):
-#         sleep(1)
-#         current_task.update_state(state='PROGRESS',
-#                                   meta={'process_percent': i*10})
-#     return {
-#         "message": "Hello world!!! 222"
-#     }
-    
 
 
 # -----------------------
@@ -91,8 +54,6 @@ def notifications()-> str:
 # @celery_app.on_after_configure.connect
 # def setup_periodic_tasks(sender, **kwargs):
 #     sender.add_periodic_task(30.0, notifications2.s(), name='add every 30')
-
-
 
 
 

@@ -99,7 +99,7 @@ services:
   celery_worker:
     container_name: "celery_worker"
     image: simon3640/siga-backend
-    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
       - prod.env
     environment:

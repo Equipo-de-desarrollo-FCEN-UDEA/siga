@@ -53,7 +53,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
       - prod.env
     environment:
