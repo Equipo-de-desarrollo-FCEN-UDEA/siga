@@ -78,63 +78,47 @@
           </span>
         </h6>
         <div style="width: 100%" formArrayName="teaching_activities">
-          <div
-            *ngFor="
-              let activity of teachingActivitiesArr.controls;
-              last as isLast;
-              let i = index
-            "
-            class="arrayLike formfloatig justify-content-center"
-            [formGroupName]="i"
-          >
+          <div class="arrayLike formfloatig justify-content-center">
             <div class="row activity_form">
               <div
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
                 class="lineGroup col-xs-12 col-md-12 col-lg-6"
                 formGroupName="activity_identification"
               >
                 <div class="row">
-                  <div class="col-12" *ngIf="i == 0">
+                  <div class="col-12">
                     <span>Identificación actividad</span>
-                    <hr />
+                    <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
                     <input
-                      id="floating_code{{ i }}"
                       type="text"
                       formControlName="code"
                       class="form-control"
                       placeholder=" "
                     />
-                    <label for="floating_code{{ i }}" class="formLabel"
-                      >Código</label
-                    >
+                    <label class="formLabel">Código</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
                     <input
-                      id="floating_group{{ i }}"
                       type="text"
                       formControlName="group"
                       class="form-control"
                       placeholder=" "
                     />
-                    <label for="floating_group{{ i }}" class="formLabel"
-                      >Grupo</label
-                    >
+                    <label class="formLabel">Grupo</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
                     <input
-                      id="floating_name{{ i }}"
                       type="text"
                       formControlName="name"
                       class="form-control"
                       placeholder=" "
                     />
-                    <label for="floating_name{{ i }}" class="formLabel"
-                      >Nombre</label
-                    >
+                    <label class="formLabel">Nombre</label>
                   </div>
                 </div>
               </div>
@@ -144,47 +128,374 @@
                 style="margin-right: 0.5em; margin-bottom: 0.5em"
               >
                 <div class="row" style="margin-left: 0px">
-                  <div class="col-12" style="text-align: center" *ngIf="i == 0">
+                  <div class="col-12" style="text-align: center">
                     <span>Estudiantes</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
                     <input
-                      id="floating_number_students{{ i }}"
                       type="number"
                       formControlName="number_students"
                       class="form-control"
                       placeholder=" "
                     />
-                    <label
-                      for="floating_number_students{{ i }}"
-                      class="formLabel"
-                      >Cantidad</label
-                    >
+                    <label class="formLabel">Cantidad</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
                     <input
-                      id="floating_level{{ i }}"
                       type="text"
                       formControlName="level"
                       class="form-control"
                       placeholder=" "
                     />
-                    <label for="floating_level{{ i }}" class="formLabel"
-                      >Nivel</label
-                    >
+                    <label class="formLabel">Nivel</label>
                   </div>
                 </div>
               </div>
 
-            
+              <div
+                class="lineGroup col-sm-12 col-md-12 col-lg-6"
+                formGroupName="horas_semana"
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Horas semana</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+                  <div class="formfloatig col-sm-4">
+                    <input
+                      type="number"
+                      formControlName="T"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">T</label>
+                  </div>
+
+                  <div class="formfloatig col-sm-4">
+                    <input
+                      type="number"
+                      formControlName="TP"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">TP</label>
+                  </div>
+                  <div class="formfloatig col-sm-4">
+                    <input
+                      type="number"
+                      formControlName="P"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">P</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="lineGroup col-sm-12 col-md-12 col-lg-5"
+                formGroupName="total_horas"
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Total horas</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
+                    <input
+                      type="number"
+                      formControlName="weekly"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Semana</label>
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
+                    <input
+                      type="number"
+                      formControlName="biannual"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Semestre</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="buttons col-sm-12 col-md-12 col-lg-2 ms-4"
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
+              >
+                <!-- <button
+                  class="btn btn-add btn-sm"
+                  type="button"
+                  (click)="addTeachingActivities()"
+                  *ngIf="isLast"
+                >
+                  <i class="fa fa-plus"></i>
+                </button> -->
+                <!-- <button
+                  class="btn btn-remove btn-sm"
+                  type="button"
+                  (click)="removeInput('teaching_activities', i)"
+                  *ngIf="teachingActivitiesArr.length > 1"
+                >
+                  <i class="fa fa-minus"></i>
+                </button> -->
+              </div>
+
+              <hr *ngIf="teachingActivitiesArr.length > 1" />
             </div>
           </div>
         </div>
 
         <div style="width: 100%" formArrayName="teaching_activities"></div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <!-- /.actividades-investigacion -->
+      <div
+        id="c8"
+        class="card card-plan col-lg-5 col-ms-6 col-xs-12 shadow h-25 p-2 m-2"
+      >
+        <h6>
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
+            Actividades de investigación
+          </span>
+        </h6>
+
+        <div style="width: 100%" formArrayName="research_activities">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row formActividades">
+              <div
+                class="col-xs-12 col-md-12 col-lg-12"
+                style="margin-right: 0.5em; margin-bottom: 0.5em"
+              >
+                <div class="col-12" style="text-align: center">
+                  <span>Identificación actividad</span>
+                  <hr style="margin: 0; margin-bottom: 3px" />
+                </div>
+
+                <div class="row" style="margin-left: 0">
+                  <div class="formfloatig col-xs-12 col-md-6 col-lg-2">
+                    <input
+                      type="text"
+                      formControlName="code"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Código</label>
+                  </div>
+
+                  <div class="formfloatig col-xs-12 col-md-6 col-lg-10">
+                    <input
+                      type="text"
+                      formControlName="project_identification"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Identificación del proyecto</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12 col-lg-12"
+                style="margin-bottom: 0.5em; margin-right: 0.5em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Responsabilidades</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
+                    <input
+                      type="text"
+                      formControlName="responsibility"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Responsabilidad</label>
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
+                    <input
+                      type="text"
+                      formControlName="cost"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Costo</label>
+                  </div>
+
+                  <div class="formfloatig col-sm-12 col-md-12 col-lg-4">
+                    <input
+                      type="text"
+                      formControlName="support_certificate"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Acta</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12 col-lg-12"
+                style="margin-right: 1em; margin-bottom: 0.5em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Horas</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-12">
+                    <input
+                      type="number"
+                      formControlName="semester_hours"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel"> Semestre</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /.actividades-extension -->
+
+      <div
+        id="c2"
+        class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2"
+      >
+        <h6>
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
+            Actividades de extensión
+          </span>
+        </h6>
+
+        <div style="width: 100%" formArrayName="extension_activities">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row formActividades">
+              <div
+                class="col-xs-12 col-md-12 col-lg-12"
+                style="margin-bottom: 0.5em; margin-right: 0.5em"
+              >
+                <div class="col-12" style="text-align: center">
+                  <span>identificación actividad</span>
+                  <hr style="margin: 0; margin-bottom: 3px" />
+                </div>
+                <div class="row" style="margin-left: 0">
+                  <div class="formfloatig col-xs-12 col-md-4 col-lg-2">
+                    <input
+                      type="text"
+                      formControlName="code"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Código</label>
+                  </div>
+                  <div class="formfloatig col-xs-12 col-md-8 col-lg-10">
+                    <input
+                      type="text"
+                      formControlName="activity_identification"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel"
+                      >Identificación de la actividad</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12 col-lg-12 col-12"
+                style="margin-bottom: 0.5em; margin-right: 0.5em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Responsabilidades</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
+                    <input
+                      type="text"
+                      formControlName="responsibility"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Responsabilidad</label>
+                  </div>
+
+                  <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
+                    <input
+                      type="text"
+                      formControlName="cost"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Costo</label>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-sm-12 col-md-12 col-lg-12"
+                style="margin-bottom: 0.5em; margin-right: 1em"
+              >
+                <div class="row" style="margin-left: 0">
+                  <div class="col-12" style="text-align: center">
+                    <span>Horas</span>
+                    <hr style="margin: 0; margin-bottom: 3px" />
+                  </div>
+
+                  <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
+                    <input
+                      type="number"
+                      formControlName="hours_week"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Semestre</label>
+                  </div>
+
+                  <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
+                    <input
+                      type="number"
+                      formControlName="semester_hours"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                    <label class="formLabel">Semana</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
