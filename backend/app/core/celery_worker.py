@@ -50,7 +50,8 @@ include = [
     "app.services.documents.applications.permission",
     "app.services.emails.application",
     "app.services.emails.applications.commission",
-    "app.services.emails.cron_notifications.full_time"
+    #"app.services.emails.cron_notifications.full_time"
+    "app.core.tasks"
 ]
 
 celery_app = Celery('tasks', broker=settings.redis_uri,
@@ -63,14 +64,14 @@ celery_app.conf.update(
 )
 
 celery_app.conf.task_routes = {
-    "app.services.emails.cron_notifications.full_time.notifications": "test-queue"
+    "app.core.tasks.full_time_notifications": "test-queue"
 }
 
 
 celery_app.conf.beat_schedule = {
-    'notifications': {
-        'task': 'app.services.emails.cron_notifications.full_time.notifications',
-        'schedule': crontab(minute="*/1"),
+        'notifications': {
+        'task': 'app.core.tasks.full_time_notifications',
+        'schedule': crontab(minute="*/3"),
     }
 }
 

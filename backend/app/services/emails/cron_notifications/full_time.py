@@ -11,9 +11,7 @@ from celery import shared_task
 # from celery import current_task
 from app.core.celery_worker import celery_app
 
-# from fastapi import Depends
-# from app.api.middlewares import db
-# from app.services import crud
+
 # from sqlalchemy.orm import Session
 
 # from app.core.config import get_app_settings
@@ -28,7 +26,7 @@ log = get_logging(__name__)
 
 # env = Environment(loader=FileSystemLoader(templatesdir))
 
-# database = Depends(db.get_db)
+
 
 
 # -----------------------
@@ -38,6 +36,8 @@ log = get_logging(__name__)
 def notifications()-> str:
     print("Task started")
     log.info("celeryyyyyyyyy")
+
+
     return {
         "message": "Hello world!!!"
     }
