@@ -16,3 +16,4 @@ class CronJob(Base):
     send_date = Column(DateTime(timezone=True), nullable=False)
     template = Column(String(50), nullable=False)
     user_email = Column(String(50), nullable=False)
+    id_application = Column(Integer)

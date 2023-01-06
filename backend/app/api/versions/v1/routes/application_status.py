@@ -98,7 +98,8 @@ async def create_application_status(
                     cron_obj = CronJobCreate(
                         send_date= date - relativedelta(months=1),
                         template="email.report.full.time.html.j2",
-                        user_email=application.user.email
+                        user_email=application.user.email,
+                        id_application=application.id
                     )
                     crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
 
