@@ -71,7 +71,7 @@ celery_app.conf.task_routes = {
 celery_app.conf.beat_schedule = {
         'notifications': {
         'task': 'app.core.tasks.full_time_notifications',
-        'schedule': crontab(minute="*/3"),
+        'schedule': crontab(hour=5, minute=0),
     }
 }
 
