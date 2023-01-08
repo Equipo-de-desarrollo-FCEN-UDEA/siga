@@ -1,90 +1,55 @@
 <div class="mt-2 plan-trabajo">
-  <form
-    novalidate
-    [formGroup]="f_workplan"
-    (ngSubmit)="onSubmit()"
-    class="need-validation"
-  >
+  <form novalidate [formGroup]="f_workplan" (ngSubmit)="onSubmit()" class="need-validation">
     <div class="row justify-content-center">
       <!-- Información del plan de trabajo general -->
-      <div
-        class="card card-plan-general col-lg-5 col-ms-6 col-xs-12 shadow p-2 m-2 h-25"
-      >
+      <div class="card card-plan-general col-lg-5 col-ms-6 col-xs-12 shadow p-2 m-2 h-25">
         <h6>
           <span class="muted">
-            <i
-              class="fa fa-info-circle"
-              title="Información sobre cómo llenar estos campos del formu"
-            ></i>
+            <i class="fa fa-info-circle" title="Información sobre cómo llenar estos campos del formu"></i>
             Información del plan de trabajo general
           </span>
         </h6>
         <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
             <div class="formfloatig">
-              <input
-                id="floating_semester"
-                type="text"
-                formControlName="semester"
-                class="form-control"
-                placeholder=" "
-              />
+              <input id="floating_semester" type="text" formControlName="semester" class="form-control"
+                placeholder=" " />
               <label for="floating_semester" class="formLabel">Semestre</label>
             </div>
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-6 mt-3">
             <div class="formfloatig">
-              <input
-                id="floating_register"
-                type="number"
-                formControlName="register"
-                class="form-control"
-                placeholder=" "
-              />
+              <input id="floating_register" type="number" formControlName="register" class="form-control"
+                placeholder=" " />
               <label for="floating_register" class="formLabel">Registro</label>
             </div>
           </div>
 
           <div class="col-sm-12 col-md-12 col-lg-12 mt-3">
             <div class="formfloatig">
-              <input
-                id="floating_part_time"
-                type="number"
-                formControlName="part_time"
-                class="form-control"
-                placeholder=" "
-              />
-              <label for="floating_part_time" class="formLabel"
-                >Tiempo parcial horas mes</label
-              >
+              <input id="floating_part_time" type="number" formControlName="part_time" class="form-control"
+                placeholder=" " />
+              <label for="floating_part_time" class="formLabel">Tiempo parcial horas mes</label>
             </div>
           </div>
         </div>
       </div>
 
       <!-- /.actividades_docencia -->
-      <div
-        id="c1"
-        class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2"
-      >
+      <div id="c1" class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
         <h6>
           <span class="muted">
-            <i
-              class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de docencia, por cada actividad haga click sobre el botón +"
-            ></i>
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de docencia, por cada actividad haga click sobre el botón +"></i>
             Actividades de docencia
           </span>
         </h6>
         <div style="width: 100%" formArrayName="teaching_activities">
           <div class="arrayLike formfloatig justify-content-center">
             <div class="row activity_form">
-              <div
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-                class="lineGroup col-xs-12 col-md-12 col-lg-6"
-                formGroupName="activity_identification"
-              >
+              <div style="margin-right: 0.5em; margin-bottom: 0.5em" class="lineGroup col-xs-12 col-md-12 col-lg-6"
+                formGroupName="activity_identification">
                 <div class="row">
                   <div class="col-12">
                     <span>Identificación actividad</span>
@@ -92,41 +57,23 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input
-                      type="text"
-                      formControlName="code"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
                     <label class="formLabel">Código</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input
-                      type="text"
-                      formControlName="group"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="group" class="form-control" placeholder=" " />
                     <label class="formLabel">Grupo</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                    <input
-                      type="text"
-                      formControlName="name"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="name" class="form-control" placeholder=" " />
                     <label class="formLabel">Nombre</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="col-sm-12 col-md-12 col-lg-5"
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-              >
+              <div class="col-sm-12 col-md-12 col-lg-5" style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0px">
                   <div class="col-12" style="text-align: center">
                     <span>Estudiantes</span>
@@ -134,73 +81,42 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input
-                      type="number"
-                      formControlName="number_students"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="number_students" class="form-control" placeholder=" " />
                     <label class="formLabel">Cantidad</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input
-                      type="text"
-                      formControlName="level"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="level" class="form-control" placeholder=" " />
                     <label class="formLabel">Nivel</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="lineGroup col-sm-12 col-md-12 col-lg-6"
-                formGroupName="horas_semana"
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-              >
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="horas_semana"
+                style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Horas semana</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input
-                      type="number"
-                      formControlName="T"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="T" class="form-control" placeholder=" " />
                     <label class="formLabel">T</label>
                   </div>
 
                   <div class="formfloatig col-sm-4">
-                    <input
-                      type="number"
-                      formControlName="TP"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="TP" class="form-control" placeholder=" " />
                     <label class="formLabel">TP</label>
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input
-                      type="number"
-                      formControlName="P"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="P" class="form-control" placeholder=" " />
                     <label class="formLabel">P</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="lineGroup col-sm-12 col-md-12 col-lg-5"
-                formGroupName="total_horas"
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-              >
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-5" formGroupName="total_horas"
+                style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Total horas</span>
@@ -208,31 +124,18 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
-                    <input
-                      type="number"
-                      formControlName="weekly"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="weekly" class="form-control" placeholder=" " />
                     <label class="formLabel">Semana</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
-                    <input
-                      type="number"
-                      formControlName="biannual"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="biannual" class="form-control" placeholder=" " />
                     <label class="formLabel">Semestre</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="buttons col-sm-12 col-md-12 col-lg-2 ms-4"
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-              >
+              <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4" style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <!-- <button
                   class="btn btn-add btn-sm"
                   type="button"
@@ -262,27 +165,19 @@
 
     <div class="row justify-content-center">
       <!-- /.actividades-investigacion -->
-      <div
-        id="c8"
-        class="card card-plan col-lg-5 col-ms-6 col-xs-12 shadow h-25 p-2 m-2"
-      >
+      <div id="c8" class="card card-plan col-lg-5 col-ms-6 col-xs-12 shadow h-25 p-2 m-2">
         <h6>
           <span class="muted">
-            <i
-              class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
-            ></i>
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
             Actividades de investigación
           </span>
         </h6>
 
-        <div style="width: 100%" formArrayName="research_activities">
+        <div style="width: 100%" formArrayName="investigation_activities">
           <div class="arrayLike formfloatig justify-content-center">
             <div class="row formActividades">
-              <div
-                class="col-xs-12 col-md-12 col-lg-12"
-                style="margin-right: 0.5em; margin-bottom: 0.5em"
-              >
+              <div class="col-xs-12 col-md-12 col-lg-12" style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="col-12" style="text-align: center">
                   <span>Identificación actividad</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -290,31 +185,18 @@
 
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-2">
-                    <input
-                      type="text"
-                      formControlName="code"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
                     <label class="formLabel">Código</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-10">
-                    <input
-                      type="text"
-                      formControlName="project_identification"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="project_identification" class="form-control" placeholder=" " />
                     <label class="formLabel">Identificación del proyecto</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="col-sm-12 col-md-12 col-lg-12"
-                style="margin-bottom: 0.5em; margin-right: 0.5em"
-              >
+              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Responsabilidades</span>
@@ -322,41 +204,23 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input
-                      type="text"
-                      formControlName="responsibility"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="responsibility" class="form-control" placeholder=" " />
                     <label class="formLabel">Responsabilidad</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input
-                      type="text"
-                      formControlName="cost"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="cost" class="form-control" placeholder=" " />
                     <label class="formLabel">Costo</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-4">
-                    <input
-                      type="text"
-                      formControlName="support_certificate"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="support_certificate" class="form-control" placeholder=" " />
                     <label class="formLabel">Acta</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="col-sm-12 col-md-12 col-lg-12"
-                style="margin-right: 1em; margin-bottom: 0.5em"
-              >
+              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-right: 1em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Horas</span>
@@ -364,12 +228,7 @@
                   </div>
 
                   <div class="formfloatig col-12">
-                    <input
-                      type="number"
-                      formControlName="semester_hours"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
                     <label class="formLabel"> Semestre</label>
                   </div>
                 </div>
@@ -381,16 +240,11 @@
 
       <!-- /.actividades-extension -->
 
-      <div
-        id="c2"
-        class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2"
-      >
+      <div id="c2" class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
         <h6>
           <span class="muted">
-            <i
-              class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
-            ></i>
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
             Actividades de extensión
           </span>
         </h6>
@@ -398,42 +252,24 @@
         <div style="width: 100%" formArrayName="extension_activities">
           <div class="arrayLike formfloatig justify-content-center">
             <div class="row formActividades">
-              <div
-                class="col-xs-12 col-md-12 col-lg-12"
-                style="margin-bottom: 0.5em; margin-right: 0.5em"
-              >
+              <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
                 <div class="col-12" style="text-align: center">
                   <span>identificación actividad</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
                 </div>
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-4 col-lg-2">
-                    <input
-                      type="text"
-                      formControlName="code"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
                     <label class="formLabel">Código</label>
                   </div>
                   <div class="formfloatig col-xs-12 col-md-8 col-lg-10">
-                    <input
-                      type="text"
-                      formControlName="activity_identification"
-                      class="form-control"
-                      placeholder=" "
-                    />
-                    <label class="formLabel"
-                      >Identificación de la actividad</label
-                    >
+                    <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
+                    <label class="formLabel">Identificación de la actividad</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="col-sm-12 col-md-12 col-lg-12 col-12"
-                style="margin-bottom: 0.5em; margin-right: 0.5em"
-              >
+              <div class="col-sm-12 col-md-12 col-lg-12 col-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Responsabilidades</span>
@@ -441,31 +277,18 @@
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input
-                      type="text"
-                      formControlName="responsibility"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="responsibility" class="form-control" placeholder=" " />
                     <label class="formLabel">Responsabilidad</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input
-                      type="text"
-                      formControlName="cost"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="text" formControlName="cost" class="form-control" placeholder=" " />
                     <label class="formLabel">Costo</label>
                   </div>
                 </div>
               </div>
 
-              <div
-                class="col-sm-12 col-md-12 col-lg-12"
-                style="margin-bottom: 0.5em; margin-right: 1em"
-              >
+              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 1em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span>Horas</span>
@@ -473,25 +296,230 @@
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input
-                      type="number"
-                      formControlName="hours_week"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="hours_week" class="form-control" placeholder=" " />
                     <label class="formLabel">Semestre</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input
-                      type="number"
-                      formControlName="semester_hours"
-                      class="form-control"
-                      placeholder=" "
-                    />
+                    <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
                     <label class="formLabel">Semana</label>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+
+      <!-- /.actividades-administracion -->
+      <div id="c3" class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
+        <h6>
+          <span class="muted">
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            Administración académica
+          </span>
+        </h6>
+
+        <div style="width: 100%" formArrayName="academic_admin_activities">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row formActividades" style="width: 100%">
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="formfloatig">
+                  <input type="text" formControlName="charge" class="form-control" placeholder=" " />
+                  <label class="formLabel">Cargo</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="formfloatig">
+                  <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
+                  <label class="formLabel">Horas semestre</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="formfloatig">
+                  <input type="text" formControlName="other_activities" class="form-control" placeholder=" " />
+                  <label class="formLabel">Otras actividades</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="formfloatig">
+                  <input type="number" formControlName="other_hours_semester" class="form-control" placeholder=" " />
+                  <label class="formLabel">Horas semestre</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.otras-actividades -->
+
+      <div id="c4" class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
+        <h6>
+          <span class="muted">
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            Otras actividades
+          </span>
+        </h6>
+
+        <div style="width: 100%" formArrayName="other_activities">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row formActividades" style="width: 100%">
+
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="formfloatig">
+                  <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
+                  <label class="formLabel">Identificación de la actividad</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-2 col-lg-12">
+                <div class="formfloatig">
+                  <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
+                  <label class="formLabel">Horas semestre</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row justify-content-center">
+      <!-- /.seguimiento-actividades -->
+      <div id="c5" class="card card-plan card-plan-seguimiento col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
+        <h6>
+          <span class="muted">
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            Seguimiento actividades
+          </span>
+        </h6>
+
+        <div style="width: 100%" formArrayName="monitoring_activities">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row formActividades" style="width: 100%">
+
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="formfloatig">
+                  <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
+                  <label class="formLabel">Identificación de la actividad</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-3 col-lg-3">
+                <div class="formfloatig">
+                  <input type="date" formControlName="date_1" class="form-control" placeholder=" " />
+                  <label class="formLabel">Fecha 1</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-3 col-lg-3">
+                <div class="formfloatig">
+                  <input type="date" formControlName="date_2" class="form-control" placeholder=" " />
+                  <label class="formLabel">Fecha 2</label>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="formfloatig">
+                  <input type="text" formControlName="others" class="form-control" placeholder=" " />
+                  <label class="formLabel">Otros</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- /.jornada-trabajo -->
+      <div class="card card-plan col-lg-5 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
+        <h6>
+          <span class="muted">
+            <i class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            Observaciones generales
+          </span>
+        </h6>
+
+        <div class="formfloatig col-12">
+          <textarea id="floating_general_remarks" formControlName="general_remarks" class="form-control" placeholder=" "
+            rows="3">
+          </textarea>
+          <label for="floating_general_remarks" class="formLabel">Observaciones</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-plan col-lg-12 col-md-12 col-xs-12 shadow h-25 p-2 m-2">
+      <h6>
+        <span class="muted">
+          <i class="fa fa-info-circle"
+            title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+          Jornada de trabajo
+        </span>
+      </h6>
+
+      <div class="row" style="width: 100%" formArrayName="work_day">
+        <div class="col-xl-4 col-lg-6 arrayLike formfloatig justify-content-center">
+          <div class="row formActividades shadow m-2 p-1" style="width: 100%; margin: auto; min-width: 320px">
+            <span>
+              <i class="fa fa-clock"></i>
+              semana[i] }}
+            </span>
+
+            <div class="col-6">
+              <div class="row">
+                <span>Mañana</span>
+                <div class="col-lg-6">
+                  <div class="formfloatig" style="padding-right: 0">
+                    <input atp-time-picker type="time" formControlName="morning_1
+                    " class="form-control" onlyHour="false" value="07:00" start="07:00" end="12:00" placeholder=" " />
+                    <label class="formLabel">Inicia</label>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="formfloatig" style="padding-right: 0">
+                    <input atp-time-picker type="time" formControlName="morning_2" class="form-control" onlyHour="false"
+                      value="07:00" start="07:00" end="12:00" placeholder=" " />
+                    <label class="formLabel">Termina</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-6">
+              <div class="row">
+                <span>Tarde</span>
+
+                <div class="col-lg-6">
+                  <div class="formfloatig">
+                    <input atp-time-picker type="time" formControlName="afternoon_1" class="form-control"
+                      placeholder=" " value="13:00" start="13:00" end="17:00" />
+                    <label class="formLabel">Inicia</label>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="formfloatig">
+                    <input atp-time-picker type="time" formControlName="afternoon_2" class="form-control" placeholder=" "
+                      value="13:00" start="13:00" end="17:00" />
+                    <label class="formLabel">Termina</label>
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>
