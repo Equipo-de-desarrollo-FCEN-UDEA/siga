@@ -56,9 +56,21 @@ export class WorkplanComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-  ) { }
+  ) {
+
+    for (let i = 0; i < 4; i++) { this.workDayArr.push(this.workDayGroup()); }
+
+    this.workDayArr.push(this.fb.group({
+      morning_1: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      morning_2: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      afternoon_1: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      afternoon_2: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+    }));
+   }
 
   ngOnInit(): void {
+
+
   }
 
   // ------------------------------
