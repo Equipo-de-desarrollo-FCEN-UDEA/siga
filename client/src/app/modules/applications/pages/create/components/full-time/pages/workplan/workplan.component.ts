@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
 
 @Component({
   selector: 'app-workplan',
@@ -56,6 +57,7 @@ export class WorkplanComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private fullTimeSvc: FullTimeService 
   ) {
 
     for (let i = 0; i < 4; i++) { this.workDayArr.push(this.workDayGroup()); }
@@ -69,7 +71,7 @@ export class WorkplanComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+    // this.fullTimeSvc.getFullTime()
 
   }
 
