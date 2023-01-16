@@ -110,7 +110,7 @@
                 </div>
               </div>
 
-              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="horas_semana"
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="hours_week"
                 style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
@@ -133,7 +133,7 @@
                 </div>
               </div>
 
-              <div class="lineGroup col-sm-12 col-md-12 col-lg-5" formGroupName="total_horas"
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-5" formGroupName="total_hours"
                 style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
@@ -152,13 +152,19 @@
                   </div>
                 </div>
               </div>
-
-              <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4" style="margin-right: 0.5em; margin-bottom: 0.5em">
-              </div>
-
-              <hr *ngIf="teachingActivitiesArr.length > 1" />
             </div>
           </div>
+
+          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button class="btn btn-add" type="button" (click)="addTeachingActivities()">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-remove" type="button">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+
+          <hr *ngIf="teachingActivitiesArr.length > 1" />
         </div>
       </div>
     </div>
@@ -240,6 +246,16 @@
               </div>
             </div>
           </div>
+
+          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button class="btn btn-add" type="button">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-remove" type="button">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -319,6 +335,16 @@
               </div>
             </div>
           </div>
+
+          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button class="btn btn-add" type="button">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-remove" type="button">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -374,6 +400,16 @@
 
             </div>
           </div>
+
+          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button class="btn btn-add" type="button">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-remove" type="button">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -415,6 +451,16 @@
             </div>
           </div>
         </div>
+
+        <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+          <button class="btn btn-add" type="button">
+            <i class="fa fa-plus"></i>
+          </button>
+          <button class="btn btn-remove" type="button">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+
       </div>
     </div>
 
@@ -466,6 +512,16 @@
               </div>
             </div>
           </div>
+
+          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button class="btn btn-add" type="button">
+              <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-remove" type="button">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>

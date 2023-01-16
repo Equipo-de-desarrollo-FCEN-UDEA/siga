@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
+
+//interfaces
+import { FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
+
+//services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
+import { LoaderService } from '@services/loader.service';
 
 @Component({
   selector: 'app-workplan',
@@ -22,6 +28,10 @@ export class WorkplanComponent implements OnInit {
     monitoring_activities: this.fb.array([this.monitoringActivitiesGroup()], [Validators.required]),
     work_day: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
+
+  @Input() id_full_time:number = 0;
+
+  public work_plan:any;
 
   // ------------------------------
   // --------- GETTERS -----------
@@ -57,7 +67,8 @@ export class WorkplanComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private fullTimeSvc: FullTimeService 
+    private fullTimeSvc: FullTimeService,
+    private loaderSvc: LoaderService
   ) {
 
     for (let i = 0; i < 4; i++) { this.workDayArr.push(this.workDayGroup()); }
@@ -71,8 +82,13 @@ export class WorkplanComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // this.fullTimeSvc.getFullTime()
+    // this.fullTimeSvc.getFullTime(this.id_full_time).subscribe({
+    //   next:(res: FullTimeInDB) => {
+    //     this.work_plan = res.work_plan
+    //   } 
+    // });
 
+    this.patchTeachingActivities(this.work_plan.teaching_activities)
   }
 
   // ------------------------------
@@ -84,6 +100,9 @@ export class WorkplanComponent implements OnInit {
     //   ... this.f_workplan.value as WorkPlan,
           
     // }
+
+    this.loaderSvc.show();
+    
   }
 
 

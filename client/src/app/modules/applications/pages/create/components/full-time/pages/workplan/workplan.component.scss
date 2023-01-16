@@ -77,29 +77,28 @@ align-items: flex-end;
 }
 }
 
-.btn-add {
-border-color: #fff;
-color: #fff;
-background-color: #43b649;
-}
-
-.btn-add:hover {
-background-color: #79b97c;
-}
-
-.btn-remove {
-color: #fff;
-background-color: var(--032c);
-border-color: #fff;
-} .btn-remove:hover {
-background-color: #d45f57;
-}
-
+//---- buttons ------
 .buttons{
   align-items: center;
   margin: 0.5em;
   width: fit-content;
 }
+.btn-add {
+border-color: #fff;
+color: #fff;
+background-color: #43b649;
+}.btn-add:hover {
+  background-color: #79b97c;
+  }
+
+.btn-remove {
+background-color: #d45f57;  
+color: #fff;
+border-color: #fff;
+}.btn-remove:hover {
+  background-color: #d45f57e1;
+  }
+
 
 .arrayLike{
 padding: 0;
