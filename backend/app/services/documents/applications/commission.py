@@ -67,7 +67,7 @@ async def commission_resolution_generation(user: User, application: Application,
 @celery_app.task
 def generate_commission_pdf_to_aws(data: dict, path: str):
     env = Environment(loader=FileSystemLoader(templates_dir))
-    template = env.get_template('commission.letter.html')
+    template = env.get_template('commission.letter.html.j2')
     render = template.render(data)
     pdf = HTML(string=render, base_url=logos_dir).write_pdf()
     file = BytesIO()

@@ -8,19 +8,27 @@ from app.domain.schemas import FullTimeUpdate, FullTimeCreate
 from app.domain.policies.applications.full_time import FullTimePolicy
 from .base import CRUDBase
 
+
 class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePolicy]):
-    async def letter(self, db: AIOSession, *, id: ObjectId, letter: Any) -> FullTime:
+    async def letter(self, db: AIOSession, *, id: ObjectId, letter: Any, path: str) -> FullTime:
         full_time = await db.find_one(FullTime, FullTime.id == id)
         full_time.initial_letter = letter
+        for i, document in enumerate(full_time.documents):
+            if document['name'] == 'carta-inicio.pdf':
+                del full_time.documents[i]
+        if full_time.documents is not None:
+            full_time.documents += [{'name': 'carta-inicio.pdf', 'path': path}]
+        else:
+            full_time.documents = [{'name': 'carta-inicio.pdf', 'path': path}]
         db_obj = await db.save(full_time)
         return db_obj
-    
+
     async def vice_format(self, db: AIOSession, *, id: ObjectId, vice_format: Any) -> FullTime:
         full_time = await db.find_one(FullTime, FullTime.id == id)
         full_time.vice_format = vice_format
         db_obj = await db.save(full_time)
         return db_obj
-    
+
     async def work_plan(self, db: AIOSession, *, id: ObjectId, work_plan: Any) -> FullTime:
         full_time = await db.find_one(FullTime, FullTime.id == id)
         full_time.work_plan = work_plan
