@@ -27,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./nginx
-          file: ./Dockerfile.prod
+          file: ./nginx/Dockerfile.prod
           push: true
-          tags: ${{ secrets.DOCKER_ID }}/nginx
+          tags: ${{ secrets.DOCKER_ID }}/siga-nginx
