@@ -10,7 +10,7 @@ from app.domain.models import User
 from app.domain.schemas import UserResponse
 from app.core.logging import get_logging
 from app.core.config import get_app_settings
-from app.core.celery_worker import celery
+from app.core.celery_worker import celery_app
 from app.assets.logos import logos_dir
 from app.services import aws
 
@@ -35,7 +35,7 @@ async def initial_letter_generation(user: User, body: str) -> str:
     
     return path
 
-@celery.task
+@celery_app.task
 def generate_initial_letter_pdf_to_aws(data: dict, path: str):
     env = Environment(loader=FileSystemLoader(templates_dir))
     template = env.get_template('initial.letter.html.j2')
