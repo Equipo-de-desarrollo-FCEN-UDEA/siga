@@ -374,6 +374,14 @@ dnspython = ">=1.15.0"
 idna = ">=2.0.0"
 
 [[package]]
+name = "et-xmlfile"
+version = "1.1.0"
+description = "An implementation of lxml.xmlfile for the standard library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "exceptiongroup"
 version = "1.0.1"
 description = "Backport of PEP 654 (exception groups)"
@@ -715,6 +723,17 @@ dev = ["ipython (>=7.16.1,<7.17.0)"]
 doc = ["mkdocs-macros-plugin (>=0.5.0,<0.6.0)", "mkdocs-material (>=8.4.0,<8.5.0)", "mkdocstrings[python] (>=0.19.0,<0.20.0)", "pydocstyle (>=6.0.0,<6.1.0)"]
 fastapi = ["fastapi (>=0.61.1)"]
 test = ["async-asgi-testclient (>=1.4.4,<1.5.0)", "asyncmock (>=0.4.2,<0.5.0)", "black (>=22.3.0,<22.4.0)", "coverage[toml] (>=6.2,<7.0)", "darglint (>=1.8.1,<1.9.0)", "fastapi (>=0.61.1,<0.69.0)", "flake8 (>=4.0.1,<4.1.0)", "isort (>=5.8.0,<5.9.0)", "mypy (>=0.961,<1.0)", "pytest (>=7.0,<8.0)", "pytest-asyncio (>=0.16.0,<0.17.0)", "pytest-sugar (>=0.9.5,<0.10.0)", "pytest-xdist (>=2.1.0,<2.2.0)", "pytz (>=2022.1,<2023.0)", "requests (>=2.24.0,<2.25.0)", "semver (>=2.13.0,<2.14.0)", "typer (>=0.4.1,<0.5.0)", "types-pytz (>=2022.1.1,<2022.2.0)", "uvicorn (>=0.17.0,<0.18.0)"]
+
+[[package]]
+name = "openpyxl"
+version = "3.0.10"
+description = "A Python library to read/write Excel 2010 xlsx/xlsm files"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+et-xmlfile = "*"
 
 [[package]]
 name = "packaging"
@@ -1301,7 +1320,7 @@ test = ["pytest"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "01f6069302f51b0085e8753b3d6c28b4df9feaa73453134528bd449a3c9394af"
+content-hash = "83e3a16ba3881d22dc9769c8776e354a95be5d259b91decb90062c4d61f8db50"
 
 [metadata.files]
 amqp = [
@@ -1625,6 +1644,10 @@ email-validator = [
     {file = "email_validator-1.3.0-py2.py3-none-any.whl", hash = "sha256:816073f2a7cffef786b29928f58ec16cdac42710a53bb18aa94317e3e145ec5c"},
     {file = "email_validator-1.3.0.tar.gz", hash = "sha256:553a66f8be2ec2dea641ae1d3f29017ab89e9d603d4a25cdaac39eefa283d769"},
 ]
+et-xmlfile = [
+    {file = "et_xmlfile-1.1.0-py3-none-any.whl", hash = "sha256:a2ba85d1d6a74ef63837eed693bcb89c3f752169b0e3e7ae5b16ca5e1b3deada"},
+    {file = "et_xmlfile-1.1.0.tar.gz", hash = "sha256:8eb9e2bc2f8c97e37a2dc85a09ecdcdec9d8a396530a6d5a33b30b9a92da0c5c"},
+]
 exceptiongroup = [
     {file = "exceptiongroup-1.0.1-py3-none-any.whl", hash = "sha256:4d6c0aa6dd825810941c792f53d7b8d71da26f5e5f84f20f9508e8f2d33b140a"},
     {file = "exceptiongroup-1.0.1.tar.gz", hash = "sha256:73866f7f842ede6cb1daa42c4af078e2035e5f7607f0e2c762cc51bb31bbe7b2"},
@@ -1844,6 +1867,10 @@ numpy-financial = [
 odmantic = [
     {file = "odmantic-0.9.0-py3-none-any.whl", hash = "sha256:dfc974836cea921f466614de5b2af025aa5703a68c8242a8d9affb73121705c4"},
     {file = "odmantic-0.9.0.tar.gz", hash = "sha256:e7ef635dad4284170ea8903e418de5abf502ecb7256a6ce0e2fae2b5fed1ec29"},
+]
+openpyxl = [
+    {file = "openpyxl-3.0.10-py2.py3-none-any.whl", hash = "sha256:0ab6d25d01799f97a9464630abacbb34aafecdcaa0ef3cba6d6b3499867d0355"},
+    {file = "openpyxl-3.0.10.tar.gz", hash = "sha256:e47805627aebcf860edb4edf7987b1309c1b3632f3750538ed962bbcc3bd7449"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
