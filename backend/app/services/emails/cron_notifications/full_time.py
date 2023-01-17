@@ -60,39 +60,3 @@ def notifications(emails: list, today: datetime)-> str:
     }
     
 
-# -----------------------
-
-
-# @celery_app.task(acks_late=True, queue="test-queue")
-# def notifications2()-> str:
-#     print("Task started 2222")
-#     return "done"
-
-# @celery_app.on_after_configure.connect
-# def setup_periodic_tasks(sender, **kwargs):
-#     sender.add_periodic_task(30.0, notifications2.s(), name='add every 30')
-
-
-
-
-
-    # template = env.get_template(template)
-    # url = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
-    # context = {
-    #     'date': date,
-    #     'link': url
-    # }
-
-    # render = template.render(context)
-    # msg = EmailMessage()
-    # msg["Subject"] = subject
-    # msg["From"] = _my_email
-    # msg["To"] = email
-    # msg.set_content(
-    #     render,
-    #     subtype="html"
-    # )
-
-    # with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-    #     smtp.login(_my_email, _my_pwd)
-    #     smtp.send_message(msg)
