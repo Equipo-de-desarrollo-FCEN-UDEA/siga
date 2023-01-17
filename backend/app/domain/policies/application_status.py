@@ -3,22 +3,28 @@ from app.domain.errors.application_status import Application_statusErrors
 from app.domain.schemas import Application_statusUpdate, Application_statusCreate
 from .base import Base
 
+from app.core.logging import get_logging
+
+
+log = get_logging(__name__)
+
 
 class Application_statusPolicy(Base[Application_status, Application_statusCreate, Application_statusUpdate]):
-    
+
     def create(self, who: User, to: Application) -> str:
         status_fluxes = to.application_sub_type.application_type.status_flux
         actual_status = to.application_status[-1].status.name
         for i, flux in enumerate(status_fluxes):
             if actual_status == flux["status"]:
                 next_status = i+1
-        if not (actual_status == 'RECHAZADA'):
+        if not (actual_status == 'RECHAZADA' or actual_status == 'EN CREACIÓN'):
             if not (who.rol.scope in status_fluxes[next_status]['scope']):
                 status = ''
                 for i, flux in enumerate(status_fluxes):
                     if who.rol.scope in flux["scope"]:
                         status = status_fluxes[i-1]['status']
-                raise Application_statusErrors(403, detail=f"No puedes tomar acción sobre esta solicitud, solo puedes tomar acción cuando la solicitud está en estado {status}")
+                raise Application_statusErrors(
+                    403, detail=f"No puedes tomar acción sobre esta solicitud, solo puedes tomar acción cuando la solicitud está en estado {status}")
         if actual_status == 'RECHAZADA':
             actual_status = to.application_status[-2].status.name
             for i, flux in enumerate(status_fluxes):
@@ -27,4 +33,22 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
             return status_fluxes[next_status]['status']
         return status_fluxes[next_status]['status']
 
+    def request(self, who: User, to: Application, current: any) -> str:
+        status_fluxes = to.application_sub_type.application_type.status_flux
+        actual_status = to.application_status[-1].status.name
 
+        for i, flux in enumerate(status_fluxes):
+            if actual_status == flux["status"]:
+                next_status = i+1
+
+        if to.user_id != who.id:
+            raise Application_statusErrors(
+                403, detail=f"No puedes tomar acción sobre esta solicitud")
+
+        if actual_status == 'EN CREACIÓN':
+
+            if current.initial_letter == None and current.vice_format == None and current.work_plan == None and to.application_sub_type.application_type.name == 'DEDICACIÓN EXCLUSIVA':
+                raise Application_statusErrors(
+                    403, detail=f"Debes diligenciar los 3 formatos para solicitar la dedicación")
+
+        return status_fluxes[next_status]['status']

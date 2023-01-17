@@ -16,7 +16,8 @@ from app.domain.schemas import (ApplicationCreate,
                                 InitialLetter,
                                 WorkPlan,
                                 ViceFormat,
-                                CronJobCreate
+                                CronJobCreate,
+                                Application_statusCreate
                                 )
 from app.domain.errors import BaseErrors
 
@@ -118,12 +119,12 @@ async def get_full_time(
 @router.put("/{id}", status_code=200)
 async def update_full_time(
     id: int,
-    full_time: FullTimeUpdate,
+    #full_time: FullTimeUpdate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> FullTime:
+) -> Application:
     """
     Endpoint to update an application of type full_time
 
@@ -144,27 +145,24 @@ async def update_full_time(
 
         if application:
 
-            log.debug('obj_in que es', full_time)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
-
             current_full_time = await crud.full_time.get(engine, id=mongo_id)
 
-            updated_full_time = await crud.full_time.update(engine, db_obj=current_full_time, obj_in=full_time)
-
-            log.debug('updated_full_time', updated_full_time)
+            # updated_full_time = await crud.full_time.update(engine, db_obj=current_full_time, obj_in=full_time)
 
             # In PostgreSQL
-            application_updated = crud.application.update(
-                db=db, who=current_user, db_obj=application, obj_in=full_time)
+            # application_updated = crud.application.update(
+            #     db=db, who=current_user, db_obj=application, obj_in=full_time)
 
-            log.debug('application update', application_updated)
+            status = Application_statusCreate(
+                application_id=application.id, status_id=1, observation="Dedicación exclusiva solicitada")
+            crud.application_status.request(db, who=current_user ,obj_in=status, to=application, current=current_full_time)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
-    return updated_full_time
+    return application
 
 
 @router.delete("/{id}", response_model=Msg)
@@ -260,6 +258,3 @@ async def update_work_plan(
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
-
-
-

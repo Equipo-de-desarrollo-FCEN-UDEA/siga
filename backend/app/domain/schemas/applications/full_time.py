@@ -1,4 +1,5 @@
 from datetime import datetime, time
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -131,6 +132,7 @@ class InitialLetter(BaseModel):
 
 class FullTimeBase(BaseModel):
     title: str
+    documents: list[Any] | None
 
 
 class FullTimeCreate(FullTimeBase):
@@ -145,6 +147,7 @@ class FullTimeInDB(FullTimeBase):
     work_plan: WorkPlan | None
     vice_format: ViceFormat | None
     initial_letter: InitialLetter | None
+    
 
 
 class FullTimeResponse(ApplicationResponse):
