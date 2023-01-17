@@ -1,7 +1,7 @@
 from datetime import datetime, time
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.domain.schemas.application import ApplicationResponse
 
@@ -125,14 +125,14 @@ class ViceFormat(BaseModel):
 
 
 class InitialLetter(BaseModel):
-    body: str
+    body: str = Field(min_length=100, max_length=4730)
 
 
 # Model
 
 class FullTimeBase(BaseModel):
     title: str
-    documents: list[Any] | None
+    documents: list[Any] | None = Field(default_factory=list)
 
 
 class FullTimeCreate(FullTimeBase):
