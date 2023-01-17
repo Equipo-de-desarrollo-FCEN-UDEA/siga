@@ -16,6 +16,7 @@ from app.domain.schemas import (ApplicationCreate,
                                 InitialLetter,
                                 WorkPlan,
                                 ViceFormat,
+                                CronJobCreate,
                                 Application_statusCreate
                                 )
 from app.domain.errors import BaseErrors
@@ -257,5 +258,3 @@ async def update_work_plan(
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
-
-

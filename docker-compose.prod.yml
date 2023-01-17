@@ -99,7 +99,21 @@ services:
   celery_worker:
     container_name: "celery_worker"
     image: simon3640/siga-backend
-    command: celery -A app.core.celery_worker.celery worker --loglevel=info
+    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info -Q test-queue -c 1
+    env_file:
+      - prod.env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - backend
+    mem_limit: 350m
+
+  celery-beat:
+    container_name: 'celery_beat'
+    image: simon3640/siga-backend
+    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
       - prod.env
     environment:
