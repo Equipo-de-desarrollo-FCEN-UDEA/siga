@@ -18,7 +18,7 @@ class Objectives(BaseModel):
 class Topics(BaseModel):
     title: str
     subtitle: str
-    objectives: Objectives
+    objectives: list[Objectives]
 
 
 class ActivityIdentification(BaseModel):

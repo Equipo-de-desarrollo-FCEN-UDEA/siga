@@ -1,2 +1,4 @@
 from .applications.commission import commission_resolution_generation
 from .applications.permission import permission_resolution_generation
+from .applications.full_time import fill_vice_document
+from .applications.work_plan import fill_work_plan_format

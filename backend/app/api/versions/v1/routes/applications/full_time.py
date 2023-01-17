@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails
+from app.services import crud, documents
 from app.domain.models import FullTime, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 FullTimeCreate,
@@ -72,14 +72,6 @@ async def create_full_time(
         full_time=full_time_created
     )
     return response
-
-
-@router.get("/", response_model=list[FullTime])
-async def get_full_times(*,
-                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[FullTime]:
-
-    full_timees = await engine.find(FullTime)
-    return full_timees
 
 
 @router.get("/{id}", response_model=FullTimeResponse)
@@ -236,6 +228,8 @@ async def update_vice_format(
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.vice_format(engine,
                                                        id=mongo_id, vice_format=vice_format)
+                                                
+        documents.fill_vice_document(current_user, full_time)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
@@ -256,6 +250,8 @@ async def update_work_plan(
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.work_plan(engine,
                                                      id=mongo_id, work_plan=work_plan)
+
+        documents.fill_work_plan_format(current_user, full_time)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
