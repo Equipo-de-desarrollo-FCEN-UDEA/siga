@@ -13,18 +13,21 @@ import { Observable } from 'rxjs';
 import { UserService } from '@services/user.service';
 import { RolService } from '@services/rol.service';
 import { DepartmentService } from '@services/department.service';
+import { SchoolService } from '@services/school.service';
 
 //interfaces
 import { RolBase } from '@interfaces/rol';
+import { SchoolResponse } from '@interfaces/school';
 import { DepartmentBase, DepartmentInDB } from '@interfaces/department';
+import { UserCreate } from '@interfaces/user';
 
 //data
 import { id_type } from '@shared/data/id_type';
-import { SchoolService } from '@services/school.service';
-import { SchoolResponse } from '@interfaces/school';
+
+//shared
 import { scale } from '@shared/data/scale';
-import { UserCreate } from '@interfaces/user';
 import { vinculation_type } from '@shared/data/vinculation';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -39,9 +42,7 @@ export class SignUpComponent {
 
   public vinculation_types = vinculation_type;
 
-  public loading: boolean = false;
   public error: string = '';
-  public submitted: boolean = false;
 
   public id_type = id_type;
 
@@ -56,8 +57,7 @@ export class SignUpComponent {
     email: ['', [Validators.required, Validators.pattern(this.is_email_valid)]],
     identification_type: ['', Validators.required],
     identification_number: ['', [Validators.required, Validators.pattern("^[A-Z0-9]*$")]],
-    phone: ['', Validators.required],
-    rol_id: [NaN, Validators.required],
+    rol_id: [0, Validators.required],
     department_id: ['', Validators.required],
     password: [
       '',
@@ -73,7 +73,6 @@ export class SignUpComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-
     private ngZone: NgZone,
     private router: Router,
 
@@ -92,12 +91,11 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-    this.submitted = true;
+
+    console.log(this.createUserForm.value)
 
     // verificacion de errores
     if (this.createUserForm.invalid) { return; }
-
-    console.log(this.createUserForm.value)
 
     this.userService.postUser(this.createUserForm.value as UserCreate).subscribe({
       next: (res: any) => {
@@ -111,16 +109,11 @@ export class SignUpComponent {
         this.ngZone.run(() => this.router.navigateByUrl(`../login`));
       },
       error: (err) => {
-        if (err.status === 404 || err.status === 401) {
-          this.error = err.error.msg;
-        }
-        if (err.status === 400) {
-          this.error = err.error.message;
-        }
       },
     });
   }
 
+  // Departamentos dependiendo de la facultad
   nextDepartment(event: any) {
     this.departments$ = this.depatmentService.getExposeDepartment(event.target.value as number)
   }

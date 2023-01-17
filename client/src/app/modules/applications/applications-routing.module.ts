@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 import { ApplicationListComponent } from './application-list/application-list.component';
 
+
 const routes: Routes = [
  
   {
@@ -12,20 +13,16 @@ const routes: Routes = [
   },
   {
     path: 'ver', 
-    canActivate: [EmpleadoGuard],
-    loadChildren: () => import('./view/view.module')
+    loadChildren: () => import('./pages/view/view.module')
     .then(m => m.ViewModule) 
   },
   {
     path: 'crear', 
-    canActivate: [EmpleadoGuard],
-    loadChildren: () => import('./create/create.module')
-    .then(m => m.CreateModule) 
-  },
-  {
+    loadChildren: () => import('./pages/create/create.module')
+    .then(m => m.CreateModule) },
+  { 
     path: 'editar', 
-    canActivate: [EmpleadoGuard],
-    loadChildren: () => import('./edit/edit.module')
+    loadChildren: () => import('./pages/edit/edit.module')
     .then(m => m.EditModule) 
   },
   {

@@ -68,14 +68,22 @@
                 'is-invalid': f['email'].errors && f['email'].touched
               }"
             />
+
+            <!-- errors justification -->
+            <div
+              *ngIf="f['email'].touched && f['email'].errors"
+              class="invalid"
+            >
+              <div
+                *ngIf="f['email'].touched && (f['email'].errors?.['required'] || 
+            f['email'].errors?.['pattern'])"
+              >
+                Debes ingresar tu correo institucional sin espacios
+              </div>
+            </div>
           </div>
         </div>
 
-        <div *ngIf="f['email'].errors" class="invalid-feedback">
-          <div *ngIf="f['email'].touched && f['email'].errors?.['pattern']">
-            Ingresa tu correo institucional
-          </div>
-        </div>
 
         <!-- tipo ID -->
         <div class="row regular-row mt-4">
@@ -124,7 +132,7 @@
         </div>
 
         <!-- Telefono -->
-        <div class="row regular-row mt-4">
+        <!-- <div class="row regular-row mt-4">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <input
@@ -137,7 +145,7 @@
               }"
             />
           </div>
-        </div>
+        </div> -->
 
         <!-- Vinculación -->
         <div class="row regular-row mt-4">
@@ -209,7 +217,7 @@
         <!-- Facultad -->
         <div class="row regular-row mt-4" *ngIf="schools$ | async as schools">
           <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Elige tu facultad
+            Facultad
           </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
@@ -220,7 +228,7 @@
               placeholder=" "
               (change)="nextDepartment($event)"
             >
-              <option [value]="null" selected disabled>Facultad</option>
+              <option [value]="null" selected disabled>Elige tu facultad</option>
               <option
                 *ngFor="let school of schools; let i = index"
                 [value]="school.id"
@@ -347,12 +355,6 @@
               class="btn btn-success"
               [disabled]="validatePassword() || createUserForm.invalid"
             >
-              <span
-                *ngIf="loading"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
               Confirmar
             </button>
           </div>
@@ -361,3 +363,6 @@
     </div>
   </div>
 </form>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

@@ -25,21 +25,24 @@ h5{
     background-color: #f9a12c;
   }
 
+  .btn-light {
+    color: #fff;
+    background-color: #43b649;
+  }
+
   @media (max-width: 576px) {
     .containerInside {
         width: 95%;
     }
   }
 
-  .ptitle{
-    color: #ffffff;
-    background-color: #026937;
-    padding: 0.5em;
-    border-radius: 0.2em;
-    text-align: center;
+  .mt-5{
+    margin-top: 5em!important;
   }
 
-  .btn-submit {
+
+
+.btn-submit {
     color: #fff;
     border-color: #fff;
     background: linear-gradient(
@@ -49,5 +52,6 @@ h5{
       rgba(141, 198, 63, 1) 100%
     );
   }.btn-submit:hover {
-    background-color: #000;
+    transition: all 0.5s ease-out;
+    background-color: rgba(67, 182, 73, 0.8) 0%,;
   }

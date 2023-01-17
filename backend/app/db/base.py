@@ -8,6 +8,7 @@ from app.domain.models import (
     Application,
     ApplicationSubType,
     ApplicationType,
-    Application_status
+    Application_status,
+    Holiday
 )
 # Para que se puedan crear las tablas
