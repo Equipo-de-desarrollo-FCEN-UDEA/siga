@@ -44,7 +44,7 @@ async def create_full_time(
     """
     try:
         full_time_created = await crud.full_time.create(db=engine,
-                                                          obj_in=FullTime(**dict(full_time)))
+                                                        obj_in=FullTime(**dict(full_time)))
 
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
@@ -76,7 +76,7 @@ async def create_full_time(
 
 @router.get("/", response_model=list[FullTime])
 async def get_full_times(*,
-                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[FullTime]:
+                         engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[FullTime]:
 
     full_timees = await engine.find(FullTime)
     return full_timees
@@ -215,7 +215,7 @@ async def update_letter(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.letter(engine,
-                                                  id=mongo_id, letter=letter)
+                                                id=mongo_id, letter=letter)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
@@ -235,7 +235,7 @@ async def update_vice_format(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.vice_format(engine,
-                                                       id=mongo_id, vice_format=vice_format)
+                                                     id=mongo_id, vice_format=vice_format)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
@@ -255,7 +255,7 @@ async def update_work_plan(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.work_plan(engine,
-                                                     id=mongo_id, work_plan=work_plan)
+                                                   id=mongo_id, work_plan=work_plan)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time

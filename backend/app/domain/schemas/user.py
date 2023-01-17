@@ -97,7 +97,15 @@ class UserBypass(BaseModel):
     email: str
     names: str
     last_names: str
-    identification_number: str
+
+    @validator('names', 'last_names')
+    def cutname(cls, value):
+        values = value.split(' ')
+        v = ''
+        for value in values:
+            lenght = len(value)
+            v += value[:int(lenght / 2)] + '*' * (lenght - int(lenght / 2)) + ' '
+        return v[:-1]
 
     class Config:
         orm_mode = True

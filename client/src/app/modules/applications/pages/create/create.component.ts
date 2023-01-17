@@ -14,6 +14,7 @@ export class CreateComponent implements OnInit {
 
   // Title for the header of create application
   public title: string = '';
+  public button: string = '';
 
   private activatedComponentReference: any;
 
@@ -25,8 +26,10 @@ export class CreateComponent implements OnInit {
     private loaderService: LoaderService,
     private location: Location
   ) { 
-    // We take the titile from the child data
+    // We take the title from the child data
+    this.button = this.route.snapshot.firstChild?.data['button'];
     this.title = this.route.snapshot.firstChild?.data['title'];
+    
   }
 
   ngOnInit(): void {

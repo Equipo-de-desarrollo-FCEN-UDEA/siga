@@ -3,7 +3,7 @@ from typing import Any
 from odmantic import Model, EmbeddedModel
 
 class Applicant(EmbeddedModel):
-    identification_number: str
+    email: str
     acepted: bool | None = None
     role: str
 

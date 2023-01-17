@@ -7,6 +7,7 @@ import { CommissionComponent } from './components/commission/commission.componen
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 
 
 
@@ -16,6 +17,7 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
     CommissionComponent,
     PermissionComponent,
     ComplimentComponent,
+    HourAvalComponent,
   ],
   imports: [
     CommonModule,

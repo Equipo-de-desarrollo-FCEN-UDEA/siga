@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommissionComponent } from './components/commission/commission.component';
 import { ComplimentComponent } from './components/compliment/compliment.component';
 import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CreateComponent } from './create.component';
 
@@ -16,7 +17,8 @@ const routes: Routes = [
         path: 'permiso',
         component: PermissionComponent,
         data: {
-          title: 'Permiso'
+          title: 'Permiso',
+          button: 'Solicitar'
         },
       },
       //comision
@@ -24,7 +26,8 @@ const routes: Routes = [
         path: 'comision',
         component: CommissionComponent,
         data: {
-          title: 'Comisión'
+          title: 'Comisión',
+          button: 'Solicitar'
         }
       },
       {
@@ -35,7 +38,16 @@ const routes: Routes = [
         path: 'cumplido/:id',
         component: ComplimentComponent,
         data: {
-          title: 'Cumplido'
+          title: 'Cumplido',
+          button: 'Enviar cumplido'
+        }
+      },
+      {
+        path: 'avalhoras',
+        component: HourAvalComponent,
+        data: {
+          title: 'Aval de horas para grupos de investigación',
+          button: 'Iniciar'
         }
       },
       {

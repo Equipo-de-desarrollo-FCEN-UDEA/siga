@@ -7,11 +7,11 @@ from app.domain.policies.applications.hour_aval import HourAvalPolicy
 from .base import CRUDBase
 
 class CRUDHourAval(CRUDBase[HourAval, HourAvalCreate, HourAvalUpdate, HourAvalPolicy]):
-    async def confirm(self, db: AIOSession, id: ObjectId, identification: str, acepted: bool) -> None:
+    async def confirm(self, db: AIOSession, id: ObjectId, email: str, acepted: bool) -> None:
         hour_aval = await db.find_one(HourAval, HourAval.id == id)
         hour_aval_aux = HourAvalInDB(**dict(hour_aval))
         for i, applicant in enumerate(hour_aval_aux.another_applicants):
-            if applicant.identification_number == identification:
+            if applicant.email == email:
                 hour_aval.another_applicants[i].acepted = acepted
         hour_aval = await db.save(hour_aval)
         return hour_aval

@@ -56,9 +56,9 @@ async def create_hour_aval(
 
         for applicant in hour_aval.another_applicants:
             token = security.jwt.hour_aval_token(
-                applicant.identification_number)
-            user = crud.user.get_by_identification(
-                db, applicant.identification_number)
+                applicant.email)
+            user = crud.user.get_by_email(
+                db, applicant.email)
             emails.hours_aval_email.apply_async(
                 args=(hour_aval.dict(), applicant.dict(), user.email, application.id, token))
     except BaseErrors as e:
@@ -222,9 +222,9 @@ async def confirm_user(
     engine: AIOSession = Depends(mongo_db.get_mongo_db)
 ) -> Msg:
     try:
-        identification_number = security.jwt.decode_token(token).sub
+        email = security.jwt.decode_token(token).sub
         mongo_id = ObjectId(mongo_id)
-        hour_aval = await crud.hour_aval.confirm(engine, mongo_id, identification_number, acepted)
+        hour_aval = await crud.hour_aval.confirm(engine, mongo_id, email, acepted)
     except Exception as e:
         raise HTTPException(500, str(e))
     response = 'aceptó' if acepted else 'rechazó'

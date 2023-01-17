@@ -8,7 +8,7 @@ from app.domain.schemas.application import ApplicationResponse
 
 
 class Applicant(BaseModel):
-    identification_number: str
+    email: str
     acepted: bool | None = None
     role: str
 
@@ -24,7 +24,7 @@ class HourAvalBase(BaseModel):
     announcement: str
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
-    another_applicants: list[Applicant]
+    another_applicants: list[Applicant] | None
     objectives: list[str]
 
 
@@ -37,6 +37,7 @@ class HourAvalUpdate(HourAvalBase):
 
 
 class HourAvalInDB(HourAvalBase):
+    id: str
     letter_path: str | None
 
 

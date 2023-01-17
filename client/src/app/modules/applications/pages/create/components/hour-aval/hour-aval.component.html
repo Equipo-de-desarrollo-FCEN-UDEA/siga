@@ -1,0 +1,117 @@
+<form (ngSubmit)="submit()" [formGroup]="form">
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Tiempo(meses) *</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatingtime" formControlName="time" class="form-control" placeholder=" " type="number"
+                    [ngClass]="{
+                'is-invalid':
+                  (submitted && f['time'].errors) || isInvalidForm('time')
+              }" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Horas por semana <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatinghours_week" formControlName="hours_week" class="form-control" placeholder=" "
+                    type="number" [ngClass]="{
+                'is-invalid':
+                  (submitted && f['hours_week'].errors) || isInvalidForm('hours_week')
+              }" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Descripción <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <textarea id="description" formControlName="description" class="form-control" placeholder=" " [ngClass]="{
+                'is-invalid':
+                  (submitted && f['description'].errors) || isInvalidForm('description')
+                }" rows="5"></textarea>
+            </div>
+            <div *ngIf="(submitted || f['description'].touched) && (f['description'].errors?.['required'] || 
+              f['description'].errors?.['maxlength'] || f['description'].errors?.['minlength'])">
+                La descripción debe tener al menos 30 caracteres y máximo 500
+                caracteres.
+            </div>
+        </div>
+    </div>
+
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Entidad <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatingentity" formControlName="entity" class="form-control" placeholder=" " type="text"
+                    [ngClass]="{
+                'is-invalid':
+                  (submitted && f['entity'].errors) || isInvalidForm('entity')
+              }" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Rol <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatingrole" formControlName="role" class="form-control" placeholder=" " type="text"
+                    [ngClass]="{
+                'is-invalid':
+                  (submitted && f['role'].errors) || isInvalidForm('role')
+              }" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row regular-row mt-4 align-items-baseline">
+            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                Objetivo(s):<span style="color: red">*</span>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-8" formArrayName="objectives">
+                <div *ngFor="
+          let objectives of objectivesArr.controls;
+          last as isLast;
+          let i = index
+        " class="arrayLike formfloatig" [formGroupName]="i">
+                    <textarea id="floatingObjectives{{ i }}" formControlName="objectives" rows="1" class="form-control"
+                        type="text" placeholder=" "
+                        [ngClass]="{ 'is-invalid': objectives.invalid && objectives.touched }"></textarea>
+                    <div class="buttons">
+                        <button class="btn btn-circle btn-remove btn-sm" type="button"
+                            (click)="removeInput('objectives', i)" *ngIf="objectivesArr.length > 1">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button class="btn btn-circle btn-add btn-sm" type="button" (click)="addInputObjectives()"
+                            *ngIf="isLast">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row header-row mt-3">
+        <div class="col">
+            <span class="text-secondary">Otros usuarios dentro del aval de horas</span>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Solicitante</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input class="form-control" type="text" formControlName="search"/>
+            </div>
+        </div>
+    </div>
+
+   
+</form>

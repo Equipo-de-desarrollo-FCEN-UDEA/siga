@@ -1,0 +1,138 @@
+.containerInside {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em;
+  align-items: unset;
+  margin-bottom: 6em !important;
+}
+
+.card {
+  margin: auto;
+  margin-top: 0;
+  padding: 1em 0.5em;
+}
+
+@media screen and (max-width: 576px) {
+  :host ::ng-deep .ngb-dp-months {
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+
+  :host ::ng-deep .ngb-dp-month {
+    flex: 1 0 auto;
+  }
+
+  .containerInside {
+    width: 95% !important;
+
+  }
+}
+
+
+p {
+  text-align: center;
+  margin: 0;
+  color: green;
+}
+
+.btn-dark {
+  background-color: #43B649;
+  border-color: #43B649;
+}
+
+
+.formLabel {
+  left: 1.7em;
+}
+
+.selectLabel {
+  left: 1.7em;
+}
+
+.formfloatig {
+  position: relative;
+  padding-bottom: .4em;
+  height: 100%;
+  width: 100%;
+}
+
+.form-control:focus {
+  border: 1px solid #43b649 !important;
+  box-shadow: 0 0 0 3px #C7F9CC !important;
+}
+
+.formLabel,
+.form-control:not(:placeholder-shown)+.formLabel {
+  transform: translateY(0) scale(.5);
+  transform-origin: left top;
+}
+
+.formLabel {
+  color: gray;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 15px;
+  transform: translateY(7px);
+  transition: transform .5s, color .3s
+}
+
+.selectLabel {
+  color: gray;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 15px;
+  transform: translateY(7px);
+  transition: transform .5s, color .3s
+}
+
+.form-select:focus+.selectLabel {
+  transform: translateY(0) scale(.5);
+  transform-origin: left top;
+  color: rgba(74, 132, 248, 0.8);
+}
+
+.form-select {
+  margin: 0;
+}
+
+
+.file-upload {
+  display: none;
+}
+
+
+.buttons {
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: auto;
+}
+
+.btn-remove {
+  border-color: #fff;
+  color: #fff;
+  background-color: red;
+}
+
+.btn-remove:hover {
+  background-color: #d45f57;
+}
+
+.btn-add {
+  border-color: #fff;
+  color: #fff;
+  background-color: #43b649;
+}
+
+.btn-add:hover {
+  background-color: #79b97c;
+}
+
+.btn-success {
+  background-color: #43b649;
+}
