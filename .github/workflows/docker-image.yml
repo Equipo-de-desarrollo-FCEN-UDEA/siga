@@ -29,4 +29,4 @@ jobs:
           context: .
           file: nginx/Dockerfile.prod
           push: true
-          tags: ${{ secrets.DOCKER_ID }}/nginx:latest
+          tags: ${{ secrets.DOCKER_ID }}/nginx
