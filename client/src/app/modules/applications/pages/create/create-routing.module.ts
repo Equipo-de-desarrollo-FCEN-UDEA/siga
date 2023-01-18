@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommissionComponent } from './components/commission/commission.component';
 import { ComplimentComponent } from './components/compliment/compliment.component';
 import { FullTimeComponent } from './components/full-time/full-time.component';
+import { StartLetterComponent } from './components/full-time/pages/start-letter/start-letter.component';
 import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CreateComponent } from './create.component';
@@ -37,6 +38,13 @@ const routes: Routes = [
         component: FullTimeComponent,
         data: {
           title: 'Dedicación Exclusiva'
+        }
+      },
+      {
+        path: 'carta-inicio/:id',
+        component: StartLetterComponent,
+        data: {
+          title: 'Carta de Inicio'
         }
       },
       {
