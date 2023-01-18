@@ -5,9 +5,9 @@ import { FullTimeService } from '@services/applications/full_time/full-time.serv
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-full-time-format',
-  templateUrl: './full-time-format.component.html',
-  styleUrls: ['./full-time-format.component.scss']
+  selector: 'app-viceformat',
+  templateUrl: './viceformat.component.html',
+  styleUrls: ['./viceformat.component.scss']
 })
 export class FullTimeFormatComponent implements OnInit {
 
