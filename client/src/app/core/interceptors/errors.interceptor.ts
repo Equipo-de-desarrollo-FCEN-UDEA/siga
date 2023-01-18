@@ -61,7 +61,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
               confirmButtonText: 'Aceptar',
               icon: 'error'
             }).then(
-              res => this.router.navigate(['/home'])
+              res => this.router.navigate(['/login'])
             )
             break;
           case 422:

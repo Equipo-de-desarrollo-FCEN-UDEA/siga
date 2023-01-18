@@ -35,3 +35,7 @@ from .applications import (
     HourAvalCreate,
     HourAvalInDB
 )
+
+from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
+
+from .cron_job import (CronJobBase, CronJobCreate, CronJobUpdate)

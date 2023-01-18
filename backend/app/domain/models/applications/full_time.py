@@ -9,3 +9,4 @@ class FullTime(Model):
     work_plan: Any | None
     vice_format: Any | None
     initial_letter: Any | None
+    documents: list[Any] | None

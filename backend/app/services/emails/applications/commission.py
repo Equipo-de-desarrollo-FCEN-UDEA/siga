@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 from email.message import EmailMessage
 
 from ..templates import templatesdir
-from app.core.celery_worker import celery
+from app.core.celery_worker import celery_app
 from app.core.config import get_app_settings
 
 from app.services.aws import s3
@@ -15,7 +15,7 @@ settings = get_app_settings()
 env = Environment(loader=FileSystemLoader(templatesdir))
 
 
-@celery.task
+@celery_app.task
 def compliment_email(to_name: str, to_lname: str, observation: str, files: list[Dict[str, Any]], email: list[str]):
     template = env.get_template("email.envio.cumplido.html.j2")
 

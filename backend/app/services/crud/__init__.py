@@ -12,3 +12,10 @@ from .applications import (commission,
                            permission,
                            full_time,
                            hour_aval)
+
+from .holiday import holiday
+from .cron_job import cron_job
+
+
+
+

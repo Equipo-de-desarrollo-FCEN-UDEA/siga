@@ -13,14 +13,11 @@ import Swal from 'sweetalert2';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  public isLoading = this.loaderSvc.isLoading;
-
   private token = '';
 
   constructor(
     private fb: FormBuilder,
     private authSvc: AuthService,
-    private loaderSvc: LoaderService,
     private route: ActivatedRoute,
     private router: Router
   ) { 

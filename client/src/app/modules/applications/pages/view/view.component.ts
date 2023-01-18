@@ -28,8 +28,6 @@ export class ViewComponent implements AfterViewChecked {
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   private activatedComponentReference: any;
 
   public id = 0;
@@ -45,7 +43,6 @@ export class ViewComponent implements AfterViewChecked {
     private location: Location,
 
     private authSvc: AuthService,
-    private loaderSvc: LoaderService,
     private applicationStatusSvc: ApplicationStatusService
   ) { 
     this.title = this.route.snapshot.firstChild?.data['title'];

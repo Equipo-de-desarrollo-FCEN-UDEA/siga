@@ -139,9 +139,19 @@
             <i class="fa fa-calendar"> </i>
           </button>
         </div>
-        <div *ngIf="submitted && f['end_date'].errors" class="invalid">
-          <div *ngIf="submitted  && f['end_date'].errors?.['required']">
-            Debes elegir unas fechas de inicio y fin
+        <!-- errors dates -->
+        <div
+          *ngIf="
+          (submitted && f['start_date'].errors) ||
+          ((!fromDate || !toDate) && clicked !== 0) ||
+          selectDays(fromDate, toDate)
+          "
+          class="invalid"
+        >
+          <div
+            *ngIf="selectDays(fromDate, toDate)"
+          >
+            La cantidad de días elegidos sobrepasa los permitidos para este tipo de permiso
           </div>
         </div>
       </div>

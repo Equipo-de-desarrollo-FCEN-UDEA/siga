@@ -8,6 +8,7 @@ import { PermissionComponent } from './components/permission/permission.componen
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
+import { FullTimeModule } from './components/full-time/full-time.module';
 
 
 
@@ -22,7 +23,8 @@ import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
   imports: [
     CommonModule,
     CreateRoutingModule,
-    SharedModule
+    SharedModule,
+    FullTimeModule
   ]
 })
 export class CreateModule { }

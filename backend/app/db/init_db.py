@@ -80,5 +80,12 @@ def init_db() -> None:
         log.info('subtipos iniciales de las solicitudes creados')
 
 
+    @event.listens_for(base.Holiday.__table__, 'after_create')
+    def init_holiday(table, conn, *args, **kwargs):
+        from .init_data import init_holiday
+        for holiday in init_holiday:
+            db_obj = dict(holiday)
+            conn.execute(table.insert().values(**db_obj))
+        log.info('festivos creados')
 
     base.Base.metadata.create_all(bind=session.engine)
