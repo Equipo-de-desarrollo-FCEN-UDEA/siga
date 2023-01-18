@@ -47,9 +47,9 @@
     </div>
 
     <!-- /.actividades_docencia -->
-    <div id="c1" class="accordion-item">
+    <div class="accordion-item">
 
-
+      <!-- header -->
       <h6 class="accordion-header" id="headingTwo">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
           aria-expanded="false" aria-controls="collapseTwo">
@@ -61,117 +61,134 @@
         </button>
       </h6>
 
-
+      <!-- content -->
       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
         <div class="accordion-body" formArrayName="teaching_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+            let activity of teachingActivitiesArr.controls;
+            last as isLast;
+            let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row activity_form">
-              <div style="margin-right: 0.5em; margin-bottom: 0.5em" class="lineGroup col-xs-12 col-md-12 col-lg-6"
-                formGroupName="activity_identification">
+
+              <!-- Identificación actividad -->
+              <div class="lineGroup col-xs-12 col-md-12 col-lg-6" formGroupName="activity_identification">
                 <div class="row">
                   <div class="col-12">
-                    <span>Identificación actividad</span>
+                    <span class="fw-bold">Identificación actividad</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
-                    <label class="formLabel">Código</label>
+                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_code{{ i }}">Código</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="group" class="form-control" placeholder=" " />
-                    <label class="formLabel">Grupo</label>
+                    <input type="text" formControlName="group" id="floating_group{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_group{{ i }}">Grupo</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                    <input type="text" formControlName="name" class="form-control" placeholder=" " />
-                    <label class="formLabel">Nombre</label>
+                    <input type="text" formControlName="name" id="floating_name{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_name{{ i }}">Nombre</label>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-12 col-lg-5" style="margin-right: 0.5em; margin-bottom: 0.5em">
-                <div class="row" style="margin-left: 0px">
-                  <div class="col-12" style="text-align: center">
-                    <span>Estudiantes</span>
+              <!-- Estudiantes -->
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-5">
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <span class="fw-bold">Estudiantes</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="number_students" class="form-control" placeholder=" " />
-                    <label class="formLabel">Cantidad</label>
+                    <input type="number" formControlName="number_students" id="floating_number_students{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label class="formLabel" id="floating_number_students{{ i }}">Cantidad</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="level" class="form-control" placeholder=" " />
-                    <label class="formLabel">Nivel</label>
+                    <input type="text" formControlName="level" id="floating_level{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_level{{ i }}">Nivel</label>
                   </div>
                 </div>
               </div>
 
-              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="hours_week"
-                style="margin-right: 0.5em; margin-bottom: 0.5em">
+              <!-- Horas semana -->
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="hours_week">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Horas semana</span>
+                    <span class="fw-bold">Horas semana</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="T" class="form-control" placeholder=" " />
-                    <label class="formLabel">T</label>
+                    <input type="number" formControlName="T" class="form-control" id="floating_t{{ i }}"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_t{{ i }}">T</label>
                   </div>
 
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="TP" class="form-control" placeholder=" " />
-                    <label class="formLabel">TP</label>
+                    <input type="number" formControlName="TP" id="floating_tp{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_tp{{ i }}">TP</label>
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="P" class="form-control" placeholder=" " />
-                    <label class="formLabel">P</label>
+                    <input type="number" formControlName="P" id="floating_p{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_p{{ i }}">P</label>
                   </div>
                 </div>
               </div>
 
-              <div class="lineGroup col-sm-12 col-md-12 col-lg-5" formGroupName="total_hours"
-                style="margin-right: 0.5em; margin-bottom: 0.5em">
+              <!-- Total horas -->
+              <div class="lineGroup col-sm-12 col-md-12 col-lg-5" formGroupName="total_hours">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Total horas</span>
+                    <span class="fw-bold">Total horas</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
-                    <input type="number" formControlName="weekly" class="form-control" placeholder=" " />
-                    <label class="formLabel">Semana</label>
+                    <input type="number" formControlName="weekly" [value]="f_workplan.controls.teaching_activities.value[i]
+                    .total_hours
+                  " class="form-control" placeholder=" " />
+                    <label class="formLabel" id="floating_weekly{{ i }}">Semana</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-6">
-                    <input type="number" formControlName="biannual" class="form-control" placeholder=" " />
-                    <label class="formLabel">Semestre</label>
+                    <input type="number" formControlName="biannual" id="floating_biannual{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_biannual{{ i }}">Semestre</label>
                   </div>
                 </div>
               </div>
+
+              <!-- buttons -->
+              <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+                <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <button (click)="removeInput('teaching_activities', i)" class="btn btn-remove" type="button">
+                  <i class=" fa fa-minus"></i>
+                </button>
+              </div>
+
             </div>
           </div>
 
-          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button class="btn btn-add" type="button" (click)="addTeachingActivities()">
-              <i class="fa fa-plus"></i>
-            </button>
-            <button class="btn btn-remove" type="button">
-              <i class="fa fa-minus"></i>
-            </button>
-          </div>
-
-          <hr *ngIf="teachingActivitiesArr.length > 1" />
         </div>
       </div>
     </div>
 
     <!-- /.actividades-investigacion -->
-    <div id="c8" class="accordion-item">
-
+    <div class="accordion-item">
+      <!-- header -->
       <h6 class="accordion-header" id="headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -183,77 +200,92 @@
         </button>
       </h6>
 
-
+      <!-- content -->
       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
         <div class="accordion-body" formArrayName="investigation_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+          let activity of investigationActivitiesArr.controls;
+          last as isLast;
+          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row formActividades">
-              <div class="col-xs-12 col-md-12 col-lg-12" style="margin-right: 0.5em; margin-bottom: 0.5em">
+
+              <!-- Identificación actividad -->
+              <div class="col-xs-12 col-md-12 col-lg-12 lineGroup">
                 <div class="col-12" style="text-align: center">
-                  <span>Identificación actividad</span>
+                  <span class="fw-bold">Identificación actividad</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
                 </div>
 
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-2">
-                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
-                    <label class="formLabel">Código</label>
+                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label id="floating_code{{ i }}" class="formLabel">Código</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-10">
-                    <input type="text" formControlName="project_identification" class="form-control" placeholder=" " />
-                    <label class="formLabel">Identificación del proyecto</label>
+                    <input type="text" formControlName="project_identification"
+                      id="floating_project_identification{{ i }}" class="form-control" placeholder=" " />
+                    <label class="formLabel" id="floating_project_identification{{ i }}">Identificación del
+                      proyecto</label>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
+              <!-- Responsabilidades -->
+              <div class="col-sm-12 col-md-12 col-lg-12 lineGroup">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Responsabilidades</span>
+                    <span class="fw-bold">Responsabilidades</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input type="text" formControlName="responsibility" class="form-control" placeholder=" " />
-                    <label class="formLabel">Responsabilidad</label>
+                    <input type="text" formControlName="responsibility" id="floating_responsibility{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label id="floating_responsibility{{ i }}" class="formLabel">Responsabilidad</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input type="text" formControlName="cost" class="form-control" placeholder=" " />
-                    <label class="formLabel">Costo</label>
+                    <input type="text" formControlName="cost" id="floating_cost{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label class="formLabel" id="floating_cost{{ i }}">Costo</label>
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-4">
-                    <input type="text" formControlName="support_certificate" class="form-control" placeholder=" " />
-                    <label class="formLabel">Acta</label>
+                    <input type="text" formControlName="support_certificate" id="floating_support_certificate{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label id="floating_support_certificate{{ i }}" class="formLabel">Acta</label>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-right: 1em; margin-bottom: 0.5em">
-                <div class="row" style="margin-left: 0">
+              <!-- Horas -->
+              <div class="col-sm-12 col-md-12 col-lg-12 lineGroup">
+                <div class="row justify-content-center" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Horas</span>
+                    <span class="fw-bold">Horas</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
-                  <div class="formfloatig col-12">
-                    <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
-                    <label class="formLabel"> Semestre</label>
+                  <div class="formfloatig col-lg-4 col-md-12">
+                    <input type="number" formControlName="semester_hours" id="floating_semester_hours{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label id="floating_semester_hours{{ i }}" class="formLabel"> Semestre</label>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button class="btn btn-add" type="button">
-              <i class="fa fa-plus"></i>
-            </button>
-            <button class="btn btn-remove" type="button">
-              <i class="fa fa-minus"></i>
-            </button>
+            <!-- buttons -->
+            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+              <button (click)="addInvestigationActivities()" class="btn btn-add" type="button">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button (click)="removeInput('investigation_activities', i)" class="btn btn-remove" type="button">
+                <i class=" fa fa-minus"></i>
+              </button>
+            </div>
           </div>
 
         </div>
@@ -261,8 +293,8 @@
     </div>
 
     <!-- /.actividades-extension -->
-    <div id="c2" class="accordion-item">
-
+    <div class="accordion-item">
+      <!-- header -->
       <h6 class="accordion-header" id="headingFour">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
@@ -274,75 +306,91 @@
         </button>
       </h6>
 
-
+      <!-- content -->
       <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingSix">
         <div class="accordion-body" formArrayName="extension_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+          let activity of extensionActivitiesArr.controls;
+          last as isLast;
+          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row formActividades">
-              <div class="col-xs-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
+
+              <!-- identificación actividad -->
+              <div class="col-xs-12 col-md-12 col-lg-12 lineGroup">
                 <div class="col-12" style="text-align: center">
-                  <span>identificación actividad</span>
+                  <span class="fw-bold">identificación actividad</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
                 </div>
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-4 col-lg-2">
-                    <input type="text" formControlName="code" class="form-control" placeholder=" " />
-                    <label class="formLabel">Código</label>
+                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label id="floating_code{{ i }}" class="formLabel">Código</label>
                   </div>
                   <div class="formfloatig col-xs-12 col-md-8 col-lg-10">
-                    <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
-                    <label class="formLabel">Identificación de la actividad</label>
+                    <input type="text" formControlName="activity_identification"
+                      id="floating_activity_identification{{ i }}" class="form-control" placeholder=" " />
+                    <label id="floating_activity_identification{{ i }}" class="formLabel">
+                      Identificación de la actividad</label>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-12 col-lg-12 col-12" style="margin-bottom: 0.5em; margin-right: 0.5em">
+              <!-- Responsabilidades -->
+              <div class="col-sm-12 col-md-12 col-lg-12 col-12 lineGroup">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Responsabilidades</span>
+                    <span class="fw-bold">Responsabilidades</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="responsibility" class="form-control" placeholder=" " />
+                    <input type="text" formControlName="responsibility" id="floating_responsibility{{ i }}"
+                      class="form-control" placeholder=" " />
                     <label class="formLabel">Responsabilidad</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="cost" class="form-control" placeholder=" " />
-                    <label class="formLabel">Costo</label>
+                    <input type="text" formControlName="cost" id="floating_responsibility{{ i }}" class="form-control"
+                      placeholder=" " />
+                    <label id="floating_responsibility{{ i }}" class="formLabel">Costo</label>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom: 0.5em; margin-right: 1em">
+              <!-- Horas -->
+              <div class="col-sm-12 col-md-12 col-lg-12 lineGroup">
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
-                    <span>Horas</span>
+                    <span class="fw-bold">Horas</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="hours_week" class="form-control" placeholder=" " />
-                    <label class="formLabel">Semestre</label>
+                    <input type="number" formControlName="hours_week" id="floating_hours_week{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label id="floating_hours_week{{ i }}" class="formLabel">Semestre</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
-                    <label class="formLabel">Semana</label>
+                    <input type="number" formControlName="semester_hours" id="floating_semester_hours{{ i }}"
+                      class="form-control" placeholder=" " />
+                    <label id="floating_semester_hours{{ i }}" class="formLabel">Semana</label>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button class="btn btn-add" type="button">
-              <i class="fa fa-plus"></i>
-            </button>
-            <button class="btn btn-remove" type="button">
-              <i class="fa fa-minus"></i>
-            </button>
+            <!-- buttons -->
+            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+              <button (click)="addExtensionActivities()" class="btn btn-add" type="button">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button (click)="removeInput('extension_activities', i)" class="btn btn-remove" type="button">
+                <i class=" fa fa-minus"></i>
+              </button>
+            </div>
+
           </div>
 
         </div>
@@ -351,9 +399,9 @@
 
 
     <!-- /.actividades-administracion -->
-    <div class="accordion-item" id="c3">
+    <div class="accordion-item">
 
-
+      <!-- header -->
       <h6 class="accordion-header" id="headingFive">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -365,49 +413,59 @@
         </button>
       </h6>
 
+      <!-- content -->
       <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive">
         <div class="accordion-body" formArrayName="academic_admin_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+          let activity of academicAdministrationArr.controls;
+          last as isLast;
+          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row formActividades" style="width: 100%">
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="text" formControlName="charge" class="form-control" placeholder=" " />
-                  <label class="formLabel">Cargo</label>
+                  <input type="text" formControlName="charge" id="floating_charge{{ i }}" class="form-control"
+                    placeholder=" " />
+                  <label id="floating_charge{{ i }}" class="formLabel">Cargo</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
-                  <label class="formLabel">Horas semestre</label>
+                  <input type="number" formControlName="semester_hours" id="floating_semester_hours{{ i }}"
+                    class="form-control" placeholder=" " />
+                  <label id="floating_semester_hours{{ i }}" class="formLabel">Horas semestre</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="text" formControlName="other_activities" class="form-control" placeholder=" " />
-                  <label class="formLabel">Otras actividades</label>
+                  <input type="text" formControlName="other_activities" id="floating_other_activities{{ i }}"
+                    class="form-control" placeholder=" " />
+                  <label id="floating_other_activities{{ i }}" class="formLabel">Otras actividades</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="number" formControlName="other_hours_semester" class="form-control" placeholder=" " />
+                  <input type="number" formControlName="other_hours_semester" id="floating_other_hours_semester{{ i }}"
+                    class="form-control" placeholder=" " />
                   <label class="formLabel">Horas semestre</label>
                 </div>
               </div>
 
             </div>
-          </div>
 
-          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button class="btn btn-add" type="button">
-              <i class="fa fa-plus"></i>
-            </button>
-            <button class="btn btn-remove" type="button">
-              <i class="fa fa-minus"></i>
-            </button>
+            <!-- buttons -->
+            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+              <button (click)="addAcademicAdministration()" class="btn btn-add" type="button">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button (click)="removeInput('academic_admin_activities', i)" class="btn btn-remove" type="button">
+                <i class=" fa fa-minus"></i>
+              </button>
+            </div>
+
           </div>
 
         </div>
@@ -415,9 +473,9 @@
     </div>
 
     <!-- /.otras-actividades -->
-    <div id="c4" class="accordion-item">
+    <div class="accordion-item">
 
-
+      <!-- header -->
       <h6 class="accordion-header" id="headingSix">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix"
           aria-expanded="false" aria-controls="collapseSix">
@@ -429,44 +487,53 @@
         </button>
       </h6>
 
-
+      <!-- content -->
       <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix">
         <div class="accordion-body" formArrayName="other_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+          let activity of otherActivitiesArr.controls;
+          last as isLast;
+          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row formActividades" style="width: 100%">
 
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="formfloatig">
-                  <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
-                  <label class="formLabel">Identificación de la actividad</label>
+                  <input type="text" formControlName="activity_identification"
+                    id="floating_activity_identification{{ i }}" class="form-control" placeholder=" " />
+                  <label id="floating_activity_identification{{ i }}" class="formLabel">Identificación de la
+                    actividad</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-2 col-lg-12">
                 <div class="formfloatig">
-                  <input type="number" formControlName="semester_hours" class="form-control" placeholder=" " />
+                  <input type="number" formControlName="semester_hours" id="floating_semester_hours{{ i }}"
+                    class="form-control" placeholder=" " />
                   <label class="formLabel">Horas semestre</label>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+            <!-- buttons -->
+            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+              <button (click)="addOtherActivities()" class="btn btn-add" type="button">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button (click)="removeInput('other_activities', i)" class="btn btn-remove" type="button">
+                <i class=" fa fa-minus"></i>
+              </button>
+            </div>
 
-        <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-          <button class="btn btn-add" type="button">
-            <i class="fa fa-plus"></i>
-          </button>
-          <button class="btn btn-remove" type="button">
-            <i class="fa fa-minus"></i>
-          </button>
+          </div>
+
         </div>
 
       </div>
     </div>
 
     <!-- /.seguimiento-actividades -->
-    <div id="c5" class="accordion-item">
+    <div class="accordion-item">
 
+      <!-- header -->
       <h6 class="accordion-header" id="headingSeven">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
@@ -478,48 +545,59 @@
         </button>
       </h6>
 
+      <!-- content -->
       <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven">
         <div class="accordion-body" formArrayName="monitoring_activities">
-          <div class="arrayLike formfloatig justify-content-center">
+          <div *ngFor="
+          let activity of monitoringActivitiesArr.controls;
+          last as isLast;
+          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
             <div class="row formActividades" style="width: 100%">
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="text" formControlName="activity_identification" class="form-control" placeholder=" " />
-                  <label class="formLabel">Identificación de la actividad</label>
+                  <input type="text" formControlName="activity_identification"
+                    id="floating_activity_identification{{ i }}" class="form-control" placeholder=" " />
+                  <label id="floating_activity_identification{{ i }}" class="formLabel">Identificación de la
+                    actividad</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <div class="formfloatig">
-                  <input type="date" formControlName="date_1" class="form-control" placeholder=" " />
-                  <label class="formLabel">Fecha 1</label>
+                  <input type="date" formControlName="date_1" id="floating_date_1{{ i }}" class="form-control"
+                    placeholder=" " />
+                  <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <div class="formfloatig">
-                  <input type="date" formControlName="date_2" class="form-control" placeholder=" " />
-                  <label class="formLabel">Fecha 2</label>
+                  <input type="date" formControlName="date_2" id="floating_date_2{{ i }}" class="form-control"
+                    placeholder=" " />
+                  <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="formfloatig">
-                  <input type="text" formControlName="others" class="form-control" placeholder=" " />
-                  <label class="formLabel">Otros</label>
+                  <input type="text" formControlName="others" id="floating_others{{ i }}" class="form-control"
+                    placeholder=" " />
+                  <label id="floating_others{{ i }}" class="formLabel">Otros</label>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button class="btn btn-add" type="button">
-              <i class="fa fa-plus"></i>
-            </button>
-            <button class="btn btn-remove" type="button">
-              <i class="fa fa-minus"></i>
-            </button>
+            <!-- buttons -->
+            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+              <button (click)="addMonitoringActivities()" class="btn btn-add" type="button">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button (click)="removeInput('monitoring_activities', i)" class="btn btn-remove" type="button">
+                <i class=" fa fa-minus"></i>
+              </button>
+            </div>
+
           </div>
 
         </div>
@@ -529,7 +607,7 @@
 
     <!-- /.jornada-trabajo -->
     <div class="accordion-item">
-
+      <!-- header -->
       <h6 class="accordion-header" id="headingEight">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
@@ -540,7 +618,7 @@
           </span>
         </button>
       </h6>
-
+      <!-- content -->
       <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight">
         <div class="accordion-body" formControlName="general_remarks">
           <div class="formfloatig col-12">
@@ -555,7 +633,7 @@
 
 
     <div class="accordion-item">
-
+      <!-- header -->
       <h6 class="accordion-header" id="headingNine">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
           data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
@@ -566,34 +644,39 @@
           </span>
         </button>
       </h6>
-
+      <!-- content -->
       <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine">
-        <div class="accordion-body" formArrayName="work_day">
+        <div class="accordion-body" formArrayName="working_week">
           <div class="formfloatig col-12">
-            <div class="col-xl-4 col-lg-6 arrayLike formfloatig justify-content-center">
+            <div *ngFor="
+            let activity of workDayArr.controls;
+            last as isLast;
+            let i = index
+            " class="arrayLike formfloatig justify-content-center d-inline" [formGroupName]="i">
               <div class="row formActividades shadow m-2 p-1" style="width: 100%; margin: auto; min-width: 320px">
                 <span>
                   <i class="fa fa-clock"></i>
-                  semana[i] }}
+                  {{ semana[i] }}
                 </span>
 
                 <div class="col-6">
                   <div class="row">
-                    <span>Mañana</span>
+                    <span class="fw-bold">Mañana</span>
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_1
-                        " class="form-control" onlyHour="false" value="07:00" start="07:00" end="12:00"
-                          placeholder=" " />
-                        <label class="formLabel">Inicia</label>
+                        <input atp-time-picker type="time" formControlName="morning_1"
+                          id="floating_wordday_morning{{ i }}" class="form-control" onlyHour="false" value="07:00"
+                          start="07:00" end="12:00" placeholder=" " />
+                        <label id="floating_wordday_morning{{ i }}" class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_2" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" placeholder=" " />
-                        <label class="formLabel">Termina</label>
+                        <input atp-time-picker type="time" formControlName="morning_2"
+                          id="floating_wordday_morning{{ i }}" class="form-control" onlyHour="false" value="07:00"
+                          start="07:00" end="12:00" placeholder=" " />
+                        <label id="floating_wordday_morning{{ i }}" class="formLabel">Termina</label>
                       </div>
                     </div>
                   </div>
@@ -602,7 +685,7 @@
 
                 <div class="col-6">
                   <div class="row">
-                    <span>Tarde</span>
+                    <span class="fw-bold">Tarde</span>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
@@ -622,11 +705,14 @@
 
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </form>

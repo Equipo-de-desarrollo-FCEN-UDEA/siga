@@ -1,6 +1,6 @@
 export interface WorkPlan {
     period: string;
-    registro: string;
+    register: string;
     partial_time: number;
     teaching_activities: TeachingActivity[];
     investigation_activities: InvestigationActivity[];

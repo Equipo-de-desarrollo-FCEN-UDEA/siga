@@ -7,8 +7,8 @@ margin-bottom: 8em!important;
 }
 
 .lineGroup{
-  margin-right: 0.5em; 
-  margin-bottom: 0.5em
+  margin-right: 1em!important;
+  margin-bottom: 1em!important;
 }
 
 // .lineGroup{
@@ -52,6 +52,12 @@ align-items: baseline;
 .card-plan, .card-plan-general {
 align-items: center;
 }
+
+.accordion-item {
+  max-height: fit-content!important;
+}
+
+
 
 
 *{

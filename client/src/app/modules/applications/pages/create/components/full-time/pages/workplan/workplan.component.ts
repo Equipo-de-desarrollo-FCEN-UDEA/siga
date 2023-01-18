@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
 
+//sweetalert2
+import Swal from 'sweetalert2';
+
 //interfaces
 import { FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
@@ -8,6 +11,7 @@ import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
 //services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { LoaderService } from '@services/loader.service';
+
 
 @Component({
   selector: 'app-workplan',
@@ -20,6 +24,7 @@ export class WorkplanComponent implements OnInit {
     semester: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
     register: ['', [Validators.required]],
     part_time: [NaN, [Validators.required]],
+    general_remarks: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
     teaching_activities: this.fb.array([this.teachingActivitiesGroup()], [Validators.required]),
     investigation_activities: this.fb.array([this.investigationActivitiesGroup()], [Validators.required]),
     extension_activities: this.fb.array([this.extensionActivitiesGroup()], [Validators.required]),
@@ -29,12 +34,16 @@ export class WorkplanComponent implements OnInit {
     work_day: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
 
+  public semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
   @Input() id_full_time:number = 0;
 
   public work_plan:any;
 
+  @Input() editable: any;
+
   // ------------------------------
-  // --------- GETTERS -----------
+  // --------- GETTERS ------------
   // ------------------------------
 
   get teachingActivitiesArr(): FormArray {
@@ -82,13 +91,31 @@ export class WorkplanComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // this.fullTimeSvc.getFullTime(this.id_full_time).subscribe({
-    //   next:(res: FullTimeInDB) => {
-    //     this.work_plan = res.work_plan
-    //   } 
-    // });
+    this.fullTimeSvc.getFullTime(this.id_full_time).subscribe({
+      next: (res: any) => {
+        this.work_plan = res.work_plan;
 
-    this.patchTeachingActivities(this.work_plan.teaching_activities)
+        if(this.work_plan) {
+          this.id_full_time = this.work_plan.id;
+          this.f_workplan.patchValue({
+            semester: this.work_plan.semester,
+            register: this.work_plan.register,
+            part_time: this.work_plan.part_time,
+            general_remarks: this.work_plan.general_remarks
+          });
+
+          this.patchTeachingActivities(this.work_plan.teaching_activities);
+          this.patchInvestigationActivities(this.work_plan.investigation_activities);
+          this.patchExtensionActivities(this.work_plan.extension_activities);
+          this.patchAcademicAdministration(this.work_plan.academic_admin_activities);
+          this.patchOtherActivities(this.work_plan.other_activities);
+          this.patchMonitoringActivities(this.work_plan.monitoring_activities);
+          this.patchWorkDay(this.work_plan.work_day);
+        }
+      }
+    });
+
+
   }
 
   // ------------------------------
@@ -96,13 +123,15 @@ export class WorkplanComponent implements OnInit {
   // ------------------------------
 
   onSubmit() {
-    // const WORK_PLAN: WorkPlan = {
-    //   ... this.f_workplan.value as WorkPlan,
+    const WORK_PLAN: WorkPlan = {
+      ... this.f_workplan.value as unknown as WorkPlan,
           
-    // }
+    }
 
     this.loaderSvc.show();
-    
+
+  
+
   }
 
 
@@ -136,15 +165,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addTeachingActivities() {
-    let div = document.getElementById('c1')
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.teachingActivitiesArr.push(this.teachingActivitiesGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addTeachingActivities() { this.teachingActivitiesArr.push(this.teachingActivitiesGroup()); }
 
   // --------- PATCHS -----------
 
@@ -176,15 +197,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addInvestigationActivities() {
-    let div = document.getElementById('c8')
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.investigationActivitiesArr.push(this.investigationActivitiesGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addInvestigationActivities() { this.investigationActivitiesArr.push(this.investigationActivitiesGroup()); }
 
   // --------- PATCHS -----------
 
@@ -216,15 +229,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addExtensionActivities() {
-    let div = document.getElementById('c2')
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.extensionActivitiesArr.push(this.extensionActivitiesGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addExtensionActivities() { this.extensionActivitiesArr.push(this.extensionActivitiesGroup()); }
 
   // --------- PATCHS -----------
 
@@ -255,15 +260,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addAcademicAdministration() {
-    let div = document.getElementById('c3')
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.academicAdministrationArr.push(this.academicAdministrationGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addAcademicAdministration() { this.academicAdministrationArr.push(this.academicAdministrationGroup()); }
 
   // --------- PATCHS -----------
 
@@ -292,15 +289,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addOtherActivities() {
-    let div = document.getElementById('c4')
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.otherActivitiesArr.push(this.otherActivitiesGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addOtherActivities() { this.otherActivitiesArr.push(this.otherActivitiesGroup()); }
 
   // --------- PATCHS -----------
 
@@ -331,15 +320,7 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addMonitoringActivities() {
-    let div = document.getElementById('c5') 
-    if (div) {
-      let height = div.clientHeight;
-      div.style.maxHeight = height + 'px';
-      this.monitoringActivitiesArr.push(this.monitoringActivitiesGroup());
-      setTimeout(() => div!.scrollTop = div!.scrollHeight, 100);
-    }
-  }
+  addMonitoringActivities() { this.monitoringActivitiesArr.push(this.monitoringActivitiesGroup()); }
 
   // --------- PATCHS -----------
 
@@ -371,15 +352,11 @@ export class WorkplanComponent implements OnInit {
 
   // --------- ADD CARDS -----------
 
-  addWorkDay() {
-    this.workDayArr.push(this.workDayGroup());
-  }
+  addWorkDay() { this.workDayArr.push(this.workDayGroup()); }
 
   // --------- PATCHS -----------
 
-  patchJornadaTrabajo(activity: any) {
-    this.workDayArr.patchValue(activity);
-  }
+  patchWorkDay(activity: any) { this.workDayArr.patchValue(activity); }
 
   
 
@@ -392,4 +369,8 @@ export class WorkplanComponent implements OnInit {
     control.removeAt(index);
   }
 
+
+  validSize() { return true; }
+
+  validFileType() { return true; }
 }
