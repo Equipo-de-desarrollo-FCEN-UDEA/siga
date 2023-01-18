@@ -5,7 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, documents
+from app.core.config import get_app_settings
+from app.services import crud, documents, aws
 from app.domain.models import FullTime, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 FullTimeCreate,
@@ -15,7 +16,9 @@ from app.domain.schemas import (ApplicationCreate,
                                 ApplicationResponse,
                                 InitialLetter,
                                 WorkPlan,
-                                ViceFormat
+                                ViceFormat,
+                                CronJobCreate,
+                                Application_statusCreate
                                 )
 from app.domain.errors import BaseErrors
 
@@ -23,6 +26,7 @@ from app.domain.errors import BaseErrors
 router = APIRouter()
 
 log = get_logging(__name__)
+settings = get_app_settings()
 
 
 @router.post("/", response_model=FullTimeResponse)
@@ -44,7 +48,7 @@ async def create_full_time(
     """
     try:
         full_time_created = await crud.full_time.create(db=engine,
-                                                          obj_in=FullTime(**dict(full_time)))
+                                                        obj_in=FullTime(**dict(full_time)))
 
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
@@ -72,6 +76,14 @@ async def create_full_time(
         full_time=full_time_created
     )
     return response
+
+
+@router.get("/", response_model=list[FullTime])
+async def get_full_times(*,
+                         engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[FullTime]:
+
+    full_timees = await engine.find(FullTime)
+    return full_timees
 
 
 @router.get("/{id}", response_model=FullTimeResponse)
@@ -114,7 +126,7 @@ async def update_full_time(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> FullTime:
+) -> Application:
     """
     Endpoint to update an application of type full_time
 
@@ -135,27 +147,21 @@ async def update_full_time(
 
         if application:
 
-            log.debug('obj_in que es', full_time)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
-
             current_full_time = await crud.full_time.get(engine, id=mongo_id)
 
             updated_full_time = await crud.full_time.update(engine, db_obj=current_full_time, obj_in=full_time)
 
-            log.debug('updated_full_time', updated_full_time)
-
-            # In PostgreSQL
-            application_updated = crud.application.update(
-                db=db, who=current_user, db_obj=application, obj_in=full_time)
-
-            log.debug('application update', application_updated)
+            status = Application_statusCreate(
+                application_id=application.id, status_id=1, observation="Dedicación exclusiva solicitada")
+            crud.application_status.request(
+                db, who=current_user, obj_in=status, to=application, current=current_full_time)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
-    return updated_full_time
+    return application
 
 
 @router.delete("/{id}", response_model=Msg)
@@ -206,8 +212,18 @@ async def update_letter(
         application: Application = crud.application.get(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
+        full_time = await crud.full_time.get(engine, id=mongo_id)
+        log.debug(full_time.documents)
+        for document in full_time.documents:
+            if document['name'] == 'carta-inicio.pdf':
+                try:
+                    delete = aws.s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=document['path'])
+                except Exception as e:
+                    pass
+        path = await documents.initial_letter_generation(current_user, letter.body)
         full_time = await crud.full_time.letter(engine,
-                                                  id=mongo_id, letter=letter)
+                                                id=mongo_id, letter=letter, path=path)
+
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time

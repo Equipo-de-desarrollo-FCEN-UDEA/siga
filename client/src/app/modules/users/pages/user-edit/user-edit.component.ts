@@ -31,13 +31,12 @@ export class UserEditComponent {
   public vinculation_types = vinculation_type;
   public scale = scale;
   
-  public isLoading = this.loadingSvc.isLoading;
   public error: string = "";
   public submitted: boolean = false;
   public rol: string = localStorage.getItem('rol') || '';
 
   public rol$: Observable<RolBase[]> = this.rolService.getRoles();
-  private is_email_valid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
+  private is_email_valid = /^[a-zA-Z0-9._%+-]+@UDEA.EDU.CO$/;
   public getId: Number | string = 0;
 
 
@@ -45,7 +44,6 @@ export class UserEditComponent {
     private router: Router,
     private fb: FormBuilder,
     public activateRoute: ActivatedRoute,
-    public loadingSvc: LoaderService,
     private departamentosSvc: DepartmentService,
 
     private rolService: RolService,
@@ -70,13 +68,13 @@ export class UserEditComponent {
     names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     last_names: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
     identification_type: ['', [Validators.required, Validators.maxLength(250)]],
-    identification_number: [' ', [Validators.required, Validators.min(1000), Validators.max(999999999999)]],
+    identification_number: [' ', [Validators.required]],
     phone: [''],
     office: [''],
     vinculation_type: ['', [Validators.required]],
     department_id : [NaN, Validators.required],
     rol_id: [NaN, Validators.required],
-    scale: ['', Validators.required]
+    scale: ['', Validators.required],
   });
 
 
@@ -87,7 +85,8 @@ export class UserEditComponent {
   submitUpdate() {
     // verificacion de errores
     if (this.updateUserBase.invalid) {
-      console.log('¡esrta en error')
+      console.log(this.updateUserBase.value)
+      console.log('error form')
       return;
     }
     const user = this.updateUserBase.value as UserUpdate;

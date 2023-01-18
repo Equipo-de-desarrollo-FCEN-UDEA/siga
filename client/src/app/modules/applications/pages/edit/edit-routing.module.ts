@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EditComponent } from './edit.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CommissionComponent } from './components/commission/commission.component';
+import { FullTimeComponent } from './components/full-time/full-time.component';
 
 const routes: Routes = [
   { 
@@ -21,6 +22,13 @@ const routes: Routes = [
         component: CommissionComponent,
         data: {
           title: 'Comisión'
+        }
+      },
+      {
+        path: 'dedicacion',
+        component: FullTimeComponent,
+        data: {
+          title: 'Dedicación Exclusiva'
         }
       },
       {

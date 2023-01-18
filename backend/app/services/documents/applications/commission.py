@@ -12,7 +12,7 @@ from app.domain.models import User, Application, Consecutive
 from app.domain.schemas import CommissionDocument, UserResponse, ApplicationResponse, SchoolInDB
 from app.core.logging import get_logging
 from app.core.config import get_app_settings
-from app.core.celery_worker import celery
+from app.core.celery_worker import celery_app
 from app.assets.logos import logos_dir
 from app.services import aws, crud
 
@@ -64,10 +64,10 @@ async def commission_resolution_generation(user: User, application: Application,
     
     return None
 
-@celery.task
+@celery_app.task
 def generate_commission_pdf_to_aws(data: dict, path: str):
     env = Environment(loader=FileSystemLoader(templates_dir))
-    template = env.get_template('commission.letter.html')
+    template = env.get_template('commission.letter.html.j2')
     render = template.render(data)
     pdf = HTML(string=render, base_url=logos_dir).write_pdf()
     file = BytesIO()

@@ -3,10 +3,12 @@ import { ViceFormat } from "./vice-format";
 import { WorkPlan } from "./work-plan";
 
 import { Application } from "@interfaces/application";
+import { file_path } from "@interfaces/documents";
 
 
 export interface FullTimeCreate {
     title: string;
+    documents?: file_path[];
 }
 
 

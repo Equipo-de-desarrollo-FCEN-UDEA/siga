@@ -147,3 +147,6 @@ client/package.lock.json
 client/package.json
 
 Siga-brasil.pem
+
+# Docker other
+docker-compose.yml

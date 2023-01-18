@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FullTimeFormatComponent } from './full-time-format.component';
+import { FullTimeFormatComponent } from './viceformat.component';
 
 describe('FullTimeFormatComponent', () => {
   let component: FullTimeFormatComponent;

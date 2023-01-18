@@ -38,8 +38,6 @@ export class CommissionComponent implements OnInit {
 
   public comision_type$: any;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
   
 
@@ -54,7 +52,6 @@ export class CommissionComponent implements OnInit {
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService
@@ -97,7 +94,7 @@ export class CommissionComponent implements OnInit {
   submit() {
     let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
     for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe().unsubscribe()
+      this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
     }
     if (this.files.length > 0) {
       commission = this.documentSvc.postDocument(this.files as File[]).pipe(
@@ -135,21 +132,45 @@ export class CommissionComponent implements OnInit {
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
-
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
+      this.form.patchValue({
+        start_date: new Date(
+          this.fromDate!.year,
+          this.fromDate!.month - 1,
+          this.fromDate!.day
+        ),
+      });
+    } else if (this.fromDate && !this.toDate && date) {
+      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
+      this.form.patchValue({
+        end_date: new Date(
+          this.toDate.year,
+          this.toDate.month - 1,
+          this.toDate.day
+        ),
+      });
     } else {
+      console.log('else',  this.fromDate, this.toDate)
       this.toDate = null;
-      this.fromDate = date;
+      this.fromDate = date
+      this.form.patchValue({
+        start_date: new Date(
+          this.fromDate.year,
+          this.fromDate.month - 1,
+          this.fromDate.day
+        ),
+      });
+      this.form.patchValue({
+        end_date: new Date(
+          this.toDate!.year,
+          this.toDate!.month - 1,
+          this.toDate!.day
+        ),
+      });
     }
-
-    this.form.patchValue({
-      start_date: (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
-      end_date: (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
-    });
   }
 
   isHovered(date: NgbDate) {

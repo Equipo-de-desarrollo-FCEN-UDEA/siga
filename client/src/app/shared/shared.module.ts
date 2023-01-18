@@ -14,11 +14,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     StatusHistoryComponent,
     NotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     RouterModule,
     StatusHistoryComponent,
     FormsModule,
-    NgbModule
+    NgbModule,
+    LoaderComponent
   ]
 })
 export class SharedModule { }

@@ -8,6 +8,10 @@ from .base import CRUDBase
 
 from sqlalchemy.orm import Session
 
+from app.core.logging import get_logging
+
+log = get_logging(__name__)
+
 
 class CRUDApplication_status(CRUDBase[Application_status, Application_statusCreate, Application_statusUpdate, Application_statusPolicy]):
     def create(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application) -> Application_status:
@@ -24,6 +28,17 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
 
     def finalize(self, db: Session, *, obj_in: Application_statusCreate) -> Application_status:
         status = db.query(Status).where(Status.name == 'FINALIZADA').first()
+        obj_in_data = dict(obj_in)
+        obj_in_data['status_id'] = status.id
+        db_obj = Application_status(**obj_in_data)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+
+    def request(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application, current: any) -> Application_status:
+        next_status = self.policy.request(who=who, to=to, current=current)
+        status = db.query(Status).where(Status.name == next_status).first()
         obj_in_data = dict(obj_in)
         obj_in_data['status_id'] = status.id
         db_obj = Application_status(**obj_in_data)

@@ -38,8 +38,6 @@ export class CommissionComponent {
 
   public comision_type$: any;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
     
@@ -57,7 +55,6 @@ export class CommissionComponent {
     private router: Router,
     private cd: ChangeDetectorRef,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentService: DocumentService

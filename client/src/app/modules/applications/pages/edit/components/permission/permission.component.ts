@@ -1,8 +1,9 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionCreate } from '@interfaces/applications/permission';
 import { file_path, DocumentsResponse } from '@interfaces/documents';
+import { Holiday } from '@interfaces/holiday';
 import {
   NgbDate,
   NgbDateStruct,
@@ -13,6 +14,7 @@ import { ApplicationSubTypeService } from '@services/application-sub-type.servic
 import { ApplicationTypesService } from '@services/application-types.service';
 import { PermissionService } from '@services/applications/permission.service';
 import { DocumentService } from '@services/document.service';
+import { HolidayService } from '@services/holiday.service';
 import { LoaderService } from '@services/loader.service';
 import { LaboralDays } from '@shared/utils';
 import { switchMap } from 'rxjs';
@@ -23,7 +25,7 @@ import Swal from 'sweetalert2';
   templateUrl: './permission.component.html',
   styleUrls: ['./permission.component.scss'],
 })
-export class PermissionComponent implements OnInit {
+export class PermissionComponent implements OnInit, AfterViewInit {
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -45,23 +47,23 @@ export class PermissionComponent implements OnInit {
 
   public id: number = 0;
 
-  public isLoading = this.loaderSvc.isLoading;
-
   public applicationType$ = this.applicationTypeSvc.getApplicationType(1);
+
+  // holidays
+  public holidays: Holiday[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
-    private ngZone: NgZone,
     private router: Router,
     private route: ActivatedRoute,
 
-    private loaderSvc: LoaderService,
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private permissionSvc: PermissionService,
-    private documentSvc: DocumentService
+    private documentSvc: DocumentService,
+    private holidaySvc: HolidayService
   ) {
     this.fromDate = null;
     this.toDate = null;
@@ -87,17 +89,29 @@ export class PermissionComponent implements OnInit {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.permissionSvc.getPermission(this.id).subscribe((data) => {
-        console.log(data)
+        // console.log(data);
         this.form.patchValue({
-          // justification: data.permission.justification,
-          // start_date: this.datepipe.transform(data.permission.start_date, 'YYYY-MM-dd'),
-          // end_date: this.datepipe.transform(data.permission.end_date, 'YYYY-MM-dd'),
           ...data.permission,
           application_sub_type_id: data.application_sub_type_id,
         });
-        console.log(data.permission.documents)
+        // console.log(data.permission);
         this.documents = data.permission.documents!;
+
+        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+          next: (res) => {
+            this.laboralDay = res.extra.days;
+          },
+        });
       });
+    });
+  }
+
+  ngAfterViewInit(): void {
+
+    this.holidaySvc.getHolidays().subscribe({
+      next: (data) => {
+        this.holidays = data;
+      },
     });
   }
 
@@ -131,14 +145,15 @@ export class PermissionComponent implements OnInit {
           }
           console.log(this.form.value);
           return this.permissionSvc.putPermission(
-            this.form.value as PermissionCreate, this.id
+            this.form.value as PermissionCreate,
+            this.id
           );
         })
       );
     }
     permission.subscribe({
       next: (res) => {
-        console.log('permission updated', permission)
+        console.log('permission updated', permission);
         Swal.fire({
           title: 'Actualizado',
           text: '¡El permiso se actualizó con éxito!',
@@ -147,12 +162,12 @@ export class PermissionComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['solicitudes/ver/'+this.id+'/permiso']);
+            this.router.navigate(['solicitudes/ver/' + this.id + '/permiso']);
           }
         });
       },
       error: (err) => {
-        console.log('salio error', err)
+        console.log('salio error', err);
         this.error = err;
       },
     });
@@ -183,7 +198,8 @@ export class PermissionComponent implements OnInit {
       return (
         LaboralDays(
           new Date(this.formatter.format(fromDate)),
-          new Date(this.formatter.format(toDate))
+          new Date(this.formatter.format(toDate)),
+          this.holidays
         ) > this.laboralDay
       );
     } else {
@@ -193,36 +209,46 @@ export class PermissionComponent implements OnInit {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
+      console.log('!this.fromDate && !this.toDate')
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
           this.fromDate!.year,
           this.fromDate!.month - 1,
           this.fromDate!.day
-        )})
+        ),
+      });
     } else if (this.fromDate && !this.toDate && date) {
-      //console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
+      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
-      this.form.patchValue({  end_date: new Date(
-        this.toDate!.year,
-        this.toDate!.month - 1,
-        this.toDate!.day
-      ),
-    });
+      this.form.patchValue({
+        end_date: new Date(
+          this.toDate.year,
+          this.toDate.month - 1,
+          this.toDate.day
+        ),
+      });
     } else {
-      //console.log('else',  this.fromDate, this.toDate)
+      console.log('else',  this.fromDate, this.toDate)
       this.toDate = null;
-      this.fromDate = date;
+      this.fromDate = date
       this.form.patchValue({
         start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        )})
+          this.fromDate.year,
+          this.fromDate.month - 1,
+          this.fromDate.day
+        ),
+      });
+      this.form.patchValue({
+        end_date: new Date(
+          this.toDate!.year,
+          this.toDate!.month - 1,
+          this.toDate!.day
+        ),
+      });
     }
-
-
   }
+
 
   isHovered(date: NgbDate) {
     return (
