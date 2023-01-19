@@ -9,8 +9,8 @@
         <div class="row">
             <div class="col-md-6 col-xs-12 col-sm-12">
                 <div class="formfloatig">
-                    <input id="requiredTime" formControlName="required_time" class="form-control" type="number"
-                        placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('required_time') }" required />
+                    <input id="requiredTime" formControlName="time" class="form-control" type="number"
+                        placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('time') }" required />
                     <label for="requiredTime" class="formLabel">Tiempo solicitado (meses)<span
                             style="color: red">*</span>
                     </label>
@@ -68,10 +68,10 @@
               last as isLast;
               let i = index
             " class="arrayLike formfloatig" [formGroupName]="i">
-                        <textarea id="floatingMeta{{ i }}" formControlName="meta" rows="1" class="form-control"
+                        <textarea id="floatingGoal{{ i }}" formControlName="goal" rows="1" class="form-control"
                             type="text" placeholder=" "
                             [ngClass]="{ 'is-invalid': goal.invalid && goal.touched }"></textarea>
-                        <label for="floatingMeta{{ i }}" class="formLabel">Meta {{ i + 1 }}</label>
+                        <label for="floatingGoal{{ i }}" class="formLabel">Meta {{ i + 1 }}</label>
                         <div class="buttons">
                             <button class="btn btn-circle btn-remove btn-sm" type="button"
                                 (click)="removeInput('goals', i)" *ngIf="goalsArr.length > 1">

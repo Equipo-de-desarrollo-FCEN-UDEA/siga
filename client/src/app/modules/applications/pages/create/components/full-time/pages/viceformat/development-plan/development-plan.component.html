@@ -1,0 +1,209 @@
+<div class="modal-header">
+    <button type="button" class="btn-close" aria-describedby="modal-title"
+        (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<form [formGroup]="FormPlan" (submit)="submit();">
+
+
+    <!-- TEMAS -->
+    <app-stepper #cdkStepper formArrayName="steps" [linear]="true">
+        <cdk-step [editable]="true" formGroupName="0" label="Temas" [optional]="false"
+            [stepControl]="formArray.get([0])!">
+            <ng-template cdkStepLabel class="cdk-step-label">
+                <span class="icon is-medium">
+                    <img [src]="logosurl+'one-svgrepo-com.svg'" title="Temas" style="margin: auto;" width="25px"
+                        *ngIf="formArray.get([0])!.invalid">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([0])!.valid"></i>
+                </span>
+            </ng-template>
+            <div class="container card shadow bg-white rounded pad">
+                <h3 class="header"> Apoya al plan de desarrollo institucional en alguno de los siguientes temas</h3>
+                <span class="m-2">A continuación elige uno o algunos de los siguientes temas que se desarrollarán a lo
+                    largo de tu proyecto de dedicación exclusiva, recuerda que también puedes consultar más información
+                    acerca de
+                    estos haciendo clíck <a
+                        href="http://www2.udea.edu.co/webmaster/multimedia/plan-desarrollo-udea/plan-desarrollo-udea.pdf"
+                        target="_blank">aquí</a>.</span>
+                <hr>
+                <div class="temas row">
+                    <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
+                        *ngFor="let tema of temas.temas; let i = index">
+                        <div class="tema card shadow rounded p-2"
+                            [ngClass]="{'selected': selectedTema.indexOf(i) != -1}" (click)="selectTema(i)">
+                            <h6>{{tema.titulo}}</h6>
+                            <hr>
+                            <span class="spantext">{{tema.subtitulo}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <footer class="my-footer">
+                    <div class="buttons">
+                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperNext>
+                            <span> Objetivos </span>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-right"></i>
+                            </span>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+
+            <!-- OBJETIVOS -->
+        </cdk-step>
+        <cdk-step label="Objetivos" [optional]="false">
+            <ng-template cdkStepLabel class="cdk-step-label">
+                <span class="icon is-medium" title="Objetivos">
+                    <img [src]="logosurl+'two-svgrepo-com.svg'" width="25px" *ngIf="formArray.get([1])!.invalid">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([1])!.valid"></i>
+                </span>
+            </ng-template>
+            <div class="container card shadow bg-white rounded">
+                <h3> Apoya al plan de desarrollo institucional en alguno de los siguientes objetivos</h3>
+                <span class="m-2">A continuación elige uno o algunos de los siguientes objetivos que se desarrollarán a
+                    lo largo de tu
+                    proyecto de dedicación exclusiva, recuerda que también puedes consultar más información acerca de
+                    estos haciendo clíck <a
+                        href="http://www2.udea.edu.co/webmaster/multimedia/plan-desarrollo-udea/plan-desarrollo-udea.pdf"
+                        target="_blank">aquí</a>.</span>
+                <hr>
+                <div class="objetivos">
+                    <div class="temas row" *ngFor="let _tema of selectedTemas; let it = index">
+                        <span><b>De acuerdo al tema :</b> {{_tema.titulo}} los objetivos de su dedicación exclusiva serán:</span>
+                        <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
+                            *ngFor="let objetivo of _tema.objetivos; let i = index">
+                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedObjetivo.indexOf(i.toString()+it) != -1}"
+                                (click)="selectObjetivo(i.toString(), it.toString(),objetivo);">
+                                <h6>{{"Objetivo estratégico " + (i+1)}}</h6>
+                                <hr>
+                                <span class="spantext">{{objetivo.descripcion}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <footer class="my-footer">
+                    <div class="buttons">
+                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-left"></i>
+                            </span>
+                            <span> Temas </span>
+                        </button>
+                        <button [disabled]="formArray.get([1])!.invalid" class="btn btn-add" cdkStepperNext>
+                            <span> Acciones </span>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-right"></i>
+                            </span>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+
+            <!-- ACCIONES ESTRATEGICAS -->
+        </cdk-step>
+        <cdk-step label="Acciones estratégicas" [optional]="false">
+            <ng-template cdkStepLabel class="cdk-step-label">
+                <span class="icon is-medium" title="Acciones estratégicas">
+                    <img [src]="logosurl+'three-svgrepo-com.svg'" width="25px"
+                        *ngIf="formArray.get([2])!.invalid">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([2])!.valid"></i>
+                </span>
+            </ng-template>
+            <div class="container card shadow bg-white rounded">
+                <h3>Apoya al plan de desarrollo institucional en alguna de las siguientes acciones estratégicas</h3>
+                <span class="m-2">A continuación elige una o algunas de las siguientes acciones estratégicas que se
+                    desarrollarán a lo largo de tu
+                    proyecto de dedicación exclusiva, recuerda que también puedes consultar más información acerca de
+                    estos haciendo clíck <a
+                        href="http://www2.udea.edu.co/webmaster/multimedia/plan-desarrollo-udea/plan-desarrollo-udea.pdf"
+                        target="_blank">aquí</a>.</span>
+                <hr>
+                <div class="acciones row" *ngFor="let _objetivo of selectedObjetivos; let iO = index">
+                    <span><b>De acuerdo al objetivo:</b> {{_objetivo.descripcion}} las acciones que estratégicos que usted desarrollará serán:</span>
+                    <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
+                        *ngFor="let accion of _objetivo.acciones; let i = index">
+                        <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedAccion.indexOf(i.toString()+iO) != -1}"
+                            (click)="selectAccion(i.toString()+iO, accion);">
+                            <h6>{{"Acción estratégica " + (i+1)}}</h6>
+                            <hr>
+                            <span class="spantext">{{accion}}</span>
+                        </div>
+                    </div>
+                </div>
+                <footer class="my-footer">
+                    <div class="buttons">
+                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-left"></i>
+                            </span>
+                            <span> Objetivos </span>
+                        </button>
+                        <button [disabled]="formArray.get([2])!.invalid" class="btn btn-add" cdkStepperNext>
+                            <span> Indicadores </span>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-right"></i>
+                            </span>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </cdk-step>
+
+
+        <!-- INDICADORES -->
+        <cdk-step label="Indicadores" [optional]="false" formGroupName="3">
+            <ng-template cdkStepLabel class="cdk-step-label">
+                <span class="icon is-medium">
+                    <img [src]="logosurl+'four-svgrepo-com.svg'" width="25px"
+                        *ngIf="formArray.get([3])!.invalid">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([3])!.valid"></i>
+                </span>
+            </ng-template>
+            <div class="container card shadow bg-white rounded">
+                <h3>Apoya al plan de desarrollo institucional en alguno de los siguientes indicadores</h3>
+                <span class="m-2">A continuación puedes ingresar los indicadores que la dedicación exclusiva pretende
+                    apoyar en el plan de acción institucional,
+                    recuerda que también puedes consultar más información acerca de
+                    estos haciendo clíck <a
+                        href="https://www.udea.edu.co/wps/portal/udea/web/generales/interna/!ut/p/z0/rY4xD4IwFIR_i4OjaWkEcawNagjRoInBLuYpDVYLLbQaf76gOLg4ud137-XuEEcZ4hXcZQFO6gpUy3seHMIpIx4d42SxiRmmAaPRZLtLSEhQjHj7sEr9yCMMJ3jpzXG6DkhA2Sz0CO4S5KWuOUX8pCsnHg5lRjcO1C0XMMRgv-msS_HRVpfavkGURgnIte0bf0z6d2Pnv4Iq2ZOS1rWXVppGGwkjAxKZKz_6qhg8AX50oP0!/"
+                        target="_blank">aquí</a>.</span>
+                <div class="indicadores row" style="width: 100%;">
+                    <h6>Indicador(es):<span style="color:red">*</span></h6>
+                    <hr>
+                    <div class="indicadores row" *ngFor="let _objetivo of selectedObjetivos; let iO = index">
+                        <span><b>De acuerdo al objetivo:</b> {{_objetivo.descripcion}} las acciones que estratégicos que usted desarrollará serán:</span>
+                        <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
+                            *ngFor="let accion of _objetivo.indicadores; let i = index">
+                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedIndicadores.indexOf(i.toString()+iO) != -1}"
+                                (click)="selectIndicador(i.toString()+iO, accion);">
+                                <h6>{{"Indicador " + (i+1)}}</h6>
+                                <hr>
+                                <span class="spantext">{{accion}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="my-footer">
+                    <div class="buttons">
+                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-arrow-left"></i>
+                            </span>
+                            <span> Acciones </span>
+                        </button>
+                        <button
+                            [disabled]="formArray.get([2])!.invalid || formArray.get([0])!.invalid || formArray.get([1])!.invalid"
+                            class="btn btn-add" type="submit" (submit)="true">
+                            <span> Finalizar </span>
+                            <span class="icon medium">
+                                <i class="fas fa-solid fa-thin fa-check-circle"></i>
+                            </span>
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </cdk-step>
+    </app-stepper>
+</form>
