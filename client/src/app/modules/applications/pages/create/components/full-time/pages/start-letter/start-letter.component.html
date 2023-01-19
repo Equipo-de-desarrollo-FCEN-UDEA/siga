@@ -1,21 +1,42 @@
 
 <!-- JUSTIFICATION -->
- <div class="row regular-row mt-4">
+<form (ngSubmit)="submit()">
+  <div class="row regular-row mt-4 align-items-baseline">
     <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación *</div>
-    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-      <div class="form-group">
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
         <textarea
-          id="floatingjustification"
-          formControlName="justification"
+          id="floatingjustificacion"
+          formControlName="body"
           class="form-control"
-          type="justification"
+          type="justificacion"
           placeholder=" "
-          
-          required
+          [ngClass]="{
+            'is-invalid':
+              (submitted && f['body'].errors) ||
+              isInvalidForm('body')
+          }"
           rows="5"
         ></textarea>
-        
-       
+        <!-- errors body -->
+        <div
+          *ngIf="
+            (submitted || f['body'].touched) &&
+            f['body'].errors
+          "
+          class="invalid"
+        >
+          <div
+            *ngIf="(submitted || f['body'].touched) && (f['body'].errors?.['required'] || 
+            f['body'].errors?.['maxlength'] || f['body'].errors?.['minlength'])"
+          >
+            La justificación debe tener al menos 30 caracteres y máximo 500
+            caracteres.
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  
+</form> 

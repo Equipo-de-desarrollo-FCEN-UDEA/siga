@@ -163,7 +163,8 @@ export class CommissionComponent {
 
 
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
+    return this.form.get(controlName)?.
+    invalid && this.form.get(controlName)?.touched;
   }
 
   // --------------------------------------
