@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FullTimeFormatComponent } from './viceformat.component';
+import { ViceFormatComponent } from './viceformat.component';
 
-describe('FullTimeFormatComponent', () => {
-  let component: FullTimeFormatComponent;
-  let fixture: ComponentFixture<FullTimeFormatComponent>;
+describe('ViceFormatComponent', () => {
+  let component: ViceFormatComponent;
+  let fixture: ComponentFixture<ViceFormatComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FullTimeFormatComponent ]
+      declarations: [ ViceFormatComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FullTimeFormatComponent);
+    fixture = TestBed.createComponent(ViceFormatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

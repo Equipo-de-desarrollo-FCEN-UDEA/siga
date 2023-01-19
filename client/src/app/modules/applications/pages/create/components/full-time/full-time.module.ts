@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FullTimeRoutingModule } from './full-time-routing.module';
-import { FullTimeFormatComponent } from './pages/viceformat/viceformat.component';
+import { ViceFormatComponent } from './pages/viceformat/viceformat.component';
 import { FullTimeComponent } from './full-time.component';
 import { InstitutionalDevelopmentPlanComponent } from './pages/institutional-development-plan/institutional-development-plan.component';
 import { StartLetterComponent } from './pages/start-letter/start-letter.component';
@@ -18,7 +18,7 @@ import { SharedModule } from '@shared/shared.module';
     StartLetterComponent,
     WorkplanComponent,
     InstitutionalDevelopmentPlanComponent,
-    FullTimeFormatComponent,
+    ViceFormatComponent,
     StatusComponent,
   ],
   imports: [
