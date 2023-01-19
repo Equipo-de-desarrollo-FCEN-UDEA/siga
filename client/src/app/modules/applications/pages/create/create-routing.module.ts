@@ -12,11 +12,6 @@ const routes: Routes = [
     path: '', 
     component: CreateComponent,
     children: [
-      {
-        path: 'dedicacion', 
-        loadChildren: () => import('./components/full-time/full-time.module')
-        .then(m => m.FullTimeModule) 
-      },
       //permiso
       {
         path: 'permiso',
@@ -34,7 +29,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'plan-de-trabajo',
+        path: 'plan-de-trabajo/:id',
         component: WorkplanComponent
       },
       {

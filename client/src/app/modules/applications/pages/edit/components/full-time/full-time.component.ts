@@ -19,6 +19,7 @@ export class FullTimeComponent implements OnInit {
   public submitted: boolean = false;
   public application: FulltimeResponse | null = null;
 
+
   // Files
   public documents: file_path[] = [];
 
@@ -36,6 +37,7 @@ export class FullTimeComponent implements OnInit {
 
       this.fullTimeSvc.getFullTime(this.id).subscribe((data) => {
         this.application = data;
+        console.log(data)
       });
     });
   }
@@ -51,6 +53,7 @@ export class FullTimeComponent implements OnInit {
       return true;
     }
   }
+
 
   // --------------------------------------
   // ------------ SUBMIT FORM  ------------

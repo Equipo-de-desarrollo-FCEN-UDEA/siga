@@ -11,6 +11,7 @@ import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
 //services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { LoaderService } from '@services/loader.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -21,76 +22,64 @@ import { LoaderService } from '@services/loader.service';
 export class WorkplanComponent implements OnInit {
 
   public f_workplan = this.fb.group({
-    semester: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
-    register: ['', [Validators.required]],
-    part_time: [NaN, [Validators.required]],
-    general_remarks: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+    period: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
+    registro: ['', [Validators.required]],
+    partial_time: [NaN, [Validators.required]],
+    //general_remarks: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
     teaching_activities: this.fb.array([this.teachingActivitiesGroup()], [Validators.required]),
     investigation_activities: this.fb.array([this.investigationActivitiesGroup()], [Validators.required]),
     extension_activities: this.fb.array([this.extensionActivitiesGroup()], [Validators.required]),
     academic_admin_activities: this.fb.array([this.academicAdministrationGroup()], [Validators.required]),
     other_activities:  this.fb.array([this.otherActivitiesGroup()], [Validators.required]),
-    monitoring_activities: this.fb.array([this.monitoringActivitiesGroup()], [Validators.required]),
-    work_day: this.fb.array([this.workDayGroup()], [Validators.required]),
+    working_week: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
 
+  private id: number = 0;
+
   public semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-
-  @Input() id_full_time:number = 0;
-
   public work_plan:any;
+  public error: any = '';
+  public application: FulltimeResponse | null = null;
 
+  @Input() id_full_time:number = 7;
   @Input() editable: any;
+
+
 
   // ------------------------------
   // --------- GETTERS ------------
   // ------------------------------
 
-  get teachingActivitiesArr(): FormArray {
-    return this.f_workplan.get('teaching_activities') as FormArray;
-  }
+  get teachingActivitiesArr(): FormArray { return this.f_workplan.get('teaching_activities') as FormArray; }
 
-  get investigationActivitiesArr(): FormArray {
-    return this.f_workplan.get('investigation_activities') as FormArray;
-  }
+  get investigationActivitiesArr(): FormArray { return this.f_workplan.get('investigation_activities') as FormArray; }
 
-  get extensionActivitiesArr(): FormArray {
-    return this.f_workplan.get('extension_activities') as FormArray;
-  }
+  get extensionActivitiesArr(): FormArray { return this.f_workplan.get('extension_activities') as FormArray; }
 
-  get academicAdministrationArr(): FormArray {
-    return this.f_workplan.get('academic_admin_activities') as FormArray;
-  }
+  get academicAdministrationArr(): FormArray { return this.f_workplan.get('academic_admin_activities') as FormArray; }
 
-  get otherActivitiesArr(): FormArray {
-    return this.f_workplan.get('other_activities') as FormArray;
-  }
+  get otherActivitiesArr(): FormArray { return this.f_workplan.get('other_activities') as FormArray;}
 
-  get monitoringActivitiesArr(): FormArray {
-    return this.f_workplan.get('monitoring_activities') as FormArray;
-  }
-
-  get workDayArr(): FormArray {
-    return this.f_workplan.get('work_day') as FormArray;
-  }
+  get workDayArr(): FormArray { return this.f_workplan.get('working_week') as FormArray; }
 
   constructor(
     private fb: FormBuilder,
     private fullTimeSvc: FullTimeService,
-    private loaderSvc: LoaderService
+    private loaderSvc: LoaderService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
 
-    for (let i = 0; i < 4; i++) { this.workDayArr.push(this.workDayGroup()); }
+    // this.fullTimeSvc.getFullTime(this.id).subscribe((data) => {
+    //   this.application = data;
+    //   console.log(data)
+    // });
 
-    this.workDayArr.push(this.fb.group({
-      morning_1: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      morning_2: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      afternoon_1: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      afternoon_2: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-    }));
    }
 
   ngOnInit(): void {
+
+    if(this.editable) {
     this.fullTimeSvc.getFullTime(this.id_full_time).subscribe({
       next: (res: any) => {
         this.work_plan = res.work_plan;
@@ -98,10 +87,10 @@ export class WorkplanComponent implements OnInit {
         if(this.work_plan) {
           this.id_full_time = this.work_plan.id;
           this.f_workplan.patchValue({
-            semester: this.work_plan.semester,
-            register: this.work_plan.register,
-            part_time: this.work_plan.part_time,
-            general_remarks: this.work_plan.general_remarks
+            period: this.work_plan.period,
+            registro: this.work_plan.registro,
+            partial_time: this.work_plan.partial_time,
+            //general_remarks: this.work_plan.general_remarks
           });
 
           this.patchTeachingActivities(this.work_plan.teaching_activities);
@@ -109,29 +98,48 @@ export class WorkplanComponent implements OnInit {
           this.patchExtensionActivities(this.work_plan.extension_activities);
           this.patchAcademicAdministration(this.work_plan.academic_admin_activities);
           this.patchOtherActivities(this.work_plan.other_activities);
-          this.patchMonitoringActivities(this.work_plan.monitoring_activities);
           this.patchWorkDay(this.work_plan.work_day);
+        }
+      }, error: (err) => {
+        if (err.status === 404 || err.status === 401) {
+          this.error = err.error.msg; // mensaje desde el back
+          this.router.navigate(['/home'])
         }
       }
     });
+    }
 
 
   }
+
+  
 
   // ------------------------------
   // --------- ENVIAR -------------
   // ------------------------------
 
-  onSubmit() {
-    const WORK_PLAN: WorkPlan = {
-      ... this.f_workplan.value as unknown as WorkPlan,
-          
+  submit() {
+
+    let work_plan: any = {
+      ... this.f_workplan.value as any,
     }
-
+    work_plan.working_week = work_plan.working_week[0]
+    console.log(work_plan)
     this.loaderSvc.show();
-
-  
-
+    this.fullTimeSvc.putWorkPlan(work_plan, this.id_full_time).subscribe(
+      (res:any) => {
+        if (res) {
+          Swal.fire(
+            {
+              title: 'El Plan de trabajo se ha guardado con éxito',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            }
+          )
+          this.loaderSvc.hide();
+        }
+      }
+    );
   }
 
 
@@ -149,16 +157,18 @@ export class WorkplanComponent implements OnInit {
         group: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(1)]],
         name: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(1)]],
       }),
-      number_students: [NaN, [Validators.required]],
+      student_quantity: [NaN, [Validators.required]],
       level: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(1)]],
-      hours_week: this.fb.group({
-        T: [NaN, [Validators.required]],
-        TP: [NaN, [Validators.required]],
-        P: [NaN, [Validators.required]],
+      week_hours: this.fb.group({
+        t: [[Validators.required]],
+        tp: [[Validators.required]],
+        p: [[Validators.required]],
       }),
-      total_hours: this.fb.group({
-        weekly: [NaN, [Validators.required]],
-        biannual: [NaN, [Validators.required]],
+      total_hours: [NaN, [Validators.required]],
+      activity_tracking: this.fb.group({
+        date_1: [new Date(), [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        date_2: [new Date(), [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        other: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
       })
     });
   }
@@ -188,10 +198,15 @@ export class WorkplanComponent implements OnInit {
     return this.fb.group({
       code: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
       project_identification: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      responsibility: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      responsibilities: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
       cost: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      support_certificate: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      semester_hours: [NaN, [Validators.required]],
+      supporting_document: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      period_hours: [NaN, [Validators.required]],
+      activity_tracking: this.fb.group({
+        date_1: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        date_2: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        other: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      })
     });
   }
 
@@ -222,8 +237,13 @@ export class WorkplanComponent implements OnInit {
       activity_identification: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
       responsibility: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
       cost:  ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      hours_week: [NaN, [Validators.required]],
-      semester_hours: [NaN, [Validators.required]],
+      week_hours: [NaN, [Validators.required]],
+      period_hours: [NaN, [Validators.required]],
+      activity_tracking: this.fb.group({
+        date_1: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        date_2: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        other: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      })
     });
   }
 
@@ -251,10 +271,15 @@ export class WorkplanComponent implements OnInit {
 
   academicAdministrationGroup() {
     return this.fb.group({
-      charge: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      semester_hours: [NaN, [Validators.required]],
-      other_activities: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      other_hours_semester: [NaN, [Validators.required]],
+      position: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      week_hours: [NaN, [Validators.required]],
+      activities: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      period_hours: [NaN, [Validators.required]],
+      activity_tracking:this.fb.group({
+        date_1: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        date_2: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        other: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      })
     });
   }
 
@@ -282,8 +307,13 @@ export class WorkplanComponent implements OnInit {
 
   otherActivitiesGroup() {
     return this.fb.group({
-      activity_identification:  ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      semester_hours: [NaN, [Validators.required]],
+      activity:  ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      period_hours: [NaN, [Validators.required]],
+      activity_tracking: this.fb.group({
+        date_1: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        date_2: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+        other: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
+      })
     });
   }
 
@@ -301,39 +331,6 @@ export class WorkplanComponent implements OnInit {
   }
 
 
-
-
-  // --------------------------------
-  // -- SEGUIMIENTO ACTIVIDADES  ----
-  // --------------------------------
-
-  // --------- GROUPS -----------
-
-  monitoringActivitiesGroup() {
-    return this.fb.group({
-      activity_identification: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      date_1: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      date_2: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-      others: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
-    });
-  }
-
-  // --------- ADD CARDS -----------
-
-  addMonitoringActivities() { this.monitoringActivitiesArr.push(this.monitoringActivitiesGroup()); }
-
-  // --------- PATCHS -----------
-
-  patchMonitoringActivities(activity: any) {
-    for (let i = 0; i < activity.length -1 ; i++) {
-      this.addMonitoringActivities();
-    }
-    this.monitoringActivitiesArr.patchValue(activity);
-  }
-
-
-
-
   // --------------------------------
   // ----- JORNADA DE TRABAJO  ------
   // --------------------------------
@@ -342,24 +339,59 @@ export class WorkplanComponent implements OnInit {
 
   workDayGroup() {
     return this.fb.group({
-      morning_1: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      morning_2: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      afternoon_1: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
-      afternoon_2: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+
+      monday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
+      tuesday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
+      wednesday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
+      
+      thursday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
+      friday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
+      saturday: this.fb.group({
+        morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_start: ['13:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+        afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      }),
+
     });
     
   }
-
-  // --------- ADD CARDS -----------
-
-  addWorkDay() { this.workDayArr.push(this.workDayGroup()); }
 
   // --------- PATCHS -----------
 
   patchWorkDay(activity: any) { this.workDayArr.patchValue(activity); }
 
   
-
   // ------------------------------
   // -------- REMOVE CARDS --------
   // ------------------------------

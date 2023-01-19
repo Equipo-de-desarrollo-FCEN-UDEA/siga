@@ -1,6 +1,6 @@
 export interface WorkPlan {
     period: string;
-    register: string;
+    registro: string;
     partial_time: number;
     teaching_activities: TeachingActivity[];
     investigation_activities: InvestigationActivity[];
@@ -8,6 +8,7 @@ export interface WorkPlan {
     academic_admin_activities: AcademicAdminActivity[];
     other_activities: OtherActivity[];
     working_week: WorkingWeek;
+    full_time_id:  number | string;
 }
 
 export interface AcademicAdminActivity {
