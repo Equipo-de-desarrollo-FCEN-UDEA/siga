@@ -44,7 +44,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     #Identificador de actividades.
     ids_activities = []
 
-    # Total de horas por actividad.
+    # Total de horas por actividad (Teaching, Research, Extension, Admin, Other).
     total_hours = [0, 0, 0, 0, 0]
 
     # Sec_2
@@ -53,9 +53,12 @@ def fill_work_plan_format(user: User, full_time: FullTime):
         if act['level'] == 'pregrado':
             level_pre = 'X'
             level_pos = ''
-        else:
+        elif act['level'] == 'posgrado':
             level_pre = ''
             level_pos = 'X'
+        else:
+            level_pre = ''
+            level_pos = ''
 
         teaching_activities.append({
             "code_t": act['activity_identification']['code'],
@@ -67,8 +70,8 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "hours_t": str(act['week_hours']['t']),
             "hours_tp": str(act['week_hours']['tp']),
             "hours_p": str(act['week_hours']['p']),
-            "total_week_hours": str(act['week_hours']['t']+act['week_hours']['tp']+act['week_hours']['p']),
-            "total_sem_hours": str(16*(act['week_hours']['t']+act['week_hours']['tp']+act['week_hours']['p']))
+            "total_week_hours": str(act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']),
+            "total_sem_hours": str(16 * (act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']))
         })
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append(act['activity_identification']['code'])
@@ -110,9 +113,9 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     for act in full_time_dict['full_time']['work_plan']['academic_admin_activities']:
         admin_activities.append({
             "position": act['position'],
-            "week_hours_a": act['week_hours'],
+            "week_hours_a": str(act['week_hours']),
             "activities": act['activities'],
-            "period_hours_a": act['period_hours']
+            "period_hours_a": str(act['period_hours'])
         })
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append("")
@@ -200,8 +203,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                     coord = coord+str(index+i)
                     target[coord] = content[i][key]
                 else:
-                    coord = ':'.join([l+str(index+i)
-                                     for l in coord.split(':')])
+                    coord = ':'.join([l+str(index+i) for l in coord.split(':')])
                     target.merge_cells(coord)
                     target[coord.split(':')[0]] = content[i][key]
 
