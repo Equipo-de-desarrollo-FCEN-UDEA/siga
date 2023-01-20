@@ -1,17 +1,27 @@
-import { DevelopmentPlan } from '@interfaces/application/full_time/development-plan';
-
 export interface Objetivo {
-    descripcion: string;
-    acciones: string[];
-    indicadores?: string[];
+    id: number;
+    description: string;
+    actions: Action[];
+    indicators?: Indicator[];
+}
+
+export interface Action {
+  id: number;
+  description: string;
+}
+
+export interface Indicator {
+  id: number;
+  description: string;
 }
 
 export interface Tema {
-    titulo: string;
-    subtitulo: string;
-    objetivos?: Objetivo[];
+    id: number;
+    title: string;
+    subtitle: string;
+    objectives?: Objetivo[];
 }
-let developmentplan= {topics:[{
+export let developmentplan= {temas:[{
     "id": 0,
     "title": "Formación integral de ciudadanos con la articulación y el desarrollo de las funciones misionales, desde los territorios y en conexión con el mundo",
     "subtitle": "Una universidad humanista, de investigación e innovadora, conectada con el mundo y comprometida con la transformación de sí misma y de la sociedad.",
@@ -1051,7 +1061,7 @@ let developmentplan= {topics:[{
     "objectives": [
       {
         "id": 25,
-        "description": "Consolidar una cultura y una ética universitarias basadas en el respeto por el ambiente y la biodiversidad en el marco de los objectives de Desarrollo Sostenible.",
+        "description": "Consolidar una cultura y una ética universitarias basadas en el respeto por el ambiente y la biodiversidad en el marco de los objetivos de Desarrollo Sostenible.",
         "actions": [
           {
             "id": 112,

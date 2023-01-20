@@ -1,4 +1,4 @@
-<div class="container mt-2 card shadow bg-white rounded p-5">
+
     <form class="need-validation" novalidate [formGroup]="form" (ngSubmit)="submit()">
         <h2 class="formTitle text-center m-2 mb-4">
             FORMATO DE EVALUACIÓN DE PROPUESTA O PROYECTO DE DEDICACIÓN EXCLUSIVA
@@ -9,10 +9,13 @@
         <div class="row">
             <div class="col-md-6 col-xs-12 col-sm-12">
                 <div class="formfloatig">
-                    <input id="requiredTime" formControlName="time" class="form-control" type="number"
+                    <input id="requiredTime" 
+                        formControlName="time" 
+                        class="form-control" type="number"
                         placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('time') }" required />
-                    <label for="requiredTime" class="formLabel">Tiempo solicitado (meses)<span
-                            style="color: red">*</span>
+                    <label for="requiredTime" 
+                        class="formLabel">Tiempo solicitado (meses)<span
+                         style="color: red">*</span>
                     </label>
                 </div>
             </div>
@@ -126,5 +129,3 @@
             </button>
         </div> -->
     </form>
-</div>
-

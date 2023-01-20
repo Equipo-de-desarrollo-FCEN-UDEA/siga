@@ -9,6 +9,7 @@ import { StartLetterComponent } from './pages/start-letter/start-letter.componen
 import { StatusComponent } from './pages/status/status.component';
 import { WorkplanComponent } from './pages/workplan/workplan.component';
 import { SharedModule } from '@shared/shared.module';
+import { DevelopmentPlanComponent } from './pages/viceformat/development-plan/development-plan.component';
 
 
 
@@ -20,6 +21,7 @@ import { SharedModule } from '@shared/shared.module';
     InstitutionalDevelopmentPlanComponent,
     ViceFormatComponent,
     StatusComponent,
+    DevelopmentPlanComponent,
   ],
   imports: [
     CommonModule,
@@ -28,3 +30,4 @@ import { SharedModule } from '@shared/shared.module';
   ]
 })
 export class FullTimeModule { }
+

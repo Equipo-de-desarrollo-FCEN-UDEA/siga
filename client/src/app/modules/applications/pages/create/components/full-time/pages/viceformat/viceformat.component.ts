@@ -4,7 +4,7 @@ import { ViceFormat, DevActionPlan } from '@interfaces/applications/full_time/vi
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ApplicationTypesService } from '@services/application-types.service';
-//import { DevelopmentPlanComponent } from  './development-plan/development-plan.component'
+import { DevelopmentPlanComponent } from  './development-plan/development-plan.component'
 
 
 import Swal from 'sweetalert2';
@@ -59,13 +59,12 @@ export class ViceFormatComponent implements OnInit {
   ) { }
 
   public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required]],
     time: [NaN, [Validators.required, Validators.min(1), Validators.max(12)]],
     field: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
     description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
     goals: this.fb.array([this.goalsgroup()], [Validators.required]),
     products: this.fb.array([this.productsgroup()], [Validators.required]),
-    //dev_action_plan: this.fb.array([this.productsgroup()], [Validators.required]),
+    dev_action_plan: [this.developmentplangroup(),Validators.required],
    
   })
   ngOnInit(): void {
@@ -90,8 +89,40 @@ export class ViceFormatComponent implements OnInit {
 
 
   open() {
-    //const modalRef = this.modalSvc.open(DevelopmentPlan, { size: 'xl' })
-    
+    const modalRef = this.modalSvc.open(DevelopmentPlanComponent, { size: 'xl' })
+    modalRef.result.then(
+      (res: any) => {
+        const steps = res.steps;
+        // for (let i = 0; i < steps[3].indicator.length; i++)  {
+        //   this.addInputDevelopmentplan()
+        // }
+        // const object = {
+        //   tema_estrategico: [{tema:steps[0].temas}],
+        //   objetivo_estrategico_desarrollo: [{objEstrategico:steps[1].objetivo}],
+        //   objetivo_estrategico_institucional: [{objetivo:steps[1].objetivo}],
+        //   acciones_estrategicas: [{accion:steps[2].accion}],
+        //   indicador: steps[3].indicador
+        // }
+        const object = {
+            tema_estrategico: [{tema:steps[0].temas}],
+            objetivo_estrategico_desarrollo: [{objEstrategico:steps[1].objetivo}],
+            objetivo_estrategico_institucional: [{objetivo:steps[1].objetivo}],
+            acciones_estrategicas: [{accion:steps[2].accion}],
+            indicador: steps[3].indicador
+          }
+          console.log(object);
+        //this.fBasicInfo.patchValue(object)
+        //console.log(this.fBasicInfo.value)
+      }
+    ).catch(
+      (err:any) => {
+        Swal.fire({
+          icon: 'error',
+          text: 'Algo ocurrió mal, vuelve a seleccional tu plan de desarrollo institucional',
+          confirmButtonText: 'Aceptar'
+        })
+      }
+    );
   }
 
 
@@ -137,6 +168,26 @@ export class ViceFormatComponent implements OnInit {
     }
     this.productsArr.patchValue(productos);
   }
+
+    // Development plans
+    developmentplangroup() {
+      return this.fb.group({
+        title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        subtitle: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+        objectives: ['', [Validators.required]]
+    }
+      );
+    }
+  
+    get developmentplanArr(): FormArray {
+      return this.form.get('dev_action_plan') as FormArray;
+    }
+  
+    addInputDevelopmentplan() {
+      this.developmentplanArr.push(this.developmentplangroup());
+    }
+  
+  
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }

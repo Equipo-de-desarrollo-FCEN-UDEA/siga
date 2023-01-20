@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PlanTrabajo } from '@interfaces/dedicaciones/plantrabajo';
+import { DevelopmentPlan } from '@interfaces/applications/full_time/development-plan';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Tema, Objetivo } from '@shared/data/development-plan';
-import { prefix } from '@shared/data/ruta-api';
+import { Tema, Objetivo, developmentplan } from '@shared/data/development-plan';
+//import { prefix } from '@shared/data/ruta-api';
 import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
@@ -16,8 +16,9 @@ import { Observable, Subject, switchMap } from 'rxjs';
 
 export class DevelopmentPlanComponent implements OnInit {
 
-  @Input() planTrabajo!: PlanTrabajo;
+  @Input() planTrabajo!: DevelopmentPlan;
 
+  temas: Tema[] = developmentplan.temas;
 
   FormPlan: FormGroup = this.fb.group({});
 
@@ -38,7 +39,7 @@ export class DevelopmentPlanComponent implements OnInit {
 
   indicadores: any[] = [];
 
-  logosurl = prefix + 'logos/';
+//  logosurl = prefix + 'logos/';
 
   objetivos$: Subject<any[] | undefined> = new Subject();
   acciones$: Subject<any[] | undefined> = new Subject();
@@ -85,7 +86,7 @@ export class DevelopmentPlanComponent implements OnInit {
     }
     let temas = ''
     for (let i = 0; i < this.selectedTemas.length; i++) {
-      temas += ' ' + this.selectedTemas[i].titulo 
+      temas += ' ' + this.selectedTemas[i].title 
     }
     this.getSteps.patchValue([{temas: temas}])
   }
@@ -102,7 +103,7 @@ export class DevelopmentPlanComponent implements OnInit {
     
     let objetivos = ''
     for (let i = 0; i < this.selectedObjetivos.length; i++) {
-      objetivos+= ' ' + this.selectedObjetivos[i].descripcion;
+      objetivos+= ' ' + this.selectedObjetivos[i].description;
     }
     this.getSteps.patchValue([null, {objetivo: objetivos}]);
   }

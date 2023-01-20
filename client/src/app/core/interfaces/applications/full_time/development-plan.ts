@@ -25,6 +25,6 @@ export interface indicador {
     descripcion: string;
 }
 
-export interface developmentplan {
-    temas: tema[]
+export interface DevelopmentPlan {
+    topics: tema[]
 }
