@@ -1,21 +1,18 @@
 
 <!-- JUSTIFICATION -->
-<form (ngSubmit)="submit()">
-  <div class="row regular-row mt-4 align-items-baseline">
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row regular-row mt-4">
     <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación *</div>
-    <div class="col-sm-12 col-xs-12 col-md-8">
-      <div class="formfloatig">
+    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+      <div class="form-group">
         <textarea
-          id="floatingjustificacion"
+          id="floatingjustification"
           formControlName="body"
           class="form-control"
-          type="justificacion"
+          type="body"
           placeholder=" "
-          [ngClass]="{
-            'is-invalid':
-              (submitted && f['body'].errors) ||
-              isInvalidForm('body')
-          }"
+          [ngClass]="{ 'is-invalid': isInvalidForm('body') }"
+          required
           rows="5"
         ></textarea>
         <!-- errors body -->
