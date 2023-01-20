@@ -82,7 +82,7 @@ def init_db() -> None:
 
     @event.listens_for(base.Holiday.__table__, 'after_create')
     def init_holiday(table, conn, *args, **kwargs):
-        from .init_data import init_holiday
+        from .init_data.holiday import init_holiday
         for holiday in init_holiday:
             db_obj = dict(holiday)
             conn.execute(table.insert().values(**db_obj))

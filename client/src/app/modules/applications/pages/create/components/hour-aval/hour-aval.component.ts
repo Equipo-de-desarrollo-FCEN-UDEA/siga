@@ -13,7 +13,7 @@ import { UserService } from '@services/user.service';
 export class HourAvalComponent {
   files: any[] = [];
 
-  objectives: string[] = [];
+  products: string[] = [];
 
   submitted = false;
 
@@ -32,7 +32,7 @@ export class HourAvalComponent {
       description: ['', [Validators.required, Validators.min(30), Validators.max(500)]],
       entity: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
       role: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
-      objectives: this.formBuilder.array([this.objectivesGroup()], [Validators.required])
+      products: this.formBuilder.array([this.productsGroup()], [Validators.required])
     })
   }
 
@@ -48,18 +48,19 @@ export class HourAvalComponent {
 
   // Objetives array
 
-  objectivesGroup() {
+  productsGroup() {
     return this.formBuilder.group({
-      objectives: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
+      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(300)]]
     });
   }
 
-  get objectivesArr(): FormArray {
-    return this.form.get('objectives') as FormArray;
+  get productsArr(): FormArray {
+    return this.form.get('products') as FormArray;
   }
 
-  addInputObjectives() {
-    this.objectivesArr.push(this.objectivesGroup());
+  addInputproducts() {
+    this.productsArr.push(this.productsGroup());
   }
 
 

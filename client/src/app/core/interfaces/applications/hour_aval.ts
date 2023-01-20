@@ -8,7 +8,7 @@ export interface HourAvalBase {
     entity: string;
     role: string;
     another_applicants: Applicant[] | null;
-    objectives: string[];
+    products: Product[];
     application_sub_type_id: number;
 }
 
@@ -17,7 +17,7 @@ export interface HourAvalCreate extends HourAvalBase {
 }
 
 export interface HourAvalUpdate extends HourAvalBase {
-    
+
 }
 
 export interface Applicant {
@@ -25,6 +25,12 @@ export interface Applicant {
     acepted: boolean | null;
     role: string;
 }
+
+export interface Product {
+    name: string;
+    description: string;
+}
+
 
 export interface HourAvalInDB extends HourAvalBase {
     id: string;

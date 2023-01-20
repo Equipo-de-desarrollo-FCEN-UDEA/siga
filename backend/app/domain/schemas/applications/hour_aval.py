@@ -12,6 +12,11 @@ class Applicant(BaseModel):
     acepted: bool | None = None
     role: str
 
+
+class Product(BaseModel):
+    name: str = Field(min_length=10, max_length=50)
+    description: str = Field(min_length=10, max_length=300)
+
 # --------------
 # ----Model-----
 # --------------
@@ -25,7 +30,7 @@ class HourAvalBase(BaseModel):
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
     another_applicants: list[Applicant] | None
-    objectives: list[str]
+    products: list[Product]
 
 
 class HourAvalCreate(HourAvalBase):

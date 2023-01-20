@@ -2,10 +2,16 @@ from typing import Any
 
 from odmantic import Model, EmbeddedModel
 
+
 class Applicant(EmbeddedModel):
     email: str
     acepted: bool | None = None
     role: str
+
+
+class Product(EmbeddedModel):
+    name: str
+    description: str
 
 
 class HourAval(Model):
@@ -17,4 +23,4 @@ class HourAval(Model):
     role: str
     another_applicants: list[Applicant]
     letter_path: str | None
-    objectives: list[str]
+    products: list[Product]
