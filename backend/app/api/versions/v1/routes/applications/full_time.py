@@ -217,7 +217,8 @@ async def update_letter(
         for document in full_time.documents:
             if document['name'] == 'carta-inicio.pdf':
                 try:
-                    delete = aws.s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=document['path'])
+                    #delete = aws.s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=document['path'])
+                    pass
                 except Exception as e:
                     pass
         path = await documents.initial_letter_generation(current_user, letter.body)
@@ -266,6 +267,7 @@ async def update_work_plan(
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.work_plan(engine,
                                                    id=mongo_id, work_plan=work_plan)
+        documents.fill_work_plan_format(current_user, full_time)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time

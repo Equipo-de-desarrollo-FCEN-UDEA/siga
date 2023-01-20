@@ -10,7 +10,7 @@ from app.domain.models import User, FullTime
 from app.domain.schemas import UserResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
-from app.core.celery_worker import celery
+from app.core.celery_worker import celery_app
 from app.services import aws
 
 
@@ -75,7 +75,7 @@ def fill_vice_document(user: User, full_time: FullTime):
     return None
 
 
-@celery.task
+@celery_app.task
 def generate_vice_format_to_aws(user: dict, full_time: dict, path: str):
 
     cells = open(templates_dir + '/cells_vice.json')
