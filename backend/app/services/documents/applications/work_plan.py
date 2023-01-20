@@ -184,7 +184,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
             target.merge_cells(cells['Cara.1'][key])
             target[cells['Cara.1'][key].split(':')[0]] = user[key]
 
-    for key in full_time.keys()[-1:]:
+    for key in list(full_time.keys())[:-1]:
         # Si no se debe hacer merge de las celdas.
         if cells['Cara.1'][key].find(':') < 0:
             target[cells['Cara.1'][key]] = full_time[key]
@@ -193,7 +193,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
             target.merge_cells(cells['Cara.1'][key])
             target[cells['Cara.1'][key].split(':')[0]] = full_time[key]
 
-    for activity in activities.keys()[:3]:
+    for activity in list(activities.keys())[:3]:
         index = cells['Cara.1']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
@@ -207,7 +207,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                     target.merge_cells(coord)
                     target[coord.split(':')[0]] = content[i][key]
 
-    for key in hours_semester.keys()[:3]:
+    for key in list(hours_semester.keys())[:3]:
         # Si no se debe hacer merge de las celdas.
         if cells['Cara.1']['total_hours'][key].find(':') < 0:
             target[cells['Cara.1']['total_hours'][key]] = hours_semester[key]
@@ -218,7 +218,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
 
     target = wb['Cara.2']
 
-    for activity in activities.keys()[-2:]:
+    for activity in list(activities.keys())[-2:]:
         index = cells['Cara.2']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
@@ -252,14 +252,14 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                 target.merge_cells(coord)
                 target[coord.split(':')[0]] = activities_track[i][key]
 
-    for key in hours_semester.keys()[-2:]:
+    for key in list(hours_semester.keys())[-2:]:
         if cells['Cara.2']['total_hours'][key].find(':') < 0:
             target[cells['Cara.2']['total_hours'][key]] = hours_semester[key]
         else:
             target.merge_cells(cells['Cara.2']['total_hours'][key])
             target[cells['Cara.2']['total_hours'][key].split(':')[0]] = hours_semester[key]
 
-    for daypart, rango in day:
+    for daypart, rango in day.items():
         target[cells['Cara.2'][daypart]] = rango
     
     target.merge_cells(cells['Cara.2']['observations'])
