@@ -19,7 +19,6 @@ export class FullTimeComponent implements OnInit {
   public submitted: boolean = false;
   public application: FulltimeResponse | null = null;
 
-
   // Files
   public documents: file_path[] = [];
 
@@ -37,7 +36,6 @@ export class FullTimeComponent implements OnInit {
 
       this.fullTimeSvc.getFullTime(this.id).subscribe((data) => {
         this.application = data;
-        console.log(data)
       });
     });
   }
@@ -54,6 +52,52 @@ export class FullTimeComponent implements OnInit {
     }
   }
 
+  //------ NAVEGATE FUNTIONS -------
+
+  //plan de trabajo
+  navegateWorkplan() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/plan-de-trabajo/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
+
+  //Formato vice
+  navegateViceFormat() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/formato-vicerrectoria/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
+
+  // carta inicio
+  navegateLetter() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/carta-inicio/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
 
   // --------------------------------------
   // ------------ SUBMIT FORM  ------------
@@ -61,8 +105,8 @@ export class FullTimeComponent implements OnInit {
   submit() {
     this.submitted = true;
 
-    if(this.isInvalidForm()){
-      return
+    if (this.isInvalidForm()) {
+      return;
     }
 
     let fullTime = this.fullTimeSvc.putFullTime(this.id);

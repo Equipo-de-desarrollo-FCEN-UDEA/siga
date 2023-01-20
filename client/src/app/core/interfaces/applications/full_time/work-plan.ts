@@ -8,7 +8,6 @@ export interface WorkPlan {
     academic_admin_activities: AcademicAdminActivity[];
     other_activities: OtherActivity[];
     working_week: WorkingWeek;
-    full_time_id:  number | string;
 }
 
 export interface AcademicAdminActivity {
