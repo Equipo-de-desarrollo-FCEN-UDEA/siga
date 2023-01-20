@@ -89,13 +89,13 @@ export class ViceFormatComponent implements OnInit {
 
 
   open() {
-    const modalRef = this.modalSvc.open(DevelopmentPlanComponent, { size: 'xl' })
+    const modalRef = this.modalSvc.open(DevelopmentPlanComponent, { size: 'xl' });
     modalRef.result.then(
       (res: any) => {
         const steps = res.steps;
-        // for (let i = 0; i < steps[3].indicator.length; i++)  {
-        //   this.addInputDevelopmentplan()
-        // }
+        //for (let i = 0; i < steps[3].indicator.length; i++)  {
+//          this.addInputIndicador()
+  //      }
         // const object = {
         //   tema_estrategico: [{tema:steps[0].temas}],
         //   objetivo_estrategico_desarrollo: [{objEstrategico:steps[1].objetivo}],
@@ -103,14 +103,19 @@ export class ViceFormatComponent implements OnInit {
         //   acciones_estrategicas: [{accion:steps[2].accion}],
         //   indicador: steps[3].indicador
         // }
-        const object = {
-            tema_estrategico: [{tema:steps[0].temas}],
-            objetivo_estrategico_desarrollo: [{objEstrategico:steps[1].objetivo}],
-            objetivo_estrategico_institucional: [{objetivo:steps[1].objetivo}],
-            acciones_estrategicas: [{accion:steps[2].accion}],
-            indicador: steps[3].indicador
+
+        let objectiv={
+          description: [steps[1].objetivo],
+          actions: [steps[2].accion],
+          indicators: [steps[3].indicador]
+        }
+
+        let devplan = {
+            title: [{tema:steps[0].temas.titulo}],
+            subtitle: [{tema:steps[0].temas.subtitulo}],
+            objectives: objectiv
           }
-          console.log(object);
+        console.log('Indicadores: '+steps[3].indicador.length)
         //this.fBasicInfo.patchValue(object)
         //console.log(this.fBasicInfo.value)
       }
@@ -175,16 +180,29 @@ export class ViceFormatComponent implements OnInit {
         title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         subtitle: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         objectives: ['', [Validators.required]]
+        }
+      );
     }
+
+    objectivesgroup(){
+      return this.fb.group({
+        indicador: this.fb.array([this.indicadorgroup()])
+      })
+    }
+    //Indicator
+    indicadorgroup() {
+      return this.fb.group({
+        indicator: [''],
+        }
       );
     }
   
-    get developmentplanArr(): FormArray {
+    get indicadorArr(): FormArray {
       return this.form.get('dev_action_plan') as FormArray;
     }
   
-    addInputDevelopmentplan() {
-      this.developmentplanArr.push(this.developmentplangroup());
+    addInputIndicador() {
+      this.indicadorArr.push(this.indicadorgroup());
     }
   
   
