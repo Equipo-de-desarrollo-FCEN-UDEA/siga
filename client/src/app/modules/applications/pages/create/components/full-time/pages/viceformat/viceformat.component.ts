@@ -41,7 +41,6 @@ export class ViceFormatComponent implements OnInit {
  
 
   public id: number = 0;
-  //isLoading: Subject<boolean> = this.fulltimesvc.isLoading;
   public applicationType$=this.applicationTypeSvc.getApplicationType(3);
   
   get f() { return this.form.controls; }
@@ -64,9 +63,23 @@ export class ViceFormatComponent implements OnInit {
     description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
     goals: this.fb.array([this.goalsgroup()], [Validators.required]),
     products: this.fb.array([this.productsgroup()], [Validators.required]),
-    dev_action_plan: [this.developmentplangroup(),Validators.required],
+    //dev_action_plan: this.fb.array([this.developmentplangroup(),Validators.required])
    
-  })
+  });
+
+  public form_dev_plan = this.fb.group({
+    title: ['', [Validators.minLength(10), Validators.maxLength(255)]],
+    subtitle: ['', [Validators.minLength(10), Validators.maxLength(255)]],
+    objectives: this.fb.array([this.objectivesgroup()], [Validators.required])
+   
+  });
+
+  public form_objective = this.fb.group({
+    description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
+    actions: this.fb.array([this.actiongroup()], [Validators.required]),
+    indicators: this.fb.array([this.indicatorgroup()], [Validators.required])
+   
+  });
   ngOnInit(): void {
        this.dev_action_plan_first_take++;
        this.route.parent?.params.subscribe(
@@ -78,7 +91,6 @@ export class ViceFormatComponent implements OnInit {
 
   submit(){
     this.submitted = true;
-
     
     if (this.form.invalid) {
       return;
@@ -94,7 +106,7 @@ export class ViceFormatComponent implements OnInit {
       (res: any) => {
         const steps = res.steps;
         //for (let i = 0; i < steps[3].indicator.length; i++)  {
-//          this.addInputIndicador()
+//          this.addInputIndicator()
   //      }
         // const object = {
         //   tema_estrategico: [{tema:steps[0].temas}],
@@ -105,18 +117,19 @@ export class ViceFormatComponent implements OnInit {
         // }
 
         let objectiv={
-          description: [steps[1].objetivo],
+          description: steps[1].objetivo,
           actions: [steps[2].accion],
           indicators: [steps[3].indicador]
         }
 
         let devplan = {
             title: [{tema:steps[0].temas.titulo}],
-            subtitle: [{tema:steps[0].temas.subtitulo}],
+            subtitle: {tema:steps[0].temas.subtitulo},
             objectives: objectiv
           }
-        console.log('Indicadores: '+steps[3].indicador.length)
-        //this.fBasicInfo.patchValue(object)
+        console.log('Indicadores: '+steps[3].indicador.length);
+        this.form_objective.patchValue(objectiv);
+        this.form_dev_plan.patchValue(devplan);
         //console.log(this.fBasicInfo.value)
       }
     ).catch(
@@ -134,7 +147,7 @@ export class ViceFormatComponent implements OnInit {
   //Goals
   goalsgroup(){
     return this.fb.group({
-      goal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      goals: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
   get goalsArr(): FormArray {
@@ -156,7 +169,7 @@ export class ViceFormatComponent implements OnInit {
   //Products
   productsgroup() {
     return this.fb.group({
-      product: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      products: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
   get productsArr(): FormArray {
@@ -186,23 +199,42 @@ export class ViceFormatComponent implements OnInit {
 
     objectivesgroup(){
       return this.fb.group({
-        indicador: this.fb.array([this.indicadorgroup()])
+        description : ['',[Validators.required]],
+        actions: this.fb.array([this.actiongroup()]),
+        indicators: this.fb.array([this.indicatorgroup()])
       })
     }
-    //Indicator
-    indicadorgroup() {
+    
+    //Actions
+    actiongroup() {
+      return this.fb.group({
+        action: [''],
+        }
+      );
+    }
+    get actionArr(): FormArray {
+      return this.form_objective.get('actions') as FormArray;
+    }
+  
+    addInputAction() {
+      this.actionArr.push(this.actiongroup());
+    }
+  
+
+    //Indicators
+    indicatorgroup() {
       return this.fb.group({
         indicator: [''],
         }
       );
     }
   
-    get indicadorArr(): FormArray {
-      return this.form.get('dev_action_plan') as FormArray;
+    get indicatorArr(): FormArray {
+      return this.form_objective.get('indicators') as FormArray;
     }
   
-    addInputIndicador() {
-      this.indicadorArr.push(this.indicadorgroup());
+    addInputIndicator() {
+      this.indicatorArr.push(this.indicatorgroup());
     }
   
   
@@ -216,11 +248,12 @@ export class ViceFormatComponent implements OnInit {
       control.removeAt(index);
     }
 
-    // Delete control
+    // ValidSize
     validSize() {
       return true;
     }
 
+    // ValidFileType
     validFileType() {
       return true;
     }

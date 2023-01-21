@@ -10,7 +10,7 @@ export interface ViceFormat {
 export interface DevActionPlan {
     title: string;
     subtitle: string;
-    objectives: Objectives;
+    objectives: Objectives;  //Ask about array
 }
 
 export interface Objectives {
