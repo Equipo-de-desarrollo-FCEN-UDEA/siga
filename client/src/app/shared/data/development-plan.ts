@@ -1,26 +1,3 @@
-export interface Objetivo {
-    id: number;
-    description: string;
-    actions: Action[];
-    indicators?: Indicator[];
-}
-
-export interface Action {
-  id: number;
-  description: string;
-}
-
-export interface Indicator {
-  id: number;
-  description: string;
-}
-
-export interface Tema {
-    id: number;
-    title: string;
-    subtitle: string;
-    objectives?: Objetivo[];
-}
 export let developmentplan= {temas:[{
     "id": 0,
     "title": "Formación integral de ciudadanos con la articulación y el desarrollo de las funciones misionales, desde los territorios y en conexión con el mundo",

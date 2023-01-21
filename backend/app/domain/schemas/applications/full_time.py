@@ -9,14 +9,25 @@ from app.domain.schemas.application import ApplicationResponse
 # -Helper Models-
 # ---------------
 
+class Action (BaseModel) :
+    id: int
+    description: str
+  
+  
+class Indicator (BaseModel) :
+    id: int
+    description: str
+  
 
 class Objectives(BaseModel):
+    id: int
     description: str
-    actions: list[str]
-    indicators: list[str]
+    actions: list[Action]
+    indicators: list[Indicator]
 
 
 class Topics(BaseModel):
+    id: int
     title: str
     subtitle: str
     objectives: list[Objectives]

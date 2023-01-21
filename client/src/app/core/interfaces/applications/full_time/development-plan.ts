@@ -1,30 +1,27 @@
-export interface tema {
+export interface Objective{
     id: number;
-    titulo: string;
-    subtitulo: string;
-    objetivos: objetivo[];
+    description: string;
+    actions: Action[];
+    indicators?: Indicator[];
 }
 
-
-export interface objetivo {
-    id: number;
-    descripcion: string;
-    acciones: accion[];
-    indicadores?: indicador[];
+export interface Action {
+  id: number;
+  description: string;
 }
 
-
-export interface accion {
-    id: number;
-    descripcion: string;
+export interface Indicator {
+  id: number;
+  description: string;
 }
 
-
-export interface indicador {
+export interface Topic {
     id: number;
-    descripcion: string;
+    title: string;
+    subtitle: string;
+    objectives?: Objective[];
 }
 
-export interface DevelopmentPlan {
-    topics: tema[]
+export interface ObjectiveTopicId extends Objective{
+  idTopic: number;
 }

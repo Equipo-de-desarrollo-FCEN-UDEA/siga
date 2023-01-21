@@ -3,21 +3,19 @@
         (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
-<form [formGroup]="FormPlan" (submit)="submit();">
+<form  (submit)="submit();">
 
 
     <!-- TEMAS -->
-    <app-stepper #cdkStepper formArrayName="steps" [linear]="true">
-        <cdk-step [editable]="true" formGroupName="0" 
-            label="Temas" [optional]="false"
-            [stepControl]="formArray.get([0])!">
+    <app-stepper #cdkStepper [linear]="true">
+        <cdk-step [editable]="true" label="Temas" [optional]="false">
             <ng-template cdkStepLabel class="cdk-step-label">
                 <span class="icon is-medium">
-                    <!-- <img [src]="logosurl+'one-svgrepo-com.svg'" 
-                        title="Temas" style="margin: auto;" width="25px"
-                        *ngIf="formArray.get([0])!.invalid"> -->
-                    <i class="fas fa-duotone fa-lg fa-check-circle" 
-                        *ngIf="formArray.get([0])!.valid"></i>
+                    <!-- <img [src]="logosurl+'one-svgrepo-com.svg'" title="Temas" style="margin: auto;" width="25px"
+                        *ngIf="selectedTema.length == 0"> -->
+                    <img title="Temas" style="margin: auto;" width="25px"
+                        *ngIf="selectedTema.length == 0">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="selectedTema.length != 0"></i>
                 </span>
             </ng-template>
             <div class="container card shadow bg-white rounded pad">
@@ -33,7 +31,7 @@
                     <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
                         *ngFor="let tema of temas; let i = index">
                         <div class="tema card shadow rounded p-2"
-                            [ngClass]="{'selected': selectedTema.indexOf(i) != -1}" (click)="selectTema(i)">
+                            [ngClass]="{'selected': selectedTema.indexOf(tema.id) != -1}" (click)="selectTema(tema.id, tema)">
                             <h6>{{tema.title}}</h6>
                             <hr>
                             <span class="spantext">{{tema.subtitle}}</span>
@@ -43,12 +41,12 @@
                 <hr>
                 <footer class="my-footer">
                     <div class="buttons">
-                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperNext>
-                            <span> Objetivos </span>
-                            <span class="icon medium">
-                                <i class="fas fa-solid fa-thin fa-arrow-right"></i>
-                            </span>
-                        </button>
+                            <button [disabled]="selectedTema.length == 0" class="btn btn-add" cdkStepperNext>
+                                <span> Objetivos </span>
+                                <span class="icon medium">
+                                    <i class="fas fa-solid fa-thin fa-arrow-right"></i>
+                                </span>
+                            </button>
                     </div>
                 </footer>
             </div>
@@ -58,8 +56,9 @@
         <cdk-step label="Objetivos" [optional]="false">
             <ng-template cdkStepLabel class="cdk-step-label">
                 <span class="icon is-medium" title="Objetivos">
-                    <!-- <img [src]="logosurl+'two-svgrepo-com.svg'" width="25px" *ngIf="formArray.get([1])!.invalid"> -->
-                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([1])!.valid"></i>
+                    <!-- <img [src]="logosurl+'two-svgrepo-com.svg'" width="25px" *ngIf="selectedObjetivo.length ==0"> -->
+                    <img width="25px" *ngIf="selectedObjetivo.length ==0">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="selectedObjetivo.length != 0"></i>
                 </span>
             </ng-template>
             <div class="container card shadow bg-white rounded">
@@ -76,8 +75,8 @@
                         <span><b>De acuerdo al tema :</b> {{_tema.title}} los objetivos de su dedicación exclusiva serán:</span>
                         <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
                             *ngFor="let objetivo of _tema.objectives; let i = index">
-                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedObjetivo.indexOf(i.toString()+it) != -1}"
-                                (click)="selectObjetivo(i.toString(), it.toString(),objetivo);">
+                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedObjetivo.indexOf(objetivo.id) != -1}"
+                                (click)="selectObjetivo(objetivo, _tema.id);">
                                 <h6>{{"Objetivo estratégico " + (i+1)}}</h6>
                                 <hr>
                                 <span class="spantext">{{objetivo.description}}</span>
@@ -88,13 +87,13 @@
                 </div>
                 <footer class="my-footer">
                     <div class="buttons">
-                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                        <button class="btn btn-add" cdkStepperPrevious>
                             <span class="icon medium">
                                 <i class="fas fa-solid fa-thin fa-arrow-left"></i>
                             </span>
                             <span> Temas </span>
                         </button>
-                        <button [disabled]="formArray.get([1])!.invalid" class="btn btn-add" cdkStepperNext>
+                        <button [disabled]="selectedObjetivo.length ==0" class="btn btn-add" cdkStepperNext>
                             <span> Acciones </span>
                             <span class="icon medium">
                                 <i class="fas fa-solid fa-thin fa-arrow-right"></i>
@@ -109,9 +108,9 @@
         <cdk-step label="Acciones estratégicas" [optional]="false">
             <ng-template cdkStepLabel class="cdk-step-label">
                 <span class="icon is-medium" title="Acciones estratégicas">
-                    <!-- <img [src]="logosurl+'three-svgrepo-com.svg'" width="25px"
-                        *ngIf="formArray.get([2])!.invalid"> -->
-                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([2])!.valid"></i>
+                    <!-- <img [src]="logosurl+'three-svgrepo-com.svg'" width="25px" -->
+                    <img *ngIf="selectedAccion.length ==0">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="selectedAccion.length !=0"></i>
                 </span>
             </ng-template>
             <div class="container card shadow bg-white rounded">
@@ -127,8 +126,8 @@
                     <span><b>De acuerdo al objetivo:</b> {{_objetivo.description}} las acciones que estratégicos que usted desarrollará serán:</span>
                     <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
                         *ngFor="let accion of _objetivo.actions; let i = index">
-                        <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedAccion.indexOf(i.toString()+iO) != -1}"
-                            (click)="selectAccion(i.toString()+iO, accion.description);">
+                        <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedAccion.indexOf(accion.id) != -1}"
+                            (click)="selectAccion(accion, _objetivo);">
                             <h6>{{"Acción estratégica " + (i+1)}}</h6>
                             <hr>
                             <span class="spantext">{{accion.description}}</span>
@@ -137,13 +136,13 @@
                 </div>
                 <footer class="my-footer">
                     <div class="buttons">
-                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                        <button class="btn btn-add" cdkStepperPrevious>
                             <span class="icon medium">
                                 <i class="fas fa-solid fa-thin fa-arrow-left"></i>
                             </span>
                             <span> Objetivos </span>
                         </button>
-                        <button [disabled]="formArray.get([2])!.invalid" class="btn btn-add" cdkStepperNext>
+                        <button [disabled]="selectedObjetivos.length == 0" class="btn btn-add" cdkStepperNext>
                             <span> Indicadores </span>
                             <span class="icon medium">
                                 <i class="fas fa-solid fa-thin fa-arrow-right"></i>
@@ -156,12 +155,12 @@
 
 
         <!-- INDICADORES -->
-        <cdk-step label="Indicadores" [optional]="false" formGroupName="3">
+        <cdk-step label="Indicadores" [optional]="false">
             <ng-template cdkStepLabel class="cdk-step-label">
                 <span class="icon is-medium">
-                    <!-- <img [src]="logosurl+'four-svgrepo-com.svg'" width="25px"
-                        *ngIf="formArray.get([3])!.invalid"> -->
-                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="formArray.get([3])!.valid"></i>
+                    <!-- <img [src]="logosurl+'four-svgrepo-com.svg'" width="25px" -->
+                    <img  *ngIf="selectedIndicadores.length ==0">
+                    <i class="fas fa-duotone fa-lg fa-check-circle" *ngIf="selectedIndicadores.length !=0"></i>
                 </span>
             </ng-template>
             <div class="container card shadow bg-white rounded">
@@ -178,26 +177,26 @@
                     <div class="indicadores row" *ngFor="let _objetivo of selectedObjetivos; let iO = index">
                         <span><b>De acuerdo al objetivo:</b> {{_objetivo.description}} las acciones que estratégicos que usted desarrollará serán:</span>
                         <div class="col-sm-12 col-md-6 col-lg-4" style="margin-bottom: 1.5em;"
-                            *ngFor="let accion of _objetivo.indicators; let i = index">
-                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedIndicadores.indexOf(i.toString()+iO) != -1}"
-                                (click)="selectIndicador(i.toString()+iO, accion.description);">
+                            *ngFor="let indicador of _objetivo.indicators; let i = index">
+                            <div class="tema card shadow rounded p-2" [ngClass]="{'selected': selectedIndicadores.indexOf(indicador.id) != -1}"
+                                (click)="selectIndicador(indicador, _objetivo);">
                                 <h6>{{"Indicador " + (i+1)}}</h6>
                                 <hr>
-                                <span class="spantext">{{accion.description}}</span>
+                                <span class="spantext">{{indicador.description}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <footer class="my-footer">
                     <div class="buttons">
-                        <button [disabled]="formArray.get([0])!.invalid" class="btn btn-add" cdkStepperPrevious>
+                        <button class="btn btn-add" cdkStepperPrevious>
                             <span class="icon medium">
                                 <i class="fas fa-solid fa-thin fa-arrow-left"></i>
                             </span>
                             <span> Acciones </span>
                         </button>
                         <button
-                            [disabled]="formArray.get([2])!.invalid || formArray.get([0])!.invalid || formArray.get([1])!.invalid"
+                            [disabled]="selectedIndicadores.length ==0 || selectedAccion.length ==0"
                             class="btn btn-add" type="submit" (submit)="true">
                             <span> Finalizar </span>
                             <span class="icon medium">

@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DevelopmentPlan } from '@interfaces/applications/full_time/development-plan';
+import { Topic, Objective, Action, Indicator, ObjectiveTopicId } from '@interfaces/applications/full_time/development-plan';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Tema, Objetivo, developmentplan } from '@shared/data/development-plan';
-//import { prefix } from '@shared/data/ruta-api';
+import { developmentplan } from '@shared/data/development-plan';
 import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
@@ -16,28 +15,28 @@ import { Observable, Subject, switchMap } from 'rxjs';
 
 export class DevelopmentPlanComponent implements OnInit {
 
-  @Input() planTrabajo!: DevelopmentPlan;
+  @Input() planTrabajo!: Topic[];
 
-  temas: Tema[] = developmentplan.temas;
+  temas: Topic[] = developmentplan.temas;
 
-  FormPlan: FormGroup = this.fb.group({});
+  selectedplanTrabajo: Topic[] = [];
 
   selectedTema : number[]  = [];
 
-  selectedTemas : Tema[] = [];
+  selectedTemas : Topic[] = [];
 
-  selectedObjetivo : string[]  = [];
+  selectedObjetivo : number[]  = [];
 
-  selectedObjetivos : Objetivo[] = [];
+  selectedObjetivos : ObjectiveTopicId[] = [];
 
-  selectedAccion : string[] = [];
+  selectedAccion : number[] = [];
 
 
-  acciones : any[] = [];
+  acciones : Action[] = [];
 
-  selectedIndicadores : string[] = [];
+  selectedIndicadores : number[] = [];
 
-  indicadores: any[] = [];
+  indicadores: Indicator[] = [];
 
 //  logosurl = prefix + 'logos/';
 
@@ -46,115 +45,126 @@ export class DevelopmentPlanComponent implements OnInit {
   inidcadores$: Subject<any[] | undefined> = new Subject();
 
   constructor(
-    private fb: FormBuilder,
     public activeModal: NgbActiveModal
-  ) {
-
-
-    if (this.planTrabajo) {
-
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.FormPlan = this.fb.group({
-      steps: this.fb.array([
-        this.fb.group({
-          temas: ['', Validators.required]
-        }),
-        this.fb.group({
-          objetivo: ['', Validators.required]
-        }),
-        this.fb.group({
-          accion: ['', Validators.required]
-        }),
-        this.fb.group({
-          indicador: ['', Validators.required]
+
+    if (this.planTrabajo) {
+      this.selectedplanTrabajo = this.planTrabajo;
+      this.selectedTema = this.selectedplanTrabajo.map(tema => tema.id)
+      this.temas.forEach(tema => {
+        if (this.selectedTema.indexOf(tema.id)!=-1){
+          this.selectedTemas.push(tema)
+        }
+      })
+      this.selectedObjetivo = this.planTrabajo.map(tema => {
+        return tema.objectives!.map(objetivo => tema.id)
+      }).flat()
+      let _selectedObjetivos = this.planTrabajo.map(tema => {
+        return tema.objectives!.map(objetivo => { return { ...objetivo, idTopic: tema.id }})
+      }).flat()
+      this.temas.forEach(tema =>{
+        tema.objectives!.forEach(objetivo =>{
+          if (this.selectedObjetivo.indexOf(objetivo.id)!=-1){
+            this.selectedObjetivos.push({...objetivo, idTopic:tema.id})
+          }
         })
-      ])}
-    );
-  }
+      })
+      this.selectedAccion = _selectedObjetivos.map(objetivo =>{
+        return objetivo.actions.map(accion => accion.id)
+      }).flat()
+      this.selectedIndicadores = _selectedObjetivos.map(objetivo =>{
+        return objetivo.indicators!.map(indicador => indicador.id)
+      }).flat()
+    }
+ }
   
-  selectTema(value: number) {
+ 
+  selectTema(value: number, tema: Topic) {
     if (this.selectedTema.indexOf(value) != -1) {
       let index = this.selectedTema.indexOf(value);
       this.selectedTema.splice(index, 1);
-      this.selectedTemas.splice(index, 1);
+      this.selectedTemas.splice(index, 1)
+      this.selectedplanTrabajo.splice(index, 1)
     } else {
       this.selectedTema.push(value);
+      console.log(value);
       this.selectedTemas.push(this.temas[value]);
+      this.selectedplanTrabajo.push({
+        id: value,
+        title: this.temas[value].title,
+        subtitle: this.temas[value].subtitle,
+        objectives: []
+      })
     }
-    let temas = ''
-    for (let i = 0; i < this.selectedTemas.length; i++) {
-      temas += ' ' + this.selectedTemas[i].title 
-    }
-    this.getSteps.patchValue([{temas: temas}])
+
   }
 
-  selectObjetivo(iO: string, iT: string, objetivo: Objetivo) {
-    let index = this.selectedObjetivo.indexOf(iO + iT);
-    if (index != -1){
+  selectObjetivo(objetivo: Objective, idTema: number) {
+    let index = this.selectedObjetivo.indexOf(objetivo.id);
+    let indexOfTema = this.selectedTema.indexOf(idTema)
+    if (index != -1) {
       this.selectedObjetivo.splice(index, 1);
       this.selectedObjetivos.splice(index, 1);
+      let indexObjetivo = this.temas[indexOfTema].objectives!.indexOf(objetivo);
+      this.selectedObjetivos.splice (indexObjetivo, 1);
+      this.selectedplanTrabajo[indexOfTema].objectives!.splice(indexObjetivo, 1)
     } else {
-      this.selectedObjetivo.push(iO + iT);
-      this.selectedObjetivos.push(objetivo);
+      this.selectedObjetivo.push(objetivo.id);
+      console.log(objetivo.id)
+      this.selectedObjetivos.push({ ...objetivo, idTopic: idTema });
+      this.selectedplanTrabajo[indexOfTema].objectives!.push({
+        id: objetivo.id,
+        description: objetivo.description,
+        actions: [],
+        indicators: []
+      })
     }
-    
-    let objetivos = ''
-    for (let i = 0; i < this.selectedObjetivos.length; i++) {
-      objetivos+= ' ' + this.selectedObjetivos[i].description;
-    }
-    this.getSteps.patchValue([null, {objetivo: objetivos}]);
   }
 
-  selectAccion(io:string, value: string) {
-    let index = this.selectedAccion.indexOf(io);
+  selectAccion(accion: Action, objetivo: ObjectiveTopicId) {
+    let index = this.selectedAccion.indexOf(accion.id);
+    let indexOfTema = this.selectedTema.indexOf(objetivo.idTopic);
+
+    //Revisar cual de estas dos
+    // let indexObjetivo = this.selectedTemas[indexOfTema].objectives!.map(objetivo => objetivo.id).indexOf(objetivo.id);
+    let indexObjetivo = this.temas[indexOfTema].objectives!.map(objetivo => objetivo.id).indexOf(objetivo.id);
     if (index != -1) {
       this.selectedAccion.splice(index, 1);
-      this.acciones.slice(index, 1);
+      this.acciones.splice(index, 1);
+      let indexAccion = this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].actions.indexOf(accion);
+      this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo]!.actions!.splice(indexAccion, 1);
     } else {
-      this.selectedAccion.push(io)
-      this.acciones.push(value);
-    }
+      this.selectedAccion.push(accion.id)
+      this.acciones.push(accion);
+      console.log('objetivo: '+ indexObjetivo+" tema: "+ indexOfTema+ " accion: "+ accion.id);
+      this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].actions!.push(accion);
 
-    let acciones =''
-    for (let i = 0; i < this.selectedAccion.length; i++) {
-      acciones+= ' ' + this.acciones[i]
     }
-    this.getSteps.patchValue([null,null,{accion:acciones}]);
+    
   }
 
-  selectIndicador(io:string, value: string) {
-    let index = this.selectedIndicadores.indexOf(io);
+  selectIndicador(indicador: Indicator, objetivo: ObjectiveTopicId) {
+    let index = this.selectedIndicadores.indexOf(indicador.id);
+    let indexOfTema = this.selectedTema.indexOf(objetivo.idTopic)
+    let indexObjetivo = this.temas[indexOfTema].objectives!.map(objetivo => objetivo.id).indexOf(objetivo.id)
     if (index != -1) {
       this.selectedIndicadores.splice(index, 1);
       this.indicadores.slice(index, 1);
+      let indexIndicador = this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].indicators!.indexOf(indicador);
+      this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].indicators!.splice(indexIndicador, 1);
     } else {
-      this.selectedIndicadores.push(io)
-      this.indicadores.push(value);
+      this.selectedIndicadores.push(indicador.id);
+      this.indicadores.push(indicador);
+      console.log(indicador);
+      this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].indicators!.push(indicador);
     }
-
-    let indicadores =''
-    for (let i = 0; i < this.selectedIndicadores.length; i++) {
-      indicadores+= ' ' + this.indicadores[i]
-    }
-    this.getSteps.patchValue([null,null,null,{indicador:indicadores}]);
+    
   }
-
-
-  get getSteps() : FormArray {
-    return this.FormPlan.get('steps') as FormArray;
-  }
-
-
-  get formArray(): AbstractControl {
-    return this.FormPlan.get('steps') as AbstractControl;
-  }
-
 
   submit() {
-    this.activeModal.close(this.FormPlan.value);
+    this.activeModal.close(this.selectedplanTrabajo);
   }
 
 }

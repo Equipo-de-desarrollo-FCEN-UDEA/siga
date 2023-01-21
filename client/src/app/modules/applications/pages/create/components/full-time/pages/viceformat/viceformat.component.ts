@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ViceFormat, DevActionPlan } from '@interfaces/applications/full_time/vice-format';
+import { ViceFormat } from '@interfaces/applications/full_time/vice-format';
+import { Topic } from '@interfaces/applications/full_time/development-plan';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ApplicationTypesService } from '@services/application-types.service';
@@ -9,6 +10,7 @@ import { DevelopmentPlanComponent } from  './development-plan/development-plan.c
 
 import Swal from 'sweetalert2';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-viceformat',
@@ -32,7 +34,7 @@ export class ViceFormatComponent implements OnInit {
   public description: string | null = null;
   public goals: any[]=[];
   public products: any[]=[];
-  public dev_action_plan: DevActionPlan | null = null;
+  public dev_action_plan: Topic [] = [];
 
   public dev_action_plan_first_take: number = 0;
 
@@ -63,8 +65,6 @@ export class ViceFormatComponent implements OnInit {
     description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
     goals: this.fb.array([this.goalsgroup()], [Validators.required]),
     products: this.fb.array([this.productsgroup()], [Validators.required]),
-    //dev_action_plan: this.fb.array([this.developmentplangroup(),Validators.required])
-   
   });
 
   public form_dev_plan = this.fb.group({
@@ -81,7 +81,6 @@ export class ViceFormatComponent implements OnInit {
    
   });
   ngOnInit(): void {
-       this.dev_action_plan_first_take++;
        this.route.parent?.params.subscribe(
         params => {
           this.id = params['id']
@@ -104,33 +103,9 @@ export class ViceFormatComponent implements OnInit {
     const modalRef = this.modalSvc.open(DevelopmentPlanComponent, { size: 'xl' });
     modalRef.result.then(
       (res: any) => {
-        const steps = res.steps;
-        //for (let i = 0; i < steps[3].indicator.length; i++)  {
-//          this.addInputIndicator()
-  //      }
-        // const object = {
-        //   tema_estrategico: [{tema:steps[0].temas}],
-        //   objetivo_estrategico_desarrollo: [{objEstrategico:steps[1].objetivo}],
-        //   objetivo_estrategico_institucional: [{objetivo:steps[1].objetivo}],
-        //   acciones_estrategicas: [{accion:steps[2].accion}],
-        //   indicador: steps[3].indicador
-        // }
-
-        let objectiv={
-          description: steps[1].objetivo,
-          actions: [steps[2].accion],
-          indicators: [steps[3].indicador]
-        }
-
-        let devplan = {
-            title: [{tema:steps[0].temas.titulo}],
-            subtitle: {tema:steps[0].temas.subtitulo},
-            objectives: objectiv
-          }
-        console.log('Indicadores: '+steps[3].indicador.length);
-        this.form_objective.patchValue(objectiv);
-        this.form_dev_plan.patchValue(devplan);
-        //console.log(this.fBasicInfo.value)
+          this.dev_action_plan = res;
+          console.log(this.dev_action_plan);
+          this.dev_action_plan_first_take++;
       }
     ).catch(
       (err:any) => {
@@ -147,7 +122,7 @@ export class ViceFormatComponent implements OnInit {
   //Goals
   goalsgroup(){
     return this.fb.group({
-      goals: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      goal: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
   get goalsArr(): FormArray {
@@ -169,7 +144,7 @@ export class ViceFormatComponent implements OnInit {
   //Products
   productsgroup() {
     return this.fb.group({
-      products: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      product: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     });
   }
   get productsArr(): FormArray {
@@ -190,16 +165,18 @@ export class ViceFormatComponent implements OnInit {
     // Development plans
     developmentplangroup() {
       return this.fb.group({
+        id: [NaN,[Validators.required]],
         title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
         subtitle: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-        objectives: ['', [Validators.required]]
+        objectives: this.fb.array([this.objectivesgroup()])
         }
       );
     }
 
     objectivesgroup(){
       return this.fb.group({
-        description : ['',[Validators.required]],
+        id: [NaN,[Validators.required]],
+        description: ['',[Validators.required]],
         actions: this.fb.array([this.actiongroup()]),
         indicators: this.fb.array([this.indicatorgroup()])
       })
@@ -208,7 +185,8 @@ export class ViceFormatComponent implements OnInit {
     //Actions
     actiongroup() {
       return this.fb.group({
-        action: [''],
+        id: [NaN,[Validators.required]],
+        description: [''],
         }
       );
     }
@@ -224,7 +202,8 @@ export class ViceFormatComponent implements OnInit {
     //Indicators
     indicatorgroup() {
       return this.fb.group({
-        indicator: [''],
+        id: [NaN,[Validators.required]],
+        description: [''],
         }
       );
     }
