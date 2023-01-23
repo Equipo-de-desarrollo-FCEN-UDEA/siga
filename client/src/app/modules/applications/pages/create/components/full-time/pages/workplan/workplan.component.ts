@@ -1,17 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 //sweetalert2
 import Swal from 'sweetalert2';
 
 //interfaces
-import { FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
-import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
+import { FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 
 //services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { LoaderService } from '@services/loader.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +24,6 @@ export class WorkplanComponent implements OnInit {
     period: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
     registro: ['', [Validators.required]],
     partial_time: [NaN, [Validators.required]],
-    //general_remarks: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
     teaching_activities: this.fb.array([this.teachingActivitiesGroup()], [Validators.required]),
     investigation_activities: this.fb.array([this.investigationActivitiesGroup()], [Validators.required]),
     extension_activities: this.fb.array([this.extensionActivitiesGroup()], [Validators.required]),
@@ -34,14 +32,13 @@ export class WorkplanComponent implements OnInit {
     working_week: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
 
+  //id de la dedicacion
   private id: number = 0;
 
   public application: FulltimeResponse | null = null;
   public work_plan:any;
   public error: any = '';
 
-
-  @Input() id_full_time: number = 2;
   @Input() editable: any;
 
 
@@ -62,6 +59,9 @@ export class WorkplanComponent implements OnInit {
 
   get workDayArr(): FormArray { return this.f_workplan.get('working_week') as FormArray; }
 
+  //Accede al form
+  get f() { return this.f_workplan.controls }
+
   constructor(
     private fb: FormBuilder,
     private fullTimeSvc: FullTimeService,
@@ -69,6 +69,8 @@ export class WorkplanComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+
+    //busca el id de la dedicacion
     this.route.params.subscribe(
       params => {
         this.id = params['id']
@@ -78,30 +80,28 @@ export class WorkplanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.fullTimeSvc.getFullTime(this.application?.id!).subscribe({
+    this.fullTimeSvc.getFullTime(this.id).subscribe({
 
-    //   next: (res: any) => {
-    //     console.log(this.application?.full_time.id)
-    //     // this.work_plan = res.work_plan;
+      next: (res: any) => {
+        this.work_plan = res.work_plan;
 
-    //     // if(this.work_plan) {
-    //     //   this.id_full_time = this.work_plan.id;
-    //     //   this.f_workplan.patchValue({
-    //     //     period: this.work_plan.period,
-    //     //     registro: this.work_plan.registro,
-    //     //     partial_time: this.work_plan.partial_time,
-    //     //     //general_remarks: this.work_plan.general_remarks
-    //     //   });
+        if(this.work_plan) {
+          this.id = this.work_plan.id;
+          this.f_workplan.patchValue({
+            period: this.work_plan.period,
+            registro: this.work_plan.registro,
+            partial_time: this.work_plan.partial_time,
+          });
 
-    //     //   this.patchTeachingActivities(this.work_plan.teaching_activities);
-    //     //   this.patchInvestigationActivities(this.work_plan.investigation_activities);
-    //     //   this.patchExtensionActivities(this.work_plan.extension_activities);
-    //     //   this.patchAcademicAdministration(this.work_plan.academic_admin_activities);
-    //     //   this.patchOtherActivities(this.work_plan.other_activities);
-    //     //   this.patchWorkDay(this.work_plan.work_day);
-    //     // }
-    //   }
-    // });
+          this.patchTeachingActivities(this.work_plan.teaching_activities);
+          this.patchInvestigationActivities(this.work_plan.investigation_activities);
+          this.patchExtensionActivities(this.work_plan.extension_activities);
+          this.patchAcademicAdministration(this.work_plan.academic_admin_activities);
+          this.patchOtherActivities(this.work_plan.other_activities);
+          this.patchWorkDay(this.work_plan.work_day);
+        }
+      }
+    });
   }
 
   
@@ -112,6 +112,7 @@ export class WorkplanComponent implements OnInit {
 
   submit() {
 
+    //guarda el plan de trabajo en una variable
     let work_plan: any = {
       ... this.f_workplan.value as any,
     }
@@ -119,8 +120,11 @@ export class WorkplanComponent implements OnInit {
     work_plan.working_week = work_plan.working_week[0]
 
     this.loaderSvc.show();
+
+    //llamado del servicio y envio del plan de trabajo
     this.fullTimeSvc.putWorkPlan(work_plan, this.id).subscribe(
       (res:any) => {
+        console.log(work_plan);
         if (res) {
           Swal.fire(
             {
