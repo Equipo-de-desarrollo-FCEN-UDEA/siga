@@ -125,13 +125,18 @@ class WorkPlan(BaseModel):
     other_activities: list[OtherActivities] | None
     working_week: WorkingWeek
 
+class Goal(BaseModel):
+    goal: str
+
+class Product(BaseModel):
+    product: str
 
 class ViceFormat(BaseModel):
     time: int
     field: str
     description: str
-    goals: list[str]
-    products: list[str]
+    goals: list[Goal]
+    products: list[Product]
     dev_action_plan: list[Topics]
 
 

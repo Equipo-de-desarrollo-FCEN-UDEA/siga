@@ -245,7 +245,7 @@ async def update_vice_format(
         full_time = await crud.full_time.vice_format(engine,
                                                        id=mongo_id, vice_format=vice_format)
                                                 
-        documents.fill_vice_document(current_user, full_time)
+        # documents.fill_vice_document(current_user, full_time)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time

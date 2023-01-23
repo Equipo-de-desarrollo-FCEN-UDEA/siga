@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViceFormat } from '@interfaces/applications/full_time/vice-format';
 import { Topic } from '@interfaces/applications/full_time/development-plan';
@@ -6,10 +6,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { DevelopmentPlanComponent } from  './development-plan/development-plan.component'
+import { FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 
 
 import Swal from 'sweetalert2';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { viewport } from '@popperjs/core';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
   templateUrl: './viceformat.component.html',
   styleUrls: ['./viceformat.component.scss']
 })
-export class ViceFormatComponent implements OnInit {
+export class ViceFormatComponent implements OnInit, AfterViewInit {
 
   @Input() editable: any;
   
@@ -62,49 +64,89 @@ export class ViceFormatComponent implements OnInit {
   public form = this.fb.group({
     time: [NaN, [Validators.required, Validators.min(1), Validators.max(12)]],
     field: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
+    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(3000)]],
     goals: this.fb.array([this.goalsgroup()], [Validators.required]),
     products: this.fb.array([this.productsgroup()], [Validators.required]),
+    dev_action_plan: [this.dev_action_plan, [Validators.required]]
   });
 
-  public form_dev_plan = this.fb.group({
-    title: ['', [Validators.minLength(10), Validators.maxLength(255)]],
-    subtitle: ['', [Validators.minLength(10), Validators.maxLength(255)]],
-    objectives: this.fb.array([this.objectivesgroup()], [Validators.required])
-   
-  });
 
-  public form_objective = this.fb.group({
-    description: ['', [Validators.minLength(10), Validators.maxLength(255)]],
-    actions: this.fb.array([this.actiongroup()], [Validators.required]),
-    indicators: this.fb.array([this.indicatorgroup()], [Validators.required])
-   
-  });
+
   ngOnInit(): void {
-       this.route.parent?.params.subscribe(
+       this.route.params.subscribe(
         params => {
           this.id = params['id']
         }
       )
+      this.fulltimesvc.getFullTime(this.id).subscribe(
+        data=>{
+          if(data.full_time.vice_format){
+            this.form.patchValue(data.full_time.vice_format);
+            this.dev_action_plan = data.full_time.vice_format.dev_action_plan;
+          }
+          
+        }
+      );
   }
 
+
+  ngAfterViewInit(): void {
+    
+  }
   submit(){
     this.submitted = true;
+
     
+
     if (this.form.invalid) {
-      return;
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return; 
     }
-    let viceformat= this.fulltimesvc.putViceFormat(this.form.value as ViceFormat, this.id);
+    // let body : any= this.form.value;
+    // body.goals = body.goals?.map((goal:any)=>goal.goal);
+    // body.products = body.products?.map((product:any)=>product.product);
+      console.log(this.form.value);
+    this.fulltimesvc.putViceFormat(this.form.value as ViceFormat, this.id).subscribe(
+      {
+        next: (data) => {
+          Swal.fire({
+            title: 'Creado',
+            text: '¡El Formato de Vicerrectoría se creó con éxito!',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+            }
+          });
+        },
+        error: (err)=> {
+          //this.error = err
+        }
+      }
+    );
+
+
 
   }
 
 
   open() {
     const modalRef = this.modalSvc.open(DevelopmentPlanComponent, { size: 'xl' });
+    modalRef.componentInstance.planTrabajo = this.dev_action_plan;
     modalRef.result.then(
       (res: any) => {
           this.dev_action_plan = res;
-          console.log(this.dev_action_plan);
+          //console.log(this.dev_action_plan);
+          //console.log(this.form.value);
+          this.form.controls['dev_action_plan'].setValue(this.dev_action_plan);
           this.dev_action_plan_first_take++;
       }
     ).catch(
@@ -116,6 +158,7 @@ export class ViceFormatComponent implements OnInit {
         })
       }
     );
+    
   }
 
 
@@ -162,62 +205,7 @@ export class ViceFormatComponent implements OnInit {
     this.productsArr.patchValue(productos);
   }
 
-    // Development plans
-    developmentplangroup() {
-      return this.fb.group({
-        id: [NaN,[Validators.required]],
-        title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-        subtitle: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
-        objectives: this.fb.array([this.objectivesgroup()])
-        }
-      );
-    }
-
-    objectivesgroup(){
-      return this.fb.group({
-        id: [NaN,[Validators.required]],
-        description: ['',[Validators.required]],
-        actions: this.fb.array([this.actiongroup()]),
-        indicators: this.fb.array([this.indicatorgroup()])
-      })
-    }
-    
-    //Actions
-    actiongroup() {
-      return this.fb.group({
-        id: [NaN,[Validators.required]],
-        description: [''],
-        }
-      );
-    }
-    get actionArr(): FormArray {
-      return this.form_objective.get('actions') as FormArray;
-    }
-  
-    addInputAction() {
-      this.actionArr.push(this.actiongroup());
-    }
-  
-
-    //Indicators
-    indicatorgroup() {
-      return this.fb.group({
-        id: [NaN,[Validators.required]],
-        description: [''],
-        }
-      );
-    }
-  
-    get indicatorArr(): FormArray {
-      return this.form_objective.get('indicators') as FormArray;
-    }
-  
-    addInputIndicator() {
-      this.indicatorArr.push(this.indicatorgroup());
-    }
-  
-  
-  isInvalidForm(controlName: string) {
+   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
   
