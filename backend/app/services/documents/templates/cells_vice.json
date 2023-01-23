@@ -1,0 +1,30 @@
+{
+    "merge_cells":
+        {
+            "fecha_diligenciamiento":"D12:K12",
+            "unidad_academica":"D18:K18",
+            "nombre_completo":"D22:K22",
+            "_id":"D23:K23",
+            "num_oficina":"D24:E24",
+            "telefono":"J24:K24",
+            "email":"D25:K25",
+            "titulo_propuesta":"E29:K29",
+            "tiempo_solicitado":"F33:K33",
+            "tema_estrategico":"D45:K46",
+            "objetivo_estrategico":"D47:K48",
+            "metas":"D49:K50",
+            "acciones_estrategicas":"D51:K52",
+            "indicadores":"D58:K58",
+            "productos":"A61:K62"
+        },
+    "lone_cells":
+        {
+            "modalidad":
+                {
+                    "docencia":"H35", 
+                    "investigacion":"K35", 
+                    "extension":"H36", 
+                    "administracion":"K36"
+                }
+        }
+}
