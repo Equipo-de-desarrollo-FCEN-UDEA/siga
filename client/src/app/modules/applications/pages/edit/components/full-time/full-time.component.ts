@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./full-time.component.scss'],
 })
 export class FullTimeComponent implements OnInit {
-  private id: number = 0;
+  public id: number = 0;
   public submitted: boolean = false;
   public application: FulltimeResponse | null = null;
 

@@ -38,6 +38,8 @@ export class FullTimeService {
   putLetter(letter: InitialLetter, id: number) {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'letter/' + id, letter)
   }
+  
+  
 
   putViceFormat(viceFormat: ViceFormat, id: number) {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'vice-format/' + id, viceFormat)

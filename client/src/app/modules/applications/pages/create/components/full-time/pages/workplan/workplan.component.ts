@@ -75,36 +75,29 @@ export class WorkplanComponent implements OnInit {
     this.route.params.subscribe(
       params => {
         this.id = params['id']
-        console.log(this.id)
+        this.fullTimeSvc.getFullTime(this.id).subscribe(data =>{
+          if(data) { 
+            this.f_workplan.patchValue({
+              period: data.full_time.work_plan?.period,
+              registro: data.full_time.work_plan?.registro,
+              partial_time: data.full_time.work_plan?.partial_time,
+  
+            });
+  
+            this.patchTeachingActivities(data.full_time.work_plan?.teaching_activities);
+            this.patchInvestigationActivities(data.full_time.work_plan?.investigation_activities);
+            this.patchExtensionActivities(data.full_time.work_plan?.extension_activities);
+            this.patchAcademicAdministration(data.full_time.work_plan?.academic_admin_activities);
+            this.patchOtherActivities(data.full_time.work_plan?.other_activities);
+            this.patchWorkDay(data.full_time.work_plan?.working_week);
+          }        
+        });
       }
     )
   }
 
   ngOnInit(): void {
-    this.fullTimeSvc.getFullTime(this.id).subscribe({
 
-      next: (res: any) => {
-        this.work_plan = res.work_plan;
-
-        if(this.work_plan) {
-          this.id = this.work_plan.id;
-          this.f_workplan.patchValue({
-            period: this.work_plan.period,
-            registro: this.work_plan.registro,
-            partial_time: this.work_plan.partial_time,
-            observations: this.work_plan.observations
-
-          });
-
-          this.patchTeachingActivities(this.work_plan.teaching_activities);
-          this.patchInvestigationActivities(this.work_plan.investigation_activities);
-          this.patchExtensionActivities(this.work_plan.extension_activities);
-          this.patchAcademicAdministration(this.work_plan.academic_admin_activities);
-          this.patchOtherActivities(this.work_plan.other_activities);
-          this.patchWorkDay(this.work_plan.work_day);
-        }
-      }
-    });
   }
 
   
