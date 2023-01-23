@@ -29,6 +29,7 @@ export class WorkplanComponent implements OnInit {
     extension_activities: this.fb.array([this.extensionActivitiesGroup()], [Validators.required]),
     academic_admin_activities: this.fb.array([this.academicAdministrationGroup()], [Validators.required]),
     other_activities:  this.fb.array([this.otherActivitiesGroup()], [Validators.required]),
+    observations: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
     working_week: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
 
@@ -91,6 +92,8 @@ export class WorkplanComponent implements OnInit {
             period: this.work_plan.period,
             registro: this.work_plan.registro,
             partial_time: this.work_plan.partial_time,
+            observations: this.work_plan.observations
+
           });
 
           this.patchTeachingActivities(this.work_plan.teaching_activities);
@@ -124,7 +127,6 @@ export class WorkplanComponent implements OnInit {
     //llamado del servicio y envio del plan de trabajo
     this.fullTimeSvc.putWorkPlan(work_plan, this.id).subscribe(
       (res:any) => {
-        console.log(work_plan);
         if (res) {
           Swal.fire(
             {
@@ -133,7 +135,6 @@ export class WorkplanComponent implements OnInit {
               confirmButtonText: 'Aceptar'
             }
           )
-          this.loaderSvc.hide();
         }
       }
     );
