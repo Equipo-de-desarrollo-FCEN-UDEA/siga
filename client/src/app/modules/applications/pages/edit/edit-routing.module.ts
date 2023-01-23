@@ -32,6 +32,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'carta-inicio',
+        component: FullTimeComponent,
+        data: {
+          title: 'Carta de Inicio'
+        }
+      },
+      {
         path: '',
         redirectTo: '/home',
         pathMatch: 'prefix'
