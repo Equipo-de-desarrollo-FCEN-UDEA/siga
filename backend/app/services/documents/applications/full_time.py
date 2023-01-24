@@ -10,11 +10,13 @@ from app.domain.models import User, FullTime
 from app.domain.schemas import UserResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
+from app.core.logging import get_logging
 from app.core.celery_worker import celery_app
 from app.services import aws
 
 
 settings = get_app_settings()
+log = get_logging(__name__)
 
 
 def Enumerate_list(lista, index_sep=' ', joint=' '):
@@ -51,12 +53,13 @@ def fill_vice_document(user: User, full_time: FullTime):
         "tema_estrategico": Enumerate_list([jitem['title'] for jitem in dev_plan], index_sep='TE. '),
         "objetivo_estrategico_con_acciones": Enumerate_list([obj['description'] for obj in action_obj], index_sep=').'),
         "objetivo_estrategico_con_indicadores": Enumerate_list([obj['description'] for obj in indic_obj], index_sep=').'),
-        "metas": Enumerate_list(full_time_dict['vice_format']['goals']),
-        "acciones_estrategicas": Enumerate_list([action for obj in action_obj for action in obj['actions']], index_sep=').'),
-        "indicadores": Enumerate_list([indic for obj in indic_obj for indic in obj['indicators']], index_sep='.'),
-        "productos": Enumerate_list(full_time_dict['vice_format']['products']),
+        "metas": Enumerate_list(list(map(lambda x: x['goal'], full_time_dict['vice_format']['goals']))),
+        "acciones_estrategicas": Enumerate_list([action['description'] for obj in action_obj for action in obj['actions']], index_sep=').'),
+        "indicadores": Enumerate_list([indic['description'] for obj in indic_obj for indic in obj['indicators']], index_sep='.'),
+        "productos": Enumerate_list(list(map(lambda x: x['product'], full_time_dict['vice_format']['products']))),
         "modalidad": full_time_dict['vice_format']['field']
     }
+    log.debug(data_full_time)
 
     data_user = {
         'unidad_academica': '-'.join([user['department']['description'], user['department']['school']['description']]),
@@ -69,10 +72,9 @@ def fill_vice_document(user: User, full_time: FullTime):
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vicerrectoria.xlsx'
 
-    generate_vice_format_to_aws.apply_async(
-        args=(data_user, data_full_time, path))
-
-    return None
+    generate_vice_format_to_aws.apply_async(args=(data_user, data_full_time, path))
+    log.debug(path)
+    return path
 
 
 @celery_app.task
@@ -86,9 +88,13 @@ def generate_vice_format_to_aws(user: dict, full_time: dict, path: str):
     cells_str = json.dumps(cells_dic)
 
     for field, info in zip(full_time.keys(), full_time.values()):
+        if info is None:
+            continue
         cells_str = cells_str.replace(field, info)
 
     for field, info in zip(user.keys(), user.values()):
+        if info is None:
+            continue
         cells_str = cells_str.replace(field, info)
 
     json_info = json.loads(cells_str)

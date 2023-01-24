@@ -223,7 +223,8 @@ async def update_letter(
                     pass
         path = await documents.initial_letter_generation(current_user, letter.body)
         full_time = await crud.full_time.letter(engine,
-                                                id=mongo_id, letter=letter, path=path)
+                                                id=mongo_id, letter=letter)
+        await crud.full_time.update_document(engine, id=mongo_id, name='carta-inicio.pdf', path=path)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -244,9 +245,10 @@ async def update_vice_format(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.vice_format(engine,
-                                                       id=mongo_id, vice_format=vice_format)
-                                                
-        # documents.fill_vice_document(current_user, full_time)
+                                                     id=mongo_id, vice_format=vice_format)
+
+        path = documents.fill_vice_document(current_user, full_time)
+        await crud.full_time.update_document(engine, id=mongo_id, name='formato-vicerrectoría.xlsx', path=path)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
@@ -268,7 +270,7 @@ async def update_work_plan(
         full_time = await crud.full_time.work_plan(engine,
                                                    id=mongo_id, work_plan=work_plan)
         path = documents.fill_work_plan_format(current_user, full_time)
-        log.debug(path)
+        await crud.full_time.update_document(engine, id=mongo_id, name='plan-trabajo', path=path)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
