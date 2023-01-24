@@ -14,11 +14,11 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
 //DEDICACION EXCLUSIVA COMPONENTS
 import { FullTimeComponent } from './components/full-time/full-time.component';
 import { StartLetterComponent } from './components/full-time/pages/start-letter/start-letter.component';
+import { ViceFormatComponent } from './components/full-time/pages/viceformat/viceformat.component';
 import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
 
 //CREATE COMPONENT
 import { CreateComponent } from './create.component';
-import { FullTimeFormatComponent } from './components/full-time/pages/full-time-format/full-time-format.component';
 
 const routes: Routes = [
   {
@@ -58,12 +58,14 @@ const routes: Routes = [
         path: 'carta-inicio/:id',
         component: StartLetterComponent,
       },
-      {
-        path: 'formato-vicerrectoria/:id',
-        component: FullTimeFormatComponent,
-      },
-
       //CUMPLIDOS
+      {
+        path: 'formatovice/:id',
+        component: ViceFormatComponent,
+        data: {
+          title: 'Formato de Vicerrectoría Administrativa'
+        }
+      },
       {
         path: 'cumplido/:id',
         component: ComplimentComponent,

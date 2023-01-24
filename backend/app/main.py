@@ -8,7 +8,6 @@ from app.db.init_db import init_db
 from app.core.logging import get_logging
 
 
-
 log = get_logging(__name__)
 
 
