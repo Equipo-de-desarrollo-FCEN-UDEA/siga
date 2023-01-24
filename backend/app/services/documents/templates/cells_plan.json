@@ -70,8 +70,8 @@
             },
             "activity_tracking": {
                 "id_activity": "A:F",
-                "date_1": "G",
-                "date_2": "H:J",
+                "date_1_str": "G",
+                "date_2_str": "H:J",
                 "other": "K:L",
                 "range_cells": 27
             }

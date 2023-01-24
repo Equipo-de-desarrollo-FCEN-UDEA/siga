@@ -10,15 +10,18 @@ from app.domain.models import User, FullTime
 from app.domain.schemas import UserResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
+from app.core.logging import get_logging
 from app.core.celery_worker import celery_app
 from app.services import aws
 
 settings = get_app_settings()
+log = get_logging(__name__)
 
 
-def fill_work_plan_format(user: User, full_time: FullTime):
+def fill_work_plan_format(user: User, full_time: FullTime) -> str:
 
     full_time_dict: dict = full_time.dict()
+    log.debug(full_time_dict)
     user = UserResponse.from_orm(user).dict(exclude_unset=True)
 
     data_user = {
@@ -163,7 +166,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     generate_work_plan_format_to_aws.apply_async(
         args=(data_user, data_full_time, data_activities, data_day, total_hours_semester, record, path))
 
-    return None
+    return path
 
 
 @celery_app.task
@@ -237,6 +240,8 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
     activities_track = tracking[list(tracking.keys())[1]]
     for i in range(len(activities_track)):
         for key in activities_track[i].keys():
+            if key in ['date_1', 'date_2']:
+                continue
             coord = cells['Cara.2']['multiple_rows']['activity_tracking'][key]
             coord_idx = cells['Cara.2']['multiple_rows']['activity_tracking']['id_activity']
 

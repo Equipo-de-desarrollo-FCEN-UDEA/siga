@@ -267,7 +267,8 @@ async def update_work_plan(
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.work_plan(engine,
                                                    id=mongo_id, work_plan=work_plan)
-        documents.fill_work_plan_format(current_user, full_time)
+        path = documents.fill_work_plan_format(current_user, full_time)
+        log.debug(path)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time

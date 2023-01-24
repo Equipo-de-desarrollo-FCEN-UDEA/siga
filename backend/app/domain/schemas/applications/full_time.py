@@ -1,7 +1,7 @@
 from datetime import datetime, time
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 from app.domain.schemas.application import ApplicationResponse
 
@@ -44,6 +44,17 @@ class ActivityTracking(BaseModel):
     date_2: datetime
     other: str
 
+    date_1_str: str | None
+    @validator('date_1_str', always=True, )
+    def stringdate(cls, v, values, **kwargs):
+        print(values['date_1'].strftime("%A %d de %B del %Y"))
+        return values['date_1'].strftime("%A %d de %B del %Y")
+    
+    date_2_str: str | None
+    @validator('date_2_str', always=True)
+    def stringdate_2(cls, v, values, **kwargs):
+        return values['date_2'].strftime("%A %d de %B del %Y")
+    
 
 class WeekHour(BaseModel):
     t: int
