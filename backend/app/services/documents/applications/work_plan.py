@@ -31,11 +31,11 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     }
 
     data_full_time = {
-        'period': full_time_dict['full_time']['work_plan']['period'],
+        'period': full_time_dict['work_plan']['period'],
         'date': datetime.now().strftime("%A %d de %B del %Y"),
-        'registro': full_time_dict['full_time']['work_plan']['registro'],
-        'partial_time': str(full_time_dict['full_time']['work_plan']['partial_time']),
-        'observations': full_time_dict['full_time']['work_plan']['observations']
+        'registro': full_time_dict['work_plan']['registro'],
+        'partial_time': str(full_time_dict['work_plan']['partial_time']),
+        'observations': full_time_dict['work_plan']['observations']
     }
 
     # Para el tracking.
@@ -44,18 +44,21 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     #Identificador de actividades.
     ids_activities = []
 
-    # Total de horas por actividad.
+    # Total de horas por actividad (Teaching, Research, Extension, Admin, Other).
     total_hours = [0, 0, 0, 0, 0]
 
     # Sec_2
     teaching_activities = []
-    for act in full_time_dict['full_time']['work_plan']['teaching_activities']:
+    for act in full_time_dict['work_plan']['teaching_activities']:
         if act['level'] == 'pregrado':
             level_pre = 'X'
             level_pos = ''
-        else:
+        elif act['level'] == 'posgrado':
             level_pre = ''
             level_pos = 'X'
+        else:
+            level_pre = ''
+            level_pos = ''
 
         teaching_activities.append({
             "code_t": act['activity_identification']['code'],
@@ -67,8 +70,8 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "hours_t": str(act['week_hours']['t']),
             "hours_tp": str(act['week_hours']['tp']),
             "hours_p": str(act['week_hours']['p']),
-            "total_week_hours": str(act['week_hours']['t']+act['week_hours']['tp']+act['week_hours']['p']),
-            "total_sem_hours": str(16*(act['week_hours']['t']+act['week_hours']['tp']+act['week_hours']['p']))
+            "total_week_hours": str(act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']),
+            "total_sem_hours": str(16 * (act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']))
         })
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append(act['activity_identification']['code'])
@@ -77,7 +80,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
 
     # Sec_3
     research_activities = []
-    for act in full_time_dict['full_time']['work_plan']['investigation_activities']:
+    for act in full_time_dict['work_plan']['investigation_activities']:
         research_activities.append({
             "code_i": act['code'],
             "project_identification": act['project_identification'],
@@ -92,7 +95,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
 
     # Sec_4
     extension_activities = []
-    for act in full_time_dict['full_time']['work_plan']['extension_activities']:
+    for act in full_time_dict['work_plan']['extension_activities']:
         extension_activities.append({
             "code_e": act['code'],
             "activity_identification": act['activity_identification'],
@@ -107,12 +110,12 @@ def fill_work_plan_format(user: User, full_time: FullTime):
 
     # Sec_5
     admin_activities = []
-    for act in full_time_dict['full_time']['work_plan']['academic_admin_activities']:
+    for act in full_time_dict['work_plan']['academic_admin_activities']:
         admin_activities.append({
             "position": act['position'],
-            "week_hours_a": act['week_hours'],
+            "week_hours_a": str(act['week_hours']),
             "activities": act['activities'],
-            "period_hours_a": act['period_hours']
+            "period_hours_a": str(act['period_hours'])
         })
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append("")
@@ -120,7 +123,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
 
     # Sec_6
     other_activities = []
-    for act in full_time_dict['full_time']['work_plan']['other_activities']:
+    for act in full_time_dict['work_plan']['other_activities']:
         other_activities.append({
             "activity": act['activity'],
             "period_hours_o": act['period_hours'],
@@ -132,11 +135,11 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     # Sección 8.
     days = []
     hours_days = []
-    for day in full_time_dict['full_time']['work_plan']['working_week']:
+    for day in full_time_dict['work_plan']['working_week']:
         for part in ['morning', 'afternoon']:
             days.append(day+'_'+part)
-            hours_days.append('-'.join([full_time_dict['full_time']['work_plan']['working_week'][day][part+'_start'],
-                                        full_time_dict['full_time']['work_plan']['working_week'][day][part+'_end']]))
+            hours_days.append('-'.join([full_time_dict['work_plan']['working_week'][day][part+'_start'],
+                                        full_time_dict['work_plan']['working_week'][day][part+'_end']]))
 
     # Diccionario con todas las actividades.
     data_activities = {'teaching_activities': teaching_activities,
@@ -146,11 +149,11 @@ def fill_work_plan_format(user: User, full_time: FullTime):
                        'other_activities': other_activities}
 
     # Total horas.
-    total_hours_semester = zip(['total_hours_t', 'total_hours_r',
-                               'total_hours_e', 'total_hours_a', 'total_hours_o'], total_hours)
+    total_hours_semester = dict(zip(['total_hours_t', 'total_hours_r',
+                               'total_hours_e', 'total_hours_a', 'total_hours_o'], total_hours))
 
     # Jornada de trabajo.
-    data_day = zip(days, hours_days)
+    data_day = dict(zip(days, hours_days))
 
     # Record de actividades.
     record = {'ids_acts':ids_activities, 'act_track': tracking_acts}
@@ -181,7 +184,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
             target.merge_cells(cells['Cara.1'][key])
             target[cells['Cara.1'][key].split(':')[0]] = user[key]
 
-    for key in full_time.keys()[-1:]:
+    for key in list(full_time.keys())[:-1]:
         # Si no se debe hacer merge de las celdas.
         if cells['Cara.1'][key].find(':') < 0:
             target[cells['Cara.1'][key]] = full_time[key]
@@ -190,7 +193,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
             target.merge_cells(cells['Cara.1'][key])
             target[cells['Cara.1'][key].split(':')[0]] = full_time[key]
 
-    for activity in activities.keys()[:3]:
+    for activity in list(activities.keys())[:3]:
         index = cells['Cara.1']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
@@ -200,12 +203,11 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                     coord = coord+str(index+i)
                     target[coord] = content[i][key]
                 else:
-                    coord = ':'.join([l+str(index+i)
-                                     for l in coord.split(':')])
+                    coord = ':'.join([l+str(index+i) for l in coord.split(':')])
                     target.merge_cells(coord)
                     target[coord.split(':')[0]] = content[i][key]
 
-    for key in hours_semester.keys()[:3]:
+    for key in list(hours_semester.keys())[:3]:
         # Si no se debe hacer merge de las celdas.
         if cells['Cara.1']['total_hours'][key].find(':') < 0:
             target[cells['Cara.1']['total_hours'][key]] = hours_semester[key]
@@ -216,7 +218,7 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
 
     target = wb['Cara.2']
 
-    for activity in activities.keys()[-2:]:
+    for activity in list(activities.keys())[-2:]:
         index = cells['Cara.2']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
@@ -250,14 +252,14 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                 target.merge_cells(coord)
                 target[coord.split(':')[0]] = activities_track[i][key]
 
-    for key in hours_semester.keys()[-2:]:
+    for key in list(hours_semester.keys())[-2:]:
         if cells['Cara.2']['total_hours'][key].find(':') < 0:
             target[cells['Cara.2']['total_hours'][key]] = hours_semester[key]
         else:
             target.merge_cells(cells['Cara.2']['total_hours'][key])
             target[cells['Cara.2']['total_hours'][key].split(':')[0]] = hours_semester[key]
 
-    for daypart, rango in day:
+    for daypart, rango in day.items():
         target[cells['Cara.2'][daypart]] = rango
     
     target.merge_cells(cells['Cara.2']['observations'])

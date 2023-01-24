@@ -1,7 +1,5 @@
-<div
-  class="containerInside container card shadow mt-5 bg-white rounded p-5"
-  *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
->
+<div class="containerInside container card shadow mt-5 bg-white rounded p-5"
+  *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
   <div class="row header-row">
     <div class="col">
       <span class="text-secondary">{{ title | uppercase }}</span>
@@ -37,19 +35,12 @@
   <hr />
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 
-  <button
-    type="button"
-    class="btn btn-status btn-block col-12 mt-3"
-    (click)="historyStatus = !historyStatus"
-  >
+  <button type="button" class="btn btn-status btn-block col-12 mt-3" (click)="historyStatus = !historyStatus">
     Ver Historial de estados
   </button>
   <div *ngIf="application$ | async as application">
     <div class="row regular-row">
-      <app-status-history
-        *ngIf="historyStatus"
-        [status]="application.application_status"
-      ></app-status-history>
+      <app-status-history *ngIf="historyStatus" [status]="application.application_status"></app-status-history>
     </div>
   </div>
 
@@ -66,24 +57,14 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Observación *</div>
         <div class="col-sm-12 col-xs-12 col-md-8">
           <div class="formfloatig">
-            <textarea
-              id="floatingjustificacion"
-              formControlName="observation"
-              class="form-control"
-              type="justificacion"
-              placeholder=" "
-              rows="5"
-            ></textarea>
+            <textarea id="floatingjustificacion" formControlName="observation" class="form-control" type="justificacion"
+              placeholder=" " rows="5"></textarea>
           </div>
         </div>
       </div>
       <div class="footer-row d-md-flex justify-content-md-end">
         <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            (click)="cancel()"
-          >
+          <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
             Cancelar
           </button>
         </div>
@@ -101,36 +82,17 @@
   </div>
 
   <div class="user-control" *ngIf="!context.isSuperUser">
-    <div
-      class="footer-row d-md-flex justify-content-md-end"
-      *ngIf="application$ | async as application"
-    >
-      <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          (click)="cancel()"
-        >
-          Cancelar
-        </button>
-      </div>
+    <div class="footer-row d-md-flex justify-content-md-end" *ngIf="application$ | async as application">
+
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
-        <button
-          class="btn btn-outline-danger"
-          (submit)="(true)"
-          type="submit"
-          (click)="delete()"
-        >
+        <button class="btn btn-outline-danger" (submit)="(true)" type="submit" (click)="delete()">
           Eliminar
         </button>
       </div>
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
-        <button
-          class="btn btn-warning"
-          routerLink="/solicitudes/editar/{{ id }}/{{
+        <button class="btn btn-warning" routerLink="/solicitudes/editar/{{ id }}/{{
             application.application_sub_type.application_type.description
-          }}"
-        >
+          }}">
           Editar
         </button>
       </div>

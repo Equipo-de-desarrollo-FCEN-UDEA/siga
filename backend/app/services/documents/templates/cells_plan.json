@@ -30,7 +30,7 @@
                 "total_sem_hours": "L",
                 "range_cells": 17
             },
-            "investigation_activities": {
+            "research_activities": {
                 "code_i": "A",
                 "project_identification": "B:D",
                 "responsibilities": "E",
@@ -56,7 +56,7 @@
             "total_hours_o": "K22:L22"
         },
         "multiple_rows": {
-            "academic_admin_activities": {
+            "admin_activities": {
                 "position": "A:D",
                 "week_hours_a": "E",
                 "activities": "F:J",
@@ -76,18 +76,18 @@
                 "range_cells": 27
             }
         },
-        "monday_morning": "B36",
-        "monday_afternoon": "C36",
-        "tuesday_morning": "B37",
-        "tuesday_afternoon": "C37",
-        "wednesday_morning": "B38",
-        "wednesday_afternoon": "C38",
-        "thursday_morning": "B39",
-        "thursday_afternoon": "C39",
-        "friday_morning": "B40",
-        "friday_afternoon": "C40",
-        "saturday_morning": "B41",
-        "saturday_afternoon": "C41",
-        "observations": "D35:L39"
+        "monday_morning": "B41",
+        "monday_afternoon": "C41",
+        "tuesday_morning": "B42",
+        "tuesday_afternoon": "C342",
+        "wednesday_morning": "B43",
+        "wednesday_afternoon": "C433",
+        "thursday_morning": "B44",
+        "thursday_afternoon": "C44",
+        "friday_morning": "B45",
+        "friday_afternoon": "C45",
+        "saturday_morning": "B46",
+        "saturday_afternoon": "C46",
+        "observations": "D40:L44"
     }
 }
