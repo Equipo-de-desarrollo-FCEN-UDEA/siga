@@ -13,4 +13,8 @@ from .applications.permission import permission
 from .applications.full_time import full_time
 
 from .holiday import holiday
+from .cron_job import cron_job
+
+
+
 

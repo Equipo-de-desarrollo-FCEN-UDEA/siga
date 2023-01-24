@@ -8,6 +8,10 @@ from .base import CRUDBase
 
 from sqlalchemy.orm import Session
 
+from app.core.logging import get_logging
+
+log = get_logging(__name__)
+
 
 class CRUDApplication_status(CRUDBase[Application_status, Application_statusCreate, Application_statusUpdate, Application_statusPolicy]):
     def create(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application) -> Application_status:

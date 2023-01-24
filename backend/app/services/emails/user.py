@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 from email.message import EmailMessage
 
 from .templates import templatesdir
-from app.core.celery_worker import celery
+from app.core.celery_worker import celery_app
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
 
@@ -18,7 +18,7 @@ _my_pwd = settings.smtp_user_password._secret_value
 
 env = Environment(loader=FileSystemLoader(templatesdir))
 
-@celery.task
+@celery_app.task
 def recovery_password_email(to_name: str, token: str, email: str):
     template = env.get_template('email.recuperar.contraseña.html.j2')
     link = f"http://{settings.APP_DOMAIN}/auth/recuperar-contrasena/{token}"
@@ -41,7 +41,7 @@ def recovery_password_email(to_name: str, token: str, email: str):
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
 
-@celery.task
+@celery_app.task
 def confirm_email(to_name: str, token: str, email: str):
     template = env.get_template('email.validar.email.html.j2')
     link = f"http://{settings.APP_DOMAIN}/auth/confirmar-correo/{token}"

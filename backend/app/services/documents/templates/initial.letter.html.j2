@@ -1,0 +1,57 @@
+{% extends "letter.base.html.j2" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+            <p class="subtitle">
+                Medellín, {{date}}
+            </p>
+        </div>
+        <p>
+            Señores:
+        </p>
+        <p>
+            Consejo {{(user.department.description).title()}}
+        </p>
+        <p>
+            {{user.department.school.description}}
+        </p>
+        <p>
+            Universidad de Antioquia
+        </p>
+
+        <p>
+            Respetados miembros del consejo:
+        </p>
+
+    </header>
+    <section class="section" style="margin-top: 1em;">
+        <p class="text-justify">
+            {{body}}
+        </p>
+    </section>
+</div>
+
+<div class="footer">
+    <div class="text-center">
+        <p>
+            Prof. {{(user.names + ' ' + user.last_names).title()}}
+        </p>
+        <p>
+            {{(user.department.description).title()}}
+        </p>
+        <p>
+            {{(user.department.school.description).title()}}
+        </p>
+        <p>
+            {{(user.email).lower()}}
+        </p>
+        <p>
+            Medellín, Antioquia, Colombia
+        </p>
+    </div>
+</div>
+
+{% endblock %}

@@ -15,18 +15,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { StepperComponent } from './components/stepper/stepper.component';
+import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 
 @NgModule({
   declarations: [
     StatusHistoryComponent,
     NotFoundComponent,
     LoaderComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CdkStepperModule
   ],
   exports: [
     HttpClientModule,
@@ -35,7 +39,9 @@ import { LoaderComponent } from './components/loader/loader.component';
     StatusHistoryComponent,
     FormsModule,
     NgbModule,
-    LoaderComponent
+    LoaderComponent,
+    StepperComponent,
+    CdkStepperModule
   ]
 })
 export class SharedModule { }

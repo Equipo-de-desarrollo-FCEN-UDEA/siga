@@ -2,9 +2,12 @@ from boto3 import resource
 from botocore.exceptions import ClientError
 
 from app.core.config import get_app_settings
+from app.core.logging import get_logging
 
 
 settings = get_app_settings()
+
+log = get_logging(__name__)
 
 
 class AmazonS3:
@@ -29,6 +32,7 @@ class AmazonS3:
         try:
             self.s3.Object(bucket_name, file_name).delete()
         except ClientError as e:
+            log.error(e)
             return False
         return True
 

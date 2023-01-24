@@ -25,6 +25,7 @@ odmantic = "^0.9.0"
 httpx = "^0.23.0"
 boto3 = "^1.26.8"
 weasyprint = "^57.1"
+openpyxl = "^3.0.10"
 
 
 [tool.poetry.group.dev.dependencies]
