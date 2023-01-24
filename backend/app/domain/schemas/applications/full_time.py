@@ -1,7 +1,7 @@
 from datetime import datetime, time
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from app.domain.schemas.application import ApplicationResponse
 
@@ -9,28 +9,17 @@ from app.domain.schemas.application import ApplicationResponse
 # -Helper Models-
 # ---------------
 
-class Action (BaseModel) :
-    id: int
-    description: str
-  
-  
-class Indicator (BaseModel) :
-    id: int
-    description: str
-  
 
 class Objectives(BaseModel):
-    id: int
     description: str
-    actions: list[Action]
-    indicators: list[Indicator]
+    actions: list[str]
+    indicators: list[str]
 
 
 class Topics(BaseModel):
-    id: int
     title: str
     subtitle: str
-    objectives: list[Objectives]
+    objectives: Objectives
 
 
 class ActivityIdentification(BaseModel):
@@ -125,29 +114,25 @@ class WorkPlan(BaseModel):
     other_activities: list[OtherActivities] | None
     working_week: WorkingWeek
 
-class Goal(BaseModel):
-    goal: str
-
-class Product(BaseModel):
-    product: str
 
 class ViceFormat(BaseModel):
     time: int
     field: str
     description: str
-    goals: list[Goal]
-    products: list[Product]
+    goals: list[str]
+    products: list[str]
     dev_action_plan: list[Topics]
 
 
 class InitialLetter(BaseModel):
-    body: str = Field(min_length=100, max_length=4730)
+    body: str
+
 
 # Model
 
 class FullTimeBase(BaseModel):
     title: str
-    documents: list[Any] | None = Field(default_factory=list)
+    documents: list[Any] | None
 
 
 class FullTimeCreate(FullTimeBase):

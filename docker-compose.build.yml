@@ -53,22 +53,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info -Q test-queue -c 1
-    env_file:
-      - prod.env
-    environment:
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    depends_on:
-      - redis
-      - backend
-
-  celery-beat:
-    container_name: 'celery_beat'
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.prod
-    command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
+    command: celery -A app.core.celery_worker.celery worker --loglevel=info
     env_file:
       - prod.env
     environment:

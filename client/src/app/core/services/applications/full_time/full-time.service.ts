@@ -40,7 +40,7 @@ export class FullTimeService {
   }
 
   putViceFormat(viceFormat: ViceFormat, id: number) {
-    return this.http.put<FullTimeInDB>(this.urlEndPoint + 'vice-format/' + id, viceFormat)
+    this.http.put<FullTimeInDB>(this.urlEndPoint + 'vice-format/' + id, viceFormat)
   }
 
   putWorkPlan(workPlan: WorkPlan, id: number) {

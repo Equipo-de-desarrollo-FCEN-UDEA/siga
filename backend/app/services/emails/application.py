@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 from email.message import EmailMessage
 
 from .templates import templatesdir
-from app.core.celery_worker import celery_app
+from app.core.celery_worker import celery
 from app.core.config import get_app_settings
 
 settings = get_app_settings()
@@ -16,7 +16,7 @@ _my_pwd = settings.smtp_user_password._secret_value
 env = Environment(loader=FileSystemLoader(templatesdir))
 
 
-@celery_app.task
+@celery.task
 def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: str):
     template = env.get_template("email.cambio.estado.html.j2")
     enlace = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
@@ -41,7 +41,7 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
         smtp.send_message(msg)
 
 
-@celery_app.task
+@celery.task
 def create_application_email(to_name: str, to_lname: str, tipo_solicitud: str, token: str, email: str):
     template = env.get_template("email.creacion.solicitud.html.j2")
 

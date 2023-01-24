@@ -12,7 +12,7 @@ from app.domain.models import Commission, User, Application
 from app.domain.schemas import PermissionDocument, UserResponse, ApplicationResponse, SchoolInDB
 from app.core.logging import get_logging
 from app.core.config import get_app_settings
-from app.core.celery_worker import celery_app
+from app.core.celery_worker import celery
 from app.assets.logos import logos_dir
 from app.services import aws, crud
 
@@ -55,10 +55,10 @@ async def permission_resolution_generation(user: User, application: Application,
     
     return None
 
-@celery_app.task
+@celery.task
 def generate_permission_pdf_to_aws(data: dict, path: str):
     env = Environment(loader=FileSystemLoader(templates_dir))
-    template = env.get_template('permission.letter.html.j2')
+    template = env.get_template('permission.letter.html')
     render = template.render(data)
     pdf = HTML(string=render, base_url=logos_dir).write_pdf()
     file = BytesIO()

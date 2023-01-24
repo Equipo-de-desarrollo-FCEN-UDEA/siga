@@ -94,7 +94,7 @@ export class CommissionComponent implements OnInit {
   submit() {
     let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
     for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
+      this.documentSvc.deleteDocument(path).subscribe().unsubscribe()
     }
     if (this.files.length > 0) {
       commission = this.documentSvc.postDocument(this.files as File[]).pipe(

@@ -34,4 +34,3 @@ from .applications import (
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
 
-from .cron_job import (CronJobBase, CronJobCreate, CronJobUpdate)

@@ -1,18 +1,20 @@
-import { Topic } from "./development-plan";
-
 export interface ViceFormat {
     time: number;
     field: string;
     description: string;
-    goals: Goal[];
-    products: Product[];
-    dev_action_plan: Topic[];
+    goals: string[];
+    products: string[];
+    dev_action_plan: DevActionPlan[];
 }
 
-export interface Goal{
-    goal: string;
+export interface DevActionPlan {
+    title: string;
+    subtitle: string;
+    objectives: Objectives;
 }
 
-export interface Product{
-    product: string;
+export interface Objectives {
+    description: string;
+    actions: string[];
+    indicators: string[];
 }
