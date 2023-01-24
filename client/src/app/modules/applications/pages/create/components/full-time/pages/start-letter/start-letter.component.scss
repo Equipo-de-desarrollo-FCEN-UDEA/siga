@@ -1,0 +1,116 @@
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+  }
+  .custom-day.focused {
+    background-color: #e6e6e6;
+  }
+  .custom-day.range, .custom-day:hover {
+    background-color: #43B649;
+    color: white;
+  }
+  .custom-day.faded {
+    background-color: #43b649c0;
+  }
+  .containerInside{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1em;
+    align-items: unset;
+    margin-bottom: 6em!important;
+  }
+  .card{
+  margin: auto;
+  margin-top: 0;
+  padding: 1em 0.5em;
+  }
+  
+  @media screen and (max-width: 576px){
+  :host ::ng-deep .ngb-dp-months {
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+  :host ::ng-deep .ngb-dp-month {
+    flex: 1 0 auto;
+  }
+  .containerInside {
+    width: 95%!important;
+  
+   }
+  }
+  
+  
+  p {
+    text-align: center;
+    margin: 0;
+    color: green;
+  }
+  
+  .btn-dark {
+  background-color: #43B649;
+  border-color: #43B649;
+  }
+  
+  
+  .formLabel{
+  left: 1.7em;
+  }
+  
+  .selectLabel{
+  left: 1.7em;
+  }
+  
+  .file-upload{
+  display: none;
+  }
+  
+  
+  .buttons {
+    width: fit-content;
+    margin: 0;
+  }
+  
+  .btn-remove {
+    background-color: red;
+    border-color: #fff;
+    color: #fff;
+  }
+  
+  .btn-remove:hover {
+    background-color: #d45f57;
+  }
+
+  .invalid {
+    color: rgb(216, 36, 36);
+  }
+  
+  .btn-add {
+    border-color: #fff;
+    color: #fff;
+    background-color: #43b649;
+  }
+  
+  .btn-add:hover {
+    background-color: #79b97c;
+  }
+  
+  .btn-success {
+    background-color: #43b649;
+  }
+  
+  
+  .ptitle{
+    color: #ffffff;
+    background-color: #026937;
+    padding: 0.5em;
+    border-radius: 0.2em;
+  }
+  
+
+  .invalid {
+    color: rgb(216, 36, 36);
+  }

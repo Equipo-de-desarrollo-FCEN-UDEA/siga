@@ -9,17 +9,28 @@ from app.domain.schemas.application import ApplicationResponse
 # -Helper Models-
 # ---------------
 
+class Action (BaseModel) :
+    id: int
+    description: str
+  
+  
+class Indicator (BaseModel) :
+    id: int
+    description: str
+  
 
 class Objectives(BaseModel):
+    id: int
     description: str
-    actions: list[str]
-    indicators: list[str]
+    actions: list[Action]
+    indicators: list[Indicator]
 
 
 class Topics(BaseModel):
+    id: int
     title: str
     subtitle: str
-    objectives: Objectives
+    objectives: list[Objectives]
 
 
 class ActivityIdentification(BaseModel):
@@ -79,7 +90,7 @@ class AcademicAdminActivities(BaseModel):
 
 class OtherActivities(BaseModel):
     activity: str
-    period_hours: str
+    period_hours: int
     activity_tracking: ActivityTracking | None
 
 
@@ -113,20 +124,25 @@ class WorkPlan(BaseModel):
     academic_admin_activities: list[AcademicAdminActivities] | None
     other_activities: list[OtherActivities] | None
     working_week: WorkingWeek
+    observations: str
 
+class Goal(BaseModel):
+    goal: str
+
+class Product(BaseModel):
+    product: str
 
 class ViceFormat(BaseModel):
     time: int
     field: str
     description: str
-    goals: list[str]
-    products: list[str]
+    goals: list[Goal]
+    products: list[Product]
     dev_action_plan: list[Topics]
 
 
 class InitialLetter(BaseModel):
     body: str = Field(min_length=100, max_length=4730)
-
 
 # Model
 

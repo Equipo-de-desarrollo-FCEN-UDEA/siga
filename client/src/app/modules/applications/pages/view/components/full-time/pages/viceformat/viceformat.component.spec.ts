@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FullTimeFormatComponent } from './full-time-format.component';
+import { FDedicacionComponent } from './viceformat.component';
 
-describe('FullTimeFormatComponent', () => {
-  let component: FullTimeFormatComponent;
-  let fixture: ComponentFixture<FullTimeFormatComponent>;
+describe('FDedicacionComponent', () => {
+  let component: FDedicacionComponent;
+  let fixture: ComponentFixture<FDedicacionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FullTimeFormatComponent ]
+      declarations: [ FDedicacionComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FullTimeFormatComponent);
+    fixture = TestBed.createComponent(FDedicacionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

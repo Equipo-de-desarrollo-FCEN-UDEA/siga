@@ -1,0 +1,42 @@
+.container{
+    max-width: 1440px;
+    width:100%;
+    margin-bottom: 8em !important;
+}
+
+*{
+    box-sizing: border-box;
+    font-size: small;
+}
+
+h1{
+  color: #ffffff;
+  background-color: #026937;
+  padding: 0.5em;
+  border-radius: 0.2em;
+}
+
+form{
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 0.9em
+}
+
+.btn-add {
+    border-color: #fff;
+    color: #fff;
+    background-color: #43b649;
+  }
+
+  .btn-add:hover {
+    background-color: #79b97c;
+  }
+
+  .btn-remove {
+    color: #fff;
+    background-color: var(--032c);
+    border-color: #fff;
+  } .btn-remove:hover {
+    background-color: #d45f57;
+  }

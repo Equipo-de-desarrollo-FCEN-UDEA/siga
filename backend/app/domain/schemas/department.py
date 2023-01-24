@@ -10,7 +10,6 @@ class DepartmentBase(BaseModel):
     school_id: int
     cost_center: int | None
 
-
 class DepartmentCreate(DepartmentBase):
     pass
 

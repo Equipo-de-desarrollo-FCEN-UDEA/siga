@@ -1,0 +1,131 @@
+
+    <form class="need-validation" novalidate [formGroup]="form" (ngSubmit)="submit()">
+        <h2 class="formTitle text-center m-2 mb-4">
+            FORMATO DE EVALUACIÓN DE PROPUESTA O PROYECTO DE DEDICACIÓN EXCLUSIVA
+        </h2>
+        <hr />
+        <h4>Referencias básicas de la dedicación exclusiva</h4>
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12 col-sm-12">
+                <div class="formfloatig">
+                    <input id="requiredTime" 
+                        formControlName="time" 
+                        class="form-control" type="number"
+                        placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('time') }" required />
+                    <label for="requiredTime" 
+                        class="formLabel">Tiempo solicitado (meses)<span
+                         style="color: red">*</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xs-12 col-sm-12">
+                <div class="formfloatig">
+                    <select class="form-select form-select-lg mb-3" id="floatingfield"
+                        formControlName="field" required
+                        [ngClass]="{ 'is-invalid': isInvalidForm('field') }" placeholder=" ">
+                        <option [value]="field" *ngFor="let field of field2fill">
+                            {{ field }}
+                        </option>
+                    </select>
+                    <label for="floatingfield" class="selectLabel"
+                        [ngClass]="{ isFill: form.controls['field'].valid }">Campo o modalidad<span
+                            style="color: red">*</span></label>
+                </div>
+            </div>
+        </div>
+
+        <h5>
+            Descripción del documento comprobante de inscripción en el Sistema
+            Universitario de Investigación (acta, contrato u otro):
+        </h5>
+
+        <div class="formfloatig">
+            <textarea id="floatingdesc" formControlName="description" class="form-control"
+                placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('description') }" rows="2">
+      </textarea>
+            <label for="floatingdesc" class="formLabel">Descripción<span style="color: red">*</span>
+            </label>
+        </div>
+
+        <hr />
+        <h5>Apoya al plan de desarrollo y acción institucional vigente en:</h5>
+        <div class="d-grid gap-2 m-3">
+            <button class="btn btn-success btn-sm" type="button" (click)="open()">
+                Ver plan de desarrollo y acción
+            </button>
+        </div>
+        <hr />
+        <h6>
+            Productos y metas que el profesor adquiere y se compromete a entregar una
+            vez culmine su período de Dedicación Exclusiva. Esta información será
+            consignada en la Resolución de Vicerrectoría de Docencia.
+        </h6>
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <h6>Meta(s):<span style="color: red">*</span></h6>
+                <div style="width: 100%" formArrayName="goals">
+                    <div *ngFor="
+              let goal of goalsArr.controls;
+              last as isLast;
+              let i = index
+            " class="arrayLike formfloatig" [formGroupName]="i">
+                        <textarea id="floatingGoal{{ i }}" formControlName="goal" rows="1" class="form-control"
+                            type="text" placeholder=" "
+                            [ngClass]="{ 'is-invalid': goal.invalid && goal.touched }"></textarea>
+                        <label for="floatingGoal{{ i }}" class="formLabel">Meta {{ i + 1 }}</label>
+                        <div class="buttons">
+                            <button class="btn btn-circle btn-remove btn-sm" type="button"
+                                (click)="removeInput('goals', i)" *ngIf="goalsArr.length > 1">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button class="btn btn-circle btn-add btn-sm" type="button" (click)="addInputGoals()"
+                                *ngIf="isLast">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <h6>Productos:<span style="color: red">*</span></h6>
+                <div style="width: 100%" formArrayName="products">
+                    <div *ngFor="
+              let product of productsArr.controls;
+              last as isLast;
+              let i = index
+            " class="arrayLike formfloatig" [formGroupName]="i">
+                        <textarea id="floatingproducts{{ i }}" formControlName="product" rows="1" class="form-control"
+                            type="text" placeholder=" "
+                            [ngClass]="{ 'is-invalid': product.invalid && product.touched }">
+            </textarea>
+                        <label for="floatingproducts{{ i }}" class="formLabel">Producto {{ i + 1 }}</label>
+                        <div class="buttons">
+                            <button class="btn btn-circle btn-remove btn-sm" type="button"
+                                (click)="removeInput('products', i)" *ngIf="productsArr.length > 1">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button class="btn btn-circle btn-add btn-sm" type="button" (click)="addInputProducts()"
+                                *ngIf="isLast">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="d-grid gap-2 m-3">
+            <button class="btn btn-add" id="Enviar" type="submit" (submit)="(true)" [disabled]="
+          form.invalid ||
+          (isLoading | async) ||
+          dev_action_plan_first_take == 0
+        ">
+                <span *ngIf="isLoading | async" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+                Guardar
+            </button>
+        </div> -->
+    </form>

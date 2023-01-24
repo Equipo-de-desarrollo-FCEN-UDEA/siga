@@ -1,0 +1,117 @@
+.container{
+  max-width: 1400px;
+}
+
+.plan-trabajo{
+margin-bottom: 8em!important;
+}
+
+.lineGroup{
+  margin-right: 1em!important;
+  margin-bottom: 1em!important;
+}
+
+// .lineGroup{
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+//     align-items: center;
+//     margin-bottom: 10px;
+// }
+
+@media (max-width: 576px) {
+.container {
+    width: 95%;
+}
+}
+
+@media (min-width: 991px ) {
+.card-plan {
+  height: 17em;
+}
+
+.card-plan-general {
+  height: 20em!important;
+  align-items: center;
+}
+.card-plan-seguimiento { 
+  height: 10.3em!important;
+}
+}
+
+
+.need-validation {
+text-align: -webkit-center;
+}
+
+.activity_form {
+justify-content: center;
+align-items: baseline;
+}
+
+.card-plan, .card-plan-general {
+align-items: center;
+}
+
+.accordion-item {
+  max-height: fit-content!important;
+}
+
+
+
+
+*{
+box-sizing: border-box;
+font-size: small;
+}
+
+.card{
+margin-top:0;
+height: fit-content;
+overflow-y: scroll;
+}
+h6{
+margin-top: 1em;
+}
+
+.row{
+width: 100%;
+align-items: flex-end;
+& > div {
+  padding: 0;
+  margin: 0;
+}
+}
+
+//---- buttons ------
+.buttons{
+  align-items: center;
+  margin: 0.5em;
+  width: fit-content;
+}
+.btn-add {
+border-color: #fff;
+color: #fff;
+background-color: #43b649;
+}.btn-add:hover {
+  background-color: #79b97c;
+  }
+
+.btn-remove {
+background-color: #d45f57;  
+color: #fff;
+border-color: #fff;
+}.btn-remove:hover {
+  background-color: #d45f57e1;
+  }
+
+
+.arrayLike{
+padding: 0;
+margin-bottom: 1em;
+}
+
+.formfloatig{
+padding: 0;
+margin: 0;
+}
