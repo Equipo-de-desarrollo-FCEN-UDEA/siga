@@ -10,6 +10,7 @@ export interface HourAvalBase {
     another_applicants: Applicant[] | null;
     products: Product[];
     application_sub_type_id: number;
+    backres?: string
 }
 
 export interface HourAvalCreate extends HourAvalBase {
@@ -22,7 +23,7 @@ export interface HourAvalUpdate extends HourAvalBase {
 
 export interface Applicant {
     email: string;
-    acepted: boolean | null;
+    acepted?: boolean | null | undefined;
     role: string;
 }
 

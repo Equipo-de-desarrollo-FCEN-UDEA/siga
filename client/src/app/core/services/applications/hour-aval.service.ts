@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { HourAvalCreate, HourAvalResponse, HourAvalUpdate } from '@interfaces/applications/hour_aval';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class HourAvalService {
 
-  private urlEndPoint = environment.route + 'hour_aval/';
+  private urlEndPoint = environment.route + 'hour-aval/';
 
   constructor(
     private http: HttpClient
@@ -30,6 +30,14 @@ export class HourAvalService {
 
   deleteHourAval(id: number): Observable<Msg> {
     return this.http.delete<Msg>(this.urlEndPoint + id)
+  }
+
+  confirmHourAval(id: string, token: string, acepted: boolean): Observable<Msg> {
+    let params = new HttpParams()
+    params = params.append('acepted', acepted ? true : false)
+    params = params.append('token', token)
+
+    return this.http.put<Msg>(this.urlEndPoint + id + '/confirm', null, { params: params })
   }
 
 }

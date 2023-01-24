@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 from app.domain.schemas.application import ApplicationResponse
@@ -25,12 +27,14 @@ class Product(BaseModel):
 class HourAvalBase(BaseModel):
     time: int = Field(gt=1, lt=48)
     hours_week: int
+    title: str = Field(min_length=10, max_length=255)
     description: str = Field(min_length=30, max_length=500)
     announcement: str
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
-    another_applicants: list[Applicant] | None
+    another_applicants: list[Applicant] = Field(default_factory=list)
     products: list[Product]
+    backrest: str | None
 
 
 class HourAvalCreate(HourAvalBase):
@@ -42,8 +46,7 @@ class HourAvalUpdate(HourAvalBase):
 
 
 class HourAvalInDB(HourAvalBase):
-    id: str
-    letter_path: str | None
+    documents: list[Any] | None = Field(default_factory=list)
 
 
 class HourAvalResponse(ApplicationResponse):

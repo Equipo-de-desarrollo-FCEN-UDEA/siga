@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field, validator, SecretStr
 
@@ -97,6 +97,7 @@ class UserBypass(BaseModel):
     email: str
     names: str
     last_names: str
+    vinculation_type: str
 
     @validator('names', 'last_names')
     def cutname(cls, value):

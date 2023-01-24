@@ -17,10 +17,12 @@ class Product(EmbeddedModel):
 class HourAval(Model):
     time: int
     hours_week: int
+    title: str 
     description: str
     announcement: str
     entity: str | None
     role: str
     another_applicants: list[Applicant]
-    letter_path: str | None
+    documents: list[Any] | None
     products: list[Product]
+    backrest: str | None

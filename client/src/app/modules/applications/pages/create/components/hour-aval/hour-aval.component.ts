@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Applicant } from '@interfaces/applications/hour_aval';
-import { UserByPass } from '@interfaces/user';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Applicant, HourAvalCreate } from '@interfaces/applications/hour_aval';
+import { UserByPass, UserResponse } from '@interfaces/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HourAvalService } from '@services/applications/hour-aval.service';
 import { UserService } from '@services/user.service';
+import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ApplicantsComponent } from './applicants/applicants.component';
 
 @Component({
   selector: 'app-hour-aval',
@@ -11,7 +15,6 @@ import { UserService } from '@services/user.service';
   styleUrls: ['./hour-aval.component.scss']
 })
 export class HourAvalComponent {
-  files: any[] = [];
 
   products: string[] = [];
 
@@ -19,34 +22,70 @@ export class HourAvalComponent {
 
   usersByPass: UserByPass[] = [];
 
+  applicants: Applicant[] = [];
+
+  public user$: Observable<UserResponse> = this.userSvc.getUser();
+  private user!: UserResponse;
+
   public form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private hourAvalSvc: HourAvalService,
-    private userSvc: UserService
+    private userSvc: UserService,
+    private modal: NgbModal
   ) {
     this.form = this.formBuilder.group({
       time: [NaN, [Validators.required, Validators.max(300), Validators.min(1)]],
       hours_week: [NaN, [Validators.required, Validators.max(48), Validators.min(1)]],
+      announcement: ['', [Validators.required, Validators.maxLength(1000)]],
+      title: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
       description: ['', [Validators.required, Validators.min(30), Validators.max(500)]],
       entity: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
       role: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
-      products: this.formBuilder.array([this.productsGroup()], [Validators.required])
-    })
+      backres: [''],
+      products: this.formBuilder.array([this.productsGroup()], [Validators.required]),
+      another_applicants: [this.applicants]
+    },
+      { Validators: this.backrestValidator }
+    )
+    this.userSvc.getUser().subscribe(user => this.user = user)
+  }
+
+  backrestValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    return (this.user.scale.toUpperCase() != 'PROFESOR ASOCIADO' && control.get('backrest')) ? null : { notmatched: true }
+  }
+
+  open() {
+    let resultModal = this.modal.open(ApplicantsComponent)
+    resultModal.result.then(
+      (res: Applicant) => this.applicants.push(res)
+    ).catch(res => { })
+  }
+
+  removeApplicant(i: number) {
+    this.applicants.splice(i, 1)
   }
 
 
-  submit() { }
+  submit() { 
+    if (this.form.invalid){
+      console.log(this.form.value)
+      console.log(this.form.errors)
+      this.submitted = true
+      return;
+    }
 
-  // searchByPass(event: any) { 
-  //   this.userSvc.getByPass(event.target.value).subscribe({
-  //     next: data => this.usersByPass.push(data)
-  //     error: 
-  //   })
-  // }
+    this.hourAvalSvc.postHourAval(this.form.value as HourAvalCreate).subscribe({
+      next: data => {
+        Swal.fire({
+          title: 'Solicitud iniciada',
+          text: 'Su solicitud fue recibida'
+        })
+      }
+    })
 
-  // Objetives array
+  }
 
   productsGroup() {
     return this.formBuilder.group({

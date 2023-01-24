@@ -3,8 +3,8 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Tiempo(meses) <span style="color: red">*</span></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
-                <input id="floatingtime" formControlName="time" class="form-control" placeholder=" " type="number"
-                    [ngClass]="{
+                <input id="floatingtime" formControlName="time" class="form-control" placeholder="Ejemplo: 6"
+                    type="number" [ngClass]="{
                 'is-invalid':
                   (submitted && f['time'].errors) || isInvalidForm('time')
               }" />
@@ -16,10 +16,34 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Horas por semana <span style="color: red">*</span></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
-                <input id="floatinghours_week" formControlName="hours_week" class="form-control" placeholder=" "
-                    type="number" [ngClass]="{
+                <input id="floatinghours_week" formControlName="hours_week" class="form-control"
+                    placeholder="Ejemplo: 4" type="number" [ngClass]="{
                 'is-invalid':
                   (submitted && f['hours_week'].errors) || isInvalidForm('hours_week')
+              }" />
+            </div>
+        </div>
+    </div>
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatingentity" formControlName="title" class="form-control"
+                    placeholder="Título de la propuesta" type="text" [ngClass]="{
+                'is-invalid':
+                  (submitted && f['title'].errors) || isInvalidForm('title')
+              }" />
+            </div>
+        </div>
+    </div>
+    <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Convocatoria<span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="formfloatig">
+                <input id="floatingannouncement" formControlName="announcement" class="form-control"
+                    placeholder="Convocatoria" type="text" [ngClass]="{
+                'is-invalid':
+                  (submitted && f['announcement'].errors) || isInvalidForm('announcement')
               }" />
             </div>
         </div>
@@ -29,7 +53,8 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Descripción <span style="color: red">*</span></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
-                <textarea id="description" formControlName="description" class="form-control" placeholder=" " [ngClass]="{
+                <textarea id="description" formControlName="description" class="form-control" placeholder="Descripción"
+                    [ngClass]="{
                 'is-invalid':
                   (submitted && f['description'].errors) || isInvalidForm('description')
                 }" rows="5"></textarea>
@@ -46,8 +71,8 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Entidad <span style="color: red">*</span></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
-                <input id="floatingentity" formControlName="entity" class="form-control" placeholder=" " type="text"
-                    [ngClass]="{
+                <input id="floatingentity" formControlName="entity" class="form-control"
+                    placeholder="Entidad que realiza la convocatoria" type="text" [ngClass]="{
                 'is-invalid':
                   (submitted && f['entity'].errors) || isInvalidForm('entity')
               }" />
@@ -59,8 +84,8 @@
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Rol <span style="color: red">*</span></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
-                <input id="floatingrole" formControlName="role" class="form-control" placeholder=" " type="text"
-                    [ngClass]="{
+                <input id="floatingrole" formControlName="role" class="form-control"
+                    placeholder="Ejemplo: Investigador principal, Co-investigador" type="text" [ngClass]="{
                 'is-invalid':
                   (submitted && f['role'].errors) || isInvalidForm('role')
               }" />
@@ -74,13 +99,14 @@
     </div>
     <hr>
     <div class="arrayLike formfloatig justify-content-center" formArrayName="products">
-        <div class="row activity_form" *ngFor="let product of productsArr.controls; last as isLast; let i=index "
+        <div class="row activity_form mb-2" *ngFor="let product of productsArr.controls; last as isLast; let i=index "
             [formGroupName]="i">
             <div style="margin-right: 0.5em; margin-bottom: 0.5em" class="lineGroup col-xs-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                        <input type="text" formControlName="name" class="form-control" placeholder=" " />
-                        <label class="formLabel">Nombre</label>
+                        <input type="text" [id]="'name'+i" formControlName="name" class="form-control"
+                            placeholder=" " />
+                        <label class="formLabel" [for]="'name'+i">Nombre</label>
                     </div>
                 </div>
             </div>
@@ -88,9 +114,9 @@
             <div class="col-sm-12 col-md-12 col-lg-12" style="margin-right: 0.5em; margin-bottom: 0.5em">
                 <div class="row" style="margin-left: 0px">
                     <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                        <textarea rows="5" formControlName="description" class="form-control"
+                        <textarea rows="5" [id]="'description'+i" formControlName="description" class="form-control"
                             placeholder=" "></textarea>
-                        <label class="formLabel">Descripción</label>
+                        <label class="formLabel" [for]="'description'+i">Descripción</label>
                     </div>
                 </div>
             </div>
@@ -99,7 +125,8 @@
                 <button class="btn btn-add" type="button" (click)="addInputproducts()" *ngIf="isLast">
                     <i class="fa fa-plus"></i>
                 </button>
-                <button class="btn btn-remove" type="button" (click)="removeInput('products', i)">
+                <button class="btn btn-remove" type="button" *ngIf="productsArr.length > 1"
+                    (click)="removeInput('products', i)">
                     <i class="fa fa-minus"></i>
                 </button>
             </div>
@@ -112,6 +139,45 @@
         </div>
     </div>
     <hr />
+    <!-- Participants -->
+    <div class="row m-2">
+        <div *ngFor="let applicant of applicants; let i=index" class="col col-md-6 col-sm-12 col-lg-4">
+            <div class="card">
+                <div class="text-end">
+                    <button class="btn btn-remove" (click)="removeApplicant(i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="text-center">
+                    <span class="user-pic">
+                        <i class="fa-solid fa-user-circle fa-2xl"></i>
+                    </span>
+                </div>
+                <div class="card-text text-center">
+                    {{applicant.email}} <br>
+                    {{applicant.role}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <button class="btn btn-success" (submit)="false" type="button" (click)="open()">Agregar participantes</button>
+    <div *ngIf="user$ | async as context">
+        <div *ngIf="context.scale.toUpperCase() != 'PROFESOR ASOCIADO'"
+            class="row regular-row mt-4 align-items-baseline">
+            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Respaldo <span style="color: red">*</span></div>
+            <div class="col-sm-12 col-xs-12 col-md-8">
+                <div class="formfloatig">
+                    <input id="floatingentity" formControlName="backres" class="form-control"
+                        placeholder="Correo del profesor que respaldará en caso de ausencia" type="text" [ngClass]="{
+                'is-invalid':
+                  (submitted && f['backres'].errors) || isInvalidForm('backres')
+              }" />
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- <div class="row regular-row mt-4 align-items-baseline">
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Solicitante</div>
