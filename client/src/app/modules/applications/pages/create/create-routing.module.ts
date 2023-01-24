@@ -19,7 +19,6 @@ import { WorkplanComponent } from './components/full-time/pages/workplan/workpla
 
 //CREATE COMPONENT
 import { CreateComponent } from './create.component';
-import { FullTimeFormatComponent } from './components/full-time/pages/full-time-format/full-time-format.component';
 
 const routes: Routes = [
   {
@@ -59,11 +58,6 @@ const routes: Routes = [
         path: 'carta-inicio/:id',
         component: StartLetterComponent,
       },
-      {
-        path: 'formato-vicerrectoria/:id',
-        component: FullTimeFormatComponent,
-      },
-
       //CUMPLIDOS
       {
         path: 'formatovice/:id',
