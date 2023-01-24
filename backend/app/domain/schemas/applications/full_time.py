@@ -1,7 +1,7 @@
 from datetime import datetime, time
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
 
 from app.domain.schemas.application import ApplicationResponse
 

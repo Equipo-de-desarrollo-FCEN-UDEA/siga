@@ -82,13 +82,14 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
         data=>{
           if(data.full_time.vice_format){
             this.form.patchValue(data.full_time.vice_format);
+            this.patchGoal(data.full_time.vice_format.goals);
+            this.patchProduct(data.full_time.vice_format.products)
             this.dev_action_plan = data.full_time.vice_format.dev_action_plan;
           }
           
         }
       );
   }
-
 
   ngAfterViewInit(): void {
     

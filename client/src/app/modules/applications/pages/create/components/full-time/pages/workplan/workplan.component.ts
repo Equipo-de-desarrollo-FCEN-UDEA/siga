@@ -24,11 +24,11 @@ export class WorkplanComponent implements OnInit {
     period: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
     registro: ['', [Validators.required]],
     partial_time: [NaN, [Validators.required]],
-    teaching_activities: this.fb.array([this.teachingActivitiesGroup()], [Validators.required]),
-    investigation_activities: this.fb.array([this.investigationActivitiesGroup()], [Validators.required]),
-    extension_activities: this.fb.array([this.extensionActivitiesGroup()], [Validators.required]),
-    academic_admin_activities: this.fb.array([this.academicAdministrationGroup()], [Validators.required]),
-    other_activities:  this.fb.array([this.otherActivitiesGroup()], [Validators.required]),
+    teaching_activities: this.fb.array([]),
+    investigation_activities: this.fb.array([]),
+    extension_activities: this.fb.array([]),
+    academic_admin_activities: this.fb.array([]),
+    other_activities:  this.fb.array([]),
     observations: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(6)]],
     working_week: this.fb.array([this.workDayGroup()], [Validators.required]),
   });
@@ -76,20 +76,21 @@ export class WorkplanComponent implements OnInit {
       params => {
         this.id = params['id']
         this.fullTimeSvc.getFullTime(this.id).subscribe(data =>{
-          if(data) { 
+          if(data.full_time.work_plan) { 
             this.f_workplan.patchValue({
-              period: data.full_time.work_plan?.period,
-              registro: data.full_time.work_plan?.registro,
-              partial_time: data.full_time.work_plan?.partial_time,
-  
+              period: data.full_time.work_plan.period,
+              registro: data.full_time.work_plan.registro,
+              partial_time: data.full_time.work_plan.partial_time,
+              observations: data.full_time.work_plan.observations
             });
-  
-            this.patchTeachingActivities(data.full_time.work_plan?.teaching_activities);
+
+            console.log(data.full_time.work_plan)
+            this.patchTeachingActivities(data.full_time.work_plan.teaching_activities);
             this.patchInvestigationActivities(data.full_time.work_plan?.investigation_activities);
             this.patchExtensionActivities(data.full_time.work_plan?.extension_activities);
             this.patchAcademicAdministration(data.full_time.work_plan?.academic_admin_activities);
             this.patchOtherActivities(data.full_time.work_plan?.other_activities);
-            this.patchWorkDay(data.full_time.work_plan?.working_week);
+            // this.patchWorkDay(data.full_time.work_plan?.working_week);
           }        
         });
       }
@@ -116,6 +117,8 @@ export class WorkplanComponent implements OnInit {
     work_plan.working_week = work_plan.working_week[0]
 
     this.loaderSvc.show();
+
+    console.log(work_plan)
 
     //llamado del servicio y envio del plan de trabajo
     this.fullTimeSvc.putWorkPlan(work_plan, this.id).subscribe(
@@ -171,7 +174,9 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchTeachingActivities(activity: any) {
-    for (let i = 0; i < activity.length - 1; i++) {
+    console.log('parchando actividades de docencia')
+    for (let i = 0; i < activity.length; i++) {
+      console.log('activity')
       this.addTeachingActivities();
     }
     this.teachingActivitiesArr.patchValue(activity);
@@ -208,7 +213,7 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchInvestigationActivities(activity: any) {
-    for (let i = 0; i < activity.length -1; i++) {
+    for (let i = 0; i < activity.length; i++) {
       this.addInvestigationActivities();
     }
     this.investigationActivitiesArr.patchValue(activity);
@@ -245,7 +250,7 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchExtensionActivities(activity: any) {
-    for (let i = 0; i < activity.length -1 ; i++) {
+    for (let i = 0; i < activity.length ; i++) {
       this.addExtensionActivities();
     }
     this.extensionActivitiesArr.patchValue(activity);
@@ -281,7 +286,7 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchAcademicAdministration(activity: any) {
-    for (let i = 0; i < activity.length -1 ; i++) {
+    for (let i = 0; i < activity.length ; i++) {
       this.addAcademicAdministration();
     }
     this.academicAdministrationArr.patchValue(activity);
@@ -315,7 +320,7 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchOtherActivities(activity: any) {
-    for (let i = 0; i < activity.length -1 ; i++) {
+    for (let i = 0; i < activity.length ; i++) {
       this.addOtherActivities();
     }
     this.otherActivitiesArr.patchValue(activity);
