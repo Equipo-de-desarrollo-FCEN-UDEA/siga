@@ -13,7 +13,7 @@ export interface FullTimeCreate {
 
 
 export interface FullTimeInDB extends FullTimeCreate {
-    id: string;
+    id: number;
     work_plan?: WorkPlan;
     vice_format?: ViceFormat;
     initial_letter?: InitialLetter;

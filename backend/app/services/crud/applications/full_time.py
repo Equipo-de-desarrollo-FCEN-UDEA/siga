@@ -1,10 +1,11 @@
 from typing import Any
+from json import loads
 
 from odmantic import ObjectId
 from odmantic.session import AIOSession
 
 from app.domain.models import FullTime
-from app.domain.schemas import FullTimeUpdate, FullTimeCreate
+from app.domain.schemas import FullTimeUpdate, FullTimeCreate, WorkPlan
 from app.domain.policies.applications.full_time import FullTimePolicy
 from .base import CRUDBase
 
@@ -29,9 +30,9 @@ class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePo
         db_obj = await db.save(full_time)
         return db_obj
 
-    async def work_plan(self, db: AIOSession, *, id: ObjectId, work_plan: Any) -> FullTime:
+    async def work_plan(self, db: AIOSession, *, id: ObjectId, work_plan: WorkPlan) -> FullTime:
         full_time = await db.find_one(FullTime, FullTime.id == id)
-        full_time.work_plan = work_plan
+        full_time.work_plan = loads(work_plan.json(exclude_unset=True))
         db_obj = await db.save(full_time)
         return db_obj
 

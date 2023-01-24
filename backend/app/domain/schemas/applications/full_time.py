@@ -19,7 +19,7 @@ class Objectives(BaseModel):
 class Topics(BaseModel):
     title: str
     subtitle: str
-    objectives: Objectives
+    objectives: list[Objectives]
 
 
 class ActivityIdentification(BaseModel):
@@ -79,7 +79,7 @@ class AcademicAdminActivities(BaseModel):
 
 class OtherActivities(BaseModel):
     activity: str
-    period_hours: str
+    period_hours: int
     activity_tracking: ActivityTracking | None
 
 
@@ -113,6 +113,7 @@ class WorkPlan(BaseModel):
     academic_admin_activities: list[AcademicAdminActivities] | None
     other_activities: list[OtherActivities] | None
     working_week: WorkingWeek
+    observations: str
 
 
 class ViceFormat(BaseModel):

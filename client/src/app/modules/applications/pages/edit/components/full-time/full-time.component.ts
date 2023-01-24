@@ -52,14 +52,61 @@ export class FullTimeComponent implements OnInit {
     }
   }
 
+  //------ NAVEGATE FUNTIONS -------
+
+  //plan de trabajo
+  navegateWorkplan() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/plan-de-trabajo/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
+
+  //Formato vice
+  navegateViceFormat() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/formato-vicerrectoria/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
+
+  // carta inicio
+  navegateLetter() {
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+
+      this.fullTimeSvc.getFullTime(this.id).subscribe({
+        next: () => {
+          this.router.navigate([
+            'solicitudes/crear/carta-inicio/' + this.application?.id,
+          ]);
+        },
+      });
+    });
+  }
+
   // --------------------------------------
   // ------------ SUBMIT FORM  ------------
   // --------------------------------------
   submit() {
     this.submitted = true;
 
-    if(this.isInvalidForm()){
-      return
+    if (this.isInvalidForm()) {
+      return;
     }
 
     let fullTime = this.fullTimeSvc.putFullTime(this.id);

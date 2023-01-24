@@ -4,3 +4,4 @@ from .commission import (CommissionCreate, CommissionResponse,
                          CommissionUpdate, commissionInDB, CommissionDocument, Compliment)
 from .full_time import (FullTimeCreate, FullTimeUpdate, FullTimeResponse,
                          FullTimeInDB, WorkPlan, ViceFormat, InitialLetter)
+from .vacations import (VacationCreate, VacationResponse, VacationUpdate)
