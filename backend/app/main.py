@@ -16,8 +16,8 @@ def run_app():
     application = FastAPI(**settings.fastapi_kwargs)
     application.add_middleware(
         CORSMiddleware,
-        allow_origins=[str(origin)
-                       for origin in settings.backend_cors_origins],
+        allow_origins=['*'], #[str(origin)
+                       #for origin in settings.backend_cors_origins],
         allow_methods=["*"],
         allow_credentials=True,
         allow_headers=["*"],

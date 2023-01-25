@@ -101,3 +101,14 @@ services:
     depends_on:
       - backend
     mem_limit: 300m
+
+  
+  pgadmin:
+    container_name: 'pgadmin'
+    image: dpage/pgadmin4
+    ports:
+      - '81:80'
+    depends_on:
+      - db
+    env_file:
+      - .env
