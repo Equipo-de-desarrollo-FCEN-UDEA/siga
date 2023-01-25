@@ -47,6 +47,16 @@ def email_token(email: str) -> str:
     return token
 
 
+def hour_aval_token(identification: str) -> str:
+    expires = datetime.utcnow() + timedelta(settings.aval_confirm_expire_token)
+    token = jwt.encode(
+        {"exp": expires, "sub": identification},
+        settings.secret_key._secret_value,
+        algorithm=settings.algorithm
+    )
+    return token
+
+
 def decode_token(
     token: str,
 ) -> TokenPayload:

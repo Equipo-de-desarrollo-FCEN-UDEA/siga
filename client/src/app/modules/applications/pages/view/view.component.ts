@@ -18,7 +18,7 @@ import { ComService } from './connection/com.service';
 })
 export class ViewComponent implements AfterViewChecked {
 
-  public title:string = '';
+  public title: string = '';
 
   public application$ = new Observable<Application>();
 
@@ -31,9 +31,9 @@ export class ViewComponent implements AfterViewChecked {
   private activatedComponentReference: any;
 
   public id = 0;
-  public isDelete:boolean = false;
-  public submitted:boolean = false;
-  public isDecline:boolean = false;
+  public isDelete: boolean = false;
+  public submitted: boolean = false;
+  public isDecline: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +44,7 @@ export class ViewComponent implements AfterViewChecked {
 
     private authSvc: AuthService,
     private applicationStatusSvc: ApplicationStatusService
-  ) { 
+  ) {
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
@@ -60,6 +60,7 @@ export class ViewComponent implements AfterViewChecked {
   })
 
 
+
   cancel() {
     this.location.back();
   }
@@ -73,26 +74,30 @@ export class ViewComponent implements AfterViewChecked {
   // ---- APROVED APPLICATION -----
   // -----------------------------
   submit() {
-    this.submitted=true;
-    this.applicationStatusSvc.postApplicationStatus({
-      "application_id": this.id,
-      "observation": this.form.value.observation!,
-      "status_id": 1
-    } as ApplicationStatusCreate).subscribe(
-      (data) => {
-        Swal.fire({
-          title: "Se cambió el estado correctamente",
-          icon: 'success',
-          confirmButtonText: 'Aceptar'
-        }).then(
-          (result) => {
-            if (result.isConfirmed){
-              this.location.back();
+    this.submitted = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.submit().subscribe((res : any) => {
+      this.applicationStatusSvc.postApplicationStatus({
+        "application_id": this.id,
+        "observation": this.form.value.observation!,
+        "status_id": 1
+      } as ApplicationStatusCreate).subscribe(
+        (data) => {
+          Swal.fire({
+            title: "Se cambió el estado correctamente",
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+          }).then(
+            (result) => {
+              if (result.isConfirmed) {
+                this.location.back();
+              }
             }
-          }
-        )
-      }
-    )
+          )
+        }
+      )
+    })
+
 
   }
 
@@ -101,7 +106,7 @@ export class ViewComponent implements AfterViewChecked {
   // ---- DECLINE APPLICATION -----
   // -----------------------------
   decline() {
-    this.isDecline=true;
+    this.isDecline = true;
     this.applicationStatusSvc.postApplicationStatus({
       "application_id": this.id,
       "observation": this.form.value.observation!,
@@ -113,7 +118,7 @@ export class ViewComponent implements AfterViewChecked {
           confirmButtonText: "Aceptar"
         }).then(
           (result) => {
-            if (result.isConfirmed){
+            if (result.isConfirmed) {
               this.location.back();
             }
           }
@@ -121,16 +126,17 @@ export class ViewComponent implements AfterViewChecked {
       }
     )
   }
+  onActivate(componentRef: any) {
+    this.activatedComponentReference = componentRef
+  }
 
 
   // -----------------------------
   // ---- DELETE APPLICATION -----
   // -----------------------------
-  onActivate(componentRef: any) {
-    this.activatedComponentReference = componentRef
-  }
 
-  delete(){
+
+  delete() {
     this.isDelete = true;
     const childRouteComp = this.activatedComponentReference;
     childRouteComp.delete(this.id);

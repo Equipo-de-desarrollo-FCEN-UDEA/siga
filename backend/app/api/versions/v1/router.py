@@ -14,7 +14,7 @@ from app.api.versions.v1.routes import (
     holiday
 )
 
-from app.api.versions.v1.routes.applications import permission, commission, full_time
+from app.api.versions.v1.routes.applications import permission, commission, full_time, hour_aval
 
 # APIRouter de fastapi nos permite generar endpoints o en su defecto con el método include_router incluir toda una ruta
 # Routes app
@@ -54,4 +54,6 @@ api_route.include_router(commission.router,
 api_route.include_router(permission.router,
                          prefix="/permission", tags=['permission'])
 api_route.include_router(full_time.router,
-                         prefix='/full-time', tags=['full-time'])
+                         prefix='/full-time', tags=['full_time'])
+api_route.include_router(hour_aval.router,
+                         prefix='/hour-aval', tags=['hour-aval'])

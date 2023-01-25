@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserCreate, UserResponse, UserUpdate } from '@interfaces/user';
+import { UserByPass, UserCreate, UserResponse, UserUpdate } from '@interfaces/user';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { CookieService } from 'ngx-cookie-service';
@@ -72,6 +72,10 @@ export class UserService {
     params = params.append('password', password);
     params = params.append('confirmpassword', confirmPassword);
     return this.http.patch(this.urlEndpoint + 'new-password', {}, { params: params })
+  }
+
+  getByPass(identification: string){
+    return this.http.get<UserByPass>(this.urlEndpoint + 'bypass/' + identification)
   }
 
 }

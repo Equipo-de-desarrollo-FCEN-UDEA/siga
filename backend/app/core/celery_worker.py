@@ -14,7 +14,8 @@ settings = get_app_settings()
 
 
 include = [
-    "app.services.emails.user",
+    "app.services.emails",
+
     "app.services.documents.applications.commission",
     "app.services.documents.applications.permission",
     "app.services.emails.application",

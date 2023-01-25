@@ -1,0 +1,29 @@
+.form-control:focus {
+    border: 1px solid #43b649 !important;
+    box-shadow: 0 0 0 3px #C7F9CC !important;
+}
+
+.formLabel,
+.form-control:not(:placeholder-shown)+.formLabel {
+    transform: translateY(0) scale(.5);
+    transform-origin: left top;
+}
+
+.formLabel {
+    color: gray;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 15px;
+    transform: translateY(7px);
+    transition: transform .5s, color .3s
+}
+
+.formfloatig {
+    padding: 0;
+    margin: 0;
+}
+
+.btn-success {
+    background-color: #43b649;
+  }

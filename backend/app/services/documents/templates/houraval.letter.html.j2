@@ -1,0 +1,71 @@
+{% extends "letter.base.html.j2" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+            <p class="subtitle">
+                Medellín, {{date}}
+            </p>
+        </div>
+        <p>
+            Señores:
+        </p>
+        <p>
+            Consejo {{(user.department.description).title()}}
+        </p>
+        <p>
+            {{user.department.school.description}}
+        </p>
+        <p>
+            Universidad de Antioquia
+        </p>
+
+        <p>
+            Respetados miembros del consejo:
+        </p>
+
+    </header>
+    <section class="section" style="margin-top: 3em;">
+        <p class="text-justify">
+            A través de este medio solicito comedidamente el aval de la dedicación horaria, requisito para participar
+            en la Convocatoria: {{hour_aval.announcement}}. <br>
+            {{hour_aval.description}}.
+        </p>
+        <p class="text-justify">
+            <b>Título: </b> "{{hour_aval.title}}" <br>
+            <b>Duración: </b> "{{hour_aval.time}} meses" <br>
+            <b>Compromisos adquiridos:</b> <br>
+            {% for product in hour_aval.products %}
+            <li><b>{{product.name}}.</b> {{product.description}} </li>
+            {%endfor%}
+        </p>
+        <p class="text-justify">
+            Muchas gracias por su atención. Atentamente,
+        </p>
+        <div class="{{'multi-user' if hour_aval.another_applicants}}">
+            <p class="text-left">
+                <hr style="width:80%;text-align:left;margin-left:0">
+                {{(user.names + ' ' + user.last_names).title()}} <br>
+                Docente {{(user.department.description).title()}} <br>
+                <b>Duración: </b>{{hour_aval.hours_week}} horas<br>
+                <b>Función: </b> {{hour_aval.role}}
+            </p>
+            {% for user in users %}
+            {% set i = loop.index - 1 %}
+            {% if hour_aval.another_applicants[i].acepted == True%}
+            <p class="text-left">
+                <hr style="width:80%;text-align:left;margin-left:0">
+                {{(user.names + ' ' + user.last_names).title()}} <br>
+                Docente {{(user.department.description).title()}} <br>
+                <b>Duración: </b>{{hour_aval.another_applicants[i].time}} horas<br>
+                <b>Función: </b> {{hour_aval.another_applicants[i].role}}
+            </p>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+{% endblock %}

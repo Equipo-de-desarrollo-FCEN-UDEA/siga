@@ -118,7 +118,7 @@ def update_user(
 
 
 @router.patch("/new-password", status_code=200,
-            response_model=schemas.UserResponse)
+              response_model=schemas.UserResponse)
 def update_user_password(
     password: str,
     confirmpassword: str,
@@ -166,3 +166,30 @@ def delete_user(
     return JSONResponse(status_code=status.HTTP_200_OK, content={
         'detail': 'User deleted'
     })
+
+
+@router.get("/bypass/{identification}", status_code=200,
+            response_model=schemas.user.UserBypass)
+def read_user(
+    identification: str,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user)
+) -> schemas.user.UserBypass:
+    """
+    Endpoint to read an user.
+
+        params: identification: str
+    """
+    try:
+        db_user = crud.user.get_by_identification(
+            db, identification) or crud.user.get_by_email(db, identification)
+        if not db_user:
+            raise HTTPException(
+                404,
+                'Este usuario no se encuentra en el sistema y por ende no se puede incluir en la solicitud')
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+
+    return db_user

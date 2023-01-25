@@ -29,7 +29,12 @@ from .applications import (
     FullTimeInDB,
     WorkPlan,
     ViceFormat,
-    InitialLetter
+    InitialLetter,
+    HourAvalResponse,
+    HourAvalUpdate,
+    HourAvalCreate,
+    HourAvalInDB,
+    Act
 )
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)

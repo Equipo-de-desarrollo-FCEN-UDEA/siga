@@ -7,7 +7,7 @@ export interface WorkPlan {
   extension_activities: ExtensionActivity[];
   academic_admin_activities: AcademicAdminActivity[];
   other_activities: OtherActivity[];
-  observations: Observations[];
+  observations: string;
   working_week: WorkingWeek;
 }
 
@@ -79,10 +79,6 @@ export interface WorkingWeek {
   thursday: Day;
   friday: Day;
   saturday: Day;
-}
-
-export interface Observations {
-  observations: string;
 }
 
 export interface Day {

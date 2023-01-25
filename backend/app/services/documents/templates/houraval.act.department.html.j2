@@ -1,0 +1,111 @@
+{% extends "letter.base.html.j2" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+            <p class="subtitle">
+                Medellín, {{date}}
+            </p>
+        </div>
+        <p>
+            Señores:
+        </p>
+        <p>
+            Consejo de Facultad <br>
+            {{user.department.school.description}} <br>
+            Universidad de Antioquia
+        </p>
+
+    </header>
+    <section class="section">
+        {% if not hour_aval.another_applicants %}
+        <p class="text-justify">
+            El Consejo del {{user.department.description}} reunido el pasado {{date}} y soportado en el acta {{act}},
+            recibió por parte del
+            profesor {{(user.names + ' ' + user.last_names).title()}}, una solicitud de aval para dedicación de
+            {{hour_aval.hours_week}} horas semanales, en calidad
+            de {{hour_aval.role}} al proyecto de investigación "{{hour_aval.title}}" que tendrá una duración de
+            {{hour_aval.time}} meses.
+            El Consejo decide avalar y recomendar ante el Consejo de la Facultad.
+        </p>
+        {% endif %}
+        {% if hour_aval.another_applicants %}
+
+        <p class="text-justify">
+            El Consejo del {{user.department.description}} reunido el pasado {{date}} y soportado en el acta {{act}},
+            recibió por parte de los
+            profesores que se relacionan a continuación, una solicitud de aval horaria, para el proyecto de
+            investigación "{{hour_aval.title}}" que tendrá una duración de
+            {{hour_aval.time}} meses.
+            El Consejo decide avalar y recomendar ante el Consejo de la Facultad.
+        </p>
+        <table class="default">
+            <thead>
+                <tr>
+                    <th colspan="3">Docente</th>
+                    <th colspan="2">Rol</th>
+                    <th colspan="2">Horas semanales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">{{(user.names + ' ' + user.last_names).title()}}</td>
+                    <td colspan="2">{{hour_aval.role}}</td>
+                    <td colspan="2">{{hour_aval.hours_week}}</td>
+                </tr>
+                {% for applicant in users%}
+                {% set i = loop.index - 1 %}
+                <tr>
+                    <td colspan="3">{{(applicant.names + ' ' + applicant.last_names).title()}}</td>
+                    <td colspan="2">{{hour_aval.another_applicants[i].role}}</td>
+                    <td colspan="2">{{hour_aval.another_applicants[i].time}}</td>
+                </tr>
+                {% endfor%}
+            </tbody>
+
+
+        </table>
+        {% endif %}
+        {% for back in backrest%}
+        <p class="text-justify">
+            Actualmente el docente {{back.user}}, tiene contrato como docente ocasional, por lo cual el
+            docente {{back.backres}}, docente vinculado, manifiesta su compromiso con la finalización
+            del
+            proyecto en caso de que el docente antes mencionado, por cualquier causa no puedan terminarlo, esto
+            significa
+            asumir el desarrollo y continuidad del proyecto en la etapa en que se encuentre en aras de darle culminación
+            y
+            cumplir con los compromisos asumidos.
+        </p>
+        {% endfor %}
+
+        <p style="margin-top: 1em;">
+            Cordialmente,
+        </p>
+        <div class="signature" style="margin-top: 2em;">
+            <p>
+                {{user.department.director.title()}} <br>
+                Director <br>
+                {{user.department.description}}
+            </p>
+        </div>
+    </section>
+</div>
+
+<div class="footer">
+    <div class="text-center">
+        <p>
+            DIRECCIÓN DE INSTITUTO
+        </p>
+        <p>
+            Contacto: {{user.department.coord_email}}
+        </p>
+        <p>
+            Medellín, Colombia
+        </p>
+    </div>
+</div>
+
+{% endblock %}

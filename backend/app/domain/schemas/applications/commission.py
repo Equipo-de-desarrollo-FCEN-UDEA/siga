@@ -22,12 +22,6 @@ class CommissionBase(BaseModel):
 class CommissionCreate(CommissionBase):
     application_sub_type_id: int = Field(gt=0, lt=100)
 
-    #@validator("application_sub_type_id")
-    #def validate(cls, v, values, **kwargs):
-    #    if not (v in [8,9]): # 8: Comisión de servicios y 9 comisión de estudios
-    #        raise ValueError("El sub tipo no corresponde a la solicitud")
-    #    return v
-
 
 class CommissionUpdate(CommissionBase):
     application_sub_type_id: int

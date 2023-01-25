@@ -26,7 +26,8 @@
         type="submit"
         (click)="click()"
         [disabled]="invalidForm()"
-      > Enviar
+      >
+        {{button? button: 'Solicitar'}}
       </button>
     </div>
   </div>

@@ -8,5 +8,6 @@ from .application_type import ApplicationType
 from .application_subtype import ApplicationSubType
 from .application_status import Application_status
 from .holiday import Holiday
-from .applications import Commission, Permission, Consecutive, FullTime
 from .cron_job import CronJob
+from .applications import (Commission, Permission,
+                           Consecutive, FullTime, HourAval)

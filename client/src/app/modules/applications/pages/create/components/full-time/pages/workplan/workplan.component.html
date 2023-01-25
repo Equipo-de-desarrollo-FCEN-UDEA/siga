@@ -188,15 +188,21 @@
 
               <!-- buttons -->
               <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-                <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
-                  <i class="fa fa-plus"></i>
-                </button>
                 <button (click)="removeInput('teaching_activities', i)" class="btn btn-remove" type="button">
                   <i class=" fa fa-minus"></i>
                 </button>
+                <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
+                  <i class="fa fa-plus"></i>
+                </button>
+
               </div>
 
             </div>
+          </div>
+          <div *ngIf="teachingActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
+              Agregar actividad de docencia
+            </button>
           </div>
 
         </div>
@@ -332,6 +338,11 @@
                 <i class=" fa fa-minus"></i>
               </button>
             </div>
+          </div>
+          <div *ngIf="investigationActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button (click)="addInvestigationActivities()" class="btn btn-add" type="button">
+              Agregar actividad de investigación
+            </button>
           </div>
 
         </div>
@@ -469,6 +480,11 @@
             </div>
 
           </div>
+          <div *ngIf="extensionActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button (click)="addExtensionActivities()" class="btn btn-add" type="button">
+              Agregar actividad de docencia
+            </button>
+          </div>
 
         </div>
       </div>
@@ -576,6 +592,11 @@
             </div>
 
           </div>
+          <div *ngIf="academicAdministrationArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button (click)="addAcademicAdministration()" class="btn btn-add" type="button">
+              Agregar actividad de Administración académica
+            </button>
+          </div>
 
         </div>
       </div>
@@ -665,6 +686,11 @@
               </button>
             </div>
 
+          </div>
+          <div *ngIf="otherActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
+            <button (click)="addOtherActivities()" class="btn btn-add" type="button">
+              Agregar otro tipo de actividad
+            </button>
           </div>
 
         </div>

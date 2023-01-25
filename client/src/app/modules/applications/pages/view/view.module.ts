@@ -8,6 +8,7 @@ import { CommissionComponent } from './components/commission/commission.componen
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from '../create/components/compliment/compliment.component';
 import { FullTimeComponent } from './components/full-time/full-time.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { FullTimeComponent } from './components/full-time/full-time.component';
     ViewComponent,
     PermissionComponent,
     CommissionComponent,
-    FullTimeComponent
+    FullTimeComponent,
+    HourAvalComponent
   ],
   imports: [
     CommonModule,

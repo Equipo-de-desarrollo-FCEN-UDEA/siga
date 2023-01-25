@@ -4,6 +4,7 @@ import { EditComponent } from './edit.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { CommissionComponent } from './components/commission/commission.component';
 import { FullTimeComponent } from './components/full-time/full-time.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 
 const routes: Routes = [
   { 
@@ -36,6 +37,13 @@ const routes: Routes = [
         component: FullTimeComponent,
         data: {
           title: 'Carta de Inicio'
+        }
+      },
+      {
+        path: 'avalhoras',
+        component: HourAvalComponent,
+        data: {
+          title: 'Aval de horas para grupos de investigación'
         }
       },
       {

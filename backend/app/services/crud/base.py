@@ -6,6 +6,9 @@ from sqlalchemy.orm import Session
 from app.domain.models.base import Base
 from app.domain.policies import base
 from app.domain.models import User
+from app.core.logging import get_logging
+
+log = get_logging(__name__)
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -46,7 +49,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         obj_in: CreateSchemaType
     ) -> ModelType:
         self.policy.create(who=who, to=obj_in)
-        obj_in_data = dict(obj_in)
+        log.debug(obj_in.__dict__)
+        obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)  # Ignoramos el tipado
         db.add(db_obj)
         db.commit()

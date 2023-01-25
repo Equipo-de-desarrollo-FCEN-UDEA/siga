@@ -37,3 +37,11 @@ export interface UserResponse extends UserInDBBase{
     department: DepartmentResponse;
     rol: RolResponse;
 }
+
+
+export interface UserByPass {
+    email: string;
+    names: string;
+    last_names: string;
+    vinculation_type: string;
+}

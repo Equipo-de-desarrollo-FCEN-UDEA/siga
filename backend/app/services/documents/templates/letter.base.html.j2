@@ -47,6 +47,10 @@
             text-align: justify;
         }
 
+        .text-left {
+            text-align: left;
+        }
+
         .section {
             margin: 1em;
         }
@@ -55,12 +59,41 @@
             margin-top: auto;
         }
 
-        .logo{
+        .logo {
             height: 150px;
         }
 
-        .signature{
+        .signature {
             height: 100px;
+        }
+
+        .multi-user {
+            width: 100%;
+            columns: 2;
+        }
+
+        .multi-user p {
+            flex: 1 50%;
+            margin: 0 -2cm;
+            padding: 1cm 0;
+            white-space: pre-wrap;
+        }
+
+        td,
+        th {
+            padding: 10px;
+            border-right: 1px #000 solid;
+            border-left: 1px #000 solid;
+        }
+
+        tbody>tr:nth-child(odd) {
+            background-color: rgba(237, 150, 66, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            border-top: 1px #000 solid;
+            border-bottom: 1px #000 solid;
         }
     </style>
 </head>

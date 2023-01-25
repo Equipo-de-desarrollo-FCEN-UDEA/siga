@@ -54,6 +54,10 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         if (application_sub_type == 10 and not (who.rol.scope == 9)):
             raise application_401
 
+        # Aval horas grupos de investigación
+        # if (application_sub_type == 11) and not (who.rol.scope == 9):
+        #     raise application_401
+
         return None
 
     # Only the user can update the application and cant update if its in a status different of SOLICITADA or RECHAZADA
@@ -64,7 +68,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         if not (who.id == to.user_id):
             raise application_401
 
-        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA'):
+        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA' or app_status == 'EN CREACIÓN'):
             raise application_in_other_status
 
         return None

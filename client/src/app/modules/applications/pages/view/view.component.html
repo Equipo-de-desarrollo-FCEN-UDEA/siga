@@ -12,7 +12,7 @@
       <div class="col-xs-12 col-sm-6 label fw-bold">Solicitante</div>
       <div class="col-xs-12 col-sm-6">
         {{
-          application.user.names + " " + application.user.last_names | titlecase
+        application.user.names + " " + application.user.last_names | titlecase
         }}
       </div>
     </div>
@@ -83,7 +83,11 @@
 
   <div class="user-control" *ngIf="!context.isSuperUser">
     <div class="footer-row d-md-flex justify-content-md-end" *ngIf="application$ | async as application">
-
+      <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+          Cancelar
+        </button>
+      </div>
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
         <button class="btn btn-outline-danger" (submit)="(true)" type="submit" (click)="delete()">
           Eliminar

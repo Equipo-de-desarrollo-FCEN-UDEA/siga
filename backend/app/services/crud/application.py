@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Union
+from datetime import datetime
 
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
@@ -22,7 +23,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         limit: int = 100,
         search: str = '',
         filed: bool | None = None,
-        type: int = 0
+        type: int = 0,
+        date_1: datetime | None = None,
+        date_2: datetime | None = None
     ) -> List[Application]:
         queries = []
 
@@ -37,11 +40,14 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             if filed is not None:
                 queries += [Application.filed == filed]
 
-        if who.rol.scope == 7:
+        if (who.rol.scope == 7) or (who.rol.scope == 6):
             queries += [User.department_id == who.department.id]
 
         if who.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
+        
+        if date_1 and date_2:
+            queries += [Application.created_at >= date_1, Application.created_at <= date_2]
 
         if search:
             columns = [
@@ -77,26 +83,42 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         return objs_db
 
-
-    def create(self, db: Session, who: User, obj_in: ApplicationCreate) -> Application:
+    def create(
+        self,
+        db: Session,
+        who: User,
+        obj_in: ApplicationCreate,
+        *,
+        status: int = 1,
+        observation: str = 'Solicitud creada'
+    ) -> Application:
         db_obj = super().create(db=db, who=who, obj_in=obj_in)
         application_status = Application_statusCreate(
             application_id=db_obj.id,
-            status_id=1,
-            observation='Solicitud creada'
+            status_id=status,
+            observation=observation
         )
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
         db.refresh(status_obj)
         return db_obj
-    
-    def update(self, db: Session, who: User, *, db_obj: Application, obj_in: Union[ApplicationUpdate, Dict[str, Any]]) -> Application:
+
+    def update(
+        self,
+        db: Session,
+        who: User,
+        *,
+        db_obj: Application,
+        obj_in: Union[ApplicationUpdate, Dict[str, Any]],
+        status: int = 1,
+        observation: str = 'Solicitud actualizada'
+    ) -> Application:
         db_obj = super().update(db, who, db_obj=db_obj, obj_in=obj_in)
         application_status = Application_statusCreate(
             application_id=db_obj.id,
-            status_id=1,
-            observation='Solicitud Actualizada'
+            status_id=status,
+            observation=observation
         )
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)

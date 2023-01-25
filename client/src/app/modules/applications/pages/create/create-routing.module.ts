@@ -19,6 +19,7 @@ import { WorkplanComponent } from './components/full-time/pages/workplan/workpla
 
 //CREATE COMPONENT
 import { CreateComponent } from './create.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 
 const routes: Routes = [
   {
@@ -30,7 +31,7 @@ const routes: Routes = [
         path: 'permiso',
         component: PermissionComponent,
         data: {
-          title: 'Permiso',
+          title: 'Permiso'
         },
       },
       //comision
@@ -38,7 +39,7 @@ const routes: Routes = [
         path: 'comision',
         component: CommissionComponent,
         data: {
-          title: 'Comisión',
+          title: 'Comisión'
         },
       },
 
@@ -48,8 +49,19 @@ const routes: Routes = [
         component: FullTimeComponent,
         data: {
           title: 'Dedicación Exclusiva',
+          button: 'Iniciar'
         },
       },
+      {
+        path: 'avalhoras',
+        component: HourAvalComponent,
+        data: {
+          title: 'Aval de horas para grupos de investigación',
+          button: 'Iniciar'
+        }
+      },
+
+      //  Formularios extras
       {
         path: 'plan-de-trabajo/:id',
         component: WorkplanComponent,
@@ -91,4 +103,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CreateRoutingModule {}
+export class CreateRoutingModule { }

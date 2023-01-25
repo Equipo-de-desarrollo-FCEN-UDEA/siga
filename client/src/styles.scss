@@ -16,6 +16,14 @@
   color: white;
 }
 
+
+html {
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
 .custom-day.faded {
   background-color: #43b649c0;
 }
@@ -156,7 +164,6 @@ p {
 .bg-in-creation {
   background-color: #000000;
 }
-
 
 .cursor{
   cursor: pointer;

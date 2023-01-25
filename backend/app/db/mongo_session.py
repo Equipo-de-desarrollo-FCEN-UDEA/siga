@@ -7,5 +7,5 @@ settings = get_app_settings()
 
 client = AsyncIOMotorClient(settings.mongo_uri, authSource="admin")
 
-engine = AIOEngine(client=client, database="siga")
+engine = AIOEngine(client=client, database=settings.mongo_initdb_database)
 

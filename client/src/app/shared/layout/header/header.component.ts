@@ -8,6 +8,7 @@ import { UserBase, UserResponse } from '@interfaces/user';
 //services
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +17,12 @@ import { AuthService } from '@services/auth.service';
 })
 export class HeaderComponent {
 
-  public user: UserResponse | undefined;
-  public user_response: UserResponse | undefined;
+  public user$: Observable<UserResponse>;
   public currentURL: any;
   public isSuperUser = this.authService.isSuperUser$;
 
   constructor(
-    private router     : Router, 
+    private router: Router,
     private userService: UserService,
     private authService: AuthService
   ) {
@@ -34,9 +34,7 @@ export class HeaderComponent {
         this.currentURL = this.router.url;
       });
 
-    this.userService.getUser().subscribe((resUser) => {
-      this.user = resUser;
-    });
+    this.user$ = this.userService.getUser()
   }
 
   logOut() {

@@ -60,9 +60,10 @@ export class ErrorsInterceptor implements HttpInterceptor {
               text: _error.error.detail,
               confirmButtonText: 'Aceptar',
               icon: 'error'
-            }).then(
-              res => this.router.navigate(['/login'])
-            )
+            })
+            // .then(
+            //   res => this.router.navigate(['/login'])
+            // )
             break;
           case 422:
             console.log(_error);

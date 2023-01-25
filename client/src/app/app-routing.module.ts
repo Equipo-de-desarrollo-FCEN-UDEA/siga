@@ -19,6 +19,11 @@ const ROUTES: Routes = [
       ),
   },
   {
+    path: 'confirmaciones',
+    loadChildren: () =>
+      import('./modules/confirmations/confirmations.module').then((m) => m.ConfirmationsModule)
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
@@ -33,7 +38,7 @@ const ROUTES: Routes = [
   {
     path: '**',
     redirectTo: 'home',
-  },
+  }
 ];
 
 @NgModule({
@@ -42,4 +47,4 @@ const ROUTES: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

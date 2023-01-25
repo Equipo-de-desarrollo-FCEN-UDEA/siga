@@ -7,22 +7,26 @@ import { CommissionComponent } from './components/commission/commission.componen
 import { PermissionComponent } from './components/permission/permission.component';
 import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
+import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { FullTimeModule } from './components/full-time/full-time.module';
+import { ApplicantsComponent } from './components/hour-aval/applicants/applicants.component';
 
 
 
 @NgModule({
-    declarations: [
-        CreateComponent,
-        CommissionComponent,
-        PermissionComponent,
-        ComplimentComponent,
-    ],
-    imports: [
-        CommonModule,
-        CreateRoutingModule,
-        SharedModule,
-        FullTimeModule
-    ]
+  declarations: [
+    CreateComponent,
+    CommissionComponent,
+    PermissionComponent,
+    ComplimentComponent,
+    HourAvalComponent,
+    ApplicantsComponent
+  ],
+  imports: [
+    CommonModule,
+    CreateRoutingModule,
+    SharedModule,
+    FullTimeModule
+  ]
 })
 export class CreateModule { }

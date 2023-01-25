@@ -10,17 +10,18 @@ from app.domain.models import User, FullTime
 from app.domain.schemas import UserResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
+from app.core.logging import get_logging
 from app.core.celery_worker import celery_app
 from app.services import aws
 
 settings = get_app_settings()
+log = get_logging(__name__)
 
 
-def fill_work_plan_format(user: User, full_time: FullTime):
+def fill_work_plan_format(user: User, full_time: FullTime) -> str:
 
     full_time_dict: dict = full_time.dict()
     user = UserResponse.from_orm(user).dict(exclude_unset=True)
-
     data_user = {
         'unidad_academica': user['department']['school']['description'],
         'department': user['department']['description'],
@@ -32,7 +33,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
 
     data_full_time = {
         'period': full_time_dict['work_plan']['period'],
-        'date': datetime.now().strftime("%A %d de %B del %Y"),
+        'date': datetime.now().strftime("%d de %B del %Y"),
         'registro': full_time_dict['work_plan']['registro'],
         'partial_time': str(full_time_dict['work_plan']['partial_time']),
         'observations': full_time_dict['work_plan']['observations']
@@ -73,11 +74,14 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "total_week_hours": str(act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']),
             "total_sem_hours": str(16 * (act['week_hours']['t'] + act['week_hours']['tp'] + act['week_hours']['p']))
         })
+        act['activity_tracking']['date_1'] = datetime.strptime(act['activity_tracking']['date_1'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
+        act['activity_tracking']['date_2'] = datetime.strptime(act['activity_tracking']['date_2'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append(act['activity_identification']['code'])
         total_hours[0] += 16*(act['week_hours']['t'] +
                               act['week_hours']['tp']+act['week_hours']['p'])
 
+    log.debug(tracking_acts)
     # Sec_3
     research_activities = []
     for act in full_time_dict['work_plan']['investigation_activities']:
@@ -89,6 +93,8 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "supporting_document": act['supporting_document'],
             "period_hours_i": str(act['period_hours'])
         })
+        act['activity_tracking']['date_1'] = datetime.strptime(act['activity_tracking']['date_1'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
+        act['activity_tracking']['date_2'] = datetime.strptime(act['activity_tracking']['date_2'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append(act['code'])
         total_hours[1] += act['period_hours']
@@ -117,6 +123,8 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "activities": act['activities'],
             "period_hours_a": str(act['period_hours'])
         })
+        act['activity_tracking']['date_1'] = datetime.strptime(act['activity_tracking']['date_1'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
+        act['activity_tracking']['date_2'] = datetime.strptime(act['activity_tracking']['date_2'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append("")
         total_hours[3] += act['period_hours']
@@ -128,6 +136,8 @@ def fill_work_plan_format(user: User, full_time: FullTime):
             "activity": act['activity'],
             "period_hours_o": act['period_hours'],
         })
+        act['activity_tracking']['date_1'] = datetime.strptime(act['activity_tracking']['date_1'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
+        act['activity_tracking']['date_2'] = datetime.strptime(act['activity_tracking']['date_2'], '%Y-%m-%dT%H:%M:%S').strftime("%d de %B del %Y")
         tracking_acts.append(act['activity_tracking'])
         ids_activities.append("")
         total_hours[4] += act['period_hours']
@@ -163,7 +173,7 @@ def fill_work_plan_format(user: User, full_time: FullTime):
     generate_work_plan_format_to_aws.apply_async(
         args=(data_user, data_full_time, data_activities, data_day, total_hours_semester, record, path))
 
-    return None
+    return path
 
 
 @celery_app.task

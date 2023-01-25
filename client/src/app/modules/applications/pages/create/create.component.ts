@@ -14,6 +14,7 @@ export class CreateComponent {
 
   // Title for the header of create application
   public title: string = '';
+  public button: string = '';
 
   private activatedComponentReference: any;
 
@@ -21,8 +22,10 @@ export class CreateComponent {
     private route: ActivatedRoute,
     private location: Location
   ) { 
-    // We take the titile from the child data
+    // We take the title from the child data
+    this.button = this.route.snapshot.firstChild?.data['button'];
     this.title = this.route.snapshot.firstChild?.data['title'];
+    
   }
 
   onActivate(componentRef: any) {

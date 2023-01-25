@@ -54,7 +54,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         self.policy.get_multi(who=who)
         queries = [User.active == active, Rol.scope >= who.rol.scope]
 
-        if who.rol.scope == 7:
+        if (who.rol.scope == 7) or (who.rol.scope == 6):
             queries += [Department.id == who.department.id]
 
         if who.rol.scope == 5:
