@@ -26,6 +26,7 @@
           class="form-select"
           style="width: auto"
           formControlName="activo"
+          (change)="search()"
         >
           <option [ngValue]="false" selected>No archivados</option>
           <option [ngValue]="true">Archivados</option>
@@ -117,7 +118,7 @@
             <button
               *ngIf="context.isSuperUser"
               (click)="
-                filed(application.id); search(); $event.stopPropagation()
+                filed(application.id); $event.stopPropagation()
               "
               class="btn btn-light btn-sm"
               type="button"
@@ -151,6 +152,17 @@
         </tr>
       </tfoot>
     </table>
+  </div>
+  <div class="footer-row d-md-flex justify-content-md-end mb-3">
+    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+      >
+        Cancelar
+      </button>
+    </div>
   </div>
 </div>
 
