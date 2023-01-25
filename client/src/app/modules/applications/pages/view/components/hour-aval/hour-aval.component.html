@@ -1,1 +1,95 @@
-<p>hour-aval works!</p>
+<div class="context" *ngIf="{isSuperUser: isSuperUser$ | async} as context">
+    <div *ngIf="hour_aval">
+        <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Titulo</div>
+            <div class="col-xs-12 col-sm-6">
+                {{ hour_aval.title }}
+            </div>
+        </div>
+        <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">
+                Estado actual del aval
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <span class="badge badge-pill pill" [ngClass]="{
+            'bg-creation': current_status === 'EN CREACIÓN',
+            'bg-requested': current_status === 'SOLICITADA',
+            'bg-ok': current_status === 'VISTO BUENO',
+            'bg-approved': current_status === 'APROBADA',
+            'bg-rejected': current_status === 'RECHAZADA'
+          }">
+                    {{ current_status }}
+                </span>
+            </div>
+        </div>
+        <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">
+                Generar carta
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <button class="btn btn-success" type="button" (click)="generateLetter()">
+                    Generar
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="hour_aval.documents" class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+            <div class="col-xs-12 col-sm-6">
+                <ul>
+                    <li *ngFor="let doc of hour_aval!.documents">
+                        <span class="link-success cursor" (click)="openDocument(doc.path)">{{ doc.name
+                            }}&nbsp;&nbsp;</span>&nbsp;
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row header-row mt-3">
+            <div class="col">
+                <span class="text-secondary">SOLICITANTES</span>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row m-2">
+            <div *ngFor="let applicant of hour_aval.another_applicants; let i=index"
+                class="col col-md-6 col-sm-12 col-lg-4">
+                <div class="card p-1">
+                    <div class="text-end">
+                        <i class="fas" [ngClass]="
+                        {'fa-check': applicant.acepted, 
+                        'fa-circle fa-regular': applicant.acepted === null, 
+                        'fa-xmark': !applicant.acepted}">
+                        </i>
+                        {{applicant.acepted === true? 'Aceptó': applicant.acepted === false? 'Rechazó' : 'Sin confirmar'}}
+                    </div>
+                    <div class="text-center">
+                        <span class="user-pic">
+                            <i class="fa-solid fa-user-circle fa-2xl"></i>
+                        </span>
+                    </div>
+                    <div class="card-text text-center">
+                        {{applicant.email.toLowerCase()}} <br>
+                        {{applicant.role}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span> <b>Importante:</b> Recuerde que estos documentos deben ser subidos a <a
+                href="https://ssofi.udea.edu.co/fcen/" target="_blank">ssofi</a> para que la solicitud sea aprobada por
+            el
+            consejo</span>
+    </div>
+
+    <form [formGroup]="form" *ngIf="context.isSuperUser" class="mt-3">
+        <div class="row">
+            <div class="col-xs-12 col-6">
+                <input type="text" class="form-control" placeholder="Acta de reunión">
+            </div>
+            <div class="col-xs-12 col-6">
+                <input type="datetime-local" class="form-control">
+            </div>
+        </div>
+    </form>
+</div>

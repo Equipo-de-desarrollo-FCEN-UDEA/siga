@@ -1,3 +1,4 @@
+import { file_path } from "@interfaces/documents";
 import { Application } from "../application";
 
 export interface HourAvalBase {
@@ -10,7 +11,8 @@ export interface HourAvalBase {
     another_applicants: Applicant[] | null;
     products: Product[];
     application_sub_type_id: number;
-    backres?: string
+    backrest?: string;
+    title: string;
 }
 
 export interface HourAvalCreate extends HourAvalBase {
@@ -25,6 +27,8 @@ export interface Applicant {
     email: string;
     acepted?: boolean | null | undefined;
     role: string;
+    time: number;
+    backres?: string;
 }
 
 export interface Product {
@@ -35,9 +39,14 @@ export interface Product {
 
 export interface HourAvalInDB extends HourAvalBase {
     id: string;
-    letter_path: string | null;
+    documents: file_path[] | null;
 }
 
 export interface HourAvalResponse extends Application {
     hour_aval: HourAvalInDB
+}
+
+export interface Act {
+    act: string;
+    date: Date;
 }

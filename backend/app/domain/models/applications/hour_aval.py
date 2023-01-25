@@ -7,6 +7,8 @@ class Applicant(EmbeddedModel):
     email: str
     acepted: bool | None = None
     role: str
+    time: int
+    backrest: str | None
 
 
 class Product(EmbeddedModel):

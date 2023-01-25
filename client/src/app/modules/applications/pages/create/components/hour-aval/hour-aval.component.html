@@ -163,15 +163,15 @@
     </div>
     <button class="btn btn-success" (submit)="false" type="button" (click)="open()">Agregar participantes</button>
     <div *ngIf="user$ | async as context">
-        <div *ngIf="context.scale.toUpperCase() != 'PROFESOR ASOCIADO'"
+        <div *ngIf="context.vinculation_type.toUpperCase() != 'PROFESOR DE PLANTA'"
             class="row regular-row mt-4 align-items-baseline">
             <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Respaldo <span style="color: red">*</span></div>
             <div class="col-sm-12 col-xs-12 col-md-8">
                 <div class="formfloatig">
-                    <input id="floatingentity" formControlName="backres" class="form-control"
+                    <input id="floatingentity" formControlName="backrest" class="form-control"
                         placeholder="Correo del profesor que respaldará en caso de ausencia" type="text" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['backres'].errors) || isInvalidForm('backres')
+                  (submitted && f['backrest'].errors) || isInvalidForm('backrest')
               }" />
                 </div>
             </div>

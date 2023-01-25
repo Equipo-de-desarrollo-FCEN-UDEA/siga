@@ -68,7 +68,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         if not (who.id == to.user_id):
             raise application_401
 
-        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA'):
+        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA' or app_status == 'EN CREACIÓN'):
             raise application_in_other_status
 
         return None

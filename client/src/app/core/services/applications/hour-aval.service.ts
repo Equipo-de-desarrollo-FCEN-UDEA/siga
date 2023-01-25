@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { HourAvalCreate, HourAvalResponse, HourAvalUpdate } from '@interfaces/applications/hour_aval';
+import { Act, HourAvalCreate, HourAvalResponse, HourAvalUpdate } from '@interfaces/applications/hour_aval';
 import { Msg } from '@interfaces/msg';
 import { Observable } from 'rxjs';
 
@@ -32,12 +32,20 @@ export class HourAvalService {
     return this.http.delete<Msg>(this.urlEndPoint + id)
   }
 
-  confirmHourAval(id: string, token: string, acepted: boolean): Observable<Msg> {
+  confirmHourAval(id: string, token: string, acepted: number): Observable<Msg> {
     let params = new HttpParams()
-    params = params.append('acepted', acepted ? true : false)
+    params = params.append('acepted', acepted == 1? true : false)
     params = params.append('token', token)
 
     return this.http.put<Msg>(this.urlEndPoint + id + '/confirm', null, { params: params })
+  }
+
+  generateLetter(id: number) {
+    return this.http.put<Msg>(this.urlEndPoint + id + '/generate', null)
+  }
+
+  generateAct(id: number, act: Act) {
+    return this.http.put<Msg>(this.urlEndPoint + id + '/act', act)
   }
 
 }

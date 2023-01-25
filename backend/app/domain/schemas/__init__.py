@@ -33,7 +33,8 @@ from .applications import (
     HourAvalResponse,
     HourAvalUpdate,
     HourAvalCreate,
-    HourAvalInDB
+    HourAvalInDB,
+    Act
 )
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)

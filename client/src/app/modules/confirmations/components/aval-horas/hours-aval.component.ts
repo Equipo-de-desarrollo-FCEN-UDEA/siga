@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class HoursAvalComponent {
   private id = '';
   private token = '';
-  private acepted: boolean = false;
+  private acepted: number = 2;
   constructor(
     private route: ActivatedRoute,
     private router: Router,

@@ -1,3 +1,6 @@
+from typing import Callable
+from functools import partial
+
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
@@ -5,14 +8,18 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails, security
-from app.domain.models import HourAval, User, Application
+from app.services import crud, emails, security, documents
+from app.domain.models import HourAval, User, Application, Application_status
 from app.domain.schemas import (ApplicationCreate,
                                 HourAvalCreate,
                                 HourAvalUpdate,
+                                HourAvalInDB,
                                 Msg,
                                 HourAvalResponse,
                                 ApplicationResponse,
+                                Application_statusCreate,
+                                UserResponse,
+                                Act
                                 )
 from app.domain.errors import BaseErrors
 
@@ -51,12 +58,16 @@ async def create_hour_aval(
         if not hour_aval.another_applicants:
             application = crud.application.create(
                 db, current_user, application)
+            path = documents.hour_aval_letter_generation(
+                current_user, hour_aval_created, [])
+            await crud.hour_aval.update_document(engine, id=hour_aval_created.id, name='carta-aval.pdf', path=path)
         else:
             application = crud.application.create(
                 db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
-        if current_user.scale.upper() != 'PROFESOR ASOCIADO':
+        if current_user.vinculation_type.upper() != 'PROFESOR DE PLANTA':
             if hour_aval.backrest:
-                raise NotImplementedError
+                pass
+                # raise NotImplementedError
             else:
                 raise HTTPException(
                     403, 'Usted no se encuentra registrado como profesor vinculado, debe agregar un respaldo a la solicitud')
@@ -232,4 +243,88 @@ async def confirm_user(
     return {
         'msg':
         f'Su participación se {response} correctamente'
+    }
+
+
+@router.put('/{id}/generate/', response_model=Msg)
+async def generate_letter(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> Msg:
+    try:
+        application = crud.application.get(db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+        hour_aval = await crud.hour_aval.get(engine, id=mongo_id)
+        emails = list(map(lambda x: x.email, hour_aval.another_applicants))
+        users = [
+            UserResponse.from_orm(crud.user.get_by_email(
+                db, email) or crud.user.get_by_identification(db, email)).dict()
+            for email in emails
+        ]
+        application_status = Application_statusCreate(
+            application_id=id,
+            status_id=1,
+            observation='Usuario generó carta'
+        )
+        db.add(Application_status(**application_status.dict()))
+        db.commit()
+        path = documents.hour_aval_letter_generation(
+            current_user, hour_aval, users)
+        await crud.hour_aval.update_document(engine, id=mongo_id, name='carta-aval.pdf', path=path)
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    return {
+        'msg':
+        f'Su carta se generó correctamente'
+    }
+
+
+@router.put('/{id}/act', response_model=Msg)
+async def generate_act(
+    id: int,
+    act: Act,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> Msg:
+    try:
+        application = crud.application.get(db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+        hour_aval = await crud.hour_aval.get(engine, id=mongo_id)
+        user = crud.user.get(db, current_user, id=application.user_id)
+        user = UserResponse.from_orm(user)
+        hour_aval = HourAvalInDB(**hour_aval.dict())
+        users = []
+        backres = []
+        if hour_aval.backrest:
+            backres += [
+            {'user': (user.names + ' ' + user.last_names).title(),
+             'backres': (crud.user.get_by_email(db, hour_aval.backrest))
+             }]
+        for applicant in hour_aval.another_applicants:
+            user_applicant = UserResponse.from_orm(crud.user.get_by_email(
+                db, applicant.email) or crud.user.get_by_identification(db, applicant.email))
+            users += [user_applicant.dict()]
+            if applicant.backrest:
+                back = crud.user.get_by_email(db, applicant.backrest)
+                backres += [
+                    {'user': (user_applicant.names + ' ' + user_applicant.last_names).title(),
+                    'backres': (back.names + ' ' + back.last_names).title()
+                    }]
+        log.debug(backres)
+        if current_user.rol.scope in [6, 7]:
+            path = documents.hour_aval_act_generation(user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')
+            await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-instituto.pdf', path=path)
+        elif current_user.rol.scope == 5:
+            path = documents.hour_aval_act_generation(user, hour_aval, act, users, backres, 'houraval.act.school.html.j2')
+            await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-facultad.pdf', path=path)
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    return {
+        'msg':
+        f'El acta se generó correctamente'
     }

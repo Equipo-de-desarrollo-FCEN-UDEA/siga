@@ -9,6 +9,7 @@ class DepartmentBase(BaseModel):
     coord_email: str
     school_id: int
     cost_center: int | None
+    director: str | None
 
 class DepartmentCreate(DepartmentBase):
     pass

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Applicant, HourAvalCreate } from '@interfaces/applications/hour_aval';
 import { UserByPass, UserResponse } from '@interfaces/user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -33,7 +34,8 @@ export class HourAvalComponent {
     private formBuilder: FormBuilder,
     private hourAvalSvc: HourAvalService,
     private userSvc: UserService,
-    private modal: NgbModal
+    private modal: NgbModal,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       time: [NaN, [Validators.required, Validators.max(300), Validators.min(1)]],
@@ -43,7 +45,7 @@ export class HourAvalComponent {
       description: ['', [Validators.required, Validators.min(30), Validators.max(500)]],
       entity: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
       role: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
-      backres: [''],
+      backrest: [''],
       products: this.formBuilder.array([this.productsGroup()], [Validators.required]),
       another_applicants: [this.applicants]
     },
@@ -75,13 +77,22 @@ export class HourAvalComponent {
       this.submitted = true
       return;
     }
+    console.log(this.form.value)
 
     this.hourAvalSvc.postHourAval(this.form.value as HourAvalCreate).subscribe({
       next: data => {
         Swal.fire({
           title: 'Solicitud iniciada',
-          text: 'Su solicitud fue recibida'
-        })
+          text: 'Su solicitud fue recibida',
+          icon: 'success',
+          confirmButtonText: 'Continuar'
+        }).then(
+          response => {
+            if (response.isConfirmed) {
+              this.router.navigate([`/solicitudes/ver/${data.id}/avalhoras`])
+            }
+          }
+        )
       }
     })
 

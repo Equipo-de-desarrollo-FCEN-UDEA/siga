@@ -15,6 +15,19 @@ class CRUDHourAval(CRUDBase[HourAval, HourAvalCreate, HourAvalUpdate, HourAvalPo
                 hour_aval.another_applicants[i].acepted = acepted
         hour_aval = await db.save(hour_aval)
         return hour_aval
+
+    async def update_document(self, db:AIOSession, *, id: ObjectId, name: str, path: str) -> None:
+        hour_aval = await db.find_one(HourAval, HourAval.id == id)
+        if hour_aval.documents is not None:
+            for i, document in enumerate(hour_aval.documents):
+                if document['name'] == name:
+                    del hour_aval.documents[i]
+        if hour_aval.documents is not None:
+            hour_aval.documents += [{'name': name, 'path': path}]
+        else:
+            hour_aval.documents = [{'name': name, 'path': path}]
+        await db.save(hour_aval)
+        return None
 policy = HourAvalPolicy()
 
 hour_aval = CRUDHourAval(HourAval, HourAvalPolicy)

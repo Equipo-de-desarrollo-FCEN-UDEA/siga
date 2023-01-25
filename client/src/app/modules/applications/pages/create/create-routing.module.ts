@@ -31,7 +31,7 @@ const routes: Routes = [
         path: 'permiso',
         component: PermissionComponent,
         data: {
-          title: 'Permiso',
+          title: 'Permiso'
         },
       },
       //comision
@@ -39,7 +39,7 @@ const routes: Routes = [
         path: 'comision',
         component: CommissionComponent,
         data: {
-          title: 'Comisión',
+          title: 'Comisión'
         },
       },
 
@@ -49,13 +49,15 @@ const routes: Routes = [
         component: FullTimeComponent,
         data: {
           title: 'Dedicación Exclusiva',
+          button: 'Iniciar'
         },
       },
       {
         path: 'avalhoras',
         component: HourAvalComponent,
         data: {
-          title: 'Aval de horas para grupos de investigación'
+          title: 'Aval de horas para grupos de investigación',
+          button: 'Iniciar'
         }
       },
 

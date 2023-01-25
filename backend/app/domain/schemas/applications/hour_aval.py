@@ -1,4 +1,5 @@
 from typing import Any
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
@@ -12,12 +13,19 @@ from app.domain.schemas.application import ApplicationResponse
 class Applicant(BaseModel):
     email: str
     acepted: bool | None = None
+    time: int | None
     role: str
+    backrest: str | None
 
 
 class Product(BaseModel):
     name: str = Field(min_length=10, max_length=50)
     description: str = Field(min_length=10, max_length=300)
+
+
+class Act(BaseModel):
+    act: str
+    date: datetime
 
 # --------------
 # ----Model-----

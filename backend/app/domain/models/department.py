@@ -18,6 +18,7 @@ class Department(Base):
     description = Column(String(100), nullable=False)
     coord_email = Column(String(100), nullable=False)
     cost_center = Column(Integer, nullable=True)
+    director = Column(String, nullable=True)
 
     #Relaciones
     users = relationship("User", back_populates="department")
