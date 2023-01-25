@@ -115,9 +115,9 @@ def fill_work_plan_format(user: User, full_time: FullTime) -> str:
         total_hours[2] += act['period_hours']
 
     # Sec_5
-    admin_activities = []
+    academic_admin_activities = []
     for act in full_time_dict['work_plan']['academic_admin_activities']:
-        admin_activities.append({
+        academic_admin_activities.append({
             "position": act['position'],
             "week_hours_a": str(act['week_hours']),
             "activities": act['activities'],
@@ -155,7 +155,7 @@ def fill_work_plan_format(user: User, full_time: FullTime) -> str:
     data_activities = {'teaching_activities': teaching_activities,
                        'research_activities': research_activities,
                        'extension_activities': extension_activities,
-                       'admin_activities': admin_activities,
+                       'academic_admin_activities': academic_admin_activities,
                        'other_activities': other_activities}
 
     # Total horas.
@@ -229,18 +229,21 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
     target = wb['Cara.2']
 
     for activity in list(activities.keys())[-2:]:
+        print('falla cual es: ' + activity)
         index = cells['Cara.2']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
             for key in content[i].keys():
                 coord = cells['Cara.2']['multiple_rows'][activity][key]
-            if coord.find(':') < 0:
-                coord = coord+str(index+i)
-                target[coord] = content[i][key]
-            else:
-                coord = ':'.join([l+str(index+i) for l in coord.split(':')])
-                target.merge_cells(coord)
-                target[coord.split(':')[0]] = content[i][key]
+                if coord.find(':') < 0:
+                    coord = coord+str(index+i)
+                    print(coord)
+                    target[coord] = content[i][key]
+                else:
+                    coord = ':'.join([l+str(index+i) for l in coord.split(':')])
+                    print(coord)
+                    target.merge_cells(coord)
+                    target[coord.split(':')[0]] = content[i][key]
 
     index = cells['Cara.2']['multiple_rows']['activity_tracking']['range_cells']
     identifications = tracking[list(tracking.keys())[0]]
@@ -278,6 +281,8 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
     with NamedTemporaryFile() as tmp:
         wb.save(tmp.name)
         file = BytesIO(tmp.read())
+    
+    print("Hecho el archivo.")
 
     aws.s3.push_data_to_s3_bucket(settings.aws_bucket_name, file,
                                   file_name=path, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
