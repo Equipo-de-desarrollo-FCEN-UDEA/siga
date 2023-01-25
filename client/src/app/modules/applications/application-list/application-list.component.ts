@@ -90,7 +90,7 @@ export class ApplicationListComponent implements OnInit {
   }
 
   filed(id: number) {
-    this.applicationsSvc.fileApplication(id).subscribe()
+    this.applicationsSvc.fileApplication(id).subscribe(data => this.search())
   }
 
   cancel() {
