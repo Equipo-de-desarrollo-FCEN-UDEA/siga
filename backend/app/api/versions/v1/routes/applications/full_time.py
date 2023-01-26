@@ -56,7 +56,7 @@ async def create_full_time(
             user_id=current_user.id
         )
         application = crud.application.create(
-            db=db, who=current_user, obj_in=application)
+            db=db, who=current_user, obj_in=application, status=6, observation='El usuario inició la dedicación')
     except BaseErrors as e:
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
         log.error('BaseErrors')
