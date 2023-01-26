@@ -84,8 +84,13 @@ export class StartLetterComponent implements OnInit {
           title: 'Carta de iniciación actualizada con éxito',
           text: data.message,
           icon: 'success',
-          confirmButtonText: 'Aceptar'
-        })
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+          }
+        });
       }
     }
 

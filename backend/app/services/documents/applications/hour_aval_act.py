@@ -27,7 +27,7 @@ def hour_aval_act_generation(user: UserResponse, hour_aval: HourAvalInDB, act: A
         "signature": f"signature_department_{user.department.id}.png",
         "date": act.date.strftime("%A %d de %B del %Y"),
         "user": user.dict(),
-        'hour_aval': hour_aval.dict(),
+        'hour_aval': hour_aval.dict(exclude={'id'}),
         'act': act.act,
         'users': users,
         'backrest': backres

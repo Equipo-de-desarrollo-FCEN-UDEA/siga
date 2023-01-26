@@ -130,7 +130,11 @@ export class WorkplanComponent implements OnInit {
               icon: 'success',
               confirmButtonText: 'Aceptar'
             }
-          )
+          ).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+            }
+          });
         }
       }
     );
