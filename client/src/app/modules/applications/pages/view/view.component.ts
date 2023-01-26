@@ -6,8 +6,7 @@ import { Application } from '@interfaces/application';
 import { ApplicationStatusCreate } from '@interfaces/application_status';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { AuthService } from '@services/auth.service';
-import { LoaderService } from '@services/loader.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
 
@@ -76,28 +75,31 @@ export class ViewComponent implements AfterViewChecked {
   submit() {
     this.submitted = true;
     const childRouteComp = this.activatedComponentReference;
-    childRouteComp.submit().subscribe((res : any) => {
-      this.applicationStatusSvc.postApplicationStatus({
-        "application_id": this.id,
-        "observation": this.form.value.observation!,
-        "status_id": 1
-      } as ApplicationStatusCreate).subscribe(
-        (data) => {
-          Swal.fire({
-            title: "Se cambió el estado correctamente",
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-          }).then(
-            (result) => {
-              if (result.isConfirmed) {
-                this.location.back();
-              }
-            }
-          )
+
+    const method = this.applicationStatusSvc.postApplicationStatus({
+      "application_id": this.id,
+      "observation": this.form.value.observation!,
+      "status_id": 1
+    } as ApplicationStatusCreate)
+
+    let receive = () => {
+      try {
+        childRouteComp.submit().subscribe()
+      } catch { }
+      Swal.fire({
+        title: "Se cambió el estado correctamente",
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(
+        (result) => {
+          if (result.isConfirmed) {
+            this.location.back();
+          }
         }
       )
-    })
+    }
 
+    method.subscribe(receive)
 
   }
 

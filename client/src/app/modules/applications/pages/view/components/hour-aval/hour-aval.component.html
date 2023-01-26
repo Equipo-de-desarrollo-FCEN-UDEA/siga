@@ -22,7 +22,7 @@
                 </span>
             </div>
         </div>
-        <div class="row regular-row mt-2">
+        <div class="row regular-row mt-2" *ngIf="!context.isSuperUser && (['EN CREACIÓN', 'RECHAZADA', 'SOLICITADA'].indexOf(current_status) != -1)">
             <div class="col-xs-12 col-sm-6 label fw-bold">
                 Generar carta
             </div>

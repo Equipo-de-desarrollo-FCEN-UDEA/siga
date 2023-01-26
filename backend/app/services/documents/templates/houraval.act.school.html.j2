@@ -21,7 +21,8 @@
     <section class="section">
         {% if not hour_aval.another_applicants %}
         <p class="text-justify">
-            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el acta {{act}},
+            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el
+            acta {{act}},
             recibió por parte del
             profesor {{(user.names + ' ' + user.last_names).title()}}, una solicitud de aval para dedicación de
             {{hour_aval.hours_week}} horas semanales, en calidad
@@ -33,7 +34,8 @@
         {% if hour_aval.another_applicants %}
 
         <p class="text-justify">
-            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el acta {{act}},
+            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el
+            acta {{act}},
             recibió por parte de los
             profesores que se relacionan a continuación, una solicitud de aval horaria, para el proyecto de
             investigación "{{hour_aval.title}}" que tendrá una duración de
@@ -56,11 +58,13 @@
                 </tr>
                 {% for applicant in users%}
                 {% set i = loop.index - 1 %}
+                {% if hour_aval.another_applicants[i].acepted == True%}
                 <tr>
                     <td colspan="3">{{(applicant.names + ' ' + applicant.last_names).title()}}</td>
                     <td colspan="2">{{hour_aval.another_applicants[i].role}}</td>
                     <td colspan="2">{{hour_aval.another_applicants[i].time}}</td>
                 </tr>
+                {% endif %}
                 {% endfor%}
             </tbody>
 
@@ -83,8 +87,9 @@
         <p style="margin-top: 1em;">
             Cordialmente,
         </p>
-        <div class="signature" style="margin-top: 2em;">
+        <div class="signature text-left" style="margin-top: 2em;">
             <p>
+                <hr style="width: 50%;">
                 {{user.department.school.dean.title()}} <br>
                 Decana <br>
                 {{user.department.school.description}}

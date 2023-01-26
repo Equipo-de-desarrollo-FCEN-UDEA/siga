@@ -309,7 +309,7 @@ async def generate_act(
             user_applicant = UserResponse.from_orm(crud.user.get_by_email(
                 db, applicant.email) or crud.user.get_by_identification(db, applicant.email))
             users += [user_applicant.dict()]
-            if applicant.backrest:
+            if applicant.backrest and applicant.acepted:
                 back = crud.user.get_by_email(db, applicant.backrest)
                 backres += [
                     {'user': (user_applicant.names + ' ' + user_applicant.last_names).title(),

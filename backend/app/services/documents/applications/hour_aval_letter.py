@@ -31,11 +31,11 @@ def hour_aval_letter_generation(user: User, hour_aval: HourAvalInDB, users=list[
         'image': f"logo_{user.department.school_id}.png",
         'date': datetime.now().strftime("%A %d de %B del %Y"),
         'user': user_response.dict(),
-        'hour_aval': hour_aval.dict(exclude_none=False),
+        'hour_aval': hour_aval.dict(exclude_none=False, exclude={'id'}),
         'users': users
     }
 
-    generate_hour_aval_letter_pdf_to_aws.apply_asyn(args=(data, path))
+    generate_hour_aval_letter_pdf_to_aws.apply_async(args=(data, path))
     
     return path
 

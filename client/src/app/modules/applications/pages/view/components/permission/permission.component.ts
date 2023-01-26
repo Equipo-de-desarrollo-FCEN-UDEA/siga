@@ -14,6 +14,8 @@ import { PermissionService } from '@services/applications/permission.service';
 import { DocumentService } from '@services/document.service';
 import { lastElement } from '@shared/utils';
 import { ComService } from '../../connection/com.service';
+import { EMPTY, Observable } from 'rxjs';
+import { EMPTY_OBSERVER } from 'rxjs/internal/Subscriber';
 
 
 @Component({

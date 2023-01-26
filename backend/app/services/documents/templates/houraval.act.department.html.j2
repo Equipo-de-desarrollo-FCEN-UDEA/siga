@@ -57,11 +57,13 @@
                 </tr>
                 {% for applicant in users%}
                 {% set i = loop.index - 1 %}
+                {% if hour_aval.another_applicants[i].acepted == True%}
                 <tr>
                     <td colspan="3">{{(applicant.names + ' ' + applicant.last_names).title()}}</td>
                     <td colspan="2">{{hour_aval.another_applicants[i].role}}</td>
                     <td colspan="2">{{hour_aval.another_applicants[i].time}}</td>
                 </tr>
+                {% endif %}
                 {% endfor%}
             </tbody>
 
@@ -86,6 +88,7 @@
         </p>
         <div class="signature" style="margin-top: 2em;">
             <p>
+                <hr style="width: 50%;">
                 {{user.department.director.title()}} <br>
                 Director <br>
                 {{user.department.description}}
