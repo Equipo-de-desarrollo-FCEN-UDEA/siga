@@ -1,6 +1,7 @@
 export var scale: string[]=[
-    'Profesor asistente',
-    'Profesor asociado',
-    'Profesor vinculado',
+    'Auxiliar',
+    'Asistente',
+    'Asociado',
+    'Titular',
     'No aplica'
   ]
