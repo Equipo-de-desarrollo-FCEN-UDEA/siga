@@ -28,6 +28,13 @@
   margin-top: 0;
   padding: 1em 0.5em;
   }
+
+  .cursor{
+    cursor:pointer
+  }
+  .link-success{
+    text-decoration: underline;
+  }
   
   @media screen and (max-width: 576px){
   :host ::ng-deep .ngb-dp-months {

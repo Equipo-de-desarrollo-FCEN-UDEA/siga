@@ -16,14 +16,22 @@
           rows="5"
         ></textarea>
         <!-- errors body -->
+        <!-- errors justification -->
         <div
-          *ngIf="
-            (submitted || f['body'].touched) &&
-            f['body'].errors
-          "
-          class="invalid"
-        >
-        </div>
+            *ngIf="
+              (submitted || f['body'].touched) &&
+              f['body'].errors
+            "
+            class="invalid"
+          >
+            <div
+              *ngIf="(submitted || f['body'].touched) && (f['body'].errors?.['required'] || 
+              f['body'].errors?.['maxlength'] || f['body'].errors?.['minlength'])"
+            >
+              La justificación debe tener al menos 30 caracteres y máximo 500
+              caracteres.
+            </div>
+          </div>
       </div>
     </div>
   </div>
