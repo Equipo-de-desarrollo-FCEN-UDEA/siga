@@ -80,6 +80,13 @@ export class CommissionComponent {
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       return;
     }
     let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)

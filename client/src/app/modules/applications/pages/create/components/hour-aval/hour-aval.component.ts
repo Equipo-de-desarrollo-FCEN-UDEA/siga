@@ -72,6 +72,13 @@ export class HourAvalComponent {
 
   submit() { 
     if (this.form.invalid){
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       console.log(this.form.value)
       console.log(this.form.errors)
       this.submitted = true
