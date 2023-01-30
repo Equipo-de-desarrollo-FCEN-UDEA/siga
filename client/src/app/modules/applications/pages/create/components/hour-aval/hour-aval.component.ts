@@ -41,12 +41,12 @@ export class HourAvalComponent {
       time: [NaN, [Validators.required, Validators.max(300), Validators.min(1)]],
       hours_week: [NaN, [Validators.required, Validators.max(48), Validators.min(1)]],
       announcement: ['', [Validators.required, Validators.maxLength(1000)]],
-      title: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
-      description: ['', [Validators.required, Validators.min(30), Validators.max(500)]],
-      entity: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
-      role: ['', [Validators.required, Validators.min(1), Validators.max(50)]],
+      title: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
+      description: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
+      entity: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
+      role: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       backrest: [''],
-      products: this.formBuilder.array([this.productsGroup()], [Validators.required]),
+      products: this.formBuilder.array([this.productsGroup()], [Validators.required, Validators.minLength(1)]),
       another_applicants: [this.applicants]
     },
       { Validators: this.backrestValidator }

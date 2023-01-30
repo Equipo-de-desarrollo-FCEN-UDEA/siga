@@ -21,8 +21,7 @@
     <section class="section">
         {% if not hour_aval.another_applicants %}
         <p class="text-justify">
-            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el
-            acta {{act}},
+            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}}{% if acta%} y soportado en el acta {{act}} {% endif %},
             recibió por parte del
             profesor {{(user.names + ' ' + user.last_names).title()}}, una solicitud de aval para dedicación de
             {{hour_aval.hours_week}} horas semanales, en calidad

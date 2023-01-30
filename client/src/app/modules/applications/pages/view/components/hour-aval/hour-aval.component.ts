@@ -129,9 +129,7 @@ export class HourAvalComponent {
             });
           },
           error: (err) => {
-            // if (err.status === 404 || err.status === 401) {
-            //   this.error = err.error.msg;
-            // }
+
           },
         });
       }

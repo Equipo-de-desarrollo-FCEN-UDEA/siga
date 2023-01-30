@@ -25,7 +25,7 @@ class Product(BaseModel):
 
 class Act(BaseModel):
     act: str
-    date: datetime
+    date: datetime = datetime.today()
 
 # --------------
 # ----Model-----
@@ -33,15 +33,15 @@ class Act(BaseModel):
 
 
 class HourAvalBase(BaseModel):
-    time: int = Field(gt=1, lt=48)
-    hours_week: int
+    time: int = Field(gt=1, lt=300)
+    hours_week: int = Field(gt=1, lt=48)
     title: str = Field(min_length=10, max_length=255)
     description: str = Field(min_length=30, max_length=500)
-    announcement: str
+    announcement: str = Field(max_length=1000)
     entity: str | None = Field(max_length=255)
     role: str = Field(max_length=50)
     another_applicants: list[Applicant] = Field(default_factory=list)
-    products: list[Product]
+    products: list[Product] = Field(default_factory=list, min_items=1)
     backrest: str | None
 
 
