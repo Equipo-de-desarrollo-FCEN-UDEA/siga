@@ -179,10 +179,34 @@ async def update_hour_aval(
             log.debug('updated_hour_aval', updated_hour_aval)
 
             # In PostgreSQL
-            application_updated = crud.application.update(
+            application = crud.application.update(
                 db=db, who=current_user, db_obj=application, obj_in=hour_aval)
 
-            log.debug('application update', application_updated)
+            if not hour_aval.another_applicants:
+                application = crud.application.update(
+                    db, current_user, application)
+                path = documents.hour_aval_letter_generation(
+                    current_user, updated_hour_aval, [])
+                await crud.hour_aval.update_document(engine, id=updated_hour_aval.id, name='carta-aval.pdf', path=path)
+        else:
+            application = crud.application.update(
+                db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
+        if current_user.vinculation_type.upper() != 'PROFESOR DE PLANTA':
+            if hour_aval.backrest:
+                pass
+                # raise NotImplementedError
+            else:
+                raise HTTPException(
+                    403, 'Usted no se encuentra registrado como profesor vinculado, debe agregar un respaldo a la solicitud')
+
+        for applicant in hour_aval.another_applicants:
+            token = security.jwt.hour_aval_token(
+                applicant.email)
+            user = crud.user.get_by_email(
+                db, applicant.email) or crud.user.get_by_identification(db, applicant.email)
+            log.debug(hour_aval.dict())
+            emails.hours_aval_email.apply_async(
+                args=(hour_aval.dict(), applicant.dict(), user.email, str(updated_hour_aval.id), token))
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -302,9 +326,9 @@ async def generate_act(
         backres = []
         if hour_aval.backrest:
             backres += [
-            {'user': (user.names + ' ' + user.last_names).title(),
-             'backres': (crud.user.get_by_email(db, hour_aval.backrest))
-             }]
+                {'user': (user.names + ' ' + user.last_names).title(),
+                 'backres': (crud.user.get_by_email(db, hour_aval.backrest))
+                 }]
         for applicant in hour_aval.another_applicants:
             user_applicant = UserResponse.from_orm(crud.user.get_by_email(
                 db, applicant.email) or crud.user.get_by_identification(db, applicant.email))
@@ -313,14 +337,16 @@ async def generate_act(
                 back = crud.user.get_by_email(db, applicant.backrest)
                 backres += [
                     {'user': (user_applicant.names + ' ' + user_applicant.last_names).title(),
-                    'backres': (back.names + ' ' + back.last_names).title()
-                    }]
+                     'backres': (back.names + ' ' + back.last_names).title()
+                     }]
         log.debug(backres)
         if current_user.rol.scope in [6, 7]:
-            path = documents.hour_aval_act_generation(user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')
+            path = documents.hour_aval_act_generation(
+                user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')
             await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-instituto.pdf', path=path)
         elif current_user.rol.scope == 5:
-            path = documents.hour_aval_act_generation(user, hour_aval, act, users, backres, 'houraval.act.school.html.j2')
+            path = documents.hour_aval_act_generation(
+                user, hour_aval, act, users, backres, 'houraval.act.school.html.j2')
             await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-facultad.pdf', path=path)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
