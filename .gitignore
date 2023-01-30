@@ -150,3 +150,6 @@ Siga-brasil.pem
 
 # Docker other
 docker-compose.yml
+
+*.csv
+users.py
