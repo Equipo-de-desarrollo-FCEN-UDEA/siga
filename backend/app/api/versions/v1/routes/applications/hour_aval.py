@@ -327,7 +327,7 @@ async def generate_act(
         if hour_aval.backrest:
             backres += [
                 {'user': (user.names + ' ' + user.last_names).title(),
-                 'backres': (crud.user.get_by_email(db, hour_aval.backrest))
+                 'backres': (crud.user.get_by_email(db, hour_aval.backrest)).__dict__
                  }]
         for applicant in hour_aval.another_applicants:
             user_applicant = UserResponse.from_orm(crud.user.get_by_email(
