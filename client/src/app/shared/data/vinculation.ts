@@ -1,5 +1,5 @@
 export var vinculation_type: string[] = [
-    'Profesor de planta',
+    'Profesor vinculado',
     'Profesor ocasional',
     'No aplica'
 ]
