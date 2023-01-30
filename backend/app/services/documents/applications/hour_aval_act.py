@@ -33,6 +33,8 @@ def hour_aval_act_generation(user: UserResponse, hour_aval: HourAvalInDB, act: A
         'backrest': backres
     }
 
+    log.info(data)
+
     hour_aval_act_pdf_to_aws.apply_async(args=(data, path, template))
 
     return path

@@ -64,7 +64,7 @@ async def create_hour_aval(
         else:
             application = crud.application.create(
                 db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
-        if current_user.vinculation_type.upper() != 'PROFESOR DE PLANTA':
+        if current_user.vinculation_type.upper() != 'PROFESOR VINCULADO':
             if hour_aval.backrest:
                 pass
                 # raise NotImplementedError
@@ -191,7 +191,7 @@ async def update_hour_aval(
         else:
             application = crud.application.update(
                 db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
-        if current_user.vinculation_type.upper() != 'PROFESOR DE PLANTA':
+        if current_user.vinculation_type.upper() != 'PROFESOR VINCULADO':
             if hour_aval.backrest:
                 pass
                 # raise NotImplementedError

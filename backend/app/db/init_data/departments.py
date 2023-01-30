@@ -17,7 +17,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         description='Departamento Decanatura de la Facultad de Ciencias Exactas y Naturales',
         coord_email='decaexactas@udea.edu.co',
         school_id=2,
-        cost_center=21402601
+        cost_center=21460001
     ),
     schemas.DepartmentCreate(
         director='nombre del director',
@@ -32,7 +32,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='MATEMÁTICAS',
         description='Instituto de Matemáticas',
         coord_email="institutomatematicas@udea.edu.co",
-        cost_center=21401201,
+        cost_center=21420001,
         school_id=2,
     ),
     schemas.DepartmentCreate(
@@ -41,14 +41,14 @@ init_departments: List[schemas.DepartmentCreate] = [
         description='Instituto de Física',
         coord_email='institutofisica@udea.edu.co',
         school_id=2,
-        cost_center=21401202
+        cost_center=21420002
     ),
     schemas.DepartmentCreate(
         director='nombre del director',
         name='BIOLOGÍA',
         description='Instituto de Biología',
         coord_email="institutobiologia@udea.edu.co",
-        cost_center=21401203,
+        cost_center=21420003,
         school_id=2,
     ),
     schemas.DepartmentCreate(
@@ -56,7 +56,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='QUÍMICA',
         description='Instituto de Química',
         coord_email="institutoquimica@udea.edu.co",
-        cost_center=21401204,
+        cost_center=21420004,
         school_id=2
     ),
     schemas.DepartmentCreate(
@@ -64,7 +64,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='EXTENSION FCEN',
         description='Centreo de Extensión',
         coord_email="coordinacionextensionfcen@udea.edu.co",
-        cost_center=21402601,
+        cost_center=21460002,
         school_id=2
     ),
     schemas.DepartmentCreate(
@@ -72,7 +72,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='CIEN FCEN',
         description='Centreo de Investigación',
         coord_email="cien@udea.edu.co",
-        cost_center=21402601,
+        cost_center=21430002,
         school_id=2
     ),
     # FING
