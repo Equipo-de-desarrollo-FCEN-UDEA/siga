@@ -142,7 +142,7 @@ class ViceFormat(BaseModel):
 
 
 class InitialLetter(BaseModel):
-    body: str = Field(min_length=100, max_length=4730)
+    body: str = Field(min_length=30, max_length=500)
 
 # Model
 

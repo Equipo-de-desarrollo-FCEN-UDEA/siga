@@ -38,8 +38,8 @@ export class StartLetterComponent implements OnInit {
       '',
       [
         Validators.required,
-        Validators.minLength(100),
-        Validators.maxLength(2730),
+        Validators.minLength(30),
+        Validators.maxLength(500),
       ],
     ],
   });
@@ -68,6 +68,13 @@ export class StartLetterComponent implements OnInit {
 
     this.submitted = true;
     if (this.form.invalid) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       return;
     }
 

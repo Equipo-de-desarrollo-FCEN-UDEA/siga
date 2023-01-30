@@ -108,11 +108,18 @@ export class WorkplanComponent implements OnInit {
   // ------------------------------
 
   submit() {
-
+    Swal.fire({
+      title: 'Error',
+      text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+      icon: 'error',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    });
     //guarda el plan de trabajo en una variable
     let work_plan: any = {
       ... this.f_workplan.value as any,
     }
+   
 
     work_plan.working_week = work_plan.working_week[0]
 
