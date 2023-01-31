@@ -6,6 +6,7 @@ import { InitialLetter } from '@interfaces/applications/full_time/letter';
 import { ViceFormat } from '@interfaces/applications/full_time/vice-format';
 import { WorkPlan } from '@interfaces/applications/full_time/work-plan';
 import { ApplicationStatusCreate } from '@interfaces/application_status';
+import { Msg } from '@interfaces/msg';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,6 @@ export class FullTimeService {
   }
   
   
-
   putViceFormat(viceFormat: ViceFormat, id: number) {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'vice-format/' + id, viceFormat)
   }
@@ -49,5 +49,8 @@ export class FullTimeService {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'work-plan/' + id, workPlan)
   }
 
+  requestFullTime(id: number) {
+    return this.http.put<Msg>(this.urlEndPoint + 'request/' + id, null)
+  }
 
 }

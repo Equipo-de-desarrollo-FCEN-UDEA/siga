@@ -7,6 +7,18 @@
             </div>
         </div>
         <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Convocatoria</div>
+            <div class="col-xs-12 col-sm-6">
+                {{ hour_aval.announcement }}
+            </div>
+        </div>
+        <div class="row regular-row mt-2">
+            <div class="col-xs-12 col-sm-6 label fw-bold">Entidad</div>
+            <div class="col-xs-12 col-sm-6">
+                {{ hour_aval.entity }}
+            </div>
+        </div>
+        <div class="row regular-row mt-2">
             <div class="col-xs-12 col-sm-6 label fw-bold">
                 Estado actual del aval
             </div>
@@ -45,7 +57,7 @@
             </div>
         </div>
 
-        <div class="row header-row mt-3">
+        <div class="row header-row mt-3" *ngIf="hour_aval.another_applicants!.length > 0">
             <div class="col">
                 <span class="text-secondary">SOLICITANTES</span>
             </div>

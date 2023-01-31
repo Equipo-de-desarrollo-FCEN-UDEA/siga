@@ -33,15 +33,18 @@
                 <div class="row">
                     <div class="formfloatig col-6">
                         <input id="rol" class="form-control" type="text" formControlName="role"
-                            placeholder="Rol ejm: Co-investigador, Investigador principal">
+                        placeholder="Rol ejm: Co-investigador, Investigador principal">
+                    <p *ngIf="isInvalidForm('role')" class="inputError">El rol debe tener entre 1 y 50 caracteres</p>
                     </div>
                     <div class="formfloatig col-6">
                         <input id="time" class="form-control" type="number" formControlName="time"
                             placeholder="Dedicación en horas semanales">
+                            <p *ngIf="isInvalidForm('time')" class="inputError">Las horas deben estar entre 1 y 168</p>
                     </div>
                     <div class="formfloatig col" *ngIf="userBypass.vinculation_type.toUpperCase() == 'PROFESOR OCASIONAL'">
                         <input id="rol" class="form-control" type="text" formControlName="backrest"
                             placeholder="Respaldo ejm: ejemplo@udea.edu.co">
+                            <p *ngIf="isInvalidForm('backrest')" class="inputError">El correo debe ser institucional</p>
                     </div>
                 </div>
             </form>

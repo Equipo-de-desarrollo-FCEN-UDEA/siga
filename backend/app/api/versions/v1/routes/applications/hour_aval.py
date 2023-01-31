@@ -178,35 +178,33 @@ async def update_hour_aval(
 
             log.debug('updated_hour_aval', updated_hour_aval)
 
-            # In PostgreSQL
-            application = crud.application.update(
-                db=db, who=current_user, db_obj=application, obj_in=hour_aval)
 
             if not hour_aval.another_applicants:
                 application = crud.application.update(
-                    db, current_user, application)
+                    db, current_user, db_obj=application, obj_in={})
                 path = documents.hour_aval_letter_generation(
                     current_user, updated_hour_aval, [])
                 await crud.hour_aval.update_document(engine, id=updated_hour_aval.id, name='carta-aval.pdf', path=path)
-        else:
-            application = crud.application.update(
-                db, current_user, application, status=6, observation='Solicitud a la espera de confirmación otros profesores')
-        if current_user.vinculation_type.upper() != 'PROFESOR VINCULADO':
-            if hour_aval.backrest:
-                pass
-                # raise NotImplementedError
             else:
-                raise HTTPException(
-                    403, 'Usted no se encuentra registrado como profesor vinculado, debe agregar un respaldo a la solicitud')
+                application = crud.application.update(
+                    db, current_user, db_obj=application, obj_in={}, status=6, observation='Solicitud a la espera de confirmación otros profesores')
+            if current_user.vinculation_type.upper() != 'PROFESOR VINCULADO':
+                if hour_aval.backrest:
+                    pass
+                    # raise NotImplementedError
+                else:
+                    raise HTTPException(
+                        403, 'Usted no se encuentra registrado como profesor vinculado, debe agregar un respaldo a la solicitud')
 
-        for applicant in hour_aval.another_applicants:
-            token = security.jwt.hour_aval_token(
-                applicant.email)
-            user = crud.user.get_by_email(
-                db, applicant.email) or crud.user.get_by_identification(db, applicant.email)
-            log.debug(hour_aval.dict())
-            emails.hours_aval_email.apply_async(
-                args=(hour_aval.dict(), applicant.dict(), user.email, str(updated_hour_aval.id), token))
+            for applicant in hour_aval.another_applicants:
+                if not applicant.acepted:
+                    token = security.jwt.hour_aval_token(
+                        applicant.email)
+                    user = crud.user.get_by_email(
+                        db, applicant.email) or crud.user.get_by_identification(db, applicant.email)
+                    log.debug(hour_aval.dict())
+                    emails.hours_aval_email.apply_async(
+                        args=(hour_aval.dict(), applicant.dict(), user.email, str(updated_hour_aval.id), token))
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -293,8 +291,7 @@ async def generate_letter(
             status_id=1,
             observation='Usuario generó carta'
         )
-        db.add(Application_status(**application_status.dict()))
-        db.commit()
+        crud.application.update(db, current_user, db_obj=application, obj_in={})
         path = documents.hour_aval_letter_generation(
             current_user, hour_aval, users)
         await crud.hour_aval.update_document(engine, id=mongo_id, name='carta-aval.pdf', path=path)
@@ -325,9 +322,10 @@ async def generate_act(
         users = []
         backres = []
         if hour_aval.backrest:
+            back = crud.user.get_by_email(db, hour_aval.backrest)
             backres += [
                 {'user': (user.names + ' ' + user.last_names).title(),
-                 'backres': (crud.user.get_by_email(db, hour_aval.backrest))
+                 'backres': (back.names + ' ' + back.last_names).title()
                  }]
         for applicant in hour_aval.another_applicants:
             user_applicant = UserResponse.from_orm(crud.user.get_by_email(

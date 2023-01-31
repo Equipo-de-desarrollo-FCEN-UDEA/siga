@@ -6,9 +6,10 @@
                 <input id="floatingtime" formControlName="time" class="form-control" placeholder="Ejemplo: 6"
                     type="number" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['time'].errors) || isInvalidForm('time')
+                   isInvalidForm('time')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('time')" class="inputError">El tiempo en meses debe ser mínimo 1 y máximo 300 </p>
         </div>
     </div>
 
@@ -19,9 +20,11 @@
                 <input id="floatinghours_week" formControlName="hours_week" class="form-control"
                     placeholder="Ejemplo: 4" type="number" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['hours_week'].errors) || isInvalidForm('hours_week')
+                 isInvalidForm('hours_week')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('hours_week')" class="inputError">Esta cantidad de horas semanales debe ser mínimo
+                1 y máximo 168</p>
         </div>
     </div>
     <div class="row regular-row mt-4 align-items-baseline">
@@ -31,9 +34,11 @@
                 <input id="floatingentity" formControlName="title" class="form-control"
                     placeholder="Título de la propuesta" type="text" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['title'].errors) || isInvalidForm('title')
+                   isInvalidForm('title')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('title')" class="inputError">El título debe tener como mínimo 10 caracteres y máximo
+                255</p>
         </div>
     </div>
     <div class="row regular-row mt-4 align-items-baseline">
@@ -46,6 +51,8 @@
                   (submitted && f['announcement'].errors) || isInvalidForm('announcement')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('announcement')" class="inputError">La convocatoria debe tener como mínimo 3
+                caracteres y máximo 1000 </p>
         </div>
     </div>
 
@@ -59,11 +66,10 @@
                   (submitted && f['description'].errors) || isInvalidForm('description')
                 }" rows="5"></textarea>
             </div>
-            <div *ngIf="(submitted || f['description'].touched) && (f['description'].errors?.['required'] || 
-              f['description'].errors?.['maxlength'] || f['description'].errors?.['minlength'])">
+            <p *ngIf="isInvalidForm('description')" class="inputError">
                 La descripción debe tener al menos 30 caracteres y máximo 500
                 caracteres.
-            </div>
+            </p>
         </div>
     </div>
 
@@ -74,9 +80,11 @@
                 <input id="floatingentity" formControlName="entity" class="form-control"
                     placeholder="Entidad que realiza la convocatoria" type="text" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['entity'].errors) || isInvalidForm('entity')
+                 isInvalidForm('entity')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('hours_week')" class="inputError">La entidad debe tener como mínimo 3 caracteres y
+                máximo 255</p>
         </div>
     </div>
 
@@ -87,9 +95,11 @@
                 <input id="floatingrole" formControlName="role" class="form-control"
                     placeholder="Ejemplo: Investigador principal, Co-investigador" type="text" [ngClass]="{
                 'is-invalid':
-                  (submitted && f['role'].errors) || isInvalidForm('role')
+                 isInvalidForm('role')
               }" />
             </div>
+            <p *ngIf="isInvalidForm('role')" class="inputError">El rol debe tener como mínimo 1 caracter y máxino
+                50</p>
         </div>
     </div>
     <div class="row header-row mt-3">
@@ -107,6 +117,9 @@
                         <input type="text" [id]="'name'+i" formControlName="name" class="form-control"
                             placeholder=" " />
                         <label class="formLabel" [for]="'name'+i">Nombre</label>
+                        <p *ngIf="product.get('name')?.invalid == true && product.get('name')?.touched"
+                            class="inputError">El nombre debe tener como
+                            mínimo 10 caracteres y máximo 50</p>
                     </div>
                 </div>
             </div>
@@ -117,6 +130,8 @@
                         <textarea rows="5" [id]="'description'+i" formControlName="description" class="form-control"
                             placeholder=" "></textarea>
                         <label class="formLabel" [for]="'description'+i">Descripción</label>
+                        <p *ngIf="product.get('description')?.invalid == true && product.get('description')?.touched"
+                            class="inputError">La descripción debe tener como mínimo 10 caracteres y máximo 300</p>
                     </div>
                 </div>
             </div>
@@ -131,6 +146,7 @@
                 </button>
             </div>
         </div>
+        <p *ngIf="isInvalidForm('products')" class="inputError">El aval de horas debe contener al menos un producto</p>
     </div>
 
     <div class="row header-row mt-3">
@@ -170,8 +186,7 @@
                 <div class="formfloatig">
                     <input id="floatingentity" formControlName="backrest" class="form-control"
                         placeholder="Correo del profesor que respaldará en caso de ausencia" type="text" [ngClass]="{
-                'is-invalid':
-                  (submitted && f['backrest'].errors) || isInvalidForm('backrest')
+                'is-invalid': isInvalidForm('backrest')
               }" />
                 </div>
             </div>

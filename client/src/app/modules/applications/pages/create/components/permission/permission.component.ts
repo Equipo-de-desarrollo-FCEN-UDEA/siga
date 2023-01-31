@@ -55,6 +55,7 @@ export class PermissionComponent implements AfterViewInit{
 
   // holidays
   public holidays: Holiday[] = [];
+mouseOvered: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,6 +82,8 @@ export class PermissionComponent implements AfterViewInit{
     })
   }
 
+  
+
 
   // Form permiso
   public form = this.formBuilder.group({
@@ -106,6 +109,13 @@ export class PermissionComponent implements AfterViewInit{
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       return;
     }
 

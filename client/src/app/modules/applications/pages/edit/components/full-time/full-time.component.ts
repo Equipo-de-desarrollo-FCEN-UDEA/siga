@@ -109,7 +109,7 @@ export class FullTimeComponent implements OnInit {
       return;
     }
 
-    let fullTime = this.fullTimeSvc.putFullTime(this.id);
+    let fullTime = this.fullTimeSvc.requestFullTime(this.id);
     fullTime.subscribe({
       next: (res) => {
         Swal.fire({

@@ -33,7 +33,7 @@ class UserBase(BaseModel):
     )
 
     email: str = Field(
-        regex="^([a-zA-Z]+(.[a-zA-Z]+)+)@udea.edu.co$",
+        # regex="^([a-zA-Z]+(.[a-zA-Z]+)+)@udea.edu.co$",
         min_length=1,
         max_length=100
     )

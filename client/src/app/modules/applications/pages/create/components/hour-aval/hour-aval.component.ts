@@ -8,7 +8,7 @@ import { HourAvalService } from '@services/applications/hour-aval.service';
 import { UserService } from '@services/user.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ApplicantsComponent } from './applicants/applicants.component';
+import { ApplicantsComponent } from '@shared/components/applicants/applicants.component';
 
 @Component({
   selector: 'app-hour-aval',
@@ -38,8 +38,8 @@ export class HourAvalComponent {
     private router: Router
   ) {
     this.form = this.formBuilder.group({
-      time: [NaN, [Validators.required, Validators.max(300), Validators.min(1)]],
-      hours_week: [NaN, [Validators.required, Validators.max(48), Validators.min(1)]],
+      time: [new Number(NaN), [Validators.required, Validators.max(300), Validators.min(1)]],
+      hours_week: [new Number(NaN), [Validators.required, Validators.max(168), Validators.min(1)]],
       announcement: ['', [Validators.required, Validators.maxLength(1000)]],
       title: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
       description: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
@@ -72,6 +72,13 @@ export class HourAvalComponent {
 
   submit() { 
     if (this.form.invalid){
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       console.log(this.form.value)
       console.log(this.form.errors)
       this.submitted = true
@@ -123,7 +130,7 @@ export class HourAvalComponent {
 
   // Validations
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
+    return this.form.get(controlName)?.invalid && (this.form.get(controlName)?.touched || this.submitted);
   }
 
   get f() {

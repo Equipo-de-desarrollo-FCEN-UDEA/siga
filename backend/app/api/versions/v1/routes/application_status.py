@@ -26,7 +26,7 @@ async def create_application_status(
     db: Session = Depends(db.get_db),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     current_user: User = Depends(jwt_bearer.get_current_active_user),
-# ) -> Application_statusInDB:
+    # ) -> Application_statusInDB:
 ):
     application_status.observation += f' por {current_user.rol.description}'
     try:
@@ -52,57 +52,62 @@ async def create_application_status(
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
 
-                full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-                
-                dates_to_save = []
+            full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
 
-                # Tomar solo las fechas del plan de trabajo
-                if full_time.work_plan['teaching_activities']:
-                    for activity in full_time.work_plan['teaching_activities']:
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_1'])
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_2'])
+            dates_to_save = []
 
-                if full_time.work_plan['investigation_activities']:
-                    for activity in full_time.work_plan['investigation_activities']:
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_1'])
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_2'])
+            # Tomar solo las fechas del plan de trabajo
+            if full_time.work_plan['teaching_activities']:
+                for activity in full_time.work_plan['teaching_activities']:
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_1'])
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_2'])
 
-                if full_time.work_plan['extension_activities']:
-                    for activity in full_time.work_plan['extension_activities']:
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_1'])
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_2'])
+            if full_time.work_plan['investigation_activities']:
+                for activity in full_time.work_plan['investigation_activities']:
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_1'])
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_2'])
 
-                if full_time.work_plan['academic_admin_activities']:
-                    for activity in full_time.work_plan['academic_admin_activities']:
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_1'])
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_2'])
+            if full_time.work_plan['extension_activities']:
+                for activity in full_time.work_plan['extension_activities']:
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_1'])
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_2'])
 
-                if full_time.work_plan['other_activities']:
-                    for activity in full_time.work_plan['other_activities']:
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_1'])
-                        dates_to_save.append(
-                            activity['activity_tracking']['date_2'])
+            if full_time.work_plan['academic_admin_activities']:
+                for activity in full_time.work_plan['academic_admin_activities']:
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_1'])
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_2'])
 
-                log.debug('dates_to_save',dates_to_save)
-                for date in dates_to_save:
-                    #se crea una tarea a ejecutar con un CRON con las fechas del work_plan
-                    cron_obj = CronJobCreate(
-                        send_date= date - relativedelta(months=1),
-                        template="email.report.full.time.html.j2",
-                        user_email=application.user.email,
-                        id_application=application.id
-                    )
-                    crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
+            if full_time.work_plan['other_activities']:
+                for activity in full_time.work_plan['other_activities']:
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_1'])
+                    dates_to_save.append(
+                        activity['activity_tracking']['date_2'])
 
+            log.debug('dates_to_save', dates_to_save)
+            for date in dates_to_save:
+                # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
+                cron_obj = CronJobCreate(
+                    send_date=date - relativedelta(months=1),
+                    template="email.report.full.time.html.j2",
+                    user_email=application.user.email,
+                    id_application=application.id
+                )
+                crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
+
+        # status Visto bueno:
+        if response.status == 'VISTO BUENO':
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                        application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
+    
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response
