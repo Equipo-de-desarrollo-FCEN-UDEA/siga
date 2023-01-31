@@ -17,13 +17,15 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
+import { ApplicantsComponent } from './components/applicants/applicants.component';
 
 @NgModule({
   declarations: [
     StatusHistoryComponent,
     NotFoundComponent,
     LoaderComponent,
-    StepperComponent
+    StepperComponent,
+    ApplicantsComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
     NgbModule,
     LoaderComponent,
     StepperComponent,
-    CdkStepperModule
+    CdkStepperModule,
+    ApplicantsComponent
   ]
 })
 export class SharedModule { }

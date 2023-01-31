@@ -1,4 +1,4 @@
-<div class="container containerInside card shadow mt-5 bg-white rounded p-5 ">
+<div class="container containerInside card shadow mt-5 bg-white rounded p-5 position-relative">
     <div class="row header-row">
       <div class="col">
         <!-- <p class="ptitle">Mi perfil</p> -->
@@ -79,15 +79,7 @@
   
     <hr />
     <div class="footer-row d-md-flex justify-content-md-end mb-3">
-      <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          (click)="cancel()"
-        >
-          Cancelar
-        </button>
-      </div>
+      
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
         <button
           *ngIf="id == 0"
@@ -111,5 +103,14 @@
       </div>
     </div>
     <div class="row footer-row"></div>
+    <div class="position-absolute p-1 top-0 start-0">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="cancel()"
+      >
+        <i class="fas fa-angle-left"></i>
+      </button>
+    </div>
   </div>
   

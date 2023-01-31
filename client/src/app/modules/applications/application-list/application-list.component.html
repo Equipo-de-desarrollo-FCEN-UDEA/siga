@@ -1,5 +1,5 @@
 <div
-  class="container card shadow containerInside mt-5 p-3"
+  class="container card shadow containerInside mt-5 p-3 position-relative"
   *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
 >
   <form [formGroup]="form" (submit)="search()">
@@ -153,18 +153,17 @@
       </tfoot>
     </table>
   </div>
-  <div class="footer-row d-md-flex justify-content-md-end mb-3">
-    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+    <div class="position-absolute top-0 start-0 p-1">
       <button
         type="button"
         class="btn btn-outline-secondary"
         (click)="cancel()"
       >
-        Cancelar
+        <i class="fas fa-angle-left"></i>
       </button>
     </div>
-  </div>
 </div>
+
 
 <!-- SPINNER ALL PAGE -->
 <app-loader></app-loader>

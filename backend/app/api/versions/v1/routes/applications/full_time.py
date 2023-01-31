@@ -199,6 +199,23 @@ async def delete_full_time(
     return Msg(msg="Comisión eliminada correctamente")
 
 
+@router.put('/request/{id}')
+def solicite_full_time(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    db: Session = Depends(db.get_db)
+) -> Msg:
+    try:
+        application = crud.application.get(db, current_user, id=id)
+        update = crud.application.update(db, current_user, db_obj=application, obj_in={
+        }, status=1, observation='Usuario solocitó dedicación exclusiva')
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    return {'msg': 'La solicitud se solicitó correctamente'}
+
+
+
 @router.put('/letter/{id}')
 async def update_letter(
     id: int,
@@ -274,3 +291,4 @@ async def update_work_plan(
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
+

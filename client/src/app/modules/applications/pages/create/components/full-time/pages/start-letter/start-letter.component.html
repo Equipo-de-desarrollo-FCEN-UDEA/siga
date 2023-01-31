@@ -13,7 +13,7 @@
           placeholder=" "
           [ngClass]="{ 'is-invalid': isInvalidForm('body') }"
           required
-          rows="5"
+          rows="15"
         ></textarea>
         <!-- errors body -->
         <!-- errors justification -->
@@ -28,7 +28,7 @@
               *ngIf="(submitted || f['body'].touched) && (f['body'].errors?.['required'] || 
               f['body'].errors?.['maxlength'] || f['body'].errors?.['minlength'])"
             >
-              La justificación debe tener al menos 30 caracteres y máximo 500
+              La justificación debe tener al menos 30 caracteres y máximo 2000
               caracteres.
             </div>
           </div>
