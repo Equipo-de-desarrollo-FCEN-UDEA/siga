@@ -22,25 +22,19 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         *,
         skip: int = 0,
         limit: int = 100,
-        search: str = '',
-        filed: bool | None = None,
-        type: int = 0,
-        date_1: datetime | None = None,
-        date_2: datetime | None = None
+        search: str | None = None,
+        filed: bool | None = None
     ) -> List[Application]:
         queries = []
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        if type:
-            queries += [ApplicationSubType.application_type_id == type]
-
         if who.rol.scope >= 9:
             queries += [User.id == who.id]
 
         if who.rol.scope < 9:
-            queries += [Application_status.status_id.not_in((6,7))]
+            # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
-                queries += [Application.filed == filed]
+                queries += [Application.filed.is_(filed)]
 
         if (who.rol.scope == 7) or (who.rol.scope == 6):
             queries += [User.department_id == who.department.id]
@@ -48,17 +42,14 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if who.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
 
-        if date_1 and date_2:
-            queries += [Application.created_at >=
-                        date_1, Application.created_at <= date_2]
-
-        if search:
+        if search is not None:
             columns = [
                 'names',
                 'last_names',
                 'identification_number',
                 'email'
             ]
+            log.debug('Entrando en search')
             search = search.upper()
             raw = [
                 db.query(Application)
@@ -66,24 +57,24 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 .join(User)
                 .join(ApplicationSubType)
                 .join(Department)
-                .join(Application_status)
                 .filter(getattr(User, col).contains(f"{search}"))
                 .filter(*queries)
+                .offset(skip)
+                .limit(limit)
                 .all()
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return res
+            return [*set(res)]
 
         objs_db = (db.query(Application)
                    .order_by(desc(Application.id))
                    .join(User)
                    .join(ApplicationSubType)
                    .join(Department)
-                   .join(Application_status)
                    .filter(*queries)
-                   .offset(skip)
                    .limit(limit)
+                   .offset(skip)
                    .all())
 
         return objs_db
