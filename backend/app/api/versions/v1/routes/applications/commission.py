@@ -72,14 +72,6 @@ async def create_commission(
     return response
 
 
-@router.get("/", response_model=list[Commission])
-async def get_commissions(*,
-                          engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[Commission]:
-
-    commissiones = await engine.find(Commission)
-    return commissiones
-
-
 @router.get("/{id}", response_model=CommissionResponse)
 async def get_commission(
     id: int,

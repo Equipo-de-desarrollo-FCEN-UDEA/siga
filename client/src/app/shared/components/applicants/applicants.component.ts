@@ -14,6 +14,8 @@ export class ApplicantsComponent {
   public role: FormGroup;
   public userBypass!: UserByPass;
   public error = ''
+  private submitted = false;
+  private isEmailValid = /^[a-zA-Z0-9._%+-]+@udea.edu.co$/;
   constructor(
     private formBuilder: FormBuilder,
     private userSvc: UserService,
@@ -24,8 +26,8 @@ export class ApplicantsComponent {
     })
     this.role = this.formBuilder.group({
       role: ['', [Validators.required, Validators.maxLength(50)]],
-      time: [NaN, [Validators.required, Validators.min(1), Validators.max(40)]],
-      backrest: ['']
+      time: [NaN, [Validators.required, Validators.min(1), Validators.max(168)]],
+      backrest: ['', [Validators.pattern(this.isEmailValid)]]
     })
   }
 
@@ -36,7 +38,17 @@ export class ApplicantsComponent {
     })
   }
 
+  // Validations
+  isInvalidForm(controlName: string) {
+    return this.role.get(controlName)?.invalid && (this.role.get(controlName)?.touched || this.submitted);
+  }
+
   submit() {
+    if (this.role.invalid) {
+      this.submitted = true;
+      return;
+    }
+
     this.activeModal.close({
       email: this.userBypass.email,
       role: this.role.value.role,
@@ -45,7 +57,7 @@ export class ApplicantsComponent {
     })
   }
 
-  cancel(){
+  cancel() {
     this.activeModal.dismiss('Dismiss modal')
   }
 

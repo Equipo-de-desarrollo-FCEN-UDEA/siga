@@ -87,21 +87,6 @@ async def create_permission(
     return response
 
 
-# ------ OBTENER TODOS LOS PERMISOS ------
-@router.get("/", response_model=list[Permission])
-async def get_permissions(
-    *,
-    engine: AIOSession = Depends(mongo_db.get_mongo_db),
-) -> list[Permission]:
-    """
-        Endpoint to get all applications of type Permission
-            response:
-                - List Permission
-    """
-    permissions = await engine.find(Permission)
-    return permissions
-
-
 # ------ OBTENER UN PERMISO POR ID ------
 @router.get("/{id}", response_model=PermissionResponse)
 async def get_permission(

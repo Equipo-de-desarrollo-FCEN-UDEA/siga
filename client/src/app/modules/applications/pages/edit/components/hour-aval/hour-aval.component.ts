@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, Valid
 import { ActivatedRoute, Router } from '@angular/router';
 import { Applicant, HourAvalCreate } from '@interfaces/applications/hour_aval';
 import { UserByPass, UserResponse } from '@interfaces/user';
-import { ApplicantsComponent } from './applicants/applicants.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HourAvalService } from '@services/applications/hour-aval.service';
 import { UserService } from '@services/user.service';
+import { ApplicantsComponent } from '@shared/components/applicants/applicants.component';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -41,7 +41,7 @@ export class HourAvalComponent {
   ) {
     this.form = this.formBuilder.group({
       time: [NaN, [Validators.required, Validators.max(300), Validators.min(1)]],
-      hours_week: [NaN, [Validators.required, Validators.max(48), Validators.min(1)]],
+      hours_week: [NaN, [Validators.required, Validators.max(168), Validators.min(1)]],
       announcement: ['', [Validators.required, Validators.maxLength(1000)]],
       title: ['', [Validators.required, Validators.min(3), Validators.max(255)]],
       description: ['', [Validators.required, Validators.min(30), Validators.max(500)]],

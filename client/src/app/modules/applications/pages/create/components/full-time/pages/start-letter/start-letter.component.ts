@@ -39,7 +39,7 @@ export class StartLetterComponent implements OnInit {
       [
         Validators.required,
         Validators.minLength(30),
-        Validators.maxLength(500),
+        Validators.maxLength(2000),
       ],
     ],
   });
