@@ -38,6 +38,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             queries += [User.id == who.id]
 
         if who.rol.scope < 9:
+            queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed == filed]
 
@@ -65,6 +66,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 .join(User)
                 .join(ApplicationSubType)
                 .join(Department)
+                .join(Application_status)
                 .filter(getattr(User, col).contains(f"{search}"))
                 .filter(*queries)
                 .all()
@@ -78,6 +80,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .join(User)
                    .join(ApplicationSubType)
                    .join(Department)
+                   .join(Application_status)
                    .filter(*queries)
                    .offset(skip)
                    .limit(limit)

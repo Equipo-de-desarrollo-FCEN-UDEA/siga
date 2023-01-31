@@ -1,5 +1,5 @@
 <div
-  class="container card shadow containerInside mt-5 p-3 position-relative"
+  class="container card shadow containerInside mt-5 p-3 pt-1 position-relative"
   *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
 >
   <form [formGroup]="form" (submit)="search()">
