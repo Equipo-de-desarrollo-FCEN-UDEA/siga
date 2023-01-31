@@ -78,14 +78,6 @@ async def create_full_time(
     return response
 
 
-@router.get("/", response_model=list[FullTime])
-async def get_full_times(*,
-                         engine: AIOSession = Depends(mongo_db.get_mongo_db)) -> list[FullTime]:
-
-    full_timees = await engine.find(FullTime)
-    return full_timees
-
-
 @router.get("/{id}", response_model=FullTimeResponse)
 async def get_full_time(
     id: int,

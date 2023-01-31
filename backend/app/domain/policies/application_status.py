@@ -11,7 +11,7 @@ log = get_logging(__name__)
 
 class Application_statusPolicy(Base[Application_status, Application_statusCreate, Application_statusUpdate]):
 
-    def create(self, who: User, to: Application) -> str:
+    def create(self, who: User, to: Application) -> tuple[str, list[int]]:
         status_fluxes = to.application_sub_type.application_type.status_flux
         actual_status = to.application_status[-1].status.name
         for i, flux in enumerate(status_fluxes):
@@ -31,7 +31,11 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
                 if actual_status == flux["status"]:
                     next_status = i+1
             return status_fluxes[next_status]['status']
-        return status_fluxes[next_status]['status']
+        if status_fluxes[next_status]['status'] == 'APROBADA':
+            scope = []
+        else:
+            scope = status_fluxes[next_status + 1]['scope']
+        return status_fluxes[next_status]['status'], scope
 
     def request(self, who: User, to: Application, current: any) -> str:
         status_fluxes = to.application_sub_type.application_type.status_flux

@@ -4,11 +4,12 @@ from datetime import datetime
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from app.domain.models import Application, User, ApplicationSubType, Application_status, Department
+from app.domain.models import Application, User, ApplicationSubType, Application_status, Department, ApplicationType, ApplicationSubType
 from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_statusCreate
 from app.domain.policies import ApplicationPolicy
 from app.core.logging import get_logging
 from .base import CRUDBase
+from app.services.emails import create_application_email
 
 log = get_logging(__name__)
 
@@ -45,9 +46,10 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         if who.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
-        
+
         if date_1 and date_2:
-            queries += [Application.created_at >= date_1, Application.created_at <= date_2]
+            queries += [Application.created_at >=
+                        date_1, Application.created_at <= date_2]
 
         if search:
             columns = [
@@ -98,6 +100,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             status_id=status,
             observation=observation
         )
+        if status == 1:
+            create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
+                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
@@ -120,6 +125,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             status_id=status,
             observation=observation
         )
+        if status == 1:
+            create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
+                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()

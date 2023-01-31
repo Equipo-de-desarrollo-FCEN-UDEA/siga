@@ -291,8 +291,7 @@ async def generate_letter(
             status_id=1,
             observation='Usuario generó carta'
         )
-        db.add(Application_status(**application_status.dict()))
-        db.commit()
+        crud.application.update(db, current_user, db_obj=application, obj_in={})
         path = documents.hour_aval_letter_generation(
             current_user, hour_aval, users)
         await crud.hour_aval.update_document(engine, id=mongo_id, name='carta-aval.pdf', path=path)
