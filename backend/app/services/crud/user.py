@@ -86,8 +86,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
                    .join(Rol)
                    .join(Department)
                    .filter(*queries)
-                   .offset(skip)
                    .limit(limit)
+                   .offset(skip)
                    .all())
 
         return objs_db
