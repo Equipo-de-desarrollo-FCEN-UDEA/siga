@@ -1,12 +1,32 @@
+
+
 <div
   class="container card shadow containerInside mt-5 p-3 pt-1 position-relative"
   *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
 >
+<!-- <div class="position-absolute top-0 start-0 p-1">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="cancel()">
+    <i class="fas fa-angle-left"> </i>
+  </button>
+</div> -->
+
   <form [formGroup]="form" (submit)="search()">
     <div class="row">
+      
       <div class="col-xs-12 col-sm-12 col-lg-8">
+
         <div class="row">
-          <div class="col-10">
+
+          <div class="col-md-auto">
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+                 <i class="fas fa-angle-left"> </i>
+           </button>
+          </div>
+
+          <div class="col-8">
             <input
               type="text"
               class="form-control"
@@ -14,13 +34,17 @@
               placeholder="Buscar"
             />
           </div>
+
           <div class="col-2 search">
             <button class="btn btn-warning" type="submit" (submit)="(true)">
               <i class="fas fa-search"></i>
             </button>
           </div>
+
         </div>
+
       </div>
+
       <div class="col-xs-5 col-lg-2" *ngIf="context.isSuperUser">
         <select
           class="form-select"
@@ -153,15 +177,7 @@
       </tfoot>
     </table>
   </div>
-    <div class="position-absolute top-0 start-0 p-1">
-      <button
-        type="button"
-        class="btn btn-outline-secondary"
-        (click)="cancel()"
-      >
-        <i class="fas fa-angle-left"></i>
-      </button>
-    </div>
+    
 </div>
 
 
