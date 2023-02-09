@@ -33,7 +33,7 @@
 
         <p class="text-justify">
             ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
-            {{user.identification_type}} {{user.identification_number}}, adscrito al Instituto, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
+            {{user.identification_type}} número {{user.identification_number}}, adscrito a {{user.department.description}}, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
             {{permission.end_date}}, para {{permission.justification}}
         </p>
 
