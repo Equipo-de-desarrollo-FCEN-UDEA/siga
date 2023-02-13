@@ -8,7 +8,9 @@ import { Component } from '@angular/core';
     </footer>
   `,
   styles: [
-    `
+    ` div {
+      margin:0;
+      }
       footer {
         height: 3em;
         text-align: center;
