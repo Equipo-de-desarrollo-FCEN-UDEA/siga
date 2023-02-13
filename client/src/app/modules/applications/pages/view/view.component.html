@@ -1,6 +1,12 @@
 <div class="containerInside container card shadow mt-5 bg-white rounded p-5"
-  *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
+  *ngIf="{ isSuperUser: isSuperUser$ | async} as context">
   <div class="row header-row">
+    <div class="col-md-auto">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+           <i class="fas fa-angle-left"> </i>
+     </button>
+    </div>
+    
     <div class="col">
       <span class="text-secondary">{{ title | uppercase }}</span>
     </div>
@@ -52,7 +58,7 @@
   <hr />
 
   <div class="status-control" *ngIf="context.isSuperUser">
-    <form [formGroup]="form" (submit)="submit()">
+      <form [formGroup]="form" (submit)="submit()">
       <div class="row regular-row mt-4 align-items-baseline">
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Observación *</div>
         <div class="col-sm-12 col-xs-12 col-md-8">
@@ -63,11 +69,6 @@
         </div>
       </div>
       <div class="footer-row d-md-flex justify-content-md-end">
-        <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-          <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-            Cancelar
-          </button>
-        </div>
         <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
           <button class="btn btn-danger" type="button" (click)="decline()">
             Rechazar
@@ -83,11 +84,6 @@
 
   <div class="user-control" *ngIf="!context.isSuperUser">
     <div class="footer-row d-md-flex justify-content-md-end" *ngIf="application$ | async as application">
-      <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-          Cancelar
-        </button>
-      </div>
       <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-3 p-2">
         <button class="btn btn-outline-danger" (submit)="(true)" type="submit" (click)="delete()">
           Eliminar
