@@ -9,6 +9,7 @@ import { SharedModule } from '@shared/shared.module';
 import { ComplimentComponent } from './components/compliment/compliment.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { FullTimeModule } from './components/full-time/full-time.module';
+import { VacationComponent } from './components/vacation/vacation.component';
 
 
 
@@ -18,7 +19,8 @@ import { FullTimeModule } from './components/full-time/full-time.module';
     CommissionComponent,
     PermissionComponent,
     ComplimentComponent,
-    HourAvalComponent
+    HourAvalComponent,
+    VacationComponent
   ],
   imports: [
     CommonModule,
