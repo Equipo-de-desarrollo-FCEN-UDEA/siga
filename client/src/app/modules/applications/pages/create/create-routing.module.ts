@@ -20,6 +20,7 @@ import { WorkplanComponent } from './components/full-time/pages/workplan/workpla
 //CREATE COMPONENT
 import { CreateComponent } from './create.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
+import { VacationComponent } from './components/vacation/vacation.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
           button: 'Iniciar'
         },
       },
+      //AVAL DE HORAS
       {
         path: 'avalhoras',
         component: HourAvalComponent,
@@ -60,7 +62,11 @@ const routes: Routes = [
           button: 'Iniciar'
         }
       },
-
+      //Vacaciones
+      {
+        path: 'vacation',
+        component: VacationComponent
+      },
       //  Formularios extras
       {
         path: 'plan-de-trabajo/:id',
