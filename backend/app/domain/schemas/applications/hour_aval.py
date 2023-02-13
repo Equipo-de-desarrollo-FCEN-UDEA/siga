@@ -33,8 +33,8 @@ class Act(BaseModel):
 
 
 class HourAvalBase(BaseModel):
-    time: int = Field(gt=1, lt=300)
-    hours_week: int = Field(gt=1, lt=48)
+    time: int = Field(gt=0, lt=300)
+    hours_week: int = Field(gt=0, lt=48)
     title: str = Field(min_length=10, max_length=255)
     description: str = Field(min_length=30, max_length=500)
     announcement: str = Field(max_length=1000)
