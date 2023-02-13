@@ -38,8 +38,8 @@ export class HourAvalComponent {
     private router: Router
   ) {
     this.form = this.formBuilder.group({
-      time: [new Number(NaN), [Validators.required, Validators.max(300), Validators.min(1)]],
-      hours_week: [new Number(NaN), [Validators.required, Validators.max(168), Validators.min(1)]],
+      time: ['', [Validators.required, Validators.max(300), Validators.min(1)]],
+      hours_week: ['', [Validators.required, Validators.max(168), Validators.min(1)]],
       announcement: ['', [Validators.required, Validators.maxLength(1000)]],
       title: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(255)]],
       description: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
@@ -130,7 +130,8 @@ export class HourAvalComponent {
 
   // Validations
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.invalid && (this.form.get(controlName)?.touched || this.submitted);
+    return this.form.get(controlName)?.
+    invalid && (this.form.get(controlName)?.touched || this.submitted);
   }
 
   get f() {
