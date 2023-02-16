@@ -51,7 +51,7 @@ const routes: Routes = [
         path: 'vacaciones',
         component: VacationComponent,
         data: {
-          title: 'Solicitud de vacaciones'
+          title: 'Vacaciones'
         }
       },
       {
