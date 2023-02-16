@@ -64,8 +64,11 @@ const routes: Routes = [
       },
       //Vacaciones
       {
-        path: 'vacation',
-        component: VacationComponent
+        path: 'vacaciones',
+        component: VacationComponent,
+        data:{
+          title: 'Vacaciones'
+        }
       },
       //  Formularios extras
       {
