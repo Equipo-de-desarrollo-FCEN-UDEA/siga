@@ -1,1 +1,257 @@
-<p>vacation works</p>
+<form
+  class="need-validation"
+  need-validation
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <!-- DATEPICKER -->
+  <ng-template #footerTemplate>
+    <hr class="my-0" />
+    <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
+    <p *ngIf="!fromDate">Elige la primera fecha</p>
+    <button
+      class="btn btn-primary btn-sm m-2 float-start"
+      (click)="model = today; datepicker.close()"
+      type="button"
+    >
+      Hoy
+    </button>
+    <button
+      class="btn btn-secondary btn-sm m-2 float-end"
+      (click)="datepicker.close()"
+      type="button"
+    >
+      Cerrar
+    </button>
+  </ng-template>
+
+  <div class="dp-hidden position-absolute">
+    <div class="input-group">
+      <input
+        hidden
+        name="datepicker"
+        class="form-control"
+        ngbDatepicker
+        #datepicker="ngbDatepicker"
+        [autoClose]="'outside'"
+        (dateSelect)="onDateSelection($event)"
+        [displayMonths]="2"
+        [dayTemplate]="t"
+        outsideDays="hidden"
+        [startDate]="fromDate!"
+        tabindex="-1"
+        [footerTemplate]="footerTemplate"
+        placement="left"
+        [positionTarget]="buttonEl"
+      />
+      <ng-template #t let-date let-focused="focused">
+        <span
+          class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null"
+        >
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- VACATION TYPE -->
+  <div class="row">
+    <div class="formfloatig">
+      <select
+        formControlName="application_sub_type_id"
+        class="form-control form-select-lg mb-3"
+        (change)="onApplicationSubType($event)"
+        [ngClass]="{
+          'is-invalid': isInvalidForm('application_sub_type_id')
+        }"
+        *ngIf="applicationType$ | async as applicationType"
+      >
+        <option value="0" disabled selected>Tipo de días a escoger</option>
+        <option
+          [ngValue]="tipo.id"
+          *ngFor="let tipo of applicationType.application_sub_type"
+        >
+          {{ tipo.name }}
+        </option>
+      </select>
+    </div>
+
+    <hr />
+
+    <!-- ALERT BOX -->
+    <div class="alert alert-warning mt-3 mb-0">
+      <strong>¡Importante!</strong> Para  elegir sus días de vacaciones solo puedes 
+       hasta {{ laboralDay }} días hábiles
+    </div>
+
+    <div class="row regular-row mt-4">
+      <span class="col-md-4 col-xs-12 col-sm-12 label">Fechas *</span>
+      <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
+        <div class="input-group">
+          <input
+            #dpFromDate
+            class="form-control"
+            type="text"
+            (click)="datepicker.toggle(); clicked = clicked + 1"
+            placeholder="yyyy-mm-dd"
+            name="dpFromDate"
+            formControlName="start_date"
+            (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+            [value]="
+              formatter.format(fromDate) ? formatter.format(fromDate) : null
+            "
+            [ngClass]="{ 'is-invalid': !fromDate && clicked !== 0 }"
+          />
+          <input
+            #dpToDate
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            name="dpToDate"
+            formControlName="end_date"
+            [value]="formatter.format(toDate)"
+            (input)="toDate = validateInput(toDate, dpToDate.value)"
+            [value]="formatter.format(toDate) ? formatter.format(toDate) : null"
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['start_date'].errors) ||
+                ((!fromDate || !toDate) && clicked !== 0) ||
+                selectDays(fromDate, toDate)
+            }"
+          />
+          <span #buttonEl class="btn btn-outline-secondary">
+            <i class="fa fa-calendar"></i>
+          </span>
+        </div>
+        <!-- errors dates -->
+        <div
+          *ngIf="
+            (submitted && f['start_date'].errors) ||
+            ((!fromDate || !toDate) && clicked !== 0) ||
+            selectDays(fromDate, toDate)
+          "
+          class="invalid"
+        >
+          <div *ngIf="selectDays(fromDate, toDate)">
+            La cantidad de días elegidos sobrepasa los permitidos para las vacaciones
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+      <div class="input-group" (click)="datepicker.toggle()">
+        <input
+          #dpToDate
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          name="dpToDate"
+          formControlName="end_date"
+          [value]="formatter.format(toDate)"
+          (input)="toDate = validateInput(toDate, dpToDate.value)"
+        />
+      </div>
+    </div>
+
+    <!-- CURRENT DOCUMENTS -->
+    <div class="row regular-row mt-4" *ngIf="documents.length > 0">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Documentos</div>
+      <div class="col-sm-12">
+        <ul *ngFor="let doc of documents; let i = index" class="list-group">
+          <li [id]="i" class="list-group-item d-flex justify-content-between">
+            <span>{{ doc.name }}</span>
+            <span style="width: fit-content; margin: 0">
+              <button
+                class="btn btn-circle"
+                type="button"
+                (click)="deleteDocument(doc.path, i)"
+              >
+                <i class="fa fa-times-circle"></i>
+              </button>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+     <!--Signature-->
+    <!-- <label for="signature">Signature</label>
+    <div class="signature-pad">
+      <div class="signature-pad--body">
+        <canvas></canvas>
+      </div>
+      <div class="signature-pad--footer">
+        <div class="description">Firma aquí</div>
+        <div class="signature-pad--actions">
+          <div>
+            <button type="button" class="button clear" data-action="clear">Borrar</button>
+          </div>
+          <div>
+            <button type="button" class="button save" data-action="save-svg">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!--ARCHIVOS-->
+    <h6 class="mt-3 text-center">
+      <span class="text-muted">Archivos adjuntos de las vacaciones</span>
+    </h6>
+    <div
+      class="alert alert-danger"
+      *ngIf="files.length > 0 && !validFileType()"
+    >
+      Ese tipo de archivo no es permitido.
+    </div>
+    <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
+      Los archivos no deben pesar más de 2 MB.
+    </div>
+    <div class="formfloatig" style="display: flex; flex-direction: column">
+      <div
+        *ngFor="let producto of document_new; last as isLast; let i = index"
+        class="arrayLike formfloatig d-flex justify-content-between"
+      >
+        <div class="archivos" style="width: auto; margin-left: 10px">
+          <label class="btn-btn-default cursor is-hoverable">
+            <div class="fa fa-upload fa-2x"></div>
+            <input
+              [id]="i"
+              class="file-upload"
+              type="file"
+              (change)="onUpload($event, i)"
+            />
+            <label [for]="i" class="is-hoverable cursor" style="margin-left: 10px">{{
+              files[i] ? files[i].name : "Subir archivo"
+            }}</label>
+          </label>
+        </div>
+        <div class="buttons">
+          <button
+            class="btn btn-circle btn-remove btn-sm m-1"
+            type="button"
+            (click)="removeFile(i)"
+          >
+            <i class="fa fa-minus"></i>
+          </button>
+          <button
+            class="btn btn-circle btn-add btn-sm m-1"
+            type="button"
+            (click)="document_new.push(1)"
+            *ngIf="isLast && document_new.length < 3"
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+    {{ error }}
+  </div>
+  <hr />
+</form>
