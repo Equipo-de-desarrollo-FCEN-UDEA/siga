@@ -11,23 +11,20 @@ class Applicant(BaseModel):
     last_names: str
     email: str
 
-class VacationsBase(BaseModel):
-    vinculation_type: str
-    service_type: str
-    vacations_type: bool
+class VacationBase(BaseModel):
+    type_date_application: str
+    total_days: int
     start_date: datetime
     end_date: datetime
-    justification: str
-    resolution: str | None
     documents: list[Any] | None
+    signature: Any | None
 
-class VacationCreate(VacationsBase):
-    pass
+class VacationCreate(VacationBase):
+    application_sub_type_id: int = 12
+class VacationUpdate(VacationBase):
+    application_sub_type_id: int = 12
 
-class VacationUpdate(VacationsBase):
-    pass
-
-class VacationInDB(VacationsBase):
+class VacationInDB(VacationBase):
     pass
 
 class VacationResponse(ApplicationResponse):
