@@ -48,6 +48,19 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
         ],
         who_can=[9]
+    ),
+    schemas.ApplicationTypeCreate(
+        name="VACACIÓN",
+        description="vacacion",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[9, 11]
     )
 ]
 
@@ -102,5 +115,9 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Aval de horas",
         application_type_id=4
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="vacacion",
+        application_type_id=5
     )
 ]

@@ -25,8 +25,8 @@ class VacationUpdate(VacationBase):
     application_sub_type_id: int = 12
 
 class VacationInDB(VacationBase):
-    pass
+    documents: list[Any] | None = Field(default_factory=list)
 
 class VacationResponse(ApplicationResponse):
-    pass
+    vacation: VacationInDB
 
