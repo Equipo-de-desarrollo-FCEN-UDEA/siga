@@ -54,7 +54,8 @@ def fill_vacations_format(user: User, vacations: Vacations):
         "final_date_day": str(final_date.day),
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
-        "total_days": str((final_date - initial_date).days)
+        "total_days": str(vacations['total_days'])
+        #"total_days": str((final_date - initial_date).days)
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
