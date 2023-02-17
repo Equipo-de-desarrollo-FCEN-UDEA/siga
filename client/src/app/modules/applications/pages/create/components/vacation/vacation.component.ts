@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { file_path } from '@interfaces/documents';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ApplicationTypesService } from '@services/application-types.service';
 
 @Component({
   selector: 'app-vacation',
@@ -7,7 +12,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VacationComponent implements OnInit {
 
-  constructor() { }
+  // Dates
+  public fromDate: NgbDate | null = null;
+  public hoveredDate: NgbDate | null = null;
+  public toDate: NgbDate | null = null;
+  public model: NgbDateStruct | null = null;
+  public today = this.calendar.getToday();
+
+  public files : any[] = [];
+  public archivos = [1];
+  public documents: file_path[] = []
+
+  constructor(
+
+    private fb: FormBuilder,
+    private calendar : NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+    private ngZone: NgZone,
+    private router: Router,
+    private cd: ChangeDetectorRef,
+
+    private applicationTypeSvc: ApplicationTypesService,
+  
+  ) { }
 
   ngOnInit(): void {
   }
