@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { CreateApplicationComponent } from './pages/create-application/create-application.component';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import { SignatureComponent } from '@shared/components/signature/signature.component';
 import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 
 const routes: Routes = [

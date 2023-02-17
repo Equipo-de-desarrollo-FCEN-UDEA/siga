@@ -2,40 +2,53 @@
 // then import for use in a component
 
 import { Component, ViewChild } from '@angular/core';
-import { SignaturePad } from 'angular2-signaturepad';
-
+import {
+  NgSignaturePadOptions,
+  SignaturePadComponent,
+  } from "@almothafar/angular-signature-pad"
 
 @Component({
-  template: '<signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>'
+  selector: "app-signature",
+  templateUrl: "./signature.component.html",
+  styleUrls: ["./signature.component.scss"]
 })
 
 export class SignatureComponent{
 
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  @ViewChild("testPad", { static: true })
+  signaturePadElement: SignaturePadComponent | undefined ;
 
-  private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
-    'minWidth': 5,
-    'canvasWidth': 500,
-    'canvasHeight': 300
+  config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
+    canvasHeight: 300,
+    canvasWidth: 500,
   };
 
   constructor() {
     // no-op
   }
-
-  ngAfterViewInit() {
-    // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+  public clear() {
+    if (!this.signaturePadElement?.isEmpty){
+      this.signaturePadElement?.clear();
+    }
   }
 
-  drawComplete() {
-    // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+  public drawStart(){
+    console.log('Start drawing')
   }
 
-  drawStart() {
-    // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+  public drawComplete(){
+    console.log(this.signaturePadElement?.toDataURL())
+  }
+
+  public getImage() {
+    console.log(this.signaturePadElement?.toDataURL());
+  }
+
+  public isInValid(): boolean {
+    return !(this.signaturePadElement && !this.signaturePadElement.isEmpty());
+  }
+
+  public forceReload() {
+    this.signaturePadElement?.clear();
   }
 }

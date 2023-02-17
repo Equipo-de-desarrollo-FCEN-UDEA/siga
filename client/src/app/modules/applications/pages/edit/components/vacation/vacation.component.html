@@ -180,23 +180,17 @@
     </div>
 
      <!--Signature-->
-    <!-- <label for="signature">Signature</label>
-    <div class="signature-pad">
-      <div class="signature-pad--body">
-        <canvas></canvas>
-      </div>
-      <div class="signature-pad--footer">
+    <label for="signature">Espacio para firma</label>
+    <div class="signature-pad--body">
+      <canvas></canvas>
         <div class="description">Firma aquí</div>
-        <div class="signature-pad--actions">
+        <div formControlName="app-signature" (onBeginEvent)="signature?.drawStart()" (onEndEvent)="signature?.drawComplete()">
           <div>
-            <button type="button" class="button clear" data-action="clear">Borrar</button>
-          </div>
-          <div>
-            <button type="button" class="button save" data-action="save-svg">Guardar</button>
+            <button (click)="signature?.clear()">Borrar</button>
+            <button (click)="signature?.getImage()" [disabled]="signature?.isInValid()">Guardar</button>
           </div>
         </div>
       </div>
-    </div> -->
 
     <!--ARCHIVOS-->
     <h6 class="mt-3 text-center">

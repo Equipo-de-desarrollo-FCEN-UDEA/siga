@@ -18,6 +18,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 import { ApplicantsComponent } from './components/applicants/applicants.component';
+import { SignatureComponent } from './components/signature/signature.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ApplicantsComponent } from './components/applicants/applicants.componen
     NotFoundComponent,
     LoaderComponent,
     StepperComponent,
-    ApplicantsComponent
+    ApplicantsComponent,
+    SignatureComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { ApplicantsComponent } from './components/applicants/applicants.componen
     LoaderComponent,
     StepperComponent,
     CdkStepperModule,
-    ApplicantsComponent
+    ApplicantsComponent,
+    SignatureComponent
   ]
 })
 export class SharedModule { }

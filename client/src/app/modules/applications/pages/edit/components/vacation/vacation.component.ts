@@ -20,6 +20,7 @@ import { LaboralDays } from '@shared/utils';
 
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
+import { SignatureComponent } from '@shared/components/signature/signature.component';
 
 
 
@@ -37,6 +38,7 @@ export class VacationComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
+  public signature : SignatureComponent| undefined;
 
   // Files
   public files: any[] = [];
@@ -82,6 +84,7 @@ export class VacationComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.signature?.signaturePadElement?.clear();
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.vacationSvc.getVacation(this.id).subscribe((data) => {
@@ -109,6 +112,7 @@ export class VacationComponent implements OnInit {
         this.holidays = data;
       },
     });
+    this.signature?.clear();
   }
 
   // --------------------------------------
