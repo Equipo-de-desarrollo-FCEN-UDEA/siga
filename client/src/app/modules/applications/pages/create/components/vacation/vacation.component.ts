@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { file_path } from '@interfaces/documents';
 import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -35,6 +35,12 @@ export class VacationComponent implements OnInit {
     private applicationTypeSvc: ApplicationTypesService,
   
   ) { }
+
+  public form = this.fb.group({
+    application_type_id: [0, [Validators.required, Validators.min(1)]],
+    
+
+  })
 
   ngOnInit(): void {
   }
