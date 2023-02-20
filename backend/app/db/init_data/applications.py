@@ -50,7 +50,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         who_can=[9]
     ),
     schemas.ApplicationTypeCreate(
-        name="VACACIÓN",
+        name="VACACIONES",
         description="vacacion",
         status_flux=[
             schemas.application_type.StatusFlux(
@@ -117,7 +117,11 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         application_type_id=4
     ),
     schemas.ApplicationSubTypeCreate(
-        name="vacacion",
+        name="Dias hábiles",
+        application_type_id=5
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Dias calendario",
         application_type_id=5
     )
 ]
