@@ -17,6 +17,7 @@ export class SignatureComponent{
 
   @ViewChild("testPad", { static: true })
   signaturePadElement: SignaturePadComponent | undefined ;
+  signatureImg: string | undefined;
 
   config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
     canvasHeight: 300,
@@ -24,7 +25,11 @@ export class SignatureComponent{
   };
 
   constructor() {
-    // no-op
+  }
+
+  ngAfterViewInit(){
+    this.signaturePadElement?.set('minWidht',2);
+    this.signaturePadElement?.clear();
   }
   public clear() {
     if (!this.signaturePadElement?.isEmpty){
@@ -41,6 +46,8 @@ export class SignatureComponent{
   }
 
   public getImage() {
+    let base64Data = this.signaturePadElement?.toDataURL();
+    this.signatureImg = base64Data;
     console.log(this.signaturePadElement?.toDataURL());
   }
 

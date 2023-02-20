@@ -85,24 +85,24 @@ export class VacationComponent implements OnInit {
 
   ngOnInit(): void {
     this.signature?.signaturePadElement?.clear();
-    this.route.parent?.params.subscribe((params) => {
-      this.id = params['id'];
-      this.vacationSvc.getVacation(this.id).subscribe((data) => {
-        // console.log(data);
-        this.form.patchValue({
-          ...data.vacation,
-          application_sub_type_id: data.application_sub_type_id,
-        });
-        // console.log(data.vacation);
-        this.documents = data.vacation.documents!;
+    // this.route.parent?.params.subscribe((params) => {
+    //   this.id = params['id'];
+    //   this.vacationSvc.getVacation(this.id).subscribe((data) => {
+    //     // console.log(data);
+    //     this.form.patchValue({
+    //       ...data.vacation,
+    //       application_sub_type_id: data.application_sub_type_id,
+    //     });
+    //     // console.log(data.vacation);
+    //     this.documents = data.vacation.documents!;
 
-        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
-          next: (res) => {
-            this.laboralDay = res.extra.days;
-          },
-        });
-      });
-    });
+    //     this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+    //       next: (res) => {
+    //         this.laboralDay = res.extra.days;
+    //       },
+    //     });
+    //   });
+    // });
   }
 
   ngAfterViewInit(): void {

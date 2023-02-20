@@ -181,15 +181,12 @@
 
      <!--Signature-->
     <label for="signature">Espacio para firma</label>
-    <div class="signature-pad--body">
-      <canvas></canvas>
+    <div class="signature?">
+      <canvas id="signature-pad" width="auto" height="auto"></canvas>
         <div class="description">Firma aquí</div>
-        <div formControlName="app-signature" (onBeginEvent)="signature?.drawStart()" (onEndEvent)="signature?.drawComplete()">
-          <div>
+        <app-signature> [options]="config" (onBeginEvent)="signature?.drawStart()" (onEndEvent)="drawComplete()"</app-signature>
             <button (click)="signature?.clear()">Borrar</button>
             <button (click)="signature?.getImage()" [disabled]="signature?.isInValid()">Guardar</button>
-          </div>
-        </div>
       </div>
 
     <!--ARCHIVOS-->
