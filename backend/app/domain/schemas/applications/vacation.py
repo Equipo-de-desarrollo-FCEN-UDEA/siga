@@ -12,7 +12,7 @@ class Applicant(BaseModel):
     email: str
 
 class VacationBase(BaseModel):
-    type_date_application: str
+    type_date_application: int
     total_days: int
     start_date: datetime
     end_date: datetime
