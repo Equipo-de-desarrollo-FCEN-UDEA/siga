@@ -15,14 +15,23 @@ import {
 
 export class SignatureComponent{
 
-  @ViewChild("testPad", { static: true })
-  signaturePadElement: SignaturePadComponent | undefined ;
+  //@ViewChild("testPad", { static: true })
+  //signaturePadElement: SignaturePadComponent | undefined ;
   signatureImg: string | undefined;
 
-  config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
-    canvasHeight: 300,
-    canvasWidth: 500,
+  @ViewChild(SignaturePadComponent)
+  signaturePadElement!: SignaturePadComponent;
+  // config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
+  //   canvasHeight: 300,
+  //   canvasWidth: 500,
+  // };
+
+  signaturePadOptions: Object = { 
+    'minWidth': 2,
+    'canvasWidth': 500,
+    'canvasHeight': 200
   };
+
 
   constructor() {
   }
@@ -32,12 +41,12 @@ export class SignatureComponent{
     this.signaturePadElement?.clear();
   }
   public clear() {
-    if (!this.signaturePadElement?.isEmpty){
-      this.signaturePadElement?.clear();
-    }
+    console.log("Probando");
+    this.signaturePadElement?.clear();
+    
   }
 
-  public drawStart(){
+  public drawStart(event:Event){
     console.log('Start drawing')
   }
 
@@ -53,6 +62,10 @@ export class SignatureComponent{
 
   public isInValid(): boolean {
     return !(this.signaturePadElement && !this.signaturePadElement.isEmpty());
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
   }
 
   public forceReload() {
