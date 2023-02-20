@@ -12,17 +12,16 @@ class Applicant(BaseModel):
     email: str
 
 class VacationBase(BaseModel):
-    type_date_application: int
     total_days: int
     start_date: datetime
     end_date: datetime
-    documents: list[Any] | None
+    documents: Any
     signature: Any | None
 
 class VacationCreate(VacationBase):
-    application_sub_type_id: int = 12
+    application_sub_type_id: int 
 class VacationUpdate(VacationBase):
-    application_sub_type_id: int = 12
+    application_sub_type_id: int
 
 class VacationInDB(VacationBase):
     documents: list[Any] | None = Field(default_factory=list)
