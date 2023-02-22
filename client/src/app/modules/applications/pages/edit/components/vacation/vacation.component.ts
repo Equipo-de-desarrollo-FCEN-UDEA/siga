@@ -20,6 +20,7 @@ import { LaboralDays } from '@shared/utils';
 
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
+import { SignatureComponent } from '@shared/components/signature/signature.component';
 
 
 
@@ -37,6 +38,7 @@ export class VacationComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
+  public signature : SignatureComponent| undefined;
 
   // Files
   public files: any[] = [];
@@ -82,24 +84,25 @@ export class VacationComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.route.parent?.params.subscribe((params) => {
-      this.id = params['id'];
-      this.vacationSvc.getVacation(this.id).subscribe((data) => {
-        // console.log(data);
-        this.form.patchValue({
-          ...data.vacation,
-          application_sub_type_id: data.application_sub_type_id,
-        });
-        // console.log(data.vacation);
-        this.documents = data.vacation.documents!;
+    this.signature?.signaturePadElement?.clear();
+    // this.route.parent?.params.subscribe((params) => {
+    //   this.id = params['id'];
+    //   this.vacationSvc.getVacation(this.id).subscribe((data) => {
+    //     // console.log(data);
+    //     this.form.patchValue({
+    //       ...data.vacation,
+    //       application_sub_type_id: data.application_sub_type_id,
+    //     });
+    //     // console.log(data.vacation);
+    //     this.documents = data.vacation.documents!;
 
-        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
-          next: (res) => {
-            this.laboralDay = res.extra.days;
-          },
-        });
-      });
-    });
+    //     this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+    //       next: (res) => {
+    //         this.laboralDay = res.extra.days;
+    //       },
+    //     });
+    //   });
+    // });
   }
 
   ngAfterViewInit(): void {
@@ -109,6 +112,7 @@ export class VacationComponent implements OnInit {
         this.holidays = data;
       },
     });
+    this.signature?.clear();
   }
 
   // --------------------------------------

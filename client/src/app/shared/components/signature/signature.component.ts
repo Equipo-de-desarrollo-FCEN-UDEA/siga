@@ -2,40 +2,73 @@
 // then import for use in a component
 
 import { Component, ViewChild } from '@angular/core';
-import { SignaturePad } from 'angular2-signaturepad';
-
+import {
+  NgSignaturePadOptions,
+  SignaturePadComponent,
+  } from "@almothafar/angular-signature-pad"
 
 @Component({
-  template: '<signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>'
+  selector: "app-signature",
+  templateUrl: "./signature.component.html",
+  styleUrls: ["./signature.component.scss"]
 })
 
 export class SignatureComponent{
 
-  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+  //@ViewChild("testPad", { static: true })
+  //signaturePadElement: SignaturePadComponent | undefined ;
+  signatureImg: string | undefined;
 
-  private signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
-    'minWidth': 5,
+  @ViewChild(SignaturePadComponent)
+  signaturePadElement!: SignaturePadComponent;
+  // config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
+  //   canvasHeight: 300,
+  //   canvasWidth: 500,
+  // };
+
+  signaturePadOptions: Object = { 
+    'minWidth': 2,
     'canvasWidth': 500,
-    'canvasHeight': 300
+    'canvasHeight': 200
   };
 
+
   constructor() {
-    // no-op
   }
 
-  ngAfterViewInit() {
-    // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+  ngAfterViewInit(){
+    this.signaturePadElement?.set('minWidht',2);
+    this.signaturePadElement?.clear();
+  }
+  public clear() {
+    console.log("Probando");
+    this.signaturePadElement?.clear();
+    
   }
 
-  drawComplete() {
-    // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+  public drawStart(event:Event){
+    console.log('Start drawing')
   }
 
-  drawStart() {
-    // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+  public drawComplete(){
+    console.log(this.signaturePadElement?.toDataURL())
+  }
+
+  public getImage() {
+    let base64Data = this.signaturePadElement?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(this.signaturePadElement?.toDataURL());
+  }
+
+  public isInValid(): boolean {
+    return !(this.signaturePadElement && !this.signaturePadElement.isEmpty());
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  public forceReload() {
+    this.signaturePadElement?.clear();
   }
 }

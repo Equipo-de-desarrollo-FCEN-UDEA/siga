@@ -180,24 +180,17 @@
     </div>
 
      <!--Signature-->
-    <!-- <label for="signature">Signature</label>
-    <div class="signature-pad">
-      <div class="signature-pad--body">
-        <canvas></canvas>
-      </div>
-      <div class="signature-pad--footer">
-        <div class="description">Firma aquí</div>
-        <div class="signature-pad--actions">
-          <div>
-            <button type="button" class="button clear" data-action="clear">Borrar</button>
-          </div>
-          <div>
-            <button type="button" class="button save" data-action="save-svg">Guardar</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
+    <label for="signature">Espacio para firma</label>
+    <div class="signature-container">Firma aquí
+      <app-signature> [options]="signaturePadOptions" (onBeginEvent)="drawStart(event)" (onEndEvent)="drawComplete()" 
+          
+      </app-signature>
+      <canvas #canvas (touchstart)="signature?.drawStart($event)" (touchmove)="signature?.moved($event)"></canvas>
+    </div>
+    <div class="buttons">
+      <button (click)="signature?.clear()">Borrar</button>
+      <button (click)="signature?.getImage()">Guardar</button>
+    </div>
     <!--ARCHIVOS-->
     <h6 class="mt-3 text-center">
       <span class="text-muted">Archivos adjuntos de las vacaciones</span>
@@ -229,23 +222,6 @@
               files[i] ? files[i].name : "Subir archivo"
             }}</label>
           </label>
-        </div>
-        <div class="buttons">
-          <button
-            class="btn btn-circle btn-remove btn-sm m-1"
-            type="button"
-            (click)="removeFile(i)"
-          >
-            <i class="fa fa-minus"></i>
-          </button>
-          <button
-            class="btn btn-circle btn-add btn-sm m-1"
-            type="button"
-            (click)="document_new.push(1)"
-            *ngIf="isLast && document_new.length < 3"
-          >
-            <i class="fa fa-plus"></i>
-          </button>
         </div>
       </div>
     </div>
