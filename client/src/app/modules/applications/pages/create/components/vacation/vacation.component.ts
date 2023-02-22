@@ -9,6 +9,7 @@ import { VacationService } from '@services/applications/vacation.service';
 import { VacationCreate } from '../../../../../../core/interfaces/applications/vacation';
 import { DocumentService } from '@services/document.service';
 import { switchMap } from 'rxjs';
+import { ApplicationSubTypeService } from '@services/application-sub-type.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class VacationComponent implements OnInit {
   public toDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
+  public laboralDay: number = 0;
 
   public files : any[] = [];
   public archivos = [1];
@@ -33,6 +35,8 @@ export class VacationComponent implements OnInit {
   public clicked = 0;
   public error = '';
   public submitted = false;
+
+  public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
 
   // --------------------------------------------------
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
@@ -50,13 +54,14 @@ export class VacationComponent implements OnInit {
     private cd: ChangeDetectorRef,
 
     private applicationTypeSvc: ApplicationTypesService,
+    private SubTypeSvc: ApplicationSubTypeService,
     private vacationSvc: VacationService,
     private documentSvc: DocumentService
   
   ) { }
 
   public form = this.fb.group({
-    application_type_id: [0, [Validators.required, Validators.min(1)]],
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     documents: [this.documents],
     days: [0, [Validators.required, Validators.min(1)]],
     })
@@ -75,7 +80,9 @@ export class VacationComponent implements OnInit {
       return;
     }
 
-    let vacation = this.vacationSvc.postVacation(this.form.value as VacationCreate)
+    let vacation = this.vacationSvc.postVacation(
+      this.form.value as VacationCreate);
+
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
@@ -84,14 +91,14 @@ export class VacationComponent implements OnInit {
               documents: data.files_paths
             })
           }
-          return this.vacationSvc.postVacation(this.form.value as VacationCreate)
+          return this.vacationSvc.postVacation(
+            this.form.value as VacationCreate)
         })
       )
     }
     vacation.subscribe({
-      next:data =>{
-        Swal.fire(
-          {
+      next:(data) => {
+        Swal.fire({
             title:'La solicitud se creó correctamente',
             icon: 'success',
             confirmButtonText: 'Aceptar'
@@ -100,7 +107,9 @@ export class VacationComponent implements OnInit {
           if (result.isConfirmed){
             this.router.navigate([`/solicitudes/ver/${data.id}/vaciones`])
           }
-        })
+        });
+      },error:(err)=>{
+        this.error =err
       }
     })
   }
@@ -108,15 +117,54 @@ export class VacationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // Tipo de días de vacaciones
+  // Tipo de solicitud
 
-  onChangeSolicitud(e: any): void {
-    this.cd.detectChanges();
+  onApplicationSubType(event: Event) {
+    // Obtener el value antes de los ':'  
+    const ID_PERMISSION_TYPE = (event.target as HTMLSelectElement).value.split(':')[0]
+    this.SubTypeSvc.getApplicationSubType(+ID_PERMISSION_TYPE).subscribe({
+      next: (res) => {
+        this.laboralDay = res.extra.days;
+      },
+    });
   }
 
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.
     invalid && this.form.get(controlName)?.touched;
+  }
+
+  // --------------------------------------
+  // -------- ARCHIVOS - ANEXOS -----------
+  // --------------------------------------
+
+  onUpload(event:Event, index: number) {
+    const element = event.target as HTMLInputElement;
+    const file = element.files?.item(0);
+    if (file) {
+      this.files.splice(index, 1, file);
+    }
+  }
+
+  removeFile(index: number) {
+    if (this.archivos.length > 1) {
+    this.archivos.splice(index, 1);};
+    this.files.splice(index, 1);
+  }
+  validSize() {
+    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
+    return size < 2 * 1024 * 1024;
+  }
+
+  validFileType() {
+    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
+    
+    let flag = true; 
+    this.files.forEach((file) => {
+      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
+    })
+    return flag;
+
   }
 
 }

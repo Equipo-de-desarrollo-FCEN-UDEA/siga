@@ -11,9 +11,33 @@ class="need-validation"
   <div class="row">
     <div class="formfloatig">
       <select 
-      formControlName=""
+      formControlName="application_sub_type_id"
       class="form-control form-select-lg mb-3 cursor"
-      (change)="onChangeSolicitud($event)"></select>
+      (change)="onApplicationSubType($event)"
+      [ngClass]="{
+        'is-invalid':
+        (submitted && f['application_sub_type_id'].errors)||
+        isInvalidForm('application_sub_type_id')
+      }"
+      *ngIf="applicationType$ | async as applicationType"
+      >
+      <option value="0" disabled selected>Elige un tipo de Días</option>
+      <option 
+      [ngValue]="tipo.id | number"
+      *ngFor="let tipo of applicationType.application_sub_type"
+      >
+      {{tipo.name}}
+    </option>
+    </select>
+
+    <div
+          *ngIf="isInvalidForm('application_sub_type_id')"
+          class="invalid-feedback"
+        >
+          <!-- <div *ngIf="f['application_sub_type_id'].errors['required']">
+              Elige un tipo de comisión
+            </div> -->
+        </div>
 
     </div>
   </div>
