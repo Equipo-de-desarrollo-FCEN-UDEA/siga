@@ -3,19 +3,21 @@
 
 <div>
     <header>
-        <div class="header">
+        <div>
             <img src="{{image}}" class="logo">
-            <p class="subtitle">
+            <br>
+            <p style="margin: 2em;">
                 Medellín, {{date}}
             </p>
         </div>
-        <p>
+        <p style="margin: 2em;">
             Señor(a):
         </p>
-        <p>
+        <p style="margin: 2em;">
             {{(user.names + ' ' + user.last_names).title()}}
+            <br>
+            <strong>C.C.: {{user.identification_number}}</strong>
         </p>
-        <p><strong>{{user.identification_number}}</strong></p>
 
     </header>
     <section class="section">
@@ -37,11 +39,15 @@
             {{user.identification_type}} número {{user.identification_number}}, adscrito al (a la) {{user.department.description}}, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
             {{permission.end_date}}, para {{permission.justification}}
         </p>
-
+        <br>
+        <br>
         <div class="signature">
             <img src="{{signature}}" class="signature">
+            <hr style="width:50%;text-align:left;margin-left:0">
             <p>
                 {{school.dean.title()}}
+                <br>
+                Decano(a) 
             </p>
         </div>
     </section>
