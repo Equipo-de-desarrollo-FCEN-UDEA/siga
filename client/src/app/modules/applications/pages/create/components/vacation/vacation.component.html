@@ -21,7 +21,7 @@ class="need-validation"
       }"
       *ngIf="applicationType$ | async as applicationType"
       >
-      <option value="0" disabled selected>Elige un tipo de Días</option>
+      <option value="0" disabled selected>Elige un tipo de días para Vacaciones</option>
       <option 
       [ngValue]="tipo.id | number"
       *ngFor="let tipo of applicationType.application_sub_type"
@@ -60,6 +60,10 @@ class="need-validation"
       />
     </div>
   </div>
+</div>
+<div class="row regular-row mt-4 align-items-baseline">
+<app-signature></app-signature>
+
 </div>
 
 
