@@ -2,10 +2,7 @@
 // then import for use in a component
 
 import { Component, ViewChild } from '@angular/core';
-import {
-  NgSignaturePadOptions,
-  SignaturePadComponent,
-  } from "@almothafar/angular-signature-pad"
+import { SignaturePad } from 'angular2-signaturepad';
 
 @Component({
   selector: "app-signature",
@@ -19,56 +16,62 @@ export class SignatureComponent{
   //signaturePadElement: SignaturePadComponent | undefined ;
   signatureImg: string | undefined;
 
-  @ViewChild(SignaturePadComponent)
-  signaturePadElement!: SignaturePadComponent;
+  @ViewChild(SignaturePad)
+  signaturePad!: SignaturePad;
   // config: NgSignaturePadOptions = { // passed through to szimek/signature_pad constructor
   //   canvasHeight: 300,
   //   canvasWidth: 500,
   // };
-
-  signaturePadOptions: Object = { 
-    'minWidth': 2,
+  public signaturePadOptions: Object = { // passed through to szimek/signature_pad constructor
+    'minWidth': 5,
     'canvasWidth': 500,
-    'canvasHeight': 200
+    'canvasHeight': 300
   };
-
+  
 
   constructor() {
   }
 
   ngAfterViewInit(){
-    this.signaturePadElement?.set('minWidht',2);
-    this.signaturePadElement?.clear();
+    this.signaturePad?.set('minWidht',2);
+    this.signaturePad?.clear();
   }
   public clear() {
     console.log("Probando");
-    this.signaturePadElement?.clear();
+    this.signaturePad?.clear();
     
   }
 
-  public drawStart(event:Event){
+  public drawStart(){
     console.log('Start drawing')
   }
 
   public drawComplete(){
-    console.log(this.signaturePadElement?.toDataURL())
+    console.log(this.signaturePad?.toDataURL())
   }
 
   public getImage() {
-    let base64Data = this.signaturePadElement?.toDataURL();
+    let base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    console.log(this.signaturePadElement?.toDataURL());
   }
 
   public isInValid(): boolean {
-    return !(this.signaturePadElement && !this.signaturePadElement.isEmpty());
+    return !(this.signaturePad && !this.signaturePad.isEmpty());
+  }
+
+  public forceReload() {
+    this.signaturePad?.clear();
   }
 
   moved(event: Event) {
     // works in device not in browser
   }
+  clearPad() {
+    this.signaturePad.clear();
+  }
 
-  public forceReload() {
-    this.signaturePadElement?.clear();
+  savePad() {
+    const base64Data = this.signaturePad.toDataURL();
+    this.signatureImg = base64Data;
   }
 }

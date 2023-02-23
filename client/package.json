@@ -29,6 +29,7 @@
     "ngx-cookie-service": "^14.0.1",
     "ngx-signaturepad": "^0.0.10",
     "rxjs": "~7.5.0",
+    "signature_pad": "^4.1.4",
     "sweetalert2": "^11.4.8",
     "tslib": "^2.3.0",
     "zone.js": "^0.11.8"
