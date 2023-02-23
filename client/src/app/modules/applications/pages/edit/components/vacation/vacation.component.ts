@@ -40,14 +40,12 @@ export class VacationComponent implements OnInit {
   public laboralDay: number = 0;
 
   // Signature
-  //public signature : SignaturePad| undefined;
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-  //@ViewChild('canvas') canvasEl: ElementRef | undefined;
   signatureImg: string | undefined;
 
   signaturePadOptions: Object = { 
     'minWidth': 2,
-    'canvasWidth': 500,
+    'canvasWidth': 1000,
     'canvasHeight': 200
   };
 
@@ -215,24 +213,25 @@ export class VacationComponent implements OnInit {
     // will be notified of szimek/signature_pad's onBegin event
     console.log('begin drawing');
   }
-  // startDrawing(event: Event) {
-  //   console.log(event);
-  //   // works in device not in browser
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
 
-  // }
+  }
 
-  // moved(event: Event) {
-  //   // works in device not in browser
-  // }
+  moved(event: Event) {
+    // works in device not in browser
+  }
 
-  // clearPad() {
-  //   this.signature?.clear();
-  // }
+  clearPad() {
+    this.signaturePad?.clear();
+  }
 
-  // savePad() {
-  //   const base64Data = this.signature?.toDataURL();
-  //   this.signatureImg = base64Data;
-  // }
+  savePad() {
+    const base64Data = this.signaturePad?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
+  }
 
 
    // --------------------------------------
