@@ -10,4 +10,4 @@ from .application_status import Application_status
 from .holiday import Holiday
 from .cron_job import CronJob
 from .applications import (Commission, Permission,
-                           Consecutive, FullTime, HourAval, Vacations)
+                           Consecutive, FullTime, HourAval)

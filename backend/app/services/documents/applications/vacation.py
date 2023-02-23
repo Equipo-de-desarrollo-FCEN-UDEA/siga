@@ -6,7 +6,7 @@ from tempfile import NamedTemporaryFile
 
 from openpyxl import load_workbook
 
-from app.domain.models import User, Vacations
+#from app.domain.models import User, Vacation
 from app.domain.schemas import UserResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
@@ -14,11 +14,11 @@ from app.core.logging import get_logging
 from app.core.celery_worker import celery_app
 from app.services import aws
 
-
+"""
 settings = get_app_settings()
 log = get_logging(__name__)
 
-def fill_vacations_format(user: User, vacations: Vacations):
+def fill_vacations_format(user: User, vacations: Vacation):
 
     vacations_dict: dict = vacations.dict()
 
@@ -87,3 +87,4 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str):
 
     aws.s3.push_data_to_s3_bucket(settings.aws_bucket_name, file,
                                   file_name=path, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+"""

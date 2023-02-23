@@ -6,4 +6,4 @@ from .full_time import (FullTimeCreate, FullTimeUpdate, FullTimeResponse,
                         FullTimeInDB, WorkPlan, ViceFormat, InitialLetter)
 from .hour_aval import (HourAvalCreate, HourAvalUpdate,
                         HourAvalResponse, HourAvalInDB, Act)
-from .vacations import (VacationCreate, VacationResponse, VacationUpdate)
+#from .vacation import (VacationCreate, VacationResponse, VacationUpdate)
