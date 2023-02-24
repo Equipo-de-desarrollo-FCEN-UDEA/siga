@@ -181,16 +181,24 @@
 
      <!--Signature-->
     <label for="signature">Espacio para firma</label>
-    <div class="signature-container">Firma aquí
-      <app-signature> [options]="signaturePadOptions" (onBeginEvent)="drawStart(event)" (onEndEvent)="drawComplete()" 
-          
-      </app-signature>
-      <canvas #canvas (touchstart)="signature?.drawStart($event)" (touchmove)="signature?.moved($event)"></canvas>
+    <div class="signature-container">
+       <signature-pad> [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()" </signature-pad>
     </div>
-    <div class="buttons">
-      <button (click)="signature?.clear()">Borrar</button>
-      <button (click)="signature?.getImage()">Guardar</button>
-    </div>
+    <div>
+      <button 
+      id="btn-sub"
+      class="btn btn-outline-secondary"
+      type="button"
+      (submit)="(false)"
+      (click)="clearPad()">Limpiar Firma</button>
+      <button 
+      id="btn-sub"
+      class="btn btn-outline-secondary"
+      type="button"
+      (submit)="(false)"
+      color="secondary" (click)="savePad()">Subir firma</button>
+      <!-- <img src='{{ signatureImg }}' /> -->
+     </div>
     <!--ARCHIVOS-->
     <h6 class="mt-3 text-center">
       <span class="text-muted">Archivos adjuntos de las vacaciones</span>

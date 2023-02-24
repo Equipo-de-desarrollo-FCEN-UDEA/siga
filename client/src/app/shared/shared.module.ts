@@ -18,7 +18,9 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 import { ApplicantsComponent } from './components/applicants/applicants.component';
-import { SignatureComponent } from './components/signature/signature.component';
+
+
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 @NgModule({
   declarations: [
@@ -26,15 +28,15 @@ import { SignatureComponent } from './components/signature/signature.component';
     NotFoundComponent,
     LoaderComponent,
     StepperComponent,
-    ApplicantsComponent,
-    SignatureComponent
+    ApplicantsComponent
   ],
   imports: [
     CommonModule,
     SharedRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    CdkStepperModule
+    CdkStepperModule,
+    SignaturePadModule
   ],
   exports: [
     HttpClientModule,
@@ -47,7 +49,7 @@ import { SignatureComponent } from './components/signature/signature.component';
     StepperComponent,
     CdkStepperModule,
     ApplicantsComponent,
-    SignatureComponent
+    SignaturePadModule
   ]
 })
 export class SharedModule { }

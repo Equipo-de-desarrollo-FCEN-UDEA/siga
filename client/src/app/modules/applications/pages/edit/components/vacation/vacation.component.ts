@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VacationCreate } from '@interfaces/applications/vacation';
@@ -20,7 +20,7 @@ import { LaboralDays } from '@shared/utils';
 
 import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs';
-import { SignatureComponent } from '@shared/components/signature/signature.component';
+import { SignaturePad } from 'angular2-signaturepad';
 
 
 
@@ -38,7 +38,16 @@ export class VacationComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
-  public signature : SignatureComponent| undefined;
+
+  // Signature
+  @ViewChild(SignaturePad) signaturePad!: SignaturePad;
+  signatureImg: string | undefined;
+
+  signaturePadOptions: Object = { 
+    'minWidth': 2,
+    'canvasWidth': 1000,
+    'canvasHeight': 200
+  };
 
   // Files
   public files: any[] = [];
@@ -84,7 +93,7 @@ export class VacationComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.signature?.signaturePadElement?.clear();
+    
     // this.route.parent?.params.subscribe((params) => {
     //   this.id = params['id'];
     //   this.vacationSvc.getVacation(this.id).subscribe((data) => {
@@ -106,13 +115,15 @@ export class VacationComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+   // this.signature = new SignaturePad(this.canvasEl?.nativeElement)
+    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
 
     this.holidaySvc.getHolidays().subscribe({
       next: (data) => {
         this.holidays = data;
       },
     });
-    this.signature?.clear();
   }
 
   // --------------------------------------
@@ -187,6 +198,39 @@ export class VacationComponent implements OnInit {
         this.laboralDay = res.extra.days;
       },
     });
+  }
+
+  // --------------------------------------
+  // ------------- SIGNATURE -------------
+  // --------------------------------------
+
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
+  }
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad?.clear();
+  }
+
+  savePad() {
+    const base64Data = this.signaturePad?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
   }
 
 
