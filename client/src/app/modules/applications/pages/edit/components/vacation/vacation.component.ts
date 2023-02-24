@@ -40,20 +40,21 @@ export class VacationComponent implements OnInit {
   public laboralDay: number = 0;
 
   // Signature
+
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-  signatureImg: string | undefined;
+  signatureImg: string ="";
 
   signaturePadOptions: Object = { 
     'minWidth': 2,
-    'canvasWidth': 1000,
-    'canvasHeight': 200
+    'canvasWidth': "100%",
+    'canvasHeight': "100%",
   };
 
   // Files
   public files: any[] = [];
   public document_new = [1];
   public documents: file_path[] = [];
-  public documentsToDelete: string[] = [];
+  public documentsToDelete: file_path[] = [];
 
   // For handle errors
   public clicked = 0;
@@ -87,38 +88,39 @@ export class VacationComponent implements OnInit {
   // Form vacation
   public form = this.formBuilder.group({
     application_sub_type_id: [0, [Validators.required]],
+    total_days: [1,[Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     documents: [this.documents],
+    signature: [this.signatureImg]
   });
 
   ngOnInit(): void {
     
-    // this.route.parent?.params.subscribe((params) => {
-    //   this.id = params['id'];
-    //   this.vacationSvc.getVacation(this.id).subscribe((data) => {
-    //     // console.log(data);
-    //     this.form.patchValue({
-    //       ...data.vacation,
-    //       application_sub_type_id: data.application_sub_type_id,
-    //     });
-    //     // console.log(data.vacation);
-    //     this.documents = data.vacation.documents!;
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+      this.vacationSvc.getVacation(this.id).subscribe((data) => {
+        // console.log(data);
+        this.form.patchValue({
+          ...data.vacation,
+          application_sub_type_id: data.application_sub_type_id,
+        });
+        // console.log(data.vacation);
+        this.documents = data.vacation.documents!;
 
-    //     this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
-    //       next: (res) => {
-    //         this.laboralDay = res.extra.days;
-    //       },
-    //     });
-    //   });
-    // });
+        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+          next: (res) => {
+            this.laboralDay = res.extra.days;
+          },
+        });
+      });
+    });
   }
 
   ngAfterViewInit(): void {
-   // this.signature = new SignaturePad(this.canvasEl?.nativeElement)
-    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    this.signaturePad.set('minWidth', 3); // set szimek/signature_pad options at runtime
+    this.signaturePad.set('canvasWidth',500);
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-
     this.holidaySvc.getHolidays().subscribe({
       next: (data) => {
         this.holidays = data;
@@ -142,9 +144,9 @@ export class VacationComponent implements OnInit {
       this.id
     );
 
-    for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe().unsubscribe();
-    }
+    // for (let path of this.documentsToDelete) {
+    //   this.documentSvc.deleteDocument(path).subscribe().unsubscribe();
+    // }
 
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
@@ -164,10 +166,10 @@ export class VacationComponent implements OnInit {
     }
     vacation.subscribe({
       next: (res) => {
-        console.log('permission updated', vacation);
+        console.log('vacation updated', vacation);
         Swal.fire({
           title: 'Actualizado',
-          text: '¡El permiso se actualizó con éxito!',
+          text: '¡El registro de vacaciones se actualizó con éxito!',
           icon: 'success',
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#3AB795',
@@ -227,14 +229,22 @@ export class VacationComponent implements OnInit {
     this.signaturePad?.clear();
   }
 
-  savePad() {
+  savePad(event:any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
     console.log(base64Data);
+    Swal.fire({
+      title: 'Firma registrada',
+      text: 'Por políticas institucionales, la firma aquí consignada no quedará almacenada en Base de Datos, solo se usará para emitir el formato. ',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    });
+    event.target.disabled = true;
+    return; 
   }
 
-
-   // --------------------------------------
+  // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
@@ -365,7 +375,7 @@ export class VacationComponent implements OnInit {
       cancelButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.documentsToDelete = this.documentsToDelete.concat([path]);
+        //this.documentsToDelete = this.documentsToDelete.concat([path]);
         this.documents.splice(i, 1);
       }
     });
