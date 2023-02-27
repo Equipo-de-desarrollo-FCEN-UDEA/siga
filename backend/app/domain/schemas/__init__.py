@@ -34,6 +34,9 @@ from .applications import (
     HourAvalUpdate,
     HourAvalCreate,
     HourAvalInDB,
+    VacationCreate,
+    VacationResponse,
+    VacationUpdate,
     Act
 )
 
