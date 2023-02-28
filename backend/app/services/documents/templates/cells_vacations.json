@@ -22,5 +22,6 @@
     "visto_bueno":"H21:M21",
     "dean_school_name":"D23:F23",
     "school_position":"G23",
-    "signature":"H23:M23"
+    "dean_signature":"H23:M23",
+    "user_signature":"A21:C24"
 }

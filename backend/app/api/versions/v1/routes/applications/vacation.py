@@ -66,8 +66,8 @@ async def create_vacation(
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
         
-        path = documents.fill_vice_document(current_user, vacation_create)
-        await crud.full_time.update_document(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+        path = documents.fill_vacations_format(current_user, vacation_create)
+        await crud.vacation.update_document(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)

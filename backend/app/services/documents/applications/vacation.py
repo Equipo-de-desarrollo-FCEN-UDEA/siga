@@ -39,11 +39,11 @@ def fill_vacations_format(user: User, vacations: Vacation):
     }
 
     #Rellenar datos de la solicitud.
-    today = datetime.now()
-    initial_date = datetime.strptime(vacations['initial_date'], '%Y-%m-%dT%H:%M:%S')
-    final_date = datetime.strptime(vacations['final_date'], '%Y-%m-%dT%H:%M:%S')
+    today = datetime.strptime(vacations['created_at'], '%Y-%m-%dT%H:%M:%S')
+    initial_date = datetime.strptime(vacations['vacation']['start_date'], '%Y-%m-%dT%H:%M:%S')
+    final_date = datetime.strptime(vacations['vacation']['end_date'], '%Y-%m-%dT%H:%M:%S')
     data_vacations = {
-        "days_type": "Días " + vacations['days_type'],
+        "days_type": vacations['application_sub_type']['name'],
         "date_day": str(today.day),
         "date_month": str(today.month),
         "date_year": str(today.year),
@@ -53,8 +53,8 @@ def fill_vacations_format(user: User, vacations: Vacation):
         "final_date_day": str(final_date.day),
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
-        "total_days": str(vacations['total_days'])
-        #"total_days": str((final_date - initial_date).days)
+        "total_days": str(vacations['vacation']['total_days']),
+        "user_signature": vacations['vacation']['signature']
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
