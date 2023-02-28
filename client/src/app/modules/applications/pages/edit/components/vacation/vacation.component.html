@@ -182,13 +182,14 @@
      <!--Signature-->
     <div class="signature-container" >
       <div class="text-center">Espacio para firma</div>
-        <div style="border: black; background-color: white; align-items: center;">
+        <div style="border: 5px double black; background-color: rgba(80, 255, 217, 0); align-items: center; text-align: center ;">
         <signature-pad>
           [options]="signaturePadOptions"
           (onBeginEvent)="drawStart()" 
           (onEndEvent)="drawComplete()"
           </signature-pad>
         </div>
+        <p></p>
       </div>
     <div>
       <div class="col-md-12 text-center">

@@ -46,10 +46,11 @@ export class VacationComponent implements OnInit {
 
   signaturePadOptions: Object = { 
     'minWidth': 2,
-    'canvasWidth': "100%",
-    'canvasHeight': "100%",
+    'canvasWidth': 300,
+    'canvasHeight': 100,
   };
 
+  
   // Files
   public files: any[] = [];
   public document_new = [1];
@@ -118,9 +119,12 @@ export class VacationComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.signaturePad.set('minWidth', 3); // set szimek/signature_pad options at runtime
+    //this.signaturePad.set('minWidth', 3); // set szimek/signature_pad options at runtime
     this.signaturePad.set('canvasWidth',500);
+    this.signaturePad.set('border',"5px #e8e8e800")
+    this.signaturePad.set('border-style',"double");
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+    this.signaturePad.resizeCanvas();
     this.holidaySvc.getHolidays().subscribe({
       next: (data) => {
         this.holidays = data;
