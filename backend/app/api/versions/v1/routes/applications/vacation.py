@@ -67,10 +67,10 @@ async def create_vacation(
             **dict(application, vacation=vacation_create))
         
         # Cómo debe corresponderse con el modelo en la base de datos? Cómo se rellena el campo documents?
-        """
-        path = documents.fill_vacations_format(current_user, vacation_create)
-        await crud.vacation.update_document(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
-        """
+    
+        path = documents.fill_vacations_format(current_user, response)
+        await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+    
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)

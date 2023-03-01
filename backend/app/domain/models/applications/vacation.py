@@ -7,5 +7,5 @@ class Vacation(Model):
     total_days: int
     start_date: datetime
     end_date: datetime
-    documents: Any
+    documents: list[Any] | None
     signature: Any

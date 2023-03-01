@@ -7,3 +7,5 @@ from .applications.vacation import fill_vacations_format
 
 from .applications.hour_aval_letter import hour_aval_letter_generation
 from .applications.hour_aval_act import hour_aval_act_generation
+
+from .applications.report_applications import fill_report_applications

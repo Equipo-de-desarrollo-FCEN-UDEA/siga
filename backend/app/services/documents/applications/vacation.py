@@ -8,6 +8,7 @@ from openpyxl import load_workbook
 
 from app.domain.models import User, Vacation
 from app.domain.schemas import UserResponse
+from app.domain.schemas import VacationResponse
 from ..templates import templates_dir
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
@@ -17,7 +18,7 @@ from app.services import aws
 settings = get_app_settings()
 log = get_logging(__name__)
 
-def fill_vacations_format(user: User, vacations: Vacation):
+def fill_vacations_format(user: User, vacations: VacationResponse):
 
     vacations_dict: dict = vacations.dict()
 
@@ -39,11 +40,11 @@ def fill_vacations_format(user: User, vacations: Vacation):
     }
 
     #Rellenar datos de la solicitud.
-    today = datetime.strptime(vacations['created_at'], '%Y-%m-%dT%H:%M:%S')
-    initial_date = datetime.strptime(vacations['vacation']['start_date'], '%Y-%m-%dT%H:%M:%S')
-    final_date = datetime.strptime(vacations['vacation']['end_date'], '%Y-%m-%dT%H:%M:%S')
+    today = vacations_dict['created_at']
+    initial_date = vacations_dict['vacation']['start_date']
+    final_date = vacations_dict['vacation']['end_date']
     data_vacations = {
-        "days_type": vacations['application_sub_type']['name'],
+        "days_type": vacations_dict['application_sub_type']['name'],
         "date_day": str(today.day),
         "date_month": str(today.month),
         "date_year": str(today.year),
@@ -53,8 +54,8 @@ def fill_vacations_format(user: User, vacations: Vacation):
         "final_date_day": str(final_date.day),
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
-        "total_days": str(vacations['vacation']['total_days']),
-        "user_signature": vacations['vacation']['signature']
+        "total_days": str(vacations_dict['vacation']['total_days']),
+        "user_signature": vacations_dict['vacation']['signature']
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
@@ -69,7 +70,7 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str):
     cells = open(templates_dir + '/cells_vacations.json')
     cells = json.load(cells)
 
-    wb = load_workbook(filename = '/content/formato_vacaciones.xlsm')
+    wb = load_workbook(filename = templates_dir + '/formato_vacaciones.xlsm')
     target = wb.active
 
     for datos in [user, vacations]:
