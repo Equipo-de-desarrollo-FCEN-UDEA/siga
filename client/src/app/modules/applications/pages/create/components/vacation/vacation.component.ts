@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
@@ -10,6 +10,7 @@ import { VacationCreate } from '../../../../../../core/interfaces/applications/v
 import { DocumentService } from '@services/document.service';
 import { switchMap } from 'rxjs';
 import { ApplicationSubTypeService } from '@services/application-sub-type.service';
+import { SignaturePad } from 'angular2-signaturepad';
 
 
 @Component({
@@ -30,6 +31,16 @@ export class VacationComponent implements OnInit {
   public files : any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
+
+   // Signature
+   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
+   signatureImg: string | undefined;
+ 
+   signaturePadOptions: Object = { 
+     'minWidth': 2,
+     'canvasWidth': 1000,
+     'canvasHeight': 200
+   };
 
   // For handle errors
   public clicked = 0;
@@ -115,6 +126,9 @@ export class VacationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.signaturePad.set('minWidth', 5); // set szimek/signature_pad options at runtime
+    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
+
   }
 
   // Tipo de solicitud
@@ -133,7 +147,38 @@ export class VacationComponent implements OnInit {
     return this.form.get(controlName)?.
     invalid && this.form.get(controlName)?.touched;
   }
+ // --------------------------------------
+  // ------------- SIGNATURE -------------
+  // --------------------------------------
 
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
+  }
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad?.clear();
+  }
+
+  savePad() {
+    const base64Data = this.signaturePad?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
+  }
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------

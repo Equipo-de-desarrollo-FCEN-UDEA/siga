@@ -62,8 +62,25 @@ class="need-validation"
   </div>
 </div>
 <div class="row regular-row mt-4 align-items-baseline">
-<app-signature></app-signature>
-
+  <label for="signature">Espacio para firma</label>
+  <div class="signature-container">
+     <signature-pad> [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()" </signature-pad>
+  </div>
+  <div>
+    <button 
+    id="btn-sub"
+    class="btn btn-outline-secondary"
+    type="button"
+    (submit)="(false)"
+    (click)="clearPad()">Limpiar Firma</button>
+    <button 
+    id="btn-sub"
+    class="btn btn-outline-secondary"
+    type="button"
+    (submit)="(false)"
+    color="secondary" (click)="savePad()">Subir firma</button>
+    <!-- <img src='{{ signatureImg }}' /> -->
+   </div>
 </div>
 
 

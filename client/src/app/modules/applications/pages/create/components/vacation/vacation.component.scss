@@ -124,3 +124,22 @@
   .invalid {
     color: rgb(216, 36, 36);
   }
+
+  .signature-pad {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e8e8e800;
+    border-width: 1px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-style: dashed;
+
+  }
+
+  .signature-container {
+    border-style: dashed;
+    border-width: 1px;
+    margin-bottom: 10px;
+    background-color: rgba(80, 255, 217, 0.021);
+  } 
