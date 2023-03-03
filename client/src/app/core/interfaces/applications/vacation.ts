@@ -7,6 +7,7 @@ export interface VacationCreate {
     vacationType: boolean;
     start_date: Date;
     end_date: Date;
+    signature: string;
     documents?: file_path[];
 }
 

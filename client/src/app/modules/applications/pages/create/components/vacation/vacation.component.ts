@@ -34,7 +34,7 @@ export class VacationComponent implements OnInit {
 
    // Signature
    @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-   signatureImg: string | undefined;
+   signatureImg: string="";
  
    signaturePadOptions: Object = { 
      'minWidth': 2,
@@ -70,11 +70,15 @@ export class VacationComponent implements OnInit {
     private documentSvc: DocumentService
   
   ) { }
-
+  
+// Form vacation
   public form = this.fb.group({
     application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
+    total_days: [1,[Validators.required]],
+    start_date: [new Date(), [Validators.required]],
+    end_date: [new Date(), [Validators.required]],
     documents: [this.documents],
-    days: [0, [Validators.required, Validators.min(1)]],
+    signature:[this.signatureImg], 
     })
 
   submit(){
@@ -174,10 +178,19 @@ export class VacationComponent implements OnInit {
     this.signaturePad?.clear();
   }
 
-  savePad() {
+  savePad(event:any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
     console.log(base64Data);
+    Swal.fire({
+      title: 'Firma registrada',
+      text: 'Por políticas institucionales, la firma aquí consignada no quedará almacenada en Base de Datos, solo se usará para emitir el formato. ',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    });
+    event.target.disabled = true;
+    return; 
   }
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------

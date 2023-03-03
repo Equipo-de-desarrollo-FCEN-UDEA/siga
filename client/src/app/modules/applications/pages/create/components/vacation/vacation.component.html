@@ -55,33 +55,45 @@ class="need-validation"
         placeholder=" "
         [ngClass]="{
           'is-invalid':
-            (submitted && f['days'].errors) || isInvalidForm('lenguage')
+            (submitted && f['total_days'].errors) || isInvalidForm('lenguage')
         }"
       />
     </div>
   </div>
 </div>
-<div class="row regular-row mt-4 align-items-baseline">
-  <label for="signature">Espacio para firma</label>
-  <div class="signature-container">
-     <signature-pad> [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()" </signature-pad>
+
+
+ <!--Signature-->
+ <div class="signature-container" >
+  <div class="text-center">Espacio para firma</div>
+    <div style="border: 5px double black; background-color: rgba(80, 255, 217, 0); align-items: center; text-align: center ;">
+    <signature-pad>
+      [options]="signaturePadOptions"
+      (onBeginEvent)="drawStart()" 
+      (onEndEvent)="drawComplete()"
+      </signature-pad>
+    </div>
+    <p></p>
   </div>
-  <div>
+<div>
+  <div class="col-md-12 text-center">
     <button 
-    id="btn-sub"
-    class="btn btn-outline-secondary"
-    type="button"
-    (submit)="(false)"
-    (click)="clearPad()">Limpiar Firma</button>
-    <button 
-    id="btn-sub"
-    class="btn btn-outline-secondary"
-    type="button"
-    (submit)="(false)"
-    color="secondary" (click)="savePad()">Subir firma</button>
-    <!-- <img src='{{ signatureImg }}' /> -->
-   </div>
-</div>
+      id="btn-sub1"
+      class="btn btn-outline-secondary"
+      type="button"
+      (submit)="(false)"
+      (click)="clearPad()">Limpiar Firma</button>
+      <button 
+      id="btn-sub2"
+      class="btn btn-outline-secondary"
+      type="button"
+      (submit)="(false)"
+      color="secondary" 
+      (click)="savePad($event);">Subir firma</button>
+      <!-- <img src='{{ signatureImg }}' /> -->
+  </div>
+ </div>
+
 
 
 
