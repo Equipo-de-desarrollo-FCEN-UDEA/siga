@@ -196,6 +196,27 @@ export class VacationComponent implements OnInit {
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------
 
+  // --------------------------------------
+  // -------- ARCHIVOS - ANEXOS -----------
+  // --------------------------------------
+
+  deleteDocument(path: string, i: number) {
+    Swal.fire({
+      title: 'Eliminar documento',
+      text: '¿Está seguro de querer eliminar este documento?, no podrá recuperarlo',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Eliminar',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3AB795',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //this.documentsToDelete = this.documentsToDelete.concat([path]);
+        this.documents.splice(i, 1);
+      }
+    });
+  }
+
   onUpload(event:Event, index: number) {
     const element = event.target as HTMLInputElement;
     const file = element.files?.item(0);
