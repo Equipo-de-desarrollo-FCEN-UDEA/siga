@@ -106,25 +106,25 @@
   }
 
   .signature-pad {
-    width: 100%;
-    height: 100%;
-    border: 1px solid #e8e8e800;
-    border-width: 1px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    background: #fff;
-    border-style: dashed;
-
+    min-height: auto;
+    max-width: 100%;
+    border: 5px #e8e8e800;
+    border-style: double;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    background: #f1f0f0;
+    
   }
 
   .signature-container {
     border-style: dashed;
     border-width: 1px;
     margin-bottom: 10px;
-    background-color: rgba(80, 255, 217, 0.021);
+    background-color: rgba(80, 255, 217, 0.055);
   } 
   
   button {
     margin: 10px;
     margin-left: 10px;
+    text-align: center;
 }
