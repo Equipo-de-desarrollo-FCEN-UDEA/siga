@@ -86,8 +86,12 @@
 
     <!-- ALERT BOX -->
     <div class="alert alert-warning mt-3 mb-0">
-      <strong>¡Importante!</strong> Para  elegir sus días de vacaciones solo puedes 
-       hasta {{ laboralDay }} días hábiles
+      <strong>¡Importante!</strong> 
+      <p>Para  elegir sus días de vacaciones solo puedes  
+       hasta {{ laboralDay }} días hábiles</p>
+       <p>Por políticas institucionales, la firma aquí consignada es obligatoria 
+        pero no quedará almacenada en Base de Datos, solo se usará para
+        emitir el formato.</p>
     </div>
 
     <div class="row regular-row mt-4">
@@ -180,15 +184,17 @@
     </div>
 
      <!--Signature-->
-    <div class="signature-container" >
-      <div class="text-center">Espacio para firma</div>
-        <div id="div-signature" style="border: 5px double black; background-color: rgba(80, 255, 217, 0); align-items: center; text-align: center ;">
-        <signature-pad
-
-          [options]="signaturePadOptions"
-          (onBeginEvent)="drawStart()" 
-          (onEndEvent)="drawComplete()"
-          canvasWidth="100%">
+    <div class="signature-container">
+      <div>Espacio para firma:</div>
+        <div id="div-signature" style="
+        border: 5px double black; 
+        background-color: rgba(80, 255, 217, 0);
+        max-width: 40%;" >
+          <signature-pad
+            [options]="signaturePadOptions"
+            (onBeginEvent)="drawStart()" 
+            (onEndEvent)="drawComplete()"
+            canvasWidth="100%">
           </signature-pad>
         </div>
         <p></p>

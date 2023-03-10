@@ -111,13 +111,12 @@
     width: 100%; /* Ancho del contenedor al 100% del elemento padre */
     height: 100%; /* Altura del contenedor al 100% del elemento padre */
     box-sizing: border-box; /* Incluye el ancho y el padding en la anchura y altura del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
   }
 
-  .signature-container signature-pad {
-    width: 100%;
-    height: 100%;
-
-  }
   
   button {
     margin: 10px;
