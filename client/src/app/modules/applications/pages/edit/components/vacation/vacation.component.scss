@@ -105,23 +105,19 @@
     cursor: pointer;
   }
 
-  .signature-pad {
-    min-height: auto;
-    max-width: 100%;
-    border: 5px #e8e8e800;
-    border-style: double;
-    margin-top: 1px;
-    margin-bottom: 1px;
-    background: #f1f0f0;
-    
+  .signature-container {
+    border: 1px solid #ccc;
+    padding: 15px;
+    width: 100%; /* Ancho del contenedor al 100% del elemento padre */
+    height: 100%; /* Altura del contenedor al 100% del elemento padre */
+    box-sizing: border-box; /* Incluye el ancho y el padding en la anchura y altura del contenedor */
   }
 
-  .signature-container {
-    border-style: dashed;
-    border-width: 1px;
-    margin-bottom: 10px;
-    background-color: rgba(80, 255, 217, 0.055);
-  } 
+  .signature-container signature-pad {
+    width: 100%;
+    height: 100%;
+
+  }
   
   button {
     margin: 10px;

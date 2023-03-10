@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VacationCreate } from '@interfaces/applications/vacation';
@@ -50,7 +50,21 @@ export class VacationComponent implements OnInit {
     'canvasHeight': 100,
   };
 
+  isButtonDisabled: boolean = false;
+  div_important = document.getElementById("div-signature") as HTMLDivElement;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event:Event) {
+  // Actualiza el tamaño del signature-pad
+  this.div_important = document.getElementById("div-signature") as HTMLDivElement;
+  this.signaturePad.set('minWidth', 0.5);
+  this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
   
+  this.signaturePad.clear();
+  this.signaturePad.resizeCanvas();
+  this.isButtonDisabled = false;
+
+}
   // Files
   public files: any[] = [];
   public document_new = [1];
@@ -93,7 +107,7 @@ export class VacationComponent implements OnInit {
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     documents: [this.documents],
-    signature: [this.signatureImg]
+    signature: [this.signatureImg],
   });
 
   ngOnInit(): void {
@@ -119,10 +133,8 @@ export class VacationComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    //this.signaturePad.set('minWidth', 3); // set szimek/signature_pad options at runtime
-    this.signaturePad.set('canvasWidth',500);
-    this.signaturePad.set('border',"5px #e8e8e800")
-    this.signaturePad.set('border-style',"double");
+    this.div_important = document.getElementById("div-signature") as HTMLDivElement;
+    this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
     this.signaturePad.resizeCanvas();
     this.holidaySvc.getHolidays().subscribe({
@@ -244,7 +256,8 @@ export class VacationComponent implements OnInit {
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#3AB795',
     });
-    event.target.disabled = true;
+    this.isButtonDisabled = true;
+    //event.target.disabled = true;
     return; 
   }
 
