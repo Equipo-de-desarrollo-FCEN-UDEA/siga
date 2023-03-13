@@ -31,9 +31,11 @@ export class VacationComponent implements OnInit {
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
 
+  // Files
   public files: any[] = [];
-  public archivos = [1];
-  public documents: file_path[] = []
+  public document_new = [1];
+  public documents: file_path[] = [];
+ 
 
   // Signature
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
@@ -241,58 +243,48 @@ export class VacationComponent implements OnInit {
 
 
 
-
-
-  // --------------------------------------
+// --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------
 
-  deleteDocument(path: string, i: number) {
-    Swal.fire({
-      title: 'Eliminar documento',
-      text: '¿Está seguro de querer eliminar este documento?, no podrá recuperarlo',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Eliminar',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3AB795',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //this.documentsToDelete = this.documentsToDelete.concat([path]);
-        this.documents.splice(i, 1);
-      }
-    });
-  }
-
+  // Subir un archivo
   onUpload(event: Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
+    const ELEMENT = event.target as HTMLInputElement;
+    const FILE = ELEMENT.files?.item(0);
+    if (FILE) {
+      this.files.splice(index, 1, FILE);
     }
   }
 
+  // Eliminar achivos
   removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
-    };
+    if (this.document_new.length > 1) {
+      this.document_new.splice(index, 1);
+    }
     this.files.splice(index, 1);
   }
+
+  // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
   validSize() {
-    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 1024 * 1024;
+    const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
+    return SIZE < 2 * 1024 * 1024;
   }
 
+  // Verifica que el archivo a adjuntar sea de un tipo valido
   validFileType() {
-    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
+    const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 
     let flag = true;
     this.files.forEach((file) => {
-      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
-    })
+      // separa el último punto del nombre del archivo para verificar su tipo
+      flag = VALID_EXTENSIONS.includes(
+        file.name.split('.')[file.name.split('.').length - 1]
+      );
+    });
     return flag;
-
   }
+
+ 
 
   // --------------------------------------
   // ------------- DATEPICKER -------------
