@@ -20,7 +20,7 @@ router = APIRouter()
 
 log = get_logging(__name__)
 
-# crea una solicitud de vacacion
+# crea una solicitud de vacaciones
 
 
 @router.post("/", response_model=VacationResponse)
@@ -60,6 +60,7 @@ async def create_vacation(
             obj_in=application
         )
         application = ApplicationResponse.from_orm(application)
+        
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
 

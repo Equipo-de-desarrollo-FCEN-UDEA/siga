@@ -19,12 +19,12 @@ class VacationBase(BaseModel):
     signature: Any | None
 
 class VacationCreate(VacationBase):
-    application_sub_type_id: int 
+    application_sub_type_id: int  = Field(gt=0, lt=100)
 class VacationUpdate(VacationBase):
     application_sub_type_id: int
 
 class VacationInDB(VacationBase):
-    documents: list[Any] | None = Field(default_factory=list)
+    documents: Any | None = Field(default_factory=list)
 
 class VacationResponse(ApplicationResponse):
     vacation: VacationInDB
