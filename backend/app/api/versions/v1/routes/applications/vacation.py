@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails
+from app.services import crud, emails, documents
 from app.domain.models import Vacation, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 VacationCreate,
@@ -59,10 +59,19 @@ async def create_vacation(
             who=current_user,
             obj_in=application
         )
+
+        mongo_id = ObjectId(application.mongo_id)
+
         application = ApplicationResponse.from_orm(application)
         
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
+        
+        # Cómo debe corresponderse con el modelo en la base de datos? Cómo se rellena el campo documents?
+    
+        path = documents.fill_vacations_format(current_user, response)
+        await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+    
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
