@@ -51,7 +51,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
     ),
     schemas.ApplicationTypeCreate(
         name="VACACIONES",
-        description="vacacion",
+        description="vacaciones",
         status_flux=[
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
