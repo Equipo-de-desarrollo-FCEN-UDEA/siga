@@ -47,7 +47,7 @@ export class VacationComponent implements OnInit {
   signaturePadOptions: Object = { 
     'minWidth': 2,
     'canvasWidth': 300,
-    'canvasHeight': 100,
+    'canvasHeight': 150,
   };
 
   isButtonDisabled: boolean = false;
@@ -55,14 +55,16 @@ export class VacationComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event:Event) {
-  // Actualiza el tamaño del signature-pad
-  this.div_important = document.getElementById("div-signature") as HTMLDivElement;
-  this.signaturePad.set('minWidth', 0.5);
-  this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
-  
-  this.signaturePad.clear();
-  this.signaturePad.resizeCanvas();
-  this.isButtonDisabled = false;
+    // Actualiza el tamaño del signature-pad
+    let important= this.div_important.offsetWidth;
+    this.div_important = document.getElementById("div-signature") as HTMLDivElement;
+ 
+    this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
+    this.signaturePad.set('canvasHeight', this.div_important.offsetWidth/2);
+    
+    this.signaturePad.clear();
+    this.signaturePad.resizeCanvas();
+    this.isButtonDisabled = false;
 
 }
   // Files
@@ -250,9 +252,11 @@ export class VacationComponent implements OnInit {
     this.signatureImg = base64Data;
     console.log(base64Data);
     Swal.fire({
-      title: 'Firma registrada',
-      text: 'Por políticas institucionales, la firma aquí consignada no quedará almacenada en Base de Datos, solo se usará para emitir el formato. ',
-      icon: 'success',
+      title: 'Firma a registrar',
+      text: 'Por políticas institucionales, la firma aquí consignada no quedará almacenada en Base de Datos, solo se usará para emitir el formato y es obligatoria. ',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#3AB795',
     });
