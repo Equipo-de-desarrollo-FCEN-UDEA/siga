@@ -11,7 +11,8 @@ from .application_status import application_status
 from .applications import (commission,
                            permission,
                            full_time,
-                           hour_aval)
+                           hour_aval,
+                           vacation)
 
 from .holiday import holiday
 from .cron_job import cron_job
