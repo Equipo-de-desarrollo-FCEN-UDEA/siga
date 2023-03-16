@@ -1,1 +1,110 @@
-<p>vacation works!</p>
+<form
+class="need-validation"
+  need-validation
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+  >
+
+  <!-- TYPE DAY VACATION -->
+<div class="row">
+  <div class="row">
+    <div class="formfloatig">
+      <select 
+      formControlName="application_sub_type_id"
+      class="form-control form-select-lg mb-3 cursor"
+      (change)="onApplicationSubType($event)"
+      [ngClass]="{
+        'is-invalid':
+        (submitted && f['application_sub_type_id'].errors)||
+        isInvalidForm('application_sub_type_id')
+      }"
+      *ngIf="applicationType$ | async as applicationType"
+      >
+      <option value="0" disabled selected>Elige un tipo de días para Vacaciones</option>
+      <option 
+      [ngValue]="tipo.id | number"
+      *ngFor="let tipo of applicationType.application_sub_type"
+      >
+      {{tipo.name}}
+    </option>
+    </select>
+
+    <div
+          *ngIf="isInvalidForm('application_sub_type_id')"
+          class="invalid-feedback"
+        >
+          <!-- <div *ngIf="f['application_sub_type_id'].errors['required']">
+              Elige un tipo de comisión
+            </div> -->
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row regular-row mt-4 align-items-baseline">
+
+   <!-- ALERT BOX -->
+  <div class="alert alert-warning mt-3 mb-0">
+    <strong>¡Importante!</strong> 
+    Para  elegir sus días de vacaciones solo puedes  
+      hasta {{ laboralDay }} días hábiles. 
+      Por políticas institucionales, la firma aquí consignada es <strong>obligatoria</strong> 
+      pero no quedará almacenada en Base de Datos, solo se usará para
+      emitir el formato.
+  </div>
+
+  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Número de días *</div>
+  <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="formfloatig">
+      <input
+        id="floatingidioma"
+        formControlName="days"
+        class="form-control"
+        type="Numero de días"
+        placeholder=" "
+        [ngClass]="{
+          'is-invalid':
+            (submitted && f['days'].errors) || isInvalidForm('lenguage')
+        }"
+      />
+    </div>
+  </div>
+</div>
+<div class="row regular-row mt-4 align-items-baseline">
+  <div class="signature-container">
+    <div>Espacio para firma:</div>
+      <div id="div-signature" style="
+        border: 5px double black; 
+        background-color: rgba(80, 255, 217, 0);
+        max-width: 60%;" >
+          <signature-pad
+            [options]="signaturePadOptions"
+            (onBeginEvent)="drawStart()" 
+            (onEndEvent)="drawComplete()">
+          </signature-pad>
+        </div>
+        <p></p>
+      <div>
+    </div>
+  </div>
+  <div class="col-md-12 text-center">
+    <button 
+      id="btn-sub1"
+      class="btn btn-outline-secondary"
+      type="button"
+      (submit)="(false)"
+      (click)="clearPad()">Limpiar Firma</button>
+      <button 
+      id="btn-sub2"
+      class="btn btn-outline-secondary"
+      type="button"
+      [disabled]="isButtonDisabled"
+      (submit)="(false)"
+      color="secondary" 
+      (click)="savePad($event);">Subir firma</button>
+      <!-- <img src='{{ signatureImg }}' /> -->
+  </div>
+</div>
+</form>
