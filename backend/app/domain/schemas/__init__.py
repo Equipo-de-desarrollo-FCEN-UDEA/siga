@@ -13,16 +13,19 @@ from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUp
 from .application_status import (Application_statusCreate, Application_statusInDB,
                                  Application_statusUpdate)
 from .applications import (
+    #COMMISSION
     CommissionCreate,
     CommissionResponse,
     CommissionUpdate,
     commissionInDB,
     CommissionDocument,
     Compliment,
+    #PERMISSION
     PermissionCreate,
     PermissionResponse,
     PermissionUpdate,
     PermissionDocument,
+    #FULLTIME
     FullTimeCreate,
     FullTimeUpdate,
     FullTimeResponse,
@@ -30,11 +33,17 @@ from .applications import (
     WorkPlan,
     ViceFormat,
     InitialLetter,
+    #HOURAVAL
     HourAvalResponse,
     HourAvalUpdate,
     HourAvalCreate,
     HourAvalInDB,
-    Act
+    Act,
+    #VACATION
+    VacationCreate,
+    VacationUpdate,
+    VacationResponse,
+    VacationInDB
 )
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
