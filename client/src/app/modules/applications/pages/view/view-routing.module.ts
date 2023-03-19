@@ -5,6 +5,7 @@ import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { ViewComponent } from './view.component';
+import { VacationComponent } from './components/vacation/vacation.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,13 @@ const routes: Routes = [
         component: HourAvalComponent,
         data: {
           title: 'Aval de horas para grupos de investigación'
+        }
+      },
+      {
+        path: 'vacaciones',
+        component: VacationComponent,
+        data: {
+          title: 'Vacaciones'
         }
       },
       {
