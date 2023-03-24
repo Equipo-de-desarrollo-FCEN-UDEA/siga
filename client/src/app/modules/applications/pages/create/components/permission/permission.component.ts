@@ -94,7 +94,7 @@ mouseOvered: any;
       '',
       [
         Validators.required,
-        Validators.minLength(30),
+        Validators.minLength(5),
         Validators.maxLength(500),
       ],
     ],
