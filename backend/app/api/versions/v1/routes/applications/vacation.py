@@ -161,6 +161,15 @@ async def update_vacation(
             application_updated = crud.application.update(
                 db, current_user, db_obj=application, obj_in=vacation)
             
+            #Llamar el formato de mongo, extraer la firma pasarla al nuevo formato, ¿cómo?
+            application = ApplicationResponse.from_orm(application_updated) #Asegurar que es application_update.
+
+            response = VacationResponse(
+            **dict(application, vacation=update_vacation))
+
+            path = documents.fill_vacations_format(current_user, response)
+            await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+            
             log.debug('application update', application_updated)
 
     except BaseErrors as e:
