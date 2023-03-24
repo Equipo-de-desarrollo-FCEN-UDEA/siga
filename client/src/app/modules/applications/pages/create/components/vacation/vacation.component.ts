@@ -106,7 +106,7 @@ export class VacationComponent implements OnInit {
     total_days: [0, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
-    documents: [this.documents, [Validators.required]],
+    documents: [this.documents],
     signature: [this.signatureImg],
   })
 
