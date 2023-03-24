@@ -1,0 +1,2937 @@
+[33mcommit 94da0a504f576f84a2eb6eb341d980cc9308b20c[m[33m ([m[1;36mHEAD -> [m[1;32mtask001fc[m[33m, [m[1;31morigin/task001fc[m[33m)[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Mar 13 12:25:39 2023 -0500
+
+    Terminando create vacaciones
+
+[33mcommit 9d407f606cc1db0e628b9fd165029ac5449c5b22[m
+Author: alwos19 <jhon.jaramilloe@udea.edu.co>
+Date:   Sun Mar 5 13:10:29 2023 -0500
+
+    formulario crear vacaciones casi listo
+
+[33mcommit c994b165a55774d932eeeae5d28378c4c5327ee3[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Mar 3 16:40:41 2023 -0500
+
+    componente crear vacaciones
+
+[33mcommit 9a6394370d540ddd523dbf01734c2f46b1c12934[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Mar 3 13:52:15 2023 -0500
+
+    terminando el componente crear
+
+[33mcommit f8276dc592561a36f851df1a8e1bcf545e3bce16[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Mar 3 10:09:59 2023 -0500
+
+    merge con la rama del profe omar
+
+[33mcommit f3768515d4d479f5150a5b27c38339443bd53448[m
+Merge: 5cd8c44 9e4579f
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Mar 3 10:06:27 2023 -0500
+
+    Merge branch 'task003f' into task001fc
+
+[33mcommit 9e4579f2c18255c5448798bd7a9d4059d0b3e39b[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Tue Feb 28 10:47:25 2023 -0500
+
+    Improving sinaturepad
+
+[33mcommit 64bafbf1ab612edef29b32a80b7b75182775e40d[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Feb 24 16:45:46 2023 -0500
+
+    Vacation edit component with signature included, avoiding save multiple times the sign
+
+[33mcommit 5cd8c4414e5487e1a3c0c76c91e3a18cbcd4501d[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Feb 24 09:12:52 2023 -0500
+
+    error nombre backend en vacations police
+
+[33mcommit fb15a6b6c0f8bf7eed063fcd27154429d7029ed5[m
+Merge: 3325097 44a30d9
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Feb 24 07:57:04 2023 -0500
+
+    Merge branch 'task003f' into task001fc
+
+[33mcommit 44a30d9edac8272e319097d78350f5e89c4198d7[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Feb 23 16:57:39 2023 -0500
+
+    Signature component works
+
+[33mcommit 5ce260c2cb741332f0394285554e4b839bb29f6f[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Feb 23 16:12:34 2023 -0500
+
+    Signature component works!
+
+[33mcommit 33250975212811feb7602b49e06a463e91ca6ca3[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 22 13:22:57 2023 -0500
+
+    signature in create
+
+[33mcommit 82ebde9a1756b31162b75284389084ec036cb930[m
+Merge: 4838d7b 0ed4fa2
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 22 11:39:40 2023 -0500
+
+    Merge branch 'task003f' into task001f
+
+[33mcommit 4838d7b807cdfdd3e8e9b057eb797969278256c0[m
+Merge: deb3f86 ae8d9ea
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 22 11:17:18 2023 -0500
+
+    Merge branch 'task001b' into task001f
+
+[33mcommit deb3f86fc165dd6fc49747abfc147055ed9dc82d[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 22 11:16:28 2023 -0500
+
+    desarrollando crear vacaciones
+
+[33mcommit ae8d9eab64881787df60787a969ab04848068b43[m[33m ([m[1;31morigin/task001b[m[33m, [m[1;32mtask001b[m[33m)[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Mon Feb 20 17:53:09 2023 -0500
+
+    antes merge develop
+
+[33mcommit 0ed4fa25c3fa6cef68f0a8667d9c2083f0bfbaa4[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Mon Feb 20 15:42:25 2023 -0500
+
+    Adjusting signature component
+
+[33mcommit 0ba0826d46284c7481e4c3a89fc6ea070a7df651[m
+Merge: 72bacd7 25fdac1
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 20 14:06:02 2023 -0500
+
+    Merge branch 'task001b' into task001f
+
+[33mcommit 25fdac1c2ea66a358ce28bea7ddb5ae07be96448[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Mon Feb 20 13:59:46 2023 -0500
+
+    version v1, crear, editar, traer, actualizar vacacion
+
+[33mcommit 72bacd73a313ad751a334d8d45cf2f7c5117c065[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 20 13:09:32 2023 -0500
+
+    vacacion create
+
+[33mcommit a93ba90c5b0b5e5c20e9de3a555dbe8dd10f5a55[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Mon Feb 20 09:40:30 2023 -0500
+
+    Trying with signature component
+
+[33mcommit 23d0560107f3bf1923004650c8b2b5f5a3514d4e[m
+Merge: 17b5826 1035002
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Sat Feb 18 12:13:00 2023 -0500
+
+    Merge branch 'task001b' into task001f
+
+[33mcommit 17b5826c10f9b2fa9a33b2cc4d4cb3f905cb5233[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Sat Feb 18 12:11:40 2023 -0500
+
+    implementadno vacation create
+
+[33mcommit 57505eb8229c145b52f3795017b977f89afce537[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Feb 17 17:51:55 2023 -0500
+
+    Try to use a shared component for signature
+
+[33mcommit 981079800b066cf5fa301fe445e08535ab97e3f8[m
+Merge: 101e1b5 8e48c42
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Feb 17 08:56:21 2023 -0500
+
+    Merge branch 'task003f' into task001f
+
+[33mcommit 101e1b5a5d162113586b7f7a6bdf9f98947866a3[m
+Merge: 6e9a80a 87202ab
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Feb 17 08:18:49 2023 -0500
+
+    Merge branch 'task044' into task001f
+
+[33mcommit 87202abb6a3f62e0d9e2fea0de08ea0a361f5613[m[33m ([m[1;31morigin/task044[m[33m, [m[1;32mtask044[m[33m)[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Feb 17 08:16:57 2023 -0500
+
+    implementando componente de crear vacaciones
+
+[33mcommit 8e48c4262470a8598ee8e201d4900e2771dc5751[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Feb 16 16:58:40 2023 -0500
+
+    Edit vacations ready for validations, signature component start
+
+[33mcommit 10350027eb7792961e9bbe7aec3b3674ebff6d4e[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Feb 16 11:55:59 2023 -0500
+
+    antes merge develop
+
+[33mcommit e98dc9ac54ef3f93c7683616dad429dd99e0a53d[m
+Merge: afa893c 6e9a80a
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Feb 16 11:26:25 2023 -0500
+
+    Edit component vacation
+
+[33mcommit 1f10f4d48f18e13fcea126818fe4e713c489679c[m
+Merge: 070886c 6e9a80a
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Feb 15 19:06:29 2023 -0500
+
+    Merge branch 'develop' into task001b
+
+[33mcommit 070886c5121af1dcc7faedbddd034b1a405f63c0[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Feb 15 19:05:58 2023 -0500
+
+    antes merge develop
+
+[33mcommit afa893c5df57de4b1237c172d0bb49c3c6748e26[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Wed Feb 15 17:06:54 2023 -0500
+
+    Starting vacation-edit. I have  been created services and interface
+
+[33mcommit 6e9a80a4b16c18d7e0a5dd66eca52b2bd67e67f4[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32mjhon[m[33m, [m[1;32mdevelop[m[33m)[m
+Merge: cd7c66c af625ef
+Author: cdavidgutierrez <36546273+cdavidgutierrez@users.noreply.github.com>
+Date:   Wed Feb 15 14:30:46 2023 -0500
+
+    Merge pull request #138 from Equipo-de-desarrollo-FCEN-UDEA/task044
+    
+    se crearon todas las rutas para vacaciones en Angular
+
+[33mcommit af625effd269c311fe0ab8a61832c85aad603f08[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 15 14:21:54 2023 -0500
+
+    se crearon todas las rutas para vacaciones
+
+[33mcommit cd7c66c96ec84cb4c25774f7693277c078f238c5[m
+Merge: 590fb6d 01aab42
+Author: David1863-sys <75543471+DavidTorres-sys@users.noreply.github.com>
+Date:   Tue Feb 14 11:49:13 2023 -0500
+
+    Merge pull request #136 from Equipo-de-desarrollo-FCEN-UDEA/task044
+    
+    modificación logo
+
+[33mcommit 01aab42347c5ed92ebad2c28e4f4fa90a808764e[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Feb 14 11:44:42 2023 -0500
+
+    modificación logo
+
+[33mcommit 590fb6d4a99374f7995267bda7ec07cec22b797b[m
+Merge: fbaa1a6 a951e54
+Author: cdavidgutierrez <36546273+cdavidgutierrez@users.noreply.github.com>
+Date:   Mon Feb 13 17:56:19 2023 -0500
+
+    Merge pull request #134 from Equipo-de-desarrollo-FCEN-UDEA/task044
+    
+    Task044
+
+[33mcommit fbaa1a639043edcfaa558a784531a4884ffcaf10[m
+Merge: 6f12e5d a5ee40d
+Author: alwos19 <38044738+alwos19@users.noreply.github.com>
+Date:   Mon Feb 13 17:45:28 2023 -0500
+
+    Merge pull request #133 from Equipo-de-desarrollo-FCEN-UDEA/task048b
+    
+    Corrección de error en el mínimo de meses y horas permitidas en el av…
+
+[33mcommit a951e54826f4f16bc6d0197f1b1c510a4196f19a[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 13 17:41:04 2023 -0500
+
+    Correción de validadores aval de horas
+
+[33mcommit a5ee40d28e805dba2a4b2339719ac25326a5e41a[m[33m ([m[1;31morigin/task048b[m[33m)[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Mon Feb 13 17:15:15 2023 -0500
+
+    Corrección de error en el mínimo de meses y horas permitidas en el aval de horas
+
+[33mcommit 46498f05f8b5ad615d0465a56caea6fbdc3a5aa5[m
+Merge: 0b53528 6f12e5d
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 13 17:10:54 2023 -0500
+
+    Merge branch 'develop' into task044
+
+[33mcommit 6f12e5df79577976e8b7868833debb56df2a5f54[m
+Merge: 226c43c 549c22e
+Author: alwos19 <38044738+alwos19@users.noreply.github.com>
+Date:   Mon Feb 13 17:08:35 2023 -0500
+
+    Merge pull request #132 from Equipo-de-desarrollo-FCEN-UDEA/task048b
+    
+    Corrección en la generación de carta-aval dehoras al no incluir otros…
+
+[33mcommit 549c22ecdbbe8c1daceac63e1559991806f812ff[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Mon Feb 13 16:58:47 2023 -0500
+
+    Corrección en la generación de carta-aval dehoras al no incluir otros participantes
+
+[33mcommit 226c43cf40112e9fc63512f8e2b7db42b2e5cd79[m
+Merge: 8d565fd cb9d28c
+Author: alwos19 <38044738+alwos19@users.noreply.github.com>
+Date:   Mon Feb 13 13:53:59 2023 -0500
+
+    Merge pull request #131 from Equipo-de-desarrollo-FCEN-UDEA/task046f
+    
+    Task046f
+
+[33mcommit 0b53528a93523726a6c13143c8bad64d98fde2a8[m
+Merge: 76692e5 226c43c
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 13 13:53:03 2023 -0500
+
+    Merge branch 'develop' into task044
+
+[33mcommit 76692e5e84e7c1904a4419d1f1fdbe708bcbb1cc[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 13 13:51:16 2023 -0500
+
+    arreglo de pdfs
+
+[33mcommit f65245a15e2f850f06db7d01d3eef7be80339c46[m
+Merge: b9c2a7f 8d565fd
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Feb 13 11:20:58 2023 -0500
+
+    Merge branch 'develop' into task044
+
+[33mcommit cb9d28cdc7087a2b1bf1d34fdff609fcf7b7f7af[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Mon Feb 13 11:16:04 2023 -0500
+
+    antes merge develop
+
+[33mcommit 29fb8ec57e984aab9437da40c7005d5d52cd427d[m
+Merge: 670ff6a 90034ce
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Feb 9 09:53:46 2023 -0500
+
+    Merge branch 'production' into task046f
+
+[33mcommit 670ff6a56bde47a5d09188de8647f3e3c069b14f[m
+Merge: b3e3e56 8d565fd
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Feb 9 09:34:31 2023 -0500
+
+    Merge branch 'develop' into task046f
+
+[33mcommit b3e3e565beb15f4679d75af03e5f19153c00b331[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Feb 9 09:33:50 2023 -0500
+
+    ante merge develop
+
+[33mcommit 90034ceca561bada8d11b428f293f56c7d0f486a[m
+Merge: d7c4990 8d565fd
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Feb 8 17:47:15 2023 -0500
+
+    Merge pull request #128 from Equipo-de-desarrollo-FCEN-UDEA/develop
+    
+    Develop
+
+[33mcommit 8d565fd4b4f7ea9db769bcf857c523b5a259918b[m
+Merge: e49689e 0b9ca8b
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Feb 8 17:45:46 2023 -0500
+
+    Merge pull request #127 from Equipo-de-desarrollo-FCEN-UDEA/task048b
+    
+    :fire:
+
+[33mcommit 0b9ca8b4baead6ae7d7e51b3baf0aae3d7c7df68[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Feb 8 17:42:37 2023 -0500
+
+    :fire:
+
+[33mcommit e49689e9d9ac46df4f847fbf186886413064f34a[m
+Merge: 8b57b21 83e8a18
+Author: cdavidgutierrez <36546273+cdavidgutierrez@users.noreply.github.com>
+Date:   Wed Feb 8 17:11:46 2023 -0500
+
+    Merge pull request #126 from Equipo-de-desarrollo-FCEN-UDEA/task048b
+    
+    Task048b
+
+[33mcommit 83e8a186a25026c673ef08728ae090f29818867e[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Feb 8 16:40:30 2023 -0500
+
+    task045: corrección template carta de permiso, se añadió departamento
+
+[33mcommit 98770593c40b9de388de3712a9c35a57c42fe640[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Feb 8 16:18:48 2023 -0500
+
+    task048b: resolución de error en eliminación de dedicatoria exclusiva con status = EN CREACIÓN
+
+[33mcommit b9c2a7ff99eeee12e4777766527227ec0d635208[m
+Merge: 95435b8 8b57b21
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Feb 8 08:02:47 2023 -0500
+
+    Merge branch 'develop' into task044
+
+[33mcommit d7c49906744b96042f97f4ccecf61f51536cb5ba[m
+Merge: a339bf8 8b57b21
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Jan 31 14:03:00 2023 -0500
+
+    Merge pull request #125 from Equipo-de-desarrollo-FCEN-UDEA/develop
+    
+    Develop
+
+[33mcommit 8b57b215c97ca8941741e437fae186f522ec71b8[m
+Merge: 515b6cd 0860315
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Jan 31 14:02:36 2023 -0500
+
+    Merge pull request #124 from Equipo-de-desarrollo-FCEN-UDEA/task044
+    
+    Se organizó boton de la tabla solicitudes y se le puso color al subir…
+
+[33mcommit 95435b8489ef131c29f30aaa101a5e9a7c0e7ede[m
+Merge: 0860315 515b6cd
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Jan 31 13:30:52 2023 -0500
+
+    Merge branch 'develop' into task044
+
+[33mcommit 515b6cdacd5bb04962f3c4149a72e5a9643a3f97[m
+Merge: 20ae02e ab06602
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Jan 31 13:04:54 2023 -0500
+
+    Merge pull request #123 from Equipo-de-desarrollo-IF-UDEA/bug006
+    
+    fix(backend/client): Errores en las solicitudes y spinner
+
+[33mcommit ab06602dcf3b7719c9f64fc833603ff89b4eb8b2[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 31 13:04:08 2023 -0500
+
+    fix(backend/client): Errores en las solicitudes y spinner
+    
+    Se corrigió el error que el backend no traia la cantidad de solicitudes que se le pedía y spinner en recuperar contraseña
+
+[33mcommit 0860315984eeeb1240a5d2d1466b5fbb8efd5874[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Jan 31 13:04:01 2023 -0500
+
+    Se organizó boton de la tabla solicitudes y se le puso color al subir archivo de permiso
+
+[33mcommit a339bf87c25487df9f4255dbdb543e118aaea404[m
+Merge: 59c4b15 20ae02e
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 23:04:34 2023 -0500
+
+    Merge pull request #122 from Equipo-de-desarrollo-IF-UDEA/develop
+    
+    Develop
+
+[33mcommit 20ae02e1075ec89c4f7077a8f257b99413ec7701[m
+Merge: 476e368 696bdc5
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 23:04:13 2023 -0500
+
+    Merge pull request #121 from Equipo-de-desarrollo-IF-UDEA/task43
+    
+    Task43
+
+[33mcommit 696bdc5acfbb5832ea07be175bea3d288e6a3316[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 23:03:29 2023 -0500
+
+    Workflow corrección
+
+[33mcommit 59c4b15c78581895c02ee0016ffa2f59f04a9eca[m
+Merge: 66bdd88 28b87b7
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 22:59:25 2023 -0500
+
+    Merge pull request #120 from Equipo-de-desarrollo-IF-UDEA/task43
+    
+    Task43
+
+[33mcommit 28b87b7126991fe36aacc37b1466db5cab8e6070[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 22:57:08 2023 -0500
+
+    feat(backend): Solicitudes en creación no se veran por los demás
+
+[33mcommit d14ee135e51515489f311cb0fc561d673b6bb268[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 22:49:28 2023 -0500
+
+    feat(backend): Notificaciones a interesados
+    
+    Se implementó notificación para cuando se solicita/crea/actualiza a quien interesa
+
+[33mcommit a69e1835b8b530f00254d8f6da405d32a77e0e87[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 21:27:48 2023 -0500
+
+    fix(client): se corrigieron detalles esteticos
+    
+    Crear/editar permiso,
+    Crear/editar comision,
+
+[33mcommit 2964675069c3d9c1a1d60cf5c3f3f1ca82de9a8f[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 21:11:45 2023 -0500
+
+    feat(backend/client): Se arreglaron los errores correspondientes al aval de horas y a la dedicación exclusiva
+
+[33mcommit a61e0c8ef9b54a73b175b52307fafcc30672a6b1[m
+Merge: 51a4598 476e368
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 18:57:33 2023 -0500
+
+    Merge branch 'develop' into task43
+
+[33mcommit 476e3681d2bd8451394db4ead82acd7101e8ee93[m
+Merge: f59cf04 4e92f22
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 18:47:00 2023 -0500
+
+    Merge pull request #119 from Equipo-de-desarrollo-IF-UDEA/task044
+    
+    se organizaron validaciones cuando los campos están vacios en cada un…
+
+[33mcommit 4e92f229119e5ab5600ee95b00c5a12b9fc62d1f[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Jan 30 17:50:33 2023 -0500
+
+    se organizaron validaciones cuando los campos están vacios en cada uno de los formularios formularios, se puso la clase cursor en scss, para permiso y comision, se modifico el schema InitalLetter, ya ue los caracteres eran de 100 como minimo y en el fornt esta de 30 como minimo.
+
+[33mcommit 51a459864f393592f5d70fe08db1690466f020a9[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 11:36:13 2023 -0500
+
+    error en backrest
+
+[33mcommit 66bdd88f65ea7ad0d7abf953ae9c2b3794cd5789[m
+Merge: 2343ec8 f59cf04
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 11:20:58 2023 -0500
+
+    Merge pull request #118 from Equipo-de-desarrollo-IF-UDEA/develop
+    
+    Develop
+
+[33mcommit f59cf049ad8b4ae2853f135334b1bfdf5bb49c7f[m
+Merge: 986cecd d0fe77b
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 30 11:20:39 2023 -0500
+
+    Merge pull request #117 from Equipo-de-desarrollo-IF-UDEA/task43
+    
+    Task43
+
+[33mcommit d0fe77b1828a7d948ecbb66fb6858b710ef76279[m[33m ([m[1;31morigin/task43[m[33m)[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 30 11:20:08 2023 -0500
+
+    probando error al generar acta
+
+[33mcommit 2343ec80bda76745c3800538a422157367040a2e[m
+Merge: 75f8294 d80a883
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Jan 29 22:33:09 2023 -0500
+
+    Merge pull request #116 from Equipo-de-desarrollo-IF-UDEA/task43
+    
+    feat((backend/client)):Escalafon corregido
+
+[33mcommit d80a88352081225d4aed3f672ca306c5c9f60b99[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Sun Jan 29 22:32:31 2023 -0500
+
+    feat((backend/client)):Escalafon corregido
+
+[33mcommit 75f82941dcd22a587f98f6e9ccefa04be969bac9[m
+Merge: 62046b3 986cecd
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Jan 29 22:03:12 2023 -0500
+
+    Merge pull request #115 from Equipo-de-desarrollo-IF-UDEA/develop
+    
+    Develop
+
+[33mcommit 986cecdeadc46e57ef5f138a7c80c09dde178d4a[m
+Merge: 62046b3 2a3a976
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Jan 29 22:02:52 2023 -0500
+
+    Merge pull request #114 from Equipo-de-desarrollo-IF-UDEA/task43
+    
+    feat(client/backend): Formularios y siga bucket nuevo
+
+[33mcommit 2a3a976917efe43e71e276f9dc1beb568c63eed4[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Sun Jan 29 22:02:23 2023 -0500
+
+    feat(client/backend): Formularios y siga bucket nuevo
+
+[33mcommit 62046b3f90eb2eed3bb9cf4b0cb499fcc3d0ea52[m
+Merge: c4dc30a 1f190dc
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Jan 26 12:31:14 2023 -0500
+
+    Merge pull request #113 from Equipo-de-desarrollo-IF-UDEA/develop
+    
+    Develop
+
+[33mcommit 1f190dc33a8249c6010c1e33b8b20ae95975528b[m
+Merge: 8d20139 3a0c817
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Jan 26 12:30:58 2023 -0500
+
+    Merge pull request #112 from Equipo-de-desarrollo-IF-UDEA/bug003
+    
+    fix(backend/frontend): Se corrigieron errores en el manejo de estados
+
+[33mcommit 3a0c817fbdce84917737a6848e55e975dca4bafa[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Thu Jan 26 12:30:26 2023 -0500
+
+    fix(backend/frontend): Se corrigieron errores en el manejo de estados
+    
+    Se corrigieron errores en el manejo de estados y demás
+
+[33mcommit 8d2013957d37912a4c00985d3c018daa22dc24a6[m
+Merge: c4dc30a e5a1d28
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Jan 25 17:03:23 2023 -0500
+
+    Merge pull request #111 from Equipo-de-desarrollo-IF-UDEA/task042
+    
+    Se resolvió llenado de las actividades administrativas y otras activi…
+
+[33mcommit e5a1d28f455b77db7013d125ff37ce4d44811183[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Jan 25 16:29:37 2023 -0500
+
+    Se resolvió llenado de las actividades administrativas y otras actividades. Y se redireccionaron cada uno de los componentes de la dedicación exclusiva a la ruta vista/dedicacion
+
+[33mcommit c4dc30a8bbf08da752f44a4b10652ca4e2236bf8[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 25 13:22:18 2023 -0500
+
+    work flows
+
+[33mcommit 7016223bb62fb4997bc2eeb43614cf49d57586ac[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 25 13:22:10 2023 -0500
+
+    work flows
+
+[33mcommit dc0a1e32597d3d5d9789e162d2e81d753ba19485[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 25 12:47:17 2023 -0500
+
+    feat(backend/frontend): Preparaciones para despliegue
+
+[33mcommit 0d4ea0197862739faf37f2c128f33e99c92a0f32[m
+Merge: 82dfbf0 d2bcb2f
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Jan 25 11:03:14 2023 -0500
+
+    Merge pull request #110 from Equipo-de-desarrollo-IF-UDEA/task036
+    
+    detalles frontEnd
+
+[33mcommit d2bcb2f4923ff45d9ea52f0f847bb66978822bb3[m[33m ([m[1;31morigin/task036[m[33m)[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 25 11:02:32 2023 -0500
+
+    detalles frontEnd
+
+[33mcommit 82dfbf02f165ed29001e18b0aedba99e4ba2d8b4[m
+Merge: d687654 33a56a0
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Jan 25 10:54:48 2023 -0500
+
+    Merge pull request #109 from Equipo-de-desarrollo-IF-UDEA/task036
+    
+    Task036
+
+[33mcommit 33a56a04acfa49b87f1c3abd58c541fe2fa62ade[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 25 10:53:48 2023 -0500
+
+    feat(backend/client): Se terminó el flujo del aval de horas
+
+[33mcommit e8ae358669cb35c1dc14cae10c1d36966b2b8c96[m
+Merge: b868064 3d944f3
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 24 14:28:38 2023 -0500
+
+    Merge branch 'integration001' into task036
+
+[33mcommit b868064e3384b19e8edde097882ee158acc0ed32[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 24 14:28:28 2023 -0500
+
+    before merge
+
+[33mcommit 7eb346bcabcb775d8de520b8e166019179d8a911[m
+Merge: 47b74c2 d687654
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 24 14:20:31 2023 -0500
+
+    Merge branch 'develop' into task036
+
+[33mcommit 3d944f3607da00353ae094cdfe007391e9c83914[m[33m ([m[1;31morigin/integration001[m[33m)[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 24 14:16:13 2023 -0500
+
+    Haciendo integración
+
+[33mcommit f750d2e34b1f017041dec5f57b5e9c73334db571[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 24 01:55:41 2023 -0500
+
+    Haciendo integración
+
+[33mcommit d687654dfdcefedcaa179448343a84d651a9bdc3[m
+Merge: 177989b 672262a
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 23 23:49:17 2023 -0500
+
+    Merge pull request #108 from Equipo-de-desarrollo-IF-UDEA/task040
+    
+    Task040
+
+[33mcommit 672262a90a54a160d889a2a8ebf355911dee6652[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 23 23:47:10 2023 -0500
+
+    errores
+
+[33mcommit ce0b39117bf013afcb60880584bfbaad85f07a9f[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 23 23:13:17 2023 -0500
+
+    Merge con develop
+
+[33mcommit 5d9314f3b92e7471a3962e7c40a4d92cd4c3885c[m
+Merge: 53ffe3e 177989b
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 23 23:02:50 2023 -0500
+
+    Merge branch 'develop' into task040
+
+[33mcommit 47b74c2b08e8edcf69fec10bc5fada46973adb1e[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Mon Jan 23 22:53:41 2023 -0500
+
+    feat((frontend/backend)): Crear aval de horas completado
+
+[33mcommit 177989b258c2f6e45f55675fa831b8fe77f3c169[m
+Merge: 820a666 484e057
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 23 22:50:49 2023 -0500
+
+    Merge pull request #104 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    Task005
+
+[33mcommit 53ffe3edf72aa56a6208b5ababdbfa6dff25b97d[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Mon Jan 23 17:11:52 2023 -0500
+
+    FormatoVice upload and operating
+
+[33mcommit 484e057eb5c416f464f94a3b30d6c518631fed98[m[33m ([m[1;31morigin/task005[m[33m)[m
+Merge: b545bef 820a666
+Author: = <=>
+Date:   Mon Jan 23 14:53:42 2023 -0500
+
+    plan de trabajo, crea, parcha pero no se genera aun el pdf
+
+[33mcommit b545bef4b9f84aac8675d33d0e256430e2e1baa2[m
+Author: = <=>
+Date:   Mon Jan 23 13:55:59 2023 -0500
+
+    antes merge develop
+
+[33mcommit 820a66621d89cc0158f8218d0f8020655432a304[m
+Merge: 98e153e 94c3631
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Jan 23 13:49:35 2023 -0500
+
+    Merge pull request #103 from Equipo-de-desarrollo-IF-UDEA/task041
+    
+    Task041
+
+[33mcommit 06da63ddc7281cadba7c989d2d83ef8a76c6742a[m
+Merge: a0d68be 9f26ad4
+Author: = <=>
+Date:   Mon Jan 23 13:29:07 2023 -0500
+
+    Merge branch 'task042' into task005
+
+[33mcommit a0d68be27ff0ba41b8787010417b03ddddb694ba[m
+Author: = <=>
+Date:   Mon Jan 23 13:26:36 2023 -0500
+
+    antes merge task042
+
+[33mcommit 1bfab9c17df2984b22281be569012fd57e04eecd[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Sat Jan 21 17:27:56 2023 -0500
+
+    Commit of a day called developmentplan... Update modal, without a good service to final actions and indicators
+
+[33mcommit eff7f658adfe3cb24c62ba0f0000cecb07b9650b[m
+Author: root <root@Omar.localdomain>
+Date:   Fri Jan 20 23:34:59 2023 -0500
+
+    Changes to viceformat.component
+
+[33mcommit f13c8bf4e23d0ea50fa97b8b00951b54b03a9791[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Jan 20 18:26:57 2023 -0500
+
+    Test continue
+
+[33mcommit 9f26ad47079cd1e1b0d20587c8738c29a286e9b6[m[33m ([m[1;31morigin/task042[m[33m)[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Fri Jan 20 17:23:16 2023 -0500
+
+    Task042: Prueba de las funciones generadoras de formatos vice y plan de trabajo
+
+[33mcommit 94c3631a2da0873fe5c029aebafed9ec5907d0a6[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Jan 20 17:17:48 2023 -0500
+
+    finish carta de inicio dedicacion
+
+[33mcommit 1d6d7f354a1207ad3a3f19bced9d927cec0178d6[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Jan 20 15:58:59 2023 -0500
+
+    Implementation of open - developmentplan
+
+[33mcommit 5643e5f76e8a1598dd0ece7d19e2a46dd47156a9[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Fri Jan 20 15:19:43 2023 -0500
+
+    recommit
+
+[33mcommit 324b7c57a6b9909f55f829dc803a6fb10d528e4d[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Fri Jan 20 15:08:05 2023 -0500
+
+    error del endpoint corregido
+
+[33mcommit b6e4520bb8224dba2a280ca3e8a6d65927fcb4df[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Fri Jan 20 14:52:18 2023 -0500
+
+    Task042: llenado de formatos de vicerrecotiría y plan de trabajo
+
+[33mcommit bce2f5d7b32ffdc521c4b08ed21de8a14d0eb976[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Fri Jan 20 13:21:24 2023 -0500
+
+    feat(frontend): Se organizó el modelo de aval
+
+[33mcommit bee4daf4b7c1ed8f12bdd7ab6e840311c333c495[m
+Author: = <=>
+Date:   Thu Jan 19 22:01:58 2023 -0500
+
+    plan de trabajo
+
+[33mcommit 54ab5199adfc0226db5927687030999be8068a5c[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Jan 19 18:47:24 2023 -0500
+
+    Advancing viceformat
+
+[33mcommit 333041f50d03864632e58b11f10b9f7df6cfa559[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Thu Jan 19 18:20:31 2023 -0500
+
+    editar carta falta que la envie al back
+
+[33mcommit 0563d295f62609ea9e30c087144eeb72c70f0c1f[m
+Author: = <=>
+Date:   Thu Jan 19 15:39:59 2023 -0500
+
+    plan de trabajo
+
+[33mcommit b5b0c981b1c562789dfabedc70084811c9c00cab[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Thu Jan 19 13:51:33 2023 -0500
+
+    Task040: llenado de formatos de vicerrecotiría y plan de trabajo
+
+[33mcommit 11d731b05f016bee9a4ad6f8f63897a68a3d03ba[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Tue Jan 17 16:48:51 2023 -0500
+
+    Task040: llenado de formatos de vicerrecotiría y plan de trabajo
+
+[33mcommit 710552b6ad7e8097a0f52544eaed53b337cc47e1[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Thu Jan 19 12:44:18 2023 -0500
+
+    ViceFormat begining
+
+[33mcommit 6f5f53b5176b6c53bd94ff218380fd1d18107ce9[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Jan 18 16:14:15 2023 -0500
+
+    cartainicio servicios
+
+[33mcommit 04b1cce54b25dd506cb71694d00233f535d27733[m
+Merge: bde2944 98e153e
+Author: = <=>
+Date:   Wed Jan 18 14:41:17 2023 -0500
+
+    Merge branch 'develop' into task005
+
+[33mcommit bde2944a336c4c1d01eee3fb0ab5e5271b53a1b7[m
+Author: = <=>
+Date:   Wed Jan 18 14:40:45 2023 -0500
+
+    antes merge
+
+[33mcommit 1972a9938dca11c1dca9e703d285b47471fbd78c[m
+Merge: 822afde 98e153e
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Wed Jan 18 12:04:29 2023 -0500
+
+    yaml
+
+[33mcommit dddc250d2f787a774a1b6538e882072576cd8a4a[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Wed Jan 18 11:26:09 2023 -0500
+
+    Celery a celey_app again
+
+[33mcommit b8572c71210020f225c80a6837494d67733a6bd7[m
+Merge: ccf5e3d 98e153e
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Wed Jan 18 11:09:41 2023 -0500
+
+    Test 1
+
+[33mcommit ccf5e3dffd4e63c1fdfec5eb45fcb183d7efe370[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Wed Jan 18 09:45:21 2023 -0500
+
+    Test 01
+
+[33mcommit 4f12db4a2acff54b6002a9279e9e66ae17b9b802[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Tue Jan 17 16:48:51 2023 -0500
+
+    Task040: llenado de formatos de vicerrecotiría y plan de trabajo
+
+[33mcommit 98e153e9d6dfe7a3dacfe6d86d76f7c4a366bb20[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 17 16:38:00 2023 -0500
+
+    fix((backend)): celery
+    
+    Cambio de celery a celery_app
+
+[33mcommit 38671d8f29b1c7f33476e796b903306dfebe5fd8[m
+Merge: 7a2f990 9f8f599
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Jan 17 14:11:09 2023 -0500
+
+    Merge pull request #102 from Equipo-de-desarrollo-IF-UDEA/task034
+    
+    carta de inicio agregada al flujo
+
+[33mcommit 9f8f5995517386ccd0b3f210e151eacad615ff6c[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 17 14:10:23 2023 -0500
+
+    carta de inicio agregada al flujo
+
+[33mcommit 7a2f990bc02b9e341e020c47d60d679899fa8e65[m
+Merge: d4011c1 f37902c
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Jan 17 12:04:50 2023 -0500
+
+    Merge pull request #101 from Equipo-de-desarrollo-IF-UDEA/task038
+    
+    Task038
+
+[33mcommit 822afde1dcbff278e363a82dc7c2f212451be12b[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Tue Jan 17 11:46:45 2023 -0500
+
+    feat(frontend): Desarrollando formulario para crear aval de horas
+    
+    Se creó una parte del formulario del aval de horas
+
+[33mcommit f37902ccf0d21370d92dbb14721e041df1ab28a0[m
+Merge: 77df5bb d7bb635
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Jan 16 23:18:51 2023 -0500
+
+    merge task039
+
+[33mcommit 77df5bb2824e3deace39fce9666e0d96cc27c172[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Jan 16 22:39:18 2023 -0500
+
+    task038 cron
+
+[33mcommit 78131171fac93215e7e9729aa0ee1bff371f306a[m
+Author: = <=>
+Date:   Mon Jan 16 14:10:21 2023 -0500
+
+    plan de trabajo
+
+[33mcommit 2b0d09e10bc4db4d9382f2a3462c8e273c3bdb1f[m
+Author: = <=>
+Date:   Tue Jan 10 13:52:27 2023 -0500
+
+    avance plan de trabajo
+
+[33mcommit 433cff9610732942a84f45f38577aa7d24fccf56[m
+Author: = <=>
+Date:   Mon Jan 9 14:31:14 2023 -0500
+
+    antes merge
+
+[33mcommit 0b1f6b4cd7793406e2b6e59c8b3baf372b2ab8a6[m
+Author: = <=>
+Date:   Sun Jan 8 16:11:50 2023 -0500
+
+    avance plan de trabajo
+
+[33mcommit 743f05c8d20786949173ebfea60f93b90b4cd36a[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Jan 8 15:16:16 2023 -0500
+
+    task038 cron fulltime
+
+[33mcommit dcb6ffac077e0896d81b280369e4a95d4d386015[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Jan 5 22:20:29 2023 -0500
+
+    email cron full time send
+
+[33mcommit d7b0150ba213f46d4a9da5f33668a1d7b3678c18[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Jan 4 11:56:59 2023 -0500
+
+    avance plan de trabajo
+
+[33mcommit 5de351c90c5f663c4b4cfd2f4dea1d2052d4e669[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Jan 3 21:13:13 2023 -0500
+
+    tasks working
+
+[33mcommit f52a9b30a250997459d068dc0d056de7939219c7[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 30 22:57:49 2022 -0500
+
+    celery cron error
+
+[33mcommit 7e4df7e17dae06281ace5d9d6e68e924dc7ecebc[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 30 22:56:11 2022 -0500
+
+    celery cron
+
+[33mcommit 41184d4953f33aaa8fa202b4f2f25f16f4c1e636[m
+Author: Simón <simon.garcial@udea.edu.co>
+Date:   Thu Dec 29 11:35:19 2022 -0500
+
+    feat(backend): Notificación a los otros investigadores
+    
+    Se creó la notificación para los demás participantes del aval de horas, endpoint para confirmar o rechazar la solicitud
+
+[33mcommit cd88dd0cb946adba530a4ce14a8b57cfb3a75107[m
+Merge: 5d0c325 d4011c1
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Dec 28 12:48:10 2022 -0500
+
+    prueba plan de trabajo
+
+[33mcommit 5d0c325995e1f0194b6ea98668ec0b831480ff86[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Tue Dec 27 10:46:26 2022 -0500
+
+    antes merge
+
+[33mcommit d4011c111d7c00294f46680ac4aac5e45adb08d8[m
+Merge: afcfd70 d7bb635
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Dec 27 01:53:53 2022 -0500
+
+    Merge pull request #99 from Equipo-de-desarrollo-IF-UDEA/task039
+    
+    Task039
+
+[33mcommit d7bb635aa5b77c0f1f0a42bd03f2ac9222dc7e09[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Dec 26 19:45:46 2022 -0500
+
+    end policy full time
+
+[33mcommit b244b032ed8c969779302014f8fc042afaa9e6da[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 25 21:38:01 2022 -0500
+
+    policy fulltime request
+
+[33mcommit 771b6520ea3d8c9b884b1d0ca81d5c61338963a3[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 25 14:48:20 2022 -0500
+
+    full time create
+
+[33mcommit ecc2c220a0ff7f142cbcc2d021c2ca81076e40f7[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sat Dec 24 13:12:24 2022 -0500
+
+    save notifications
+
+[33mcommit f78ac4ea32af413650985df22c631e735577f994[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 23 13:21:48 2022 -0500
+
+    feat(backend): Notificación otros usuarios
+    
+    se creo el servicio para notificar los demás usuarios de la plataforma del aval de horas
+
+[33mcommit d3bd75c0ddad500b7354dbdb8d78ebf76a7e11fd[m
+Merge: 1afee60 afcfd70
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 23 09:40:21 2022 -0500
+
+    Merge branch 'develop' into task038
+
+[33mcommit 1afee60ca07c71e343e2a14d503ff33d514b330b[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 23 09:39:44 2022 -0500
+
+    crons
+
+[33mcommit afcfd70de181c8b6c47d6c0d271856d7895cb7c2[m
+Merge: e1285e1 708f0d4
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Dec 21 20:06:38 2022 -0500
+
+    Merge pull request #98 from Equipo-de-desarrollo-IF-UDEA/task035
+    
+    Task035
+
+[33mcommit 708f0d4db6bcb939c0d0cff30e86603a7bb61fd8[m[33m ([m[1;31morigin/task035[m[33m)[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Dec 20 19:02:09 2022 -0500
+
+    change
+
+[33mcommit b5a6ae39121a1a58d2ab696ba72fed051e6f04cf[m
+Merge: 8b4316c e1285e1
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Dec 20 18:49:09 2022 -0500
+
+    Merge branch 'develop' into task035
+
+[33mcommit 9db883d747bf2869a245e886a5231c5c35e1fe97[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Tue Dec 20 15:14:00 2022 -0500
+
+    feat(backend): Servicios para la solicitud aval dehoras
+    
+    Se crearon los servicios y se modifico el servicio para crear una soliicitud en posgresql, para permitir elegir un estado cuando se cree una solicitud
+
+[33mcommit e1285e1a8bcbfdf09ea7c53cb8d08e3780a470b3[m
+Merge: 91a5964 e028cf9
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Dec 20 13:35:23 2022 -0500
+
+    Merge pull request #96 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    Task030
+
+[33mcommit 42ae9f5225476aebcea21995117af53866be1c06[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 19 17:50:46 2022 -0500
+
+    feat(backend): Base Aval de horas
+    
+    Para el aval de horas se hace los modelos y esquemas, además de la herencia de los servicios
+
+[33mcommit 8b4316cbc290b33c8b76c52c2bb5ef2f106c6197[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 18 21:04:18 2022 -0500
+
+    registro forms error
+
+[33mcommit 915f47f1c417d921b928aaa927abc20b15e3fe9c[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 18 19:07:52 2022 -0500
+
+    spinner all page
+
+[33mcommit e028cf9f10d7721b031588fbe970f818ed66d7a4[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 18 16:26:02 2022 -0500
+
+    update  permission holidays
+
+[33mcommit 32f8eabc6f777c34b3fc9184d2ca357800c7b500[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 18 00:02:15 2022 -0500
+
+    holidays front
+
+[33mcommit 628df5caf69be79ec048bd317ae9d4e86a04d925[m
+Merge: 50277d8 91a5964
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 16 18:08:33 2022 -0500
+
+    merge develop
+
+[33mcommit 50277d834382e167cc2863fe73ccddad43897a35[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 16 18:03:55 2022 -0500
+
+    holidays init data
+
+[33mcommit 91a59640fae08bb007012bd32302a507a01c9507[m
+Merge: ff6cb88 441fa83
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Dec 15 14:41:09 2022 -0500
+
+    Merge pull request #95 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    arreglo carpeta DEx
+
+[33mcommit 441fa837a71611da26c7f231bd97c676ed0900a9[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Dec 15 10:38:20 2022 -0500
+
+    arreglo carpeta DEx
+
+[33mcommit ff6cb88d93c3b3bf91162520148b4333e174ca58[m
+Merge: 9bc1dbf eff6cc7
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Dec 14 19:41:31 2022 -0500
+
+    Merge pull request #94 from Equipo-de-desarrollo-IF-UDEA/task033
+    
+    Task033
+
+[33mcommit eff6cc7021dfc4e3a31369e9e2c016335438d62d[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Dec 14 19:40:41 2022 -0500
+
+    feat(front): Interfaces y servicios para la dedicación
+    
+    Se hicieron  las interfaces para carata de inicio, plan de trabajo, formato vicerrectoría
+    
+    También se hicieron los servicios para consumir el backend
+
+[33mcommit bebced054928b3d58418e8d24650099c87d8bd0b[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Dec 14 19:39:29 2022 -0500
+
+    feat(Front): Interfaces y servicios para dedicación exclusiva
+    
+    Se hicieron las interfaces para carta de inicio, plan de trabajo, formato vicerrectoría
+
+[33mcommit 9bc1dbfafd57aaa24550ed48597195ec95ca2eea[m
+Merge: a6bde73 e6aacd8
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Dec 14 17:36:29 2022 -0500
+
+    Merge pull request #93 from Equipo-de-desarrollo-IF-UDEA/task032
+    
+    Api para la dedicación exclusiva
+
+[33mcommit e6aacd8c22d658ce888272e088d7c86d6bdf82e8[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Dec 14 16:10:51 2022 -0500
+
+    Api para la dedicación exclusiva
+
+[33mcommit a6bde73c7199ec9504f9d6ac444342d687beb5e1[m
+Merge: 1de4e57 b654b8f
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Dec 13 14:18:30 2022 -0500
+
+    Merge pull request #92 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    Task005
+
+[33mcommit b654b8f1c4a551135a14fcc11dcfff613a33dc17[m
+Merge: 1828c3c 1de4e57
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Tue Dec 13 12:39:17 2022 -0500
+
+    componentes Dexclusiva
+
+[33mcommit 1de4e571cffeee73328acf2b84e409d4ac0e8438[m
+Merge: 014a267 b2878b0
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 11 15:12:58 2022 -0500
+
+    Merge pull request #90 from Equipo-de-desarrollo-IF-UDEA/bug002
+    
+    Error de autenticación
+
+[33mcommit b2878b053e9a3cc157e009d614b3b69351e23d5a[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 11 15:12:30 2022 -0500
+
+    Error de autenticación
+
+[33mcommit 014a26701ef069e0b154a8594709e5ac368686da[m
+Merge: f07f4a9 ed1f88d
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 11 14:52:42 2022 -0500
+
+    Merge pull request #88 from Equipo-de-desarrollo-IF-UDEA/bug002
+    
+    Error de autenticación
+
+[33mcommit ed1f88d43dbec2aae866cab030a3aefd56649fe6[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 11 14:52:17 2022 -0500
+
+    Error de autenticación
+
+[33mcommit f07f4a9330853435ad9e0619581bb3fc29e45a6a[m
+Merge: 8d6c94c cef1c59
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 11 14:24:02 2022 -0500
+
+    Merge pull request #86 from Equipo-de-desarrollo-IF-UDEA/bug002
+    
+    Corrigiendo varios errores
+
+[33mcommit cef1c59238308674497dc3afa4cd02f998f98c25[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 11 14:23:35 2022 -0500
+
+    Corrigiendo varios errores
+
+[33mcommit 8d6c94c8878a5e070bcf0bccdb514db309b484e2[m
+Merge: 983b87f da42c12
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 11 10:38:49 2022 -0500
+
+    Merge pull request #84 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando script en maquina remota
+
+[33mcommit da42c12a746e80c2bbddedbd616f2961ac5eb6cd[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 11 10:31:10 2022 -0500
+
+    probando script en maquina remota
+
+[33mcommit 983b87f027ac778c6f08ba7f5ee112b8cf42b2ed[m
+Merge: 4709a62 71c8108
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 11 10:13:05 2022 -0500
+
+    Merge pull request #83 from Equipo-de-desarrollo-IF-UDEA/task029
+    
+    Task029
+
+[33mcommit 1828c3ccb421d46bdff91302385770b41d5a0579[m
+Merge: 66897e2 026b72b
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Fri Dec 9 21:19:54 2022 -0500
+
+    pull develop
+
+[33mcommit 4709a6261b1b55563ca4b4c5916210365d0c5181[m
+Merge: 8ad65c5 cbdfe97
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 20:38:48 2022 -0500
+
+    Merge pull request #81 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit cbdfe97c0f84be604fc1275dab005a699e944d49[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 20:38:34 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit 8ad65c5d33b566ad51df30c8f0eac3668e9eb807[m
+Merge: 73defed 334e630
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 20:29:11 2022 -0500
+
+    Merge pull request #79 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit 334e6301cf571c1bd3da30165ae7c0cc11ad478e[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 20:28:43 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit 73defed73020910a47ed152cc9c68df7fb5062ea[m
+Merge: 5db44fe c090fca
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 20:27:06 2022 -0500
+
+    Merge pull request #77 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit c090fca2d78461980dcd06b5f45eb478d99ce274[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 20:26:43 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit 5db44fe945579cb85203ab173367e70311791492[m
+Merge: d39c88a 7e784af
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 20:10:09 2022 -0500
+
+    Merge pull request #75 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit 7e784af0738a8fbcb140666d1696c140403b0217[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 20:09:09 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit d39c88af09a0ee51c36cd32a2cd8d8d2a5049c10[m
+Merge: 3a975c5 68bdd77
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 17:25:21 2022 -0500
+
+    Merge pull request #73 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit 68bdd77435a41e7f32eb3c6f62641b27a0a9b725[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 17:24:25 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit 3a975c50454a37ad70df466cf2a334f5c2b25adf[m
+Merge: db2244a f927220
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 9 17:21:03 2022 -0500
+
+    Merge pull request #71 from Equipo-de-desarrollo-IF-UDEA/task030
+    
+    probando nuevo travis.yml
+
+[33mcommit f927220438b4ded9979904a3d82b3ed153c7d3f3[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 9 17:19:29 2022 -0500
+
+    probando nuevo travis.yml
+
+[33mcommit 71c8108b5418674a0a51fcf768b8828ccc32701e[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Dec 8 21:36:15 2022 -0500
+
+    bugs usuarios, permisos, comisiones
+
+[33mcommit 2b3133cf0c2de4ba7285571e193db08673f86878[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Dec 8 19:00:39 2022 -0500
+
+    bugs registro y usuarios
+
+[33mcommit 371701e1737ea085186f9456214baf6d63fa468b[m
+Merge: 6eb3930 db2244a
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Dec 8 11:18:02 2022 -0500
+
+    merge develop 8 dic
+
+[33mcommit db2244a1b3ac76595c329c2126c66f6c4adb75bb[m
+Merge: 19c6171 b5133f9
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Dec 7 15:54:49 2022 -0500
+
+    Merge pull request #70 from Equipo-de-desarrollo-IF-UDEA/task26
+    
+    Task26
+
+[33mcommit b5133f968189b10db82e87feed35d3b3cf90c69d[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Dec 7 15:45:35 2022 -0500
+
+    datos iniciales5
+
+[33mcommit 5cec4a0b5b9a10218e710240d410fa389c03dde5[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Dec 7 13:24:06 2022 -0500
+
+    datos iniciales 4
+
+[33mcommit bd00109de860f420f9a252d85210707406a43fb6[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Dec 7 12:11:52 2022 -0500
+
+    datos iniciales3
+
+[33mcommit 19c61718e1badab7b9c401626efec5a49119c16a[m
+Merge: e95c275 44edf64
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Wed Dec 7 11:52:45 2022 -0500
+
+    Merge pull request #67 from Equipo-de-desarrollo-IF-UDEA/task028
+    
+    docker compose para instalación de ssl
+
+[33mcommit 44edf64cbb6db3caab87daffaa241a4fd9849a6e[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Dec 7 11:52:19 2022 -0500
+
+    docker compose para instalación de ssl
+
+[33mcommit 061c3470bec8352fb5e471196fec1fea6f267b0f[m
+Merge: 1e283ee ad10954
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Dec 7 10:03:06 2022 -0500
+
+    Merge branch 'task027' into task26
+
+[33mcommit 1e283eeb818b5f84bd509378fca85c17ddc694fc[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Wed Dec 7 09:48:16 2022 -0500
+
+    datos iniciales1
+
+[33mcommit ad10954acc60d655d471be673506e498ebe878a1[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Tue Dec 6 18:35:09 2022 -0500
+
+    commit tested, change to department model to field description (50 -> 100 characters)
+
+[33mcommit 4b7f1d0edbcaf97154423027b5d5309b977df8a7[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Tue Dec 6 18:17:03 2022 -0500
+
+    Update script, faculties: Science and Engineering
+
+[33mcommit c7c77639118df8988ef96815195c494525be0747[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Dec 6 18:06:46 2022 -0500
+
+    datos iniciales
+
+[33mcommit d9b6c331b1fed2641bc494c41eabef4995559200[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Tue Dec 6 16:59:39 2022 -0500
+
+    Commit Science faculty
+
+[33mcommit e95c275a8ff6b2c633e4705f0d9d4dd720b1a8e8[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 22:58:05 2022 -0500
+
+    mongo admin agregado
+
+[33mcommit 0c1de98d2fee249d491228fa5bfde22340929d00[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 19:19:55 2022 -0500
+
+    worker en el gunicorn
+
+[33mcommit 4749e7a2380a749dcd11c3f4471cf3bb3dae8275[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 17:52:48 2022 -0500
+
+    docker hub docker file del backend por revisar
+
+[33mcommit 69db42ce5f5f20cf0bd133c3dd2b8cc66b8181ee[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 17:19:56 2022 -0500
+
+    problema con la comision
+
+[33mcommit eae121a0d005ebe5b9b5f7fa4e7dd6e6cfd33a68[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 15:01:52 2022 -0500
+
+    Dockerrun.aws.json para despliegue
+
+[33mcommit b02e8234bfc9a28311f46654fde3dab8aa13107f[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 14:45:29 2022 -0500
+
+    tabla de solicitudes busca por tipo
+
+[33mcommit 485b0c6ca0b7de3bddaec82171ae8c06820fd928[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 14:37:42 2022 -0500
+
+    tabla de solicitudes busca por tipo
+
+[33mcommit 272d24e2d02244aed4009a8bcc6229f746091a44[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 13:47:04 2022 -0500
+
+    Unificación de los trabajos de todos
+
+[33mcommit 026b72b6d7bdb3ace723e3d5a18e459d15a581b3[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 01:52:40 2022 -0500
+
+    docker file para producción local
+
+[33mcommit ae902d884b0303cf390fa719413587861db6e1fb[m
+Merge: 730e683 f65259b
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Dec 5 01:39:20 2022 -0500
+
+    Merge pull request #59 from Equipo-de-desarrollo-IF-UDEA/task025
+    
+    Task025
+
+[33mcommit f65259bb26ee41d278d5c3f8f2fc441726380d94[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Dec 5 01:38:39 2022 -0500
+
+    unificación del proyecto terminada
+
+[33mcommit 6eb39308e06e1d3d3ba1cc468f1c076beb368a7d[m
+Merge: 9ab6fae 730e683
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 4 22:23:57 2022 -0500
+
+    Merge branch 'develop' into task020
+
+[33mcommit 9ab6fae2714b00673107038ba9bdafeda1124ac8[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 4 22:22:19 2022 -0500
+
+    bugs
+
+[33mcommit 66897e2c98449d197dfa622a3e99948242cf62c1[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Sun Dec 4 21:18:34 2022 -0500
+
+    tabla solicitudes arreglo, registrar users falta
+
+[33mcommit 80136065e4b85d9cd6707fe7781fe820039f59d8[m
+Merge: f0274c3 730e683
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 4 19:55:18 2022 -0500
+
+    Merge branch 'develop' into task025
+
+[33mcommit f0274c3bb5b77afe97b12aa096199d7ab5b9aa29[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 4 19:52:18 2022 -0500
+
+    Arreglando rutas en el front, tablas y demás
+
+[33mcommit 730e683e119e8afc8931659aa544dbd6e6fdb4ac[m
+Merge: e26cc3e 777f461
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 4 19:51:46 2022 -0500
+
+    Merge pull request #57 from Equipo-de-desarrollo-IF-UDEA/task020
+    
+    Task020
+
+[33mcommit 777f4615340e6edae888ec816efd0235e903a4e9[m
+Merge: 3431e2c e26cc3e
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 4 18:55:33 2022 -0500
+
+    errores y rutas
+
+[33mcommit 3431e2c268dfc737bbf2779ac17514635889e588[m
+Merge: 8292322 4ec1f36
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Dec 4 14:36:52 2022 -0500
+
+    forms errors
+
+[33mcommit e26cc3e68a997a9d9d2cdc25cbf73673777c1380[m
+Merge: 78b614d 8e01378
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 4 11:17:52 2022 -0500
+
+    Merge pull request #56 from Equipo-de-desarrollo-IF-UDEA/task009
+    
+    Task009
+
+[33mcommit 78b614de65d7a4a498590a476b71ddfe6d55f632[m
+Merge: 0fd0ca7 dbc7d56
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 4 11:17:13 2022 -0500
+
+    Merge pull request #55 from Equipo-de-desarrollo-IF-UDEA/task10
+    
+    Task10
+
+[33mcommit dbc7d56b8a5505a5c46414d6ed34043085cbe83e[m
+Merge: 77af53a 0fd0ca7
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Dec 4 11:16:45 2022 -0500
+
+    Merge branch 'develop' into task10
+
+[33mcommit 0fd0ca7ec091888aa295fe4b2913f5069b251b49[m
+Merge: 4ec1f36 2498111
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Dec 4 10:00:49 2022 -0500
+
+    Merge pull request #54 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    Task005
+
+[33mcommit 82923223a47652cb11d2c13dd4759d4dd4baabbb[m
+Merge: 138c433 156f0f6
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Fri Dec 2 21:37:18 2022 -0500
+
+    create, view, edit
+
+[33mcommit 2498111e5843949a92cd74dd6c6db6f26a3d048b[m
+Merge: ce1259d 4ec1f36
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Fri Dec 2 20:47:44 2022 -0500
+
+    Merge branch 'develop' into task005
+
+[33mcommit ce1259ded09f429bfcee508e54bc87ba58b094e8[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Fri Dec 2 20:47:03 2022 -0500
+
+    antes merge
+
+[33mcommit 77af53a6e98d5ab1c9f2ab731be90cb1cf69c674[m
+Author: alwos19 <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Dec 2 14:01:50 2022 -0500
+
+    tabla solicitudes, falta archivados
+
+[33mcommit 8e01378827eda25482d0b2ae5fd1ed72c70442d0[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Dec 2 13:30:18 2022 -0500
+
+    Update forms user-view and user-edit
+
+[33mcommit 4ec1f3628e972ac3137cf7095d98c1a50ed190cd[m
+Merge: d0e24e7 e27fc90
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 13:09:06 2022 -0500
+
+    Merge pull request #51 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    Dockerrun.aws.json edit
+
+[33mcommit e27fc9093124fc70953a2068d07ac16d4324c814[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 13:08:40 2022 -0500
+
+    Dockerrun.aws.json edit
+
+[33mcommit f5ccc63316a793f7ab861b6b7321b0c0e04f64b9[m
+Merge: 73c7275 d0e24e7
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Dec 2 13:08:15 2022 -0500
+
+    Merge branch 'develop' into task009
+
+[33mcommit d0e24e7aa8e96f78bb33b861821bc1f02ed4fd4d[m
+Merge: fcf3b7a a411916
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 12:35:09 2022 -0500
+
+    Merge pull request #48 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    Task005
+
+[33mcommit fcf3b7a048892bec78d3498e254b5422219af870[m
+Merge: 188d3a9 74e4847
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 12:34:53 2022 -0500
+
+    Merge pull request #49 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    Dockerrun.aws.json
+
+[33mcommit 74e4847e23558000923dd7e0f62b7db4af557f45[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 12:34:00 2022 -0500
+
+    Dockerrun.aws.json
+
+[33mcommit a411916bb66163aafb94392f70d5b857b10c1bb2[m
+Merge: 9deaba7 188d3a9
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Fri Dec 2 12:12:56 2022 -0500
+
+    Merge branch 'develop' into task005
+
+[33mcommit 9deaba73243060703ea603fc093304bca1518014[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Fri Dec 2 12:11:30 2022 -0500
+
+    .
+
+[33mcommit 188d3a9625c8e7ff2b60e8ebce51b99c6073314b[m
+Merge: b5f74e5 7590ecd
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 11:17:08 2022 -0500
+
+    Merge pull request #46 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    push de los builds
+
+[33mcommit 7590ecd3447ffdf0282302cc8e1cdd9ee7ba694e[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 11:16:44 2022 -0500
+
+    push de los builds
+
+[33mcommit b5f74e54e4a426148d7162961bfb794484a15784[m
+Merge: 26d2fe9 6b3735b
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 11:08:17 2022 -0500
+
+    Merge pull request #44 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    Agregando al deploy las imagenes del client y del nginx
+
+[33mcommit 6b3735b5608432a9b240c49711da02347dcd31e7[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 11:07:47 2022 -0500
+
+    Agregando al deploy las imagenes del client y del nginx
+
+[33mcommit 26d2fe94376ae82a2d12c8fd0d163e6a14943415[m
+Merge: 34e85d3 ed037b2
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 10:52:05 2022 -0500
+
+    Merge pull request #42 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    archivo docker file
+
+[33mcommit ed037b282eb44245ec8be977484b5c58c2a01869[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 10:51:36 2022 -0500
+
+    archivo docker file
+
+[33mcommit 34e85d327c8600e46954cca534990b1a0fba1870[m
+Merge: 08b492d beade50
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 02:46:05 2022 -0500
+
+    Merge pull request #40 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    agregando el docker file
+
+[33mcommit beade508083e460180416cd7a16d798ef01cde5f[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 02:45:42 2022 -0500
+
+    agregando el docker file
+
+[33mcommit 08b492d4317133ceb6207bfc14fd772ea9799748[m
+Merge: 91fd1ff 782f23f
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 02:03:59 2022 -0500
+
+    Merge pull request #38 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    puntito
+
+[33mcommit 782f23ff5eb00902ba8f96e89643da8047393613[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 02:03:15 2022 -0500
+
+    puntito
+
+[33mcommit 91fd1ff44e4e1dfdb0fe8ce61d15b3d42c105978[m
+Merge: 70e7a56 96f651f
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 02:00:18 2022 -0500
+
+    Merge pull request #36 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    docker-compose.yml
+
+[33mcommit 96f651f24cd7b7abf5712d3533e5c178ad6e3aa8[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 01:59:38 2022 -0500
+
+    docker-compose.yml
+
+[33mcommit 70e7a5662e4a9b15b3cdac54e4106d7b521224da[m
+Merge: d466349 c8685b6
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 01:51:21 2022 -0500
+
+    Merge pull request #34 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    Archivo travis variables de entorno corregidas
+
+[33mcommit c8685b6eff861fd9ebbaa87fc1175d16403e9d88[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 01:48:07 2022 -0500
+
+    Archivo travis variables de entorno corregidas
+
+[33mcommit d4663495eb48105a33be09214bcd84de25f9e4d0[m
+Merge: e3b70de bd78def
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 01:20:18 2022 -0500
+
+    Merge pull request #32 from Equipo-de-desarrollo-IF-UDEA/task005
+    
+    Task005
+
+[33mcommit bd78def3748477bc6d8b6e4137e90026e63e114e[m
+Merge: da30173 156f0f6
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 01:19:21 2022 -0500
+
+    Merge branch 'develop' into task005
+
+[33mcommit e3b70de52ad7e76ef8caf8c7cd4c818ad2250ba8[m
+Merge: 156f0f6 8a46469
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Dec 2 01:16:31 2022 -0500
+
+    Merge pull request #31 from Equipo-de-desarrollo-IF-UDEA/task024
+    
+    Archivo travis terminado
+
+[33mcommit 8a464693e601929847f8bd32317f748b464585fe[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Dec 2 01:15:46 2022 -0500
+
+    Archivo travis terminado
+
+[33mcommit 73c7275a0c6451f20eecd688845d124a30edca16[m
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Fri Dec 2 00:15:26 2022 -0500
+
+    changes applied to user-view
+
+[33mcommit ce464742c8ed8f9bfbfb18a3f98a80f5e339e10a[m
+Author: alwos19 <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Dec 2 00:14:45 2022 -0500
+
+    lista solicitudes 2
+
+[33mcommit da30173e93045752ddf4f82d1934e9524b28d19d[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Dec 1 23:08:21 2022 -0500
+
+    task005
+
+[33mcommit 0915c14dc0e8d0e2694e1901d69d10694dad7b50[m
+Author: alwos19 <jhon.jaramilloe@udea.edu.co>
+Date:   Thu Dec 1 23:05:18 2022 -0500
+
+    lista solicitudes
+
+[33mcommit 138c4336594697de1667a5e8b954b3b5993730f8[m
+Merge: a7d5884 24b34a1
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Dec 1 19:31:23 2022 -0500
+
+    bug permisos
+
+[33mcommit 156f0f698ca586042e3c296694f10a84277ddb60[m
+Merge: 24b34a1 501a269
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Dec 1 19:18:01 2022 -0500
+
+    Merge pull request #29 from Equipo-de-desarrollo-IF-UDEA/task023
+    
+    rutas gregadas en la descripcion
+
+[33mcommit 501a269a9a4845acd76252ef2b8e921f092bbbf2[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Thu Dec 1 19:17:24 2022 -0500
+
+    rutas gregadas en la descripcion
+
+[33mcommit 24b34a18a9911ebc40084e5c01141c3d41ec6d02[m
+Merge: dcdfae9 11466e0
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Dec 1 11:48:31 2022 -0500
+
+    Merge pull request #28 from Equipo-de-desarrollo-IF-UDEA/task021
+    
+    Task021
+
+[33mcommit 11466e0a705ba94d164815731a7132f92cc7c5a3[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Thu Dec 1 11:47:54 2022 -0500
+
+    Flujo cumplido terminado, implementado correo
+
+[33mcommit edd3f453f11d79a0dfafba161978e5954abff1e8[m
+Merge: d302b22 9ecc7dd
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Thu Dec 1 10:38:50 2022 -0500
+
+    Merge branch 'task021' of github.com:Equipo-de-desarrollo-IF-UDEA/siga into task021
+
+[33mcommit d302b2268de67d097517a2a66b0d8f543f797363[m
+Merge: f2841f3 dcdfae9
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Thu Dec 1 10:27:51 2022 -0500
+
+    Merge branch 'develop' into task021
+
+[33mcommit ed572937031c28d316ca3041987828a291359699[m
+Merge: 2fb9dfc dcdfae9
+Author: Omar Tíjaro <otijaro@gmail.com>
+Date:   Wed Nov 30 18:41:53 2022 -0500
+
+    Merge branch 'develop' into task009
+
+[33mcommit ecaaa89c19789eac960aa5397297a478565c9be3[m
+Merge: 95ca7d8 9ecc7dd
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Nov 30 17:47:33 2022 -0500
+
+    merge develop y task021
+
+[33mcommit 95ca7d8a53ca71846d0eb51bfcb6b17eff48e71c[m
+Merge: f3ca7ab dcdfae9
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Nov 30 17:36:48 2022 -0500
+
+    antes merge
+
+[33mcommit f3ca7abbe8078029451c99d9a58517b2dc9b076e[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Nov 30 16:39:46 2022 -0500
+
+    Se creó el componente de crear solicitud, se cambio el routing de las solicitudes de permisos y comisiones a numbers debido a que el back entrega un id dependiendo el tipo de solicitud, en un futuro se puede mirar otra forma
+
+[33mcommit 9ecc7ddc604e469e4ab57de3f486ccc6961978fc[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Wed Nov 30 15:01:47 2022 -0500
+
+    Subir cumplido casi completado, falta el sincronizar con el correo
+
+[33mcommit dcdfae995a08d0cc66f68d7f706f63c2e4571463[m
+Merge: dc194f7 bf29a83
+Author: cdavidgutierrez <36546273+cdavidgutierrez@users.noreply.github.com>
+Date:   Wed Nov 30 14:56:07 2022 -0500
+
+    Merge pull request #26 from Equipo-de-desarrollo-IF-UDEA/task022
+    
+    Task022: Archivos adjuntos en email de cumplido
+
+[33mcommit bf29a83d36cf7ae99100d2885392dfaf668964e0[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Nov 30 14:43:19 2022 -0500
+
+    Task022: Archivos adjuntos en email de cumplido
+
+[33mcommit 3b0edab7be1c3ba32ab3f60e8bb344f066f23895[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Nov 30 11:42:07 2022 -0500
+
+    antes merge develop
+
+[33mcommit f2841f320d1e0527b34d3434b9687021a8af0cc9[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Nov 30 01:28:23 2022 -0500
+
+    end-point para subir cumplido creado, falta generar link en el correo para la visualizacion
+
+[33mcommit c7562b3cf0a42e876ec6c8fce280a20f59d7d8a5[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Wed Nov 30 01:01:03 2022 -0500
+
+    merge develop
+
+[33mcommit 94619ef08f0d7701628e746e5e09cbe9859cf158[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Nov 29 19:30:44 2022 -0500
+
+    terminando tabla
+
+[33mcommit a31d771ae9f9e3416b1a977bf4827632e77259fd[m
+Merge: 5fa997a dc194f7
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Tue Nov 29 09:56:36 2022 -0500
+
+    Merge branch 'develop' into task10
+
+[33mcommit dc194f74c133a5e04289e072cde34bba30c0133a[m
+Merge: 345dab1 71dbbea
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 29 00:53:56 2022 -0500
+
+    Merge pull request #25 from Equipo-de-desarrollo-IF-UDEA/task019
+    
+    Correos incluidos al flujo, confirmacion de correo, contrasena y actu…
+
+[33mcommit 71dbbea8ba0bd0ca918b139bf875670f06f8cadb[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 29 00:53:16 2022 -0500
+
+    Correos incluidos al flujo, confirmacion de correo, contrasena y actualizacion de estado de solicitud
+
+[33mcommit a7d5884ac7cb02bb5602e6ee08b0b4ad6520b200[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 28 22:41:34 2022 -0500
+
+    eliminar solicitudes
+
+[33mcommit 345dab17d8b821691247107ff79b0bd591393f9e[m
+Merge: d538bf2 32e4089
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Nov 28 21:43:03 2022 -0500
+
+    Merge pull request #24 from Equipo-de-desarrollo-IF-UDEA/task018
+    
+    Task018
+
+[33mcommit 32e4089dd6647bedc1df6266b3c1c11477685e9d[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Nov 28 21:40:28 2022 -0500
+
+    Generacion de resolucion al aprobar permiso creado
+
+[33mcommit 0b5ae5accc4bbd39b26fcb43f9e9f06e120c8003[m
+Merge: 7fd2394 d538bf2
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 28 20:23:54 2022 -0500
+
+    Merge branch 'develop' into task002
+
+[33mcommit 7fd239419ab81e18bc504a86d84543e1e49f1d7b[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 28 20:21:33 2022 -0500
+
+    flujo permisos back y front
+
+[33mcommit e3a09d0064369781676632ad3e7dc7e8a8fbdb2a[m
+Merge: eb7ddff d538bf2
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Nov 28 19:03:52 2022 -0500
+
+    Merge branch 'develop' into task018
+
+[33mcommit d538bf20793aba4740173308740dee0142f06343[m
+Merge: 126a89c 286a387
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Nov 28 19:01:36 2022 -0500
+
+    Merge pull request #22 from Equipo-de-desarrollo-IF-UDEA/task002
+    
+    Task002
+
+[33mcommit eb7ddfff1805c30f99ec7eee7251ebf1ffcc0b41[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Mon Nov 28 18:59:56 2022 -0500
+
+    Terminado generacion de resolucion de comision
+
+[33mcommit 2fb9dfc76b3538bf1527fe9b9a69097c6f75f8e0[m
+Author: root <root@Omar.localdomain>
+Date:   Mon Nov 28 17:38:37 2022 -0500
+
+    test
+
+[33mcommit 5fa997a579b155f035ca42f49b60711f1eb01a39[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Mon Nov 28 15:27:08 2022 -0500
+
+    organizando html de la tabla applications
+
+[33mcommit c09fb896ae0a4b1a09dc2b987974f37fe62c3701[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Mon Nov 28 13:39:49 2022 -0500
+
+    antes merge
+
+[33mcommit a2785fa8577cb3193547f94a184d5884c0c91fea[m
+Author: root <root@Omar.localdomain>
+Date:   Mon Nov 28 11:20:06 2022 -0500
+
+    user-view up
+
+[33mcommit 286a387ffbe989e1a5bcb29dc8d2bca7caf1677f[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Nov 27 21:28:58 2022 -0500
+
+    redireccion editar componente
+
+[33mcommit eee7719950123bd7dbd35d9abbe20f0c8a1c056d[m
+Merge: 0305df6 50d50ec
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Nov 27 19:27:52 2022 -0500
+
+    merge task002
+
+[33mcommit 0305df6e5e3b9e0101a3de9755352995e71a5ee4[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sun Nov 27 19:22:10 2022 -0500
+
+    editar permisos
+
+[33mcommit 50d50ec295b3194b42289c8d22132e48b558d4bb[m
+Merge: 8cb5170 126a89c
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Sat Nov 26 13:06:07 2022 -0500
+
+    home y header completado solo faltan rutas
+
+[33mcommit d406cfee620cafd5610f4bcc1e6e7924edd181fb[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Sat Nov 26 01:41:44 2022 -0500
+
+    ver y editar permisos
+
+[33mcommit 27e21d6223377d860e00b1cab7b67b9cc4c83f75[m
+Author: simon <simon.garcial@udea.edu.co>
+Date:   Fri Nov 25 15:44:16 2022 -0500
+
+    generar documento resolucion
+
+[33mcommit eb3b2b859eb2c36f706fff6cfca1a9cddd5ad734[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Nov 25 14:07:03 2022 -0500
+
+    Generación de documentos para cambiar de computador
+
+[33mcommit 7da15ffd33647c7fe6d1c05f133e7d54ede805ac[m
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Nov 25 13:10:31 2022 -0500
+
+    Backend y FrontEnd funcionando en sintonia, se arreglo la cookie de login
+
+[33mcommit f773f938429c20c7178ced37be75371a59e0d2aa[m
+Merge: 76a5396 126a89c
+Author: jhon <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Nov 25 12:15:43 2022 -0500
+
+    Merge branch 'develop' into task10
+
+[33mcommit 76a53965ef9d99fa5c396ed7b52f793dffbe2c11[m
+Author: smoke <jhon.jaramilloe@udea.edu.co>
+Date:   Fri Nov 25 12:10:51 2022 -0500
+
+    Actualizar proyecto
+
+[33mcommit 387b1eca66b0450027e9a7ece455bcb7ae5a24a6[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Nov 25 07:45:30 2022 -0500
+
+    base documentos
+
+[33mcommit 1d2cd200e2210b4e6f11fbfab9f97dc8b38f9ccb[m
+Merge: 557985e 4802392
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Nov 24 20:55:47 2022 -0500
+
+    Merge branch 'develop' into task002
+
+[33mcommit 480239240304ec8a4b5aa0f58e75a22f0c4cc936[m
+Merge: 2efc02f 126a89c
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Nov 24 20:55:08 2022 -0500
+
+    Merge branch 'develop' of github.com:Equipo-de-desarrollo-IF-UDEA/siga into develop
+
+[33mcommit 557985ed5c57ea48d4dc224f935bb6ef78fd81dd[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Thu Nov 24 20:54:50 2022 -0500
+
+    permisos crear front
+
+[33mcommit 8cb5170849fdfa96c8a9e259e9cf7037062cd03d[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Nov 24 20:44:07 2022 -0500
+
+    estructura home, falta rutas y rol
+
+[33mcommit 12eaeb945dcb80cbd589c9929a4593209c8b0aca[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Thu Nov 24 13:09:14 2022 -0500
+
+    login y recuperar completadas, falta terminar signup
+
+[33mcommit 85d044911dc380a82f281e33555d960f04e210e1[m
+Merge: 4f19a24 2efc02f
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Wed Nov 23 17:54:52 2022 -0500
+
+    merge develop
+
+[33mcommit 126a89cbf941372d08d88a3d50031b3fb57fc308[m
+Merge: 4838954 ad21e5a
+Author: cdavidgutierrez <36546273+cdavidgutierrez@users.noreply.github.com>
+Date:   Wed Nov 23 15:02:01 2022 -0500
+
+    Merge pull request #20 from Equipo-de-desarrollo-IF-UDEA/task015
+    
+    Task015: envío de correos con notificaciones
+
+[33mcommit ad21e5a0899337f81a9e4c2a5f3bee35a7b3c431[m
+Author: david <cdavid.gutierrez@udea.edu.co>
+Date:   Wed Nov 23 15:00:34 2022 -0500
+
+    Task015: envío de correos con notificaciones
+
+[33mcommit 4d45b1c7a596eff1cf34bc0ec086bf4d66b52837[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Wed Nov 23 13:02:29 2022 -0500
+
+    antes merge
+
+[33mcommit 2efc02f4b2e963de9ff4d9370b6e42c2e4ef3753[m
+Merge: b9839ac 4838954
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Nov 22 22:45:57 2022 -0500
+
+    pull develop
+
+[33mcommit 4f19a24c8614f888a56007cd36c7b58b62a64fd2[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Nov 22 22:42:05 2022 -0500
+
+    permisos remunerados
+
+[33mcommit 483895460214131e1248224b56606194f7b468cd[m
+Merge: 87cc7d5 7b51ef9
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 22 20:32:28 2022 -0500
+
+    Merge pull request #19 from Equipo-de-desarrollo-IF-UDEA/task018
+    
+    auth completada
+
+[33mcommit 7b51ef983484cae51b23e73065305965b343411b[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 20:31:31 2022 -0500
+
+    auth completada
+
+[33mcommit 87cc7d5b00c2ef566bcebcf21702b21fd8311f28[m
+Merge: e097a87 f6d87c9
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 22 19:44:05 2022 -0500
+
+    Merge pull request #18 from Equipo-de-desarrollo-IF-UDEA/error001
+    
+    Errores corregidos
+
+[33mcommit f6d87c9fea2f556950eb3781407df569433c7b2d[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 19:42:47 2022 -0500
+
+    Errores corregidos
+
+[33mcommit e097a87095e07ad109269a850baa5bc13b8f1afd[m
+Merge: 2cf77d3 b0846fa
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 22 19:15:54 2022 -0500
+
+    Merge pull request #16 from Equipo-de-desarrollo-IF-UDEA/task003
+    
+    Task003
+
+[33mcommit b0846fa9a4f3de9079c737e3cac2f8e3a242da18[m
+Merge: ef2952b 2cf77d3
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 19:15:29 2022 -0500
+
+    merge
+
+[33mcommit ef2952bd370f4e49ab6adc4f8fd495afa420c145[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 19:12:46 2022 -0500
+
+    merge develop on task003
+
+[33mcommit f6b8014ac26cd9232068cec2ef8ea4cfc11880bd[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 19:12:06 2022 -0500
+
+    merge develop
+
+[33mcommit 2cf77d3874b2b80b022f55ac0d83af4b67c639ae[m
+Merge: eface4e ad23ede
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 22 19:01:28 2022 -0500
+
+    Merge pull request #15 from Equipo-de-desarrollo-IF-UDEA/task018
+    
+    Task018
+
+[33mcommit ad23ede594ea924bc81d3e45087af5de93a9071e[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 19:00:09 2022 -0500
+
+    Reenviar correo de activacion implementado en el login
+
+[33mcommit 4c819c7a32b1c4a88c509d6ace672141e265c45d[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Tue Nov 22 18:27:02 2022 -0500
+
+    recuperacion de contrasena y activar cuenta funcionando
+
+[33mcommit 16255e57ded8e47abfdda8babfd764a5c6b98cc4[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Tue Nov 22 18:18:12 2022 -0500
+
+    flujo permisos
+
+[33mcommit 2d85347159fa0d298b8ce02637538470bf77ea92[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Tue Nov 22 16:48:21 2022 -0500
+
+    task003
+
+[33mcommit c483080283639953bb9de27c275cbb9275c56d49[m
+Author: DavidTorres-sys <david.torresg@udea.edu.co>
+Date:   Tue Nov 22 13:14:19 2022 -0500
+
+    task003
+
+[33mcommit eface4eefa729046ad6ec46de574188494ce5755[m
+Merge: 38b1b4c 1b6fcc4
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Nov 20 10:23:36 2022 -0500
+
+    Merge pull request #14 from Equipo-de-desarrollo-IF-UDEA/task016
+    
+    Editar comision terminado
+
+[33mcommit 1b6fcc422507248e2a874e2682c8d30de31bc25b[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Nov 20 10:22:49 2022 -0500
+
+    Editar comision terminado
+
+[33mcommit 38b1b4cd0ed079d1263eb5586edcc0082cfad1ca[m
+Merge: b41eb2d f580b87
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Nov 20 09:47:22 2022 -0500
+
+    Merge pull request #13 from Equipo-de-desarrollo-IF-UDEA/task017
+    
+    Task017
+
+[33mcommit f580b8752a4e46b284acb25c76e732a0835d7db3[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Nov 20 09:46:34 2022 -0500
+
+    Endpoint para eliminar un archivo con el key en s3
+
+[33mcommit 4d5dde6f66a39e7decd48e7bee58e5e2782a7df4[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sun Nov 20 09:35:27 2022 -0500
+
+    Editar comision casicompleta, falta eliminar documentos
+
+[33mcommit b41eb2d8823de233537349298cbc78c3cfb915b7[m
+Merge: 852a2d6 6d376c0
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sat Nov 19 11:39:17 2022 -0500
+
+    Merge pull request #12 from Equipo-de-desarrollo-IF-UDEA/task012
+    
+    Task012
+
+[33mcommit 6d376c02408e22985a73a11d3e77906e7d449a6c[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Sat Nov 19 11:38:17 2022 -0500
+
+    Crear comision completado con subir archivos, falta api de los paises
+
+[33mcommit 850eccbc80f15fc6a6b2b6ccb8a729f08363739d[m
+Author: Simon <simon.garcial@udea.edu.co>
+Date:   Fri Nov 18 08:00:15 2022 -0500
+
+    Ver documento casi terminado, con error
+
+[33mcommit e44e60df931f0ff94fa2e5b926bd2ab737f0c701[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Thu Nov 17 15:42:06 2022 -0500
+
+    crear comision casi finalizada
+
+[33mcommit 86f3d46d45322403f4e59595b761a9033476a3d6[m
+Merge: 1ea08bb 852a2d6
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 15 15:43:32 2022 -0500
+
+    Merge branch 'develop' into task012
+
+[33mcommit 1ea08bb6ccc653ec2e9031e93adf5cfcf07dacb2[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 15 15:42:41 2022 -0500
+
+    servicio de typos de solicitudes
+
+[33mcommit 7f8cf682cebfd623d5bc100eb280d6ff119ed75f[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 15 15:42:19 2022 -0500
+
+    Organizando formulario crear comisión
+
+[33mcommit 852a2d6a5956764fa1fea033d79d74eed2593f8d[m
+Merge: bb18674 1231f72
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 15 12:55:21 2022 -0500
+
+    Merge pull request #10 from Equipo-de-desarrollo-IF-UDEA/Task01
+    
+    Cargando emails templates en formato html
+
+[33mcommit 1231f723c237c0809b87df25c58a0a1f686dd958[m
+Author: anllyvelezo14 <anlly.velezo@udea.edu.co>
+Date:   Tue Nov 15 12:49:52 2022 -0500
+
+    Cargando emails templates en formato html
+
+[33mcommit b9839ac16e1981c3eae206f55cc17c0abb090136[m
+Merge: 8df0e11 bb18674
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 14 13:26:33 2022 -0500
+
+    develop pull
+
+[33mcommit 8df0e11e908f5b56fdafd3743710fc30f14b1f4e[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 14 13:23:12 2022 -0500
+
+    develop
+
+[33mcommit bb18674809afdb96160eed4ca75f0504062d2788[m
+Merge: d3dc774 635f9b3
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Nov 13 18:50:51 2022 -0500
+
+    Merge pull request #9 from Equipo-de-desarrollo-IF-UDEA/task011
+    
+    Asociar estado a una solicitud funcionando
+
+[33mcommit 635f9b3125c5b880b974451a79376f81bb1843db[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 13 18:50:04 2022 -0500
+
+    Asociar estado a una solicitud funcionando
+
+[33mcommit d3dc774cf963e0f81e5f3e08ff5da5acab10208a[m
+Merge: 155215d 88a381e
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Nov 13 16:44:42 2022 -0500
+
+    Merge pull request #8 from Equipo-de-desarrollo-IF-UDEA/task015
+    
+    Politicas para la asignación de estados de una solicitud implementada…
+
+[33mcommit 88a381e0dfeb7f885a07fd34bd9a134bea1c1410[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 13 16:25:16 2022 -0500
+
+    Politicas para la asignación de estados de una solicitud implementadas, no se puede aceptar o rechazar a menos que seas la persona a la que va dirigida
+
+[33mcommit 155215d861a8fc2c64faf40ca05a2c02af9a60a4[m
+Merge: 659dc5d 6628b1a
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Sun Nov 13 13:43:01 2022 -0500
+
+    Merge pull request #7 from Equipo-de-desarrollo-IF-UDEA/task014
+    
+    bucket en s3 creado, permite subir archivos y obtenerlos
+
+[33mcommit 6628b1a9104945df330d499b1d9dd4e9cbcf40f9[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 13 13:42:04 2022 -0500
+
+    bucket en s3 creado, permite subir archivos y obtenerlos
+
+[33mcommit 61d5c0bf73f49fb68ee67fd73699273187030745[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 13 10:01:30 2022 -0500
+
+    Crear comisión a medio camino, falta el manejo de documentos en el back para poder continuar
+
+[33mcommit 659dc5dd81d6203a7ede833913cbc8e81f95408e[m
+Merge: b1b3302 967f329
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Fri Nov 11 21:26:13 2022 -0500
+
+    Merge pull request #6 from Equipo-de-desarrollo-IF-UDEA/task011
+    
+    Task011
+
+[33mcommit 967f329aee0765a3e6b9e87c4b07b4259be178e4[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Fri Nov 11 21:25:34 2022 -0500
+
+    Ver solicitud, más especificamente ver comisión terminada
+
+[33mcommit bf18f3999badeb5fcec10f523a6640a00c043fc2[m
+Merge: 454438d b1b3302
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Fri Nov 11 19:41:12 2022 -0500
+
+    Merge branch 'develop' into task011
+
+[33mcommit 454438d08593078fbd29e064c329f919eadf4f03[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Fri Nov 11 19:40:39 2022 -0500
+
+    En proceso de generar vista para ver comisión
+
+[33mcommit b1b33024611571cb795d63aa8cb579b7721c0bc7[m
+Merge: 5d2f844 ccb18bd
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Thu Nov 10 10:45:55 2022 -0500
+
+    Merge pull request #5 from Equipo-de-desarrollo-IF-UDEA/task004
+    
+    Task004
+
+[33mcommit ccb18bd8461fc7b1c3e49503e6211234b362f5f1[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Thu Nov 10 10:45:05 2022 -0500
+
+    Flujo comisión terminado, faltan emails, test (No se pueden ejecutar por la naturaleza asincrona del odm)
+
+[33mcommit 8de1854fd4b79949433360bfb83364c51aba3daf[m
+Merge: 3d1b33c 23b8128
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Wed Nov 9 18:33:10 2022 -0500
+
+    Merge branch 'main' of github.com:Equipo-de-desarrollo-IF-UDEA/siga into main
+    
+    pull de git
+
+[33mcommit 5cd857291b36d93e917744b2fd8225cea7ee9d29[m
+Author: Simon <simon3640>
+Date:   Wed Nov 9 15:51:40 2022 -0500
+
+    Finalizado flujo commission, faltan tests
+
+[33mcommit 651e552b1c1da712c627e15816ae39379b2a8828[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 23:51:42 2022 -0500
+
+    Flujo de comisiones casi terminado, funciona el get, post, put, y delete
+
+[33mcommit 5d2f844a9fd119c6e84d5f35fc3d968d62fc5089[m
+Merge: 436dd08 8354e9e
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 8 18:58:42 2022 -0500
+
+    Merge pull request #4 from Equipo-de-desarrollo-IF-UDEA/task008
+    
+    Endpoint para asociar estado a una solicitud creado, se modificó el s…
+
+[33mcommit 8354e9e327fa8890944960b4f6e4dafe3ae3ff59[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 18:58:07 2022 -0500
+
+    Endpoint para asociar estado a una solicitud creado, se modificó el schema de respuesta
+
+[33mcommit 436dd08d2c22e87b9f4e1deac8ff079f6c3074a2[m
+Merge: eb14822 d23433e
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 8 18:23:56 2022 -0500
+
+    Merge pull request #3 from Equipo-de-desarrollo-IF-UDEA/task006
+    
+    Task006
+
+[33mcommit d23433e8df8ad5f0b1c255cb2b19f399d1f25eec[m
+Merge: 2c6a57d eb14822
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 18:22:02 2022 -0500
+
+    Merge branch 'develop' into task006
+
+[33mcommit 2c6a57d2e1b01a194f1ec3c7d4aefc26801ac3b2[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 18:21:26 2022 -0500
+
+    Tabla terminado, con rol
+
+[33mcommit eb14822567e5a25ebb017e2ef850b76600fe401f[m
+Merge: 23b8128 8bb56a8
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Tue Nov 8 18:16:02 2022 -0500
+
+    Merge pull request #2 from Equipo-de-desarrollo-IF-UDEA/task007
+    
+    Task007
+
+[33mcommit 8bb56a8a50176b62e5b3ae0b5e85ba32b309f888[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 18:14:01 2022 -0500
+
+    schema usuario devuelve el rol
+
+[33mcommit 60bda84f02920702ea07f7b34847698089f241c0[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 18:09:22 2022 -0500
+
+    Tabla usuarios terminada, falta rol
+
+[33mcommit 23b8128c294b7ec1863c57ccd17d69cbc59cbbda[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 13:07:00 2022 -0500
+
+    Librerías frontend y login
+
+[33mcommit 5efda1ff75f8b78a5abb35d301af888257db1dad[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 11:19:38 2022 -0500
+
+    pre-commit
+
+[33mcommit 928c952f2b3621d656e7eb5aa1b4c7e73b2b46de[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 10:53:26 2022 -0500
+
+    pre-commit
+
+[33mcommit 2ee4d2b89aea3961b26031ddb9993a5833b4edbb[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 10:53:00 2022 -0500
+
+    pre-commit
+
+[33mcommit 32d399c73d5ba1bbba69ffd15e24f9102647eb95[m[33m ([m[1;33mtag: v1.0.0[m[33m)[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 09:46:55 2022 -0500
+
+    Base backend completa
+
+[33mcommit a213cb600fd7ab39f4982a1151c2b12fb0c1a028[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 8 09:42:12 2022 -0500
+
+    ejemplo odm permiso
+
+[33mcommit 3d1b33cdd9eba077484120d8e5a7b83e6202d35b[m
+Merge: 84ddd75 d429d30
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 7 21:41:17 2022 -0500
+
+    merge
+
+[33mcommit 84ddd75dfecf9765a3c7a2456f7b27771d31e4f5[m
+Author: AndreDaniTorres <60939382+AndreDaniTorres@users.noreply.github.com>
+Date:   Mon Nov 7 21:39:03 2022 -0500
+
+    crud user
+
+[33mcommit d429d300cf8c85ec2e7fd9321f77a004a89ebf0a[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Nov 7 17:19:02 2022 -0500
+
+    readme.md
+
+[33mcommit 04667a73abb8fdac63b7595afa7b456bd6426593[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Nov 7 16:47:23 2022 -0500
+
+    Configuración de la base de datos mongo, separamos las dependencias de testing y de desarrollo
+
+[33mcommit 42db8bc65c967c805c5dcb6bdf019c1c6dc8bcd4[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 6 11:34:57 2022 -0500
+
+    Trabajaremos con underscore, modelos y schemas cambiados
+
+[33mcommit 96a675194803334800c0f6cdcb065cc62c6a476e[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Nov 6 10:45:48 2022 -0500
+
+    Typos corregidos, status y tests de jwt implementados
+
+[33mcommit c64763dc1591f71395e6d88f71c3974a5cd737be[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sat Nov 5 14:52:53 2022 -0500
+
+    Nuevo Rol, director de pregrado instituto
+
+[33mcommit 9c9cb7a9f1bff5c16581d44a593814e577552501[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sat Nov 5 13:02:50 2022 -0500
+
+    Entrega de solicitudes de acuerdo al scope del usuario, test de los servicios exclusivos de solicitud
+
+[33mcommit f5ff158c017c95e998cd6d1936ee410e5ff27386[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Thu Nov 3 21:45:33 2022 -0500
+
+    Algunas cambios sobre las solicitudes, primer acercamiento al envío de correos
+
+[33mcommit 130a4ab3d1d0e78fe27e85b35f95f616c060635c[m
+Author: Simon <simon3640>
+Date:   Wed Nov 2 14:57:49 2022 -0500
+
+    celery task pruebas
+
+[33mcommit b902afd3d901d05efa4befad9190ac979e0dd5e8[m
+Author: Simon <simon3640>
+Date:   Wed Nov 2 13:57:46 2022 -0500
+
+    typo en ruta application
+
+[33mcommit d85847d4ee1d824944d3c0690813cd98b94937f7[m
+Author: Simon <simon3640>
+Date:   Wed Nov 2 13:55:49 2022 -0500
+
+    docker-compose dev
+
+[33mcommit a9bd924a94350947161b2257eb2de4bff29d093d[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Wed Nov 2 08:51:47 2022 -0500
+
+    Actualización example.env
+
+[33mcommit 6d46378a565ff49bf95784eb0c4b5dd3e59e9327[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Tue Nov 1 22:52:14 2022 -0500
+
+    Solicitudes y usuarios busqueda por departamento y search, falta archivar las solicitudes
+
+[33mcommit 82e67a20f84d78b20daf354b83583fb3def5288e[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 31 22:39:55 2022 -0500
+
+    Modelos y tablas para las solicitudes creadas
+
+[33mcommit 8ac55e275aeec8eb52e78100d7f7793d605203f3[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 31 10:51:56 2022 -0500
+
+    Tests para usuario completadas, servicios, dominio y api
+
+[33mcommit e3b10870dec007f452cace1420862b86be85f2d9[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Sun Oct 30 23:52:28 2022 -0500
+
+    Finalizando tests de la base de la aplicación
+
+[33mcommit 609f55912295fac2ea73b1c30d371b6863c4b90a[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Fri Oct 28 13:12:31 2022 -0500
+
+    example.env
+
+[33mcommit 26f1989b70085e038b0a6bd823889da6dd06475f[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Thu Oct 27 15:58:10 2022 -0500
+
+    Base del proyecto casi finalizada, departamentos, facultades agregados
+
+[33mcommit e11ae10bd91647ffd99215fb07bd83ced9e20542[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 22:31:21 2022 -0500
+
+    Comentarios en el backend para hacer más fácil el entendimiento de los demás
+
+[33mcommit 07f5d4a38d499f87b8d1ee2aa2aa2b5483c0046d[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 19:47:41 2022 -0500
+
+    docker-file.front ya no se usará
+
+[33mcommit d423bc6d10309d481ececb3c4820afe478d0def3[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 19:46:40 2022 -0500
+
+    docker-compose dev ya acepta cambios en tiempo real, también dejamos listo el broker
+
+[33mcommit 578b5d998d00694068dab99436d83735fd62bd08[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 15:23:52 2022 -0500
+
+    angular CLI actualizado
+
+[33mcommit faa96740bd822b1b042523c1858daa885050befa[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 15:22:05 2022 -0500
+
+    Se generó nueva base para el cliente en angular, el nuevo proyecto se trabajará en inglés
+
+[33mcommit 740e734aa3e18a5f2e02d0084ba72848c1a40ec7[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 12:40:53 2022 -0500
+
+    Ambiente para Siga
+
+[33mcommit 6b87c7819041337bd69933297784f9ea3b75d78f[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 12:25:32 2022 -0500
+
+    Ambiente para Siga
+
+[33mcommit 6514555dde277c68a241ce68a5f9e7fd1cdd7846[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 12:23:45 2022 -0500
+
+    Base del proyecto
+
+[33mcommit 13d568797d9a1af8e2f380202fc435151cdf4f55[m
+Author: Simon3640 <simon.garcial@udea.edu.co>
+Date:   Mon Oct 24 12:22:52 2022 -0500
+
+    Base del proyecto
+
+[33mcommit 1d49cb73225af06f5b8520a7960107e673dbd53e[m
+Author: Simón García Lujan <41750812+Simon3640@users.noreply.github.com>
+Date:   Mon Oct 24 11:16:26 2022 -0500
+
+    Initial commit

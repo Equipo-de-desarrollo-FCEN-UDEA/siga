@@ -72,8 +72,7 @@ mouseOvered: any;
     this.fromDate = null;
     this.toDate = null;
   }
-
-
+  
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({
       next: (data) =>{
@@ -81,9 +80,6 @@ mouseOvered: any;
       }
     })
   }
-
-  
-
 
   // Form permiso
   public form = this.formBuilder.group({
