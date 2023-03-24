@@ -3,16 +3,17 @@
 
 <div>
     <header>
-        <div class="header">
+        <div>
             <img src="{{image}}" class="logo">
-            <p class="subtitle">
+            <br>
+            <p style="margin: 2em;">
                 Medellín, {{date}}
             </p>
         </div>
-        <p>
+        <p style="margin: 2em;">
             Señores:
         </p>
-        <p>
+        <p style="margin: 2em;">
             Consejo de Facultad <br>
             {{user.department.school.description}} <br>
             Universidad de Antioquia
@@ -97,17 +98,17 @@
     </section>
 </div>
 
-<div class="footer">
+<div class="footer" style="color:#026937;">
     <div class="text-center">
-        <p>
-            DIRECCIÓN DE INSTITUTO
-        </p>
-        <p>
-            Contacto: {{user.department.coord_email}}
-        </p>
-        <p>
+        <h6>
+            DECANATO
+            <br>
+            {{school.direction}}
+            <br>
+            Contacto: {{school.contact}}
+            <br>
             Medellín, Colombia
-        </p>
+        </h6>
     </div>
 </div>
 
