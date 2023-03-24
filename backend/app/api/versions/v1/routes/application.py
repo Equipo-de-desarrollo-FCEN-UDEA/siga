@@ -2,13 +2,14 @@ from typing import Any, List
 
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.responses import JSONResponse
+from odmantic.session import AIOSession
 
 from sqlalchemy.orm import Session
 
-from app.api.middlewares import db, jwt_bearer
+from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.domain import models, schemas
 from app.domain.errors.base import BaseErrors
-from app.services import crud
+from app.services import crud, documents
 from app.core.logging import get_logging
 
 router = APIRouter()
@@ -18,7 +19,7 @@ log = get_logging(__name__)
 
 @router.get("/", status_code=200,
             response_model=List[schemas.ApplicationMultiResponse])
-def read_applications(
+async def read_applications(
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
@@ -26,7 +27,8 @@ def read_applications(
     skip: int = 0,
     limit: int = 100,
     search: str | None = None,
-    filed: bool | None = None
+    filed: bool | None = None,
+    engine: AIOSession = Depends(mongo_db.get_mongo_db)
 ) -> Any:
     """
     Endpoint to read all applications.

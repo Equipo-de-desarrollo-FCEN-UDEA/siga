@@ -14,6 +14,7 @@ import { SignaturePad } from 'angular2-signaturepad';
 import { LaboralDays } from '@shared/utils';
 import { Holiday } from '@interfaces/holiday';
 import { HolidayService } from '@services/holiday.service';
+import { ContentObserver } from '@angular/cdk/observers';
 
 
 @Component({
@@ -105,7 +106,7 @@ export class VacationComponent implements OnInit {
     total_days: [0, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
-    documents: [this.documents],
+    documents: [this.documents, [Validators.required]],
     signature: [this.signatureImg],
   })
 
@@ -119,7 +120,7 @@ export class VacationComponent implements OnInit {
     if (this.form.invalid) {
       Swal.fire({
         title: 'Error',
-        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        text: '¡Revise que haya llenado todos los campos que el Formato sugiere',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
