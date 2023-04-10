@@ -14,7 +14,6 @@ import { SignaturePad } from 'angular2-signaturepad';
 import { LaboralDays } from '@shared/utils';
 import { Holiday } from '@interfaces/holiday';
 import { HolidayService } from '@services/holiday.service';
-import { ContentObserver } from '@angular/cdk/observers';
 
 
 @Component({
@@ -50,7 +49,8 @@ export class VacationComponent implements OnInit {
 
    @ViewChild(SignaturePad) signaturePad!: SignaturePad;
    signatureImg: string ="";
- 
+   //signatureFile: file_path[] = [];
+   
    signaturePadOptions: Object = { 
      'minWidth': 2,
      'canvasWidth': 300,
@@ -106,8 +106,8 @@ export class VacationComponent implements OnInit {
     total_days: [0, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
+    signature: this.signatureImg,
     documents: [this.documents],
-    signature: [this.signatureImg],
   })
 
   // --------------------------------------
@@ -117,6 +117,10 @@ export class VacationComponent implements OnInit {
   submit() {
     this.submitted = true;
     // Se detiene aqui si el formulario es invalido
+    //let imageBlob = this.dataURItoBlob(this.signatureImg);
+    //let image_name = './signaturefile.png';
+    //let image = new File ([imageBlob],image_name,{type: 'image/png'});
+    // this.signatureFile = image_name;
     if (this.form.invalid) {
       Swal.fire({
         title: 'Error',
@@ -127,7 +131,10 @@ export class VacationComponent implements OnInit {
       });
       return;
     }
-
+    this.form.value.signature = this.signatureImg;
+    console.log(this.form.value.signature);
+    //this.files.push(image);
+    //console.log(this.files);
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate);
 
@@ -144,6 +151,7 @@ export class VacationComponent implements OnInit {
         })
       )
     }
+    //Continuar aquí
     vacation.subscribe({
       next: (data) => {
         Swal.fire({
@@ -196,7 +204,7 @@ export class VacationComponent implements OnInit {
   savePad(event:any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    console.log(base64Data);
+    console.log(this.signatureImg);
     Swal.fire({
       title: 'Firma a registrar',
       html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>, pero no quedará almacenada en Base de Datos pues solo se usará para emitir el formato.',
@@ -289,7 +297,18 @@ export class VacationComponent implements OnInit {
     return flag;
   }
 
- 
+  //Send from base64 to path
+  dataURItoBlob (dataURI:string) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });    
+    return blob;
+  }
+  
 
   // --------------------------------------
   // ------------- DATEPICKER -------------
