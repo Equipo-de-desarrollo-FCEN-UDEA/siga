@@ -11,17 +11,16 @@ export class VacationService {
 
   private urlEndPoint: string = environment.route + 'vacation/'
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor( private http: HttpClient)  { }
 
-  getVacation(id: number): Observable<VacationResponse> { return this.http.get<VacationResponse>(this.urlEndPoint+id) }
+  getVacation(id: number): Observable<VacationResponse> { return this.http.get<VacationResponse>(this.urlEndPoint + id) }
 
   postVacation(body: VacationCreate) { return this.http.post<VacationResponse>(this.urlEndPoint, body)}
 
   putVacation(body: VacationCreate, id: number) { return this.http.put(this.urlEndPoint + id, body)}
 
   deleteVacation(id: number) { return this.http.delete(this.urlEndPoint + id) }
+  
 }
 
 

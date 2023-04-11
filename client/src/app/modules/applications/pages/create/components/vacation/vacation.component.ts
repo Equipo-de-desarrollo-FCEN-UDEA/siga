@@ -136,7 +136,6 @@ export class VacationComponent {
 
   submit() {
     this.submitted = true;
-    console.log(this.form.value);
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid) {
       Swal.fire({
@@ -148,6 +147,8 @@ export class VacationComponent {
       });
       return;
     }
+    this.form.value.signature = this.signatureImg;
+    console.log(this.form.value.signature);
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
@@ -166,6 +167,7 @@ export class VacationComponent {
         })
       );
     }
+    console.log(this.form.value);
     vacation.subscribe({
       next: (data) => {
         Swal.fire({
