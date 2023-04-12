@@ -14,6 +14,7 @@ export interface VacationCreate {
 
 export interface VacationInDB extends VacationCreate {
     id: string;
+    resolution?: string;
 }
 
 export interface VacationResponse extends Application {
