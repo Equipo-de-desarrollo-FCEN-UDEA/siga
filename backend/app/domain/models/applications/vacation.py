@@ -9,3 +9,4 @@ class Vacation(Model):
     end_date: datetime
     documents: list[Any]
     signature: Any
+    resolution: str | None
