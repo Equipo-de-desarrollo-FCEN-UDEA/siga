@@ -1,29 +1,50 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild, HostListener } from '@angular/core';
+//angular imports
+import {
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  OnInit,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentsResponse, file_path } from '@interfaces/documents';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ApplicationTypesService } from '@services/application-types.service';
-import Swal from 'sweetalert2';
-import { VacationService } from '@services/applications/vacation.service';
-import { VacationCreate } from '../../../../../../core/interfaces/applications/vacation';
-import { DocumentService } from '@services/document.service';
+
+//ngBootstrap imports
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
+
+//rxjs imports
 import { switchMap } from 'rxjs';
-import { ApplicationSubTypeService } from '@services/application-sub-type.service';
-import { LaboralDays } from '@shared/utils';
+
+//sweetAlert imports
+import Swal from 'sweetalert2';
+
+//interfaces imports
+import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { Holiday } from '@interfaces/holiday';
+import { VacationCreate } from '@interfaces/applications/vacation';
+
+//services imports
+import { ApplicationTypesService } from '@services/application-types.service';
+import { VacationService } from '@services/applications/vacation.service';
+import { DocumentService } from '@services/document.service';
+import { ApplicationSubTypeService } from '@services/application-sub-type.service';
 import { HolidayService } from '@services/holiday.service';
 
-
-
+//shared imports
+import { LaboralDays } from '@shared/utils';
 
 @Component({
   selector: 'app-vacation',
   templateUrl: './vacation.component.html',
-  styleUrls: ['./vacation.component.scss']
+  styleUrls: ['./vacation.component.scss'],
 })
 export class VacationComponent implements OnInit {
-
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -32,7 +53,6 @@ export class VacationComponent implements OnInit {
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
 
- 
   // Files
   public files: any[] = [];
   public document_new = [1];
@@ -71,7 +91,7 @@ export class VacationComponent implements OnInit {
   // Form vacation
   public form = this.formBuilder.group({
     application_sub_type_id: [0, [Validators.required]],
-    total_days: [1,[Validators.required]],
+    total_days: [1, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     documents: [this.documents],
@@ -79,7 +99,6 @@ export class VacationComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.vacationSvc.getVacation(this.id).subscribe((data) => {
@@ -88,7 +107,9 @@ export class VacationComponent implements OnInit {
           application_sub_type_id: data.application_sub_type_id,
         });
         this.documents = data.vacation.documents!;
-        this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
+        this.SubTypeSvc.getApplicationSubType(
+          +data.application_sub_type_id
+        ).subscribe({
           next: (res) => {
             this.laboralDay = res.extra.days;
           },
@@ -152,7 +173,9 @@ export class VacationComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['solicitudes/ver/' + this.id + '/vacaciones']);
+            this.router.navigate([
+              'solicitudes/ver/' + this.id + '/vacaciones',
+            ]);
           }
         });
       },
@@ -169,7 +192,9 @@ export class VacationComponent implements OnInit {
 
   onApplicationSubType(event: Event) {
     // Obtener el value antes de los ':'
-    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(':')[0]
+    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
+      ':'
+    )[0];
     console.log(ID_VACATION_TYPE);
     this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
@@ -177,8 +202,6 @@ export class VacationComponent implements OnInit {
       },
     });
   }
-
-  
 
   // --------------------------------------
   // ------------- DATEPICKER -------------
@@ -200,7 +223,7 @@ export class VacationComponent implements OnInit {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
-      console.log('!this.fromDate && !this.toDate')
+      console.log('!this.fromDate && !this.toDate');
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -210,7 +233,12 @@ export class VacationComponent implements OnInit {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
+      console.log(
+        'this.fromDate && !this.toDate && date',
+        this.fromDate,
+        this.toDate,
+        date
+      );
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -220,9 +248,9 @@ export class VacationComponent implements OnInit {
         ),
       });
     } else {
-      console.log('else',  this.fromDate, this.toDate)
+      console.log('else', this.fromDate, this.toDate);
       this.toDate = null;
-      this.fromDate = date
+      this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
           this.fromDate.year,
@@ -353,7 +381,4 @@ export class VacationComponent implements OnInit {
     });
     return flag;
   }
-
-  
-
 }

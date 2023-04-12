@@ -7,14 +7,14 @@ export interface VacationCreate {
     vacationType: boolean;
     start_date: Date;
     end_date: Date;
-    //signature: file_path[];
     signature: string;
     documents?: file_path[];
-}
+    }
 
 
 export interface VacationInDB extends VacationCreate {
     id: string;
+    resolution?: string;
 }
 
 export interface VacationResponse extends Application {

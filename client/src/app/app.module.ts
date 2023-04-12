@@ -2,10 +2,11 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 //routing
 import { AppRoutingModule } from './app-routing.module';
 
+
+import { SignaturePadModule } from 'angular2-signaturepad';
 //component
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
@@ -33,7 +34,7 @@ registerLocaleData(localeEs, 'es');
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     CookieService,

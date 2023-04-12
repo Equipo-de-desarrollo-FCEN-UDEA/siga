@@ -3,15 +3,15 @@ from typing import Any
 from odmantic import ObjectId
 from odmantic.session import AIOSession
 
-from app.domain.models import Vacation
-from app.domain.schemas import VacationCreate, VacationUpdate
-from app.domain.policies.applications.vacation import VacationPolicy
 from app.core.logging import get_logging
+
+from  app.domain.models import Vacation
+from  app.domain.schemas import VacationCreate, VacationUpdate 
+from  app.domain.policies.applications.vacation import VacationPolicy
+
 from .base import CRUDBase
 
-
 log = get_logging(__name__)
-
 
 class CRUDVacation(CRUDBase[Vacation, VacationCreate, VacationUpdate, VacationPolicy]):
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
@@ -27,6 +27,5 @@ class CRUDVacation(CRUDBase[Vacation, VacationCreate, VacationUpdate, VacationPo
         await db.save(vacation)
         return None
 
-
-policy = VacationPolicy()
+policy   = VacationPolicy()
 vacation = CRUDVacation(Vacation, policy=policy)

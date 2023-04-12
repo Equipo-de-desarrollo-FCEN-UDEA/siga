@@ -18,9 +18,9 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 import { ApplicantsComponent } from './components/applicants/applicants.component';
-
-
 import { SignaturePadModule } from 'angular2-signaturepad';
+
+
 
 @NgModule({
   declarations: [

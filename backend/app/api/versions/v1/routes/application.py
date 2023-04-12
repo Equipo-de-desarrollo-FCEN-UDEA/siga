@@ -11,7 +11,8 @@ from app.domain import models, schemas
 from app.domain.errors.base import BaseErrors
 from app.services import crud, documents
 from app.core.logging import get_logging
-
+from app.core.config import get_app_settings
+from app.services import aws
 router = APIRouter()
 
 log = get_logging(__name__)
@@ -132,3 +133,34 @@ def filed(
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_obj
+
+
+@router.post("/report")
+def report(*,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user),
+    skip: int = 0,
+    limit: int = 100,
+    search: str | None = None,
+    filed: bool | None = None,
+    engine: AIOSession = Depends(mongo_db.get_mongo_db)
+) -> Any:
+    """
+    Endpoint to generate a report of applications.
+        params: skip: int, limit: int
+    """
+    try:
+        #Cambiar skip y limit para tomar todas las solicitudes.
+        db_application = crud.application.get_all(
+            db=db, skip=skip, limit=limit, who=current_user, search=search, filed=filed)
+        #Verificar cómo se devuelve el reporte.
+        report_path = documents.fill_report_applications(current_user, db_application)
+        
+        #report = aws.s3.get_data_from_s3_bucket(settings.aws_bucket_name, report_path)
+
+        log.debug(report)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    return report_path

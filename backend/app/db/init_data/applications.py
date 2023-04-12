@@ -65,6 +65,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
 ]
 
 init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
+    #PERMISSION
     schemas.ApplicationSubTypeCreate(
         name="Licencia de maternidad",
         application_type_id=1,
@@ -100,6 +101,7 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         application_type_id=1,
         extra={"days": 3}
     ),
+    #COMMISSION
     schemas.ApplicationSubTypeCreate(
         name="Comisión de servicios",
         application_type_id=2
@@ -108,14 +110,20 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         name="Comisión de estudios",
         application_type_id=2
     ),
+    #FULL TIME
     schemas.ApplicationSubTypeCreate(
         name="Dedicación",
         application_type_id=3
     ),
+    #HOURS AVAL
     schemas.ApplicationSubTypeCreate(
         name="Aval de horas",
         application_type_id=4
     ),
+<<<<<<< HEAD
+=======
+    #VACACITION
+>>>>>>> integration
     schemas.ApplicationSubTypeCreate(
         name="Dias hábiles",
         application_type_id=5

@@ -78,6 +78,66 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .all())
 
         return objs_db
+    
+    def get_all(
+        self,
+        db: Session,
+        who: User,
+        *,
+        search: str | None = None,
+        filed: bool | None = None
+    ) -> List[Application]:
+        queries = []
+
+        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
+        if who.rol.scope >= 9:
+            queries += [User.id == who.id]
+
+        if who.rol.scope < 9:
+            # queries += [Application_status.status_id.not_in((6,7))]
+            if filed is not None:
+                queries += [Application.filed.is_(filed)]
+
+        if (who.rol.scope == 7) or (who.rol.scope == 6):
+            queries += [User.department_id == who.department.id]
+
+        if who.rol.scope == 5:
+            queries += [Department.school_id == who.department.school_id]
+
+        if search is not None:
+            columns = [
+                'names',
+                'last_names',
+                'identification_number',
+                'email'
+            ]
+            log.debug('Entrando en search')
+            search = search.upper()
+            raw = [
+                db.query(Application)
+                .order_by(desc(Application.id))
+                .join(User)
+                .join(ApplicationSubType)
+                .join(Department)
+                .filter(getattr(User, col).contains(f"{search}"))
+                .filter(*queries)
+                .all()
+                for col in columns
+            ]
+            res = [user for users in raw for user in users]
+            return [*set(res)]
+
+        objs_db = (db.query(Application)
+                   .order_by(desc(Application.id))
+                   .join(User)
+                   .join(ApplicationSubType)
+                   .join(Department)
+                   .filter(*queries)
+                   .all())
+
+        return objs_db
+    
+    
 
     def create(
         self,

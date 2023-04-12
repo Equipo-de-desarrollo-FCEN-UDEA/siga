@@ -1,28 +1,51 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild, HostListener } from '@angular/core';
+//angular imports
+import {
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  ViewChild,
+  HostListener,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentsResponse, file_path } from '@interfaces/documents';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ApplicationTypesService } from '@services/application-types.service';
-import Swal from 'sweetalert2';
-import { VacationService } from '@services/applications/vacation.service';
-import { VacationCreate } from '../../../../../../core/interfaces/applications/vacation';
-import { DocumentService } from '@services/document.service';
-import { switchMap } from 'rxjs';
-import { ApplicationSubTypeService } from '@services/application-sub-type.service';
+import { ContentObserver } from '@angular/cdk/observers';
 import { SignaturePad } from 'angular2-signaturepad';
-import { LaboralDays } from '@shared/utils';
-import { Holiday } from '@interfaces/holiday';
-import { HolidayService } from '@services/holiday.service';
 
+//rxjs imports
+import { switchMap } from 'rxjs';
+
+//sweetalert2
+import Swal from 'sweetalert2';
+
+//ng-bootstrap imports
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
+
+//interfaces
+import { DocumentsResponse, file_path } from '@interfaces/documents';
+import { Holiday } from '@interfaces/holiday';
+import { VacationCreate } from '@interfaces/applications/vacation';
+
+//services
+import { ApplicationTypesService } from '@services/application-types.service';
+import { VacationService } from '@services/applications/vacation.service';
+import { DocumentService } from '@services/document.service';
+import { HolidayService } from '@services/holiday.service';
+import { ApplicationSubTypeService } from '@services/application-sub-type.service';
+
+//utils
+import { LaboralDays } from '@shared/utils';
 
 @Component({
   selector: 'app-vacation',
   templateUrl: './vacation.component.html',
-  styleUrls: ['./vacation.component.scss']
+  styleUrls: ['./vacation.component.scss'],
 })
-export class VacationComponent implements OnInit {
-
+export class VacationComponent {
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -35,7 +58,6 @@ export class VacationComponent implements OnInit {
   public files: any[] = [];
   public document_new = [1];
   public documents: file_path[] = [];
- 
 
   // For handle errors
   public clicked = 0;
@@ -45,45 +67,48 @@ export class VacationComponent implements OnInit {
   public id: number = 0;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
-   // Signature
 
-   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-   signatureImg: string ="";
-   //signatureFile: file_path[] = [];
-   
-   signaturePadOptions: Object = { 
-     'minWidth': 2,
-     'canvasWidth': 300,
-     'canvasHeight': 150,
-   };
- 
-   isButtonDisabled: boolean = false;
-   div_important = document.getElementById("div-signature") as HTMLDivElement;
- 
-   @HostListener('window:resize', ['$event'])
-   onResize(event:Event) {
-     // Actualiza el tamaño del signature-pad
-     let important= this.div_important.offsetWidth;
-     this.div_important = document.getElementById("div-signature") as HTMLDivElement;
-  
-     this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
-     this.signaturePad.set('canvasHeight', this.div_important.offsetWidth/2);
-     
-     this.signaturePad.clear();
-     this.signaturePad.resizeCanvas();
-     this.isButtonDisabled = false;
- 
- }
+  // Signature
+  @ViewChild(SignaturePad) signaturePad!: SignaturePad;
+  signatureImg: string = '';
+
+  signaturePadOptions: Object = {
+    minWidth: 2,
+    canvasWidth: 300,
+    canvasHeight: 150,
+  };
+
+  isButtonDisabled: boolean = false;
+  div_important = document.getElementById('div-signature') as HTMLDivElement;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    // Actualiza el tamaño del signature-pad
+    let important = this.div_important.offsetWidth;
+    this.div_important = document.getElementById(
+      'div-signature'
+    ) as HTMLDivElement;
+
+    this.signaturePad.set('canvasWidth', this.div_important.offsetWidth - 10);
+    this.signaturePad.set('canvasHeight', this.div_important.offsetWidth / 2);
+
+    this.signaturePad.clear();
+    this.signaturePad.resizeCanvas();
+    this.isButtonDisabled = false;
+  }
+
   // --------------------------------------------------
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
   // --------------------------------------------------
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   // holidays
   public holidays: Holiday[] = [];
-  constructor(
 
+  constructor(
     private fb: FormBuilder,
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
@@ -97,8 +122,7 @@ export class VacationComponent implements OnInit {
     private vacationSvc: VacationService,
     private documentSvc: DocumentService,
     private holidaySvc: HolidayService
-
-  ) { }
+  ) {}
 
   // Form vacation
   public form = this.fb.group({
@@ -106,21 +130,13 @@ export class VacationComponent implements OnInit {
     total_days: [0, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
-    signature: this.signatureImg,
     documents: [this.documents],
-  })
-
-  // --------------------------------------
-  // ------------ SUBMIT FORM  ------------
-  // --------------------------------------
+    signature: [this.signatureImg],
+  });
 
   submit() {
     this.submitted = true;
     // Se detiene aqui si el formulario es invalido
-    //let imageBlob = this.dataURItoBlob(this.signatureImg);
-    //let image_name = './signaturefile.png';
-    //let image = new File ([imageBlob],image_name,{type: 'image/png'});
-    // this.signatureFile = image_name;
     if (this.form.invalid) {
       Swal.fire({
         title: 'Error',
@@ -133,114 +149,53 @@ export class VacationComponent implements OnInit {
     }
     this.form.value.signature = this.signatureImg;
     console.log(this.form.value.signature);
-    //this.files.push(image);
-    //console.log(this.files);
     let vacation = this.vacationSvc.postVacation(
-      this.form.value as VacationCreate);
+      this.form.value as VacationCreate
+    );
 
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
           if (data) {
             this.form.patchValue({
-              documents: data.files_paths
-            })
+              documents: data.files_paths,
+            });
           }
           return this.vacationSvc.postVacation(
-            this.form.value as VacationCreate)
+            this.form.value as VacationCreate
+          );
         })
-      )
+      );
     }
-    //Continuar aquí
+    console.log(this.form.value);
     vacation.subscribe({
       next: (data) => {
         Swal.fire({
           title: 'La solicitud se creó correctamente',
           icon: 'success',
-          confirmButtonText: 'Aceptar'
-        }
-        ).then((result) => {
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${data.id}/vaciones`])
+            //redirect to the view component of the application
+            this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
           }
         });
-      }, error: (err) => {
-        this.error = err
-      }
-    })
-  }
-
-  ngOnInit(): void {
-
-  }
-  
-  // --------------------------------------
-  // ------------- SIGNATURE -------------
-  // --------------------------------------
-
-  drawComplete() {
-    // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
-  }
-
-  drawStart() {
-    // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
-  }
-  startDrawing(event: Event) {
-    console.log(event);
-    // works in device not in browser
-
-  }
-
-  moved(event: Event) {
-    // works in device not in browser
-  }
-
-  clearPad() {
-    this.signaturePad?.clear();
-  }
-
-  savePad(event:any) {
-    const base64Data = this.signaturePad?.toDataURL();
-    this.signatureImg = base64Data;
-    console.log(this.signatureImg);
-    Swal.fire({
-      title: 'Firma a registrar',
-      html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>, pero no quedará almacenada en Base de Datos pues solo se usará para emitir el formato.',
-      icon: 'warning',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#3AB795',
-    }).then((result)=>{
-      if (result.isConfirmed){
-        this.isButtonDisabled = true;
-      }else if (result.dismiss === Swal.DismissReason.cancel){
-        this.isButtonDisabled = false;
-      }
-    })
-    return; 
-  }
-  // Tipo de solicitud
-  ngAfterViewInit(): void {
-    this.div_important = document.getElementById("div-signature") as HTMLDivElement;
-    this.signaturePad.set('canvasWidth', this.div_important.offsetWidth-10);
-    this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-    this.signaturePad.resizeCanvas();
-    this.holidaySvc.getHolidays().subscribe({
-      next: (data) => {
-        this.holidays = data;
+      },
+      error: (err) => {
+        this.error = err;
       },
     });
   }
+
   // --------------------------------------
   // --------- VACATION TYPES  ---------
   // --------------------------------------
 
   onApplicationSubType(event: Event) {
-    // Obtener el value antes de los ':'  
-    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(':')[0]
+    // Obtener el value antes de los ':'
+    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
+      ':'
+    )[0];
     this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
         this.laboralDay = res.extra.days;
@@ -249,14 +204,12 @@ export class VacationComponent implements OnInit {
   }
 
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.
-      invalid && this.form.get(controlName)?.touched;
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
   }
-  
 
-
-
-// --------------------------------------
+  // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------
 
@@ -297,18 +250,53 @@ export class VacationComponent implements OnInit {
     return flag;
   }
 
-  //Send from base64 to path
-  dataURItoBlob (dataURI:string) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/png' });    
-    return blob;
+  // --------------------------------------
+  // ------------- SIGNATURE -------------
+  // --------------------------------------
+
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
   }
-  
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad?.clear();
+  }
+
+  savePad(event: any) {
+    const base64Data = this.signaturePad?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
+    Swal.fire({
+      title: 'Firma a registrar',
+      html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isButtonDisabled = true;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.isButtonDisabled = false;
+      }
+    });
+    return;
+  }
 
   // --------------------------------------
   // ------------- DATEPICKER -------------
@@ -330,7 +318,7 @@ export class VacationComponent implements OnInit {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
-      console.log('!this.fromDate && !this.toDate')
+      console.log('!this.fromDate && !this.toDate');
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -340,7 +328,12 @@ export class VacationComponent implements OnInit {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
+      console.log(
+        'this.fromDate && !this.toDate && date',
+        this.fromDate,
+        this.toDate,
+        date
+      );
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -350,9 +343,9 @@ export class VacationComponent implements OnInit {
         ),
       });
     } else {
-      console.log('else', this.fromDate, this.toDate)
+      console.log('else', this.fromDate, this.toDate);
       this.toDate = null;
-      this.fromDate = date
+      this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
           this.fromDate.year,
@@ -410,5 +403,4 @@ export class VacationComponent implements OnInit {
       ? NgbDate.from(PARSED)
       : currentValue;
   }
-
 }

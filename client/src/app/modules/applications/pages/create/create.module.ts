@@ -10,6 +10,7 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { FullTimeModule } from './components/full-time/full-time.module';
 import { VacationComponent } from './components/vacation/vacation.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 
 
@@ -26,7 +27,8 @@ import { VacationComponent } from './components/vacation/vacation.component';
     CommonModule,
     CreateRoutingModule,
     SharedModule,
-    FullTimeModule
+    FullTimeModule,
+    SignaturePadModule
   ]
 })
 export class CreateModule { }

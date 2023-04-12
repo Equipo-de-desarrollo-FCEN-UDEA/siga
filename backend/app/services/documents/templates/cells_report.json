@@ -1,11 +1,11 @@
 {
-    "id": "A",
-    "application_type": "B",
-    "status": "C",
-    "creation_date": "D",
-    "names": "E",
-    "last_names": "F",
-    "department": "G",
-    "school": "H",
-    "index": 2
+  "id": "A",
+  "application_type": "B",
+  "status": "C",
+  "creation_date": "D",
+  "names": "E",
+  "last_names": "F",
+  "department": "G",
+  "school": "H",
+  "index": 2
 }
