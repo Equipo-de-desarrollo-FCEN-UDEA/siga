@@ -38,6 +38,7 @@ import { HolidayService } from '@services/holiday.service';
 
 //shared imports
 import { LaboralDays } from '@shared/utils';
+import { SignaturePad } from 'angular2-signaturepad';
 
 @Component({
   selector: 'app-vacation',
@@ -70,6 +71,34 @@ export class VacationComponent implements OnInit {
 
   // holidays
   public holidays: Holiday[] = [];
+  // Signature
+  @ViewChild(SignaturePad) signaturePad!: SignaturePad;
+  signatureImg: string = '';
+
+  signaturePadOptions: Object = {
+    minWidth: 2,
+    canvasWidth: 300,
+    canvasHeight: 150,
+  };
+
+  isButtonDisabled: boolean = false;
+  div_important = document.getElementById('div-signature') as HTMLDivElement;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    // Actualiza el tamaño del signature-pad
+    let important = this.div_important.offsetWidth;
+    this.div_important = document.getElementById(
+      'div-signature'
+    ) as HTMLDivElement;
+
+    this.signaturePad.set('canvasWidth', this.div_important.offsetWidth - 10);
+    this.signaturePad.set('canvasHeight', this.div_important.offsetWidth / 2);
+
+    this.signaturePad.clear();
+    this.signaturePad.resizeCanvas();
+    this.isButtonDisabled = false;
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -184,6 +213,54 @@ export class VacationComponent implements OnInit {
         this.error = err;
       },
     });
+  }
+
+  // --------------------------------------
+  // ------------- SIGNATURE -------------
+  // --------------------------------------
+
+  drawComplete() {
+    // will be notified of szimek/signature_pad's onEnd event
+    console.log(this.signaturePad.toDataURL());
+  }
+
+  drawStart() {
+    // will be notified of szimek/signature_pad's onBegin event
+    console.log('begin drawing');
+  }
+  startDrawing(event: Event) {
+    console.log(event);
+    // works in device not in browser
+  }
+
+  moved(event: Event) {
+    // works in device not in browser
+  }
+
+  clearPad() {
+    this.signaturePad?.clear();
+  }
+
+  savePad(event: any) {
+    const base64Data = this.signaturePad?.toDataURL();
+    this.signatureImg = base64Data;
+    console.log(base64Data);
+    Swal.fire({
+      title: 'Firma a registrar',
+      html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.isButtonDisabled = true;
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.isButtonDisabled = false;
+      }
+    });
+    return;
   }
 
   // --------------------------------------
