@@ -30,6 +30,9 @@ export class AuthService {
   public isLoggedIn$ : Subject<boolean> = new Subject();
   public Logged = new Subject<boolean>();
   public isSuperUser$ = new Subject<boolean>();
+  public isDirector$ = new Subject<boolean>();
+  
+
 
   constructor(
     private http: HttpClient,
@@ -101,7 +104,13 @@ export class AuthService {
 
   isSuperUser() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isSuperUser$.next(data.rol.scope < 9)
+      data => this.isSuperUser$.next(data.rol.scope == 5)
+    )
+  }
+
+  isDirector() {
+    this.userSvc.getUser(0).subscribe(
+      data => this.isDirector$.next(data.rol.scope < 9 && data.rol.scope > 5)
     )
   }
 
