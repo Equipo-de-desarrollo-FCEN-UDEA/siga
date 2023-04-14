@@ -12,7 +12,7 @@ import { ContentObserver } from '@angular/cdk/observers';
 import { SignaturePad } from 'angular2-signaturepad';
 
 //rxjs imports
-import { switchMap } from 'rxjs';
+import { from, switchMap } from 'rxjs';
 
 //sweetalert2
 import Swal from 'sweetalert2';
@@ -39,6 +39,7 @@ import { ApplicationSubTypeService } from '@services/application-sub-type.servic
 
 //utils
 import { LaboralDays } from '@shared/utils';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
   selector: 'app-vacation',
@@ -53,6 +54,8 @@ export class VacationComponent {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
+  public laboralflag: boolean = true;
+  public verify_date: number = 0;
 
   // Files
   public files: any[] = [];
@@ -123,6 +126,14 @@ export class VacationComponent {
     private documentSvc: DocumentService,
     private holidaySvc: HolidayService
   ) {}
+
+  ngAfterViewInit(): void {
+    this.holidaySvc.getHolidays().subscribe({
+      next: (data) =>{
+        this.holidays = data;
+      }
+    })
+  }
 
   // Form vacation
   public form = this.fb.group({
@@ -196,11 +207,15 @@ export class VacationComponent {
     const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
       ':'
     )[0];
+    this.laboralflag=false;
     this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
         this.laboralDay = res.extra.days;
       },
     });
+    if (ID_VACATION_TYPE=="1"){
+      this.laboralflag=true;
+    }
   }
 
   isInvalidForm(controlName: string) {
@@ -301,16 +316,34 @@ export class VacationComponent {
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
-
+  
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
+    const tot_days = this.form.value.total_days;
+    const entero_temp=tot_days;
+
     if (fromDate || toDate) {
-      return (
-        LaboralDays(
+      //Verify between laboral days and calendar days
+      if (this.laboralflag){
+        this.laboralDay=LaboralDays(
           new Date(this.formatter.format(fromDate)),
           new Date(this.formatter.format(toDate)),
           this.holidays
-        ) > this.laboralDay
-      );
+        );
+        //Variable to verify (laboralDay)
+        this.verify_date=this.laboralDay;
+      }else{
+        this.verify_date=new Date(this.formatter.format(toDate)).getTime()-
+                        new Date(this.formatter.format(fromDate)).getTime();
+        //In this case is important to take the date as days:
+        this.verify_date=this.verify_date/(1000*3600*24)+1;
+      }
+      //If days in form does not equal to required, the form does not allow continue      
+      if (this.verify_date != entero_temp){
+        return true;
+      }
+      this.form.value.end_date = new Date(this.formatter.format(toDate));
+      return false;       
+
     } else {
       return false;
     }
