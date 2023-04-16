@@ -118,8 +118,6 @@ class AppSettings(BaseAppSettings):
     smtp_user_password: SecretStr
     smtp_host_email: str
     smtp_port_email: int
-    smtp_host_email_udea: str
-    smtp_port_email_udea: int
     smtp_from_email: str
 
     # AWS
