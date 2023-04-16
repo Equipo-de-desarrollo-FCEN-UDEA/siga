@@ -91,6 +91,7 @@ class UserResponse(UserInDBBase):
 
 class UserInDB(UserInDBBase):
     hashed_password: SecretStr
+    rol: RolResponse
 
 
 class UserBypass(BaseModel):

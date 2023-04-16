@@ -41,6 +41,12 @@ def recovery_password_email(to_name: str, token: str, email: str):
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
 
+        # server de pruebas udea
+
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #     smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
+
+
 @celery_app.task
 def confirm_email(to_name: str, token: str, email: str):
     template = env.get_template('email.validar.email.html.j2')
@@ -65,3 +71,8 @@ def confirm_email(to_name: str, token: str, email: str):
         log.debug(_my_pwd)
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
+
+        # server de pruebas udea
+
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #    smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)

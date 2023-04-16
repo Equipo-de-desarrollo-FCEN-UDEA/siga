@@ -40,13 +40,15 @@ async def create_application_status(
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):
             await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                     application_status.observation, response.status.name, application.id, [application.user.email]))
 
         # Permission
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "PERMISO"):
             await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
         emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                     application_status.observation, response.status.name, application.id, application.user.email))
+                                                     application_status.observation, response.status.name, application.id, [application.user.email] ))
 
         # Full time
         if (response.status.name == 'APROBADA' and
