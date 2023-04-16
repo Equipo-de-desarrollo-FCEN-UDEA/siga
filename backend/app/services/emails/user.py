@@ -37,14 +37,14 @@ def recovery_password_email(to_name: str, token: str, email: str):
         subtype="html"
     )
 
-    # with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-    #     smtp.login(_my_email, _my_pwd)
-    #     smtp.send_message(msg)
+    with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
+        smtp.login(_my_email, _my_pwd)
+        smtp.send_message(msg)
 
         # server de pruebas udea
 
-    with smtplib.SMTP("172.19.0.101", port=25) as smtp:
-        smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #     smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
 
 
 @celery_app.task
@@ -67,12 +67,12 @@ def confirm_email(to_name: str, token: str, email: str):
         subtype="html"
     )
 
-    # with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-    #     log.debug(_my_pwd)
-    #     smtp.login(_my_email, _my_pwd)
-    #     smtp.send_message(msg)
+    with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
+        log.debug(_my_pwd)
+        smtp.login(_my_email, _my_pwd)
+        smtp.send_message(msg)
 
         # server de pruebas udea
 
-    with smtplib.SMTP("172.19.0.101", port=25) as smtp:
-       smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #    smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
