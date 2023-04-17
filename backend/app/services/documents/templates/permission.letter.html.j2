@@ -3,19 +3,21 @@
 
 <div>
     <header>
-        <div class="header">
+        <div>
             <img src="{{image}}" class="logo">
-            <p class="subtitle">
+            <br>
+            <p style="margin: 2em;">
                 Medellín, {{date}}
             </p>
         </div>
-        <p>
+        <p style="margin: 2em;">
             Señor(a):
         </p>
-        <p>
+        <p style="margin: 2em;">
             {{(user.names + ' ' + user.last_names).title()}}
+            <br>
+            <strong>C.C.: {{user.identification_number}}</strong>
         </p>
-        <p><strong>{{user.identification_number}}</strong></p>
 
     </header>
     <section class="section">
@@ -29,6 +31,7 @@
             hasta por dos veces al año, y conceder comisiones y licencias hasta por treinta días”
             2. Que el(la) Decano(a) de la Facultad, una vez revisada la solicitud.
         </p>
+        <br>
         <p class="text-center"><strong>RESUELVE</strong></p>
 
         <p class="text-justify">
@@ -36,30 +39,31 @@
             {{user.identification_type}} número {{user.identification_number}}, adscrito al (a la) {{user.department.description}}, permiso de {{application.application_sub_type.name}} desde {{permission.start_date}} hasta
             {{permission.end_date}}, para {{permission.justification}}
         </p>
-
+        <br>
+        <br>
         <div class="signature">
             <img src="{{signature}}" class="signature">
+            <hr style="width:50%;text-align:left;margin-left:0">
             <p>
                 {{school.dean.title()}}
+                <br>
+                Decano(a) 
             </p>
         </div>
     </section>
 </div>
 
-<div class="footer">
+<div class="footer" style="color:#026937;">
     <div class="text-center">
-        <p>
+        <h6>
             DECANATO
-        </p>
-        <p>
-            Dirección: {{school.direction}}
-        </p>
-        <p>
+            <br>
+            {{school.direction}}
+            <br>
             Contacto: {{school.contact}}
-        </p>
-        <p>
+            <br>
             Medellín, Colombia
-        </p>
+        </h6>
     </div>
 </div>
 
