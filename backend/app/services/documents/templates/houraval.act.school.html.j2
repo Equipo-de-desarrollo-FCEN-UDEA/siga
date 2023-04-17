@@ -3,17 +3,19 @@
 
 <div>
     <header>
-        <div class="header">
+        <div>
             <img src="{{image}}" class="logo">
-            <p class="subtitle">
+            <br>
+            <p style="margin: 2em;">
                 Medellín, {{date}}
             </p>
         </div>
-        <p>
+        <p style="margin: 2em;">
             Señores:
-        </p>
+        </p style="margin: 2em;">
         <p>
-            VICERRECTORÍA DE INVESTIGACIÓN <br>
+            VICERRECTORÍA DE INVESTIGACIÓN 
+            <br>
             Universidad de Antioquia
         </p>
 
@@ -86,31 +88,32 @@
         <p style="margin-top: 1em;">
             Cordialmente,
         </p>
+        <br>
+        <br>
+        <br>
         <div class="signature text-left" style="margin-top: 2em;">
             <p>
-                <hr style="width: 50%;">
+                <hr style="width:50%;text-align:left;margin-left:0">
                 {{user.department.school.dean.title()}} <br>
-                Decana <br>
+                Decano(a) 
+                <br>
                 {{user.department.school.description}}
             </p>
         </div>
     </section>
 </div>
 
-<div class="footer">
+<div class="footer" style="color:#026937;">
     <div class="text-center">
-        <p>
+        <h6>
             DECANATO
-        </p>
-        <p>
-            Dirección: {{user.department.school.direction}}
-        </p>
-        <p>
-            Contacto: {{user.department.school.contact}}
-        </p>
-        <p>
+            <br>
+            {{school.direction}}
+            <br>
+            Contacto: {{school.contact}}
+            <br>
             Medellín, Colombia
-        </p>
+        </h6>
     </div>
 </div>
 
