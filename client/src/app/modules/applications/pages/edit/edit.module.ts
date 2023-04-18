@@ -9,6 +9,7 @@ import { SharedModule } from '@shared/shared.module';
 import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
+import {  SignaturePadModule } from 'angular2-signaturepad';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { VacationComponent } from './components/vacation/vacation.component';
   imports: [
     CommonModule,
     EditRoutingModule,
-    SharedModule
+    SharedModule,
+    SignaturePadModule
   ]
 })
 export class EditModule { }
