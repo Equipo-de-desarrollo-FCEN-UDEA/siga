@@ -87,7 +87,6 @@ export class VacationComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     // Actualiza el tamaño del signature-pad
-    let important = this.div_important.offsetWidth;
     this.div_important = document.getElementById(
       'div-signature'
     ) as HTMLDivElement;
@@ -159,11 +158,9 @@ export class VacationComponent {
       return;
     }
     this.form.value.signature = this.signatureImg;
-    console.log(this.form.value.signature);
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
-
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
@@ -172,30 +169,40 @@ export class VacationComponent {
               documents: data.files_paths,
             });
           }
+          this.form.value.signature = this.signatureImg;
           return this.vacationSvc.postVacation(
             this.form.value as VacationCreate
           );
         })
       );
+      console.log(vacation);
+      vacation.subscribe({
+        next: (data) => {
+          Swal.fire({
+            title: 'La solicitud se creó correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //redirect to the view component of the application
+              this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
+            }
+          });
+        },
+        error: (err) => {
+          this.error = err;
+        },
+      });
+    }else{
+      Swal.fire({
+        title: 'Adjuntar documento',
+        html: 'Por favor adjunte documento de aval de talento humano.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
     }
-    console.log(this.form.value);
-    vacation.subscribe({
-      next: (data) => {
-        Swal.fire({
-          title: 'La solicitud se creó correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            //redirect to the view component of the application
-            this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
-          }
-        });
-      },
-      error: (err) => {
-        this.error = err;
-      },
-    });
   }
 
   // --------------------------------------
@@ -294,7 +301,7 @@ export class VacationComponent {
   savePad(event: any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    console.log(base64Data);
+    //console.log(base64Data);
     Swal.fire({
       title: 'Firma a registrar',
       html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
