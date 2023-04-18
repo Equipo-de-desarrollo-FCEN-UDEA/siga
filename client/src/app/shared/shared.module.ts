@@ -21,6 +21,7 @@ import { ApplicantsComponent } from './components/applicants/applicants.componen
 import { SignaturePadModule } from 'angular2-signaturepad';
 
 
+
 @NgModule({
   declarations: [
     StatusHistoryComponent,
@@ -47,7 +48,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     LoaderComponent,
     StepperComponent,
     CdkStepperModule,
-    ApplicantsComponent
+    ApplicantsComponent,
+    SignaturePadModule
   ]
 })
 export class SharedModule { }

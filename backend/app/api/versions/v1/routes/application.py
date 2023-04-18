@@ -20,7 +20,7 @@ log = get_logging(__name__)
 
 @router.get("/", status_code=200,
             response_model=List[schemas.ApplicationMultiResponse])
-def read_applications(
+async def read_applications(
     *,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
@@ -28,7 +28,8 @@ def read_applications(
     skip: int = 0,
     limit: int = 100,
     search: str | None = None,
-    filed: bool | None = None
+    filed: bool | None = None,
+    engine: AIOSession = Depends(mongo_db.get_mongo_db)
 ) -> Any:
     """
     Endpoint to read all applications.

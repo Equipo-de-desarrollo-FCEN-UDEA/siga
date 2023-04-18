@@ -15,12 +15,11 @@ class VacationBase(BaseModel):
     total_days: int
     start_date: datetime
     end_date: datetime
-    documents: list[Any]
+    documents: list[Any] | None = Field(default_factory=list)
     signature: Any | None
 
 class VacationCreate(VacationBase):
-    application_sub_type_id: int  = Field(gt=0, lt=100)
-
+    application_sub_type_id: int 
 class VacationUpdate(VacationBase):
     application_sub_type_id: int
 

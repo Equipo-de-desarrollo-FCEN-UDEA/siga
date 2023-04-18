@@ -9,7 +9,7 @@ export interface VacationCreate {
     end_date: Date;
     signature: string;
     documents?: file_path[];
-}
+    }
 
 
 export interface VacationInDB extends VacationCreate {

@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@almothafar/angular-signature-pad": "^5.0.1",
     "@angular/animations": "^14.2.7",
     "@angular/cdk": "^14.0.4",
     "@angular/common": "^14.2.7",
@@ -27,6 +28,7 @@
     "angular2-signaturepad": "^4.0.2",
     "bootstrap": "^5.2.2",
     "ngx-cookie-service": "^14.0.1",
+    "ngx-signaturepad": "^0.0.10",
     "rxjs": "~7.5.0",
     "signature_pad": "^4.1.5",
     "sweetalert2": "^11.4.8",

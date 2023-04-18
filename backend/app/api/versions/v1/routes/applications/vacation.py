@@ -158,7 +158,6 @@ async def update_vacation(
 
     return update_vacation
 
-
 @router.delete("/{id}", response_model=Msg)
 async def delete_vacation(
     id: int,
