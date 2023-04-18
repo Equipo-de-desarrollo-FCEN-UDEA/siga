@@ -1,9 +1,11 @@
 import json
+import base64
 from datetime import datetime
 from uuid import uuid1
 from io import BytesIO
 from tempfile import NamedTemporaryFile
 
+import openpyxl
 from openpyxl import load_workbook
 
 from app.domain.models import User, Vacation
@@ -55,7 +57,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
         "total_days": str(vacations_dict['vacation']['total_days']),
-        "user_signature": vacations_dict['vacation']['signature']
+        "user_signature": base64.base64decode(vacations_dict['vacation']['signature'])
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
@@ -80,6 +82,11 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str):
             else:
                 target.merge_cells(cells[key])
                 target[cells[key].split(':')[0]] = datos[key]
+    
+    img_sign = openpyxl.drawing.image.Image(BytesIO(vacations['user_signature']))
+    target.merge_cells('A21:C24')
+    img_sign.anchor('A21')
+    target.add_image(img_sign)
 
     with NamedTemporaryFile() as tmp:
         wb.save(tmp.name)

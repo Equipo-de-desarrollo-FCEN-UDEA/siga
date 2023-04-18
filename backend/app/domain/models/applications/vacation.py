@@ -8,5 +8,5 @@ class Vacation(Model):
     start_date: datetime
     end_date: datetime
     documents: list[Any]
-    signature: Any
+    signature: str
     resolution: str | None
