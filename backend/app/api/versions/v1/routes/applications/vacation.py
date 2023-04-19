@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails
+from app.services import crud, emails, documents
 from app.domain.models import Vacation, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 VacationCreate,
@@ -58,12 +58,16 @@ async def create_vacation(
             who=current_user,
             obj_in=application
         )
+
+        #mongo_id = ObjectId(application.mongo_id)
         
         application = ApplicationResponse.from_orm(application)
         
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
         
+        #path = documents.fill_vacations_format(current_user, response)
+        #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
@@ -152,6 +156,14 @@ async def update_vacation(
             # In PostgreSQL
             application_updated = crud.application.update(
                 db, current_user, db_obj=application, obj_in=vacation)
+            
+            application = ApplicationResponse.from_orm(application_updated) #Asegurar que es application_update.
+
+            response = VacationResponse(
+            **dict(application, vacation=update_vacation))
+
+            #path = documents.fill_vacations_format(current_user, response)
+            #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
             
             log.debug('application update', application_updated)
 
