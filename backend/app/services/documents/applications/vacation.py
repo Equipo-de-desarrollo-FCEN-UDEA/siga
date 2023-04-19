@@ -57,7 +57,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
         "total_days": str(vacations_dict['vacation']['total_days']),
-        "user_signature": base64.base64decode(vacations_dict['vacation']['signature'])
+        "user_signature": base64.b64decode(vacations_dict['vacation']['signature'])
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
