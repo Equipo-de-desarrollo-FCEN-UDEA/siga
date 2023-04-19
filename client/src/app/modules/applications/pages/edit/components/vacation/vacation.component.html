@@ -91,10 +91,10 @@
   </div>
 
   <div class="row regular-row mt-4 align-items-baseline">
-    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+    <div class="col-md-2 col-xs-12 col-sm-6 label mb-2">
       Número de días <span style="color: red">*</span>
     </div>
-    <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="col-sm-12 col-xs-12 col-md-3">
       <div class="formfloatig">
         <input
           id="floatinghours_week"
@@ -113,13 +113,11 @@
         Esta cantidad de días debe ser mínimo de 1 y máximo de 21
       </p>
     </div>
-  </div>
 
-  <div class="row regular-row mt-4">
-    <span class="col-md-4 col-xs-12 col-sm-12 label"
+    <span class="col-md-2 col-xs-12 col-sm-12 label"
       >Fechas <span style="color: red">*</span></span
     >
-    <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
+    <div class="col-sm-12 col-xs-12 col-md-5" style="margin-bottom: 5px">
       <div class="input-group">
         <input
           #dpFromDate
@@ -173,9 +171,9 @@
   </div>
 
   <!-- CURRENT DOCUMENTS -->
-  <div class="row regular-row mt-4" *ngIf="documents.length > 0">
+  <div class="row regular-row mt-4 d-flex justify-content-between" *ngIf="documents.length > 0">
     <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Documentos</div>
-    <div class="col-sm-12 col-xs-12 col-md-8">
+    <div class="col-sm-12 col-xs-12 col-md-7">
       <ul *ngFor="let doc of documents; let i = index" class="list-group">
         <li [id]="i" class="list-group-item d-flex justify-content-between">
           <span>{{ doc.name }}</span>

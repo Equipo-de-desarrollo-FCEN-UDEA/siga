@@ -1,11 +1,32 @@
-<div class="container card shadow containerInside mt-5 p-3">
-  <div class="mb-3 p-2 d-flex justify-content-between"></div>
+
+
+<div
+  class="container card shadow containerInside mt-5 p-3 pt-1 position-relative"
+  *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
+>
+<!-- <div class="position-absolute top-0 start-0 p-1">
+  <button
+    type="button"
+    class="btn btn-outline-secondary"
+    (click)="cancel()">
+    <i class="fas fa-angle-left"> </i>
+  </button>
+</div> -->
 
   <form [formGroup]="form" (submit)="search()">
     <div class="row">
+      
       <div class="col-xs-12 col-sm-12 col-lg-8">
+
         <div class="row">
-          <div class="col-6 mb-3">
+
+          <div class="col-md-auto">
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+                 <i class="fas fa-angle-left"> </i>
+           </button>
+          </div>
+
+          <div class="col-10 col-sm-6">
             <input
               type="text"
               class="form-control"
@@ -13,16 +34,31 @@
               placeholder="Buscar"
             />
           </div>
-          <div class="col-2 search">
+
+          <div class="col-1 search">
             <button class="btn btn-warning" type="submit" (submit)="(true)">
               <i class="fas fa-search"></i>
             </button>
           </div>
+
         </div>
+
+      </div>
+
+      <div class="col-xs-5 col-lg-2" *ngIf="context.isSuperUser">
+        <select
+          class="form-select"
+          style="width: auto"
+          formControlName="activo"
+          (change)="search()"
+        >
+          <option [ngValue]="false" selected>No archivados</option>
+          <option [ngValue]="true">Archivados</option>
+          <option [ngValue]="null">Todos</option>
+        </select>
       </div>
     </div>
   </form>
-  <hr/>  
   <div class="table-responsive-lg">
     <table
       *ngIf="applications$ | async as applications"
@@ -33,58 +69,89 @@
           <th>id</th>
           <th>Solicitud</th>
           <th>Estado</th>
-          <th>Fecha</th>
-          <th>Nombre</th>
-          <th>Apellidos</th>
-          <th>Departamento</th>
-          <th>Facultad</th>
+          <th>Fecha de creación</th>
+          <th *ngIf="context.isSuperUser">Nombre</th>
+          <th *ngIf="context.isSuperUser">Apellidos</th>
+          <th *ngIf="context.isSuperUser">Departamento</th>
+          <th *ngIf="context.isSuperUser">Facultad</th>
           <th>Acción</th>
         </tr>
       </thead>
-      <tbody class="table-group-divider ">
+      <tbody class="table-group-divider">
         <tr *ngIf="applications.length == 0" style="width: 100%">
           <td colspan="7">No se encontraron resultados</td>
         </tr>
         <tr
           [routerLink]="[
-            'solicitudes/ver/' +
+            '/solicitudes/ver/' +
               application.id +
               '/' +
-              application.application_sub_type.application_type.name
+              application.application_sub_type.application_type.description
           ]"
           *ngFor="let application of applications"
+          class="cursor"
         >
-          <th>{{ application.id }}</th>
+          <td>{{ application.id }}</td>
           <td>{{ application.application_sub_type.name }}</td>
-          <td>{{ application.application_status[0].status.name }}</td>
+          <td>
+            <span
+              class="badge badge-pill pill"
+              [ngClass]="{
+                'bg-requested':
+                  application.application_status[0].status.name ===
+                  'SOLICITADA',
+                'bg-ok':
+                  application.application_status[0].status.name ===
+                  'VISTO BUENO',
+                'bg-approved':
+                  application.application_status[0].status.name === 'APROBADA',
+                'bg-rejected':
+                  application.application_status[0].status.name === 'RECHAZADA',
+                'bg-ended':
+                  application.application_status[0].status.name == 'FINALIZADA',
+                'bg-in-creation':
+                  application.application_status[0].status.name == 'EN CREACIÓN'
+              }"
+              >{{ application.application_status[0].status.name }}</span
+            >
+          </td>
           <td>{{ application.created_at | date : "yyyy-MM-dd" }}</td>
-          <td>{{ application.user.names }}</td>
-          <td>{{ application.user.last_names }}</td>
-          <td>{{ application.user.department.name }}</td>
-          <td>{{ application.user.department.school.name }}</td>
-
-          <!-- <td>{{user.names + ' ' + user.last_names | -->
-          <!-- titlecase}} -->
-          <!-- </td> -->
-          <!-- <td>{{user.rol.name}}</td> -->
-          <!-- <td>{{user.email | lowercase}}</td> -->
-          <!-- <td>{{user.identificaction_number | lowercase}}</td> -->
-          <!-- <td>{{user.department.name}}</td> -->
-          <!-- <td>{{user.department.school.name}}</td> -->
-          <!-- <td>{{user.active? 'Activo': 'Inactivo'}}</td> -->
-          <!-- <td> -->
-          <!-- <button [routerLink]="['actualizar/'+user.id]" (click)="$event.stopPropagation()"
-                            class="btn btn-outline-primary btn-sm" type="button">
-                            <i class="fas fa-edit"></i>
-                        </button> -->
-          <!-- <button (click)="eliminar(user.id);$event.stopPropagation()"
-                        class="button is-danger is-small is-rounded is-outlined " type="button">
-                        <i class="fas fa-trash"></i>
-                    </button> -->
-          <!-- </td> -->
+          <td *ngIf="context.isSuperUser">{{ application.user.names }}</td>
+          <td *ngIf="context.isSuperUser">{{ application.user.last_names }}</td>
+          <td *ngIf="context.isSuperUser">
+            {{ application.user.department.name }}
+          </td>
+          <td *ngIf="context.isSuperUser">
+            {{ application.user.department.school.name }}
+          </td>
+          <td>
+            <button
+              *ngIf="!context.isSuperUser"
+              [routerLink]="[
+                '/solicitudes/editar/' +
+                  application.id +
+                  '/' +
+                  application.application_sub_type.application_type.description
+              ]"
+              (click)="$event.stopPropagation()"
+              class="btn btn-light btn-sm"
+              type="button"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              *ngIf="context.isSuperUser"
+              (click)="
+                filed(application.id); $event.stopPropagation()
+              "
+              class="btn btn-light btn-sm"
+              type="button"
+            >
+              {{ application.filed ? "Desarchivar" : "Archivar" }}
+            </button>
+          </td>
         </tr>
-        
-      </tbody> 
+      </tbody>
       <tfoot>
         <tr style="width: 100%">
           <td colspan="7">
@@ -106,15 +173,13 @@
               <i class="fas fa-arrow-right"></i>
             </button>
           </td>
-          <div class="col-xs-5 col-lg-2">
-            <select class="form-select" style="width: auto">
-              <option value="0">No archivados</option>
-              <option value="1">Archivados</option>
-              <option value="2">Todos</option>
-            </select>
-          </div>
         </tr>
       </tfoot>
     </table>
   </div>
+    
 </div>
+
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>
