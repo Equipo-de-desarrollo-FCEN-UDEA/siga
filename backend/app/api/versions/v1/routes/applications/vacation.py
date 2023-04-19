@@ -63,6 +63,7 @@ async def create_vacation(
         
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
+        
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
