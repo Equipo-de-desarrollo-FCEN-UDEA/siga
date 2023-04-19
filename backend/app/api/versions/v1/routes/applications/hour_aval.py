@@ -341,11 +341,11 @@ async def generate_act(
         if current_user.rol.scope in [6, 7]:
             path = documents.hour_aval_act_generation(
                 user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')
-            await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-instituto.pdf', path=path)
+            await crud.hour_aval.update_document(engine, id=mongo_id, name='aval-instituto.pdf', path=path)
         elif current_user.rol.scope == 5:
             path = documents.hour_aval_act_generation(
                 user, hour_aval, act, users, backres, 'houraval.act.school.html.j2')
-            await crud.hour_aval.update_document(engine, id=mongo_id, name='acta-facultad.pdf', path=path)
+            await crud.hour_aval.update_document(engine, id=mongo_id, name='aval-facultad.pdf', path=path)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return {

@@ -802,7 +802,8 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
                 status="VISTO BUENO", scope=[6, 7]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9, 11]
     ),
@@ -814,7 +815,8 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
                 status='VISTO BUENO', scope=[6, 7]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9, 11]
     ),
@@ -826,6 +828,19 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
         ],
         who_can=[9]
+    ),
+    schemas.ApplicationTypeCreate(
+        name="VACACIONES",
+        description="vacaciones",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status='VISTO BUENO', scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[9, 11]
     )
 ]
 
@@ -877,6 +892,14 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Dedicación",
         application_type_id=3
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Dias hábiles",
+        application_type_id=5
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Dias calendario",
+        application_type_id=5
     )
 ]
 

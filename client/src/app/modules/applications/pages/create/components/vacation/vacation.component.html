@@ -1,1 +1,299 @@
-<p>vacation works!</p>
+<form
+  class="need-validation"
+  need-validation
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <!-- DATEPICKER -->
+  <ng-template #footerTemplate>
+    <hr class="my-0" />
+    <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
+    <p *ngIf="!fromDate">Elige la primera fecha</p>
+    <button
+      class="btn btn-primary btn-sm m-2 float-start"
+      (click)="model = today; datepicker.close()"
+      type="button"
+    >
+      Hoy
+    </button>
+    <button
+      class="btn btn-secondary btn-sm m-2 float-end"
+      (click)="datepicker.close()"
+      type="button"
+    >
+      Cerrar
+    </button>
+  </ng-template>
+
+  <div class="dp-hidden position-absolute">
+    <div class="input-group">
+      <input
+        hidden
+        name="datepicker"
+        class="form-control"
+        ngbDatepicker
+        #datepicker="ngbDatepicker"
+        [autoClose]="'outside'"
+        (dateSelect)="onDateSelection($event)"
+        [displayMonths]="1"
+        [dayTemplate]="t"
+        outsideDays="hidden"
+        [startDate]="fromDate!"
+        tabindex="-1"
+        [footerTemplate]="footerTemplate"
+        placement="left"
+        [positionTarget]="buttonEl"
+      />
+      <ng-template #t let-date let-focused="focused">
+        <span
+          class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null"
+        >
+          {{ date.day }}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- TYPE DAY VACATION -->
+  <div class="row">
+    <div class="formfloatig">
+      <select
+        formControlName="application_sub_type_id"
+        class="form-control form-select-lg mb-3 cursor"
+        (change)="onApplicationSubType($event)"
+        [ngClass]="{
+          'is-invalid':
+            (submitted && f['application_sub_type_id'].errors) ||
+            isInvalidForm('application_sub_type_id')
+        }"
+        *ngIf="applicationType$ | async as applicationType"
+      >
+        <option value="0" disabled selected>
+          Elige un tipo de días para Vacaciones
+        </option>
+        <option
+          [ngValue]="tipo.id | number"
+          *ngFor="let tipo of applicationType.application_sub_type"
+        >
+          {{ tipo.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- ALERT BOX -->
+  <div class="alert alert-warning mt-3 mb-0">
+    <strong>¡Importante!</strong>
+    Solo puedes elegir el número de días aprobados por talento humano.
+  </div>
+
+  <!-- Form data -->
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="mt-4 col-md-5 col-xs-12 col-sm-12 col-12 mb-3">
+      <span class="col-md-4 col-xs-12 col-sm-12 label"
+        >Número de días<span style="color: red">*</span></span
+      >
+      <div class="col-12">
+        <div class="formfloatig">
+          <input
+            id="floatinghours_week"
+            formControlName="total_days"
+            max="21"
+            min="1"
+            class="form-control"
+            placeholder="Ejemplo: 4"
+            type="number"
+            [ngClass]="{
+              'is-invalid': isInvalidForm('total_days')
+            }"
+          />
+        </div>
+        <p *ngIf="isInvalidForm('total_days')" class="inputError text-danger">
+          Esta cantidad de días debe ser mínimo de 1 y máximo de 21
+        </p>
+      </div>
+      <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
+        >Fecha inicial <span style="color: red">*</span></span
+      >
+      <div class="col-12 mt-2" style="margin-bottom: 3px; margin-top: 6 px">
+        <div class="input-group">
+          <input
+            #dpFromDate
+            class="form-control"
+            type="text"
+            (click)="datepicker.toggle(); clicked = clicked + 1"
+            placeholder="yyyy-mm-dd"
+            name="dpFromDate"
+            formControlName="start_date"
+            (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+            [value]="
+              formatter.format(fromDate) ? formatter.format(fromDate) : null
+            "
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['total_days'].errors) ||
+                ((!fromDate || !toDate) && clicked !== 0) ||
+                selectDays(fromDate, toDate)
+            }"
+            [attr.disabled]="
+              f['total_days'].errors ||
+              f['application_sub_type_id'].pristine ||
+              f['application_sub_type_id'].errors
+                ? ''
+                : null
+            "
+          />
+          <button
+            #buttonEl
+            class="btn btn-outline-secondary"
+            (click)="datepicker.toggle(); clicked = clicked + 1"
+            type="button"
+            [attr.disabled]="
+              f['total_days'].errors ||
+              f['application_sub_type_id'].pristine ||
+              f['application_sub_type_id'].errors
+                ? ''
+                : null
+            "
+          >
+            <i class="fa fa-calendar"> </i>
+          </button>
+        </div>
+        <!-- errors dates -->
+        <div
+          *ngIf="
+            (submitted && f['total_days'].errors) ||
+            ((!fromDate || !toDate) && clicked !== 0) ||
+            selectDays(fromDate, toDate)
+          "
+          class="invalid"
+        >
+          <div *ngIf="selectDays(fromDate, toDate)">
+            La cantidad de días elegidos de vacaciones no es igual a los
+            escogidos (tenga en cuenta si son hábiles o no)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+      <div class="input-group" (click)="datepicker.toggle()">
+        <input
+          #dpToDate
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          name="dpToDate"
+          formControlName="end_date"
+          [value]="formatter.format(toDate)"
+          (input)="toDate = validateInput(toDate, dpToDate.value)"
+        />
+      </div>
+    </div>
+
+    <!-- FIRMA -->
+    <div class="col-md-4 col-xs-12 col-sm-12 col-12">
+      <div
+        id="div-signature"
+        class="col-12"
+        style="
+          border: 5px double black;
+          background-color: rgba(80, 255, 217, 0);
+          max-height: 10em;
+        "
+      >
+        <div class="me-3">Espacio para firma</div>
+        <signature-pad
+          [options]="signaturePadOptions"
+          (onBeginEvent)="drawStart()"
+          (onEndEvent)="drawComplete()"
+        >
+        </signature-pad>
+      </div>
+    </div>
+
+    <div class="mt-4 col-md-3 col-xs-12 col-sm-12 col-12">
+      <div class="col-12">
+        <button
+          id="btn-sub1"
+          class="btn btn-outline-secondary col-12"
+          type="button"
+          (submit)="(false)"
+          (click)="clearPad()"
+        >
+          Limpiar Firma
+        </button>
+      </div>
+      <div>
+        <div class="col-12 mt-3">
+          <button
+            id="btn-sub2"
+            class="btn btn-outline-secondary col-12"
+            type="button"
+            [disabled]="isButtonDisabled"
+            (submit)="(false)"
+            color="secondary"
+            (click)="savePad($event)"
+          >
+            Subir firma
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--ARCHIVOS-->
+  <h6 class="mt-3 text-center">
+    <span class="text-muted">Archivos adjuntos de la solicitud</span>
+  </h6>
+
+  <div class="alert alert-danger" *ngIf="files.length > 0 && !validFileType()">
+    Ese tipo de archivo no es permitido.
+  </div>
+
+  <div class="formfloatig" style="flex-direction: column">
+    <div
+      *ngFor="let producto of document_new; last as isLast; let i = index"
+      class="arrayLike formfloatig d-flex justify-content-between"
+    >
+      <div class="document_new">
+        <label class="btn-btn-default cursor is-hoverable">
+          <div class="fa fa-upload fa-2x"></div>
+          <input
+            [id]="i"
+            class="file-upload"
+            type="file"
+            (change)="onUpload($event, i)"
+          />
+          <label
+            [for]="i"
+            class="is-hoverable cursor link-success"
+            style="margin-left: 10px"
+            >{{
+              files[i]
+                ? files[i].name
+                : "Subir aval de vacaciones de Talento Humano"
+            }}</label
+          >
+        </label>
+      </div>
+      <div class="buttons">
+        <button
+          class="btn btn-circle btn-remove btn-sm m-1"
+          type="button"
+          (click)="removeFile(i)"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr />
+</form>

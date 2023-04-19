@@ -72,8 +72,7 @@ mouseOvered: any;
     this.fromDate = null;
     this.toDate = null;
   }
-
-
+  
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({
       next: (data) =>{
@@ -83,8 +82,6 @@ mouseOvered: any;
   }
 
   
-
-
   // Form permiso
   public form = this.formBuilder.group({
     application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
@@ -106,6 +103,7 @@ mouseOvered: any;
   // --------------------------------------
   submit() {
     this.submitted = true;
+    console.log(this.form.value)
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
