@@ -59,15 +59,15 @@ async def create_vacation(
             obj_in=application
         )
 
-        mongo_id = ObjectId(application.mongo_id)
+        #mongo_id = ObjectId(application.mongo_id)
         
         application = ApplicationResponse.from_orm(application)
         
         response = VacationResponse(
             **dict(application, vacation=vacation_create))
         
-        path = documents.fill_vacations_format(current_user, response)
-        await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+        #path = documents.fill_vacations_format(current_user, response)
+        #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
@@ -162,8 +162,8 @@ async def update_vacation(
             response = VacationResponse(
             **dict(application, vacation=update_vacation))
 
-            path = documents.fill_vacations_format(current_user, response)
-            await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+            #path = documents.fill_vacations_format(current_user, response)
+            #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
             
             log.debug('application update', application_updated)
 
