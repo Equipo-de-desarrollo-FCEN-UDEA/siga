@@ -17,7 +17,7 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 
 
 @celery_app.task
-def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: str):
+def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: list[str] | str):
     template = env.get_template("email.cambio.estado.html.j2")
     enlace = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
     context = {
@@ -26,11 +26,13 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
         'Enlace': enlace
     }
 
-    render = template.render(context)
+    render = template.render(
+        
+    )
     msg = EmailMessage()
     msg["Subject"] = "Actualización de solicitud"
     msg["From"] = _my_email
-    msg["To"] = email
+    msg["To"] = ", ".join(email) if isinstance(email, list) else email
     msg.set_content(
         render,
         subtype="html"

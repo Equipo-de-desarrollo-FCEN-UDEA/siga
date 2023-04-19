@@ -32,7 +32,7 @@ services:
     container_name: 'pgadmin'
     image: dpage/pgadmin4
     ports:
-      - '80:80'
+      - '81:80'
     depends_on:
       - db
     env_file:

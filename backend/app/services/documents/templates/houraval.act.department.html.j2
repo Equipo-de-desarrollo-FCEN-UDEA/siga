@@ -12,10 +12,10 @@
         </div>
         <p style="margin: 2em;">
             Señores:
-        </p>
-        <p style="margin: 2em;">
-            Consejo de Facultad <br>
-            {{user.department.school.description}} <br>
+        </p style="margin: 2em;">
+        <p>
+            VICERRECTORÍA DE INVESTIGACIÓN 
+            <br>
             Universidad de Antioquia
         </p>
 
@@ -23,7 +23,7 @@
     <section class="section">
         {% if not hour_aval.another_applicants %}
         <p class="text-justify">
-            El Consejo del {{user.department.description}} reunido el pasado {{date}}{% if acta%} y soportado en el acta {{act}} {% endif %},
+            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}}{% if acta%} y soportado en el acta {{act}} {% endif %},
             recibió por parte del
             profesor {{(user.names + ' ' + user.last_names).title()}}, una solicitud de aval para dedicación de
             {{hour_aval.hours_week}} horas semanales, en calidad
@@ -35,7 +35,8 @@
         {% if hour_aval.another_applicants %}
 
         <p class="text-justify">
-            El Consejo del {{user.department.description}} reunido el pasado {{date}} y soportado en el acta {{act}},
+            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el
+            acta {{act}},
             recibió por parte de los
             profesores que se relacionan a continuación, una solicitud de aval horaria, para el proyecto de
             investigación "{{hour_aval.title}}" que tendrá una duración de
@@ -87,12 +88,16 @@
         <p style="margin-top: 1em;">
             Cordialmente,
         </p>
-        <div class="signature" style="margin-top: 2em;">
+        <br>
+        <br>
+        <br>
+        <div class="signature text-left" style="margin-top: 2em;">
             <p>
-                <hr style="width: 50%;">
-                {{user.department.director.title()}} <br>
-                Director <br>
-                {{user.department.description}}
+                <hr style="width:50%;text-align:left;margin-left:0">
+                {{user.department.school.dean.title()}} <br>
+                Decano(a) 
+                <br>
+                {{user.department.school.description}}
             </p>
         </div>
     </section>
