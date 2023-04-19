@@ -95,64 +95,63 @@
     Solo puedes elegir el número de días aprobados por talento humano.
   </div>
 
-
   <!-- Form data -->
   <div class="row regular-row mt-4 align-items-baseline">
-    <div class="signature-container">
-      <div class="row regular-row mt-4">
-        <span class="col-md-4 col-xs-12 col-sm-12 label"
-          >Número de días  <span style="color: red">*</span></span>
-          <div class="col-md-6">
-            <div class="formfloatig">
-              <input
-                id="floatinghours_week"
-                formControlName="total_days"
-                max="21"
-                min="1"
-                class="form-control"
-                placeholder="Ejemplo: 4"
-                type="number"
-                [ngClass]="{
-                  'is-invalid': isInvalidForm('total_days')
-                }"
-              />
-            </div>
-            <p *ngIf="isInvalidForm('total_days')" class="inputError text-danger">
-              Esta cantidad de días debe ser mínimo de 1 y máximo de 21
-            </p>
-          </div>
-        <span class="col-md-4 col-xs-12 col-sm-12 label" 
-          >Fecha inicial <span style="color: red">*</span></span>
-        <div  class="col-md-6" 
-              style="margin-bottom: 3px;
-                     margin-top: 6 px;"
-              >
-          <div class="input-group">
-            <input
-              #dpFromDate
-              class="form-control"
-              type="text"
-              (click)="datepicker.toggle(); clicked = clicked + 1"
-              placeholder="yyyy-mm-dd"
-              name="dpFromDate"
-              formControlName="start_date"
-              (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-              [value]="
-                formatter.format(fromDate) ? formatter.format(fromDate) : null
-              "
-              [ngClass]="{ 'is-invalid': 
-              (submitted && f['total_days'].errors) ||
-              ((!fromDate || !toDate) && clicked !== 0) ||
-              selectDays(fromDate,toDate)}"
-              [attr.disabled]="
-                f['total_days'].errors ||
-                f['application_sub_type_id'].pristine ||
-                f['application_sub_type_id'].errors
-                  ? ''
-                  : null
-              "
-            />
-            <button
+    <div class="mt-4 col-md-5 col-xs-12 col-sm-12 col-12 mb-3">
+      <span class="col-md-4 col-xs-12 col-sm-12 label"
+        >Número de días<span style="color: red">*</span></span
+      >
+      <div class="col-12">
+        <div class="formfloatig">
+          <input
+            id="floatinghours_week"
+            formControlName="total_days"
+            max="21"
+            min="1"
+            class="form-control"
+            placeholder="Ejemplo: 4"
+            type="number"
+            [ngClass]="{
+              'is-invalid': isInvalidForm('total_days')
+            }"
+          />
+        </div>
+        <p *ngIf="isInvalidForm('total_days')" class="inputError text-danger">
+          Esta cantidad de días debe ser mínimo de 1 y máximo de 21
+        </p>
+      </div>
+      <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
+        >Fecha inicial <span style="color: red">*</span></span
+      >
+      <div class="col-12 mt-2" style="margin-bottom: 3px; margin-top: 6 px">
+        <div class="input-group">
+          <input
+            #dpFromDate
+            class="form-control"
+            type="text"
+            (click)="datepicker.toggle(); clicked = clicked + 1"
+            placeholder="yyyy-mm-dd"
+            name="dpFromDate"
+            formControlName="start_date"
+            (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+            [value]="
+              formatter.format(fromDate) ? formatter.format(fromDate) : null
+            "
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['total_days'].errors) ||
+                ((!fromDate || !toDate) && clicked !== 0) ||
+                selectDays(fromDate, toDate)
+            }"
+            [attr.disabled]="
+              f['total_days'].errors ||
+              f['application_sub_type_id'].pristine ||
+              f['application_sub_type_id'].errors
+                ? ''
+                : null
+            "
+          />
+          <button
             #buttonEl
             class="btn btn-outline-secondary"
             (click)="datepicker.toggle(); clicked = clicked + 1"
@@ -160,55 +159,56 @@
             [attr.disabled]="
               f['total_days'].errors ||
               f['application_sub_type_id'].pristine ||
-              f['application_sub_type_id'].errors 
+              f['application_sub_type_id'].errors
                 ? ''
                 : null
             "
           >
             <i class="fa fa-calendar"> </i>
           </button>
-          </div>
-          <!-- errors dates -->
-            <div
-            *ngIf="
+        </div>
+        <!-- errors dates -->
+        <div
+          *ngIf="
             (submitted && f['total_days'].errors) ||
             ((!fromDate || !toDate) && clicked !== 0) ||
-            selectDays(fromDate,toDate)
-            "
-            class="invalid"
-          >
-            <div
-              *ngIf="selectDays(fromDate,toDate)"
-            >
-              La cantidad de días elegidos de vacaciones no es igual a los escogidos (tenga en cuenta si son hábiles o no)
-            </div>
+            selectDays(fromDate, toDate)
+          "
+          class="invalid"
+        >
+          <div *ngIf="selectDays(fromDate, toDate)">
+            La cantidad de días elegidos de vacaciones no es igual a los
+            escogidos (tenga en cuenta si son hábiles o no)
           </div>
         </div>
       </div>
-    
-      <div class="col-sm-6 col-xs-6 col-md-6" hidden>
-        <div class="input-group" (click)="datepicker.toggle()">
-          <input
-            #dpToDate
-            class="form-control"
-            placeholder="yyyy-mm-dd"
-            name="dpToDate"
-            formControlName="end_date"
-            [value]="formatter.format(toDate)"
-            (input)="toDate = validateInput(toDate, dpToDate.value)"
-          />
-        </div>
+    </div>
+
+    <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+      <div class="input-group" (click)="datepicker.toggle()">
+        <input
+          #dpToDate
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          name="dpToDate"
+          formControlName="end_date"
+          [value]="formatter.format(toDate)"
+          (input)="toDate = validateInput(toDate, dpToDate.value)"
+        />
       </div>
-      
-      <!-- FIRMA -->
+    </div>
+
+    <!-- FIRMA -->
+    <div class="col-md-4 col-xs-12 col-sm-12 col-12">
       <div
         id="div-signature"
+        class="col-12"
         style="
           border: 5px double black;
           background-color: rgba(80, 255, 217, 0);
-          max-width: 30%;
+          max-height: 10em;
         "
-        >
+      >
         <div class="me-3">Espacio para firma</div>
         <signature-pad
           [options]="signaturePadOptions"
@@ -217,26 +217,34 @@
         >
         </signature-pad>
       </div>
-      <p></p>
-      <div class="d-grid gap-2 col-sm-12 col-md-33 col-lg-4 col-xl-4 p-4">
+    </div>
+
+    <div class="mt-4 col-md-3 col-xs-12 col-sm-12 col-12">
+      <div class="col-12">
         <button
           id="btn-sub1"
           class="btn btn-outline-secondary col-12"
           type="button"
           (submit)="(false)"
-          (click)="clearPad()" >
+          (click)="clearPad()"
+        >
           Limpiar Firma
         </button>
-        <button
-          id="btn-sub2"
-          class="btn btn-outline-secondary col-12"
-          type="button"
-          [disabled]="isButtonDisabled"
-          (submit)="(false)"
-          color="secondary"
-          (click)="savePad($event)"   >
-          Subir firma
-        </button>
+      </div>
+      <div>
+        <div class="col-12 mt-3">
+          <button
+            id="btn-sub2"
+            class="btn btn-outline-secondary col-12"
+            type="button"
+            [disabled]="isButtonDisabled"
+            (submit)="(false)"
+            color="secondary"
+            (click)="savePad($event)"
+          >
+            Subir firma
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -286,9 +294,6 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="text-danger mt-2" *ngIf="files.length <= 0 && submitted">
-    Es obligatorio subir el archivo de talento humano.
   </div>
   <hr />
 </form>

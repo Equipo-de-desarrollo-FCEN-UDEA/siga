@@ -15,9 +15,6 @@ class CommissionBase(BaseModel):
     lenguage: str | None
     justification: str = Field(max_length=500, min_length=5)
     documents: list[Any] | None
-    
-
-
 
 class CommissionCreate(CommissionBase):
     application_sub_type_id: int = Field(gt=0, lt=100)

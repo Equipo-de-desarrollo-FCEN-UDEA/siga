@@ -8,7 +8,7 @@ class VacationBase(BaseModel):
     total_days: int
     start_date: datetime
     end_date: datetime
-    documents: list[Any] | None = Field(default_factory=list)
+    documents: list[Any]
     signature: str
 
 class VacationCreate(VacationBase):

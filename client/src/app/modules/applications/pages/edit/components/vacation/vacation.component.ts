@@ -124,7 +124,7 @@ export class VacationComponent implements OnInit {
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
     documents: [this.documents],
-    //signature: [this.signatureImg],
+    signature: [this.signatureImg],
   });
 
   ngOnInit(): void {
@@ -171,6 +171,8 @@ export class VacationComponent implements OnInit {
       this.id
     );
 
+    this.form.value.signature = this.signatureImg;
+    console.log(this.form.value.signature);
     // for (let path of this.documentsToDelete) {
     //   this.documentSvc.deleteDocument(path).subscribe().unsubscribe();
     // }
@@ -183,6 +185,7 @@ export class VacationComponent implements OnInit {
               documents: data.files_paths,
             });
           }
+          this.form.value.signature = this.signatureImg;
           console.log(this.form.value);
           return this.vacationSvc.putVacation(
             this.form.value as VacationCreate,
