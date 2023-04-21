@@ -59,12 +59,8 @@ async def create_vacation(
             obj_in=application
         )
 
-        #mongo_id = ObjectId(application.mongo_id)
+        mongo_id = ObjectId(application.mongo_id)
         
-        application = ApplicationResponse.from_orm(application)
-        
-        response = VacationResponse(
-            **dict(application, vacation=vacation_create))
         
         #path = documents.fill_vacations_format(current_user, response)
         #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
@@ -84,6 +80,14 @@ async def create_vacation(
         log.error(e)
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
+    
+    application = ApplicationResponse.from_orm(application)
+        
+    response = VacationResponse(
+            **dict(application, vacation=vacation_create))
+    
+    path = documents.fill_vacations_format(current_user, response)
+    await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     return response
 
