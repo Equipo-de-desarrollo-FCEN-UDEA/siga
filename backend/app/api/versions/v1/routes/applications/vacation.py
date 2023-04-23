@@ -154,7 +154,7 @@ async def update_vacation(
             current_vacation = await crud.vacation.get(engine, id=mongo_id)
             update_vacation = await crud.vacation.update(engine, db_obj=current_vacation, obj_in=vacation)
 
-            log.debug('updated_commission', update_vacation)
+            log.debug('updated_vacation', update_vacation)
 
 
             # In PostgreSQL
@@ -185,7 +185,7 @@ async def delete_vacation(
     db: Session = Depends(db.get_db)
 ) -> Msg:
     """
-    Endpoint to delete an application of type commission
+    Endpoint to delete an application of type vacation
 
         params:
             -id: int, this is the id of the application and not of mongo
