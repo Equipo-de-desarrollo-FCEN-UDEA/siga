@@ -53,6 +53,8 @@ export class VacationComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
+  public laboralflag: boolean = true;
+  public verify_date: number = 0;
 
   // Files
   public files: any[] = [];
@@ -87,7 +89,6 @@ export class VacationComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     // Actualiza el tamaño del signature-pad
-    let important = this.div_important.offsetWidth;
     this.div_important = document.getElementById(
       'div-signature'
     ) as HTMLDivElement;
@@ -136,11 +137,13 @@ export class VacationComponent implements OnInit {
           application_sub_type_id: data.application_sub_type_id,
         });
         this.documents = data.vacation.documents!;
+        this.documents.pop();
         this.SubTypeSvc.getApplicationSubType(
           +data.application_sub_type_id
         ).subscribe({
           next: (res) => {
             this.laboralDay = res.extra.days;
+            this.laboralflag = true;
           },
         });
       });
@@ -275,12 +278,16 @@ export class VacationComponent implements OnInit {
     const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
       ':'
     )[0];
-    console.log(ID_VACATION_TYPE);
-    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
+    this.laboralflag = false;
+this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
         this.laboralDay = res.extra.days;
       },
     });
+
+    if (ID_VACATION_TYPE=="1"){
+      this.laboralflag=true;
+    }
   }
 
   // --------------------------------------
@@ -288,14 +295,32 @@ export class VacationComponent implements OnInit {
   // --------------------------------------
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
+    const tot_days = this.form.value.total_days;
+    const entero_temp=tot_days;
+
     if (fromDate || toDate) {
-      return (
-        LaboralDays(
+      //Verify between laboral days and calendar days
+      if (this.laboralflag){
+        this.laboralDay=LaboralDays(
           new Date(this.formatter.format(fromDate)),
           new Date(this.formatter.format(toDate)),
           this.holidays
-        ) > this.laboralDay
-      );
+        );
+        //Variable to verify (laboralDay)
+        this.verify_date=this.laboralDay;
+      }else{
+        this.verify_date=new Date(this.formatter.format(toDate)).getTime()-
+                        new Date(this.formatter.format(fromDate)).getTime();
+        //In this case is important to take the date as days:
+        this.verify_date=this.verify_date/(1000*3600*24)+1;
+      }
+      //If days in form does not equal to required, the form does not allow continue      
+      if (this.verify_date != entero_temp){
+        return true;
+      }
+      this.form.value.end_date = new Date(this.formatter.format(toDate));
+      return false;       
+
     } else {
       return false;
     }
