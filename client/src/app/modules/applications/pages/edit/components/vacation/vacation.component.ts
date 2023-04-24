@@ -136,13 +136,16 @@ export class VacationComponent implements OnInit {
           ...data.vacation,
           application_sub_type_id: data.application_sub_type_id,
         });
+        let status_app = data.application_status[data.application_status.length-1].status.name;
         this.documents = data.vacation.documents!;
-        this.documents.pop();
+        if (status_app != 'APROBADA'){
+          this.documents.pop();
+        }
         this.SubTypeSvc.getApplicationSubType(
           +data.application_sub_type_id
         ).subscribe({
           next: (res) => {
-            this.laboralDay = res.extra.days;
+            //this.laboralDay = res.extra.days;
             this.laboralflag = true;
           },
         });
@@ -227,7 +230,7 @@ export class VacationComponent implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
@@ -235,7 +238,7 @@ export class VacationComponent implements OnInit {
     console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    console.log(event);
+    //console.log(event);
     // works in device not in browser
   }
 

@@ -142,7 +142,7 @@
             }"
             [attr.disabled]="
               f['total_days'].errors ||
-              f['application_sub_type_id'].pristine ||
+
               f['application_sub_type_id'].errors
                 ? ''
                 : null
@@ -155,7 +155,7 @@
             type="button"
             [attr.disabled]="
               f['total_days'].errors ||
-              f['application_sub_type_id'].pristine ||
+
               f['application_sub_type_id'].errors
                 ? ''
                 : null
