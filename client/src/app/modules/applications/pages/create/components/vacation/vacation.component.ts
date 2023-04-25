@@ -158,6 +158,7 @@ export class VacationComponent {
       return;
     }
     this.form.value.signature = this.signatureImg;
+    
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
@@ -175,24 +176,36 @@ export class VacationComponent {
           );
         })
       );
-      console.log(vacation);
-      vacation.subscribe({
-        next: (data) => {
-          Swal.fire({
-            title: 'La solicitud se creó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              //redirect to the view component of the application
-              this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
-            }
-          });
-        },
-        error: (err) => {
-          this.error = err;
-        },
-      });
+      if (this.signatureImg!=""){
+        //console.log(vacation);
+        vacation.subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: 'La solicitud se creó correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                //redirect to the view component of the application
+                this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
+              }
+            });
+          },
+          error: (err) => {
+            this.error = err;
+          },
+        });
+      }else{
+        Swal.fire({
+          title: 'Firmar',
+          html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
+        });
+        return;
+      }
+      
     }else{
       Swal.fire({
         title: 'Adjuntar documento',
@@ -278,15 +291,15 @@ export class VacationComponent {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
+    //console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    console.log(event);
+    //console.log(event);
     // works in device not in browser
   }
 
