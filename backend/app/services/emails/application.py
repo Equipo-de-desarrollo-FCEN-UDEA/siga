@@ -26,9 +26,7 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
         'Enlace': enlace
     }
 
-    render = template.render(
-        
-    )
+    render = template.render(context)
     msg = EmailMessage()
     msg["Subject"] = "Actualización de solicitud"
     msg["From"] = _my_email
@@ -41,6 +39,12 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
+
+             # server de pruebas udea
+
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #     smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
+
 
 
 @celery_app.task
@@ -66,3 +70,9 @@ def create_application_email(to_name: str, to_lname: str, tipo_solicitud: str, t
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
+
+         # server de pruebas udea
+
+    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
+    #     smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
+
