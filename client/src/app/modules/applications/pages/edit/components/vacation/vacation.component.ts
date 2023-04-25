@@ -140,6 +140,15 @@ export class VacationComponent implements OnInit {
         this.documents = data.vacation.documents!;
         if (status_app != 'APROBADA'){
           this.documents.pop();
+        }else{
+          Swal.fire({
+            title: 'Solicitud Aprobada',
+            html: 'Su solicitud está aprobada, y por tal motivo no se puede editar',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          return;
         }
         this.SubTypeSvc.getApplicationSubType(
           +data.application_sub_type_id
