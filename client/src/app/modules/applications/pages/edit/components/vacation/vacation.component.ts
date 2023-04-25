@@ -199,29 +199,42 @@ export class VacationComponent implements OnInit {
           );
         })
       );
-    }
-    vacation.subscribe({
-      next: (res) => {
-        console.log('vacation updated', vacation);
+      if (this.signatureImg!=""){
+        vacation.subscribe({
+          next: (res) => {
+            console.log('vacation updated', vacation);
+            Swal.fire({
+              title: 'Actualizado',
+              text: '¡El registro de vacaciones se actualizó con éxito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#3AB795',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate([
+                  'solicitudes/ver/' + this.id + '/vacaciones',
+                ]);
+              }
+            });
+          },
+          error: (err) => {
+            console.log('salio error', err);
+            this.error = err;
+          },
+        });
+      }else{
         Swal.fire({
-          title: 'Actualizado',
-          text: '¡El registro de vacaciones se actualizó con éxito!',
-          icon: 'success',
+          title: 'Firmar',
+          html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
+          icon: 'error',
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#3AB795',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([
-              'solicitudes/ver/' + this.id + '/vacaciones',
-            ]);
-          }
         });
-      },
-      error: (err) => {
-        console.log('salio error', err);
-        this.error = err;
-      },
-    });
+        return;
+      }
+    }
+
+   
   }
 
   // --------------------------------------
