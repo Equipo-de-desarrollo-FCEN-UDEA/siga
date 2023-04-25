@@ -1,4 +1,5 @@
 import json
+import re
 import base64
 from datetime import datetime
 from uuid import uuid1
@@ -12,6 +13,7 @@ from app.domain.models import User, Vacation
 from app.domain.schemas import UserResponse
 from app.domain.schemas import VacationResponse
 from ..templates import templates_dir
+from app.assets.logos import logos_dir
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
 from app.core.celery_worker import celery_app
@@ -57,7 +59,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
         "total_days": str(vacations_dict['vacation']['total_days']),
-        "user_signature": base64.b64decode(vacations_dict['vacation']['signature'])
+        "user_signature": vacations_dict['vacation']['signature']
     }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
@@ -67,9 +69,9 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
     return path
 
 @celery_app.task
-def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str):
+def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str, school_id: int = 2):
 
-    cells = open(templates_dir + '/cells_vacations.json')
+    cells = open(templates_dir + '/cells_vacation.json')
     cells = json.load(cells)
 
     wb = load_workbook(filename = templates_dir + '/formato_vacaciones.xlsm')
@@ -77,16 +79,25 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str):
 
     for datos in [user, vacations]:
         for key in datos.keys():
-            if cells[key].find(':') < 0:
-                target[cells[key]] = datos[key]
-            else:
-                target.merge_cells(cells[key])
-                target[cells[key].split(':')[0]] = datos[key]
-    
-    img_sign = openpyxl.drawing.image.Image(BytesIO(vacations['user_signature']))
+            if key!='user_signature':
+                if cells[key].find(':') < 0:
+                    target[cells[key]] = datos[key]
+                else:
+                    target.merge_cells(cells[key])
+                    target[cells[key].split(':')[0]] = datos[key]
+
+    dean_path = logos_dir + f"/signature_{school_id}.png"
+    sign_base64 = base64.b64decode(re.sub('data:image/png;base64,',"", vacations['user_signature']))
+    img_sign = openpyxl.drawing.image.Image(BytesIO(sign_base64))
+    sign_dean = openpyxl.drawing.image.Image(dean_path)
+    img_sign.width = 300
+    img_sign.height = 320
     target.merge_cells('A21:C24')
-    img_sign.anchor('A21')
+    img_sign.anchor = 'A21'
     target.add_image(img_sign)
+    target.merge_cells('H23:M23')
+    sign_dean.anchor = 'H23'
+    target.add_image(sign_dean)
 
     with NamedTemporaryFile() as tmp:
         wb.save(tmp.name)
