@@ -12,7 +12,8 @@ from .applications import (commission,
                            permission,
                            full_time,
                            hour_aval,
-                           vacation)
+                           vacation,
+                           economic_support)
 
 from .holiday import holiday
 from .cron_job import cron_job

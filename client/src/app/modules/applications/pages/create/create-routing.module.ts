@@ -2,6 +2,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+//CREATE COMPONENT
+import { CreateComponent } from './create.component';
+
 // PERMISO COMPONENT
 import { PermissionComponent } from './components/permission/permission.component';
 
@@ -17,10 +20,14 @@ import { StartLetterComponent } from './components/full-time/pages/start-letter/
 import { ViceFormatComponent } from './components/full-time/pages/viceformat/viceformat.component';
 import { WorkplanComponent } from './components/full-time/pages/workplan/workplan.component';
 
-//CREATE COMPONENT
-import { CreateComponent } from './create.component';
+//AVAL DE HORAS COMPONENT
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
+
+//VACACIONES COMPONENT
 import { VacationComponent } from './components/vacation/vacation.component';
+
+//ECONOMIC SUPPORT COMPONENT
+import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 
 
 
@@ -64,12 +71,20 @@ const routes: Routes = [
           button: 'Iniciar'
         }
       },
-      //Vacaciones
+      //VACACIONES
       {
         path: 'vacaciones',
         component: VacationComponent,
         data:{
           title: 'Vacaciones'
+        }
+      },
+      //APOYO ECONOMICO
+      {
+        path: 'apoyo-economico',
+        component: EconomicSupportComponent,
+        data:{
+          title: 'Apoyo Económico'
         }
       },
       //  Formularios extras
