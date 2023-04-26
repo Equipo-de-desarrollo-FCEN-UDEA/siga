@@ -148,9 +148,7 @@ export class VacationComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-          this.router.navigate([
-            'solicitudes/ver/' + this.id + '/vacaciones',
-          ]);
+          
           return;
         }
         this.SubTypeSvc.getApplicationSubType(
