@@ -79,7 +79,7 @@
               class="fa fa-info-circle"
               title="Información general de la solicitud"
             ></i>
-            Información general
+            Lugar
           </span>
         </button>
       </h6>
@@ -137,22 +137,6 @@
                   class="form-control"
                   placeholder=" "
                   [ngClass]="{ 'is-invalid': isInvalidForm('state') }"
-                />
-              </div>
-            </div>
-          </div>
-          <!-- LANGUAGE -->
-          <div class="row regular-row mt-3 align-items-baseline">
-            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Idioma</div>
-            <div class="col-sm-12 col-xs-12 col-md-8">
-              <div class="formfloatig">
-                <input
-                  id="floatingidioma"
-                  formControlName="lenguage"
-                  class="form-control"
-                  type="idioma"
-                  placeholder=" "
-                  [ngClass]="{ 'is-invalid': isInvalidForm('lenguage') }"
                 />
               </div>
             </div>
@@ -277,7 +261,7 @@
               class="fa fa-info-circle"
               title="A continuación llene los siguientes campos para la dependencia que apoyará su solicitud y la fecha de inicio y fin de la actividad "
             ></i>
-            Apoyo y fechas
+            Fechas
           </span>
         </button>
       </h6>
@@ -288,38 +272,6 @@
         aria-labelledby="headingThree"
       >
         <div class="accordion-body">
-          <div class="row regular-row mt-4 align-items-baseline">
-            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-              Apoyo solicitado a: <span style="color: red">*</span>
-            </div>
-            <div class="col-sm-12 col-xs-12 col-md-8">
-              <div class="formfloatig">
-                <select
-                  class="form-control form-select-lg mb-3 cursor"
-                  formControlName="support"
-                >
-                  <option value="0" disabled selected>
-                    Elige la dependencia
-                  </option>
-                  <option *ngFor="let tipo of support">
-                    {{ tipo.name }}
-                  </option>
-                </select>
-                <!-- errors justification -->
-                <div
-                  *ngIf="
-                    (submitted || f['support'].touched) && f['support'].errors
-                  "
-                  class="invalid"
-                >
-                  <div *ngIf="f['support'].errors['required']">
-                    El campo es requerido
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- DATES -->
           <div class="mt-4 row regular-row align-items-baseline">
             <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
@@ -473,9 +425,9 @@
               documentos:
               <ul>
                 <li>Carta de invitación o aceptación</li>
+                <li>Carta de compromiso</li>
                 <li>Certificación bancaria</li>
                 <li>Copia del documento de identidad</li>
-                <li>Poliza de seguro</li>
               </ul>
               Y algun documento extra que considere necesario.
             </div>
@@ -544,5 +496,74 @@
       </div>
     </div>
   </div>
+
+  <div class="accordion mt-3">
+    <div class="accordion-item">
+      <!-- header -->
+      <h6 class="accordion-header" id="headingSix">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseSix"
+          aria-expanded="false"
+          aria-controls="collapseSix"
+        >
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada dependencia donde desea realizar la solicitud"
+            ></i>
+            Apoyo solicitado
+          </span>
+        </button>
+      </h6>
+      <!-- content -->
+      <div
+        id="collapseSix"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingSix"
+      >
+        <div class="accordion-body">
+          <div class="alert alert-warning mt-3 col-12 col-lg-12">
+            A continuación, seleccione la dependencia donde desea enviar la
+            solicitud y llene los campos extras de ser necesario.
+          </div>
+
+          <div class="row regular-row mt-4 align-items-baseline">
+            <div class="col-md-4 col-xs-12 col-sm-6 label">
+              Apoyo solicitado a: <span style="color: red">*</span>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-8">
+              <div class="formfloatig">
+                <select
+                  class="form-control form-select-lg cursor"
+                  formControlName="support"
+                >
+                  <option value="0" disabled selected>
+                    Elige la dependencia
+                  </option>
+                  <option *ngFor="let tipo of support">
+                    {{ tipo.name }}
+                  </option>
+                </select>
+                <!-- errors justification -->
+                <div
+                  *ngIf="
+                    (submitted || f['support'].touched) && f['support'].errors
+                  "
+                  class="invalid"
+                >
+                  <div *ngIf="f['support'].errors['required']">
+                    El campo es requerido
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
-<hr>
+<hr />

@@ -70,11 +70,15 @@ export class EconomicSupportComponent {
 
   ///SOLO DE EJEMPLO
   support = [
-    { name: 'COMITE DE POSGRADO', value: true },
-    { name: 'CONSEJO DE INSTITUTO', value: true },
+    { name: 'PREGRADO', value: true },
+    { name: 'POSGRADO', value: true },
+    { name: 'BIENESTAR DE LA FACULTAD', value: true },
+    { name: 'BIENESTAR GENERAL', value: true },
+    { name: 'GRUPOS DE INVESTIGACIÓN', value: true },
+    { name: 'INTERNACIONALIZACIÓN', value: true },
   ];
   
- 
+  
   
   
   public form = this.fb.group({
