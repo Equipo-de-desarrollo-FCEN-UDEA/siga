@@ -12,3 +12,7 @@ from .hour_aval import (HourAvalCreate, HourAvalUpdate,
 
 from .vacation import (VacationCreate, VacationUpdate, 
                        VacationResponse, VacationInDB)
+
+from .economic_support import (EconomicSupportCreate, EconomicSupportUpdate,
+                               EconomicSupportResponse, EconomicSupportInDB, 
+                               EconomicSupportBase)
