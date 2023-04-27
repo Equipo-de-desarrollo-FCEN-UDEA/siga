@@ -26,9 +26,7 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
         'Enlace': enlace
     }
 
-    render = template.render(
-        
-    )
+    render = template.render(context)
     msg = EmailMessage()
     msg["Subject"] = "Actualización de solicitud"
     msg["From"] = _my_email
