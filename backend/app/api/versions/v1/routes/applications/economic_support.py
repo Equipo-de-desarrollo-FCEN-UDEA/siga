@@ -5,51 +5,52 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails, documents
-from app.domain.models import Vacation, User, Application
+from app.services import crud, emails
+from app.domain.models import EconomicSupport, User, Application
 from app.domain.schemas import (ApplicationCreate,
-                                VacationCreate,
-                                VacationUpdate,
-                                VacationResponse,
                                 Msg,
+                                EconomicSupportCreate,
+                                EconomicSupportUpdate,
+                                EconomicSupportResponse,
                                 ApplicationResponse,
                                 Application_statusCreate)
 from app.domain.errors import BaseErrors
+
 
 router = APIRouter()
 
 log = get_logging(__name__)
 
-# crea una solicitud de vacaciones
-@router.post("/", response_model=VacationResponse)
-async def create_vacation(
-    vacation: VacationCreate,
+# crea una solicitud de apoyo económico
+@router.post("/", response_model=EconomicSupportResponse)
+async def create_economic_support(
+    economic_supprt: EconomicSupportCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> VacationResponse:
+) -> EconomicSupportResponse:
     """
-    Endpoint to create a application type vacation
+    Endpoint to create a application type economic support
 
         params:
-            - body: VacationCreate
+            - body: EconomicSupportCreate
 
         response:
-            - Vacation
+            - EconomicSupport
     """
     try:
-        log.debug(vacation)
+        log.debug(economic_supprt)
         # En la BD de mongo
-        vacation_create = await crud.vacation.create(
+        economic_support_create = await crud.economic_support.create(
             db=engine,
-            obj_in=Vacation(**dict(vacation))
+            obj_in=EconomicSupport(**dict(economic_supprt))
         )
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(
-            mongo_id=str(vacation_create.id),
-            application_sub_type_id=vacation.application_sub_type_id,
+            mongo_id=str(economic_support_create.id),
+            application_sub_type_id=economic_supprt.application_sub_type_id,
             user_id=current_user.id
         )
 
@@ -59,83 +60,78 @@ async def create_vacation(
             obj_in=application
         )
 
-        mongo_id = ObjectId(application.mongo_id)
         
-
     except BaseErrors as e:
-        await engine.remove(Vacation, Vacation.id == vacation_create.id)
+        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
 
     except ValueError as e:
         log.error('ValueError')
-        await engine.remove(Vacation, Vacation.id == vacation_create.id)
+        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, e)
 
     except Exception as e:
         log.error('Exception')
         log.error(e)
-        await engine.remove(Vacation, Vacation.id == vacation_create.id)
+        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
     
     application = ApplicationResponse.from_orm(application)
-        
-    response = VacationResponse(
-            **dict(application, vacation=vacation_create))
-    
-    path = documents.fill_vacations_format(current_user, response)
-    await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
+    response = EconomicSupportResponse(
+            **dict(application, economic_support=economic_support_create))
+    
     return response
 
 
-# trae una solicitud de vacacion expecifica del usuario
-@router.get("/{id}", response_model=VacationResponse)
-async def get_vacation(
+# trae una solicitud de economic_support expecifica del usuario
+@router.get("/{id}", response_model=EconomicSupportResponse)
+async def get_economic_support(
     id: int,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> VacationResponse:
+) -> EconomicSupportResponse:
 
     try:
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
 
         if application:
-            vacation = await crud.vacation.get(engine, id=mongo_id)
+            economic_support = await crud.economic_support.get(engine, id=mongo_id)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
     application_response = ApplicationResponse.from_orm(application)
-    response = VacationResponse(
-        **dict(application_response), vacation=vacation)
+    response = EconomicSupportResponse(
+        **dict(application_response), economic_support=economic_support)
 
     return response
 
 
 @router.put("/{id}", status_code=200)
-async def update_vacation(
+async def update_economic_support(
     id: int,
-    vacation: VacationUpdate,
+    economic_support: EconomicSupportUpdate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> Vacation:
+) -> EconomicSupport:
     """
-    Endpoint to update an application of type Vacation
+    Endpoint to update an application of type economic support
 
         params:
-            -body: VacationUpdate
+            -body: EconomicSupportUpdate
 
         path-params:
             -id: int, this is the id of the application and not the mongo_id
 
         response:
-            -body: Vacation
+            -body: EconomicSupport
     """
 
     try:
@@ -143,38 +139,32 @@ async def update_vacation(
             db=db, id=id, who=current_user)
         
         if application:
-            log.debug('obj_in que es', vacation)
+            log.debug('obj_in que es', economic_support)
 
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
-            current_vacation = await crud.vacation.get(engine, id=mongo_id)
-            update_vacation = await crud.vacation.update(engine, db_obj=current_vacation, obj_in=vacation)
+            current_economic_support = await crud.economic_support.get(engine, id=mongo_id)
+            update_economic_support = await crud.economic_support.update(engine, db_obj=current_economic_support, obj_in=economic_support)
 
-            log.debug('updated_vacation', update_vacation)
+            log.debug('update_economic_support', update_economic_support)
 
 
             # In PostgreSQL
             application_updated = crud.application.update(
-                db, current_user, db_obj=application, obj_in=vacation)
+                db, current_user, db_obj=application, obj_in=economic_support)
             
             application = ApplicationResponse.from_orm(application_updated) #Asegurar que es application_update.
-
-            response = VacationResponse(
-            **dict(application, vacation=update_vacation))
-
-            #path = documents.fill_vacations_format(current_user, response)
-            #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
             
             log.debug('application update', application_updated)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
-    return update_vacation
+    return update_economic_support
 
 @router.delete("/{id}", response_model=Msg)
-async def delete_vacation(
+async def delete_economic_support(
     id: int,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
@@ -182,7 +172,7 @@ async def delete_vacation(
     db: Session = Depends(db.get_db)
 ) -> Msg:
     """
-    Endpoint to delete an application of type vacation
+    Endpoint to delete an application of type economic support
 
         params:
             -id: int, this is the id of the application and not of mongo
@@ -198,8 +188,8 @@ async def delete_vacation(
         log.debug(delete)
         if delete:
             log.debug('Estamos en delete')
-            await crud.vacation.delete(engine, id=mongo_id)
+            await crud.economic_support.delete(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     
-    return Msg(msg="Vacacion eliminada correctamente")
+    return Msg(msg="Solicitud eliminada correctamente")

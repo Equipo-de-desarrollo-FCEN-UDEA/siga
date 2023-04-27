@@ -43,7 +43,12 @@ from .applications import (
     VacationCreate,
     VacationUpdate,
     VacationResponse,
-    VacationInDB
+    VacationInDB,
+    ##ECONOMIC SUPPORT
+    EconomicSupportCreate,
+    EconomicSupportUpdate,
+    EconomicSupportResponse,
+    EconomicSupportInDB,
 )
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
