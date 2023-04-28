@@ -6,6 +6,7 @@ import { CommissionComponent } from './components/commission/commission.componen
 import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
+import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 
 const routes: Routes = [
   { 
@@ -52,6 +53,13 @@ const routes: Routes = [
         component: VacationComponent,
         data: {
           title: 'Vacaciones'
+        }
+      },
+      {
+        path: 'apoyo-economico',
+        component: EconomicSupportComponent,
+        data: {
+          title: 'Apoyo Económico'
         }
       },
       {
