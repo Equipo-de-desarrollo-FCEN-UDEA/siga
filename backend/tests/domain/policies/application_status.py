@@ -51,5 +51,5 @@ class TestApplication_statusPolicy(TestBaseDB):
         assert status == 'VISTO BUENO'
 
         with raises(BaseErrors):
-            # dean cant aprobe without permission be in VISTO BUENO or RECHAZADA status
+            # dean cant aprobe without permission be in VISTO BUENO or DEVUELTA status
             policy.create(dean, to=permission)
