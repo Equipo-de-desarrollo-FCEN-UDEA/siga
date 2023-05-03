@@ -1079,7 +1079,7 @@ Date:   Thu Dec 29 11:35:19 2022 -0500
 
     feat(backend): Notificación a los otros investigadores
     
-    Se creó la notificación para los demás participantes del aval de horas, endpoint para confirmar o rechazar la solicitud
+    Se creó la notificación para los demás participantes del aval de horas, endpoint para confirmar o devolver la solicitud
 
 [33mcommit cd88dd0cb946adba530a4ce14a8b57cfb3a75107[m
 Merge: 5d0c325 d4011c1
@@ -2580,7 +2580,7 @@ Date:   Sun Nov 13 16:44:42 2022 -0500
 Author: Simon3640 <simon.garcial@udea.edu.co>
 Date:   Sun Nov 13 16:25:16 2022 -0500
 
-    Politicas para la asignación de estados de una solicitud implementadas, no se puede aceptar o rechazar a menos que seas la persona a la que va dirigida
+    Politicas para la asignación de estados de una solicitud implementadas, no se puede aceptar o devolver a menos que seas la persona a la que va dirigida
 
 [33mcommit 155215d861a8fc2c64faf40ca05a2c02af9a60a4[m
 Merge: 659dc5d 6628b1a

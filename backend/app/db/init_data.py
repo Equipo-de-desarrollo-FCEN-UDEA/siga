@@ -762,9 +762,16 @@ init_rols: List[schemas.RolCreate] = [
     ),
     # 11
     schemas.RolCreate(
-        name='Estudiante',
-        description='Estudiante',
-        scope=13
+        name='Estudiante pregrado',
+        description='Estudiante pregrado',
+        scope=27
+    ),
+
+    # 12
+    schemas.RolCreate(
+        name='Estudiante posgrado',
+        description='Estudiante posgrado',
+        scope=28
     )
 ]
 
@@ -780,7 +787,7 @@ init_statuss: List[schemas.StatusCreate] = [
         name='APROBADA'
     ),
     schemas.StatusCreate(
-        name='RECHAZADA'
+        name='DEVUELTA'
     ),
     schemas.StatusCreate(
         name='FINALIZADA'
