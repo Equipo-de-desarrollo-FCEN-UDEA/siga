@@ -60,7 +60,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
 
         return None
 
-    # Only the user can update the application and cant update if its in a status different of SOLICITADA or RECHAZADA
+    # Only the user can update the application and cant update if its in a status different of SOLICITADA or DEVUELTA
     def update(self, who: User, to: Application,
                obj_in: Union[ApplicationUpdate, Dict[str, Any]]) -> None:
 
@@ -68,19 +68,19 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         if not (who.id == to.user_id):
             raise application_401
 
-        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA' or app_status == 'EN CREACIÓN'):
+        if not (app_status == 'SOLICITADA' or app_status == 'DEVUELTA' or app_status == 'EN CREACIÓN'):
             raise application_in_other_status
 
         return None
 
-    # Only the user can delete the application and cant delete if its in a status different of SOLICITADA or RECHAZADA
+    # Only the user can delete the application and cant delete if its in a status different of SOLICITADA or DEVUELTA
     def delete(self, who: User, to: Application) -> None:
         app_status = to.application_status[-1].status.name
 
         if not (who.id == to.user_id):
             raise application_401
 
-        if not (app_status == 'SOLICITADA' or app_status == 'RECHAZADA' or app_status == 'EN CREACIÓN'):
+        if not (app_status == 'SOLICITADA' or app_status == 'DEVUELTA' or app_status == 'EN CREACIÓN'):
             raise application_401
 
         return None

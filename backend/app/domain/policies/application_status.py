@@ -17,7 +17,7 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
         for i, flux in enumerate(status_fluxes):
             if actual_status == flux["status"]:
                 next_status = i+1
-        if not (actual_status == 'RECHAZADA' or actual_status == 'EN CREACIÓN'):
+        if not (actual_status == 'DEVUELTA' or actual_status == 'EN CREACIÓN'):
             if not (who.rol.scope in status_fluxes[next_status]['scope']):
                 status = ''
                 for i, flux in enumerate(status_fluxes):
@@ -25,7 +25,7 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
                         status = status_fluxes[i-1]['status']
                 raise Application_statusErrors(
                     403, detail=f"No puedes tomar acción sobre esta solicitud, solo puedes tomar acción cuando la solicitud está en estado {status}")
-        if actual_status == 'RECHAZADA':
+        if actual_status == 'DEVUELTA':
             actual_status = to.application_status[-2].status.name
             for i, flux in enumerate(status_fluxes):
                 if actual_status == flux["status"]:
