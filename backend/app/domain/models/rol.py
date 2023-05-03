@@ -16,4 +16,5 @@ class Rol(Base):
     scope = Column(Integer)
 
     # relations
-    users = relationship("User", back_populates="rol")
+    rol_users = relationship("UserRol",backpopulates="rol")
+    #users = relationship("User", back_populates="rol")
