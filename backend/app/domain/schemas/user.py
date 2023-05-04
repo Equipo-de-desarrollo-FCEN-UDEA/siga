@@ -5,7 +5,8 @@ from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
-from .rol import RolResponse
+#from .rol import RolResponse
+from .users_rol import UserRolResponse
 
 log = get_logging(__name__)
 
@@ -86,12 +87,12 @@ class UserInDBBase(UserBase):
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
     email: str
-    rol: RolResponse
+    rol: UserRolResponse
 
 
 class UserInDB(UserInDBBase):
     hashed_password: SecretStr
-    rol: RolResponse
+    rol: UserRolResponse
 
 
 class UserBypass(BaseModel):

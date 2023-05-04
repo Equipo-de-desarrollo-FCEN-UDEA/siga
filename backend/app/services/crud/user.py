@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.domain.schemas.user import UserCreate, UserUpdate
-from app.domain.models import User, Rol, Department
+from app.domain.models import User, Rol, Department, UserRol
 from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
 from app.domain.errors.user import user_diferent_password
@@ -71,7 +71,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             raw = [
                 db.query(User)
                 .order_by(desc(User.id))
-                .join(Rol)
+                .join(UserRol)
                 .join(Department)
                 .filter(getattr(User, col).contains(f"{search}"))
                 .filter(*queries)
@@ -83,7 +83,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
 
         objs_db = (db.query(User)
                    .order_by(desc(User.id))
-                   .join(Rol)
+                   .join(UserRol)
                    .join(Department)
                    .filter(*queries)
                    .limit(limit)

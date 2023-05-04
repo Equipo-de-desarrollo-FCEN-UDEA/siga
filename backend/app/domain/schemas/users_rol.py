@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from .rol import RolResponse
 
 class UserRolBase(BaseModel):
     rol_id: int
@@ -23,6 +23,7 @@ class UserRolInDBBase(UserRolBase):
 
 
 class UserRolResponse(UserRolInDBBase):
+    rol: RolResponse
     pass
 
 

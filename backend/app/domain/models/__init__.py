@@ -2,6 +2,7 @@ from .user import User
 from .department import Department
 from .school import School
 from .rol import Rol
+from .users_rol import UserRol
 from .status import Status
 from .application import Application
 from .application_type import ApplicationType

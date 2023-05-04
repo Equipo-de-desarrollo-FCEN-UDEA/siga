@@ -897,7 +897,7 @@ init_rols: List[schemas.RolCreate] = [
     # 7
     schemas.RolCreate(
         name='Coordinador',
-        description='Coordinador del instituto',
+        description='Coordinador',
         scope=7
     ),
     # 8
