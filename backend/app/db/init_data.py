@@ -864,6 +864,16 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         extra={"days": 8}
     ),
     schemas.ApplicationSubTypeCreate(
+        name="Cumpleaños",
+        application_type_id=1,
+        extra={"days": 1}
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Luto",
+        application_type_id=1,
+        extra={"days": 5}
+    ),
+    schemas.ApplicationSubTypeCreate(
         name="Calamidad doméstica",
         application_type_id=1,
         extra={"days": 12}
