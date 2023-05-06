@@ -336,7 +336,7 @@
                 (submitted && f['reason'].errors) ||
                 isInvalidForm('reason')
             }"
-            rows="5"
+            rows="1"
           ></textarea>
           <!-- errors justification -->
           <div
@@ -350,7 +350,7 @@
               *ngIf="(submitted || f['reason'].touched) && (f['reason'].errors?.['required'] || 
               f['reason'].errors?.['maxlength'] || f['reason'].errors?.['minlength'])"
             >
-              La justificación debe tener al menos 5 caracteres y máximo 500
+              El motivo debe tener al menos 5 caracteres y máximo 50
               caracteres.
             </div>
           </div>

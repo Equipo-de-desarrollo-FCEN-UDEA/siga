@@ -314,6 +314,44 @@
         </div>
       </div>
 
+      <!-- REASON -->
+    <div class="row regular-row mt-4 align-items-baseline">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Motivo de la comisión *</div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig">
+          <textarea
+            id="floatingjustificacion"
+            formControlName="reason"
+            class="form-control"
+            type="reason"
+            placeholder=" "
+            [ngClass]="{
+              'is-invalid':
+                (submitted && f['reason'].errors) ||
+                isInvalidForm('reason')
+            }"
+            rows="1"
+          ></textarea>
+          <!-- errors justification -->
+          <div
+            *ngIf="
+              (submitted || f['reason'].touched) &&
+              f['reason'].errors
+            "
+            class="invalid"
+          >
+            <div
+              *ngIf="(submitted || f['reason'].touched) && (f['reason'].errors?.['required'] || 
+              f['reason'].errors?.['maxlength'] || f['reason'].errors?.['minlength'])"
+            >
+              El motivo debe tener al menos 5 caracteres y máximo 50
+              caracteres.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
       <div class="row regular-row mt-4 align-items-baseline">
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
           Justificación *
