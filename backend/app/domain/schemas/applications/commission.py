@@ -12,7 +12,7 @@ class CommissionBase(BaseModel):
     city: str | None
     start_date: datetime
     end_date: datetime
-    reason: str
+    reason: str | None
     lenguage: str | None
     justification: str = Field(max_length=500, min_length=5)
     documents: list[Any] | None
