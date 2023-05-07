@@ -41,7 +41,7 @@
             ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
             {{user.identification_type}} {{user.identification_number}}, adscrito al (a la) {{user.department.description}},
             {{application.application_sub_type.name}} desde el dia {{commission.start_date}}
-            hasta el dia {{commission.end_date}}, para {{commission.justification}} por resolución C-{{consecutive}}.
+            hasta el dia {{commission.end_date}}, para {{commission.reason}}.
 
         </p>
 
@@ -55,13 +55,15 @@
         <br>
         <br>
         <br>
+
+        <p> Dada en Medellín el {{commission.start_date}}</p>
         <div class="signature">
             <img src="{{signature}}" class="signature">
             <hr style="width:50%;text-align:left;margin-left:0">
             <p>
-                {{school.dean.title()}}
+                {{school.dean.title()}}.
                 <br>
-                Decano(a) 
+                Decano(a) de la {{school.description.upper()}}. 
             </p>
         </div>
     </section>
