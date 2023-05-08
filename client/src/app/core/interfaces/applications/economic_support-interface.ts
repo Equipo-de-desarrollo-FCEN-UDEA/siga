@@ -1,28 +1,59 @@
 import { Application } from "@interfaces/application";
 import { file_path } from "@interfaces/documents";
 
-export interface IBudget {
-  description: string;
-  amount: number;
+export interface IApplicationData { 
+  type_applicant: string;
+  project: string; 
+  goal: string; 
+}
+
+export interface IPersonalData { 
+  application_for: string;
+  name: string;
+  identification_number: string;
+  address: string; 
+  landline?: string;
+  city: string;
+  email: string;
+  phone: string;
+  institution?: string;
+  academic_unit?: string;
+}
+
+export interface ITickets { 
+  birthdate: Date;
+  place_birth: string;
+  departure_date: Date;
+  departure_place: string;
+  arrival_date: Date;
+  arrival_place: string;
+}
+
+export interface IAdvancePayment { 
+  name: string;
+  id: string;
+  bank: string;
+  value: string;
+  account_number: string;
+  account_type: string;
+  start_date: Date;
+  end_date: Date;
+}
+
+export interface IEconomicSupport {
+  application_data: IApplicationData[];
+  personal_data: IPersonalData[];
+  tickets: ITickets[];
+  advance_payment: IAdvancePayment[];
+  documents: file_path[];
 }
 
 export interface IEconomicSupportCreate {
-  start_date: Date;
-  end_date: Date;
-  country: string;
-  support: any;
-  justification: string;
-  budget: IBudget[];
-  documents: file_path[];
-
-  lenguage?: string;
-  state?: string;
-  city?: string;
+  economic_support: IEconomicSupport;
 }
 
 
 export interface IEconomicSupportInDB extends IEconomicSupportCreate {
-  id: string;
   documents: file_path[];
 }
 

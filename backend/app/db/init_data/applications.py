@@ -73,7 +73,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],
-        who_can=[13]
+        who_can=[13, 14]
     )
 ]
 
@@ -144,7 +144,19 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     ),
     #ECONOMIC SUPPORT 
     schemas.ApplicationSubTypeCreate(
-        name="Apoyo economico para estudiantes",
+        name="Pregrado",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Posgrado",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Grupo de Investigación",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Bienestar",
         application_type_id=6
     )
 ]

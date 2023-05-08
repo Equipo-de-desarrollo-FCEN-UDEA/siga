@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -10,9 +10,15 @@ import {
   NgbDateStruct,
 } from '@ng-bootstrap/ng-bootstrap';
 
-
 //interfaces
-import { IEconomicSupportCreate } from '@interfaces/applications/economic_support-interface';
+import {
+  IAdvancePayment,
+  IApplicationData,
+  IEconomicSupport,
+  IEconomicSupportCreate,
+  IPersonalData,
+  ITickets,
+} from '@interfaces/applications/economic_support-interface';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
 
 //services
@@ -24,6 +30,12 @@ import { switchMap } from 'rxjs';
 
 // SweetAlert2
 import Swal from 'sweetalert2';
+import { ApplicationTypesService } from '@services/application-types.service';
+import { ApplicationDataComponent } from './pages/application-data/application-data.component';
+import { PersonalDataComponent } from './pages/personal-data/personal-data.component';
+import { TicketsComponent } from './pages/tickets/tickets.component';
+import { AdvanceComponent } from './pages/advance/advance.component';
+import { DocumentsComponent } from './pages/documents/documents.component';
 
 @Component({
   selector: 'app-economic-support',
@@ -31,13 +43,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./economic-support.component.scss'],
 })
 export class EconomicSupportComponent {
-  // Dates
-  public fromDate: NgbDate | null = null;
-  public hoveredDate: NgbDate | null = null;
-  public toDate: NgbDate | null = null;
-  public model: NgbDateStruct | null = null;
-  public today = this.calendar.getToday();
-
   // For handle errors
   public clicked = 0;
   public error = '';
@@ -48,72 +53,69 @@ export class EconomicSupportComponent {
   public archivos = [1];
   public documents: file_path[] = [];
 
-  get f() {
-    return this.form.controls;
-  }
-
-  get budgetArr(): FormArray {
-    return this.form.get('budget') as FormArray;
-  }
+  // Acceder a los form
+  get f() { return this.form.controls; }
 
   constructor(
     private fb: FormBuilder,
 
     private router: Router,
-    
-    private calendar: NgbCalendar,
+
     public formatter: NgbDateParserFormatter,
 
+    private applicationTypeSvc: ApplicationTypesService,
     private economicSupportSvc: EconomicSupportService,
-    private documentService: DocumentService
+
+    private applicationData: ApplicationDataComponent,
+    private personalData: PersonalDataComponent,
+    private tickets: TicketsComponent,
+    private advance: AdvanceComponent,
+    private documentsComponent: DocumentsComponent
   ) {}
 
-  ///SOLO DE EJEMPLO
-  support = [
-    { name: 'PREGRADO', value: true },
-    { name: 'POSGRADO', value: true },
-    { name: 'BIENESTAR DE LA FACULTAD', value: true },
-    { name: 'BIENESTAR GENERAL', value: true },
-    { name: 'GRUPOS DE INVESTIGACIÓN', value: true },
-    { name: 'INTERNACIONALIZACIÓN', value: true },
-  ];
-  
-  
-  
-  
   public form = this.fb.group({
-    country: ['', [Validators.required]],
-    state: [''],
-    city: [''],
-    lenguage: [''],
-    support: ['', [Validators.required]],
-    budget: this.fb.array([this.budgetGroup()], [Validators.required, Validators.minLength(1)]),
-    start_date: [new Date(), [Validators.required]],
-    end_date: [new Date(), [Validators.required]],
-    justification: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
-    documents: [this.documents],
+    application_data: [this.applicationData.form.value],
+    personal_data: [this.personalData.form.value],
+    tickets: [this.tickets.form.value],
+    advance: [this.advance.form.value],
+    documents: [this.documentsComponent.form.value],
   });
 
-  budgetGroup() {
-    return this.fb.group({
-      description: [''],
-      amount: [0],
-    });
-  }
+  //Observar cambios en los componentes hijos
+  @ViewChild(ApplicationDataComponent)
+  application_data_form!: ApplicationDataComponent;
 
-  addInputBubget() {
-    this.budgetArr.push(this.budgetGroup());
-  }
+  @ViewChild(PersonalDataComponent)
+  personal_data_form!: PersonalDataComponent;
 
-  // Remove from control
-  removeInput(controlName: string, index: number) {
-    const control = this.form.get(controlName) as FormArray;
-    control.removeAt(index);
-  }
+  @ViewChild(TicketsComponent)
+  tickets_form!: TicketsComponent;
+
+  @ViewChild(AdvanceComponent)
+  advance_form!: AdvanceComponent;
+
+  @ViewChild(DocumentsComponent)
+  documents_form!: DocumentsComponent;
 
   submit() {
-    this.submitted = true;
-    //Se detiene aqui si el formulario es invalido
+    //ALMACENA LOS DATOS DE LOS COMPONENTES HIJOS EN CONSTANTES
+    const APPLICATION_DATA: IApplicationData[] = [Object(this.application_data_form.sendForms())];
+    const PERSONAL_DATA: IPersonalData[] = [Object(this.personal_data_form.sendForms())];
+    const TICKETS: ITickets[] = [Object(this.tickets_form.sendForms())];
+    const ADVANCE: IAdvancePayment[] = [Object(this.advance_form.sendForms())];
+    const DOCUMENTS: file_path[] = [Object(this.documents_form.sendForms())];
+
+    let economic_support: IEconomicSupport = {
+      application_data: APPLICATION_DATA,
+      personal_data: PERSONAL_DATA,
+      tickets: TICKETS,
+      advance_payment: ADVANCE,
+      documents: DOCUMENTS,
+    };
+
+    
+
+    // Se detiene aqui si el formulario es invalido
     if (this.form.invalid) {
       Swal.fire({
         title: 'Error',
@@ -124,103 +126,29 @@ export class EconomicSupportComponent {
       });
       return;
     }
-    let economic_support = this.economicSupportSvc.postEconomicSupport(this.form.value as IEconomicSupportCreate);
-    if (this.files.length > 0) {
-      economic_support = this.documentService.postDocument(this.files as File[]).pipe(
-        switchMap((data: DocumentsResponse) => {
-          if (data) {
-            this.form.patchValue({
-              documents: data.files_paths
-            })
-          }
-          return this.economicSupportSvc.postEconomicSupport(this.form.value as IEconomicSupportCreate)
-        })
-      )
-    }
-    console.log(this.form.value as IEconomicSupportCreate)
-    economic_support.subscribe({
-      next: data => {
-        Swal.fire(
-          {
-            title: 'Su solicitud se creó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }
-        ).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${data.id}/apoyo-economico`])
-          }
-        })
-      }}
-    )
-  }
 
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
+    let economic_support_form = this.economicSupportSvc.postEconomicSupport(
+      economic_support as unknown as IEconomicSupportCreate
+    );
 
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (
-      this.fromDate &&
-      !this.toDate &&
-      date &&
-      date.after(this.fromDate)
-    ) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
+    console.log(economic_support)
 
-    this.form.patchValue({
-      start_date: new Date(
-        this.fromDate.year,
-        this.fromDate.month - 1,
-        this.fromDate.day
-      ),
-      end_date: new Date(
-        this.toDate!.year,
-        this.toDate!.month - 1,
-        this.toDate!.day
-      ),
+    economic_support_form.subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: '¡Solicitud enviada!',
+          text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
+        });
+        this.router.navigateByUrl(`/solicitudes/ver/${data.id}/apoyo-economico`);
+      },
+      error: (err) => {
+        this.error = err;
+      },
     });
   }
-
-  isHovered(date: NgbDate) {
-    return (
-      this.fromDate &&
-      !this.toDate &&
-      this.hoveredDate &&
-      date.after(this.fromDate) &&
-      date.before(this.hoveredDate)
-    );
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) ||
-      (this.toDate && date.equals(this.toDate)) ||
-      this.isInside(date) ||
-      this.isHovered(date)
-    );
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed))
-      ? NgbDate.from(parsed)
-      : currentValue;
-  }
-
-  // --------------------------------------
-  // ---------- VALIDATE FORM -------------
-  // --------------------------------------
 
   isInvalidForm(controlName: string) {
     return (
@@ -228,39 +156,11 @@ export class EconomicSupportComponent {
     );
   }
 
-  // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
-  // --------------------------------------
-
-  onUpload(event: Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
-    }
-  }
-
-  removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
-    }
-    this.files.splice(index, 1);
-  }
-
   validSize() {
-    const size = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 1024 * 1024;
+    return true;
   }
 
   validFileType() {
-    const extensionesValidas = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      flag = extensionesValidas.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
-    });
-    return flag;
+    return true;
   }
 }

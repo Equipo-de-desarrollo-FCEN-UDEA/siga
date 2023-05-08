@@ -4,16 +4,9 @@ from typing import Any
 from odmantic import Model
 
 class EconomicSupport(Model):
-    start_date: datetime
-    end_date: datetime
-    country: str
-    justification: str
-    support: Any
-    budget: list[Any]
-    documents: list[Any]
+    economic_support: Any
+    document: list[Any] | None
+    
 
-    state: str | None
-    city: str | None
-    lenguage: str | None
 
 

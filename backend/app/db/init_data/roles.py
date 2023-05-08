@@ -66,8 +66,14 @@ init_rols: List[schemas.RolCreate] = [
     ),
     # 11
     schemas.RolCreate(
-        name='Estudiante',
-        description='Estudiante',
+        name='Estudiante Pregrado',
+        description='Estudiante pregrado',
+        scope=13
+    ),
+        # 11
+    schemas.RolCreate(
+        name='Estudiante Posgrado',
+        description='Estudiante posgrado',
         scope=13
     )
 ]
