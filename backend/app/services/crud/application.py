@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 from datetime import datetime
 
 from sqlalchemy import desc
@@ -15,6 +15,19 @@ log = get_logging(__name__)
 
 
 class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate, ApplicationPolicy]):
+    def get(self, db: Session, who: User, *, id: int) -> Application | None:
+        application = (
+            db
+            .query(Application)
+            .filter(Application.id == id)
+            .join(Application_status)
+            .order_by(desc(Application_status.id))
+            .first()
+        )
+        self.policy.get(who=who, to=application)
+        return application
+    
+    
     def get_multi(
         self,
         db: Session,

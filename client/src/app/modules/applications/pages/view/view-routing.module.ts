@@ -6,6 +6,7 @@ import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { ViewComponent } from './view.component';
 import { VacationComponent } from './components/vacation/vacation.component';
+import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,13 @@ const routes: Routes = [
         component: VacationComponent,
         data: {
           title: 'Vacaciones'
+        }
+      },
+      {
+        path: 'apoyo-economico',
+        component: EconomicSupportComponent,
+        data: {
+          title: 'Apoyo Económico'
         }
       },
       {
