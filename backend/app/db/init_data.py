@@ -762,9 +762,16 @@ init_rols: List[schemas.RolCreate] = [
     ),
     # 11
     schemas.RolCreate(
-        name='Estudiante',
-        description='Estudiante',
-        scope=13
+        name='Estudiante pregrado',
+        description='Estudiante pregrado',
+        scope=27
+    ),
+
+    # 12
+    schemas.RolCreate(
+        name='Estudiante posgrado',
+        description='Estudiante posgrado',
+        scope=28
     )
 ]
 
@@ -780,7 +787,7 @@ init_statuss: List[schemas.StatusCreate] = [
         name='APROBADA'
     ),
     schemas.StatusCreate(
-        name='RECHAZADA'
+        name='DEVUELTA'
     ),
     schemas.StatusCreate(
         name='FINALIZADA'
@@ -801,7 +808,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
-                status="VISTO BUENO", scope=[6, 7]),
+                status="VISTO BUENO", scope=[5, 6, 7]),
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],
@@ -814,7 +821,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
-                status='VISTO BUENO', scope=[6, 7]),
+                status='VISTO BUENO', scope=[5, 6, 7]),
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],

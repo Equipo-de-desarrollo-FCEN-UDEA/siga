@@ -53,6 +53,8 @@ export class VacationComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
+  public laboralflag: boolean = true;
+  public verify_date: number = 0;
 
   // Files
   public files: any[] = [];
@@ -87,7 +89,6 @@ export class VacationComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     // Actualiza el tamaño del signature-pad
-    let important = this.div_important.offsetWidth;
     this.div_important = document.getElementById(
       'div-signature'
     ) as HTMLDivElement;
@@ -135,12 +136,26 @@ export class VacationComponent implements OnInit {
           ...data.vacation,
           application_sub_type_id: data.application_sub_type_id,
         });
+        let status_app = data.application_status[data.application_status.length-1].status.name;
         this.documents = data.vacation.documents!;
+        if (status_app != 'APROBADA'){
+          this.documents.pop();
+        }else{
+          Swal.fire({
+            title: 'Solicitud Aprobada',
+            html: 'Su solicitud está aprobada, y por tal motivo no se puede editar',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          return;
+        }
         this.SubTypeSvc.getApplicationSubType(
           +data.application_sub_type_id
         ).subscribe({
           next: (res) => {
-            this.laboralDay = res.extra.days;
+            //this.laboralDay = res.extra.days;
+            this.laboralflag = true;
           },
         });
       });
@@ -193,29 +208,42 @@ export class VacationComponent implements OnInit {
           );
         })
       );
-    }
-    vacation.subscribe({
-      next: (res) => {
-        console.log('vacation updated', vacation);
+      if (this.signatureImg!=""){
+        vacation.subscribe({
+          next: (res) => {
+            console.log('vacation updated', vacation);
+            Swal.fire({
+              title: 'Actualizado',
+              text: '¡El registro de vacaciones se actualizó con éxito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#3AB795',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate([
+                  'solicitudes/ver/' + this.id + '/vacaciones',
+                ]);
+              }
+            });
+          },
+          error: (err) => {
+            console.log('salio error', err);
+            this.error = err;
+          },
+        });
+      }else{
         Swal.fire({
-          title: 'Actualizado',
-          text: '¡El registro de vacaciones se actualizó con éxito!',
-          icon: 'success',
+          title: 'Firmar',
+          html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
+          icon: 'error',
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#3AB795',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([
-              'solicitudes/ver/' + this.id + '/vacaciones',
-            ]);
-          }
         });
-      },
-      error: (err) => {
-        console.log('salio error', err);
-        this.error = err;
-      },
-    });
+        return;
+      }
+    }
+
+   
   }
 
   // --------------------------------------
@@ -224,7 +252,7 @@ export class VacationComponent implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    console.log(this.signaturePad.toDataURL());
+    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
@@ -232,7 +260,7 @@ export class VacationComponent implements OnInit {
     console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    console.log(event);
+    //console.log(event);
     // works in device not in browser
   }
 
@@ -275,12 +303,16 @@ export class VacationComponent implements OnInit {
     const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
       ':'
     )[0];
-    console.log(ID_VACATION_TYPE);
-    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
+    this.laboralflag = false;
+this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
         this.laboralDay = res.extra.days;
       },
     });
+
+    if (ID_VACATION_TYPE=="1"){
+      this.laboralflag=true;
+    }
   }
 
   // --------------------------------------
@@ -288,14 +320,32 @@ export class VacationComponent implements OnInit {
   // --------------------------------------
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
+    const tot_days = this.form.value.total_days;
+    const entero_temp=tot_days;
+
     if (fromDate || toDate) {
-      return (
-        LaboralDays(
+      //Verify between laboral days and calendar days
+      if (this.laboralflag){
+        this.laboralDay=LaboralDays(
           new Date(this.formatter.format(fromDate)),
           new Date(this.formatter.format(toDate)),
           this.holidays
-        ) > this.laboralDay
-      );
+        );
+        //Variable to verify (laboralDay)
+        this.verify_date=this.laboralDay;
+      }else{
+        this.verify_date=new Date(this.formatter.format(toDate)).getTime()-
+                        new Date(this.formatter.format(fromDate)).getTime();
+        //In this case is important to take the date as days:
+        this.verify_date=this.verify_date/(1000*3600*24)+1;
+      }
+      //If days in form does not equal to required, the form does not allow continue      
+      if (this.verify_date != entero_temp){
+        return true;
+      }
+      this.form.value.end_date = new Date(this.formatter.format(toDate));
+      return false;       
+
     } else {
       return false;
     }

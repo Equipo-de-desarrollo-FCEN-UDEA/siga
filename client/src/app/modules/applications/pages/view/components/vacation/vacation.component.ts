@@ -46,10 +46,13 @@ export class VacationComponent implements OnInit {
   ngOnInit(): void {
     this.vacationSvc.getVacation(this.id).subscribe((app: VacationResponse) => {
       const { vacation, ...application } = app;
-      console.log(app);
       this.vacation = vacation;
       this.application = application;
-
+      let status_app = this.application.application_status[this.application.application_status.length-1].status.name;
+      this.vacation.documents = this.vacation.documents!;
+      if (status_app != 'APROBADA'){
+        this.vacation.documents.pop();
+      }
       this.current_status = lastElement(
         application.application_status
       ).status.name;

@@ -122,7 +122,7 @@ export class ViewComponent implements AfterViewChecked {
       } as ApplicationStatusCreate)
       .subscribe((data) => {
         Swal.fire({
-          title: 'La solicitud se rechazó correctamente',
+          title: 'La solicitud se devolvió correctamente',
           confirmButtonText: 'Aceptar',
         }).then((result) => {
           if (result.isConfirmed) {
