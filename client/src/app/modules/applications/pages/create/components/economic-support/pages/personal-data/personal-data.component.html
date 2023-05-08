@@ -37,16 +37,16 @@
                 </div>
 
                 <div class="col-sm-12 col-xs-12 col-md-8">
-                  <div class="formfloatig">
-                    <select class="form-control form-select-lg cursor">
+                  <div class="formfloatig" *ngIf="APPLICATION_FOR">
+                    <select
+                      class="form-control form-select-lg cursor"
+                      formControlName="application_for"
+                    >
                       <option value="0" disabled selected>
                         Elige una opción
                       </option>
-                      <!-- <option *ngFor="let item of application_for">
+                      <option *ngFor="let item of APPLICATION_FOR">
                         {{ item }}
-                      </option> -->
-                      <option>
-                        Prueba
                       </option>
                     </select>
                   </div>

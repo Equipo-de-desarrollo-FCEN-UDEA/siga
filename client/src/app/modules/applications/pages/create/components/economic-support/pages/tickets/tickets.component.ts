@@ -37,7 +37,7 @@ export class TicketsComponent {
     departure_place: ['', [Validators.required]],
     arrival_place: ['', [Validators.required]],
     place_birth: ['', [Validators.required]],
-    birthdate: ['', [Validators.required]],
+    //birthdate: ['', [Validators.required]],
   });
 
   @Output() sendForm = new EventEmitter<any>();

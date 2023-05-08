@@ -156,7 +156,7 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         application_type_id=6
     ),
     schemas.ApplicationSubTypeCreate(
-        name="Bienestar",
+        name="Bienestar de la Facultad",
         application_type_id=6
     )
 ]

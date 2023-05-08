@@ -2,7 +2,7 @@ import { Application } from "@interfaces/application";
 import { file_path } from "@interfaces/documents";
 
 export interface IApplicationData { 
-  type_applicant: string;
+  application_type: string;
   project: string; 
   goal: string; 
 }
@@ -21,7 +21,7 @@ export interface IPersonalData {
 }
 
 export interface ITickets { 
-  birthdate: Date;
+  //birthdate: Date;
   place_birth: string;
   departure_date: Date;
   departure_place: string;
@@ -41,11 +41,12 @@ export interface IAdvancePayment {
 }
 
 export interface IEconomicSupport {
-  application_data: IApplicationData[];
-  personal_data: IPersonalData[];
-  tickets: ITickets[];
-  advance_payment: IAdvancePayment[];
-  documents: file_path[];
+  application_sub_type_id: number;
+  application_data: IApplicationData;
+  personal_data: IPersonalData;
+  tickets: ITickets;
+  payment: IAdvancePayment;
+  documents: file_path;
 }
 
 export interface IEconomicSupportCreate {

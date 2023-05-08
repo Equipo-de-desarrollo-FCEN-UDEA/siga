@@ -9,6 +9,8 @@ import { APPLICATION_FOR } from '../../data/economic-support';
 })
 export class PersonalDataComponent {
 
+  public APPLICATION_FOR = APPLICATION_FOR;
+
   public form = this.fb.group({
     application_for: ['', [Validators.required]],
     name: ['', [Validators.required]],

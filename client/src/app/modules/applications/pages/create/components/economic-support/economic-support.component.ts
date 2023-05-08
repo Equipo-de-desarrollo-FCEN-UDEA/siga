@@ -36,6 +36,7 @@ import { PersonalDataComponent } from './pages/personal-data/personal-data.compo
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { AdvanceComponent } from './pages/advance/advance.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
+import { SubtypeComponent } from './pages/subtype/subtype.component';
 
 @Component({
   selector: 'app-economic-support',
@@ -70,10 +71,12 @@ export class EconomicSupportComponent {
     private personalData: PersonalDataComponent,
     private tickets: TicketsComponent,
     private advance: AdvanceComponent,
-    private documentsComponent: DocumentsComponent
+    private documentsComponent: DocumentsComponent,
+    private applicationSubtye: SubtypeComponent
   ) {}
 
   public form = this.fb.group({
+    application_sub_type_id: [this.applicationSubtye.form.value],
     application_data: [this.applicationData.form.value],
     personal_data: [this.personalData.form.value],
     tickets: [this.tickets.form.value],
@@ -82,6 +85,9 @@ export class EconomicSupportComponent {
   });
 
   //Observar cambios en los componentes hijos
+  @ViewChild(SubtypeComponent)
+  application_sub_type_form!: SubtypeComponent;
+
   @ViewChild(ApplicationDataComponent)
   application_data_form!: ApplicationDataComponent;
 
@@ -99,21 +105,22 @@ export class EconomicSupportComponent {
 
   submit() {
     //ALMACENA LOS DATOS DE LOS COMPONENTES HIJOS EN CONSTANTES
-    const APPLICATION_DATA: IApplicationData[] = [Object(this.application_data_form.sendForms())];
-    const PERSONAL_DATA: IPersonalData[] = [Object(this.personal_data_form.sendForms())];
-    const TICKETS: ITickets[] = [Object(this.tickets_form.sendForms())];
-    const ADVANCE: IAdvancePayment[] = [Object(this.advance_form.sendForms())];
-    const DOCUMENTS: file_path[] = [Object(this.documents_form.sendForms())];
+    const APPLICATION_DATA: IApplicationData = Object(this.application_data_form.sendForms());
+    const PERSONAL_DATA: IPersonalData = Object(this.personal_data_form.sendForms());
+    const TICKETS: ITickets = Object(this.tickets_form.sendForms());
+    const PAYMENT: IAdvancePayment = Object(this.advance_form.sendForms());
+    const DOCUMENTS: file_path = Object(this.documents_form.sendForms());
+    //PROVICIONAL
+    const APPLICATION_SUB_TYPE  = 15;
 
     let economic_support: IEconomicSupport = {
+      application_sub_type_id: APPLICATION_SUB_TYPE,
       application_data: APPLICATION_DATA,
       personal_data: PERSONAL_DATA,
       tickets: TICKETS,
-      advance_payment: ADVANCE,
+      payment: PAYMENT,
       documents: DOCUMENTS,
     };
-
-    
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid) {
@@ -156,11 +163,7 @@ export class EconomicSupportComponent {
     );
   }
 
-  validSize() {
-    return true;
-  }
+  validSize() { return true; }
 
-  validFileType() {
-    return true;
-  }
+  validFileType() { return true; }
 }

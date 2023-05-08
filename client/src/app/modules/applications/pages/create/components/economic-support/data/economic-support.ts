@@ -11,3 +11,8 @@ export const APPLICATION_FOR: string[]=[
   'Estudiante UdeA',
   'Contratista',
 ];
+
+export const ACCOUNT_TYPE: string[]=[
+  'Ahorros',
+  'Corriente',
+];

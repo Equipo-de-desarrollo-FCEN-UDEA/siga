@@ -8,6 +8,7 @@ import {
   NgbDateParserFormatter,
   NgbDateStruct,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ACCOUNT_TYPE } from '../../data/economic-support';
 
 @Component({
   selector: 'app-advance',
@@ -30,6 +31,8 @@ export class AdvanceComponent {
   get f() {
     return this.form.controls;
   }
+
+  public ACCOUNT_TYPE = ACCOUNT_TYPE
 
   @Output() sendForm = new EventEmitter<any>();
 

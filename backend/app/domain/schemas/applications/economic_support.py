@@ -1,12 +1,12 @@
 from typing import Any
 from datetime import datetime
 
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel
 
 from app.domain.schemas.application import ApplicationResponse
 
 class ApplicationData(BaseModel):
-    type_applicant: str
+    application_type: str
     project: str 
     goal: str 
 
@@ -23,7 +23,7 @@ class PersonalData(BaseModel):
     academic_unit: str | None
 
 class tickets(BaseModel):
-    birthdate: datetime
+    #birthdate: datetime
     place_birth: str
     departure_date: datetime
     departure_place: str
@@ -43,11 +43,11 @@ class AdvancePayment(BaseModel):
         
 
 class EconomicSupportBase(BaseModel):
-    application_data: list[ApplicationData]
-    persona_data: list[PersonalData]
-    tickets: list[tickets]
-    payment: list[AdvancePayment]
-    document: list[Any] | None
+    application_data: ApplicationData
+    personal_data: PersonalData
+    tickets: tickets
+    payment: AdvancePayment
+    document: Any
 
 
 class EconomicSupportCreate(EconomicSupportBase):
@@ -58,7 +58,6 @@ class EconomicSupportUpdate(EconomicSupportBase):
 
 class EconomicSupportInDB(EconomicSupportBase):
     economic_support: EconomicSupportBase | None
-    document: list[Any] | None
 
 class EconomicSupportResponse(ApplicationResponse):
     economic_support: EconomicSupportInDB

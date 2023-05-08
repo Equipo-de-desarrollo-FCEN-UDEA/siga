@@ -180,13 +180,16 @@
                 </div>
 
                 <div class="col-sm-12 col-xs-12 col-md-8">
-                  <div class="formfloatig">
-                    <select class="form-control form-select-lg cursor">
+                  <div class="formfloatig" *ngIf="ACCOUNT_TYPE">
+                    <select
+                      class="form-control form-select-lg cursor"
+                      formControlName="account_type"
+                    >
                       <option value="0" disabled selected>
                         Selecciona el tipo de cuenta
                       </option>
-                      <option>
-                        Prueba
+                      <option *ngFor="let tipo of ACCOUNT_TYPE">
+                        {{ tipo }}
                       </option>
                     </select>
                   </div>

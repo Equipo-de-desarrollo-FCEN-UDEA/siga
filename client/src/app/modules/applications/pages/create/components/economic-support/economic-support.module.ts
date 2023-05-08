@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdvanceComponent } from './pages/advance/advance.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SubtypeComponent } from './pages/subtype/subtype.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PersonalDataComponent,
     TicketsComponent,
     AdvanceComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    SubtypeComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PersonalDataComponent,
     TicketsComponent,
     AdvanceComponent,
+    SubtypeComponent,
     DocumentsComponent
   ]
 })

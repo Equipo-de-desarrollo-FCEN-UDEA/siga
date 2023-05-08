@@ -30,28 +30,7 @@
         <div class="accordion-body">
           <div class="arrayLike formfloatig justify-content-center">
             <div class="row activity_form">
-              <div class="row">
-                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-                  <span class=""
-                    >Dependencia donde desea realizar la solicitud
-                    <span style="color: red">*</span></span
-                  >
-                </div>
 
-                <div class="col-sm-12 col-xs-12 col-md-8">
-                  <div
-                    class="formfloatig"
-                    *ngIf="applicationType$ | async as applicationType"
-                  >
-                    <div
-                      *ngFor="let tipo of applicationType.application_sub_type"
-                    >
-                      <input type="checkbox" class="form-check-input" />
-                      {{ tipo.name }}
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="row mt-3">
                 <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
                   <span class=""
@@ -60,7 +39,7 @@
                 </div>
 
                 <div class="col-sm-12 col-xs-12 col-md-8">
-                  <div class="formfloatig">
+                  <div class="formfloatig" *ngIf="ECONOMIC_SUPPORT_TYPE">
                     <select
                       class="form-control form-select-lg cursor"
                       formControlName="application_type"
@@ -68,7 +47,9 @@
                       <option value="0" disabled selected>
                         Elige el tipo de solicitud
                       </option>
-                      <option>Prueba</option>
+                      <option *ngFor="let tipo of ECONOMIC_SUPPORT_TYPE">
+                        {{ tipo }}
+                      </option>
                     </select>
                   </div>
                 </div>

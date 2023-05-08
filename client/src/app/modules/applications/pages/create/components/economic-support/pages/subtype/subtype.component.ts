@@ -1,31 +1,23 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ECONOMIC_SUPPORT_TYPE } from '../../data/economic-support';
 import { ApplicationTypesService } from '@services/application-types.service';
 
 @Component({
-  selector: 'app-application-data',
-  templateUrl: './application-data.component.html',
-  styleUrls: ['./application-data.component.scss'],
+  selector: 'app-subtype',
+  templateUrl: './subtype.component.html',
+  styleUrls: ['./subtype.component.scss'],
 })
-export class ApplicationDataComponent {
-  get f() {
-    return this.form.controls;
-  }
-
-  public ECONOMIC_SUPPORT_TYPE = ECONOMIC_SUPPORT_TYPE;
+export class SubtypeComponent {
+  public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
 
   public form = this.fb.group({
-    application_type: ['', [Validators.required]],
-    project: ['', [Validators.required]],
-    goal: ['', [Validators.required]],
+    application_sub_type_id: [16, [Validators.required]],
   });
 
   @Output() sendForm = new EventEmitter<any>();
-
+  
   constructor(
     private fb: FormBuilder,
-    
     private applicationTypeSvc: ApplicationTypesService
   ) {}
 
