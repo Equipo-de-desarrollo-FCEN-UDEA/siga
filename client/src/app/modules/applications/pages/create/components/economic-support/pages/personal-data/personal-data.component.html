@@ -41,11 +41,18 @@
                     <select
                       class="form-control form-select-lg cursor"
                       formControlName="application_for"
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['application_for'].errors) ||
+                          isInvalidForm('application_for')
+                      }"
                     >
-                      <option value="0" disabled selected>
+                      <option value="" disabled selected>
                         Elige una opción
                       </option>
-                      <option *ngFor="let item of APPLICATION_FOR">
+                      <option 
+                        [value]="item"
+                        *ngFor="let item of APPLICATION_FOR">
                         {{ item }}
                       </option>
                     </select>
@@ -67,6 +74,11 @@
                       formControlName="name"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['name'].errors) ||
+                          isInvalidForm('name')
+                      }"
                     />
                   </div>
                 </div>
@@ -87,6 +99,11 @@
                       formControlName="identification_number"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['identification_number'].errors) ||
+                          isInvalidForm('identification_number')
+                      }"
                     />
                   </div>
                 </div>
@@ -104,6 +121,11 @@
                       formControlName="city"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['city'].errors) ||
+                          isInvalidForm('city')
+                      }"
                     />
                   </div>
                 </div>
@@ -121,6 +143,11 @@
                       formControlName="address"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['address'].errors) ||
+                          isInvalidForm('address')
+                      }"
                     />
                   </div>
                 </div>
@@ -157,6 +184,11 @@
                       formControlName="email"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['email'].errors) ||
+                          isInvalidForm('email')
+                      }"
                     />
                   </div>
                 </div>
@@ -174,6 +206,11 @@
                       formControlName="phone"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['phone'].errors) ||
+                          isInvalidForm('phone')
+                      }"
                     />
                   </div>
                 </div>

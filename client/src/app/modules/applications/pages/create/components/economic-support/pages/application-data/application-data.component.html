@@ -44,10 +44,12 @@
                       class="form-control form-select-lg cursor"
                       formControlName="application_type"
                     >
-                      <option value="0" disabled selected>
+                      <option value="" disabled selected>
                         Elige el tipo de solicitud
                       </option>
-                      <option *ngFor="let tipo of ECONOMIC_SUPPORT_TYPE">
+                      <option 
+                        [value]="tipo"
+                        *ngFor="let tipo of ECONOMIC_SUPPORT_TYPE">
                         {{ tipo }}
                       </option>
                     </select>
@@ -68,6 +70,12 @@
                       formControlName="project"
                       class="form-control"
                       placeholder=""
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['project'].errors) ||
+                          isInvalidForm('project')
+                      }"
+                      
                     />
                   </div>
                 </div>
@@ -87,6 +95,11 @@
                       formControlName="goal"
                       class="form-control"
                       placeholder="Objetivo del viaje, traslado, movilidad académica…."
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['goal'].errors) ||
+                          isInvalidForm('goal')
+                      }"
                     />
                   </div>
                 </div>

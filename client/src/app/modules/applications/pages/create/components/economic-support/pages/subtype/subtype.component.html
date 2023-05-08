@@ -28,7 +28,6 @@
         aria-labelledby="headingSix"
       >
         <div class="accordion-body">
-          
           <div class="arrayLike formfloatig justify-content-center">
             <div class="row activity_form">
               <div class="row">
@@ -47,23 +46,27 @@
                     <div
                       *ngFor="let tipo of applicationType.application_sub_type"
                     >
-                      <input
-                        type="checkbox"
-                        class="form-check-input"
-                        formControlName="application_sub_type_id"
-                      />
-                      {{ tipo.name }}
+                      <label>
+                        <input
+                          type="radio"
+                          [ngClass]="{
+                            'is-invalid':
+                              (submitted && f['application_sub_type_id'].errors) ||
+                              isInvalidForm('application_sub_type_id')
+                          }"
+                          [value]="tipo.id"
+                          formControlName="application_sub_type_id"
+                        />
+                        {{ tipo.name }}
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
-
     </div>
   </div>
 </form>

@@ -146,6 +146,11 @@
                   formControlName="departure_place"
                   class="form-control"
                   placeholder=" "
+                  [ngClass]="{
+                    'is-invalid':
+                      (submitted && f['departure_place'].errors) ||
+                      isInvalidForm('departure_place')
+                  }"
                 />
               </div>
             </div>
@@ -163,6 +168,11 @@
                   formControlName="arrival_place"
                   class="form-control"
                   placeholder=" "
+                  [ngClass]="{
+                    'is-invalid':
+                      (submitted && f['arrival_place'].errors) ||
+                      isInvalidForm('arrival_place')
+                  }"
                 />
               </div>
             </div>
@@ -180,6 +190,11 @@
                   formControlName="place_birth"
                   class="form-control"
                   placeholder=" "
+                  [ngClass]="{
+                    'is-invalid':
+                      (submitted && f['place_birth'].errors) ||
+                      isInvalidForm('place_birth')
+                  }"
                 />
               </div>
             </div>

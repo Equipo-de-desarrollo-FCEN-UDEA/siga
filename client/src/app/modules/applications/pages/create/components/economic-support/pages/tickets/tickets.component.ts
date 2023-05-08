@@ -25,7 +25,8 @@ export class TicketsComponent {
   // For handle errors
   public clicked = 0;
   public error = '';
-  public submitted = false;
+  
+  @Output() submitted = false;
 
   get f() {
     return this.form.controls;
@@ -52,8 +53,16 @@ export class TicketsComponent {
   send() { this.sendForm.emit(this.form.value); }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { return this.form.value; }
+  sendForms() { 
+    this.submitted = true;
+    return this.form.value; 
+  }
 
+  isInvalidForm(controlName: string) {
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
+  }
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------

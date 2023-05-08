@@ -24,13 +24,26 @@ export class PersonalDataComponent {
     academic_unit: ['', [Validators.required]],
   });
 
+  @Output() submitted = false;
   @Output() sendForm = new EventEmitter<any>();
-  
+
+
+    // Acceder a los form
+  get f() { return this.form.controls; }
   constructor( private fb: FormBuilder ) { }
 
   send() { this.sendForm.emit(this.form.value) }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { return this.form.value }
+  sendForms() { 
+    this.submitted = true;
+    return this.form.value 
+  }
+
+  isInvalidForm(controlName: string) {
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
+  }
   
 }

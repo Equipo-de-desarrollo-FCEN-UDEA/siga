@@ -26,14 +26,14 @@ export class AdvanceComponent {
   // For handle errors
   public clicked = 0;
   public error = '';
-  public submitted = false;
+
 
   get f() {
     return this.form.controls;
   }
-
   public ACCOUNT_TYPE = ACCOUNT_TYPE
 
+  @Output() submitted = false;
   @Output() sendForm = new EventEmitter<any>();
 
   public form = this.fb.group({
@@ -53,11 +53,22 @@ export class AdvanceComponent {
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {}
+  
 
   send() { this.sendForm.emit(this.form.value); }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { return this.form.value; }
+  sendForms() { 
+    this.submitted = true;
+    return this.form.value; 
+  }
+
+
+  isInvalidForm(controlName: string) {
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
+  }
 
   // --------------------------------------
   // ------------- DATEPICKER -------------

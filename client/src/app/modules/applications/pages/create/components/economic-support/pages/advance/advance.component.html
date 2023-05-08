@@ -99,6 +99,11 @@
                       formControlName="name"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['name'].errors) ||
+                          isInvalidForm('name')
+                      }"
                     />
                   </div>
                 </div>
@@ -115,6 +120,11 @@
                       formControlName="id"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['id'].errors) ||
+                          isInvalidForm('id')
+                      }"
                     />
                   </div>
                 </div>
@@ -131,6 +141,11 @@
                       formControlName="bank"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['bank'].errors) ||
+                          isInvalidForm('bank')
+                      }"
                     />
                   </div>
                 </div>
@@ -149,6 +164,11 @@
                       formControlName="value"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['value'].errors) ||
+                          isInvalidForm('value')
+                      }"
                     />
                   </div>
                 </div>
@@ -167,6 +187,11 @@
                       formControlName="account_number"
                       class="form-control"
                       placeholder=" "
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['account_number'].errors) ||
+                          isInvalidForm('account_number')
+                      }"
                     />
                   </div>
                 </div>
@@ -184,11 +209,19 @@
                     <select
                       class="form-control form-select-lg cursor"
                       formControlName="account_type"
+                      [ngClass]="{
+                        'is-invalid':
+                          (submitted && f['account_type'].errors) ||
+                          isInvalidForm('account_type')
+                      }"
                     >
-                      <option value="0" disabled selected>
+                      <option value="" selected disabled >
                         Selecciona el tipo de cuenta
                       </option>
-                      <option *ngFor="let tipo of ACCOUNT_TYPE">
+                      <option 
+                        *ngFor="let tipo of ACCOUNT_TYPE"
+                        [value]="tipo"
+                        >
                         {{ tipo }}
                       </option>
                     </select>

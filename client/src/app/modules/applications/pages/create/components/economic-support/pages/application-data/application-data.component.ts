@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ECONOMIC_SUPPORT_TYPE } from '../../data/economic-support';
-import { ApplicationTypesService } from '@services/application-types.service';
+import { EconomicSupportComponent } from '../../economic-support.component';
+
 
 @Component({
   selector: 'app-application-data',
@@ -21,12 +22,13 @@ export class ApplicationDataComponent {
     goal: ['', [Validators.required]],
   });
 
+  @Output() submitted = false;
   @Output() sendForm = new EventEmitter<any>();
 
   constructor(
     private fb: FormBuilder,
     
-    private applicationTypeSvc: ApplicationTypesService
+    
   ) {}
 
   send() {
@@ -35,6 +37,13 @@ export class ApplicationDataComponent {
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
+    this.submitted = true;
     return this.form.value;
+  }
+
+  isInvalidForm(controlName: string) {
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
   }
 }
