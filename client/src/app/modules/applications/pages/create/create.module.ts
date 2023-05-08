@@ -12,6 +12,7 @@ import { FullTimeModule } from './components/full-time/full-time.module';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
+import { EconomicSupportModule } from './components/economic-support/economic-support.module';
 
 
 
@@ -23,14 +24,14 @@ import { EconomicSupportComponent } from './components/economic-support/economic
     ComplimentComponent,
     HourAvalComponent,
     VacationComponent,
-    EconomicSupportComponent
   ],
   imports: [
     CommonModule,
     CreateRoutingModule,
     SharedModule,
     FullTimeModule,
-    SignaturePadModule
+    EconomicSupportModule,
+    SignaturePadModule,
   ]
 })
 export class CreateModule { }

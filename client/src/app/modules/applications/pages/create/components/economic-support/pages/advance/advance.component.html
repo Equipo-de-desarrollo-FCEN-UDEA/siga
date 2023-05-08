@@ -1,0 +1,260 @@
+<!-- DATEPICKER -->
+<ng-template #footerTemplate>
+  <hr class="my-0" />
+  <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
+  <p *ngIf="!fromDate">Elige la primera fecha</p>
+  <button
+    class="btn btn-primary btn-sm m-2 float-start"
+    (click)="model = today; datepicker.close()"
+    type="button"
+  >
+    Hoy
+  </button>
+  <button
+    class="btn btn-secondary btn-sm m-2 float-end"
+    (click)="datepicker.close()"
+    type="button"
+  >
+    Cerrar
+  </button>
+</ng-template>
+
+<div class="dp-hidden position-absolute">
+  <div class="input-group">
+    <input
+      hidden
+      name="datepicker"
+      class="form-control"
+      ngbDatepicker
+      #datepicker="ngbDatepicker"
+      [autoClose]="'outside'"
+      (dateSelect)="onDateSelection($event)"
+      [displayMonths]="2"
+      [dayTemplate]="t"
+      outsideDays="hidden"
+      [startDate]="fromDate!"
+      tabindex="-1"
+      [footerTemplate]="footerTemplate"
+      placement="left"
+      [positionTarget]="buttonEl"
+    />
+    <ng-template #t let-date let-focused="focused">
+      <span
+        class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
+        {{ date.day }}
+      </span>
+    </ng-template>
+  </div>
+</div>
+
+<form [formGroup]="form">
+  <div class="accordion mt-2">
+    <div class="accordion-item">
+      <!-- header -->
+      <h6 class="accordion-header" id="headingFour">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseFour"
+          aria-expanded="false"
+          aria-controls="collapseFour"
+        >
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para la consignación del dinero."
+            ></i>
+            Avances, Viáticos y Apoyos Económicos
+            <span class="text-secondary"
+              >(información para la consignación del dinero)</span
+            >
+          </span>
+        </button>
+      </h6>
+
+      <!-- content -->
+      <div
+        id="collapseFour"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingSix"
+      >
+        <div class="accordion-body">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row activity_form">
+              <div class="row">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class="">Nombre <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="name"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class="">Cédula <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="id"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class="">Banco <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="bank"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class=""
+                    >Valor ($) <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="value"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class=""
+                    >Numero de cuenta <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="account_number"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class=""
+                    >Tipo de cuenta <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig" *ngIf="ACCOUNT_TYPE">
+                    <select
+                      class="form-control form-select-lg cursor"
+                      formControlName="account_type"
+                    >
+                      <option value="0" disabled selected>
+                        Selecciona el tipo de cuenta
+                      </option>
+                      <option *ngFor="let tipo of ACCOUNT_TYPE">
+                        {{ tipo }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DATES -->
+              <div class="mt-4 row regular-row align-items-baseline">
+                <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
+                  >Desde fecha / Hasta fecha
+                  <span style="color: red">*</span></span
+                >
+                <div
+                  class="col-sm-12 col-xs-12 col-md-8"
+                  style="margin-bottom: 5px"
+                >
+                  <div class="input-group">
+                    <input
+                      #dpFromDate
+                      class="form-control"
+                      type="text"
+                      (click)="datepicker.toggle(); clicked = clicked + 1"
+                      placeholder="aaaa-mm-dd - aaaa-mm-dd"
+                      name="dpFromDate"
+                      formControlName="start_date"
+                      (input)="
+                        fromDate = validateInput(fromDate, dpFromDate.value)
+                      "
+                      [value]="
+                        formatter.format(fromDate)
+                          ? formatter.format(fromDate) +
+                            ' - ' +
+                            formatter.format(toDate)
+                          : null
+                      "
+                    />
+                    <button
+                      #buttonEl
+                      class="btn btn-outline-secondary"
+                      (click)="datepicker.toggle(); clicked = clicked + 1"
+                      type="button"
+                    >
+                      <i class="fa fa-calendar"> </i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+                <div class="input-group" (click)="datepicker.toggle()">
+                  <input
+                    #dpToDate
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    name="dpToDate"
+                    formControlName="end_date"
+                    [value]="formatter.format(toDate)"
+                    (input)="toDate = validateInput(toDate, dpToDate.value)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

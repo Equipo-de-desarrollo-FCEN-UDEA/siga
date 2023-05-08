@@ -1,0 +1,211 @@
+<!-- DATEPICKER -->
+<ng-template #footerTemplate>
+  <hr class="my-0" />
+  <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
+  <p *ngIf="!fromDate">Elige la primera fecha</p>
+  <button
+    class="btn btn-primary btn-sm m-2 float-start"
+    (click)="model = today; datepicker.close()"
+    type="button"
+  >
+    Hoy
+  </button>
+  <button
+    class="btn btn-secondary btn-sm m-2 float-end"
+    (click)="datepicker.close()"
+    type="button"
+  >
+    Cerrar
+  </button>
+</ng-template>
+
+<div class="dp-hidden position-absolute">
+  <div class="input-group">
+    <input
+      hidden
+      name="datepicker"
+      class="form-control"
+      ngbDatepicker
+      #datepicker="ngbDatepicker"
+      [autoClose]="'outside'"
+      (dateSelect)="onDateSelection($event)"
+      [displayMonths]="2"
+      [dayTemplate]="t"
+      outsideDays="hidden"
+      [startDate]="fromDate!"
+      tabindex="-1"
+      [footerTemplate]="footerTemplate"
+      placement="left"
+      [positionTarget]="buttonEl"
+    />
+    <ng-template #t let-date let-focused="focused">
+      <span
+        class="custom-day"
+        [class.focused]="focused"
+        [class.range]="isRange(date)"
+        [class.faded]="isHovered(date) || isInside(date)"
+        (mouseenter)="hoveredDate = date"
+        (mouseleave)="hoveredDate = null"
+      >
+        {{ date.day }}
+      </span>
+    </ng-template>
+  </div>
+</div>
+
+<form [formGroup]="form">
+  <div class="accordion mt-2">
+    <div class="accordion-item">
+      <!-- header -->
+      <h6 class="accordion-header" id="headingThree">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseThree"
+          aria-expanded="false"
+          aria-controls="collapseThree"
+        >
+          <span class="muted">
+            <i class="fa fa-info-circle" title=""></i>
+            Pasajes - Tiquetes
+          </span>
+        </button>
+      </h6>
+
+      <!-- content -->
+      <div
+        id="collapseThree"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingThree"
+      >
+        <div class="accordion-body">
+          <!-- DATES -->
+          <div class="mt-4 row regular-row align-items-baseline">
+            <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
+              >Fechas de ida y fecha de regreso
+              <span style="color: red">*</span></span
+            >
+            <div
+              class="col-sm-12 col-xs-12 col-md-8"
+              style="margin-bottom: 5px"
+            >
+              <div class="input-group">
+                <input
+                  #dpFromDate
+                  class="form-control"
+                  type="text"
+                  (click)="datepicker.toggle(); clicked = clicked + 1"
+                  placeholder="aaaa-mm-dd - aaaa-mm-dd"
+                  name="dpFromDate"
+                  formControlName="departure_place"
+                  (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+                  [value]="
+                    formatter.format(fromDate)
+                      ? formatter.format(fromDate) +
+                        ' - ' +
+                        formatter.format(toDate)
+                      : null
+                  "
+                />
+                <button
+                  #buttonEl
+                  class="btn btn-outline-secondary"
+                  (click)="datepicker.toggle(); clicked = clicked + 1"
+                  type="button"
+                >
+                  <i class="fa fa-calendar"> </i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-xs-6 col-md-6" hidden>
+            <div class="input-group" (click)="datepicker.toggle()">
+              <input
+                #dpToDate
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                name="dpToDate"
+                formControlName="arrival_date"
+                [value]="formatter.format(toDate)"
+                (input)="toDate = validateInput(toDate, dpToDate.value)"
+              />
+            </div>
+          </div>
+
+          <!-- LUGAR DE ORIGEN -->
+          <div class="row mt-3">
+            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+              <span>Lugar de origen <span style="color: red">*</span></span>
+            </div>
+
+            <div class="col-sm-12 col-xs-12 col-md-8">
+              <div class="formfloatig">
+                <input
+                  formControlName="departure_place"
+                  class="form-control"
+                  placeholder=" "
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- LUGAR DE DESTINO -->
+          <div class="row mt-3">
+            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+              <span>Lugar de destino <span style="color: red">*</span></span>
+            </div>
+
+            <div class="col-sm-12 col-xs-12 col-md-8">
+              <div class="formfloatig">
+                <input
+                  formControlName="arrival_place"
+                  class="form-control"
+                  placeholder=" "
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- LUGAR DE NACIMIENTO -->
+          <div class="row mt-3">
+            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+              <span>Lugar de nacimiento <span style="color: red">*</span></span>
+            </div>
+
+            <div class="col-sm-12 col-xs-12 col-md-8">
+              <div class="formfloatig">
+                <input
+                  formControlName="place_birth"
+                  class="form-control"
+                  placeholder=" "
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- FECHA DE NACIMIENTO -->
+          <!-- <div class="mt-4 row regular-row align-items-baseline">
+            <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
+              >Fechas de nacimiento <span style="color: red">*</span></span
+            >
+            <div
+              class="col-sm-12 col-xs-12 col-md-8"
+              style="margin-bottom: 5px"
+            >
+              <div class="formfloatig">
+                <input
+                  formControlName="birthdate"
+                  class="form-control"
+                  placeholder="aaaa-mm-dd"
+                />
+              </div>
+            </div>
+          </div> -->
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

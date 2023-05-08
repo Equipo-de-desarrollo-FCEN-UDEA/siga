@@ -1,0 +1,221 @@
+<form [formGroup]="form">
+  <div class="accordion mt-2">
+    <div class="accordion-item">
+      <!-- HEADER -->
+      <h6 class="accordion-header" id="headingTwo">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo"
+        >
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="Información persona de la persona a la que se le brindará el apoyo económico"
+            ></i>
+            Información del solicitante
+          </span>
+        </button>
+      </h6>
+
+      <!-- content -->
+      <div
+        id="collapseTwo"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingTwo"
+      >
+        <div class="accordion-body">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row activity_form">
+              <!-- SOLICITUD PARA -->
+              <div class="row">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Solicitud para: <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig" *ngIf="APPLICATION_FOR">
+                    <select
+                      class="form-control form-select-lg cursor"
+                      formControlName="application_for"
+                    >
+                      <option value="0" disabled selected>
+                        Elige una opción
+                      </option>
+                      <option *ngFor="let item of APPLICATION_FOR">
+                        {{ item }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- NOMBRE  Y APELLIDOS -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span
+                    >Nombre y apellido <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="name"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- CÉDULA -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span
+                    >Numero documento de Identidad
+                    <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="identification_number"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- CIUDAD -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Ciudad <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="city"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- DIRECCION -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Dirección <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="address"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- TELEFONO FIJO -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Teléfono fijo</span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="landline"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- CORREO ELECTRONICO -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span
+                    >Correo electronico <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="email"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- CELULAR -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Celular <span style="color: red">*</span></span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="phone"
+                      class="form-control"
+                      placeholder=" "
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- NOMBRE INSTITUCION -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Nombre institucion </span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="institution"
+                      class="form-control"
+                      placeholder="Universidad o institución de procedencia (invitado)."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- UNIDAD ACADEMICA -->
+              <div class="row mt-3">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span>Unidad Académica </span>
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div class="formfloatig">
+                    <input
+                      formControlName="academic_unit"
+                      class="form-control"
+                      placeholder=" Facultad, Depto. Programa Académico de procedencia (invitado)."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
