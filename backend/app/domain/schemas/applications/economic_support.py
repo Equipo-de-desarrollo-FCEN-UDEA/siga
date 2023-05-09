@@ -1,41 +1,63 @@
 from typing import Any
 from datetime import datetime
 
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel
 
 from app.domain.schemas.application import ApplicationResponse
 
-class Budget(BaseModel):
-    description: str = Field(min_length=2, max_length=50)
-    amount: int
+class ApplicationData(BaseModel):
+    application_type: str
+    project: str 
+    goal: str 
 
-class EconomicSupportBase(BaseModel):
+class PersonalData(BaseModel):
+    application_for: str
+    name: str
+    identification_number: str
+    city: str
+    address: str | None
+    landline: str 
+    email: str
+    phone: str
+    institution: str | None
+    academic_unit: str | None
+
+class tickets(BaseModel):
+    #birthdate: datetime
+    place_birth: str
+    departure_date: datetime
+    departure_place: str
+    arrival_date: datetime
+    arrival_place: str
+
+#Avances, viaticos y apoyos economicos
+class AdvancePayment(BaseModel):
+    name: str
+    id: str
+    bank: str
+    value: str
+    account_number: str
+    account_type: str
     start_date: datetime
     end_date: datetime
-    country: str
-    justification: str = Field(max_length=500, min_length=5)
-    support: Any
-    budget: list[Budget]
-    documents: list[Any]
+        
 
-    state: str | None
-    city: str | None
-    lenguage: str | None
+class EconomicSupportBase(BaseModel):
+    application_data: ApplicationData
+    personal_data: PersonalData
+    tickets: tickets
+    payment: AdvancePayment
+    document: Any
 
 
 class EconomicSupportCreate(EconomicSupportBase):
-    application_sub_type_id: int = 14
+    application_sub_type_id: int
 
 class EconomicSupportUpdate(EconomicSupportBase):
-    application_sub_type_id: int = 14
+    application_sub_type_id: int
 
 class EconomicSupportInDB(EconomicSupportBase):
-    documents: list[Any]
+    economic_support: EconomicSupportBase | None
 
 class EconomicSupportResponse(ApplicationResponse):
     economic_support: EconomicSupportInDB
-
-class EconomicSupportDocument(EconomicSupportInDB):
-    @validator("start_date", 'end_date')
-    def stringdate(cls, v, values, **kwargs):
-        return v.strftime("%A %d de %B del %Y")

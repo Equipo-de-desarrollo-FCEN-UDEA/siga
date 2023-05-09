@@ -8,6 +8,7 @@ export interface CommissionCreate {
     city?: string;
     start_date: Date;
     end_date: Date;
+    reason: string;
     lenguage: string;
     justification: string;
     documents?: file_path[];

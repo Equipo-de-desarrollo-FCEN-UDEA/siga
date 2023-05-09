@@ -66,6 +66,7 @@ export class CommissionComponent implements OnInit {
     city: [''],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
+    reason: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
     lenguage: ['', [Validators.required, Validators.maxLength(50)]],
     justification: ['', [Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
     documents: [this.documents]

@@ -13,7 +13,7 @@ init_status: List[schemas.StatusCreate] = [
         name='APROBADA'
     ),
     schemas.StatusCreate(
-        name='RECHAZADA'
+        name='DEVUELTA'
     ),
     schemas.StatusCreate(
         name='FINALIZADA'
