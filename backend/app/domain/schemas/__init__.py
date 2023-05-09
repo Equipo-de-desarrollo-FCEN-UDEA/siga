@@ -3,6 +3,7 @@ from .user import UserCreate, UserUpdate, UserResponse, UserInDB
 from .token import Token, TokenPayload
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
 from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse
+from .extra import ExtraCreate, ExtraUpdate, ExtraInDBBase, ExtraResponse
 from .rol import RolInDB, RolCreate, RolUpdate, RolResponse
 from .status import StatusCreate, StatusUpdate, StatusInDB
 from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiResponse, ApplicationResponse
