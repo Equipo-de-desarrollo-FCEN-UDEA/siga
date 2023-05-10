@@ -16,6 +16,8 @@ class Application(Base):
     id = Column(Integer, primary_key=True)
     mongo_id = Column(String(255), nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
+    start_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
+    end_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
     filed = Column(Boolean, default=False)
     
     #Relaciones
