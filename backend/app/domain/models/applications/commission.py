@@ -10,6 +10,7 @@ class Commission(Model):
     city: str | None
     start_date: datetime
     end_date: datetime
+    reason: str | None
     lenguage: str | None
     justification: str
     documents: list[Any] | None

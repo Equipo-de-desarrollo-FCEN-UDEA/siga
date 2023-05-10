@@ -12,13 +12,15 @@ import { Component } from '@angular/core';
       margin:0;
       }
       footer {
-        height: 3em;
+        /* height: 3em; */
         text-align: center;
         background-color: rgba(2, 105, 55, 1);
         color: #fff;
         width: 100%;
-        position: fixed;
-        bottom: 0;
+        /* position: fixed; */
+        /* bottom: 0; */
+        padding: 1em;
+        font-size: 1em;
       }
     `,
   ],

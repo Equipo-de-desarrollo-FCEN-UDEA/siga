@@ -10,6 +10,7 @@ import { ComplimentComponent } from '../create/components/compliment/compliment.
 import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
+import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { VacationComponent } from './components/vacation/vacation.component';
     CommissionComponent,
     FullTimeComponent,
     HourAvalComponent,
-    VacationComponent
+    VacationComponent,
+    EconomicSupportComponent
   ],
   imports: [
     CommonModule,

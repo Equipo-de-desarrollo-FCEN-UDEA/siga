@@ -59,15 +59,8 @@ async def create_vacation(
             obj_in=application
         )
 
-        #mongo_id = ObjectId(application.mongo_id)
+        mongo_id = ObjectId(application.mongo_id)
         
-        application = ApplicationResponse.from_orm(application)
-        
-        response = VacationResponse(
-            **dict(application, vacation=vacation_create))
-        
-        path = documents.fill_vacations_format(current_user, response)
-        await crud.vacation.create_format(engine, id=vacation_create.id, name='formato-vacaciones.xlsx', path=path)
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
@@ -84,6 +77,14 @@ async def create_vacation(
         log.error(e)
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
+    
+    application = ApplicationResponse.from_orm(application)
+        
+    response = VacationResponse(
+            **dict(application, vacation=vacation_create))
+    
+    path = documents.fill_vacations_format(current_user, response)
+    await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     return response
 
@@ -150,7 +151,7 @@ async def update_vacation(
             current_vacation = await crud.vacation.get(engine, id=mongo_id)
             update_vacation = await crud.vacation.update(engine, db_obj=current_vacation, obj_in=vacation)
 
-            log.debug('updated_commission', update_vacation)
+            log.debug('updated_vacation', update_vacation)
 
 
             # In PostgreSQL
@@ -181,7 +182,7 @@ async def delete_vacation(
     db: Session = Depends(db.get_db)
 ) -> Msg:
     """
-    Endpoint to delete an application of type commission
+    Endpoint to delete an application of type vacation
 
         params:
             -id: int, this is the id of the application and not of mongo

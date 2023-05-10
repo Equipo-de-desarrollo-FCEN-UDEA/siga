@@ -1,0 +1,83 @@
+<!-- <div *ngIf="economic_support">
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.start_date | date : "fullDate" }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.end_date | date : "fullDate" }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Lugar</div>
+    <div class="col-xs-12 col-sm-6">
+      {{
+        economic_support.country +
+          ", " +
+          economic_support.state +
+          ", " +
+          economic_support.city | titlecase
+      }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Apoyo Solicitado a</div>
+    <div class="col-xs-12 col-sm-6">{{ economic_support.support }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">
+      Estado actual de la comisión
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <span
+        class="badge badge-pill pill"
+        [ngClass]="{
+          'bg-requested': current_status === 'SOLICITADA',
+          'bg-ok': current_status === 'VISTO BUENO',
+          'bg-approved': current_status === 'APROBADA',
+          'bg-rejected': current_status === 'RECHAZADA'
+        }"
+      >
+        {{ current_status }}
+      </span>
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Justificación</div>
+    <div class="col-xs-12 col-sm-6">{{ economic_support.justification }}</div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Presupuesto</div>
+    <div class="col-xs-12 col-sm-6">
+      <ul>
+        <li *ngFor="let budget of economic_support.budget">
+          <span
+            >RUBRO: {{ budget.description }}, VALOR: ${{ budget.amount }}</span
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+    <div class="col-xs-12 col-sm-6">
+      <ul>
+        <li *ngFor="let doc of economic_support.documents">
+          <span class="link-success cursor" (click)="openDocument(doc.path)"
+            >{{ doc.name }}&nbsp;&nbsp;</span
+          >&nbsp;
+        </li>
+      </ul>
+    </div>
+  </div>
+</div> -->

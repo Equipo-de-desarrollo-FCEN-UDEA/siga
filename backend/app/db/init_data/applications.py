@@ -61,6 +61,19 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status='APROBADA', scope=[5])
         ],
         who_can=[9, 11]
+    ),
+    schemas.ApplicationTypeCreate(
+        name="APOYO ECONÓMICO PARA ESTUDIANTES",
+        description="apoyo economico",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[5, 6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[13, 14]
     )
 ]
 
@@ -120,7 +133,7 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         name="Aval de horas",
         application_type_id=4
     ),
-    #VACACITION
+    #VACATION
     schemas.ApplicationSubTypeCreate(
         name="Dias hábiles",
         application_type_id=5
@@ -128,5 +141,22 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Dias calendario",
         application_type_id=5
+    ),
+    #ECONOMIC SUPPORT 
+    schemas.ApplicationSubTypeCreate(
+        name="Pregrado",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Posgrado",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Grupo de Investigación",
+        application_type_id=6
+    ),
+    schemas.ApplicationSubTypeCreate(
+        name="Bienestar de la Facultad",
+        application_type_id=6
     )
 ]
