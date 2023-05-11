@@ -22,4 +22,4 @@ class UserRol(Base):
     rol_id = Column(Integer, ForeignKey("rol.id"))
     rol = relationship("Rol", back_populates = "rol_users")
     user_id = Column(Integer, ForeignKey("user.id"))
-    users = relationship("User", back_populates = "user_rol")
+    users = relationship("User", back_populates = "users_rol")

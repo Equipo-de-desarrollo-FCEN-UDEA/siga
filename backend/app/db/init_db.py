@@ -55,6 +55,14 @@ def init_db() -> None:
             conn.execute(table.insert().values(**db_obj))
         log.info('Roles iniciales creados')
 
+    @event.listens_for(base.UserRol.__table__, 'after_create')
+    def init_user_rol(table, conn, *args, **kwargs):
+        from .init_data.userroles import init_users_rol
+        for roles in init_users_rol:
+            db_obj = dict(roles)
+            conn.execute(table.insert().values(**db_obj))
+        log.info('User Roles iniciales creados')
+
     @event.listens_for(base.Status.__table__, 'after_create')
     def init_status(table, conn, *args, **kwargs):
         from .init_data.status import init_status

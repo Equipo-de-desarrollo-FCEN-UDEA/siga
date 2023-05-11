@@ -3,7 +3,8 @@ from typing import Union, Dict, Any
 from app.domain.models import User
 from app.domain.schemas.user import UserCreate
 from app.domain.errors.user import *
-from app.domain.schemas import UserUpdate
+from app.domain.schemas import UserUpdate, UserRolResponse
+
 from .base import Base
 
 
@@ -35,7 +36,15 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie decide who can see the list of users
     def get_multi(self, who: User) -> None:
-        if not (who.rol.scope < 9):
+
+        #Verify here
+        print(who.users_rol)
+        #temp_user = UserRolResponse(who.users_rol)
+        #print(who.users_rol)
+        a=iter(who.users_rol)
+        for st in a:
+            print(st)
+        if not (who.users_rol.rol.scope < 9):
             raise user_401
         return None
 

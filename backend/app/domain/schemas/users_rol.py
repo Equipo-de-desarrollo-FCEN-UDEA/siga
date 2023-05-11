@@ -29,3 +29,4 @@ class UserRolResponse(UserRolInDBBase):
 
 class UserRolInDB(UserRolInDBBase):
     scope: int
+    
