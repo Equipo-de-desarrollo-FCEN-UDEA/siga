@@ -11,6 +11,8 @@ from .user import UserResponse
 class ApplicationBase(BaseModel):
     mongo_id: Any
     application_sub_type_id: int
+    start_date: datetime | None
+    end_date: datetime | None
     user_id: int
 
 
@@ -25,6 +27,7 @@ class ApplicationUpdate(ApplicationBase):
 class ApplicationInDB(ApplicationUpdate):
     id: int
     created_at: datetime
+    
 
     # Pydantic models can be created from arbitrary class instances to 
     # support models that map to ORM objects. 

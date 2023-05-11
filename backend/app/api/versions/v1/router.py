@@ -5,6 +5,7 @@ from app.api.versions.v1.routes import (
     user,
     auth,
     department,
+    extra,
     school,
     rol,
     application_type,
@@ -25,6 +26,8 @@ api_route.include_router(auth.router,
                          prefix="/login", tags=["auth"])
 api_route.include_router(department.router,
                          prefix="/department", tags=['departments'])
+api_route.include_router(extra.router,
+                         prefix="/extra", tags=['extra'])
 api_route.include_router(school.router,
                          prefix='/school', tags=["schools"])
 api_route.include_router(rol.router,

@@ -69,7 +69,7 @@
           <th>id</th>
           <th>Solicitud</th>
           <th>Estado</th>
-          <th>Fecha de creación</th>
+          <th>Fecha de inicio</th>
           <th *ngIf="context.isSuperUser">Nombre</th>
           <th *ngIf="context.isSuperUser">Apellidos</th>
           <th *ngIf="context.isSuperUser">Departamento</th>
@@ -115,7 +115,7 @@
               >{{ application.application_status[0].status.name }}</span
             >
           </td>
-          <td>{{ application.created_at | date : "yyyy-MM-dd" }}</td>
+          <td>{{ application.start_date | date : "yyyy-MM-dd" }}</td>
           <td *ngIf="context.isSuperUser">{{ application.user.names }}</td>
           <td *ngIf="context.isSuperUser">{{ application.user.last_names }}</td>
           <td *ngIf="context.isSuperUser">
