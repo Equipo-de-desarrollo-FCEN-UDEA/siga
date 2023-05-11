@@ -18,8 +18,8 @@ class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, Economi
         #Match student rols (pregraduated and postgraduated)
         accept_support = to.application_sub_type_id
 
-        if who.rol.scope == 27 : #27 -> pregraduated
-            if accept_support == 13 :
+        if who.rol.scope == 13 : #27 -> pregraduated
+            if accept_support == 15 :
                 raise EconomicSupportErrors(
                     403, detail=f"No tiene permitido pedir un apoyo económico a Posgrado siendo de pregrado")
         

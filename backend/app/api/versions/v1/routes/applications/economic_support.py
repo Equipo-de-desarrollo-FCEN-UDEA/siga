@@ -61,7 +61,10 @@ async def create_economic_support(
             obj_in=application
         )
 
-    
+    # 422 (Unprocessable Entity)
+    except EconomicSupportErrors as e:
+        log.debug('PermissionErrors', e)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('BaseErrors')
@@ -81,7 +84,8 @@ async def create_economic_support(
     application = ApplicationResponse.from_orm(application)
 
     response = EconomicSupportResponse(
-            **dict(application, economic_support=economic_support_create))
+            **dict(application, 
+                   economic_support=economic_support_create))
     
     return response
 
