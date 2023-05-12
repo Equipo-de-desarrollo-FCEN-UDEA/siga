@@ -25,12 +25,12 @@ log = get_logging(__name__)
 # crea una solicitud de apoyo económico
 @router.post("/", response_model=EconomicSupportResponse)
 async def create_economic_support(
-    economic_supprt: EconomicSupportCreate,
+    economic_support: EconomicSupportCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> EconomicSupportResponse:
+):
     """
     Endpoint to create a application type economic support
 
@@ -41,17 +41,20 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_supprt)
+        #log.debug(economic_support)
+        economic_support_create = None
         # En la BD de mongo
         economic_support_create = await crud.economic_support.create(
-            db=engine,
-            obj_in=EconomicSupport(**dict(economic_supprt))
+            db = engine,
+            who = current_user,
+            application_sub_type_id= economic_support.application_sub_type_id, 
+            obj_in=EconomicSupport(**dict(economic_support))
         )
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(economic_support_create.id),
-            application_sub_type_id=economic_supprt.application_sub_type_id,
+            application_sub_type_id=economic_support.application_sub_type_id,
             user_id=current_user.id
         )
 
@@ -61,31 +64,36 @@ async def create_economic_support(
             obj_in=application
         )
 
+        application = ApplicationResponse.from_orm(application)
+
+        response = EconomicSupportResponse (
+            **dict(application),
+            economic_support = economic_support_create
+        )
     # 422 (Unprocessable Entity)
     except EconomicSupportErrors as e:
-        log.debug('PermissionErrors', e)
+        log.debug('EconomicSupportErrors', e)
         raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
-        log.error('BaseErrors')
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
+            log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
 
     except ValueError as e:
         log.error('ValueError')
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, e)
 
     except Exception as e:
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('Exception')
         log.error(e)
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
     
-    application = ApplicationResponse.from_orm(application)
-
-    response = EconomicSupportResponse(
-            **dict(application, 
-                   economic_support=economic_support_create))
+   
     
     return response
 

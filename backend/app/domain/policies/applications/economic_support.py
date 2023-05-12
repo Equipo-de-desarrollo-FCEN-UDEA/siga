@@ -14,14 +14,12 @@ log = get_logging(__name__)
 class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, EconomicSupportUpdate]):
     # pass
 
-    def create(self, who: User, to: Application) -> tuple[str, str]:
+    def create(self, who: User, application_sub_type_id):
         #Match student rols (pregraduated and postgraduated)
-        accept_support = to.application_sub_type_id
-
+   
         if who.rol.scope == 13 : #27 -> pregraduated
-            if accept_support == 15 :
-                raise EconomicSupportErrors(
-                    403, detail=f"No tiene permitido pedir un apoyo económico a Posgrado siendo de pregrado")
+            if application_sub_type_id == 15 :
+                raise economic_support_403
         
-        return 
+        return None
     
