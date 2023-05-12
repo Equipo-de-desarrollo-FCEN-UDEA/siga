@@ -1,0 +1,117 @@
+<form>
+  <div class="accordion mt-2">
+    <div class="accordion-item">
+      <!-- header -->
+      <h6 class="accordion-header" id="headingFive">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseFive"
+          aria-expanded="false"
+          aria-controls="collapseFive"
+        >
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="A continuación ingrese los ducumentos necesarios para la solicitud."
+            ></i>
+            Documentos
+          </span>
+        </button>
+      </h6>
+
+      <!-- content -->
+      <div
+        id="collapseFive"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingFive"
+      >
+        <div class="accordion-body">
+          <div class="row">
+            <div class="alert alert-warning mt-3 col-12 col-lg-5">
+              <strong>¡Importante!</strong>
+              Para poder realizar la solicitud, debe adjuntar los siguientes
+              documentos:
+              <ul>
+                <li>Carta de invitación o aceptación</li>
+                <li>
+                  Afiliación a SALUD bien sea como beneficiario, cotizante o
+                  SISBEN
+                </li>
+                <li>Certificación bancaria</li>
+                <li>Copia del documento de identidad</li>
+                <li>Poliza estudiantial</li>
+                <li>
+                  ARL <strong>NOTA:</strong> todos los estudiantes deben estar
+                  afiliados por el respectivo Instituto a la ARL
+                </li>
+              </ul>
+              Y algun documento extra que considere necesario.
+            </div>
+
+            <div class="col-12 col-lg-7 mt-3">
+              <div
+                class="alert alert-danger"
+                *ngIf="files.length > 0 && !validFileType()"
+              >
+                Ese tipo de archivo no es permitido.
+              </div>
+              <div
+                class="alert-danger alert"
+                *ngIf="files.length > 0 && !validSize()"
+              >
+                Los archivos no deben pesar más de 2 MB.
+              </div>
+              <div class="formfloatig" style="flex-direction: column">
+                <div
+                  *ngFor="
+                    let producto of archivos;
+                    last as isLast;
+                    let i = index
+                  "
+                  class="arrayLike formfloatig d-flex justify-content-between"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="i"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, i)"
+                      />
+                      <label
+                        [for]="i"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{ files[i] ? files[i].name : "Subir archivo" }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(i)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                    <button
+                      class="btn btn-circle btn-add btn-sm m-1"
+                      type="button"
+                      (click)="archivos.push(1)"
+                      *ngIf="isLast && archivos.length < 7"
+                    >
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

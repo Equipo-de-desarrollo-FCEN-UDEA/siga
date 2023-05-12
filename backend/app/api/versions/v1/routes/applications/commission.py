@@ -47,6 +47,8 @@ async def create_commission(
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
+            start_date=commission.start_date,
+            end_date= commission.end_date,
             user_id=current_user.id
         )
         application = crud.application.create(

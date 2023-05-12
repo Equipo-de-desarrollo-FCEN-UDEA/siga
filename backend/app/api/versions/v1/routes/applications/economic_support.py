@@ -14,6 +14,7 @@ from app.domain.schemas import (ApplicationCreate,
                                 EconomicSupportResponse,
                                 ApplicationResponse,
                                 Application_statusCreate)
+from app.domain.errors.applications.economic_support import EconomicSupportErrors
 from app.domain.errors import BaseErrors
 
 
@@ -60,7 +61,7 @@ async def create_economic_support(
             obj_in=application
         )
 
-        
+    
     except BaseErrors as e:
         await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('BaseErrors')
