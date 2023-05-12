@@ -27,7 +27,7 @@ def read_roles(
         params: skip: int, limit: int
     """
     try:
-        db_empleado = crud.users_rol.get_multi(
+        db_empleado = crud.userrol.get_multi(
             db=db, skip=skip, limit=limit, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)

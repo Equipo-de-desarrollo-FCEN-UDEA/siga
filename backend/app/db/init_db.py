@@ -57,7 +57,7 @@ def init_db() -> None:
 
     @event.listens_for(base.UserRol.__table__, 'after_create')
     def init_user_rol(table, conn, *args, **kwargs):
-        from .init_data.userroles import init_users_rol
+        from .init_data.users_rol import init_users_rol
         for roles in init_users_rol:
             db_obj = dict(roles)
             conn.execute(table.insert().values(**db_obj))

@@ -15,11 +15,11 @@ if TYPE_CHECKING:
 
 # Middle table
 class UserRol(Base):
-    #__tablename__='users_rol'
+    #__tablename__='userrol'
     id = Column(Integer, primary_key=True)
    
     # relations
     rol_id = Column(Integer, ForeignKey("rol.id"))
-    rol = relationship("Rol", back_populates = "rol_users")
+    rol = relationship("Rol", back_populates = "userrol")
     user_id = Column(Integer, ForeignKey("user.id"))
-    users = relationship("User", back_populates = "users_rol")
+    users = relationship("User", back_populates = "userrol")

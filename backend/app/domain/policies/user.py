@@ -38,14 +38,14 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     def get_multi(self, who: User) -> None:
 
         #Verify here
-        print(who.users_rol)
-        userRol = UserRolResponse.from_orm(who.users_rol)
-        print(userRol)
-        #print(who.users_rol)
+        print(who.userrol)
+        userRol = UserRolResponse.from_orm(who.userrol)
+        print(userRol.rol.scope)
+        # #print(who.users_rol)
         #temp_user = UserRolResponse(who.users_rol)
         #print(who.users_rol)
        
-        if not (who.users_rol.rol.scope < 9):
+        if not (who.userrol.rol.scope < 9):
             raise user_401
         return None
 
