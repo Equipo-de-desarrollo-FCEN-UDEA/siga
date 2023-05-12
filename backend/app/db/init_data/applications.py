@@ -144,7 +144,7 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     ),
     #ECONOMIC SUPPORT 
     schemas.ApplicationSubTypeCreate(
-        name="Apoyo economico para estudiantes",
+        name="Apoyo económico para estudiantes",
         application_type_id=6
     )
 ]

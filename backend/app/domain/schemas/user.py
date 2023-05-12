@@ -87,12 +87,12 @@ class UserInDBBase(UserBase):
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
     email: str
-    rol: UserRolResponse
+    users_rol: UserRolResponse
 
 
 class UserInDB(UserInDBBase):
     hashed_password: SecretStr
-    rol: UserRolResponse
+    users_rol: UserRolResponse
 
 
 class UserBypass(BaseModel):

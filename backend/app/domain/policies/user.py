@@ -39,11 +39,12 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
         #Verify here
         print(who.users_rol)
+        userRol = UserRolResponse.from_orm(who.users_rol)
+        print(userRol)
+        #print(who.users_rol)
         #temp_user = UserRolResponse(who.users_rol)
         #print(who.users_rol)
-        a=iter(who.users_rol)
-        for st in a:
-            print(st)
+       
         if not (who.users_rol.rol.scope < 9):
             raise user_401
         return None
