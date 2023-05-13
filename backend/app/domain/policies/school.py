@@ -7,6 +7,8 @@ from .base import Base
 
 class SchoolPolicy(Base[School, SchoolCreate, SchoolUpdate]):
     def get_multi(self, who: User) -> None:
-        if who.rol.scope > 5:
+        userrol = who.userrol[0]
+        if userrol.rol.scope > 5:
+        #if who.rol.scope > 5:
             raise School401
         return None

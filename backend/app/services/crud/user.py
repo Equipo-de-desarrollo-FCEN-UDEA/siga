@@ -52,14 +52,29 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         active: bool = True,
     ) -> List[User]:
         self.policy.get_multi(who=who)
-        queries = [User.active == active, Rol.scope >= who.users_rol.rol.scope]
+        
+        #Verify the rol for current user
+        userrol = who.userrol[0]
+        # queries = [User.active == active, Rol.scope >= who.userrol.rol.scope]
 
-        if (who.users_rol.rol.scope == 7) or (who.users_rol.rol.scope == 6):
-            queries += [Department.id == who.department.id]
+        # if (who.userrol.rol.scope == 7) or (who.userrol.rol.scope == 6):
+        #     queries += [Department.id == who.department.id]
 
-        if who.users_rol.scope == 5:
+        # if who.userrol.scope == 5:
+        #     queries += [Department.school_id == who.department.school_id]
+
+
+
+        queries = [User.active == active, Rol.scope >= userrol.rol.scope]
+        
+        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
+             queries += [Department.id == who.department.id]
+
+        if userrol.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
 
+        
+        
         if search:
             columns = [
                 'names',

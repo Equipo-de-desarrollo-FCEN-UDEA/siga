@@ -1,12 +1,12 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
 #from .rol import RolResponse
-from .users_rol import UserRolResponse
+from .userrol import UserRolResponse
 
 log = get_logging(__name__)
 
@@ -87,12 +87,12 @@ class UserInDBBase(UserBase):
 class UserResponse(UserInDBBase):
     department: Optional[DepartmentResponse]
     email: str
-    users_rol: UserRolResponse
+    userrol: List[UserRolResponse]
 
 
 class UserInDB(UserInDBBase):
     hashed_password: SecretStr
-    users_rol: UserRolResponse
+    userrol: List[UserRolResponse]
 
 
 class UserBypass(BaseModel):

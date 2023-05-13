@@ -8,7 +8,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .department import Department
-    from .users_rol import UserRol
+    from .userrol import UserRol
     from .application import Application
 
 

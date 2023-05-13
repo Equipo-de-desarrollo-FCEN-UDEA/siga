@@ -12,22 +12,23 @@ log = get_logging(__name__)
 
 
 class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, RolPolicy]):
-    def get_multi(
-        self,
-        db: Session,
-        who: User,
-        *,
-        skip: int = 0,
-        limit: int = 100
-    ) -> List[Rol]:
-        objs_db = db.\
-            query(UserRol).\
-            filter(Rol.scope >= who.rol.scope).\
-            offset(skip).\
-            limit(limit).\
-            all()
+   pass
+    # def get_multi(
+    #     self,
+    #     db: Session,
+    #     who: User,
+    #     *,
+    #     skip: int = 0,
+    #     limit: int = 100
+    # ) -> List[Rol]:
+    #     objs_db = db.\
+    #         query(UserRol).\
+    #         filter(Rol.scope >= who.userrol.rol.scope).\
+    #         offset(skip).\
+    #         limit(limit).\
+    #         all()
 
-        return objs_db
+    #     return objs_db
 
     # def get_expose(
     #     self,
@@ -46,4 +47,4 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, RolPolicy]):
 
 policy = RolPolicy()
 
-users_rol = CRUDUserRol(UserRol, policy=policy)
+userrol = CRUDUserRol(UserRol, policy=policy)

@@ -24,7 +24,6 @@ class UserRolInDBBase(UserRolBase):
 
 class UserRolResponse(UserRolInDBBase):
     rol: RolResponse
-    pass
 
 
 class UserRolInDB(UserRolInDBBase):

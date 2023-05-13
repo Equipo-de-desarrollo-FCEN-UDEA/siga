@@ -1,6 +1,6 @@
 from .msg import Msg
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB
-from .users_rol import UserRolBase, UserRolCreate, UserRolResponse, UserRolUpdate, UserRolInDB, UserRolInDBBase
+from .userrol import UserRolBase, UserRolCreate, UserRolResponse, UserRolUpdate, UserRolInDB, UserRolInDBBase
 from .token import Token, TokenPayload
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
 from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse

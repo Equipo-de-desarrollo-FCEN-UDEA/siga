@@ -6,7 +6,9 @@ from .base import Base
 
 class DepartmentPolicy(Base[Department, DepartmentCreate, DeparmentUpdate]):
     def get_multi(self, who: User) -> None:
-        if who.rol.scope > 5:
+        userrol = who.userrol[0]
+        if userrol.rol.scope > 5:
+        #if who.rol.scope > 5:
             raise Department401
 
         return None
