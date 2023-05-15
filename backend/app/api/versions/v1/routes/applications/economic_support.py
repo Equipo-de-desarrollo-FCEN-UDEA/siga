@@ -41,12 +41,13 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_supprt)
         # En la BD de mongo
         economic_support_create = await crud.economic_support.create(
             db=engine,
             obj_in=EconomicSupport(**dict(economic_supprt))
         )
+
+        log.debug(' economic_support_create',  economic_support_create)
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(
