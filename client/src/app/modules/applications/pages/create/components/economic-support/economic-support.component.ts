@@ -140,25 +140,23 @@ export class EconomicSupportComponent {
 
       console.log(economic_support);
 
-      if (APPLICATION_SUB_TYPE.length - 1) {
-        economic_support_form.subscribe({
-          next: (data) => {
-            Swal.fire({
-              title: '¡Solicitud enviada!',
-              text: '¡La solicitud de apoyo económico se ha creado con éxito!',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#3AB795',
-            });
-            this.router.navigateByUrl(
-              `/solicitudes/ver/${data.id}/apoyo-economico`
-            );
-          },
-          error: (err) => {
-            this.error = err;
-          },
-        });
-      }
+      economic_support_form.subscribe({
+        next: (data) => {
+          Swal.fire({
+            title: '¡Solicitud enviada!',
+            text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          this.router.navigateByUrl(
+            `/solicitudes/lista`
+          );
+        },
+        error: (err) => {
+          this.error = err;
+        },
+      });
     }
   }
 

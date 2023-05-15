@@ -7,6 +7,7 @@ from app.api.versions.v1.routes import (
     department,
     school,
     rol,
+    extra,
     application_type,
     application_subtype,
     application,
@@ -47,6 +48,9 @@ api_route.include_router(documents.router,
 # Holidays
 api_route.include_router(holiday.router,
                          prefix="/holiday", tags=["holiday"])
+
+api_route.include_router(extra.router,
+                         prefix="/extra", tags=['extra'])
 
 # Applications
 api_route.include_router(commission.router,

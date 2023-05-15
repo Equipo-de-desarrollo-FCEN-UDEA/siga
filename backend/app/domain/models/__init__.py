@@ -9,6 +9,7 @@ from .application_subtype import ApplicationSubType
 from .application_status import Application_status
 from .holiday import Holiday
 from .cron_job import CronJob
+from .extra import Extra
 from .applications import (Commission, Permission, Consecutive, 
                            FullTime, HourAval, Vacation, 
                            EconomicSupport)

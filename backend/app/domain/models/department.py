@@ -24,3 +24,4 @@ class Department(Base):
     users = relationship("User", back_populates="department")
     school_id = Column(Integer, ForeignKey("school.id"))
     school = relationship("School", back_populates="departments")
+    extras = relationship("Extra", back_populates="department")

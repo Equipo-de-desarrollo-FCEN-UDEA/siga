@@ -47,7 +47,7 @@ class EconomicSupportBase(BaseModel):
     personal_data: PersonalData
     tickets: tickets
     payment: AdvancePayment
-    document: list[Any]
+    documents: list[Any]
 
 
 class EconomicSupportCreate(EconomicSupportBase):
