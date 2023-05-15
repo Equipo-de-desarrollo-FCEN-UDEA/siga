@@ -49,8 +49,9 @@ async def create_commission(
             application_sub_type_id=commission.application_sub_type_id,
             start_date=commission.start_date,
             end_date= commission.end_date,
-            user_id=current_user.id
-        )
+            user_id=current_user.id)
+        log.debug('commission_created', commission_created)
+        
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:

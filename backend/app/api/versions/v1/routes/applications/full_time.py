@@ -49,6 +49,7 @@ async def create_full_time(
     try:
         full_time_created = await crud.full_time.create(db=engine,
                                                         obj_in=FullTime(**dict(full_time)))
+        log.debug(' full_time_created',  full_time_created)
 
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
