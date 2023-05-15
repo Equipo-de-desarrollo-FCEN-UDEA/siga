@@ -8,7 +8,7 @@ class EconomicSupport(Model):
     personal_data: Any | None
     tickets: Any | None
     payment: Any | None
-    document: Any | None
+    document: list[Any] | None
     
 
 

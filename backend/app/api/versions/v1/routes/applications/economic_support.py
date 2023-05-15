@@ -25,7 +25,7 @@ log = get_logging(__name__)
 # crea una solicitud de apoyo económico
 @router.post("/", response_model=EconomicSupportResponse)
 async def create_economic_support(
-    economic_supprt: EconomicSupportCreate,
+    economic_support: EconomicSupportCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
@@ -41,17 +41,17 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_supprt)
-        # En la BD de mongo
+        log.debug(economic_support)
+
         economic_support_create = await crud.economic_support.create(
             db=engine,
-            obj_in=EconomicSupport(**dict(economic_supprt))
+            obj_in=EconomicSupport(**dict(economic_support))
         )
-
+        
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(economic_support_create.id),
-            application_sub_type_id=economic_supprt.application_sub_type_id,
+            application_sub_type_id=economic_support.application_sub_type_id,
             user_id=current_user.id
         )
 
