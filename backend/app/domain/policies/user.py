@@ -41,7 +41,7 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie decide who can see the list of users
     def get_multi(self, who: User) -> None:
-        #Aquí es donde se debe elegir el rol         
+        #Aquí es donde se debe elegir el rol
         userrol = who.userrol[0]
 
         if not (userrol.rol.scope < 9):

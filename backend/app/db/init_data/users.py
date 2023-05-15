@@ -4,6 +4,7 @@ from app.core.config import get_app_settings
 settings = get_app_settings()
 
 init_users: list[schemas.UserCreate] = [
+    #1
     schemas.UserCreate(
         last_names=settings.first_superemployee_last_names,
         names=settings.first_superemployee_names,
@@ -17,6 +18,7 @@ init_users: list[schemas.UserCreate] = [
         password=settings.first_superemployee_password
     ),
     # DECANATURA FCEN
+    #2
     schemas.UserCreate(
         last_names='FCEN',
         names='DECANO DE',
@@ -29,6 +31,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.decano_fcen_password
     ),
+    #3
     schemas.UserCreate(
         last_names='FCEN',
         names='SECRETARIA DECANO DE',
@@ -42,6 +45,7 @@ init_users: list[schemas.UserCreate] = [
         password=settings.secretaria_decano_fcen_password
     ),
     # VICEDECANATURA FCEN
+    #4
     schemas.UserCreate(
         last_names='FCEN',
         names='VICEDECANO DE',
@@ -54,6 +58,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.vicedecano_fcen_password
     ),
+    #5
     schemas.UserCreate(
         last_names='FCEN',
         names='SECRETARIA VICEDECANO DE',
@@ -68,6 +73,7 @@ init_users: list[schemas.UserCreate] = [
     ),
 
     # MATEMÁTICAS
+    #6
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
         names='DIRECTOR DE',
@@ -80,6 +86,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_matematicas_password
     ),
+    #7
     schemas.UserCreate(
         last_names='DIRECCIÓN MATEMÁTICAS',
         names='SECRETARIA DE',
@@ -92,7 +99,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_director_matematicas_password
     ),
-
+    #8
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
         names='COORDINADOR POSGRADO DE ',
@@ -105,6 +112,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.coordinador_posgrado_matematicas_password
     ),
+    #9
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
         names='SECRETARIA POSGRADO DE ',
@@ -117,6 +125,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_coordinador_posgrado_matematicas_password
     ),
+    #10
     schemas.UserCreate(
         last_names='MATEMÁTICAS',
         names='COORDINADOR PREGRADO DE ',
@@ -130,6 +139,7 @@ init_users: list[schemas.UserCreate] = [
         password=settings.coordinador_pregrado_matematicas_password
     ),
     # FISICA
+    #11
     schemas.UserCreate(
         last_names='FÍSICA',
         names='DIRECTOR DE',
@@ -142,6 +152,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_fisica_password
     ),
+    #12
     schemas.UserCreate(
         last_names='DIRECCIÓN FÍSICA',
         names='SECRETARIA DE',
@@ -154,7 +165,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_director_fisica_password
     ),
-
+    #13
     schemas.UserCreate(
         last_names='FÍSICA',
         names='COORDINADOR POSGRADO DE ',
@@ -167,6 +178,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.coordinador_posgrado_fisica_password
     ),
+    #14
     schemas.UserCreate(
         last_names='FÍSICA',
         names='SECRETARIA POSGRADO DE ',
@@ -179,6 +191,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_coordinador_posgrado_fisica_password
     ),
+    #15
     schemas.UserCreate(
         last_names='FÍSICA',
         names='COORDINADOR PREGRADO DE ',
@@ -193,6 +206,7 @@ init_users: list[schemas.UserCreate] = [
     ),
 
     # BIOLOGÍA
+    #16
     schemas.UserCreate(
         last_names='BIOLOGÍA',
         names='DIRECTOR DE',
@@ -205,6 +219,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_biologia_password
     ),
+    #17
     schemas.UserCreate(
         last_names='DIRECCIÓN BIOLOGÍA',
         names='SECRETARIA DE',
@@ -217,7 +232,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_director_biologia_password
     ),
-
+    #18
     schemas.UserCreate(
         last_names='BIOLOGÍA',
         names='COORDINADOR POSGRADO DE ',
@@ -230,6 +245,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.coordinador_posgrado_biologia_password
     ),
+    #19
     schemas.UserCreate(
         last_names='BIOLOGÍA',
         names='SECRETARIA POSGRADO DE ',
@@ -242,6 +258,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_coordinador_posgrado_biologia_password
     ),
+    #20
     schemas.UserCreate(
         last_names='BIOLOGÍA',
         names='COORDINADOR PREGRADO DE ',
@@ -256,6 +273,7 @@ init_users: list[schemas.UserCreate] = [
     ),
 
     # QUÍMICA
+    # 21
     schemas.UserCreate(
         last_names='QUÍMICA',
         names='DIRECTOR DE',
@@ -268,6 +286,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_quimica_password
     ),
+    # 22
     schemas.UserCreate(
         last_names='DIRECCIÓN QUÍMICA',
         names='SECRETARIA DE',
@@ -280,7 +299,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_director_quimica_password
     ),
-
+    # 23
     schemas.UserCreate(
         last_names='QUÍMICA',
         names='COORDINADOR POSGRADO DE ',
@@ -293,6 +312,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.coordinador_posgrado_quimica_password
     ),
+    # 24
     schemas.UserCreate(
         last_names='QUÍMICA',
         names='SECRETARIA POSGRADO DE ',
@@ -305,6 +325,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.secretaria_coordinador_posgrado_quimica_password
     ),
+    # 25
     schemas.UserCreate(
         last_names='QUÍMICA',
         names='COORDINADOR PREGRADO DE ',
@@ -319,6 +340,7 @@ init_users: list[schemas.UserCreate] = [
     ),
 
     # EXTENSION_FCEN
+    # 26
     schemas.UserCreate(
         last_names='EXTENSIÓN FCEN',
         names='DIRECTOR DE',
@@ -331,6 +353,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_extension_password
     ),
+    # 27
     schemas.UserCreate(
         last_names='DIRECCIÓN EXTENSIÓN FCEN',
         names='SECRETARIA DE',
@@ -344,6 +367,7 @@ init_users: list[schemas.UserCreate] = [
         password=settings.secretaria_director_extension_password
     ),
     # CIEN_FCEN
+    # 28
     schemas.UserCreate(
         last_names='CIEN FCEN',
         names='DIRECTOR DE',
@@ -356,6 +380,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.director_cien_password
     ),
+    # 29
     schemas.UserCreate(
         last_names='DIRECCIÓN CIEN FCEN',
         names='SECRETARIA DE',
@@ -370,6 +395,7 @@ init_users: list[schemas.UserCreate] = [
     ),
 
     # FING
+    # 30
     schemas.UserCreate(
         last_names='FING',
         names='DECANO DE',
@@ -382,7 +408,7 @@ init_users: list[schemas.UserCreate] = [
         active=True,
         password=settings.decano_fing_password
     ),
-
+    # 31
     schemas.UserCreate(
         last_names='FING',
         names='SECRETARIA DECANO DE',

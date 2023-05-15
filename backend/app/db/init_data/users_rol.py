@@ -34,128 +34,134 @@ init_users_rol: List[schemas.UserRolCreate] = [
         user_id = 6
     ),
     schemas.UserRolCreate(
+    #Secretaria MATEMÁTICAS
+        rol_id = 6,
+        user_id = 7
+    ),
+    
+    schemas.UserRolCreate(
     #Coordinador posgrados MATEMÁTICAS
         rol_id = 7,
-        user_id = 7
+        user_id = 8
     ),
     schemas.UserRolCreate(
     #secretarIa posgrados MATEMÁTICAS
         rol_id = 8,
-        user_id = 8
+        user_id = 9
     ),
     schemas.UserRolCreate(
     #Coordinador pregrado MATEMÁTICAS
         rol_id = 7,
-        user_id = 9
+        user_id = 10
     ),
     schemas.UserRolCreate(
     #Director FÍSICA
         rol_id = 5,
-        user_id = 10
+        user_id = 11
     ),
     schemas.UserRolCreate(
     #Secretaria FÍSICA
         rol_id = 6,
-        user_id = 11
+        user_id = 12
     ),
     schemas.UserRolCreate(
     #Coordinador posgrados FÍSICA
         rol_id = 7,
-        user_id = 12
+        user_id = 13
     ),
     schemas.UserRolCreate(
     #secretarIa posgrados FÍSICA
         rol_id = 8,
-        user_id = 13
+        user_id = 14
     ),
     schemas.UserRolCreate(
     #Coordinador pregrado FÍSICA
         rol_id = 7,
-        user_id = 14
+        user_id = 15
     ),
     #BIOLOGÍA
     schemas.UserRolCreate(
     #Director BIOLOGÍA
         rol_id = 5,
-        user_id = 15
+        user_id = 16
     ),
     schemas.UserRolCreate(
     #Secretaria BIOLOGÍA
         rol_id = 6,
-        user_id = 16
+        user_id = 17
     ),
     schemas.UserRolCreate(
     #Coordinador posgrados BIOLOGÍA
         rol_id = 7,
-        user_id = 17
+        user_id = 18
     ),
     schemas.UserRolCreate(
     #secretarIa posgrados BIOLOGÍA
         rol_id = 8,
-        user_id = 18
+        user_id = 19
     ),
     schemas.UserRolCreate(
     #Coordinador pregrado BIOLOGÍA
         rol_id = 7,
-        user_id = 19
+        user_id = 20
     ),
      #QUÍMICA
     schemas.UserRolCreate(
     #Director QUÍMICA
         rol_id = 5,
-        user_id = 20
+        user_id = 21
     ),
     schemas.UserRolCreate(
     #Secretaria QUÍMICA
         rol_id = 6,
-        user_id = 21
+        user_id = 22
     ),
     schemas.UserRolCreate(
     #Coordinador posgrados QUÍMICA
         rol_id = 7,
-        user_id = 22
+        user_id = 23
     ),
     schemas.UserRolCreate(
     #secretarIa posgrados QUÍMICA
         rol_id = 8,
-        user_id = 23
+        user_id = 24
     ),
     schemas.UserRolCreate(
     #Coordinador pregrado QUÍMICA
         rol_id = 7,
-        user_id = 24
+        user_id = 25
     ),
      #EXTENSIÓN_FCEN
     schemas.UserRolCreate(
     #Director Extensión FCEN
         rol_id = 5,
-        user_id = 25
+        user_id = 26
     ),
     schemas.UserRolCreate(
     #Secretaria Extensión FCEN
         rol_id = 6,
-        user_id = 26
+        user_id = 27
     ),
     schemas.UserRolCreate(
     #DIRECTOR CIEN FCEN
         rol_id = 5,
-        user_id = 27
+        user_id = 28
     ),
     schemas.UserRolCreate(
     #secretaria DIRECTOR CIEN FCEN
         rol_id = 6,
-        user_id = 28
+        user_id = 29
     ),
     #FING
     schemas.UserRolCreate(
     #DECANO FING
         rol_id = 3,
-        user_id = 29
+        user_id = 30
     ),
     schemas.UserRolCreate(
     #SECRETARÍA DECANO FING
         rol_id = 4,
-        user_id = 30
+        user_id = 31
     ),
     
 ]

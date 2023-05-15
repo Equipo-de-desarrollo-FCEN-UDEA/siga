@@ -25,7 +25,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
         elif not (userrol.rol.scope < 9) and not (who.id == to.user.id):
             raise application_401
 
-        elif not (userrol.rol.scope <= to.user.rol.scope):
+        elif not (userrol.rol.scope <= torol.rol.scope):
             raise application_401
 
         elif (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
@@ -54,6 +54,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
 
     # Who can create a application of a subtype
     def create(self, who: User, to: ApplicationCreate) -> None:
+
         userrol = who.userrol[0]
         application_sub_type = to.application_sub_type_id
 
@@ -62,7 +63,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
                 not (userrol.rol.scope == 11 or userrol.rol.scope == 9)):
 
             raise application_401
-
+        
         # Comisión
         if (application_sub_type in [8, 9]
                 and not (userrol.rol.scope == 11 or userrol.rol.scope == 9)):

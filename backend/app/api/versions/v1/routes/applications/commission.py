@@ -44,6 +44,8 @@ async def create_commission(
         commission_created = await crud.commission.create(db=engine,
                                                           obj_in=Commission(**dict(commission)))
 
+        log.debug('commission_created', commission_created)
+        
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
