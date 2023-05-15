@@ -21,7 +21,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             .query(Application)
             .filter(Application.id == id)
             .join(Application_status)
-            .order_by(desc(Application_status.id))
+            .order_by(desc(Application_status.created_at))
             .first()
         )
         self.policy.get(who=who, to=application)
