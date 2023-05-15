@@ -24,6 +24,10 @@ async def commission_resolution_generation(user: User, application: Application,
 
     id = ObjectId(application.mongo_id)
 
+    #log.debug([status.created_at for status in application.application_status])
+
+    last_status = [status.created_at for status in application.application_status][-1].strftime("%A %d de %B del %Y")
+
     application = ApplicationResponse.from_orm(application)
 
     school = SchoolInDB.from_orm(user.department.school)
@@ -31,6 +35,9 @@ async def commission_resolution_generation(user: User, application: Application,
     user = UserResponse.from_orm(user)
 
     commission = await crud.commission.get(mong_db, id=id,)
+    
+    log.debug('Este es el modelo')
+    log.debug(last_status)
 
     path = f'user_{user.id}/{uuid1()}' + 'resolucion.pdf'
 
@@ -52,8 +59,11 @@ async def commission_resolution_generation(user: User, application: Application,
         "school": school.dict(),
         "commission": commission.dict(),
         "application": application.dict(),
-        "consecutive": str(consecutive.number)[1:]
+        "consecutive": str(consecutive.number)[1:], 
+        "last_status": last_status,
     }
+
+    log.debug(data)
 
     consecutive.number += 1 
 

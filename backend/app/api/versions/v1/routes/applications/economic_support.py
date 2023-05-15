@@ -14,6 +14,7 @@ from app.domain.schemas import (ApplicationCreate,
                                 EconomicSupportResponse,
                                 ApplicationResponse,
                                 Application_statusCreate)
+from app.domain.errors.applications.economic_support import EconomicSupportErrors
 from app.domain.errors import BaseErrors
 
 
@@ -40,12 +41,13 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_supprt)
         # En la BD de mongo
         economic_support_create = await crud.economic_support.create(
             db=engine,
             obj_in=EconomicSupport(**dict(economic_supprt))
         )
+
+        log.debug(' economic_support_create',  economic_support_create)
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(
@@ -60,7 +62,7 @@ async def create_economic_support(
             obj_in=application
         )
 
-        
+    
     except BaseErrors as e:
         await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('BaseErrors')

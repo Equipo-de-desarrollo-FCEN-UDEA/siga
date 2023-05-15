@@ -39,12 +39,13 @@ async def create_vacation(
             - Vacation
     """
     try:
-        log.debug(vacation)
         # En la BD de mongo
         vacation_create = await crud.vacation.create(
             db=engine,
             obj_in=Vacation(**dict(vacation))
         )
+
+        log.debug(' vacation_create',  vacation_create)
 
         # En la BD de PostgreSQL
         application = ApplicationCreate(

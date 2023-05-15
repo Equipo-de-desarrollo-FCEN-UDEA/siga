@@ -1,0 +1,72 @@
+<form [formGroup]="form">
+  <div class="accordion mt-2">
+    <div class="accordion-item">
+      <!-- header -->
+      <h6 class="accordion-header" id="headingSix">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseSix"
+          aria-expanded="false"
+          aria-controls="collapseSix"
+        >
+          <span class="muted">
+            <i
+              class="fa fa-info-circle"
+              title="selecciona la(s) dependendias en las que desea solicitar el apoyo económico"
+            ></i>
+            Dependencia donde desea realizar la solicitud
+          </span>
+        </button>
+      </h6>
+
+      <!-- content -->
+      <div
+        id="collapseSix"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingSix"
+      >
+        <div class="accordion-body">
+          <div class="arrayLike formfloatig justify-content-center">
+            <div class="row activity_form">
+              <div class="row">
+                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                  <span class=""
+                    >Dependencia donde desea realizar la solicitud
+                    <span style="color: red">*</span></span
+                  >
+                </div>
+
+                <div class="col-sm-12 col-xs-12 col-md-8">
+                  <div
+                    class="formfloatig"
+                    *ngIf="applicationType$ | async as applicationType"
+                  >
+                    <div
+                      *ngFor="let tipo of applicationType.application_sub_type"
+                    >
+                      <label>
+                        <input
+                          type="radio"
+                          [ngClass]="{
+                            'is-invalid':
+                              (submitted && f['application_sub_type_id'].errors) ||
+                              isInvalidForm('application_sub_type_id')
+                          }"
+                          [value]="tipo.id"
+                          formControlName="application_sub_type_id"
+                        />
+                        {{ tipo.name }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
