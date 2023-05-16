@@ -48,8 +48,10 @@ async def create_permission(
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(permission_created.id),
-            application_sub_type_id=permission.application_sub_type_id,
-            user_id=current_user.id,
+            application_sub_type_id = permission.application_sub_type_id,
+            start_date = permission.start_date,
+            end_date = permission.end_date,
+            user_id = current_user.id,
         )
 
         application = crud.application.create(
