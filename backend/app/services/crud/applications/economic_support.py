@@ -33,6 +33,19 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
         log.debug('salio de la policy', obj_in)
     
         return await db.save(obj_in)
+    
+    async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
+        economic_support = await db.find_one(EconomicSupport, EconomicSupport.id == id)
+        log.debug(economic_support.dict())
+        # for i, document in enumerate(economic_support.documents):
+        #     if document['name'] == name:
+        #         del economic_support.documents[i]
+        if economic_support.documents is not None:
+            economic_support.documents += [{'name': name, 'path': path}]
+        else:
+            economic_support.documents = [{'name': name, 'path': path}]
+        await db.save(economic_support)
+        return None
 
 policy   = EconomicSupportPolicy()
 economic_support = CRUDEconomicSupport(EconomicSupport, policy=policy)

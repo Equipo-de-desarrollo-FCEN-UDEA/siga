@@ -151,22 +151,22 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     #ECONOMIC SUPPORT 
     #14
     schemas.ApplicationSubTypeCreate(
-        name="Pregrado",
+        name="ApoyoEE Pregrado",
         application_type_id=6
     ),
     #15
     schemas.ApplicationSubTypeCreate(
-        name="Posgrado",
+        name="ApoyoEE Posgrado",
         application_type_id=6
     ),
     #16
     schemas.ApplicationSubTypeCreate(
-        name="Grupo de Investigación",
+        name="ApoyoEE Grupo de Investigación",
         application_type_id=6
     ),
     #17
     schemas.ApplicationSubTypeCreate(
-        name="Bienestar de la Facultad",
+        name="ApoyoEE Bienestar de la Facultad",
         application_type_id=6
     )
 ]

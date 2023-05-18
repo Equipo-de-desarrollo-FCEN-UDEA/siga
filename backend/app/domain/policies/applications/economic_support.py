@@ -6,11 +6,9 @@ from app.domain.models import Application_status, User, Application, Status
 
 from app.domain.errors.applications.economic_support import *
 
-from app.core.logging import get_logging
+from app.domain.models import Application_status, User, Application, Status
 
-
-
-log = get_logging(__name__)
+#log = get_logging(__name__)
 class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, EconomicSupportUpdate]):
     # pass
 

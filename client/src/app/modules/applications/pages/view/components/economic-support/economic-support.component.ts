@@ -6,7 +6,10 @@ import Swal from 'sweetalert2';
 
 // interfaces
 import { Application } from '@interfaces/application';
-import { IEconomicSupportInDB, IEconomicSupportResponse } from '@interfaces/applications/economic_support-interface';
+import {
+  IEconomicSupportInDB,
+  IEconomicSupportResponse,
+} from '@interfaces/applications/economic_support-interface';
 
 // Utils
 import { lastElement } from '@shared/utils';
@@ -20,10 +23,9 @@ import { ComService } from '../../connection/com.service';
 @Component({
   selector: 'app-economic-support',
   templateUrl: './economic-support.component.html',
-  styleUrls: ['./economic-support.component.scss']
+  styleUrls: ['./economic-support.component.scss'],
 })
 export class EconomicSupportComponent implements OnInit {
-
   public id: number = 0;
 
   public current_status: string = '';
@@ -31,50 +33,50 @@ export class EconomicSupportComponent implements OnInit {
   public today = new Date();
   public end_date = new Date();
 
-
   public economic_support: IEconomicSupportInDB | undefined = undefined;
   public application: Application | undefined = undefined;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    
-    private documentService: DocumentService,
+
+    //SERVICES
+    private documentSvc: DocumentService,
     private economicSupportSvc: EconomicSupportService,
     private authSvc: AuthService,
-    private comSvc: ComService,
-  ) { 
+    private comSvc: ComService
+  ) {
     this.authSvc.isSuperUser();
-    this.route.parent?.params.subscribe(
-      params => {
-        this.id = params['id']
-      }
-    )
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+    });
   }
 
   ngOnInit(): void {
-    this.economicSupportSvc.getEconomicSupport(this.id).subscribe(
-      (app: IEconomicSupportResponse) => {
-        const {economic_support, ...application} = app;
+    this.economicSupportSvc
+      .getEconomicSupport(this.id)
+      .subscribe((app: IEconomicSupportResponse) => {
+        const { economic_support, ...application } = app;
         this.economic_support = economic_support;
         this.application = application;
-        
+
         console.log(this.economic_support);
 
-        this.current_status = lastElement(application.application_status).status.name;
+        this.current_status = lastElement(
+          application.application_status
+        ).status.name;
         this.comSvc.push(this.application);
         //this.end_date = new Date(economic_support.end_date)
-      }
-    )
+      });
   }
 
-  openDocument(path:string) {
-    this.documentService.getDocument(path).subscribe(
-      res => window.open(window.URL.createObjectURL(res))
-    )
+  openDocument(path: string) {
+    this.documentSvc
+      .getDocument(path)
+      .subscribe((res) => window.open(window.URL.createObjectURL(res)));
   }
 
-    // -----------------------------------------
+  // -----------------------------------------
   // ----------- DELETE COMMISSION ------------
   // -----------------------------------------
   delete(id: number): void {
@@ -105,5 +107,4 @@ export class EconomicSupportComponent implements OnInit {
       }
     });
   }
-
 }

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails
+from app.services import crud, emails, documents
 from app.domain.models import EconomicSupport, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 Msg,
@@ -50,7 +50,7 @@ async def create_economic_support(
             application_sub_type_id= economic_support.application_sub_type_id, 
             obj_in=EconomicSupport(**dict(economic_support))
         )
-
+        
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(economic_support_create.id),
@@ -66,10 +66,8 @@ async def create_economic_support(
 
         application = ApplicationResponse.from_orm(application)
 
-        response = EconomicSupportResponse (
-            **dict(application),
-            economic_support = economic_support_create
-        )
+        mongo_id = ObjectId(application.mongo_id)
+
     # 422 (Unprocessable Entity)
     except EconomicSupportErrors as e:
         log.debug('EconomicSupportErrors', e)
@@ -93,8 +91,15 @@ async def create_economic_support(
         log.error(e)
         raise HTTPException(422, "Algo ocurrió mal")
     
-   
+    response = EconomicSupportResponse (
+            **dict(application),
+            economic_support = economic_support_create
+        )
     
+    
+    path = documents.fill_economic_support_form(current_user, response)
+    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.xlsx', path=path)
+
     return response
 
 
