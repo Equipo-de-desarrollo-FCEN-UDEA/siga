@@ -85,8 +85,8 @@ async def create_economic_support(
     response = EconomicSupportResponse(
             **dict(application, economic_support=economic_support_create))
     
-    #path = documents.fill_economic_support_form(current_user, response)
-    #await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.xlsx', path=path)
+    path = documents.fill_economic_support_form(current_user, response)
+    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.xlsx', path=path)
 
     return response
 

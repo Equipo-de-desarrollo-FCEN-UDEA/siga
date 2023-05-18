@@ -8,6 +8,8 @@ export interface Application {
     filed: boolean;
     id: number;
     created_at: Date;
+    start_date: Date;
+    end_date: Date;
     application_sub_type: ApplicationSubType;
     application_status: ApplicationStatus[];
     user: UserResponse;
