@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
-from app.services import crud, emails
+from app.services import crud, emails, documents
 from app.domain.models import EconomicSupport, User, Application
 from app.domain.schemas import (ApplicationCreate,
                                 Msg,
@@ -25,7 +25,7 @@ log = get_logging(__name__)
 # crea una solicitud de apoyo económico
 @router.post("/", response_model=EconomicSupportResponse)
 async def create_economic_support(
-    economic_supprt: EconomicSupportCreate,
+    economic_support: EconomicSupportCreate,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
@@ -41,17 +41,17 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_supprt)
-        # En la BD de mongo
+        log.debug(economic_support)
+
         economic_support_create = await crud.economic_support.create(
             db=engine,
-            obj_in=EconomicSupport(**dict(economic_supprt))
+            obj_in=EconomicSupport(**dict(economic_support))
         )
-
+        
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(economic_support_create.id),
-            application_sub_type_id=economic_supprt.application_sub_type_id,
+            application_sub_type_id=economic_support.application_sub_type_id,
             user_id=current_user.id
         )
 
@@ -60,6 +60,8 @@ async def create_economic_support(
             who=current_user,
             obj_in=application
         )
+
+        mongo_id = ObjectId(application.mongo_id)
 
     
     except BaseErrors as e:
@@ -83,6 +85,9 @@ async def create_economic_support(
     response = EconomicSupportResponse(
             **dict(application, economic_support=economic_support_create))
     
+    path = documents.fill_economic_support_form(current_user, response)
+    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.xlsx', path=path)
+
     return response
 
 

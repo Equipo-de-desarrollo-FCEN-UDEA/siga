@@ -53,20 +53,26 @@ async def create_application_status(
             log.debug('CORREO...')
         
         # Vacations
-        #TODO: AL MOMENTO QUE SE APRUEBA LA SOLICITUD SE TIEsNE QUE GENERAR EL FORMATO
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "VACACIONES"):
-            log.debug('VACATION APRROVED!!!!')
-            #await documents.fill_vacations_format(user=application.user, application=vacation)
-        # emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                    # application_status.observation, response.status.name, application.id, application.user.email))
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                     application_status.observation, response.status.name, application.id, application.user.email))
+
+        #ECONOMIC SUPPORT
+        if(response.status.name == 'SOLICITADA' 
+           and application.application_sub_type.application_type.name == "APOYO ECONÓMICO PARA ESTUDIANTES"):
+            log.debug('SOLICITADA')
+
+        if (response.status.name == 'APROBADA' 
+            and application.application_sub_type.application_type.name == "APOYO ECONÓMICO PARA ESTUDIANTES"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                     application_status.observation, response.status.name, application.id, application.user.email))
+          
 
         # Full time
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
-
             full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-
             dates_to_save = []
 
             # Tomar solo las fechas del plan de trabajo
