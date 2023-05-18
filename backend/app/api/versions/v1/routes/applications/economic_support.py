@@ -30,7 +30,7 @@ async def create_economic_support(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> EconomicSupportResponse:
+):
     """
     Endpoint to create a application type economic support
 
@@ -41,10 +41,13 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        log.debug(economic_support)
-
+        #log.debug(economic_support)
+        economic_support_create = None
+        # En la BD de mongo
         economic_support_create = await crud.economic_support.create(
-            db=engine,
+            db = engine,
+            who = current_user,
+            application_sub_type_id= economic_support.application_sub_type_id, 
             obj_in=EconomicSupport(**dict(economic_support))
         )
         
@@ -61,29 +64,38 @@ async def create_economic_support(
             obj_in=application
         )
 
+        application = ApplicationResponse.from_orm(application)
+
         mongo_id = ObjectId(application.mongo_id)
 
-    
+    # 422 (Unprocessable Entity)
+    except EconomicSupportErrors as e:
+        log.debug('EconomicSupportErrors', e)
+        raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
-        log.error('BaseErrors')
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
+            log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
 
     except ValueError as e:
         log.error('ValueError')
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, e)
 
     except Exception as e:
+        if economic_support_create is not None:
+            await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         log.error('Exception')
         log.error(e)
-        await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
     
-    application = ApplicationResponse.from_orm(application)
-
-    response = EconomicSupportResponse(
-            **dict(application, economic_support=economic_support_create))
+    response = EconomicSupportResponse (
+            **dict(application),
+            economic_support = economic_support_create
+        )
+    
     
     path = documents.fill_economic_support_form(current_user, response)
     await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.xlsx', path=path)

@@ -16,6 +16,24 @@ from .base import CRUDBase
 log = get_logging(__name__)
 
 class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, EconomicSupportUpdate, EconomicSupportPolicy]):
+
+    # ---------- CREATE ECONOMIC SUPPORT ----------
+    # Si es estudiante de pregrado no puede pedir a posgrado
+    async def create(
+        self,
+        db: Session,
+        who: User,
+        application_sub_type_id: int,
+        obj_in: EconomicSupport,
+    ) -> EconomicSupport:
+
+        
+        self.policy.create(who=who,application_sub_type_id=application_sub_type_id)
+
+        log.debug('salio de la policy', obj_in)
+    
+        return await db.save(obj_in)
+    
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
         economic_support = await db.find_one(EconomicSupport, EconomicSupport.id == id)
         log.debug(economic_support.dict())
