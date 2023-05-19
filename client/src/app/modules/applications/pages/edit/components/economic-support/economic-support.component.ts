@@ -68,7 +68,7 @@ export class EconomicSupportComponent implements OnInit {
   ) {}
 
   public form = this.fb.group({
-    application_sub_type_id: [this.applicationSubtype.form.value],
+    application_sub_type_id: [this.applicationSubtype],
     application_data: [this.applicationData.form.value],
     personal_data: [this.personalData.form.value],
     tickets: [this.tickets.form.value],
@@ -113,11 +113,10 @@ export class EconomicSupportComponent implements OnInit {
     const TICKETS: ITickets = Object(this.tickets_form.sendForms());
     const PAYMENT: IAdvancePayment = Object(this.advance_form.sendForms());
     const DOCUMENTS: file_path[] = Object(this.documents_form.sendForms());
-    const APPLICATION_SUB_TYPE = Object(
-      this.application_sub_type_form.sendForms()
-    );
+    const APPLICATION_SUB_TYPE =  this.application_sub_type_form.sendForms();
 
-    let economic_support: IEconomicSupportCreate = {
+
+    let economic_support: any = {
       application_sub_type_id: APPLICATION_SUB_TYPE,
       application_data: APPLICATION_DATA,
       personal_data: PERSONAL_DATA,

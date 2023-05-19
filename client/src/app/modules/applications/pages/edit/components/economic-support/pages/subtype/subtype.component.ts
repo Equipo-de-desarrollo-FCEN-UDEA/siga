@@ -30,8 +30,10 @@ export class SubtypeComponent implements OnInit {
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
+    const { application_sub_type_id } = this.form.value;
     this.submitted = true;
-    return this.form.value;
+    console.log(application_sub_type_id);
+    return application_sub_type_id;
   }
 
   ngOnInit(): void {}
