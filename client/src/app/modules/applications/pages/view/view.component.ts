@@ -63,6 +63,7 @@ export class ViewComponent implements AfterViewChecked {
       '',
       [Validators.required, Validators.minLength(2), Validators.maxLength(300)],
     ],
+    
   });
 
   cancel() {
