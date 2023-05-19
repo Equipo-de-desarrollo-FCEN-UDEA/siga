@@ -43,9 +43,6 @@ export class EconomicSupportComponent {
 
   @Output() submitted = false;
 
-  // Files
-
-
   // Acceder a los form
   get f() {
     return this.form.controls;
@@ -58,7 +55,6 @@ export class EconomicSupportComponent {
 
     public formatter: NgbDateParserFormatter,
 
-    private applicationTypeSvc: ApplicationTypesService,
     private economicSupportSvc: EconomicSupportService,
     private documentSvc: DocumentService,
 

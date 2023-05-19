@@ -1,0 +1,14 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <!-- INFORMACION SOLICITANTE -->
+  <app-application-data formArrayName="application_data"></app-application-data>
+  <!-- DEPENDECIA DONDE SE REALIZARA LA SOLICITUD -->
+  <app-subtype formArrayName="application_sub_type_id"></app-subtype>
+  <!-- INFORMACION PARA QUIEN ES LA SOLICITUD -->
+  <app-personal-data formArrayName="personal_data"></app-personal-data>
+  <!-- TIQUETES Y PASAJES -->
+  <app-tickets formArrayName="tickets"></app-tickets>
+  <!-- INFORMACION CUENTA BANCARIA -->
+  <app-advance formArrayName="advance"></app-advance>
+  <!-- DOCUMENTOS -->
+  <app-documents formArrayName="documents"></app-documents>
+</form>
