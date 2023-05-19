@@ -57,6 +57,38 @@
                 </div>
               </div>
             </div>
+
+            <div class="row mt-3">
+              <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+                <span class=""
+                  >Grupo de Investigacion
+                  <span style="color: red">*</span></span
+                >
+              </div>
+
+              <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+                <div
+                  class="formfloatig"
+                  *ngIf="investigationGroup$ | async as investigationGroups"
+                >
+                  <select
+                    class="form-control form-select-lg cursor"
+                    formControlName="account_type"
+                  >
+                    <option value="" selected disabled>
+                      Selecciona el grupo de Investigacion
+                    </option>
+
+                    <option
+                      *ngFor="let investigation of investigationGroups"
+                      [value]="investigation"
+                    >
+                      {{ investigation.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

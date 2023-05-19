@@ -22,6 +22,7 @@ def read_extra_intern(
 ) -> Any:
     """
     Endpoint to read all extra(research groups).
+
         params: skip: int, limit: int
     """ 
     try:
