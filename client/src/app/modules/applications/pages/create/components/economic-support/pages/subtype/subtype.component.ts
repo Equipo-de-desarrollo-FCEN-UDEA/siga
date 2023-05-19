@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { ExtraService } from '@services/extra.service';
 
 @Component({
   selector: 'app-subtype',
@@ -10,6 +11,7 @@ import { ApplicationTypesService } from '@services/application-types.service';
 export class SubtypeComponent {
   
   public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
+  public investigationGroup$ = this.extraSvc.getInvestigationGroups();
 
   public subtype: number[] = [];
 
@@ -32,7 +34,11 @@ export class SubtypeComponent {
     console.log(this.subtype);
   }
 
-  constructor(private applicationTypeSvc: ApplicationTypesService) {}
+  constructor(
+    private applicationTypeSvc: ApplicationTypesService,
+    private extraSvc: ExtraService ) {
+      console.log(this.investigationGroup$)
+    }
 
   send() {
     this.sendForm.emit(this.subtype);
