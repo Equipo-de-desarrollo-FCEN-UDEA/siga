@@ -9,15 +9,15 @@ import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import {
   IAdvancePayment,
   IApplicationData,
-  IEconomicSupport,
   IEconomicSupportCreate,
   IPersonalData,
   ITickets,
 } from '@interfaces/applications/economic_support-interface';
-import { file_path } from '@interfaces/documents';
+import { DocumentsResponse, file_path } from '@interfaces/documents';
 
 //services
 import { EconomicSupportService } from '@services/applications/economic-support.service';
+import { DocumentService } from '@services/document.service';
 
 // SweetAlert2
 import Swal from 'sweetalert2';
@@ -28,6 +28,8 @@ import { TicketsComponent } from './pages/tickets/tickets.component';
 import { AdvanceComponent } from './pages/advance/advance.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { SubtypeComponent } from './pages/subtype/subtype.component';
+import { VacationCreate } from '@interfaces/applications/vacation';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-economic-support',
@@ -42,9 +44,7 @@ export class EconomicSupportComponent {
   @Output() submitted = false;
 
   // Files
-  public files: any[] = [];
-  public archivos = [1];
-  public documents: file_path[] = [];
+
 
   // Acceder a los form
   get f() {
@@ -60,6 +60,7 @@ export class EconomicSupportComponent {
 
     private applicationTypeSvc: ApplicationTypesService,
     private economicSupportSvc: EconomicSupportService,
+    private documentSvc: DocumentService,
 
     private applicationData: ApplicationDataComponent,
     private personalData: PersonalDataComponent,
@@ -108,13 +109,13 @@ export class EconomicSupportComponent {
     );
     const TICKETS: ITickets = Object(this.tickets_form.sendForms());
     const PAYMENT: IAdvancePayment = Object(this.advance_form.sendForms());
-    const DOCUMENTS: file_path = Object(this.documents_form.sendForms());
+    const DOCUMENTS: file_path[] = Object(this.documents_form.sendForms());
     const APPLICATION_SUB_TYPE = Object(
       this.application_sub_type_form.sendForms()
     );
 
     for (let i = 0; i < APPLICATION_SUB_TYPE.length; i++) {
-      let economic_support: IEconomicSupport = {
+      let economic_support: IEconomicSupportCreate = {
         application_sub_type_id: APPLICATION_SUB_TYPE[i],
         application_data: APPLICATION_DATA,
         personal_data: PERSONAL_DATA,
@@ -138,8 +139,26 @@ export class EconomicSupportComponent {
         economic_support as unknown as IEconomicSupportCreate
       );
 
-      console.log(economic_support);
-
+      //console.log(economic_support);
+      if (DOCUMENTS.length > 0) {
+        economic_support_form = this.documentSvc.postDocument(DOCUMENTS as unknown as File[]).pipe(
+          switchMap((data: any) => {
+            if (data) {
+              //console.log(DOCUMENTS);
+              console.log(data);
+              this.form.patchValue({
+                documents: data.files_paths,
+              });
+            }
+            economic_support.documents = data.files_paths;
+            console.log(economic_support);
+            return economic_support_form = this.economicSupportSvc.postEconomicSupport(
+              economic_support as IEconomicSupportCreate
+            );
+          })
+        );
+      }
+ 
       economic_support_form.subscribe({
         next: (data) => {
           Swal.fire({

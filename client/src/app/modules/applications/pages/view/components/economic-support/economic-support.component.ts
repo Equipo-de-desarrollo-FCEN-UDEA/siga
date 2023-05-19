@@ -37,6 +37,7 @@ export class EconomicSupportComponent implements OnInit {
   public application: Application | undefined = undefined;
 
   constructor(
+    //ROUTERS
     private route: ActivatedRoute,
     private router: Router,
 
@@ -69,15 +70,25 @@ export class EconomicSupportComponent implements OnInit {
         //this.end_date = new Date(economic_support.end_date)
       });
   }
-
+  // -----------------------------------------
+  // ------------- OPEN DOCUMENTS ----------
+  // -----------------------------------------
   openDocument(path: string) {
-    this.documentSvc
-      .getDocument(path)
-      .subscribe((res) => window.open(window.URL.createObjectURL(res)));
+    this.documentSvc.getDocument(path).subscribe({
+      next: (res) => {
+        window.open(window.URL.createObjectURL(res));
+      },
+      error: (err) => {
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = err.error.msg;
+        // }
+      },
+    });
   }
 
+
   // -----------------------------------------
-  // ----------- DELETE COMMISSION ------------
+  // ------ DELETE ECONOMIC SUPPORT ----------
   // -----------------------------------------
   delete(id: number): void {
     Swal.fire({
