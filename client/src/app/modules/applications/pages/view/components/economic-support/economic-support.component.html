@@ -1,17 +1,104 @@
- <div *ngIf="economic_support">
+<div *ngIf="economic_support">
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">
+      Estado actual de la solicitud
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <span
+        class="badge badge-pill pill"
+        [ngClass]="{
+          'bg-requested': current_status === 'SOLICITADA',
+          'bg-ok': current_status === 'VISTO BUENO',
+          'bg-approved': current_status === 'APROBADA',
+          'bg-rejected': current_status === 'RECHAZADA'
+        }"
+      >
+        {{ current_status }}
+      </span>
+    </div>
+  </div>
 
+  <hr class="mt-4">
 
   <div class="row">
     <span class="fw-bold">Información general</span>
   </div>
 
- <div class="row regular-row mt-2">
+  <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label text-secondary">Tipo de solicitud</div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.economic_support }}
+      {{ economic_support.application_data.application_type }}
     </div>
   </div>
 
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Proyecto</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.application_data.project}}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Objetivo</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.application_data.goal}}
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <span class="fw-bold">Información del Solicitante</span>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Solicitud Para</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.personal_data.application_for }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Nombre y Apellidos</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.personal_data.name}}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Numero Indentificación</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.personal_data.identification_number}}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Correo Electrónico</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ economic_support.personal_data.email}}
+    </div>
+  </div>
+
+
+  <hr class="mt-4">
+
+  <div class="row">
+    <span class="fw-bold">Monto</span>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Monto Solicitado</div>
+    <div class="col-xs-12 col-sm-6">
+      ${{ economic_support.payment.value }} Pesos Colombianos
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2" *ngIf="current_status == 'APROBADA'">
+    <div class="col-xs-12 col-sm-6 label text-secondary">Monto Aprobado</div>
+    <div class="col-xs-12 col-sm-6">
+      ${{ economic_support }} Pesos Colombianos
+    </div>
+  </div>
+
+  <hr class="mt-4">
   <!-- <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
     <div class="col-xs-12 col-sm-6">
@@ -35,28 +122,9 @@
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Apoyo Solicitado a</div>
     <div class="col-xs-12 col-sm-6">{{ economic_support.support }}</div>
-  </div>
+  </div> -->
 
-  <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label fw-bold">
-      Estado actual de la comisión
-    </div>
-    <div class="col-xs-12 col-sm-6">
-      <span
-        class="badge badge-pill pill"
-        [ngClass]="{
-          'bg-requested': current_status === 'SOLICITADA',
-          'bg-ok': current_status === 'VISTO BUENO',
-          'bg-approved': current_status === 'APROBADA',
-          'bg-rejected': current_status === 'RECHAZADA'
-        }"
-      >
-        {{ current_status }}
-      </span>
-    </div>
-  </div>
-
-  <div class="row regular-row mt-2">
+  <!-- <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Justificación</div>
     <div class="col-xs-12 col-sm-6">{{ economic_support.justification }}</div>
   </div>
@@ -72,7 +140,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div>  -->
 
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
@@ -85,6 +153,5 @@
         </li>
       </ul>
     </div>
-  </div> -->
-
-</div> 
+  </div>
+</div>

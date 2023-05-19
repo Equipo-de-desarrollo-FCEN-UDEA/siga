@@ -40,22 +40,19 @@ export interface IAdvancePayment {
   end_date: Date;
 }
 
-export interface IEconomicSupport {
+
+export interface IEconomicSupportCreate {
   application_sub_type_id: number;
   application_data: IApplicationData;
   personal_data: IPersonalData;
   tickets: ITickets;
   payment: IAdvancePayment;
-  documents: file_path;
-}
-
-export interface IEconomicSupportCreate {
-  economic_support: IEconomicSupport;
+  documents?: file_path[];
 }
 
 
 export interface IEconomicSupportInDB extends IEconomicSupportCreate {
-  documents: file_path[];
+  id: string;
 }
 
 export interface IEconomicSupportResponse extends Application {
