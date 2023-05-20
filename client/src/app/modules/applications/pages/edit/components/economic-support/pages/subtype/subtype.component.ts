@@ -17,6 +17,7 @@ export class SubtypeComponent implements OnInit {
 
   public form = this.fb.group({
     application_sub_type_id: ['', [Validators.required]],
+    investigation_group: [''],
   });
 
   constructor(

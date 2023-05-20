@@ -40,9 +40,13 @@ class AdvancePayment(BaseModel):
     account_type: str
     start_date: datetime
     end_date: datetime
+
+class InvestigationGroup(BaseModel):
+    name: str | None
         
 
 class EconomicSupportBase(BaseModel):
+    investigation_group: InvestigationGroup
     application_data: ApplicationData
     personal_data: PersonalData
     tickets: tickets

@@ -9,7 +9,6 @@ import { ExtraService } from '@services/extra.service';
   styleUrls: ['./subtype.component.scss'],
 })
 export class SubtypeComponent {
-  
   public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
   public investigationGroup$ = this.extraSvc.getInvestigationGroups();
 
@@ -17,6 +16,16 @@ export class SubtypeComponent {
 
   @Output() sendForm = new EventEmitter<any>();
   @Output() submitted = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private applicationTypeSvc: ApplicationTypesService,
+    private extraSvc: ExtraService
+  ) {}
+
+  public form = this.fb.group({
+    name: [''],
+  });
 
   onCheckboxChange(event: any, id: number) {
     if (event.target.checked) {
@@ -34,12 +43,6 @@ export class SubtypeComponent {
     console.log(this.subtype);
   }
 
-  constructor(
-    private applicationTypeSvc: ApplicationTypesService,
-    private extraSvc: ExtraService ) {
-      console.log(this.investigationGroup$)
-    }
-
   send() {
     this.sendForm.emit(this.subtype);
   }
@@ -49,5 +52,10 @@ export class SubtypeComponent {
     this.submitted = true;
     //this.form.get('application_sub_type_id')?.setValue(this.subtype);
     return this.subtype;
+  }
+
+
+  sendInvestigationGroup() {
+    return this.form.value;
   }
 }

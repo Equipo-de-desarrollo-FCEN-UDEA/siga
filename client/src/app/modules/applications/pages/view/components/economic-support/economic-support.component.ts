@@ -34,7 +34,7 @@ export class EconomicSupportComponent implements OnInit {
   public end_date = new Date();
 
   public economic_support: IEconomicSupportInDB | undefined = undefined;
-  public application: Application | undefined = undefined;
+  public application: Application | any = undefined;
 
   constructor(
     //ROUTERS
