@@ -46,7 +46,7 @@ class InvestigationGroup(BaseModel):
         
 
 class EconomicSupportBase(BaseModel):
-    investigation_group: InvestigationGroup
+    investigation_group: InvestigationGroup | None
     application_data: ApplicationData
     personal_data: PersonalData
     tickets: tickets

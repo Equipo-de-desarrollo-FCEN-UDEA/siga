@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // SweetAlert2
@@ -19,6 +19,9 @@ import { DocumentService } from '@services/document.service';
 import { EconomicSupportService } from '@services/applications/economic-support.service';
 import { AuthService } from '@services/auth.service';
 import { ComService } from '../../connection/com.service';
+import { ApplicationStatusService } from '@services/application-status.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { ApplicationStatus } from '@interfaces/application_status';
 
 @Component({
   selector: 'app-economic-support',
@@ -29,12 +32,16 @@ export class EconomicSupportComponent implements OnInit {
   public id: number = 0;
 
   public current_status: string = '';
+  public amount_approved: number = 0;
 
   public today = new Date();
   public end_date = new Date();
 
   public economic_support: IEconomicSupportInDB | undefined = undefined;
   public application: Application | any = undefined;
+  public application$ = new Observable<Application>();
+
+  @Input() status: ApplicationStatus[] | undefined;
 
   constructor(
     //ROUTERS
@@ -45,7 +52,8 @@ export class EconomicSupportComponent implements OnInit {
     private documentSvc: DocumentService,
     private economicSupportSvc: EconomicSupportService,
     private authSvc: AuthService,
-    private comSvc: ComService
+    private comSvc: ComService,
+    private applicationStatusSvc: ApplicationStatusService
   ) {
     this.authSvc.isSuperUser();
     this.route.parent?.params.subscribe((params) => {
@@ -63,12 +71,17 @@ export class EconomicSupportComponent implements OnInit {
 
         console.log(this.economic_support);
 
+        this.amount_approved = lastElement(
+          application.application_status
+        ).amount_approved;
         this.current_status = lastElement(
           application.application_status
         ).status.name;
         this.comSvc.push(this.application);
         //this.end_date = new Date(economic_support.end_date)
       });
+
+    this.applicationStatusSvc
   }
   // -----------------------------------------
   // ------------- OPEN DOCUMENTS ----------
