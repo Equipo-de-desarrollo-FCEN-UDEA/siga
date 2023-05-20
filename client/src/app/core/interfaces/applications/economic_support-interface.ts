@@ -40,9 +40,14 @@ export interface IAdvancePayment {
   end_date: Date;
 }
 
+export interface IInvertigationGroup {
+  name: string;
+}
+
 
 export interface IEconomicSupportCreate {
   application_sub_type_id: number;
+  investigation_group?: IInvertigationGroup;
   application_data: IApplicationData;
   personal_data: IPersonalData;
   tickets: ITickets;

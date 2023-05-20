@@ -10,10 +10,11 @@ import {
   IAdvancePayment,
   IApplicationData,
   IEconomicSupportCreate,
+  IInvertigationGroup,
   IPersonalData,
   ITickets,
 } from '@interfaces/applications/economic_support-interface';
-import { DocumentsResponse, file_path } from '@interfaces/documents';
+import { file_path } from '@interfaces/documents';
 
 //services
 import { EconomicSupportService } from '@services/applications/economic-support.service';
@@ -28,7 +29,6 @@ import { TicketsComponent } from './pages/tickets/tickets.component';
 import { AdvanceComponent } from './pages/advance/advance.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
 import { SubtypeComponent } from './pages/subtype/subtype.component';
-import { VacationCreate } from '@interfaces/applications/vacation';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -43,9 +43,6 @@ export class EconomicSupportComponent {
 
   @Output() submitted = false;
 
-  // Files
-
-
   // Acceder a los form
   get f() {
     return this.form.controls;
@@ -58,7 +55,6 @@ export class EconomicSupportComponent {
 
     public formatter: NgbDateParserFormatter,
 
-    private applicationTypeSvc: ApplicationTypesService,
     private economicSupportSvc: EconomicSupportService,
     private documentSvc: DocumentService,
 
@@ -72,6 +68,7 @@ export class EconomicSupportComponent {
 
   public form = this.fb.group({
     application_sub_type_id: [this.applicationSubtype.subtype],
+    investigation_group: [this.applicationSubtype.form.value],
     application_data: [this.applicationData.form.value],
     personal_data: [this.personalData.form.value],
     tickets: [this.tickets.form.value],
@@ -113,70 +110,141 @@ export class EconomicSupportComponent {
     const APPLICATION_SUB_TYPE = Object(
       this.application_sub_type_form.sendForms()
     );
+    const INVESTIGATION_GROUP: IInvertigationGroup =
+    Object(this.application_sub_type_form.sendInvestigationGroup());
 
     for (let i = 0; i < APPLICATION_SUB_TYPE.length; i++) {
-      let economic_support: IEconomicSupportCreate = {
-        application_sub_type_id: APPLICATION_SUB_TYPE[i],
-        application_data: APPLICATION_DATA,
-        personal_data: PERSONAL_DATA,
-        tickets: TICKETS,
-        payment: PAYMENT,
-        documents: DOCUMENTS,
-      };
-      // Se detiene aqui si el formulario es invalido
-      if (this.form.invalid) {
-        Swal.fire({
-          title: 'Error',
-          text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#3AB795',
-        });
-        return;
-      }
-
-      let economic_support_form = this.economicSupportSvc.postEconomicSupport(
-        economic_support as unknown as IEconomicSupportCreate
-      );
-
-      //console.log(economic_support);
-      if (DOCUMENTS.length > 0) {
-        economic_support_form = this.documentSvc.postDocument(DOCUMENTS as unknown as File[]).pipe(
-          switchMap((data: any) => {
-            if (data) {
-              //console.log(DOCUMENTS);
-              console.log(data);
-              this.form.patchValue({
-                documents: data.files_paths,
-              });
-            }
-            economic_support.documents = data.files_paths;
-            console.log(economic_support);
-            return economic_support_form = this.economicSupportSvc.postEconomicSupport(
-              economic_support as IEconomicSupportCreate
-            );
-          })
-        );
-      }
- 
-      economic_support_form.subscribe({
-        next: (data) => {
+      if (APPLICATION_SUB_TYPE[i] == 16) {
+        let economic_support: IEconomicSupportCreate = {
+          application_sub_type_id: APPLICATION_SUB_TYPE[i],
+          investigation_group: INVESTIGATION_GROUP,
+          application_data: APPLICATION_DATA,
+          personal_data: PERSONAL_DATA,
+          tickets: TICKETS,
+          payment: PAYMENT,
+          documents: DOCUMENTS,
+        };
+        // Se detiene aqui si el formulario es invalido
+        if (this.form.invalid) {
           Swal.fire({
-            title: '¡Solicitud enviada!',
-            text: '¡La solicitud de apoyo económico se ha creado con éxito!',
-            icon: 'success',
+            title: 'Error',
+            text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+            icon: 'error',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-          this.router.navigateByUrl(
-            `/solicitudes/lista`
-          );
-        },
-        error: (err) => {
-          this.error = err;
-        },
-      });
-    }
+          return;
+        }
+
+        let economic_support_form = this.economicSupportSvc.postEconomicSupport(
+          economic_support as unknown as IEconomicSupportCreate
+        );
+
+        //console.log(economic_support);
+        if (DOCUMENTS.length > 0) {
+          economic_support_form = this.documentSvc
+            .postDocument(DOCUMENTS as unknown as File[])
+            .pipe(
+              switchMap((data: any) => {
+                if (data) {
+                  //console.log(DOCUMENTS);
+                  console.log(data);
+                  this.form.patchValue({
+                    documents: data.files_paths,
+                  });
+                }
+                economic_support.documents = data.files_paths;
+                console.log(economic_support);
+                return (economic_support_form =
+                  this.economicSupportSvc.postEconomicSupport(
+                    economic_support as IEconomicSupportCreate
+                  ));
+              })
+            );
+        }
+
+        economic_support_form.subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: '¡Solicitud enviada!',
+              text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#3AB795',
+            });
+            this.router.navigateByUrl(`/solicitudes/lista`);
+          },
+          error: (err) => {
+            this.error = err;
+          },
+        });
+      } else {
+        let economic_support: IEconomicSupportCreate = {
+          application_sub_type_id: APPLICATION_SUB_TYPE[i],
+          application_data: APPLICATION_DATA,
+          personal_data: PERSONAL_DATA,
+          tickets: TICKETS,
+          payment: PAYMENT,
+          documents: DOCUMENTS,
+        };
+        // Se detiene aqui si el formulario es invalido
+        if (this.form.invalid) {
+          Swal.fire({
+            title: 'Error',
+            text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          return;
+        }
+
+        let economic_support_form = this.economicSupportSvc.postEconomicSupport(
+          economic_support as unknown as IEconomicSupportCreate
+        );
+
+        //console.log(economic_support);
+        if (DOCUMENTS.length > 0) {
+          economic_support_form = this.documentSvc
+            .postDocument(DOCUMENTS as unknown as File[])
+            .pipe(
+              switchMap((data: any) => {
+                if (data) {
+                  //console.log(DOCUMENTS);
+                  console.log(data);
+                  this.form.patchValue({
+                    documents: data.files_paths,
+                  });
+                }
+                economic_support.documents = data.files_paths;
+                console.log(economic_support);
+                return (economic_support_form =
+                  this.economicSupportSvc.postEconomicSupport(
+                    economic_support as IEconomicSupportCreate
+                  ));
+              })
+            );
+        }
+
+        economic_support_form.subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: '¡Solicitud enviada!',
+              text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#3AB795',
+            });
+            this.router.navigateByUrl(`/solicitudes/lista`);
+          },
+          error: (err) => {
+            this.error = err;
+          },
+        });
+
+      }
+    } 
+
   }
 
   validSize() {

@@ -48,46 +48,13 @@
                     >
                       <label>
                         <input
-                          type="checkbox"
+                          type="radio"
                           [value]="tipo.id"
-                          (change)="onCheckboxChange($event, tipo.id)"
+                          formControlName="investigation_group"
                         />
                         {{ tipo.name }}
                       </label>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="alert alert-warning col-12 mt-3">
-                <span>Solo llene este campo si su solicitud es por grupo de Investigación</span>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-                  <span>Grupo de Investigacion</span>
-                </div>
-
-                <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-                  <div
-                    class="formfloatig"
-                    *ngIf="investigationGroup$ | async as investigationGroups"
-                  >
-                    <select
-                      class="form-control form-select-lg cursor"
-                      formControlName="name"
-                    >
-                      <option value="" selected disabled>
-                        Selecciona el grupo de Investigación
-                      </option>
-
-                      <option
-                        *ngFor="let investigation of investigationGroups"
-                        [value]="investigation.name"
-                      >
-                        {{ investigation.name }}
-                      </option>
-                    </select>
                   </div>
                 </div>
               </div>

@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { file_path } from '@interfaces/documents';
-import { DocumentService } from '@services/document.service';
 
 @Component({
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
 })
-export class DocumentsComponent {
+export class DocumentsComponent implements OnInit {
   // Files
   public files: any[] = [];
   public archivos = [1];
@@ -69,4 +68,6 @@ export class DocumentsComponent {
     });
     return flag;
   }
+
+  ngOnInit(): void {}
 }

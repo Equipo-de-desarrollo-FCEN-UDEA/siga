@@ -1,5 +1,8 @@
 from io import BytesIO
 from uuid import uuid1
+import shutil
+import zipfile
+import io
 
 from fastapi import APIRouter, File, UploadFile, Response, HTTPException, Depends
 from fastapi.responses import FileResponse, StreamingResponse
@@ -14,7 +17,6 @@ log = get_logging(__name__)
 settings = get_app_settings()
 
 router = APIRouter()
-
 
 @router.post("/")
 def upload_doc(files: list[UploadFile],

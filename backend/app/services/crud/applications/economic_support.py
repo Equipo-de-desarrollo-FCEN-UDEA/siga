@@ -3,6 +3,9 @@ from app.core.logging import get_logging
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
 from bson.objectid import ObjectId
+import zipfile
+import io
+
 
 from app.core.logging import get_logging
 
@@ -46,6 +49,8 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
             economic_support.documents = [{'name': name, 'path': path}]
         await db.save(economic_support)
         return None
+
+
 
 policy   = EconomicSupportPolicy()
 economic_support = CRUDEconomicSupport(EconomicSupport, policy=policy)
