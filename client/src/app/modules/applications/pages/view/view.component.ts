@@ -50,6 +50,8 @@ export class ViewComponent implements AfterViewChecked {
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
+
+    console.log("Superuser",this.id);
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });

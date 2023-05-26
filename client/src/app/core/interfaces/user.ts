@@ -1,5 +1,5 @@
 import { DepartmentResponse } from "./department";
-import { RolResponse } from "./rol";
+import { UserRolResponse } from "./user_rol";
 
 export interface UserBase {
     last_names: string;
@@ -13,7 +13,6 @@ export interface UserBase {
     office?: string;
     vinculation_type: string;
     department_id: number;
-    // rol_id: number;
 }
 
 
@@ -35,7 +34,7 @@ export interface UserInDBBase extends UserBase{
 
 export interface UserResponse extends UserInDBBase{
     department: DepartmentResponse;
-    rol: RolResponse;
+    user_rol: UserRolResponse;
 }
 
 

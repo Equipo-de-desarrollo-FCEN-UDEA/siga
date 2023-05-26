@@ -104,13 +104,13 @@ export class AuthService {
 
   isSuperUser() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isSuperUser$.next(data.rol.scope < 9)
+      data => this.isSuperUser$.next(data?.user_rol?.rol?.scope < 9)
     )
   }
 
   isDirector() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isDirector$.next(data.rol.scope < 9 && data.rol.scope > 5)
+      data => this.isDirector$.next(data?.user_rol?.rol?.scope < 9 && data?.user_rol?.rol?.scope > 5)
     )
   }
 

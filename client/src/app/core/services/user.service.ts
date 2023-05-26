@@ -22,6 +22,7 @@ export class UserService {
 
   // service for get an user with id, doesn't have a default value to return
   getUser(id: number = 0): Observable<UserResponse> {
+    //console.log(id);
     return this.http.get<UserResponse>(this.urlEndpoint + id);
   }
 
