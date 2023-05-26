@@ -40,14 +40,18 @@ class AdvancePayment(BaseModel):
     account_type: str
     start_date: datetime
     end_date: datetime
+
+class InvestigationGroup(BaseModel):
+    name: str | None
         
 
 class EconomicSupportBase(BaseModel):
+    investigation_group: InvestigationGroup | None
     application_data: ApplicationData
     personal_data: PersonalData
     tickets: tickets
     payment: AdvancePayment
-    document: Any
+    documents: list[Any]
 
 
 class EconomicSupportCreate(EconomicSupportBase):

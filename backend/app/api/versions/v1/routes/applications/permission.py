@@ -108,7 +108,7 @@ async def get_permission(
         mongo_id = ObjectId(application.mongo_id)
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
-            log.debug('permission in mongo', permission)
+            # log.debug('permission in mongo', permission)
 
     # except ApplicationErrors as e:
     #     raise HTTPException(e.code, e.detail)

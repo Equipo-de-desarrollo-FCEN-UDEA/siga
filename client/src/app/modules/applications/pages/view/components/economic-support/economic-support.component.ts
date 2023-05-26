@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 // SweetAlert2
@@ -6,7 +6,10 @@ import Swal from 'sweetalert2';
 
 // interfaces
 import { Application } from '@interfaces/application';
-import { IEconomicSupportInDB, IEconomicSupportResponse } from '@interfaces/applications/economic_support-interface';
+import {
+  IEconomicSupportInDB,
+  IEconomicSupportResponse,
+} from '@interfaces/applications/economic_support-interface';
 
 // Utils
 import { lastElement } from '@shared/utils';
@@ -16,66 +19,89 @@ import { DocumentService } from '@services/document.service';
 import { EconomicSupportService } from '@services/applications/economic-support.service';
 import { AuthService } from '@services/auth.service';
 import { ComService } from '../../connection/com.service';
+import { ApplicationStatusService } from '@services/application-status.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { ApplicationStatus } from '@interfaces/application_status';
 
 @Component({
   selector: 'app-economic-support',
   templateUrl: './economic-support.component.html',
-  styleUrls: ['./economic-support.component.scss']
+  styleUrls: ['./economic-support.component.scss'],
 })
 export class EconomicSupportComponent implements OnInit {
-
   public id: number = 0;
 
   public current_status: string = '';
+  public amount_approved: number = 0;
 
   public today = new Date();
   public end_date = new Date();
 
-
   public economic_support: IEconomicSupportInDB | undefined = undefined;
-  public application: Application | undefined = undefined;
+  public application: Application | any = undefined;
+  public application$ = new Observable<Application>();
+
+  @Input() status: ApplicationStatus[] | undefined;
 
   constructor(
+    //ROUTERS
     private route: ActivatedRoute,
     private router: Router,
-    
-    private documentService: DocumentService,
+
+    //SERVICES
+    private documentSvc: DocumentService,
     private economicSupportSvc: EconomicSupportService,
     private authSvc: AuthService,
     private comSvc: ComService,
-  ) { 
+    private applicationStatusSvc: ApplicationStatusService
+  ) {
     this.authSvc.isSuperUser();
-    this.route.parent?.params.subscribe(
-      params => {
-        this.id = params['id']
-      }
-    )
+    this.route.parent?.params.subscribe((params) => {
+      this.id = params['id'];
+    });
   }
 
   ngOnInit(): void {
-    this.economicSupportSvc.getEconomicSupport(this.id).subscribe(
-      (app: IEconomicSupportResponse) => {
-        const {economic_support, ...application} = app;
+    this.economicSupportSvc
+      .getEconomicSupport(this.id)
+      .subscribe((app: IEconomicSupportResponse) => {
+        const { economic_support, ...application } = app;
         this.economic_support = economic_support;
         this.application = application;
-        
+
         console.log(this.economic_support);
 
-        this.current_status = lastElement(application.application_status).status.name;
+        this.amount_approved = lastElement(
+          application.application_status
+        ).amount_approved;
+        this.current_status = lastElement(
+          application.application_status
+        ).status.name;
         this.comSvc.push(this.application);
         //this.end_date = new Date(economic_support.end_date)
-      }
-    )
+      });
+
+    this.applicationStatusSvc
+  }
+  // -----------------------------------------
+  // ------------- OPEN DOCUMENTS ----------
+  // -----------------------------------------
+  openDocument(path: string) {
+    this.documentSvc.getDocument(path).subscribe({
+      next: (res) => {
+        window.open(window.URL.createObjectURL(res));
+      },
+      error: (err) => {
+        // if (err.status === 404 || err.status === 401) {
+        //   this.error = err.error.msg;
+        // }
+      },
+    });
   }
 
-  openDocument(path:string) {
-    this.documentService.getDocument(path).subscribe(
-      res => window.open(window.URL.createObjectURL(res))
-    )
-  }
 
-    // -----------------------------------------
-  // ----------- DELETE COMMISSION ------------
+  // -----------------------------------------
+  // ------ DELETE ECONOMIC SUPPORT ----------
   // -----------------------------------------
   delete(id: number): void {
     Swal.fire({
@@ -105,5 +131,4 @@ export class EconomicSupportComponent implements OnInit {
       }
     });
   }
-
 }

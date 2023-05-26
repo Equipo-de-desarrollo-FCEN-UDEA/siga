@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { EconomicSupportRoutingModule } from './economic-support-routing.module';
+import { CommonModule } from '@angular/common'
 import { ApplicationDataComponent } from './pages/application-data/application-data.component';
 import { EconomicSupportComponent } from './economic-support.component';
 import { PersonalDataComponent } from './pages/personal-data/personal-data.component';
@@ -25,7 +23,6 @@ import { SubtypeComponent } from './pages/subtype/subtype.component';
   ],
   imports: [
     CommonModule,
-    EconomicSupportRoutingModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule

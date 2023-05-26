@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 class Application_status(Base):
     id = Column(Integer, primary_key=True)
     observation = Column(String(255), nullable=True)
+    amount_approved = Column(Integer, nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now())
 
     # relations

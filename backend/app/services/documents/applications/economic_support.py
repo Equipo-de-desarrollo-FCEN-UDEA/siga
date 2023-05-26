@@ -93,4 +93,11 @@ def generate_support_format_to_aws(data_application: dict, path: str):
         file = BytesIO(tmp.read())
 
     aws.s3.push_data_to_s3_bucket(settings.aws_bucket_name, file,
+<<<<<<< HEAD
                                   file_name=path, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+=======
+                                  file_name=path, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    
+def create_zip():
+    pass
+>>>>>>> integration

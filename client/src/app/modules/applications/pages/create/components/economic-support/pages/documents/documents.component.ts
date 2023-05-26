@@ -20,22 +20,19 @@ export class DocumentsComponent {
     documents: [this.documents],
   });
 
-  constructor(
-    private documentService: DocumentService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private fb: FormBuilder) {}
 
-  send() { this.sendForm.emit(this.form.value); }
-
-  //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { 
-    if (this.files.length > 0) {
-      return this.files
-    }
-    return; 
+  send() {
+    this.sendForm.emit(this.form.value);
   }
 
-  
+  //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
+  sendForms() {
+    if (this.files.length > 0) {
+      return this.files;
+    }
+    return;
+  }
 
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
