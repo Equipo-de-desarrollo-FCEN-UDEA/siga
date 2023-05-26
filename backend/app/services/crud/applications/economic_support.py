@@ -19,13 +19,13 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
         economic_support = await db.find_one(EconomicSupport, EconomicSupport.id == id)
         log.debug(economic_support.dict())
-        for i, document in enumerate(economic_support.documents):
+        for i, document in enumerate(economic_support.document):
             if document['name'] == name:
-                del economic_support.documents[i]
-        if economic_support.documents is not None:
-            economic_support.documents += [{'name': name, 'path': path}]
+                del economic_support.document[i]
+        if economic_support.document is not None:
+            economic_support.document += [{'name': name, 'path': path}]
         else:
-            economic_support.documents = [{'name': name, 'path': path}]
+            economic_support.document = [{'name': name, 'path': path}]
         await db.save(economic_support)
         return None
 
