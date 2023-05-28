@@ -85,7 +85,7 @@
                         *ngFor="let investigation of investigationGroups"
                         [value]="investigation.name"
                       >
-                        {{ investigation.name }}
+                        {{ investigation.name | uppercase }}
                       </option>
                     </select>
                   </div>

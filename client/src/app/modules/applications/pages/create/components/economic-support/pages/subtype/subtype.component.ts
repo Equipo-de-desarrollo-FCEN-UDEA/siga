@@ -17,6 +17,10 @@ export class SubtypeComponent {
   @Output() sendForm = new EventEmitter<any>();
   @Output() submitted = false;
 
+  get f() {
+    return this.form.controls;
+  }
+
   constructor(
     private fb: FormBuilder,
     private applicationTypeSvc: ApplicationTypesService,
@@ -53,7 +57,6 @@ export class SubtypeComponent {
     //this.form.get('application_sub_type_id')?.setValue(this.subtype);
     return this.subtype;
   }
-
 
   sendInvestigationGroup() {
     return this.form.value;

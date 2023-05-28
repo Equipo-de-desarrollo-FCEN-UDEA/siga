@@ -97,155 +97,77 @@ export class EconomicSupportComponent {
 
   submit() {
     this.submitted = true;
-    //ALMACENA LOS DATOS DE LOS COMPONENTES HIJOS EN CONSTANTES
-    const APPLICATION_DATA: IApplicationData = Object(
-      this.application_data_form.sendForms()
-    );
-    const PERSONAL_DATA: IPersonalData = Object(
-      this.personal_data_form.sendForms()
-    );
-    const TICKETS: ITickets = Object(this.tickets_form.sendForms());
-    const PAYMENT: IAdvancePayment = Object(this.advance_form.sendForms());
-    const DOCUMENTS: file_path[] = Object(this.documents_form.sendForms());
-    const APPLICATION_SUB_TYPE = Object(
-      this.application_sub_type_form.sendForms()
-    );
-    const INVESTIGATION_GROUP: IInvertigationGroup =
-    Object(this.application_sub_type_form.sendInvestigationGroup());
-
+  
+    const APPLICATION_DATA = this.application_data_form.sendForms() as IApplicationData;
+    const PERSONAL_DATA = this.personal_data_form.sendForms() as IPersonalData;
+    const TICKETS = this.tickets_form.sendForms() as ITickets;
+    const PAYMENT = this.advance_form.sendForms() as IAdvancePayment;
+    const DOCUMENTS = this.documents_form.sendForms() as file_path[];
+    const APPLICATION_SUB_TYPE = this.application_sub_type_form.sendForms();
+    const INVESTIGATION_GROUP = this.application_sub_type_form.sendInvestigationGroup() as IInvertigationGroup;
+  
     for (let i = 0; i < APPLICATION_SUB_TYPE.length; i++) {
-      if (APPLICATION_SUB_TYPE[i] == 16) {
-        let economic_support: IEconomicSupportCreate = {
-          application_sub_type_id: APPLICATION_SUB_TYPE[i],
-          investigation_group: INVESTIGATION_GROUP,
-          application_data: APPLICATION_DATA,
-          personal_data: PERSONAL_DATA,
-          tickets: TICKETS,
-          payment: PAYMENT,
-          documents: DOCUMENTS,
-        };
-        // Se detiene aqui si el formulario es invalido
-        if (this.form.invalid) {
-          Swal.fire({
-            title: 'Error',
-            text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#3AB795',
-          });
-          return;
-        }
-
-        let economic_support_form = this.economicSupportSvc.postEconomicSupport(
-          economic_support as unknown as IEconomicSupportCreate
-        );
-
-        //console.log(economic_support);
-        if (DOCUMENTS.length > 0) {
-          economic_support_form = this.documentSvc
-            .postDocument(DOCUMENTS as unknown as File[])
-            .pipe(
-              switchMap((data: any) => {
-                if (data) {
-                  //console.log(DOCUMENTS);
-                  console.log(data);
-                  this.form.patchValue({
-                    documents: data.files_paths,
-                  });
-                }
-                economic_support.documents = data.files_paths;
-                console.log(economic_support);
-                return (economic_support_form =
-                  this.economicSupportSvc.postEconomicSupport(
-                    economic_support as IEconomicSupportCreate
-                  ));
-              })
-            );
-        }
-
-        economic_support_form.subscribe({
-          next: (data) => {
-            Swal.fire({
-              title: '¡Solicitud enviada!',
-              text: '¡La solicitud de apoyo económico se ha creado con éxito!',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#3AB795',
-            });
-            this.router.navigateByUrl(`/solicitudes/lista`);
-          },
-          error: (err) => {
-            this.error = err;
-          },
+      const applicationSubType = APPLICATION_SUB_TYPE[i];
+      const isEconomicSupport = applicationSubType === 16;
+  
+      let economic_support: IEconomicSupportCreate = {
+        application_sub_type_id: applicationSubType,
+        investigation_group: isEconomicSupport ? INVESTIGATION_GROUP : undefined,
+        application_data: APPLICATION_DATA,
+        personal_data: PERSONAL_DATA,
+        tickets: TICKETS,
+        payment: PAYMENT,
+        documents: DOCUMENTS,
+      };
+  
+      let economic_support_form = this.economicSupportSvc.postEconomicSupport(economic_support);
+      const isInvalidDocumentCount = DOCUMENTS.length < 6;
+  
+      if (isInvalidDocumentCount) {
+        Swal.fire({
+          title: 'Error',
+          text: '¡Revise que haya llenado todos los campos y subidos todos los documentos que el formato sugiere!',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
         });
-      } else {
-        let economic_support: IEconomicSupportCreate = {
-          application_sub_type_id: APPLICATION_SUB_TYPE[i],
-          application_data: APPLICATION_DATA,
-          personal_data: PERSONAL_DATA,
-          tickets: TICKETS,
-          payment: PAYMENT,
-          documents: DOCUMENTS,
-        };
-        // Se detiene aqui si el formulario es invalido
-        if (this.form.invalid) {
-          Swal.fire({
-            title: 'Error',
-            text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
-            icon: 'error',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#3AB795',
-          });
-          return;
-        }
-
-        let economic_support_form = this.economicSupportSvc.postEconomicSupport(
-          economic_support as unknown as IEconomicSupportCreate
-        );
-
-        //console.log(economic_support);
-        if (DOCUMENTS.length > 0) {
-          economic_support_form = this.documentSvc
-            .postDocument(DOCUMENTS as unknown as File[])
-            .pipe(
-              switchMap((data: any) => {
-                if (data) {
-                  //console.log(DOCUMENTS);
-                  console.log(data);
-                  this.form.patchValue({
-                    documents: data.files_paths,
-                  });
-                }
-                economic_support.documents = data.files_paths;
-                console.log(economic_support);
-                return (economic_support_form =
-                  this.economicSupportSvc.postEconomicSupport(
-                    economic_support as IEconomicSupportCreate
-                  ));
-              })
-            );
-        }
-
-        economic_support_form.subscribe({
-          next: (data) => {
-            Swal.fire({
-              title: '¡Solicitud enviada!',
-              text: '¡La solicitud de apoyo económico se ha creado con éxito!',
-              icon: 'success',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#3AB795',
-            });
-            this.router.navigateByUrl(`/solicitudes/lista`);
-          },
-          error: (err) => {
-            this.error = err;
-          },
-        });
-
+        return;
       }
-    } 
-
+  
+      else {
+        economic_support_form = this.documentSvc.postDocument(DOCUMENTS as unknown as File[]).pipe(
+          switchMap((data: any) => {
+            if (data) {
+              console.log(data);
+              this.form.patchValue({
+                documents: data.files_paths,
+              });
+            }
+            economic_support.documents = data.files_paths;
+            console.log(economic_support);
+            return this.economicSupportSvc.postEconomicSupport(economic_support);
+          })
+        );
+      }
+  
+      economic_support_form.subscribe({
+        next: (data) => {
+          Swal.fire({
+            title: '¡Solicitud enviada!',
+            text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          this.router.navigateByUrl(`/solicitudes/lista`);
+        },
+        error: (err) => {
+          this.error = err;
+        },
+      });
+    }
   }
+  
 
   validSize() {
     return true;
