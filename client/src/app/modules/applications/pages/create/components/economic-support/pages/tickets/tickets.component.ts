@@ -35,9 +35,9 @@ export class TicketsComponent {
   public form = this.fb.group({
     departure_date: [new Date(), [Validators.required]],
     arrival_date: [new Date(), [Validators.required]],
-    departure_place: ['', [Validators.required]],
-    arrival_place: ['', [Validators.required]],
-    place_birth: ['', [Validators.required]],
+    departure_place: ['', [Validators.required , Validators.minLength(1), Validators.maxLength(50)]],
+    arrival_place: ['', [Validators.required , Validators.minLength(1), Validators.maxLength(50)]],
+    place_birth: ['', [Validators.required , Validators.minLength(1), Validators.maxLength(50)]],
     //birthdate: ['', [Validators.required]],
   });
 

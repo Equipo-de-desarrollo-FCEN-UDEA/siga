@@ -27,22 +27,39 @@ export class AdvanceComponent {
   public clicked = 0;
   public error = '';
 
-
   get f() {
     return this.form.controls;
   }
-  public ACCOUNT_TYPE = ACCOUNT_TYPE
+  public ACCOUNT_TYPE = ACCOUNT_TYPE;
 
   @Output() submitted = false;
   @Output() sendForm = new EventEmitter<any>();
 
   public form = this.fb.group({
-    name: ['', [Validators.required]],
-    id: ['', [Validators.required]],
-    bank: ['', [Validators.required]],
-    value: ['', [Validators.required]],
-    account_number: ['', [Validators.required]],
-    account_type: ['', [Validators.required]],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+    id: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+    bank: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+    value: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+    account_number: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
+    account_type: [
+      '',
+      [Validators.required, Validators.minLength(1), Validators.maxLength(50)],
+    ],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
   });
@@ -53,16 +70,16 @@ export class AdvanceComponent {
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
   ) {}
-  
 
-  send() { this.sendForm.emit(this.form.value); }
-
-  //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { 
-    this.submitted = true;
-    return this.form.value; 
+  send() {
+    this.sendForm.emit(this.form.value);
   }
 
+  //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
+  sendForms() {
+    this.submitted = true;
+    return this.form.value;
+  }
 
   isInvalidForm(controlName: string) {
     return (

@@ -12,16 +12,16 @@ export class PersonalDataComponent {
   public APPLICATION_FOR = APPLICATION_FOR;
 
   public form = this.fb.group({
-    application_for: ['', [Validators.required]],
-    name: ['', [Validators.required]],
-    identification_number: ['', [Validators.required]],
-    phone: ['', [Validators.required]],
-    landline: ['', [Validators.required]],
-    email: ['', [Validators.required]],
-    address: ['', [Validators.required]],
-    city: ['', [Validators.required]],
-    institution: ['', [Validators.required]],
-    academic_unit: ['', [Validators.required]],
+    application_for: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    identification_number: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    phone: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    landline: ['', [Validators.minLength(1), Validators.maxLength(50)]],
+    email: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    address: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    city: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    institution: ['', [Validators.minLength(1), Validators.maxLength(50)]],
+    academic_unit: ['', [Validators.minLength(1), Validators.maxLength(50)]],
   });
 
   @Output() submitted = false;
