@@ -34,12 +34,12 @@ export class ComplimentComponent implements OnInit {
   form: FormGroup;
 
   correosPredeterminados: any = [
-    { nombre: 'Secretaria del CIEN', value: 'dandrea.torres@udea.edu.co' },
-    { nombre: 'Programa de Extensión', value: 'dandrea.torres@udea.edu.co' },
-    { nombre: 'Fondo de Pasajes Internacionales', value: 'dandrea.torres@udea.edu.co' },
-    { nombre: 'Vicerrectoría de Investigación', value: 'david.torresg@udea.edu.co' },
-    { nombre: 'Centro de Investigaciones SIU', value: 'david.torresg@udea.edu.co' },
-    { nombre: 'Fondos de Vicerrectoría de Docencia', value: 'david.torresg@udea.edu.co' }
+    { nombre: 'Secretaria del CIEN', value: 'apoyocien@udea.edu.co' },
+    { nombre: 'Programa de Extensión', value: 'apoyoextension.fcen@udea.edu.co' },
+    { nombre: 'Fondo de Pasajes Internacionales', value: '' },
+    { nombre: 'Vicerrectoría de Investigación', value: '' },
+    { nombre: 'Centro de Investigaciones SIU', value: '' },
+    { nombre: 'Fondos de Vicerrectoría de Docencia', value: '' }
   ];
 
   constructor(
