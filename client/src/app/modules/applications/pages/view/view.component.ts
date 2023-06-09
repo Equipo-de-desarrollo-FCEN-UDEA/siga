@@ -51,12 +51,10 @@ export class ViewComponent implements AfterViewChecked {
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
 
-    console.log("Superuser",this.id);
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
     this.applicationStatusSvc.isApproved(this.id)
-
   }
 
 

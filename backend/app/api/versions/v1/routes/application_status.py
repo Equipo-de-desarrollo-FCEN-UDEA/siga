@@ -28,7 +28,7 @@ async def create_application_status(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     # ) -> Application_statusInDB:
 ):
-    application_status.observation += f' por {current_user.rol.description}'
+    application_status.observation += f' por {current_user.userrol[0].rol.description}'
     try:
         application = crud.application.get(
             db, current_user, id=application_status.application_id)

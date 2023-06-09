@@ -1,5 +1,5 @@
 import { DepartmentResponse } from "./department";
-import { UserRolResponse } from "./user_rol";
+import { UserRolResponse } from "./userrol";
 
 export interface UserBase {
     last_names: string;
@@ -34,7 +34,7 @@ export interface UserInDBBase extends UserBase{
 
 export interface UserResponse extends UserInDBBase{
     department: DepartmentResponse;
-    user_rol: UserRolResponse;
+    userrol: UserRolResponse[];
 }
 
 
