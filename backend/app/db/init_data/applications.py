@@ -69,7 +69,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
-                status="VISTO BUENO", scope=[5, 6, 7]),
+                status="VISTO BUENO", scope=[6, 7]),
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],
@@ -151,22 +151,13 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     #ECONOMIC SUPPORT 
     #14
     schemas.ApplicationSubTypeCreate(
-        name="Apoyo Económico Pregrado",
-        application_type_id=6
+        name="Apoyo Económico",
+        application_type_id=6,
+        extra={
+            "Pregrado": 0,
+            "Posgrado": 1,
+            "Bienestar de la Facultad": 2,
+            "Grupo de Investigación": 3
+            }
     ),
-    #15
-    schemas.ApplicationSubTypeCreate(
-        name="Apoyo Económico Posgrado",
-        application_type_id=6
-    ),
-    #16
-    schemas.ApplicationSubTypeCreate(
-        name="Apoyo Económico Grupo de Investigación",
-        application_type_id=6
-    ),
-    #17
-    schemas.ApplicationSubTypeCreate(
-        name="Apoyo Económico Bienestar de la Facultad",
-        application_type_id=6
-    )
 ]
