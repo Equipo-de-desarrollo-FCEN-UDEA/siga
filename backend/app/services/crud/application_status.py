@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.domain.models import Application, Application_status, Status, User, Department, Rol
+from app.domain.models import Application, Application_status, Status, User, Department, Rol, UserRol
 from app.domain.policies import Application_statusPolicy
 from app.domain.schemas import (Application_statusCreate,
                                 Application_statusUpdate)
@@ -21,7 +21,7 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
             queries = [Department.school_id ==
                        who.department.school_id, Rol.scope.in_(scope)]
             to_notify: list[User] = db.query(User).join(
-                Rol).join(Department).filter(*queries).all()
+                UserRol).join(Department).filter(*queries).all()
             log.debug(scope)
             for to_user in to_notify:
                 log.debug(to_user.__dict__)

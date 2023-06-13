@@ -32,10 +32,12 @@ async def create_application_status(
     try:
         application = crud.application.get(
             db, current_user, id=application_status.application_id)
+        
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
-
+        
         # Cases of document generations
+        
         # Commision
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):
