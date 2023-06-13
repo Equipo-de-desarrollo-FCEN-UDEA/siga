@@ -1,10 +1,14 @@
 import json
+import os
+import re
 from datetime import datetime
 from uuid import uuid1
 from io import BytesIO
 from tempfile import NamedTemporaryFile
+import tempfile
 
 from docx import Document
+from zipfile import ZipFile, ZIP_DEFLATED
 
 from app.domain.models import User, EconomicSupport
 from app.domain.schemas import UserResponse
@@ -93,11 +97,35 @@ def generate_support_format_to_aws(data_application: dict, path: str):
         file = BytesIO(tmp.read())
 
     aws.s3.push_data_to_s3_bucket(settings.aws_bucket_name, file,
-<<<<<<< HEAD
                                   file_name=path, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-=======
-                                  file_name=path, content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-    
-def create_zip():
-    pass
->>>>>>> integration
+
+@celery_app.task
+def create_zip_documents(user: User, economic_support:EconomicSupportResponse):
+    regex = r"user_[0-9]+/([\w.-]+)"
+    economic_support_dict: dict = economic_support.dict()
+    files = economic_support_dict['economic_support']['documents']
+    zip_name = "{}_{}-{}_{}.zip".format(economic_support_dict['application_sub_type']['name'],
+                                  economic_support_dict['id'],
+                                  str.title(economic_support_dict['user']['names']+economic_support_dict['user']['last_names']),
+                                  economic_support_dict['user']['identification_number']
+                                  )
+    file_paths = [file['path'] for file in files]
+    #Abrir una carpeta temporal.
+    temp_dir = tempfile.TemporaryDirectory()
+    # log.debug("Está vacía la carpeta?")
+    # log.debug(os.listdir(temp_dir.name))
+    destination = temp_dir.name
+    binary_files = [os.path.join(destination, re.findall(regex, file)[0]) for file in file_paths]
+    for file in file_paths:
+        aws.s3.s3.meta.client.download_file(settings.aws_bucket_name, file, os.path.join(destination, re.findall(regex, file)[0]))
+
+    # log.debug("Está llena la carpeta?")
+    # log.debug(os.listdir(temp_dir.name))
+
+    zip_buffer = BytesIO()
+    with ZipFile(zip_buffer,'w', ZIP_DEFLATED) as zip:
+        # writing each file one by one
+        for file in binary_files:
+            zip.write(file)
+
+    return zip_buffer

@@ -5,8 +5,7 @@ from .applications.full_time import fill_vice_document
 from .applications.work_plan import fill_work_plan_format
 from .applications.vacation import fill_vacations_format
 from .applications.economic_support import fill_economic_support_form
-
-from .applications.economic_support import fill_economic_support_form
+from .applications.economic_support import create_zip_documents
 
 from .applications.hour_aval_letter import hour_aval_letter_generation
 from .applications.hour_aval_act import hour_aval_act_generation
