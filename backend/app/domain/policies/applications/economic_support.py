@@ -1,16 +1,15 @@
 from app.domain.policies.base import Base
 
+from app.core.logging import get_logging
+
 from app.domain.models.applications.economic_support import *
 from app.domain.schemas.applications.economic_support import EconomicSupportCreate, EconomicSupportUpdate
-from app.domain.models import Application_status, User, Application, Status
+from app.domain.models import Application_status, User, UserApplication, Status
 
 from app.domain.errors.applications.economic_support import *
 
-from app.domain.models import Application_status, User, Application, Status
-
-#log = get_logging(__name__)
+log = get_logging(__name__)
 class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, EconomicSupportUpdate]):
-    # pass
 
     def create(self, who: User, application_sub_type_id):
         #Match student rols (pregraduated and postgraduated)
@@ -18,6 +17,16 @@ class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, Economi
         if who.rol.scope == 13 : #27 -> pregraduated
             if application_sub_type_id == 15 :
                 raise economic_support_403
+        
+        return None
+    
+    #Check if the user(coordinador) can see the application
+    def check_user(self, user_application: UserApplication) -> None:
+        log.debug('dentro de check_user')
+        
+        if not (user_application.user_id and user_application.application_id):
+            log.debug('entro a la policy')
+            raise economic_support_401
         
         return None
     

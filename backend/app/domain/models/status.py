@@ -6,6 +6,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .application_status import Application_status
+    from .user_application import UserApplication
 
 
 class Status(Base):
@@ -15,3 +16,4 @@ class Status(Base):
 
     # relations
     application_status = relationship("Application_status", back_populates="status")
+    user_application = relationship("UserApplication", back_populates="status")

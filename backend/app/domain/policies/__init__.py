@@ -11,3 +11,4 @@ from .application_status import Application_statusPolicy
 from .holiday import HolidayPolicy
 from .cron_job import CronJobPolicy
 from .extra import ExtraPolicy
+from .user_application import UserApplicationPolicy
