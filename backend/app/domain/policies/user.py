@@ -3,7 +3,8 @@ from typing import Union, Dict, Any
 from app.domain.models import User
 from app.domain.schemas.user import UserCreate
 from app.domain.errors.user import *
-from app.domain.schemas import UserUpdate
+from app.domain.schemas import UserUpdate, UserRolResponse
+
 from .base import Base
 
 
@@ -17,16 +18,21 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
         if not to:
             raise user_404
 
-    # This policie filter who can see another user
+    # This policy filter who cans see another user
     def get(self, who: User, to: User) -> None:
-        if not (who.rol.scope < 9) and not (who.id == to.id):
+
+        #Aquí es donde se debe elegir el rol         
+        userrol = who.userrol[0]
+        touser = to.userrol[0]
+
+        if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
-        if not (who.rol.scope <= to.rol.scope):
+        if not (userrol.rol.scope <= touser.rol.scope):
             raise user_401
-        if who.rol.scope == 7 or who.rol.scope == 6:
+        if userrol.rol.scope == 7 or userrol.rol.scope == 6:
             if not (to.department_id == who.department_id):
                 raise user_401
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 5:
             if not (to.department.school_id == who.department.school_id):
                 raise user_401
         if not to:
@@ -35,7 +41,10 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie decide who can see the list of users
     def get_multi(self, who: User) -> None:
-        if not (who.rol.scope < 9):
+        #Aquí es donde se debe elegir el rol
+        userrol = who.userrol[0]
+
+        if not (userrol.rol.scope < 9):
             raise user_401
         return None
 
@@ -49,7 +58,9 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
-        if not (who.rol.scope < 9) and not (who.id == to.id):
+        userrol = who.userrol[0]
+        if not (userrol.rol.scope < 9) and not (who.id == to.id):
+        #if not (who.rol.scope < 9) and not (who.id == to.id):
             raise user_401
         if 'active' in update_data:
             if who.id == to.id and update_data['active'] != to.active:
@@ -58,7 +69,9 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie handle update password, maybe it will be removed
     def update_password(self, who: User, to: User, password, confirmpassword) -> None:
-        if not (who.rol.scope < 9) and not (who.id == to.id):
+        userrol = who.userrol[0]
+        #if not (who.rol.scope < 9) and not (who.id == to.id):
+        if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
         if not password == confirmpassword:
             raise user_diferent_password
@@ -66,7 +79,9 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie handle who can delete an user, it will be removed
     def delete(self, who: User, to: User | None) -> None:
-        if not (who.rol.scope < 9):
+        userrol = who.userrol[0]
+        if not (userrol.rol.scope < 9):
+        #if not (who.rol.scope < 9):
             raise user_401
         return None
 

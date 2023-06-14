@@ -3,6 +3,7 @@ from .department import department
 from .school import school
 from .extra import extra
 from .rol import rol
+from .userrol import userrol
 from .status import status
 from .application import application
 from .application_type import application_type

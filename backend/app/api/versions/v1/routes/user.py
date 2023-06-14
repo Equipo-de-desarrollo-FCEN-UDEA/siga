@@ -42,6 +42,14 @@ def create_user(
 
     token = email_token(db_user.email)
     confirm_email.apply_async(args=(db_user.names, token, db_user.email))
+    try:
+        userrol = crud.userrol.create(db=db, obj_in = db_user,rol_id = user_in.rol_id)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    except KeyError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
     # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return db_user
 

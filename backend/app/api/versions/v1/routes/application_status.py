@@ -28,14 +28,16 @@ async def create_application_status(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     # ) -> Application_statusInDB:
 ):
-    application_status.observation += f' por {current_user.rol.description}'
+    application_status.observation += f' por {current_user.userrol[0].rol.description}'
     try:
         application = crud.application.get(
             db, current_user, id=application_status.application_id)
+
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
-
+        
         # Cases of document generations
+        
         # Commision
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):

@@ -45,7 +45,7 @@ async def create_vacation(
             db=engine,
             obj_in=Vacation(**dict(vacation))
         )
-
+        
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(vacation_create.id),
@@ -58,9 +58,12 @@ async def create_vacation(
             who=current_user,
             obj_in=application
         )
-
+        
         mongo_id = ObjectId(application.mongo_id)
         
+        
+        path = documents.fill_vacations_format(current_user, response)
+        await crud.vacation.create_format(engine, id=vacation_create.id, name='formato-vacaciones.xlsx', path=path)
 
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)

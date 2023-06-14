@@ -63,7 +63,7 @@
         >
           <th>{{ user.id }}</th>
           <td>{{ user.names + " " + user.last_names | titlecase }}</td>
-          <td>{{ user.rol.name }}</td>
+          <td>{{ user.userrol[0].rol.name }}</td>
           <td>{{ user.email | lowercase }}</td>
           <td>{{ user.identification_number | lowercase }}</td>
           <td>{{ user.department.name }}</td>
