@@ -43,7 +43,7 @@ def create_user(
     token = email_token(db_user.email)
     confirm_email.apply_async(args=(db_user.names, token, db_user.email))
     try:
-        userrol = crud.userrol.create(db=db, obj_in = db_user,rol_id = user_in.rol_id)
+        userrol = crud.userrol.create(db=db, id_user = db_user.id,rol_id = user_in.rol_id)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     except KeyError as e:
@@ -71,7 +71,9 @@ def read_users(
 
         params: skip: int, limit: int
     """
-    try:
+    try:# @router.post("/", status_code=201,
+#              response_model=schemas.UserRolBase)
+
         db_user = crud.user.get_multi(
             db=db, skip=skip, limit=limit, who=user, search=search, active=active)
     except BaseErrors as e:

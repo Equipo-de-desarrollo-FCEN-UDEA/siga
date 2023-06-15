@@ -41,6 +41,7 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
+        log.debug(economic_support)
         economic_support_create = None
         # En la BD de mongo
         economic_support_create = await crud.economic_support.create(

@@ -14,7 +14,7 @@ class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, Economi
     def create(self, who: User, application_sub_type_id):
         #Match student rols (pregraduated and postgraduated)
    
-        if who.rol.scope == 13 : #27 -> pregraduated
+        if who.userrol[0].rol.scope == 13 : #27 -> pregraduated
             if application_sub_type_id == 15 :
                 raise economic_support_403
         

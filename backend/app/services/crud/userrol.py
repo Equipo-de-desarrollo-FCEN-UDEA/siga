@@ -12,49 +12,16 @@ log = get_logging(__name__)
 
 
 class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, RolPolicy]):
-    # def get_multi(
-    #     self,
-    #     db: Session,
-    #     who: User,
-    #     *,
-    #     skip: int = 0,
-    #     limit: int = 100
-    # ) -> List[Rol]:
-    #     userrol= who.userrol[0]
-    #     objs_db = db.\
-    #         query(UserRol).\
-    #         filter(Rol.scope >= userrol.rol.scope).\
-    #         offset(skip).\
-    #         limit(limit).\
-    #         all()
-
-    #     return objs_db
-
-    # def get_expose(
-    #     self,
-    #     db: Session,
-    #     *,
-    #     skip: int = 0,
-    #     limit: int = 100
-    # ) -> List[User]:
-    #     return (db.
-    #             query(UserRol).
-    #             filter(Rol.scope >= 9).
-    #             offset(skip).
-    #             limit(limit).
-    #             all())
-
-#Verificar esto
     def create(
         self,
         db: Session,
-        obj_in: User,
+        id_user: User,
         rol_id: str
     ) -> UserRol:
         
         data = UserRolCreate(
             rol_id = rol_id,
-            user_id = obj_in.id)
+            user_id = id_user)
         # data2 = dict(obj_in)
         # dataUser = User(**data2)
         # print(dataUser)
