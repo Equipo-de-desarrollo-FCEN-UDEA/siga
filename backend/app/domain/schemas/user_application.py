@@ -4,7 +4,7 @@ class UserApplicationBase(BaseModel):
     user_id: int
     application_id: int
     response: int
-    amout: int
+    amount: int
 
 class UserApplicationCreate(UserApplicationBase):
     pass
@@ -22,7 +22,7 @@ class UserApplicationResponse(BaseModel):
     user_id: int
     application_id: int
     response: int
-    amout: int
+    amount: int
 
     class Config:
         orm_mode = True

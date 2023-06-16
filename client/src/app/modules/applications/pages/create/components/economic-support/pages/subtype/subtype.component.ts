@@ -12,7 +12,7 @@ export class SubtypeComponent {
   public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
   public investigationGroup$ = this.extraSvc.getInvestigationGroups();
 
-  public subtype: number[] = [];
+  public subtype: number = 0;
 
   @Output() sendForm = new EventEmitter<any>();
   @Output() submitted = false;
@@ -31,25 +31,25 @@ export class SubtypeComponent {
     name: [''],
   });
 
-  onCheckboxChange(event: any, id: number) {
-    if (event.target.checked) {
-      if (!this.subtype.includes(id)) {
-        this.subtype.push(id);
-        //onsole.log(this.subtype);
-      }
-    } else {
-      if (this.subtype.includes(id)) {
-        this.subtype.splice(this.subtype.indexOf(id), 1);
-        //console.log(this.subtype);
-      }
-      //console.log(id);
-    }
-    console.log(this.subtype);
-  }
+  // onCheckboxChange(event: any, id: number) {
+  //   if (event.target.checked) {
+  //     if (!this.subtype.includes(id)) {
+  //       this.subtype.push(id);
+  //       //onsole.log(this.subtype);
+  //     }
+  //   } else {
+  //     if (this.subtype.includes(id)) {
+  //       this.subtype.splice(this.subtype.indexOf(id), 1);
+  //       //console.log(this.subtype);
+  //     }
+  //     //console.log(id);
+  //   }
+  //   console.log(this.subtype);
+  // }
 
-  send() {
-    this.sendForm.emit(this.subtype);
-  }
+  // send() {
+  //   this.sendForm.emit(this.subtype);
+  // }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
