@@ -37,6 +37,18 @@ class CRUDUserApplication(CRUDBase[UserApplication, UserApplicationCreate, UserA
         db.refresh(db_obj)
         #log.debug(f"UserApplication created: {db_obj}")
         return db_obj
+    
+    def get_by_coordinator(
+        self, 
+        db: Session, 
+        who: User,
+        *, 
+        id: int, 
+    ):
+        return db.query(UserApplication).filter(
+                        UserApplication.user_id == who.id, 
+                        UserApplication.application_id == id).first()
+
        
 
 policy = UserApplicationPolicy()
