@@ -59,4 +59,5 @@ from .cron_job import (CronJobBase, CronJobCreate, CronJobUpdate)
 from .extra import (ExtraBase, ExtraCreate, ExtraUpdate, ExtraInDBBase, ExtraResponse)
 
 from .user_application import (UserApplicationBase, UserApplicationCreate, 
-                               UserApplicationUpdate, UserApplicationInDB)
+                               UserApplicationUpdate, UserApplicationInDB,
+                               UserApplicationResponse)

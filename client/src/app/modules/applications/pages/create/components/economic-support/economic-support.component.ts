@@ -10,7 +10,7 @@ import {
   IAdvancePayment,
   IApplicationData,
   IEconomicSupportCreate,
-  IInvertigationGroup,
+  IDependence,
   IPersonalData,
   ITickets,
 } from '@interfaces/applications/economic_support-interface';
@@ -97,45 +97,44 @@ export class EconomicSupportComponent {
 
   submit() {
     this.submitted = true;
-  
-    const APPLICATION_DATA = this.application_data_form.sendForms() as IApplicationData;
+
+    const APPLICATION_DATA =
+      this.application_data_form.sendForms() as IApplicationData;
     const PERSONAL_DATA = this.personal_data_form.sendForms() as IPersonalData;
     const TICKETS = this.tickets_form.sendForms() as ITickets;
     const PAYMENT = this.advance_form.sendForms() as IAdvancePayment;
     const DOCUMENTS = this.documents_form.sendForms() as file_path[];
-    const APPLICATION_SUB_TYPE = this.application_sub_type_form.sendForms();
-    const INVESTIGATION_GROUP = this.application_sub_type_form.sendInvestigationGroup() as IInvertigationGroup;
-  
-    for (let i = 0; i < APPLICATION_SUB_TYPE.length; i++) {
-      const applicationSubType = APPLICATION_SUB_TYPE[i];
-      const isEconomicSupport = applicationSubType === 16;
-  
-      let economic_support: IEconomicSupportCreate = {
-        application_sub_type_id: applicationSubType,
-        investigation_group: isEconomicSupport ? INVESTIGATION_GROUP : undefined,
-        application_data: APPLICATION_DATA,
-        personal_data: PERSONAL_DATA,
-        tickets: TICKETS,
-        payment: PAYMENT,
-        documents: DOCUMENTS,
-      };
-  
-      let economic_support_form = this.economicSupportSvc.postEconomicSupport(economic_support);
-      const isInvalidDocumentCount = DOCUMENTS.length < 6;
-  
-      if (isInvalidDocumentCount) {
-        Swal.fire({
-          title: 'Error',
-          text: '¡Revise que haya llenado todos los campos y subidos todos los documentos que el formato sugiere!',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#3AB795',
-        });
-        return;
-      }
-  
-      else {
-        economic_support_form = this.documentSvc.postDocument(DOCUMENTS as unknown as File[]).pipe(
+    const APPLICATION_SUB_TYPE = 14;
+    const DEPENDECE =
+      this.application_sub_type_form.sendInvestigationGroup() as IDependence;
+
+    let economic_support: IEconomicSupportCreate = {
+      application_sub_type_id: APPLICATION_SUB_TYPE,
+      dependece: DEPENDECE,
+      application_data: APPLICATION_DATA,
+      personal_data: PERSONAL_DATA,
+      tickets: TICKETS,
+      payment: PAYMENT,
+      documents: DOCUMENTS,
+    };
+
+    let economic_support_form =
+      this.economicSupportSvc.postEconomicSupport(economic_support);
+    const isInvalidDocumentCount = DOCUMENTS.length < 6;
+
+    if (isInvalidDocumentCount) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos y subidos todos los documentos que el formato sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    } else {
+      economic_support_form = this.documentSvc
+        .postDocument(DOCUMENTS as unknown as File[])
+        .pipe(
           switchMap((data: any) => {
             if (data) {
               console.log(data);
@@ -145,29 +144,29 @@ export class EconomicSupportComponent {
             }
             economic_support.documents = data.files_paths;
             console.log(economic_support);
-            return this.economicSupportSvc.postEconomicSupport(economic_support);
+            return this.economicSupportSvc.postEconomicSupport(
+              economic_support
+            );
           })
         );
-      }
-  
-      economic_support_form.subscribe({
-        next: (data) => {
-          Swal.fire({
-            title: '¡Solicitud enviada!',
-            text: '¡La solicitud de apoyo económico se ha creado con éxito!',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#3AB795',
-          });
-          this.router.navigateByUrl(`/solicitudes/lista`);
-        },
-        error: (err) => {
-          this.error = err;
-        },
-      });
     }
+
+    economic_support_form.subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: '¡Solicitud enviada!',
+          text: '¡La solicitud de apoyo económico se ha creado con éxito!',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
+        });
+        this.router.navigateByUrl(`/solicitudes/lista`);
+      },
+      error: (err) => {
+        this.error = err;
+      },
+    });
   }
-  
 
   validSize() {
     return true;
