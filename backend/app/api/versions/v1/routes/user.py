@@ -43,7 +43,7 @@ def create_user(
     token = email_token(db_user.email)
     confirm_email.apply_async(args=(db_user.names, token, db_user.email))
     try:
-        userrol = crud.userrol.create(db=db, id_user = db_user.id,rol_id = user_in.rol_id)
+        userrol = crud.userrol.create(db=db, user = db_user,rol_id = user_in.rol_id, description=user_in.scale)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     except KeyError as e:

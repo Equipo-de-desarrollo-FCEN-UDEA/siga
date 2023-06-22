@@ -34,10 +34,13 @@ def read_roles(
     return db_empleado
 
 
-@router.get("/users", status_code=200, response_model=List[schemas.RolResponse])
+@router.get("/users", status_code=200, response_model=List[schemas.UserRolResponse])
 def read_users(
     *,
     db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user),
+    rol_id: int,
     skip: int = 0,
     limit: int = 100
 ) -> Any:
@@ -47,8 +50,8 @@ def read_users(
         params: skip: int, limit: int
     """
     try:
-        db_empleado = crud.rol.get_expose(
-            db, skip=skip, limit=limit)
+        db_empleado = crud.userrol.get_users(
+            db, skip=skip, limit=limit, who=current_user, lookrol=rol_id)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_empleado

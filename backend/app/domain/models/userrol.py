@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 class UserRol(Base):
     #__tablename__='userrol'
     id = Column(Integer, primary_key=True)
+    description = Column(String(50), nullable=True)
    
     # relations
     rol_id = Column(Integer, ForeignKey("rol.id"))

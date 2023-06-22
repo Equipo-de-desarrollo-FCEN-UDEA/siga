@@ -1,9 +1,12 @@
 from pydantic import BaseModel
 from .rol import RolResponse
+from typing import Optional
+
 
 class UserRolBase(BaseModel):
     rol_id: int
     user_id: int
+    description: Optional[str]
     
 
 
