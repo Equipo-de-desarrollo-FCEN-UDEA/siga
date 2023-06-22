@@ -59,8 +59,7 @@ export class ViewComponent implements AfterViewChecked {
 
 
   public form = this.fb.group({
-    observation: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(300)]],
-    amount_approved: [''],   
+    observation: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(300)]],  
   });
 
   cancel() {
@@ -86,7 +85,6 @@ export class ViewComponent implements AfterViewChecked {
     const method = this.applicationStatusSvc.postApplicationStatus({
       application_id: this.id,
       observation: this.form.value.observation!,
-      amount_approved: this.form.value.amount_approved!,
       status_id: 1,
     } as ApplicationStatusCreate);
     console.log(this.form.value);

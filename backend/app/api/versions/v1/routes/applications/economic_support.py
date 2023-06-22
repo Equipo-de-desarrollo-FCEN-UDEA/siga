@@ -64,15 +64,15 @@ async def create_economic_support(
         )
 
         for dependence in economic_support.dependence:
-            if dependence.name == 'Grupo de Investigación':
-                for subdepartment in dependence.subdepartment:
-                    user_application = crud.user_application.create(
-                                        db=db,
-                                        who=subdepartment,
-                                        obj_in=application
-                                        )
-                    response = UserApplicationResponse.from_orm(user_application)
-            else: 
+            # if dependence.name == 'Grupo de Investigación':
+            #     for subdepartment in dependence.subdepartment:
+            #         user_application = crud.user_application.create(
+            #                             db=db,
+            #                             who=subdepartment,
+            #                             obj_in=application
+            #                             )
+            #         response = UserApplicationResponse.from_orm(user_application)
+            #else: 
                 user_application = crud.user_application.create(
                     db=db,
                     who=dependence,
