@@ -19,7 +19,7 @@ log = get_logging(__name__)
 
 
 @router.get("/{id}", response_model=UserApplicationResponse)
-async def get_economic_support_by_coordinator(
+async def get_application_by_coordinator(
     id: int,
     *,
     current_user: User = Depends(jwt_bearer.get_current_active_user),

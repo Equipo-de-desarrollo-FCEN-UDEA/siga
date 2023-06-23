@@ -43,7 +43,7 @@ export interface IAdvancePayment {
 export interface IDependence { 
   id: number;
   name: string;
-  subdepartment: ISubdepartment[];
+  subdepartment?: ISubdepartment[];
 }
 
 export interface ISubdepartment { 
@@ -53,7 +53,7 @@ export interface ISubdepartment {
 
 export interface IEconomicSupportCreate {
   application_sub_type_id: number;
-  dependece: IDependence;
+  dependence: IDependence[];
   application_data: IApplicationData;
   personal_data: IPersonalData;
   tickets: ITickets;

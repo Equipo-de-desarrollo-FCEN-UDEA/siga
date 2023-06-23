@@ -18,7 +18,26 @@
     </div>
   </div>
 
-  <hr class="mt-4">
+  <hr class="mt-4" />
+
+  <div class="row">
+    <span class="fw-bold">Dependecias</span>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Dependecias donde realizó la solicitud
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <ul>
+        <li *ngFor="let dependecies of economic_support.dependence">
+          {{ dependecies.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="mt-4" />
 
   <div class="row">
     <span class="fw-bold">Información general</span>
@@ -34,24 +53,16 @@
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label text-secondary">Proyecto</div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.application_data.project}}
+      {{ economic_support.application_data.project }}
     </div>
   </div>
 
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label text-secondary">Objetivo</div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.application_data.goal}}
+      {{ economic_support.application_data.goal }}
     </div>
   </div>
-
-  <div class="row regular-row mt-2" *ngIf="application.application_sub_type_id == 16">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Grupo de Investigación</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ economic_support.investigation_group?.name}}
-    </div>
-  </div>
-
 
   <div class="row mt-2">
     <span class="fw-bold">Información del Solicitante</span>
@@ -65,28 +76,33 @@
   </div>
 
   <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Nombre y Apellidos</div>
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Nombre y Apellidos
+    </div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.personal_data.name}}
+      {{ economic_support.personal_data.name }}
     </div>
   </div>
 
   <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Numero Indentificación</div>
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Numero Indentificación
+    </div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.personal_data.identification_number}}
+      {{ economic_support.personal_data.identification_number }}
     </div>
   </div>
 
   <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Correo Electrónico</div>
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Correo Electrónico
+    </div>
     <div class="col-xs-12 col-sm-6">
-      {{ economic_support.personal_data.email}}
+      {{ economic_support.personal_data.email }}
     </div>
   </div>
 
-
-  <hr class="mt-4">
+  <hr class="mt-4" />
 
   <div class="row">
     <span class="fw-bold">Monto</span>
@@ -106,7 +122,7 @@
     </div>
   </div>
 
-  <hr class="mt-4">
+  <hr class="mt-4" />
 
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
@@ -121,7 +137,4 @@
     </div>
   </div>
 
-  
-  <span> <b>Importante:</b> Recuerde que estos documentos deben ser subidos a <a href="https://ssofi.udea.edu.co/fcen/"
-    target="_blank">ssofi</a> para que la solicitud sea aprobada por el consejo</span>
 </div>

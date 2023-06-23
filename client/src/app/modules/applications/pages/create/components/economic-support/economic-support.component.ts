@@ -38,15 +38,15 @@ import { switchMap } from 'rxjs';
 })
 export class EconomicSupportComponent {
   // For handle errors
-  public clicked = 0;
-  public error = '';
+  // public clicked = 0;
+  // public error = '';
 
-  @Output() submitted = false;
+  // @Output() submitted = false;
 
   // Acceder a los form
-  get f() {
-    return this.form.controls;
-  }
+  // get f() {
+  //   return this.form.controls;
+  // }
 
   constructor(
     private fb: FormBuilder,
@@ -67,16 +67,15 @@ export class EconomicSupportComponent {
   ) {}
 
   public form = this.fb.group({
-    application_sub_type_id: [this.applicationSubtype.subtype],
-    investigation_group: [this.applicationSubtype.form.value],
+    dependencies: [this.applicationSubtype.dependencies],
     application_data: [this.applicationData.form.value],
     personal_data: [this.personalData.form.value],
     tickets: [this.tickets.form.value],
     advance: [this.advance.form.value],
-    documents: [this.documentsComponent.form.value],
+    documents: [this.documentsComponent.form.value]
   });
 
-  //Observar cambios en los componentes hijos
+  // //Observar cambios en los componentes hijos
   @ViewChild(SubtypeComponent)
   application_sub_type_form!: SubtypeComponent;
 
@@ -96,21 +95,19 @@ export class EconomicSupportComponent {
   documents_form!: DocumentsComponent;
 
   submit() {
-    this.submitted = true;
+    //this.submitted = true;
 
-    const APPLICATION_DATA =
-      this.application_data_form.sendForms() as IApplicationData;
+    const DEPENDENCIES = this.application_sub_type_form.sendForms() as IDependence[];
+    const APPLICATION_DATA = this.application_data_form.sendForms() as IApplicationData;
     const PERSONAL_DATA = this.personal_data_form.sendForms() as IPersonalData;
     const TICKETS = this.tickets_form.sendForms() as ITickets;
     const PAYMENT = this.advance_form.sendForms() as IAdvancePayment;
     const DOCUMENTS = this.documents_form.sendForms() as file_path[];
     const APPLICATION_SUB_TYPE = 14;
-    const DEPENDECE =
-      this.application_sub_type_form.sendInvestigationGroup() as IDependence;
 
     let economic_support: IEconomicSupportCreate = {
       application_sub_type_id: APPLICATION_SUB_TYPE,
-      dependece: DEPENDECE,
+      dependence: DEPENDENCIES,
       application_data: APPLICATION_DATA,
       personal_data: PERSONAL_DATA,
       tickets: TICKETS,
@@ -118,8 +115,9 @@ export class EconomicSupportComponent {
       documents: DOCUMENTS,
     };
 
-    let economic_support_form =
-      this.economicSupportSvc.postEconomicSupport(economic_support);
+    console.log(economic_support);
+
+    let economic_support_form = this.economicSupportSvc.postEconomicSupport(economic_support);
     const isInvalidDocumentCount = DOCUMENTS.length < 6;
 
     if (isInvalidDocumentCount) {
@@ -160,11 +158,8 @@ export class EconomicSupportComponent {
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#3AB795',
         });
-        this.router.navigateByUrl(`/solicitudes/lista`);
-      },
-      error: (err) => {
-        this.error = err;
-      },
+        this.router.navigateByUrl(`/solicitudes/ver/${data.id}/apoyo-economico`);
+      }
     });
   }
 

@@ -19,6 +19,7 @@ import { StepperComponent } from './components/stepper/stepper.component';
 import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 import { ApplicantsComponent } from './components/applicants/applicants.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { UserApplicationStatusComponent } from './components/user-application-status/user-application-status.component';
 
 
 
@@ -28,7 +29,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     NotFoundComponent,
     LoaderComponent,
     StepperComponent,
-    ApplicantsComponent
+    ApplicantsComponent,
+    UserApplicationStatusComponent
   ],
   imports: [
     CommonModule,
