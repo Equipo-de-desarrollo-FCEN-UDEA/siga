@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy.orm import Session
 
 from app.domain.models import Rol, User, UserRol
-from app.domain.schemas import UserRolCreate, UserRolUpdate
+from app.domain.schemas import UserRolCreate, UserRolUpdate, UserResponse
 from app.domain.policies import UserRolPolicy
 from app.core.logging import get_logging
 from .base import CRUDBase
@@ -15,9 +15,10 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
     def create(
         self,
         db: Session,
-        user: User,
+        user: UserResponse,
         rol_id: str,
-        description: str
+        description: str,
+        current_user: User | None
     ) -> UserRol:
         
         data = UserRolCreate(
@@ -25,13 +26,13 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
             user_id = user.id, description = description)
 
         db_obj = UserRol(**dict(data))
-        self.policy.create(user,data)
+        self.policy.create(user,current_user)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
         return db_obj
     
-    #Get roles from current_user
+    #Get roles from current_user (superUser)
     def get_multi(
         self,
         db: Session,
@@ -50,6 +51,19 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
 
         return objs_db
     
+    #get rol from an id user (superUser)
+    def get_rol_by_iduser(
+        self,
+        db: Session,
+        who: User,
+        user_id: int
+    )-> List[UserRol]:
+        self.policy.get_users(who)
+        return (db.
+                query(UserRol).
+                filter(UserRol.user_id == user_id).
+                all())
+
     #Get users from a directive rol
     def get_users(
         self,
