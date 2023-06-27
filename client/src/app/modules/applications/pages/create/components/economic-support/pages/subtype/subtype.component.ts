@@ -45,8 +45,8 @@ export class SubtypeComponent {
         this.dependenciesTemp.splice(this.dependenciesTemp.indexOf(dependence), 1);
       }
     }
-    this.dependencies = this.dependenciesTemp.concat(this.researchGroupTemp);
-    console.log(this.dependencies);
+    //this.dependencies = this.dependenciesTemp.concat(this.researchGroupTemp);
+    console.log(this.dependenciesTemp);
   }
 
   onSelectDependencie(selectedValue: any) {
@@ -66,7 +66,7 @@ export class SubtypeComponent {
         this.researchGroupTemp.push(newDependence);
       };
     } 
-    this.dependencies = this.dependenciesTemp.concat(this.researchGroupTemp);
+    //this.dependencies = this.dependenciesTemp.concat(this.researchGroupTemp);
     console.log(this.researchGroupTemp);
   }
 
@@ -77,6 +77,7 @@ export class SubtypeComponent {
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
     this.submitted = true;
+    this.dependencies = this.dependenciesTemp.concat(this.researchGroupTemp);
     //this.form.get('application_sub_type_id')?.setValue(this.subtype);
     return this.dependencies;
   }

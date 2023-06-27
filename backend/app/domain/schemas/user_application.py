@@ -19,8 +19,8 @@ class UserApplicationInDB(UserApplicationBase):
         orm_mode = True
 
 class UserApplicationResponse(BaseModel):
-    user_id: int
     application_id: int
+    user_id: int
     response: int
     amount: int
 
