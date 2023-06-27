@@ -128,6 +128,7 @@ export class ViewComponent implements AfterViewChecked {
         });
       });
   }
+  
   onActivate(componentRef: any) {
     this.activatedComponentReference = componentRef;
   }

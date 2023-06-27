@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 // SweetAlert2
 import Swal from 'sweetalert2';
@@ -10,6 +11,12 @@ import {
   IEconomicSupportInDB,
   IEconomicSupportResponse,
 } from '@interfaces/applications/economic_support-interface';
+import {
+  IUserApplication,
+  IUserApplicationCreate,
+} from '@interfaces/user_application_interface';
+import { ApplicationStatus } from '@interfaces/application_status';
+import { UserResponse } from '@interfaces/user';
 
 // Utils
 import { lastElement } from '@shared/utils';
@@ -20,8 +27,8 @@ import { EconomicSupportService } from '@services/applications/economic-support.
 import { AuthService } from '@services/auth.service';
 import { ComService } from '../../connection/com.service';
 import { ApplicationStatusService } from '@services/application-status.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { ApplicationStatus } from '@interfaces/application_status';
+import { UserApplicationService } from '@services/user-application.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-economic-support',
@@ -29,41 +36,57 @@ import { ApplicationStatus } from '@interfaces/application_status';
   styleUrls: ['./economic-support.component.scss'],
 })
 export class EconomicSupportComponent implements OnInit {
-  public id: number = 0;
+  public application_id: number = 0;
+  public user_id: number = 15;
 
   public current_status: string = '';
   public amount_approved: number = 0;
 
+  public isSuperUser$ = this.authSvc.isSuperUser$;
+
   public today = new Date();
   public end_date = new Date();
 
+  public UserApplication$ = new Observable<IUserApplication[]>();
+
   public economic_support: IEconomicSupportInDB | undefined = undefined;
-  public application: Application | any = undefined;
+  public userApplication: IUserApplication | undefined = undefined;
+
+  public user: UserResponse | undefined = undefined;
+  public application: Application | undefined = undefined;
   public application$ = new Observable<Application>();
 
   @Input() status: ApplicationStatus[] | undefined;
 
   constructor(
     //ROUTERS
-    private route: ActivatedRoute,
     private router: Router,
+    private route: ActivatedRoute,
+
+    //FORMS
+    private fb: FormBuilder,
 
     //SERVICES
-    private documentSvc: DocumentService,
+    private applicationStatusSvc: ApplicationStatusService,
+    private userApplicationSvc: UserApplicationService,
     private economicSupportSvc: EconomicSupportService,
+    private documentSvc: DocumentService,
     private authSvc: AuthService,
-    private comSvc: ComService,
-    private applicationStatusSvc: ApplicationStatusService
+    private comSvc: ComService
   ) {
     this.authSvc.isSuperUser();
     this.route.parent?.params.subscribe((params) => {
-      this.id = params['id'];
+      this.application_id = params['id'];
     });
   }
 
+  public form = this.fb.group({
+    amount_approved: [0, [Validators.required]],
+  });
+
   ngOnInit(): void {
     this.economicSupportSvc
-      .getEconomicSupport(this.id)
+      .getEconomicSupport(this.application_id)
       .subscribe((app: IEconomicSupportResponse) => {
         const { economic_support, ...application } = app;
         this.economic_support = economic_support;
@@ -81,7 +104,7 @@ export class EconomicSupportComponent implements OnInit {
         //this.end_date = new Date(economic_support.end_date)
       });
 
-    this.applicationStatusSvc
+    this.applicationStatusSvc;
   }
   // -----------------------------------------
   // ------------- OPEN DOCUMENTS ----------
@@ -98,7 +121,6 @@ export class EconomicSupportComponent implements OnInit {
       },
     });
   }
-
 
   // -----------------------------------------
   // ------ DELETE ECONOMIC SUPPORT ----------
@@ -130,5 +152,47 @@ export class EconomicSupportComponent implements OnInit {
         });
       }
     });
+  }
+
+  submit() {
+    const FORM = this.userApplicationSvc.putUserApplication(
+      this.application_id,
+      {
+        application_id: Number(this.application_id),
+        user_id: Number(this.user_id),
+        amount: this.form.value.amount_approved!,
+        response: 1,
+      } as any)
+      .subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Aceptada!',
+            text: '¡La solicitud ha sido aprobada!',
+            icon: 'success',
+            confirmButtonColor: '#3AB795',
+          });
+        }
+      });
+  }
+
+  decline() {
+    const FORM = this.userApplicationSvc.putUserApplication(
+      this.application_id,
+      {
+        application_id: Number(this.application_id),
+        user_id: Number(this.user_id),
+        amount: this.form.value.amount_approved!,
+        response: 2,
+      } as any)
+      .subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Rechazada!',
+            text: 'La solicitud se ha sido rechazada',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+        }
+      });
   }
 }

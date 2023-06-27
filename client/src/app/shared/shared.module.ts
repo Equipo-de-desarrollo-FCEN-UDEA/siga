@@ -45,6 +45,7 @@ import { UserApplicationStatusComponent } from './components/user-application-st
     ReactiveFormsModule,
     RouterModule,
     StatusHistoryComponent,
+    UserApplicationStatusComponent,
     FormsModule,
     NgbModule,
     LoaderComponent,

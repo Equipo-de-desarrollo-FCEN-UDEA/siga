@@ -1,5 +1,6 @@
 from typing import Any
 from .base import CRUDBase
+from typing import Any, Dict, Union
 
 from sqlalchemy.orm import Session
 
@@ -7,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.domain.models import Application, UserApplication, User
 
 # Schemas
-from app.domain.schemas import UserApplicationCreate, UserApplicationUpdate
+from app.domain.schemas import UserApplicationCreate, UserApplicationUpdate, UserApplicationResponse
 
 # Políticas
 from app.domain.policies import UserApplicationPolicy
@@ -48,8 +49,33 @@ class CRUDUserApplication(CRUDBase[UserApplication, UserApplicationCreate, UserA
         return db.query(UserApplication).filter(
                         UserApplication.user_id == who.id, 
                         UserApplication.application_id == id).first()
+    
+    def get_user_application(
+        self,
+        db: Session,
+        *,
+        id: int,
+    )-> list[UserApplication]:
+        db_obj = db.query(UserApplication).filter(UserApplication.application_id == id).all()
+        log.debug(f"UserApplication: {db_obj}")
+        return db_obj
 
+    def update_by_coordinator(
+        self, 
+        db: Session, 
+        who: User,
+        id: int,
+        *, 
+        db_obj: UserApplication,
+        obj_in: Union[UserApplicationUpdate, Dict[str, Any]],        
+    ) -> UserApplication:
+        db_obj = super().update(db, who, db_obj=db_obj, obj_in=obj_in)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        #log.debug(f"UserApplication created: {db_obj}")
+        return db_obj
        
-
+    
 policy = UserApplicationPolicy()
 user_application = CRUDUserApplication(UserApplication, policy=UserApplicationPolicy())

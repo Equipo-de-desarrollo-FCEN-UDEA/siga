@@ -4,8 +4,8 @@ export interface IUserApplication {
 }
 
 export interface IUserApplicationCreate {
-  user_id: number;
   application_id: number;
+  user_id: number;
   amount: number;
   response: number;
 }
