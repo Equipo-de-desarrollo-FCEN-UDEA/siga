@@ -29,7 +29,7 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
 
     # This policie handle who can delete an user, it will be removed
     def delete(self, who: User, to: UserRolCreate | None) -> None:
-        userrol = who.userrol[0]
+        userrol = to.userrol[0]
         if not (userrol.rol.scope < 9):
                 raise user_401
         return None
