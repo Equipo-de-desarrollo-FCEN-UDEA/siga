@@ -13,6 +13,7 @@ import { id_type } from '@shared/data/id_type';
 import { Observable, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { vinculation_type } from '@shared/data/vinculation';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-user-edit',
@@ -33,12 +34,17 @@ export class UserEditComponent {
   
   public error: string = "";
   public submitted: boolean = false;
-  public rol: string = localStorage.getItem('rol') || '';
+  //public rol: string = localStorage.getItem('rol') || '';
+  public rol: string = '';
 
   public rol$: Observable<RolBase[]> = this.rolService.getRoles();
   private is_email_valid = /^[a-zA-Z0-9._%+-]+@UDEA.EDU.CO$/;
   public getId: Number | string = 0;
 
+  //Properties of rol and userrol
+  public dropdownList:any[] = [];
+  public selectedItems:any[] = [];
+  public dropdownSettings: IDropdownSettings;
 
   constructor(
     private router: Router,
@@ -50,16 +56,39 @@ export class UserEditComponent {
     private userSvc: UserService,
     private location: Location
   ) {
-    //this.roles$ = this.rolesSvc.getRoles();
     this.activateRoute.params.subscribe(params => this.getId = params['id']);
+    //List of rols 
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Seleccionar todo',
+      unSelectAllText: 'Deseleccionar todo',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+    this.rol$.subscribe((roles: RolBase[]) => {
+      this.dropdownList = roles;
+    });
 
     this.userSvc.getUser(this.getId as number).subscribe({
       next: res => {
         console.log(res)
         this.userResponse = res;
+        this.rol = String(this.userResponse.userrol[0].rol.name);
         this.updateUserBase.patchValue(this.userResponse);
+        //this.updateUserBase.get('rol_id')?.setValue(this.userResponse.userrol[0].rol_id);
+        this.selectedItems = this.userResponse.userrol.map(rol => ({ id: rol.rol_id,
+                                                                    name: rol.rol.name,
+                                                                    description: rol.rol.description,
+                                                                    scope: rol.rol.scope }));
+        console.log(this.selectedItems);
+        console.log(this.dropdownList);
+        //this.updateUserBase.get('rol_id')?.setValue(this.selectedItems)
        }
     }
+    
+    //this.roles$ = this.rolesSvc.getRoles();
     );
   }
 
@@ -73,7 +102,8 @@ export class UserEditComponent {
     office: [''],
     vinculation_type: ['', [Validators.required]],
     department_id : [NaN, Validators.required],
-    rol_id: [NaN, Validators.required],
+    //rol_id: [NaN, Validators.required],
+    rol_id: [this.selectedItems],
     scale: ['', Validators.required],
   });
 
@@ -82,6 +112,16 @@ export class UserEditComponent {
     return this.updateUserBase.controls;
   }
 
+  //Rol changes are controled here
+  toggleOption(option: any) {
+    if (this.selectedItems.includes(option)) {
+      this.selectedItems = this.selectedItems.filter(item => item !== option);
+    } else {
+      this.selectedItems.push(option);
+    }
+    //option.selected = !option.selected;
+
+  }
   submitUpdate() {
     // verificacion de errores
     if (this.updateUserBase.invalid) {

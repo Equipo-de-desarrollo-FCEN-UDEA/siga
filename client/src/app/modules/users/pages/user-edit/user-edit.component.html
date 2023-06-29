@@ -155,10 +155,10 @@
           class="row regular-row m-2 align-items-baseline"
           *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')"
         >
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Cargo</div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Cargo(s) ocupado(s)</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <select
+              <!-- <select
                 class="form-select form-select-lg"
                 id="rol_id"
                 formControlName="rol_id"
@@ -171,7 +171,17 @@
                 <option [value]="rol.id" *ngFor="let rol of rol$ | async">
                   {{ rol.name | uppercase }}
                 </option>
-              </select>
+              </select> -->
+              <!-- <div *ngFor="let object of userResponse?.userrol">
+                <input type="checkbox"> {{object.rol.name}}
+              </div> -->
+              <ng-multiselect-dropdown
+                formControlName="rol_id"
+                [placeholder]=rol.toUpperCase()
+                [data]="dropdownList"
+                [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings"
+              ></ng-multiselect-dropdown>
             </div>
           </div>
         </div>
