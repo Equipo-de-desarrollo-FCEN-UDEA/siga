@@ -29,6 +29,7 @@ class User(Base):
     hashed_password = Column(String(300), nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    active_rol = Column(Integer, nullable=True)
 
     # relations
     department_id = Column(Integer, ForeignKey("department.id"))
