@@ -61,7 +61,7 @@ export class UserEditComponent {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
-      textField: 'name',
+      textField: 'description',
       selectAllText: 'Seleccionar todo',
       unSelectAllText: 'Deseleccionar todo',
       itemsShowLimit: 5,
@@ -77,18 +77,12 @@ export class UserEditComponent {
         this.userResponse = res;
         this.rol = String(this.userResponse.userrol[0].rol.name);
         this.updateUserBase.patchValue(this.userResponse);
-        //this.updateUserBase.get('rol_id')?.setValue(this.userResponse.userrol[0].rol_id);
         this.selectedItems = this.userResponse.userrol.map(rol => ({ id: rol.rol_id,
                                                                     name: rol.rol.name,
                                                                     description: rol.rol.description,
                                                                     scope: rol.rol.scope }));
-        console.log(this.selectedItems);
-        console.log(this.dropdownList);
-        //this.updateUserBase.get('rol_id')?.setValue(this.selectedItems)
        }
     }
-    
-    //this.roles$ = this.rolesSvc.getRoles();
     );
   }
 
@@ -102,7 +96,6 @@ export class UserEditComponent {
     office: [''],
     vinculation_type: ['', [Validators.required]],
     department_id : [NaN, Validators.required],
-    //rol_id: [NaN, Validators.required],
     rol_id: [this.selectedItems],
     scale: ['', Validators.required],
   });
@@ -112,16 +105,6 @@ export class UserEditComponent {
     return this.updateUserBase.controls;
   }
 
-  //Rol changes are controled here
-  toggleOption(option: any) {
-    if (this.selectedItems.includes(option)) {
-      this.selectedItems = this.selectedItems.filter(item => item !== option);
-    } else {
-      this.selectedItems.push(option);
-    }
-    //option.selected = !option.selected;
-
-  }
   submitUpdate() {
     // verificacion de errores
     if (this.updateUserBase.invalid) {
@@ -130,6 +113,18 @@ export class UserEditComponent {
       return;
     }
     const user = this.updateUserBase.value as UserUpdate;
+    Swal.fire({
+      title: '¿Agregar descripción al (a los) rol(es) escogido(s)?',
+      html: 'Por favor agregue una descripción sugerida para cada rol de los escogido.',
+      icon: 'question',
+      input: 'text',
+      inputPlaceholder: 'Nombre',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3AB795',
+    }).then(()=>{
+      //user.push
+    });
+    return;
     this.userSvc.putUser(user, this.getId as number)
     .subscribe({
       next: (res: any) => {
