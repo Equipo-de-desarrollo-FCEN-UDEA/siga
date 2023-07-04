@@ -19,8 +19,8 @@ export class UserApplicationService {
     return this.http.get<IUserApplication>(this.urlEndPoint + id +'/coordinator')
   }
 
-  getUserApplications(): Observable<IUserApplication[]> {
-    return this.http.get<IUserApplication[]>(this.urlEndPoint)
+  getUserApplications(id: number): Observable<IUserApplication[]> {
+    return this.http.get<IUserApplication[]>(this.urlEndPoint + id) 
   }
 
   putUserApplication(id: number, body: IUserApplication,): Observable<IUserApplication> {
