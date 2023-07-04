@@ -37,22 +37,22 @@
                     <span style="color: red">*</span></span
                   >
                 </div>
-                <ng-container *ngFor="let dependencies of SUBTYPES">
-                  <div class="col-sm-12 col-xs-12 col-md-8">
+                <ng-container *ngFor="let subdeparment of subdeparments">
+                  <div class="col-sm-12 col-xs-12 col-md-12 col-12">
                     <label>
                       <input
                         type="checkbox"
-                        [value]="dependencies.id"
-                        (change)="onCheckboxChange($event, dependencies)"
+                        [value]="subdeparment.id"
+                        (change)="onCheckboxChange($event, subdeparment)"
                       />
-                      {{ dependencies.name }}
+                      {{ subdeparment.name | uppercase }}
                     </label>
                   </div>
                 </ng-container>
               </div>
 
-              <hr class="mt-2" />
-              <div class="row">
+              <!-- <hr class="mt-2" /> -->
+              <!-- <div class="row">
                 <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
                   <span>Grupo de Investigación</span>
                 </div>
@@ -78,7 +78,7 @@
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

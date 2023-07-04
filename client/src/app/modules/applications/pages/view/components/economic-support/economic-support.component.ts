@@ -11,10 +11,7 @@ import {
   IEconomicSupportInDB,
   IEconomicSupportResponse,
 } from '@interfaces/applications/economic_support-interface';
-import {
-  IUserApplication,
-  IUserApplicationCreate,
-} from '@interfaces/user_application_interface';
+import { IUserApplication } from '@interfaces/user_application_interface';
 import { ApplicationStatus } from '@interfaces/application_status';
 import { UserResponse } from '@interfaces/user';
 
@@ -29,6 +26,9 @@ import { ComService } from '../../connection/com.service';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { UserApplicationService } from '@services/user-application.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '@services/user.service';
+import { switchMap } from 'rxjs/operators';
+import { UserPerIdPipe } from './pipes/user-per-id.pipe';
 
 @Component({
   selector: 'app-economic-support',
@@ -37,17 +37,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class EconomicSupportComponent implements OnInit {
   public application_id: number = 0;
-  public user_id: number = 15;
+  public user_id: number = 0;
+  public userRol: string = '';
+
+  public dependecies: any[] = [];
 
   public current_status: string = '';
   public amount_approved: number = 0;
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
-
-  public today = new Date();
-  public end_date = new Date();
-
-  public UserApplication$ = new Observable<IUserApplication[]>();
 
   public economic_support: IEconomicSupportInDB | undefined = undefined;
   public userApplication: IUserApplication | undefined = undefined;
@@ -63,6 +61,9 @@ export class EconomicSupportComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
 
+    //Pipes
+    private userPerId: UserPerIdPipe,
+
     //FORMS
     private fb: FormBuilder,
 
@@ -71,6 +72,7 @@ export class EconomicSupportComponent implements OnInit {
     private userApplicationSvc: UserApplicationService,
     private economicSupportSvc: EconomicSupportService,
     private documentSvc: DocumentService,
+    private userService: UserService,
     private authSvc: AuthService,
     private comSvc: ComService
   ) {
@@ -78,6 +80,42 @@ export class EconomicSupportComponent implements OnInit {
     this.route.parent?.params.subscribe((params) => {
       this.application_id = params['id'];
     });
+
+    const userSvc = this.route.params.pipe(
+      switchMap((params) => {
+        this.user_id = params['id'];
+        return this.userService.getUser(params['id']);
+      })
+    );
+    userSvc.subscribe((user) => {
+      this.user_id = user.id;
+      this.userRol = user.rol.name;
+      if (this.userRol === 'Coordinador') {
+        this.userApplicationSvc
+          .getUserApplication(this.application_id)
+          .subscribe((res) => {
+            this.userApplication = res;
+            //console.log(this.userApplication);
+          });
+      }
+      if (this.userRol === 'Decano' || this.userRol === 'Director') {
+        this.userApplicationSvc
+          .getUserApplications(this.application_id)
+          .subscribe((res) => {
+            this.dependecies = res;
+            //console.log(this.dependecies);
+            this.dependecies.forEach((dependence) => {
+              dependence.transformedUserId = this.userPerId.transform(dependence.user_id).then(
+                (res) => {
+                  dependence.transformedUserId = res;
+                  //console.log(dependence.transformedUserId);
+                }
+              );
+            });
+          });
+      }
+    });
+
   }
 
   public form = this.fb.group({
@@ -85,6 +123,7 @@ export class EconomicSupportComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     this.economicSupportSvc
       .getEconomicSupport(this.application_id)
       .subscribe((app: IEconomicSupportResponse) => {
@@ -101,10 +140,10 @@ export class EconomicSupportComponent implements OnInit {
           application.application_status
         ).status.name;
         this.comSvc.push(this.application);
-        //this.end_date = new Date(economic_support.end_date)
       });
 
     this.applicationStatusSvc;
+
   }
   // -----------------------------------------
   // ------------- OPEN DOCUMENTS ----------
@@ -154,10 +193,10 @@ export class EconomicSupportComponent implements OnInit {
     });
   }
 
+  //FUNCTION TO ACCEPT A DEPENDENCY-APPLICATION NOT THE APPLICATION
   submit() {
-    const FORM = this.userApplicationSvc.putUserApplication(
-      this.application_id,
-      {
+    const FORM = this.userApplicationSvc
+      .putUserApplication(this.application_id, {
         application_id: Number(this.application_id),
         user_id: Number(this.user_id),
         amount: this.form.value.amount_approved!,
@@ -171,14 +210,14 @@ export class EconomicSupportComponent implements OnInit {
             icon: 'success',
             confirmButtonColor: '#3AB795',
           });
-        }
+        },
       });
   }
 
+  //FUNCTION TO DECLINE A DEPENDENCY-APPLICATION NOT THE APPLICATION
   decline() {
-    const FORM = this.userApplicationSvc.putUserApplication(
-      this.application_id,
-      {
+    const FORM = this.userApplicationSvc
+      .putUserApplication(this.application_id, {
         application_id: Number(this.application_id),
         user_id: Number(this.user_id),
         amount: this.form.value.amount_approved!,
@@ -192,7 +231,7 @@ export class EconomicSupportComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-        }
+        },
       });
   }
 }

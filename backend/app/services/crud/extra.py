@@ -32,6 +32,17 @@ class CRUDExtra(CRUDBase[Extra, ExtraCreate, ExtraUpdate, ExtraPolicy]):
                 #filter(Extra.department_id == who.department.id).\
             log.debug(db_objs)
         return db_objs
+    
+    def get_by_department(
+            self,
+            db: Session,
+            who: User,
+            *,
+            department_id: int,
+    ):
+        db_objs = db.query(Extra).filter(Extra.department_id == department_id).all()
+        
+        return db_objs
 
 policy = ExtraPolicy()
 

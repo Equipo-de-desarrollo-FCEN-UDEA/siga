@@ -11,6 +11,8 @@ import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
+import { UserApplicationStatusPipe } from './components/economic-support/pipes/user-application-status.pipe';
+import { UserPerIdPipe } from './components/economic-support/pipes/user-per-id.pipe';
 
 
 @NgModule({
@@ -21,12 +23,17 @@ import { EconomicSupportComponent } from './components/economic-support/economic
     FullTimeComponent,
     HourAvalComponent,
     VacationComponent,
-    EconomicSupportComponent
+    EconomicSupportComponent,
+    UserApplicationStatusPipe,
+    UserPerIdPipe
   ],
   imports: [
     CommonModule,
     ViewRoutingModule,
     SharedModule
+  ],
+  providers: [
+    UserPerIdPipe
   ]
 })
 export class ViewModule { }

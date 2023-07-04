@@ -1,4 +1,5 @@
 export interface IUserApplication {
+  user_id: number;
   amount: number;
   response: number;
 }

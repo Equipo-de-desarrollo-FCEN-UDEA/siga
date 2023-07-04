@@ -115,37 +115,93 @@
     </div>
   </div>
 
-  <div class="row regular-row mt-2" *ngIf="current_status == 'APROBADA'">
+  <div class="row regular-row mt-2" 
+      *ngIf="
+            current_status == 'APROBADA' ||
+            userRol === 'Decano' || 
+            userRol === 'Director'"
+            >
     <div class="col-xs-12 col-sm-6 label text-secondary">Monto Aprobado</div>
     <div class="col-xs-12 col-sm-6">
       ${{ amount_approved }} Pesos Colombianos
     </div>
   </div>
 
-  <ng-container *ngIf="{ isSuperUser: isSuperUser$ | async } as context ">
-    <div *ngIf="context.isSuperUser && current_status != 'APROBADA'">
+  <ng-container *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
+    <div *ngIf="userRol === 'Coordinador'">
+      <div *ngIf="context.isSuperUser && current_status != 'APROBADA'">
+        <hr class="mt-4" />
+        <form [formGroup]="form" (submit)="submit()">
+          <div class="row regular-row mt-4 align-items-baseline">
+            <div
+              class="col-xs-12 col-sm-12 col-md-3 col-lg-2 label text-secondary"
+            >
+              Monto a Aprobar
+            </div>
+            <div class="col-xs-12 col-sm-12 col-xs-12 col-12 col-lg-4">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="amount_approved"
+                placeholder="Ingresa el monto aprobado"
+              />
+            </div>
+            <div
+              class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2"
+            >
+              <button class="btn btn-danger" type="button" (click)="decline()">
+                Rechazar
+              </button>
+            </div>
+            <div
+              class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2"
+            >
+              <button type="submit" class="btn btn-add">Aprobar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <ng-container>
+        <hr class="mt-4" />
+        <table class="table">
+          <tr>
+            <th class="col-xs-12 col-sm-6 label text-secondary">
+              Monto aprobado por su dependencia
+            </th>
+            <th class="col-xs-12 col-sm-6 label text-secondary" scope="col">
+              Estado de la solicitud en su dependencia
+            </th>
+          </tr>
+          <tr>
+            <td scope="row">
+              ${{ userApplication?.amount }} Pesos Colombianos
+            </td>
+            <td>{{ userApplication?.response | userApplicationStatus }}</td>
+          </tr>
+        </table>
+      </ng-container>
+    </div>
+
+    <div *ngIf="userRol === 'Decano' || userRol === 'Director'">
       <hr class="mt-4" />
-      <form [formGroup]="form" (submit)="submit()">
-        <div class="row regular-row mt-4 align-items-baseline">
-          <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 label text-secondary">
-            Monto Aprobado
-          </div>
-          <div class="col-xs-12 col-sm-12 col-xs-12 col-12 col-lg-4">
-            <input  
-              type="number"
-              class="form-control"
-              formControlName="amount_approved"
-              placeholder="Monto Aprobado"
-            />
-          </div>
-          <div class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2">
-            <button class="btn btn-danger" type="button" (click)="decline()">Rechazar</button>
-          </div>
-          <div class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2">
-            <button type="submit" class="btn btn-add">Aprobar</button>
-          </div>
-        </div>
-      </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-xs-12 col-sm-6 label" scope="col">
+              Dependecia<span class="text-secondary">(nombre coordinador)</span>
+            </th>
+            <th class="col-xs-12 col-sm-6 label" scope="col">Monto</th>
+            <th class="col-xs-12 col-sm-6 label" scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dependence of dependecies">
+            <td>{{ dependence.transformedUserId }}</td>
+            <td>${{ dependence.amount }} Pesos Colombianos</td>
+            <td>{{ dependence.response | userApplicationStatus }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </ng-container>
 
