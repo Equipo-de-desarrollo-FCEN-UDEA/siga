@@ -12,7 +12,6 @@ class Application_statusBase(BaseModel):
     observation: Optional[str] = Field(max_length=200)
     amount_approved: Optional[int] = Field(ge=0, le=1000000000)
 
-
 class Application_statusCreate(Application_statusBase):
     pass
 

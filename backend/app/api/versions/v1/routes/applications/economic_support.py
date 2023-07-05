@@ -14,7 +14,7 @@ from app.domain.schemas import (ApplicationCreate,
                                 EconomicSupportUpdate,
                                 EconomicSupportResponse,
                                 ApplicationResponse,
-                                Application_statusCreate)
+                                UserApplicationResponse)
 from app.domain.errors.applications.economic_support import EconomicSupportErrors
 from app.domain.errors import BaseErrors
 
@@ -42,13 +42,12 @@ async def create_economic_support(
             - EconomicSupport
     """
     try:
-        #log.debug(economic_support)
         economic_support_create = None
         # En la BD de mongo
         economic_support_create = await crud.economic_support.create(
-            db = engine,
-            who = current_user,
-            application_sub_type_id= economic_support.application_sub_type_id, 
+            db=engine,
+            who=current_user,
+            application_sub_type_id=economic_support.application_sub_type_id, 
             obj_in=EconomicSupport(**dict(economic_support))
         )
         
@@ -64,12 +63,16 @@ async def create_economic_support(
             who=current_user,
             obj_in=application
         )
-
         mongo_id = ObjectId(application.mongo_id)
     
+        for dependence in economic_support.dependence:
+            user_application = crud.user_application.create(
+                db=db,
+                who=dependence,
+                    obj_in=application
+            )
+            response = UserApplicationResponse.from_orm(user_application)
         application = ApplicationResponse.from_orm(application)
-
-        mongo_id = ObjectId(application.mongo_id)
 
     # 422 (Unprocessable Entity)
     except EconomicSupportErrors as e:

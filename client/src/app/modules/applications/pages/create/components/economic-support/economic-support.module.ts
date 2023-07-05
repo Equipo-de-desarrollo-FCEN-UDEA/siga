@@ -10,7 +10,6 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubtypeComponent } from './pages/subtype/subtype.component';
 
-
 @NgModule({
   declarations: [
     EconomicSupportComponent,
@@ -19,7 +18,7 @@ import { SubtypeComponent } from './pages/subtype/subtype.component';
     TicketsComponent,
     AdvanceComponent,
     DocumentsComponent,
-    SubtypeComponent
+    SubtypeComponent,
   ],
   imports: [
     CommonModule,

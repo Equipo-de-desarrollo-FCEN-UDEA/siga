@@ -78,23 +78,7 @@
     >
       <div
         class="row regular-row mt-4 align-items-baseline"
-        *ngIf="
-          application.application_sub_type.name == 'ApoyoEE Pregrado' ||
-          application.application_sub_type.name == 'ApoyoEE Posgrado' ||
-          application.application_sub_type.name == 'ApoyoEE Grupo de Investigación' ||
-          application.application_sub_type.name == 'ApoyoEE Bienestar de la Facultad'
-        "
-      >
-        <div class="alert alert-warning">
-          <li>
-            En el campo "Monto Aprobado" ingrese el valor en numeros, ejemplo:
-            200000
-          </li>
-          <li>
-            En el campo "Observación" ingrese el valor en letras, ejemplo:
-            Doscientos mil Pesos
-          </li>
-        </div>
+        *ngIf="application.application_sub_type.name == 'Apoyo Económico'">
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
           Monto Aprobado *
         </div>

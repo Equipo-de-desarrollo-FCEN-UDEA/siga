@@ -7,9 +7,11 @@ import { ApplicationStatusCreate } from '@interfaces/application_status';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { ApplicationService } from '@services/application.service';
 import { AuthService } from '@services/auth.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
+import { UserService } from '@services/user.service';
+import { UserBase, UserResponse } from '@interfaces/user';
 
 @Component({
   selector: 'app-view',
@@ -18,8 +20,11 @@ import { ComService } from './connection/com.service';
 })
 export class ViewComponent implements AfterViewChecked {
   public title: string = '';
+  public userRol: string = '';
+  public userId: number = 0;
 
   public application$ = new Observable<Application>();
+  public user$ = new Observable<UserResponse>();
 
   public text$ = new Observable<string>();
 
@@ -35,7 +40,6 @@ export class ViewComponent implements AfterViewChecked {
   public submitted: boolean = false;
   public isDecline: boolean = false;
 
-
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
@@ -44,23 +48,20 @@ export class ViewComponent implements AfterViewChecked {
     private location: Location,
 
     private authSvc: AuthService,
-    private applicationStatusSvc: ApplicationStatusService
+    private applicationStatusSvc: ApplicationStatusService,
   ) {
-
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
-    this.applicationStatusSvc.isApproved(this.id)
-
+    this.applicationStatusSvc.isApproved(this.id);
   }
-
 
   public form = this.fb.group({
     observation: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(300)]],
-    amount_approved: [''],   
+    amount_approved: [0],
   });
 
   cancel() {
@@ -72,9 +73,8 @@ export class ViewComponent implements AfterViewChecked {
   }
 
   isApproved(id: number) {
-    this.applicationStatusSvc.isApproved(id)
+    this.applicationStatusSvc.isApproved(id);
   }
-
 
   // -----------------------------
   // ---- APROVED APPLICATION -----
@@ -130,6 +130,7 @@ export class ViewComponent implements AfterViewChecked {
         });
       });
   }
+
   onActivate(componentRef: any) {
     this.activatedComponentReference = componentRef;
   }
