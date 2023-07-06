@@ -3,6 +3,7 @@ from odmantic import ObjectId
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
 
+from fastapi.responses import StreamingResponse
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
 from app.services import crud, emails, documents
@@ -114,9 +115,8 @@ async def create_economic_support(
             economic_support = economic_support_create
         )
     
-    
     path = documents.fill_economic_support_form(current_user, response)
-    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-económico.docx', path=path)
+    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-economico.docx', path=path)
 
     return response
 
@@ -137,14 +137,13 @@ async def get_economic_support(
 
         if application:
             economic_support = await crud.economic_support.get(engine, id=mongo_id)
-
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
     application_response = ApplicationResponse.from_orm(application)
     response = EconomicSupportResponse(
         **dict(application_response), economic_support=economic_support)
-
+    documents.create_zip_documents(current_user, response)
     return response
 
 
@@ -229,3 +228,29 @@ async def delete_economic_support(
         raise HTTPException(e.code, e.detail)
     
     return Msg(msg="Solicitud eliminada correctamente")
+
+@router.get("/zipfile/{id}")
+async def get_zip_economic_support(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> EconomicSupportResponse:
+
+    try:
+        application = crud.application.get(db, current_user, id=id)
+        mongo_id = ObjectId(application.mongo_id)
+
+        if application:
+            economic_support = await crud.economic_support.get(engine, id=mongo_id)
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+
+    application_response = ApplicationResponse.from_orm(application)
+    response = EconomicSupportResponse(
+        **dict(application_response), economic_support=economic_support)
+    zip_file = documents.create_zip_documents(current_user, response)
+    log.debug(zip_file.getbuffer().nbytes)
+    zip_file.seek(0)
+    return StreamingResponse(content=zip_file, media_type="application/x-zip-compressed")
