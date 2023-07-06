@@ -1,5 +1,7 @@
 import { Application } from "@interfaces/application";
+import { DepartmentBase } from "@interfaces/department";
 import { file_path } from "@interfaces/documents";
+import { UserBase } from "@interfaces/user";
 
 export interface IApplicationData { 
   application_type: string;
@@ -43,11 +45,15 @@ export interface IAdvancePayment {
 export interface IDependence { 
   id: number;
   name: string;
-  subdepartment?: ISubdepartment[];
 }
 
 export interface ISubdepartment { 
   id: number;
+  ccrg_code: string;
+  coordinador_id: number;
+  coordinador: UserBase;
+  deparment_id: number;
+  deparment: DepartmentBase;
   name: string;
 }
 

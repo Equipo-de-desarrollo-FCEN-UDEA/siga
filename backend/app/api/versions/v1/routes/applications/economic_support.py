@@ -63,29 +63,27 @@ async def create_economic_support(
             who=current_user,
             obj_in=application
         )
+<<<<<<< HEAD
 
+=======
+        mongo_id = ObjectId(application.mongo_id)
+    
+>>>>>>> f6ed42ae221c19206b17c45d19f2f4658458d3bd
         for dependence in economic_support.dependence:
-            # if dependence.name == 'Grupo de Investigación':
-            #     for subdepartment in dependence.subdepartment:
-            #         user_application = crud.user_application.create(
-            #                             db=db,
-            #                             who=subdepartment,
-            #                             obj_in=application
-            #                             )
-            #         response = UserApplicationResponse.from_orm(user_application)
-            #else: 
-                user_application = crud.user_application.create(
-                    db=db,
-                    who=dependence,
+            user_application = crud.user_application.create(
+                db=db,
+                who=dependence,
                     obj_in=application
+<<<<<<< HEAD
                 )
                 response = UserApplicationResponse.from_orm(user_application)
         
 
+=======
+            )
+            response = UserApplicationResponse.from_orm(user_application)
+>>>>>>> f6ed42ae221c19206b17c45d19f2f4658458d3bd
         application = ApplicationResponse.from_orm(application)
-
-
-        mongo_id = ObjectId(application.mongo_id)
 
     # 422 (Unprocessable Entity)
     except EconomicSupportErrors as e:

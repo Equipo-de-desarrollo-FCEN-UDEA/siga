@@ -16,7 +16,15 @@ export class UserApplicationService {
   ) { }
 
   getUserApplication(id: number): Observable<IUserApplication> {
-    return this.http.get<IUserApplication>(this.urlEndPoint + id)
+    return this.http.get<IUserApplication>(this.urlEndPoint + id +'/coordinator')
+  }
+
+  getUserApplications(id: number): Observable<IUserApplication[]> {
+    return this.http.get<IUserApplication[]>(this.urlEndPoint + id) 
+  }
+
+  putUserApplication(id: number, body: IUserApplication,): Observable<IUserApplication> {
+    return this.http.put<IUserApplication>(this.urlEndPoint + id, body)
   }
   
 }

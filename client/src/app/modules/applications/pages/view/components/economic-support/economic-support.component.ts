@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 // SweetAlert2
 import Swal from 'sweetalert2';
@@ -10,6 +11,9 @@ import {
   IEconomicSupportInDB,
   IEconomicSupportResponse,
 } from '@interfaces/applications/economic_support-interface';
+import { IUserApplication } from '@interfaces/user_application_interface';
+import { ApplicationStatus } from '@interfaces/application_status';
+import { UserResponse } from '@interfaces/user';
 
 // Utils
 import { lastElement } from '@shared/utils';
@@ -20,8 +24,11 @@ import { EconomicSupportService } from '@services/applications/economic-support.
 import { AuthService } from '@services/auth.service';
 import { ComService } from '../../connection/com.service';
 import { ApplicationStatusService } from '@services/application-status.service';
-import { Observable } from 'rxjs/internal/Observable';
-import { ApplicationStatus } from '@interfaces/application_status';
+import { UserApplicationService } from '@services/user-application.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '@services/user.service';
+import { switchMap } from 'rxjs/operators';
+import { UserPerIdPipe } from './pipes/user-per-id.pipe';
 
 @Component({
   selector: 'app-economic-support',
@@ -29,41 +36,96 @@ import { ApplicationStatus } from '@interfaces/application_status';
   styleUrls: ['./economic-support.component.scss'],
 })
 export class EconomicSupportComponent implements OnInit {
-  public id: number = 0;
+  public application_id: number = 0;
+  public user_id: number = 0;
+  public userRol: string = '';
+
+  public dependecies: any[] = [];
 
   public current_status: string = '';
   public amount_approved: number = 0;
 
-  public today = new Date();
-  public end_date = new Date();
+  public isSuperUser$ = this.authSvc.isSuperUser$;
 
   public economic_support: IEconomicSupportInDB | undefined = undefined;
-  public application: Application | any = undefined;
+  public userApplication: IUserApplication | undefined = undefined;
+
+  public user: UserResponse | undefined = undefined;
+  public application: Application | undefined = undefined;
   public application$ = new Observable<Application>();
 
   @Input() status: ApplicationStatus[] | undefined;
 
   constructor(
     //ROUTERS
-    private route: ActivatedRoute,
     private router: Router,
+    private route: ActivatedRoute,
+
+    //Pipes
+    private userPerId: UserPerIdPipe,
+
+    //FORMS
+    private fb: FormBuilder,
 
     //SERVICES
-    private documentSvc: DocumentService,
+    private applicationStatusSvc: ApplicationStatusService,
+    private userApplicationSvc: UserApplicationService,
     private economicSupportSvc: EconomicSupportService,
+    private documentSvc: DocumentService,
+    private userService: UserService,
     private authSvc: AuthService,
-    private comSvc: ComService,
-    private applicationStatusSvc: ApplicationStatusService
+    private comSvc: ComService
   ) {
     this.authSvc.isSuperUser();
     this.route.parent?.params.subscribe((params) => {
-      this.id = params['id'];
+      this.application_id = params['id'];
     });
+
+    const userSvc = this.route.params.pipe(
+      switchMap((params) => {
+        this.user_id = params['id'];
+        return this.userService.getUser(params['id']);
+      })
+    );
+    userSvc.subscribe((user) => {
+      this.user_id = user.id;
+      this.userRol = user.rol.name;
+      if (this.userRol === 'Coordinador') {
+        this.userApplicationSvc
+          .getUserApplication(this.application_id)
+          .subscribe((res) => {
+            this.userApplication = res;
+            //console.log(this.userApplication);
+          });
+      }
+      if (this.userRol === 'Decano' || this.userRol === 'Director') {
+        this.userApplicationSvc
+          .getUserApplications(this.application_id)
+          .subscribe((res) => {
+            this.dependecies = res;
+            //console.log(this.dependecies);
+            this.dependecies.forEach((dependence) => {
+              dependence.transformedUserId = this.userPerId.transform(dependence.user_id).then(
+                (res) => {
+                  dependence.transformedUserId = res;
+                  //console.log(dependence.transformedUserId);
+                }
+              );
+            });
+          });
+      }
+    });
+
   }
 
+  public form = this.fb.group({
+    amount_approved: [0, [Validators.required]],
+  });
+
   ngOnInit(): void {
+
     this.economicSupportSvc
-      .getEconomicSupport(this.id)
+      .getEconomicSupport(this.application_id)
       .subscribe((app: IEconomicSupportResponse) => {
         const { economic_support, ...application } = app;
         this.economic_support = economic_support;
@@ -78,10 +140,10 @@ export class EconomicSupportComponent implements OnInit {
           application.application_status
         ).status.name;
         this.comSvc.push(this.application);
-        //this.end_date = new Date(economic_support.end_date)
       });
 
-    this.applicationStatusSvc
+    this.applicationStatusSvc;
+
   }
   // -----------------------------------------
   // ------------- OPEN DOCUMENTS ----------
@@ -98,7 +160,6 @@ export class EconomicSupportComponent implements OnInit {
       },
     });
   }
-
 
   // -----------------------------------------
   // ------ DELETE ECONOMIC SUPPORT ----------
@@ -130,5 +191,47 @@ export class EconomicSupportComponent implements OnInit {
         });
       }
     });
+  }
+
+  //FUNCTION TO ACCEPT A DEPENDENCY-APPLICATION NOT THE APPLICATION
+  submit() {
+    const FORM = this.userApplicationSvc
+      .putUserApplication(this.application_id, {
+        application_id: Number(this.application_id),
+        user_id: Number(this.user_id),
+        amount: this.form.value.amount_approved!,
+        response: 1,
+      } as any)
+      .subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Aceptada!',
+            text: '¡La solicitud ha sido aprobada!',
+            icon: 'success',
+            confirmButtonColor: '#3AB795',
+          });
+        },
+      });
+  }
+
+  //FUNCTION TO DECLINE A DEPENDENCY-APPLICATION NOT THE APPLICATION
+  decline() {
+    const FORM = this.userApplicationSvc
+      .putUserApplication(this.application_id, {
+        application_id: Number(this.application_id),
+        user_id: Number(this.user_id),
+        amount: this.form.value.amount_approved!,
+        response: 2,
+      } as any)
+      .subscribe({
+        next: () => {
+          Swal.fire({
+            title: 'Rechazada!',
+            text: 'La solicitud se ha sido rechazada',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+        },
+      });
   }
 }
