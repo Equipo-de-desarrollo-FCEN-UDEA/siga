@@ -44,6 +44,7 @@ export class EconomicSupportComponent implements OnInit {
 
   public current_status: string = '';
   public amount_approved: number = 0;
+  public total_amount: number = 0;
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
@@ -113,6 +114,12 @@ export class EconomicSupportComponent implements OnInit {
               );
             });
           });
+      }
+    });
+
+    this.userApplicationSvc.computeTotalAmount(this.application_id).subscribe({
+      next: (res) => {
+        this.total_amount = res;
       }
     });
 
@@ -194,7 +201,7 @@ export class EconomicSupportComponent implements OnInit {
   }
 
   //FUNCTION TO ACCEPT A DEPENDENCY-APPLICATION NOT THE APPLICATION
-  submit() {
+  approved() {
     const FORM = this.userApplicationSvc
       .putUserApplication(this.application_id, {
         application_id: Number(this.application_id),
@@ -206,7 +213,7 @@ export class EconomicSupportComponent implements OnInit {
         next: () => {
           Swal.fire({
             title: 'Aceptada!',
-            text: '¡La solicitud ha sido aprobada!',
+            text: '¡la solicitud ha sido aprobada por su dependencia!',
             icon: 'success',
             confirmButtonColor: '#3AB795',
           });
@@ -227,7 +234,7 @@ export class EconomicSupportComponent implements OnInit {
         next: () => {
           Swal.fire({
             title: 'Rechazada!',
-            text: 'La solicitud se ha sido rechazada',
+            text: 'La solicitud ha sido rechazada por su dependencia!',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
