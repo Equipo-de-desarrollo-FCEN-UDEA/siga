@@ -177,6 +177,9 @@
                 [placeholder]=rol.toUpperCase()
                 [data]="dropdownList"
                 [(ngModel)]="selectedItems"
+                (onSelect)="onItemSelect($event)"
+                (onDeSelect)="onItemSelect($event)"
+                (onSelectAll)="onItemSelect($event)"
                 [settings]="dropdownSettings"
               ></ng-multiselect-dropdown>
             </div>

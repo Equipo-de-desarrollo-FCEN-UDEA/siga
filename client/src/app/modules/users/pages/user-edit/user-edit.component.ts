@@ -27,7 +27,7 @@ export class UserEditComponent {
 
 
   public id: Number | string = 0;
-
+  public flag_rol: boolean = false;
   public typesId = id_type;
   public vinculation_types = vinculation_type;
   public scale = scale;
@@ -105,6 +105,11 @@ export class UserEditComponent {
     return this.updateUserBase.controls;
   }
 
+  onItemSelect(item:any){
+    this.flag_rol = true;
+
+  }
+
   submitUpdate() {
     // verificacion de errores
     if (this.updateUserBase.invalid) {
@@ -112,19 +117,17 @@ export class UserEditComponent {
       console.log('error form')
       return;
     }
-    const user = this.updateUserBase.value as UserUpdate;
-    Swal.fire({
-      title: '¿Agregar descripción al (a los) rol(es) escogido(s)?',
-      html: 'Por favor agregue una descripción sugerida para cada rol de los escogido.',
-      icon: 'question',
-      input: 'text',
-      inputPlaceholder: 'Nombre',
-      confirmButtonText: 'Aceptar',
-      confirmButtonColor: '#3AB795',
-    }).then(()=>{
-      //user.push
-    });
-    return;
+    //Review number of rols
+    if(this.selectedItems.length==0){
+      Swal.fire({
+        title: 'Debe agregar al menos un cargo',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        return;
+      })
+    }
+    let user = this.updateUserBase.value as UserUpdate;
     this.userSvc.putUser(user, this.getId as number)
     .subscribe({
       next: (res: any) => {
