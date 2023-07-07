@@ -69,7 +69,7 @@ async def create_economic_support(
             user_application = crud.user_application.create(
                 db=db,
                 who=dependence,
-                    obj_in=application
+                obj_in=application
             )
             response = UserApplicationResponse.from_orm(user_application)
         application = ApplicationResponse.from_orm(application)
@@ -223,7 +223,7 @@ async def get_zip_economic_support(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
-) -> EconomicSupportResponse:
+) :
 
     try:
         application = crud.application.get(db, current_user, id=id)
