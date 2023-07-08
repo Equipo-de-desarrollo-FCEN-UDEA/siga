@@ -40,7 +40,7 @@ def get_application_by_coordinator(
 
     if not db_user_application:
         raise HTTPException(
-            status_code=404, detail="No se encontró la solicitud")
+            status_code=404, detail="Esta solicitud no se realizo en su dependencia")
 
     return db_user_application
 
@@ -66,7 +66,7 @@ def get_user_application(
 
     if not db_user_application:
         raise HTTPException(
-            status_code=404, detail="No se encontró la solicitud")
+            status_code=404, detail="Esta solicitud no se realizo en su dependencia")
 
     return db_user_application
 
@@ -96,3 +96,25 @@ async def update_application_by_coordinator(
         raise HTTPException(status_code=e.code, detail=e.detail)
 
     return update_user_application
+
+@router.get("/{id}/total_amount", response_model=int)
+def compute_total_amount(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> int:
+    """
+    Endpoint to read the total amount of a application.
+
+        params: id: int
+    """
+    try:
+        db_user_application = crud.user_application.compute_total_amount(
+            db=db, id=id)
+
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    return db_user_application

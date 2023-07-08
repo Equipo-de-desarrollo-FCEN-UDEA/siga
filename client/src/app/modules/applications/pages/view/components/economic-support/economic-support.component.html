@@ -115,13 +115,25 @@
     </div>
   </div>
 
-  <div class="row regular-row mt-2" 
-      *ngIf="
-            current_status == 'APROBADA' ||
-            userRol === 'Decano' || 
-            userRol === 'Director'"
-            >
-    <div class="col-xs-12 col-sm-6 label text-secondary">Monto Aprobado</div>
+  <div
+    class="row regular-row mt-2"
+    *ngIf="userRol === 'Decano' || userRol === 'Director'"
+  >
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Monto total aprobado por las dependecias
+    </div>
+    <div class="col-xs-12 col-sm-6">${{ total_amount }} Pesos Colombianos</div>
+  </div>
+
+  <div
+    class="row regular-row mt-2"
+    *ngIf="current_status == 'APROBADA' || current_status == 'VISTO BUENO'"
+  >
+    <div class="col-xs-12 col-sm-6 label text-secondary">
+      Monto Aprobado
+      <span *ngIf="current_status == 'VISTO BUENO'">por Director</span>
+      <span *ngIf="current_status == 'APROBADA'">Final</span>
+    </div>
     <div class="col-xs-12 col-sm-6">
       ${{ amount_approved }} Pesos Colombianos
     </div>
@@ -131,7 +143,7 @@
     <div *ngIf="userRol === 'Coordinador'">
       <div *ngIf="context.isSuperUser && current_status != 'APROBADA'">
         <hr class="mt-4" />
-        <form [formGroup]="form" (submit)="submit()">
+        <form [formGroup]="form">
           <div class="row regular-row mt-4 align-items-baseline">
             <div
               class="col-xs-12 col-sm-12 col-md-3 col-lg-2 label text-secondary"
@@ -156,14 +168,14 @@
             <div
               class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2"
             >
-              <button type="submit" class="btn btn-add">Aprobar</button>
+              <button type="button" class="btn btn-add" (click)="approved()">Aprobar</button>
             </div>
           </div>
         </form>
       </div>
       <ng-container>
         <hr class="mt-4" />
-        <table class="table">
+        <table class="table table-striped table-hover table-borderless table-responsive">
           <tr>
             <th class="col-xs-12 col-sm-6 label text-secondary">
               Monto aprobado por su dependencia
@@ -184,7 +196,7 @@
 
     <div *ngIf="userRol === 'Decano' || userRol === 'Director'">
       <hr class="mt-4" />
-      <table class="table">
+      <table class="table table-striped table-borderless table-responsive">
         <thead>
           <tr>
             <th class="col-xs-12 col-sm-6 label" scope="col">

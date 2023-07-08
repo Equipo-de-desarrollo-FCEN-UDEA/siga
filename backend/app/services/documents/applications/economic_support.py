@@ -117,7 +117,8 @@ def create_zip_documents(user: User, economic_support:EconomicSupportResponse):
     destination = temp_dir.name
     binary_files = [os.path.join(destination, re.findall(regex, file)[0]) for file in file_paths]
     for file in file_paths:
-        aws.s3.s3.meta.client.download_file(settings.aws_bucket_name, file, os.path.join(destination, re.findall(regex, file)[0]))
+        pass
+        #aws.s3.s3.meta.client.download_file(settings.aws_bucket_name, file, os.path.join(destination, re.findall(regex, file)[0]))
 
     # log.debug("Está llena la carpeta?")
     # log.debug(os.listdir(temp_dir.name))
@@ -126,6 +127,7 @@ def create_zip_documents(user: User, economic_support:EconomicSupportResponse):
     with ZipFile(zip_buffer,'w', ZIP_DEFLATED) as zip:
         # writing each file one by one
         for file in binary_files:
-            zip.write(file)
+            pass
+            #zip.write(file)
 
     return zip_buffer
