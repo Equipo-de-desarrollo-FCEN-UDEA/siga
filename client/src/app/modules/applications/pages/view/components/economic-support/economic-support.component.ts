@@ -106,12 +106,12 @@ export class EconomicSupportComponent implements OnInit {
             this.dependecies = res;
             //console.log(this.dependecies);
             this.dependecies.forEach((dependence) => {
-              dependence.transformedUserId = this.userPerId.transform(dependence.user_id).then(
-                (res) => {
+              dependence.transformedUserId = this.userPerId
+                .transform(dependence.user_id)
+                .then((res) => {
                   dependence.transformedUserId = res;
                   //console.log(dependence.transformedUserId);
-                }
-              );
+                });
             });
           });
       }
@@ -120,9 +120,8 @@ export class EconomicSupportComponent implements OnInit {
     this.userApplicationSvc.computeTotalAmount(this.application_id).subscribe({
       next: (res) => {
         this.total_amount = res;
-      }
+      },
     });
-
   }
 
   public form = this.fb.group({
@@ -130,7 +129,6 @@ export class EconomicSupportComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
     this.economicSupportSvc
       .getEconomicSupport(this.application_id)
       .subscribe((app: IEconomicSupportResponse) => {
@@ -150,7 +148,6 @@ export class EconomicSupportComponent implements OnInit {
       });
 
     this.applicationStatusSvc;
-
   }
   // -----------------------------------------
   // ------------- OPEN DOCUMENTS ----------
@@ -167,6 +164,8 @@ export class EconomicSupportComponent implements OnInit {
       },
     });
   }
+
+  generateZipFile() { this.economicSupportSvc.downloadZipFile(this.application_id); }
 
   // -----------------------------------------
   // ------ DELETE ECONOMIC SUPPORT ----------

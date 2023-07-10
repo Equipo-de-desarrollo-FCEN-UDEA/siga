@@ -36,4 +36,23 @@ export class EconomicSupportService {
   deleteEconomicSupport(id: number): Observable<Msg> {
     return this.http.delete<Msg>(this.urlEndPoint + id);
   }
+
+  downloadZipFile(id: number): void {
+    const OPTIONS = { responseType: 'blob' as 'json' as 'json' };
+
+    this.http
+      .get<any>(this.urlEndPoint + 'zipfile/' + id, OPTIONS)
+      .subscribe((response) => {
+        const BLOB = new Blob([response], { type: 'application/zip' });
+
+        // Create a virtual link and click it to trigger the download
+        const LINK = document.createElement('a');
+        LINK.href = URL.createObjectURL(BLOB);
+        LINK.download = 'documents.zip';
+        LINK.click();
+
+        // Clean up the URL.createObjectURL() by revoking the object URL
+        URL.revokeObjectURL(LINK.href);
+      });
+  }
 }
