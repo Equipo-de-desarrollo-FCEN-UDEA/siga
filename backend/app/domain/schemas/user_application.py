@@ -1,10 +1,19 @@
-from pydantic import BaseModel, Field
+import json
+from pydantic import BaseModel, validator
+from sqlalchemy import JSON
 
 class UserApplicationBase(BaseModel):
     user_id: int
     application_id: int
     response: int
     amount: int
+    document: list
+
+    @validator("document", pre=True)
+    def parse_document(cls, value):
+        if isinstance(value, str):
+            return json.loads(value)
+        return value
 
 class UserApplicationCreate(UserApplicationBase):
     pass
@@ -23,6 +32,13 @@ class UserApplicationResponse(BaseModel):
     user_id: int
     response: int
     amount: int
+    document: list
+    
+    @validator("document", pre=True)
+    def parse_document(cls, value):
+        if isinstance(value, str):
+            return json.loads(value)
+        return value
 
     class Config:
         orm_mode = True

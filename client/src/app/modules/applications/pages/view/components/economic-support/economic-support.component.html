@@ -159,6 +159,40 @@
               />
             </div>
             <div
+              class="col-xs-12 col-sm-12 col-md-3 col-lg-2 label text-secondary"
+            >
+              Acta
+            </div>
+            <div
+              *ngFor="
+                let producto of document_new;
+                last as isLast;
+                let i = index
+              "
+              class="col-xs-12 col-sm-12 col-xs-12 col-12 col-lg-4"
+            >
+              <div class="document_new">
+                <label class="btn-btn-default cursor is-hoverable">
+                  <div class="fa fa-upload fa-2x"></div>
+                  <input
+                    [id]="i"
+                    class="file-upload"
+                    type="file"
+                    (change)="onUpload($event, i)"
+                  />
+                  <label
+                    [for]="i"
+                    class="is-hoverable cursor link-success"
+                    style="margin-left: 10px"
+                    >{{ files[i] ? files[i].name : "Subir acta" }}</label
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-md-flex justify-content-md-end mt-2">
+            <div
               class="d-grid gap-2 col-sm-12 col-md-2 col-lg-2 col-xl-3 col-lg-3 p-2"
             >
               <button class="btn btn-danger" type="button" (click)="decline()">
@@ -181,18 +215,24 @@
           class="table table-striped table-hover table-borderless table-responsive"
         >
           <tr>
-            <th class="col-xs-12 col-sm-6 label text-secondary">
+            <th class="col-xs-12 col-sm-4 label text-secondary">
               Monto aprobado por su dependencia
             </th>
-            <th class="col-xs-12 col-sm-6 label text-secondary" scope="col">
+            <th class="col-xs-12 col-sm-5 label text-secondary" scope="col">
               Estado de la solicitud en su dependencia
             </th>
+            <!-- <th class="col-xs-12 col-sm-3 label text-secondary" scope="col">
+              Acta
+            </th> -->
           </tr>
           <tr>
             <td scope="row">
               ${{ userApplication?.amount }} Pesos Colombianos
             </td>
             <td>{{ userApplication?.response | userApplicationStatus }}</td>
+            <!-- <td scope="row">
+              {{ userApplication?.document }}
+            </td> -->
           </tr>
         </table>
       </ng-container>
@@ -203,11 +243,12 @@
       <table class="table table-striped table-borderless table-responsive">
         <thead>
           <tr>
-            <th class="col-xs-12 col-sm-6 label" scope="col">
+            <th class="col-xs-12 col-sm-4 label" scope="col">
               Dependecia<span class="text-secondary">(nombre coordinador)</span>
             </th>
-            <th class="col-xs-12 col-sm-6 label" scope="col">Monto</th>
-            <th class="col-xs-12 col-sm-6 label" scope="col">Estado</th>
+            <th class="col-xs-12 col-sm-3 label" scope="col">Monto</th>
+            <th class="col-xs-12 col-sm-2 label" scope="col">Estado</th>
+            <th class="col-xs-12 col-sm-4 label" scope="col">Acta</th>
           </tr>
         </thead>
         <tbody>
@@ -215,6 +256,12 @@
             <td>{{ dependence.transformedUserId }}</td>
             <td>${{ dependence.amount }} Pesos Colombianos</td>
             <td>{{ dependence.response | userApplicationStatus }}</td>
+            <div
+              *ngFor="let act of dependence.document"
+              class="link-success cursor"
+            >
+              <td (click)="openDocument(act.path)">{{ act.name }}</td>
+            </div>
           </tr>
         </tbody>
       </table>
@@ -245,7 +292,7 @@
         type="button"
         (click)="generateZipFile()"
       >
-        Descargar Archivos
+        Descargar Documentos
       </button>
     </div>
   </div>

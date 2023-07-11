@@ -13,6 +13,7 @@ import { VacationComponent } from './components/vacation/vacation.component';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { UserApplicationStatusPipe } from './components/economic-support/pipes/user-application-status.pipe';
 import { UserPerIdPipe } from './components/economic-support/pipes/user-per-id.pipe';
+import { GetDocumentPipe } from './components/economic-support/pipes/get-document.pipe';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { UserPerIdPipe } from './components/economic-support/pipes/user-per-id.p
     VacationComponent,
     EconomicSupportComponent,
     UserApplicationStatusPipe,
-    UserPerIdPipe
+    UserPerIdPipe,
+    GetDocumentPipe
   ],
   imports: [
     CommonModule,

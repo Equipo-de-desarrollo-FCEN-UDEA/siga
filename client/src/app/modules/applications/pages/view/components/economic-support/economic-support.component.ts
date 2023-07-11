@@ -11,7 +11,10 @@ import {
   IEconomicSupportInDB,
   IEconomicSupportResponse,
 } from '@interfaces/applications/economic_support-interface';
-import { IUserApplication } from '@interfaces/user_application_interface';
+import {
+  IUserApplication,
+  IUserApplicationCreate,
+} from '@interfaces/user_application_interface';
 import { ApplicationStatus } from '@interfaces/application_status';
 import { UserResponse } from '@interfaces/user';
 
@@ -29,6 +32,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '@services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { UserPerIdPipe } from './pipes/user-per-id.pipe';
+import { file_path } from '@interfaces/documents';
 
 @Component({
   selector: 'app-economic-support',
@@ -43,6 +47,7 @@ export class EconomicSupportComponent implements OnInit {
   public dependecies: any[] = [];
 
   public current_status: string = '';
+
   public amount_approved: number = 0;
   public total_amount: number = 0;
 
@@ -50,12 +55,19 @@ export class EconomicSupportComponent implements OnInit {
 
   public economic_support: IEconomicSupportInDB | undefined = undefined;
   public userApplication: IUserApplication | undefined = undefined;
-
   public user: UserResponse | undefined = undefined;
   public application: Application | undefined = undefined;
+
   public application$ = new Observable<Application>();
 
   @Input() status: ApplicationStatus[] | undefined;
+
+  public error: string = '';
+
+  // Files
+  public files: any[] = [];
+  public document_new = [1];
+  public documents: file_path[] = [];
 
   constructor(
     //ROUTERS
@@ -104,7 +116,7 @@ export class EconomicSupportComponent implements OnInit {
           .getUserApplications(this.application_id)
           .subscribe((res) => {
             this.dependecies = res;
-            //console.log(this.dependecies);
+            console.log(this.dependecies);
             this.dependecies.forEach((dependence) => {
               dependence.transformedUserId = this.userPerId
                 .transform(dependence.user_id)
@@ -121,11 +133,15 @@ export class EconomicSupportComponent implements OnInit {
       next: (res) => {
         this.total_amount = res;
       },
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 
   public form = this.fb.group({
     amount_approved: [0, [Validators.required]],
+    document: [this.documents],
   });
 
   ngOnInit(): void {
@@ -158,14 +174,50 @@ export class EconomicSupportComponent implements OnInit {
         window.open(window.URL.createObjectURL(res));
       },
       error: (err) => {
-        // if (err.status === 404 || err.status === 401) {
-        //   this.error = err.error.msg;
-        // }
+        if (err.status === 404 || err.status === 401) {
+          this.error = err.error.msg;
+        }
       },
     });
   }
 
-  generateZipFile() { this.economicSupportSvc.downloadZipFile(this.application_id); }
+  generateZipFile() {
+    this.economicSupportSvc.downloadZipFile(this.application_id);
+  }
+
+  // --------------------------------------
+  // -------- ARCHIVOS - ANEXOS -----------
+  // --------------------------------------
+
+  onUpload(event: Event, index: number) {
+    const ELEMENT = event.target as HTMLInputElement;
+    const FILE = ELEMENT.files?.item(0);
+    if (FILE) {
+      this.files.splice(index, 1, FILE);
+    }
+  }
+
+  validSize() {
+    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
+    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
+      (a, b) => a + b,
+      0
+    );
+    return SIZE < 2 * 1024 * 1024;
+  }
+
+  validFileType() {
+    const validExtensions = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
+    let flag = true;
+    this.files.forEach((file) => {
+      const fileExtension = file?.name.split('.').pop()?.toLowerCase();
+      if (!validExtensions.includes(fileExtension)) {
+        flag = false;
+      }
+    });
+
+    return flag;
+  }
 
   // -----------------------------------------
   // ------ DELETE ECONOMIC SUPPORT ----------
@@ -201,18 +253,33 @@ export class EconomicSupportComponent implements OnInit {
 
   //FUNCTION TO ACCEPT A DEPENDENCY-APPLICATION NOT THE APPLICATION
   approved() {
-    const FORM = this.userApplicationSvc
-      .putUserApplication(this.application_id, {
-        application_id: Number(this.application_id),
-        user_id: Number(this.user_id),
-        amount: this.form.value.amount_approved!,
-        response: 1,
-      } as any)
+    this.documentSvc
+      .postDocument(this.files as File[])
+      .pipe(
+        switchMap((data) => {
+          this.form.patchValue({
+            document: data.files_paths,
+          });
+
+          let user_application_form = {
+            application_id: Number(this.application_id),
+            user_id: Number(this.user_id),
+            amount: this.form.value.amount_approved!,
+            response: 1,
+            document: this.form.value.document!,
+          } as IUserApplicationCreate;
+
+          return this.userApplicationSvc.putUserApplication(
+            this.application_id,
+            user_application_form
+          );
+        })
+      )
       .subscribe({
         next: () => {
           Swal.fire({
             title: 'Aceptada!',
-            text: '¡la solicitud ha sido aprobada por su dependencia!',
+            text: '¡La solicitud ha sido aprobada por su dependencia!',
             icon: 'success',
             confirmButtonColor: '#3AB795',
           });
@@ -228,7 +295,8 @@ export class EconomicSupportComponent implements OnInit {
         user_id: Number(this.user_id),
         amount: this.form.value.amount_approved!,
         response: 2,
-      } as any)
+        document: (this.form.value.document! = []),
+      } as IUserApplication)
       .subscribe({
         next: () => {
           Swal.fire({
