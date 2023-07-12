@@ -1,5 +1,5 @@
 
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, Integer, ForeignKey, JSON
 from sqlalchemy.orm import relationship
 
 from typing import TYPE_CHECKING
@@ -17,6 +17,7 @@ class UserApplication(Base):
     id = Column(Integer, primary_key=True)
     amount = Column(Integer, nullable=True)
     response = Column(Integer, nullable=True)
+    document = Column(JSON, nullable=True)
 
     application_id = Column(Integer, ForeignKey("application.id"))
     application = relationship("Application", back_populates="user_application")

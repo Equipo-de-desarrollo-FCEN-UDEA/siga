@@ -30,7 +30,8 @@ class CRUDUserApplication(CRUDBase[UserApplication, UserApplicationCreate, UserA
             user_id=who.id,
             application_id=obj_in.id,
             response=0, # 0 = pendiente, 1 = aceptado, 2 = rechazado
-            amount=0 # inicialmente el monto asignado es 0
+            amount=0, # inicialmente el monto asignado es 0
+            document=[''] # inicialmente no se sube ningún documento
         )
         db_obj = UserApplication(**dict(data))
         db.add(db_obj)
