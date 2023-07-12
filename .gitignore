@@ -6,8 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
-# Markdown extensions for notes
-*.md
+# text extensions for notes
+nombres_archivos.txt
+newUsers.txt
+
 
 # Distribution / packaging
 .Python
