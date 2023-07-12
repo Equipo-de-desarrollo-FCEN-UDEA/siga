@@ -221,18 +221,23 @@
             <th class="col-xs-12 col-sm-5 label text-secondary" scope="col">
               Estado de la solicitud en su dependencia
             </th>
-            <!-- <th class="col-xs-12 col-sm-3 label text-secondary" scope="col">
+            <th class="col-xs-12 col-sm-3 label text-secondary" scope="col">
               Acta
-            </th> -->
+            </th>
           </tr>
           <tr>
             <td scope="row">
               ${{ userApplication?.amount }} Pesos Colombianos
             </td>
             <td>{{ userApplication?.response | userApplicationStatus }}</td>
-            <!-- <td scope="row">
-              {{ userApplication?.document }}
-            </td> -->
+            <td
+              scope="row"
+              class="link-success cursor"
+              *ngFor="let act of userApplication?.document"
+              (click)="openDocument(act.path)"
+            >
+              {{ act.name }}
+            </td>
           </tr>
         </table>
       </ng-container>

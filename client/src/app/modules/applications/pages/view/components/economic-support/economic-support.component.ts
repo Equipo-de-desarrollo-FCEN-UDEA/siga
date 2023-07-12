@@ -108,7 +108,7 @@ export class EconomicSupportComponent implements OnInit {
           .getUserApplication(this.application_id)
           .subscribe((res) => {
             this.userApplication = res;
-            //console.log(this.userApplication);
+            console.log(this.userApplication);
           });
       }
       if (this.userRol === 'Decano' || this.userRol === 'Director') {
@@ -116,13 +116,11 @@ export class EconomicSupportComponent implements OnInit {
           .getUserApplications(this.application_id)
           .subscribe((res) => {
             this.dependecies = res;
-            console.log(this.dependecies);
             this.dependecies.forEach((dependence) => {
               dependence.transformedUserId = this.userPerId
                 .transform(dependence.user_id)
                 .then((res) => {
                   dependence.transformedUserId = res;
-                  //console.log(dependence.transformedUserId);
                 });
             });
           });
