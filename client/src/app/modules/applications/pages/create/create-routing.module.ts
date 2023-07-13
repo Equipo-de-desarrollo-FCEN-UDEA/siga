@@ -81,7 +81,7 @@ const routes: Routes = [
       },
       //APOYO ECONOMICO
       {
-        path: 'apoyo-economico',
+        path: 'apoyo economico',
         component: EconomicSupportComponent,
         data:{
           title: 'Apoyo Económico'

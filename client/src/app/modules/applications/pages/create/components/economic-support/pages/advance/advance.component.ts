@@ -105,6 +105,10 @@ export class AdvanceComponent {
       this.toDate = null;
       this.fromDate = date;
     }
+    this.form.patchValue({
+      start_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
+      end_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+    });
   }
 
   isHovered(date: NgbDate) {

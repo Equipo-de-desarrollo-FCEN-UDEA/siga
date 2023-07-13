@@ -68,7 +68,7 @@ def fill_economic_support_form(user: User, economic_support:EconomicSupportRespo
             'bank':economic_support_dict['economic_support']['payment']['bank'],
             'value':economic_support_dict['economic_support']['payment']['value'],
             'account_number':economic_support_dict['economic_support']['payment']['account_number'],
-            'account_type':economic_support_dict['economic_support']['payment']['name'],#corriente
+            'account_type':economic_support_dict['economic_support']['payment']['account_type'],#corriente
             'start_date':economic_support_dict['economic_support']['payment']['start_date'].strftime("%d-%b-%Y"),
             'end_date':economic_support_dict['economic_support']['payment']['end_date'].strftime("%d-%b-%Y")
         }

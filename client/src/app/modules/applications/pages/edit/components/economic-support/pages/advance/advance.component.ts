@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ACCOUNT_TYPE } from '@modules/applications/pages/create/components/economic-support/data/economic-support';
@@ -10,7 +10,7 @@ import { EconomicSupportService } from '@services/applications/economic-support.
   templateUrl: './advance.component.html',
   styleUrls: ['./advance.component.scss']
 })
-export class AdvanceComponent implements OnInit {
+export class AdvanceComponent {
 
   // Dates
   public fromDate: NgbDate | null = null;
@@ -53,9 +53,7 @@ export class AdvanceComponent implements OnInit {
 
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
@@ -73,6 +71,7 @@ export class AdvanceComponent implements OnInit {
       });
     });
   }
+
   
 
   send() { this.sendForm.emit(this.form.value); }
@@ -108,6 +107,10 @@ export class AdvanceComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
+    this.form.patchValue({
+      start_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
+      end_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+    });
   }
 
   isHovered(date: NgbDate) {
