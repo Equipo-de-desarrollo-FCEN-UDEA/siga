@@ -157,6 +157,7 @@ async def update_economic_support(
     """
 
     try:
+        
         application: Application = crud.application.get(
             db=db, id=id, who=current_user)
         
@@ -182,6 +183,15 @@ async def update_economic_support(
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
+    
+        
+    response = EconomicSupportResponse (
+            **dict(application),
+            economic_support = update_economic_support
+        )
+    
+    path = documents.fill_economic_support_form(current_user, response)
+    await crud.economic_support.create_format(engine, id=mongo_id, name='formato-apoyo-economico.docx', path=path)
 
     return update_economic_support
 

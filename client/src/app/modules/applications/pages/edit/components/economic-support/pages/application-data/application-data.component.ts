@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ECONOMIC_SUPPORT_TYPE } from '@modules/applications/pages/create/components/economic-support/data/economic-support';
@@ -9,7 +9,7 @@ import { EconomicSupportService } from '@services/applications/economic-support.
   templateUrl: './application-data.component.html',
   styleUrls: ['./application-data.component.scss'],
 })
-export class ApplicationDataComponent implements OnInit {
+export class ApplicationDataComponent {
   get f() {
     return this.form.controls;
   }
@@ -31,9 +31,7 @@ export class ApplicationDataComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private economicSupportSvc: EconomicSupportService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
@@ -46,6 +44,7 @@ export class ApplicationDataComponent implements OnInit {
       });
     });
   }
+
 
   send() {
     this.sendForm.emit(this.form.value);
