@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserResponse } from '@interfaces/user';
 import { UserService } from '@services/user.service';
+import { UserRolService } from '@services/userrol.service';
 import { switchMap} from 'rxjs';
 
 
@@ -14,14 +15,13 @@ import { switchMap} from 'rxjs';
 
 
 export class RolSelectionComponent {
-  //public rol : string = localStorage.getItem('rol') || '';
   public user: UserResponse | undefined;
   public userResponse!: UserResponse;
   public id: number | string = 0;
   public selectedRol: string | undefined;
   
   constructor(
-    private userService: UserService,
+    private userRolService: UserRolService,
     private activateRoute: ActivatedRoute,
     private location: Location
 
@@ -30,20 +30,20 @@ export class RolSelectionComponent {
       switchMap(
         params => {
           this.id = params['id']
-          return this.userService.getUser(params['id'])
+          return this.userRolService.getUserRoles(params['id'])
         }
       )
     );
-    userSvc.subscribe(
-      (user) => {
-        console.log(user)
-        this.user = user
       }
-    );
-  }
 
-
-  cancel() {
-    this.location.back();
+  selectRole(role: string) {
+    // Aquí puedes realizar las acciones correspondientes cuando se selecciona un rol,
+    // como almacenar la selección en el almacenamiento local o enviarla al servidor.
+    console.log('Rol seleccionado:', role);
+    // Redirigir al usuario a la siguiente página, por ejemplo:
+    // this.router.navigate(['/dashboard']);
   }
+  
 }
+
+

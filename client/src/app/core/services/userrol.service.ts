@@ -11,7 +11,7 @@ import { Msg } from '@interfaces/msg';
 @Injectable({
   providedIn: 'root'
 })
-export class UserrolService {
+export class UserRolService {
   
   urlEndpoint: string = environment.route + 'userrol/rolbyiduser'
 
