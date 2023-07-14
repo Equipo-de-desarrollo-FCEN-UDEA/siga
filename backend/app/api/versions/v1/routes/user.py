@@ -123,6 +123,8 @@ def update_user(
         user = crud.user.get(db=db, id=id, who=current_user)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    #Insert here code for userrol delete and create
 
     return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
 

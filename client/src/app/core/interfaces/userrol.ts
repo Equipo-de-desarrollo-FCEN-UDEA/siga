@@ -3,6 +3,7 @@ import { RolResponse } from "./rol";
 export interface UserRolBase {
     rol_id: number;
     user_id: number;
+    description: string;
 }
 
 
