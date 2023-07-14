@@ -6,10 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# text extensions for notes
-nombres_archivos.txt
-newUsers.txt
-
 
 # Distribution / packaging
 .Python
