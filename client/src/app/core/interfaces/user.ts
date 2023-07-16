@@ -13,6 +13,7 @@ export interface UserBase {
     office?: string;
     vinculation_type: string;
     department_id: number;
+    changes_rol: boolean;
 }
 
 

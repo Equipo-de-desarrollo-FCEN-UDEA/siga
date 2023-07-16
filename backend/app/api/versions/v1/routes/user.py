@@ -112,6 +112,7 @@ def update_user(
     id: int,
     user_in: Union[schemas.UserUpdate, Dict[str, Any]],
     *,
+    changes_rol: bool,
     db: Session = Depends(db.get_db),
     current_user: schemas.UserInDB = Depends(
         jwt_bearer.get_current_active_user),
@@ -125,7 +126,13 @@ def update_user(
         raise HTTPException(status_code=e.code, detail=e.detail)
     
     #Insert here code for userrol delete and create
-
+    if (changes_rol):
+        print(user_in)
+        # try:
+        #     deleterol = crud.userrol.delete(db=db, who=current_user,id=id)
+        # except BaseErrors as e:
+        #     raise HTTPException(status_code=e.code, detail=e.detail)
+        
     return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
 
 

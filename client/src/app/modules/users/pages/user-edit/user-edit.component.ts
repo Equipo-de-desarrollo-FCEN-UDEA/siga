@@ -98,6 +98,7 @@ export class UserEditComponent {
     department_id : [NaN, Validators.required],
     rol_id: [this.selectedItems],
     scale: ['', Validators.required],
+    changes_rol: this.flag_rol
   });
 
 
@@ -128,7 +129,7 @@ export class UserEditComponent {
       })
     }
     let user = this.updateUserBase.value as UserUpdate;
-    this.userSvc.putUser(user, this.getId as number)
+    this.userSvc.putUser(user, this.getId as number, this.flag_rol)
     .subscribe({
       next: (res: any) => {
         Swal.fire({
