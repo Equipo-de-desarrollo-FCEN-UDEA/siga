@@ -128,7 +128,7 @@ export class EconomicSupportComponent implements OnInit {
     let economicSupportForm: Observable<IEconomicSupportResponse>;
 
     // Validar que se hayan llenado todos los campos
-    const IS_INVALID_DOCUMENT = DOCUMENTS.length < 6;
+    const IS_INVALID_DOCUMENT = DOCUMENTS.length < 7;
     const IS_INVALID_DEPENDENCE = DEPENDENCIES.length === 0;
 
     if (IS_INVALID_DEPENDENCE) {

@@ -76,17 +76,6 @@ class CRUDUserApplication(CRUDBase[UserApplication, UserApplicationCreate, UserA
         db.refresh(db_obj)
         return db_obj
        
-    def compute_total_amount(
-        self,
-        db: Session,
-        *,
-        id: int,
-    )-> int:
-        db_obj = db.query(UserApplication).filter(UserApplication.application_id == id).all()
-        total_amount = 0
-        for item in db_obj:
-            total_amount += item.amount
-        return total_amount
     
 policy = UserApplicationPolicy()
 user_application = CRUDUserApplication(UserApplication, policy=UserApplicationPolicy())

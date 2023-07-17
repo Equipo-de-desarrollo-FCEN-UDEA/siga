@@ -94,46 +94,40 @@ export class EconomicSupportComponent implements OnInit {
       this.application_id = params['id'];
     });
 
-    const userSvc = this.route.params.pipe(
+    const USER_SVC = this.route.params.pipe(
       switchMap((params) => {
         this.user_id = params['id'];
         return this.userService.getUser(params['id']);
       })
     );
-    userSvc.subscribe((user) => {
+    USER_SVC.subscribe((user) => {
       this.user_id = user.id;
       this.userRol = user.rol.name;
-      if (this.userRol === 'Coordinador') {
-        this.userApplicationSvc
-          .getUserApplication(this.application_id)
-          .subscribe((res) => {
-            this.userApplication = res;
-            console.log(this.userApplication);
-          });
-      }
-      if (this.userRol === 'Decano' || this.userRol === 'Director') {
-        this.userApplicationSvc
-          .getUserApplications(this.application_id)
-          .subscribe((res) => {
-            this.dependecies = res;
-            this.dependecies.forEach((dependence) => {
-              dependence.transformedUserId = this.userPerId
-                .transform(dependence.user_id)
-                .then((res) => {
-                  dependence.transformedUserId = res;
-                });
+      if (this.isSuperUser$) {
+        if (this.userRol === 'Coordinador') {
+          this.userApplicationSvc
+            .getUserApplication(this.application_id)
+            .subscribe((res) => {
+              this.userApplication = res;
+              //console.log(this.userApplication);
             });
-          });
+        }
+        if (this.userRol === 'Decano' || this.userRol === 'Director') {
+          this.userApplicationSvc
+            .getUserApplications(this.application_id)
+            .subscribe((res) => {
+              this.dependecies = res;
+              this.dependecies.forEach((dependence) => {
+                dependence.transformedUserId = this.userPerId
+                  .transform(dependence.user_id)
+                  .then((res) => {
+                    dependence.transformedUserId = res;
+                  });
+                this.total_amount += dependence.amount;
+              });
+            });
+        }
       }
-    });
-
-    this.userApplicationSvc.computeTotalAmount(this.application_id).subscribe({
-      next: (res) => {
-        this.total_amount = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
     });
   }
 

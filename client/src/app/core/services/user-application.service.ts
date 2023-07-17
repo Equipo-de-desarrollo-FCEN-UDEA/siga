@@ -27,7 +27,4 @@ export class UserApplicationService {
     return this.http.put<IUserApplication>(this.urlEndPoint + id, body)
   }
   
-  computeTotalAmount(id: number): Observable<number> {
-    return this.http.get<number>(this.urlEndPoint + id + '/total_amount')
-  }
 }
