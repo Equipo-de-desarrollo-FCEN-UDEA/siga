@@ -56,6 +56,7 @@ export class ViewComponent implements AfterViewChecked {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
+
     this.applicationStatusSvc.isApproved(this.id);
   }
 

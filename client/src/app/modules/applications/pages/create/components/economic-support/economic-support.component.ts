@@ -112,7 +112,7 @@ export class EconomicSupportComponent {
     let economicSupportForm: Observable<IEconomicSupportResponse>;
 
     // Validar que se hayan llenado todos los campos
-    const IS_INVALID_DOCUMENT = DOCUMENTS.length < 6;
+    const IS_INVALID_DOCUMENT = DOCUMENTS.length < 7;
     const IS_INVALID_DEPENDENCE = DEPENDENCIES.length === 0;
 
     if (IS_INVALID_DEPENDENCE) {
@@ -163,7 +163,7 @@ export class EconomicSupportComponent {
           confirmButtonColor: '#3AB795',
         });
         this.router.navigateByUrl(
-          `/solicitudes/ver/${data.id}/apoyo-economico`
+          `/solicitudes/ver/${data.id}/apoyo economico`
         );
       },
     });
