@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       // this.router.navigate(['/role-selection']);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/users/page/rol-selection']);
     }
   }
 
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;  
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/users/page/rol-selection']);
       },
       error: (err) => {
         this.activation = true;
