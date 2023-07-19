@@ -10,8 +10,7 @@ export class UserPerIdPipe implements PipeTransform {
   constructor( private userService: UserService ) { }
 
   async transform(value: number): Promise<string> {
-    const res: any = await firstValueFrom(this.userService.getUser(value));
-    console.log(res);
-    return res.names + ' ' + res.last_names;
+    const RES: any = await firstValueFrom(this.userService.getUser(value));
+    return RES.names + ' ' + RES.last_names;
   }
 }

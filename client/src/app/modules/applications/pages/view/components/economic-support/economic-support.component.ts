@@ -33,6 +33,7 @@ import { UserService } from '@services/user.service';
 import { switchMap } from 'rxjs/operators';
 import { UserPerIdPipe } from './pipes/user-per-id.pipe';
 import { file_path } from '@interfaces/documents';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-economic-support',
@@ -45,11 +46,15 @@ export class EconomicSupportComponent implements OnInit {
   public userRol: string = '';
 
   public dependecies: any[] = [];
+  public applicationStatus: ApplicationStatus[] = [];
 
   public current_status: string = '';
 
+  public amountApprovedResearchGroup: number = 0;
+  public amountApprovedUndergraduate: any = 0;
+  public amountApprovedWelfare: number = 0;
   public amount_approved: number = 0;
-  public total_amount: number = 0;
+  public totalAmount: number = 0;
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
 
@@ -103,36 +108,64 @@ export class EconomicSupportComponent implements OnInit {
     USER_SVC.subscribe((user) => {
       this.user_id = user.id;
       this.userRol = user.rol.name;
-      if (this.isSuperUser$) {
-        if (this.userRol === 'Coordinador') {
-          this.userApplicationSvc
-            .getUserApplication(this.application_id)
-            .subscribe((res) => {
-              this.userApplication = res;
-              //console.log(this.userApplication);
+      if (this.isSuperUser$ && this.userRol === 'Coordinador') {
+        this.userApplicationSvc
+          .getUserApplication(this.application_id)
+          .subscribe((res) => {
+            this.userApplication = res;
+            return;
+          });
+      } else if (this.isSuperUser$ && (this.userRol === 'Decano' || this.userRol === 'Director')) {
+        this.userApplicationSvc.getUserApplications(this.application_id).subscribe((res) => {
+          this.dependecies = res;
+      
+          // Create an array to store all the promises for the userPerId transformations
+          const transformationPromises = this.dependecies.map((dependence) => {
+            return this.userPerId.transform(dependence.user_id);
+          });
+      
+          // Use Promise.all() to wait for all promises to resolve
+          Promise.all(transformationPromises).then((transformedUserIds) => {
+            transformedUserIds.forEach((transformedUserId, index) => {
+              this.dependecies[index].transformedUserId = transformedUserId;
+              const DEPENDENCE = this.dependecies[index];
+      
+              if (
+                DEPENDENCE.transformedUserId.includes('COORDINADOR P') &&
+                this.current_status === 'SOLICITADA'
+              ) {
+                this.amountApprovedUndergraduate += DEPENDENCE.amount;
+              } else if (
+                this.current_status !== 'SOLICITADA' &&
+                DEPENDENCE.transformedUserId.includes('COORDINADOR P')
+              ) {
+                this.amountApprovedUndergraduate = this.applicationStatus[1].amount_approved;
+              } else if (DEPENDENCE.transformedUserId.includes('BIENESTAR')) {
+                this.amountApprovedWelfare += DEPENDENCE.amount;
+              } else {
+                this.amountApprovedResearchGroup += DEPENDENCE.amount;
+              }
             });
-        }
-        if (this.userRol === 'Decano' || this.userRol === 'Director') {
-          this.userApplicationSvc
-            .getUserApplications(this.application_id)
-            .subscribe((res) => {
-              this.dependecies = res;
-              this.dependecies.forEach((dependence) => {
-                dependence.transformedUserId = this.userPerId
-                  .transform(dependence.user_id)
-                  .then((res) => {
-                    dependence.transformedUserId = res;
-                  });
-                this.total_amount += dependence.amount;
-              });
-            });
-        }
+      
+            this.totalAmount =
+              this.amountApprovedResearchGroup +
+              this.amountApprovedUndergraduate +
+              this.amountApprovedWelfare;
+          });
+        });
       }
+      
+      this.applicationStatusSvc
+        .getApplicationStatus(this.application_id)
+        .subscribe((res) => {
+          this.applicationStatus = res;
+        });
+      return;
     });
   }
 
   public form = this.fb.group({
-    amount_approved: [0, [Validators.required]],
+    amount_approved: [0],
     document: [this.documents],
   });
 
@@ -177,6 +210,15 @@ export class EconomicSupportComponent implements OnInit {
     this.economicSupportSvc.downloadZipFile(this.application_id);
   }
 
+  public hasCoordinator(): any {
+    return (
+      (this.current_status === 'APROBADA' ||
+        this.current_status === 'VISTO BUENO') &&
+      this.economic_support?.dependence?.some(
+        (dep) => dep.name.includes('Pregrado') || dep.name.includes('Posgrado')
+      )
+    );
+  }
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------
@@ -253,7 +295,7 @@ export class EconomicSupportComponent implements OnInit {
             document: data.files_paths,
           });
 
-          let user_application_form = {
+          let userApplicationForm = {
             application_id: Number(this.application_id),
             user_id: Number(this.user_id),
             amount: this.form.value.amount_approved!,
@@ -263,7 +305,7 @@ export class EconomicSupportComponent implements OnInit {
 
           return this.userApplicationSvc.putUserApplication(
             this.application_id,
-            user_application_form
+            userApplicationForm
           );
         })
       )
@@ -285,7 +327,7 @@ export class EconomicSupportComponent implements OnInit {
       .putUserApplication(this.application_id, {
         application_id: Number(this.application_id),
         user_id: Number(this.user_id),
-        amount: this.form.value.amount_approved!,
+        amount: (this.form.value.amount_approved! = 0),
         response: 2,
         document: (this.form.value.document! = []),
       } as IUserApplication)

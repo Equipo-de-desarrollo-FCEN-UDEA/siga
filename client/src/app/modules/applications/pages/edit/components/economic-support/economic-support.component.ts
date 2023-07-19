@@ -190,7 +190,7 @@ export class EconomicSupportComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         });
         this.router.navigateByUrl(
-          `/solicitudes/ver/${this.id}/apoyo economico`
+          `/solicitudes/ver/${this.id}/apoyo-economico`
         );
       },
       error: (err) => {

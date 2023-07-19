@@ -69,7 +69,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
-                status="VISTO BUENO", scope=[6, 7]),
+                status="VISTO BUENO", scope=[5, 6, 7]),
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],

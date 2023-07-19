@@ -5,6 +5,7 @@ export interface ApplicationStatus{
     created_at: Date;
     status: Status;
     amount_approved?: number;
+    document?: any[];
 }
 
 export interface ApplicationStatusCreate {
@@ -12,4 +13,5 @@ export interface ApplicationStatusCreate {
     status_id: number;
     observation: string;
     amount_approved?: number;
+    documents?: any[];
 }
