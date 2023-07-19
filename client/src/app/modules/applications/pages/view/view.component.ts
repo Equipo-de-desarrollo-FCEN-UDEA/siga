@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
 import { UserService } from '@services/user.service';
 import { UserBase, UserResponse } from '@interfaces/user';
+import { file_path } from '@interfaces/documents';
+import { DocumentService } from '@services/document.service';
 
 @Component({
   selector: 'app-view',
@@ -20,8 +22,6 @@ import { UserBase, UserResponse } from '@interfaces/user';
 })
 export class ViewComponent implements AfterViewChecked {
   public title: string = '';
-  public userRol: string = '';
-  public userId: number = 0;
 
   public application$ = new Observable<Application>();
   public user$ = new Observable<UserResponse>();
@@ -40,6 +40,11 @@ export class ViewComponent implements AfterViewChecked {
   public submitted: boolean = false;
   public isDecline: boolean = false;
 
+  // Files
+  public files: any[] = [];
+  public document_new = [1];
+  public documents: file_path[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
@@ -48,14 +53,16 @@ export class ViewComponent implements AfterViewChecked {
     private location: Location,
 
     private authSvc: AuthService,
-    private applicationStatusSvc: ApplicationStatusService,
+    private userSvc: UserService,
+    private documentSvc: DocumentService,
+    private applicationStatusSvc: ApplicationStatusService
   ) {
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-    });
+    }); 
 
     this.applicationStatusSvc.isApproved(this.id);
   }
@@ -63,6 +70,7 @@ export class ViewComponent implements AfterViewChecked {
   public form = this.fb.group({
     observation: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(300)]],
     amount_approved: [0],
+    document: [this.documents],
   });
 
   cancel() {
@@ -83,31 +91,66 @@ export class ViewComponent implements AfterViewChecked {
   submit() {
     this.submitted = true;
     const childRouteComp = this.activatedComponentReference;
-
-    const method = this.applicationStatusSvc.postApplicationStatus({
-      application_id: this.id,
-      observation: this.form.value.observation!,
-      amount_approved: this.form.value.amount_approved!,
-      status_id: 1,
-    } as ApplicationStatusCreate);
-    console.log(this.form.value);
-    let receive = () => {
-      try {
-        childRouteComp.submit().subscribe();
-      } catch {}
-      Swal.fire({
-        title: 'Se cambió el estado correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.location.back();
-        }
+  
+    if (this.files.length > 0) {
+      this.documentSvc.postDocument(this.files as File[]).pipe(
+        switchMap((data) => {
+          this.form.patchValue({
+            document: data.files_paths,
+          });
+  
+          return this.applicationStatusSvc.postApplicationStatus({
+            application_id: this.id,
+            observation: this.form.value.observation!,
+            amount_approved: this.form.value.amount_approved!,
+            document: this.form.value.document!,
+            status_id: 1,
+          } as ApplicationStatusCreate);
+        })
+      )
+      .subscribe(() => {
+        try {
+          childRouteComp.submit().subscribe();
+        } catch {}
+  
+        Swal.fire({
+          title: 'Se cambió el estado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.location.back();
+          }
+        });
       });
-    };
-
-    method.subscribe(receive);
+    } else {
+      // Handle the case when there are no files to upload
+      this.applicationStatusSvc.postApplicationStatus({
+        application_id: this.id,
+        observation: this.form.value.observation!,
+        amount_approved: this.form.value.amount_approved!,
+        document: this.form.value.document!,
+        status_id: 1,
+      } as ApplicationStatusCreate)
+      .subscribe(() => {
+        try {
+          childRouteComp.submit().subscribe();
+        } catch {}
+  
+        Swal.fire({
+          title: 'Se cambió el estado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.location.back();
+          }
+        });
+      });
+    }
   }
+  
+
 
   // -----------------------------
   // ---- DECLINE APPLICATION -----
@@ -136,6 +179,39 @@ export class ViewComponent implements AfterViewChecked {
     this.activatedComponentReference = componentRef;
   }
 
+  // --------------------------------------
+  // -------- ARCHIVOS - ANEXOS -----------
+  // --------------------------------------
+
+  onUpload(event: Event, index: number) {
+    const ELEMENT = event.target as HTMLInputElement;
+    const FILE = ELEMENT.files?.item(0);
+    if (FILE) {
+      this.files.splice(index, 1, FILE);
+    }
+  }
+
+  validSize() {
+    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
+    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
+      (a, b) => a + b,
+      0
+    );
+    return SIZE < 2 * 1024 * 1024;
+  }
+
+  validFileType() {
+    const validExtensions = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
+    let flag = true;
+    this.files.forEach((file) => {
+      const fileExtension = file?.name.split('.').pop()?.toLowerCase();
+      if (!validExtensions.includes(fileExtension)) {
+        flag = false;
+      }
+    });
+
+    return flag;
+  }
   // -----------------------------
   // ---- DELETE APPLICATION -----
   // -----------------------------

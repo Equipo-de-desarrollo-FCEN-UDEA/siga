@@ -49,7 +49,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'apoyo economico',
+        path: 'apoyo-economico',
         component: EconomicSupportComponent,
         data: {
           title: 'Apoyo Económico'

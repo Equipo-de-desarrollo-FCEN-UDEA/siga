@@ -163,7 +163,7 @@ export class EconomicSupportComponent {
           confirmButtonColor: '#3AB795',
         });
         this.router.navigateByUrl(
-          `/solicitudes/ver/${data.id}/apoyo economico`
+          `/solicitudes/ver/${data.id}/apoyo-economico`
         );
       },
     });

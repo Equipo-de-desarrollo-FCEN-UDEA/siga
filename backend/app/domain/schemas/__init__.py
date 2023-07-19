@@ -10,9 +10,9 @@ from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiR
 from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
                                ApplicationTypeUpdate, ApplicationTypeResponse)
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,
-                                  ApplicationSubTypeInDB)
+                                  ApplicationSubTypeInDB, )
 from .application_status import (Application_statusCreate, Application_statusInDB,
-                                 Application_statusUpdate)
+                                 Application_statusUpdate, Application_statusResponse)
 from .applications import (
     #COMMISSION
     CommissionCreate,

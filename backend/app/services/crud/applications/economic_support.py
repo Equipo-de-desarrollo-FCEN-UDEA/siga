@@ -50,7 +50,5 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
         await db.save(economic_support)
         return None
 
-
-
 policy   = EconomicSupportPolicy()
 economic_support = CRUDEconomicSupport(EconomicSupport, policy=policy)

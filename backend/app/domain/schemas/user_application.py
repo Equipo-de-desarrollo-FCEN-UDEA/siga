@@ -1,6 +1,5 @@
 import json
 from pydantic import BaseModel, validator
-from sqlalchemy import JSON
 
 class UserApplicationBase(BaseModel):
     user_id: int

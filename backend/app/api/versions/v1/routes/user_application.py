@@ -66,7 +66,7 @@ def get_user_application(
 
     if not db_user_application:
         raise HTTPException(
-            status_code=404, detail="Esta solicitud no se realizo en su dependencia")
+            status_code=404, detail="Esta solicitud no se realizó en su dependencia")
 
     return db_user_application
 

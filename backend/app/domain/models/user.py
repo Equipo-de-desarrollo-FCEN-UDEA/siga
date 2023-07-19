@@ -36,9 +36,9 @@ class User(Base):
 
     rol_id = Column(Integer, ForeignKey("rol.id"))
     rol = relationship("Rol", back_populates="users")
+
+    user_application = relationship("UserApplication", back_populates="user")
     
     applications = relationship("Application", back_populates="user")
 
     extra = relationship("Extra", back_populates="coordinador")
-
-    user_application = relationship("UserApplication", back_populates="user")
