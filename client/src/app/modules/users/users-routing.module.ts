@@ -5,6 +5,7 @@ import { UserViewComponent } from './pages/user-view/user-view.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { SuperempleadoGuard } from 'src/app/core/guards/superempleado.guard';
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
+import { RolSelectionComponent } from './pages/rol-selection/rol-selection.component';
 
 const routes: Routes = [
   {
@@ -24,8 +25,11 @@ const routes: Routes = [
   {
     path: 'editar-contrasena',
     component: NewPasswordComponent
+  },
+  {
+    path: 'seleccionar-rol',
+    component: RolSelectionComponent
   }
-
 ];
 
 @NgModule({
