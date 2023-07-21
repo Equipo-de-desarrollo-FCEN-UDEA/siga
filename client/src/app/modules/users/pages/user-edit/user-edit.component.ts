@@ -98,7 +98,7 @@ export class UserEditComponent {
     department_id : [NaN, Validators.required],
     rol_id: [this.selectedItems],
     scale: ['', Validators.required],
-    changes_rol: this.flag_rol
+    changes_rol: [this.flag_rol]
   });
 
 
@@ -108,7 +108,6 @@ export class UserEditComponent {
 
   onItemSelect(item:any){
     this.flag_rol = true;
-
   }
 
   submitUpdate() {
@@ -129,6 +128,8 @@ export class UserEditComponent {
       })
     }
     let user = this.updateUserBase.value as UserUpdate;
+    user.changes_rol = this.flag_rol;
+    console.log(user);
     this.userSvc.putUser(user, this.getId as number, this.flag_rol)
     .subscribe({
       next: (res: any) => {

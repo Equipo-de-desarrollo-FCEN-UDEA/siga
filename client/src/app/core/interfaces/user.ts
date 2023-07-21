@@ -13,7 +13,6 @@ export interface UserBase {
     office?: string;
     vinculation_type: string;
     department_id: number;
-    changes_rol: boolean;
 }
 
 
@@ -23,6 +22,7 @@ export interface UserCreate extends UserBase {
 
 
 export interface UserUpdate extends UserBase{
+    changes_rol: boolean;
 }
 
 
