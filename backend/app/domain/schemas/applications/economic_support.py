@@ -59,6 +59,11 @@ class EconomicSupportBase(BaseModel):
     payment: AdvancePayment
     documents: list[Any]
 
+class Compliment(BaseModel):
+    documents: list[Any]
+    emails: list[str]
+    observation: str = Field(max_length=300)
+
 
 class EconomicSupportCreate(EconomicSupportBase):
     application_sub_type_id: int = 14
