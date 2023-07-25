@@ -108,59 +108,67 @@ export class EconomicSupportComponent implements OnInit {
     USER_SVC.subscribe((user) => {
       this.user_id = user.id;
       this.userRol = user.rol.name;
-      if (this.isSuperUser$ && this.userRol === 'Coordinador') {
+      if (this.userRol === 'Coordinador') {
         this.userApplicationSvc
           .getUserApplication(this.application_id)
           .subscribe((res) => {
             this.userApplication = res;
-            return;
           });
-      } else if (this.isSuperUser$ && (this.userRol === 'Decano' || this.userRol === 'Director')) {
-        this.userApplicationSvc.getUserApplications(this.application_id).subscribe((res) => {
-          this.dependecies = res;
-      
-          // Create an array to store all the promises for the userPerId transformations
-          const transformationPromises = this.dependecies.map((dependence) => {
-            return this.userPerId.transform(dependence.user_id);
-          });
-      
-          // Use Promise.all() to wait for all promises to resolve
-          Promise.all(transformationPromises).then((transformedUserIds) => {
-            transformedUserIds.forEach((transformedUserId, index) => {
-              this.dependecies[index].transformedUserId = transformedUserId;
-              const DEPENDENCE = this.dependecies[index];
-      
-              if (
-                DEPENDENCE.transformedUserId.includes('COORDINADOR P') &&
-                this.current_status === 'SOLICITADA'
-              ) {
-                this.amountApprovedUndergraduate += DEPENDENCE.amount;
-              } else if (
-                this.current_status !== 'SOLICITADA' &&
-                DEPENDENCE.transformedUserId.includes('COORDINADOR P')
-              ) {
-                this.amountApprovedUndergraduate = this.applicationStatus[1].amount_approved;
-              } else if (DEPENDENCE.transformedUserId.includes('BIENESTAR')) {
-                this.amountApprovedWelfare += DEPENDENCE.amount;
-              } else {
-                this.amountApprovedResearchGroup += DEPENDENCE.amount;
-              }
+        this.userApplicationSvc
+          .getUserApplications(this.application_id)
+          .subscribe((res) => {
+            this.dependecies = res;
+            this.dependecies.forEach((dependence) => {
+              this.totalAmount += dependence.amount;
             });
-      
-            this.totalAmount =
-              this.amountApprovedResearchGroup +
-              this.amountApprovedUndergraduate +
-              this.amountApprovedWelfare;
           });
-        });
+      } else if (this.userRol === 'Decano' || this.userRol === 'Director') {
+        this.userApplicationSvc
+          .getUserApplications(this.application_id)
+          .subscribe((res) => {
+            this.dependecies = res;
+
+            // Create an array to store all the promises for the userPerId transformations
+            const transformationPromises = this.dependecies.map(
+              (dependence) => {
+                return this.userPerId.transform(dependence.user_id);
+              }
+            );
+
+            // Use Promise.all() to wait for all promises to resolve
+            Promise.all(transformationPromises)
+              .then((transformedUserIds) => {
+                this.dependecies.forEach((dependence, index) => {
+                  dependence.transformedUserId = transformedUserIds[index];
+                  const DEPENDENCE = this.dependecies[index];
+
+                  if (DEPENDENCE.transformedUserId.includes('COORDINADOR P')) {
+                    this.amountApprovedUndergraduate += DEPENDENCE.amount;
+                  } else if (
+                    DEPENDENCE.transformedUserId.includes('BIENESTAR')
+                  ) {
+                    this.amountApprovedWelfare += DEPENDENCE.amount;
+                  } else {
+                    this.amountApprovedResearchGroup += DEPENDENCE.amount;
+                  }
+                });
+
+                this.totalAmount =
+                  this.amountApprovedResearchGroup +
+                  this.amountApprovedUndergraduate +
+                  this.amountApprovedWelfare;
+              })
+              .catch((error) => {
+                console.error('Error during promise resolution:', error);
+              });
+          });
       }
-      
+
       this.applicationStatusSvc
         .getApplicationStatus(this.application_id)
         .subscribe((res) => {
           this.applicationStatus = res;
         });
-      return;
     });
   }
 

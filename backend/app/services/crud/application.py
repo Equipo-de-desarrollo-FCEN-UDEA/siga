@@ -115,7 +115,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 queries += [Application.filed.is_(filed)]
 
         if who.rol.scope == 7:
-            queries.append(UserApplication.user_id == who.id)
+            queries += [Department.school_id == who.department.school_id]
 
         if (who.rol.scope == 6):
             queries += [Department.school_id == who.department.school_id]
