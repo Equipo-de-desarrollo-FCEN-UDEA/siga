@@ -22,5 +22,9 @@ user_diferent_password = UserErrors(
     401, "El correo o la contraseña están erradas"
 )
 
+user_selecting_rol = UserErrors(
+    401, "El rol seleccionado no está asignado al usuario."
+)
+
 user_inactive = UserErrors(
     403, "Tu cuenta no se encuentra activa, recuerda revisar tu correo para activarla o pide correo de activación nuevamente")

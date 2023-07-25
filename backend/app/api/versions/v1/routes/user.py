@@ -177,6 +177,30 @@ def update_user_password(
         db=db, db_obj=user, password=password, confirmPassword=confirmpassword, who=current_user
     )
 
+@router.patch("/change-active-rol", status_code=200,
+              response_model=schemas.UserResponse)
+def select_active_rol(
+    active_rol: int,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user)
+)-> schemas.UserResponse:
+    """
+    Endpoint to select user's active rol.
+    """
+    try:
+        user = crud.user.get(db=db, id=current_user.id, who=current_user)
+        #user_roles = crud.user.get_middleware(db, id=user.id).__dict__['assigned_roles']
+        user_roles = crud.user.get_middleware(db, id=user.id).assigned_roles
+        log.debug(user.__dict__)
+        log.debug(user_roles)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    return crud.user.update_active_role(db=db, db_obj=user, new_active_rol=active_rol, assigned_roles=user_roles, who=current_user
+    )
+
 
 @router.delete("/{id}", status_code=200)
 def delete_user(

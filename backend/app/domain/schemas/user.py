@@ -51,12 +51,13 @@ class UserBase(BaseModel):
     office: Optional[str] = Field(max_length=5)
     vinculation_type: str = Field(max_length=50)
     department_id: int = Field(gt=0)
+    active_rol: Optional[int] = Field(gt=0)
     #rol_id: int = Field(gt=0)
 
 
 class UserCreate(UserBase):
     password: Optional[str]
-    rol_id : Optional[int]
+    rol_id : Optional[int] #Esta el la línea a comentar cuando se crea por primera vez la DB.
 
     @validator('password', always=True)
     def generate_password(cls, v, values, **kwargs):
