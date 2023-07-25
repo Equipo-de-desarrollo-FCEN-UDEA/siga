@@ -1,6 +1,8 @@
 from typing import Any, List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi.responses import JSONResponse
+
 
 from sqlalchemy.orm import Session
 
@@ -109,3 +111,30 @@ def create_userrol(
     # Dentro de la función estará el controlador que lo que hace es redireccionar los datos del middleware y la request al servicio
     return userrol
     
+
+@router.delete("/{id}", status_code=200)
+def delete_userrol(
+    id: int,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user),
+) -> Any:
+    """
+    Endpoint to delete an user.
+
+        params: id: int
+    """
+    try:
+        db_obj = crud.userrol.get_rol_by_iduser(db=db, who=current_user, user_id=id)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    for obj in db_obj:
+        try:
+            db_userrol = crud.userrol.delete(db=db, id=obj.id, who=current_user)
+        except BaseErrors as e:
+            raise HTTPException(status_code=e.code, detail=e.detail)
+    return JSONResponse(status_code=status.HTTP_200_OK, content={
+        'detail': 'Userrol(s) deleted'
+    })
+

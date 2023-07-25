@@ -58,7 +58,7 @@ export class UserService {
   }
 
   // service to update a user
-  putUser(body: UserUpdate, id: number): Observable<UserResponse> {
+  putUser(body: UserUpdate, id: number, changes_rol: boolean): Observable<UserResponse> {
     return this.http.put<UserResponse>(this.urlEndpoint + id, body)
   }
 

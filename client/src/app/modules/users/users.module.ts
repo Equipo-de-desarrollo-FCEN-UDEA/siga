@@ -7,6 +7,7 @@ import { UserViewComponent } from './pages/user-view/user-view.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 import { SharedModule } from '@shared/shared.module';
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';  
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NewPasswordComponent } from './pages/new-password/new-password.componen
   imports: [
     CommonModule,
     UsersRoutingModule,
-    SharedModule
+    SharedModule,
+    NgMultiSelectDropDownModule.forRoot()
   ]
 })
 export class UsersModule { }

@@ -73,7 +73,8 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(UserBase):
-    pass
+    rol_id: Optional[UserRolResponse]
+    changes_rol: bool
 
 
 class UserInDBBase(UserBase):

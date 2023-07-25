@@ -27,6 +27,7 @@
     "angular-signature-pad": "^0.0.14",
     "angular2-signaturepad": "^4.0.2",
     "bootstrap": "^5.2.2",
+    "ng-multiselect-dropdown": "^0.3.9",
     "ngx-cookie-service": "^14.0.1",
     "ngx-signaturepad": "^0.0.10",
     "rxjs": "~7.5.0",

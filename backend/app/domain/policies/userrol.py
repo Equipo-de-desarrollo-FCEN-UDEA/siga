@@ -43,3 +43,11 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
          if not (userrol.rol.scope < 9):
                 raise user_401
          return None
+    
+    # This policie handle who can delete an user, it will be removed
+    def delete(self, who: User, to: User | None) -> None:
+        userrol = who.userrol[0]
+        if not (userrol.rol.scope < 9):
+        #if not (who.rol.scope < 9):
+            raise user_401
+        return None
