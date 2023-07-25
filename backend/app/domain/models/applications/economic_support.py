@@ -10,3 +10,4 @@ class EconomicSupport(Model):
     tickets: Any | None
     payment: Any | None
     documents: list[Any] | None
+    compliment: Any | None
