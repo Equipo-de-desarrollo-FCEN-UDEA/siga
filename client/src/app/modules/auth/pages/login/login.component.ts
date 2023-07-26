@@ -18,6 +18,7 @@ import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
 import { UserService } from '@services/user.service';
 import { UserRolService } from '@services/userrol.service';
+import { on } from 'events';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent implements OnInit {
     username: ['', [Validators.required, Validators.minLength(2)]],
     password: ['', [Validators.required, Validators.minLength(2)]],
   });
-  public userRoles!: UserRolResponse[];
+  public userRoles: UserRolResponse[] | undefined = undefined ;
+  public selectedRole: UserRolResponse | undefined = undefined;
 
   get f() { return this.loginForm.controls;}
 
@@ -55,21 +57,19 @@ export class LoginComponent implements OnInit {
         next: (user: UserResponse) => {
           this.userRoles = user.userrol;
           console.log(this.userRoles);
-
-          if (this.userRoles.length > 1) {
-            this.router.navigate(['/usuarios/seleccionar-rol']);
-          } else { this.router.navigate(['/home']); }        
         },
         error: (error: any) => {
           console.log('Error al obtener el usuario', error);
-          this.router.navigate(['/usuarios/seleccionar-rol']);
         }
+        
       });
     }
   }
     
 
   onSubmitLogin() {
+    //this.router.navigate(['/usuarios/seleccionar-rol']);
+    //return;
     this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
@@ -77,7 +77,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
+        if (this.userRoles == undefined) {return;}
+
         if (this.userRoles.length > 1) {
+          console.log('Hemos entrado');
           this.router.navigate(['/usuarios/seleccionar-rol']);
         } else { 
           this.router.navigate(['/home']);
@@ -91,3 +94,5 @@ export class LoginComponent implements OnInit {
     });
   }
 }
+
+

@@ -1,7 +1,16 @@
 <main>
-  <select [(ngModel)]="selectedRol.rol_id" (change)="onSelec($event)">
-    <option *ngFor="let userrol of userRol" [value]="userrol.rol_id">
-      {{ userrol.rol_id }}
-    </option>
-  </select>
+  <!-- <form [formGroup]="form"> -->
+  <ng-container>
+    <select [(ngModel)]="selectedRol.rol_id" (change)="onSelec($event)">
+      <option *ngFor="let userrol of userRol" [value]="userrol.rol_id">
+        {{ userrol.rol_id }}
+      </option>
+    </select>
+  </ng-container>
+
+  <div>
+    <button (click)="onCancel()">Cancelar</button>
+    <button (click)="onSubmitRol()">Continuar</button>
+  </div>
+  <!-- </form> -->
 </main>
