@@ -10,7 +10,8 @@
           'bg-requested': current_status === 'SOLICITADA',
           'bg-ok': current_status === 'VISTO BUENO',
           'bg-approved': current_status === 'APROBADA',
-          'bg-rejected': current_status === 'RECHAZADA'
+          'bg-ended': current_status === 'FINALIZADA',
+          'bg-rejected': current_status === 'DEVUELTA'
         }"
       >
         {{ current_status }}
@@ -154,7 +155,7 @@
     </ng-container> -->
   </div>
 
-  <div *ngIf="current_status == 'APROBADA'">
+  <div *ngIf="current_status == 'APROBADA' || current_status == 'FINALIZADA'">
     <ng-container class="table-responsive-lg">
       <table
         class="table table-striped table-hover table-borderless table-responsive"
@@ -255,6 +256,7 @@
             </div>
           </div>
         </form>
+        <hr class="mt-2" />
       </div>
 
       <ng-container class="table-responsive-lg">
@@ -322,28 +324,45 @@
         </tbody>
       </table>
     </div>
-    <hr class="mt-2" />
-    <div
-      class="row regular-row mt-2"
-      *ngIf="
-        userRol === 'Decano' ||
-        userRol === 'Director' ||
-        userRol === 'Coordinador'
-      "
-    >
-      <div class="col-xs-12 col-sm-6 label text-secondary">
-        Monto Total Aprobado por las Dependencias
-      </div>
-      <div class="col-xs-12 col-sm-6">${{ totalAmount }} Pesos Colombianos</div>
-    </div>
   </ng-container>
 
-  <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Monto Solicitado</div>
-    <div class="col-xs-12 col-sm-6">
-      ${{ economic_support.payment.value }} Pesos Colombianos
-    </div>
-  </div>
+  <ng-container class="table-responsive-lg">
+    <table
+      class="table table-striped table-hover table-borderless table-responsive"
+    >
+      <tr>
+        <td class="col-xs-12 col-sm-4 col-md-6 col-lg-6 label text-secondary">
+          Monto Solicitado
+        </td>
+        <td
+          class="col-xs-12 col-sm-3 col-md-6 col-lg-6 label text-secondary"
+          scope="col"
+          *ngIf="
+            userRol === 'Decano' ||
+            userRol === 'Director' ||
+            userRol === 'Coordinador'
+          "
+        >
+          Monto Total Aprobado por las Dependencias
+        </td>
+      </tr>
+      <tr>
+        <td scope="row">
+          ${{ economic_support.payment.value }} Pesos Colombianos
+        </td>
+        <td
+          *ngIf="
+            userRol === 'Decano' ||
+            userRol === 'Director' ||
+            userRol === 'Coordinador'
+          "
+          scope="row"
+        >
+          ${{ totalAmount }} Pesos Colombianos
+        </td>
+      </tr>
+    </table>
+  </ng-container>
 
   <!-- <div class="row regular-row mt-2" *ngIf="current_status == 'APROBADA'">
     <div class="col-xs-12 col-sm-6 label text-secondary">Monto Aprobado</div>
@@ -351,6 +370,56 @@
       ${{ amount_approved }} Pesos Colombianos
     </div>
   </div> -->
+  <div class="cumplido" *ngIf="economic_support.compliment">
+    <div class="row header-row mt-3">
+      <div class="col">
+        <span class="text-secondary">Cumplido</span>
+      </div>
+    </div>
+    <hr />
+
+    <div class="row regular-row mt-2">
+      <div class="col-xs-12 col-sm-6 label fw-bold">Documentos</div>
+      <div class="col-6">
+        <ul>
+          <li *ngFor="let doc of economic_support.compliment.documents">
+            <span class="link-success cursor" (click)="openDocument(doc.path)"
+              >{{ doc.name }}&nbsp;&nbsp;</span
+            >&nbsp;
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row regular-row mt-2">
+      <div class="col-xs-12 col-sm-6 label fw-bold">
+        Información complementaria
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        {{ economic_support.compliment.observation }}
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="row regular-row mt-2"
+    *ngIf="
+      economic_support.compliment == undefined &&
+      current_status == 'APROBADA' &&
+      end_date < today &&
+      !(isSuperUser$ | async)
+    "
+  >
+    <div class="col-xs-12 col-sm-6 label fw-bold">Cumplido</div>
+    <div class="col-6">
+      <button
+        class="btn btn-outline-warning"
+        [routerLink]="['/solicitudes/crear/cumplido/' + application!.id]"
+      >
+        Subir cumplido
+      </button>
+    </div>
+  </div>
 
   <hr class="mt-2" />
 

@@ -2,6 +2,7 @@ import { Application } from "@interfaces/application";
 import { DepartmentBase } from "@interfaces/department";
 import { file_path } from "@interfaces/documents";
 import { UserBase } from "@interfaces/user";
+import { ComplimentCreate } from "./commission";
 
 export interface IApplicationData { 
   application_type: string;
@@ -70,6 +71,7 @@ export interface IEconomicSupportCreate {
 
 export interface IEconomicSupportInDB extends IEconomicSupportCreate {
   id: string;
+  compliment?: ComplimentCreate;
 }
 
 export interface IEconomicSupportResponse extends Application {

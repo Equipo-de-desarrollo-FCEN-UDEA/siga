@@ -67,6 +67,10 @@ export class EconomicSupportComponent implements OnInit {
 
   @Input() status: ApplicationStatus[] | undefined;
 
+
+  public today = new Date();
+  public end_date = new Date();
+
   public error: string = '';
 
   // Files
@@ -194,6 +198,7 @@ export class EconomicSupportComponent implements OnInit {
           application.application_status
         ).status.name;
         this.comSvc.push(this.application);
+        this.end_date = new Date(economic_support.payment.end_date)
       });
 
     this.applicationStatusSvc;
