@@ -57,7 +57,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: Optional[str]
-    rol_id : Optional[int] #Esta el la línea a comentar cuando se crea por primera vez la DB.
+    # rol_id : Optional[int] #Esta el la línea a comentar cuando se crea por primera vez la DB.
 
     @validator('password', always=True)
     def generate_password(cls, v, values, **kwargs):
