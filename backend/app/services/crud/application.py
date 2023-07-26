@@ -41,19 +41,37 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         queries = []
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        if who.rol.scope >= 9:
+        userrol = who.userrol[0]
+
+
+        if userrol.rol.scope >= 9:
             queries += [User.id == who.id]
 
-        if who.rol.scope < 9:
+        if userrol.rol.scope < 9:
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
-        if (who.rol.scope == 7) or (who.rol.scope == 6):
+        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
             queries += [User.department_id == who.department.id]
 
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
+
+
+        # if who.rol.scope >= 9:
+        #     queries += [User.id == who.id]
+
+        # if who.rol.scope < 9:
+        #     # queries += [Application_status.status_id.not_in((6,7))]
+        #     if filed is not None:
+        #         queries += [Application.filed.is_(filed)]
+
+        # if (who.rol.scope == 7) or (who.rol.scope == 6):
+        #     queries += [User.department_id == who.department.id]
+
+        # if who.rol.scope == 5:
+        #     queries += [Department.school_id == who.department.school_id]
 
         if search is not None:
             columns = [
@@ -102,20 +120,36 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
     ) -> List[Application]:
         queries = []
 
-        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        if who.rol.scope >= 9:
+        userrol = who.userrol[0]
+
+        if userrol.rol.scope >= 9:
             queries += [User.id == who.id]
 
-        if who.rol.scope < 9:
+        if userrol.rol.scope < 9:
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
-        if (who.rol.scope == 7) or (who.rol.scope == 6):
+        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
             queries += [User.department_id == who.department.id]
 
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
+
+        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
+        # if who.rol.scope >= 9:
+        #     queries += [User.id == who.id]
+
+        # if who.rol.scope < 9:
+        #     # queries += [Application_status.status_id.not_in((6,7))]
+        #     if filed is not None:
+        #         queries += [Application.filed.is_(filed)]
+
+        # if (who.rol.scope == 7) or (who.rol.scope == 6):
+        #     queries += [User.department_id == who.department.id]
+
+        # if who.rol.scope == 5:
+        #     queries += [Department.school_id == who.department.school_id]
 
         if search is not None:
             columns = [
@@ -205,3 +239,4 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 policy = ApplicationPolicy()
 
 application = CRUDApplication(Application, policy=policy)
+

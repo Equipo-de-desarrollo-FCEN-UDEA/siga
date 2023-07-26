@@ -8,7 +8,10 @@ from .base import Base
 
 class RolPolicy(Base[Rol, RolCreate, RolUpdate]):
     def get_multi(self, who: User, rol: List[Rol]) -> None:
-        if who.rol.scope >=5:
+
+        userrol = who.userrol[0]
+        # if who.userrol.rol.scope >=5:
+        if userrol.userrol.rol.scope >=5:
             raise Rol401
         
         if not rol:

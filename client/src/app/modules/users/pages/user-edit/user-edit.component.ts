@@ -13,6 +13,7 @@ import { id_type } from '@shared/data/id_type';
 import { Observable, take } from 'rxjs';
 import Swal from 'sweetalert2';
 import { vinculation_type } from '@shared/data/vinculation';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-user-edit',
@@ -26,19 +27,24 @@ export class UserEditComponent {
 
 
   public id: Number | string = 0;
-
+  public flag_rol: boolean = false;
   public typesId = id_type;
   public vinculation_types = vinculation_type;
   public scale = scale;
   
   public error: string = "";
   public submitted: boolean = false;
-  public rol: string = localStorage.getItem('rol') || '';
+  //public rol: string = localStorage.getItem('rol') || '';
+  public rol: string = '';
 
   public rol$: Observable<RolBase[]> = this.rolService.getRoles();
   private is_email_valid = /^[a-zA-Z0-9._%+-]+@UDEA.EDU.CO$/;
   public getId: Number | string = 0;
 
+  //Properties of rol and userrol
+  public dropdownList:any[] = [];
+  public selectedItems:any[] = [];
+  public dropdownSettings: IDropdownSettings;
 
   constructor(
     private router: Router,
@@ -50,14 +56,31 @@ export class UserEditComponent {
     private userSvc: UserService,
     private location: Location
   ) {
-    //this.roles$ = this.rolesSvc.getRoles();
     this.activateRoute.params.subscribe(params => this.getId = params['id']);
+    //List of rols 
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'description',
+      selectAllText: 'Seleccionar todo',
+      unSelectAllText: 'Deseleccionar todo',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+    this.rol$.subscribe((roles: RolBase[]) => {
+      this.dropdownList = roles;
+    });
 
     this.userSvc.getUser(this.getId as number).subscribe({
       next: res => {
         console.log(res)
         this.userResponse = res;
+        this.rol = String(this.userResponse.userrol[0].rol.name);
         this.updateUserBase.patchValue(this.userResponse);
+        this.selectedItems = this.userResponse.userrol.map(rol => ({ id: rol.rol_id,
+                                                                    name: rol.rol.name,
+                                                                    description: rol.rol.description,
+                                                                    scope: rol.rol.scope }));
        }
     }
     );
@@ -73,13 +96,18 @@ export class UserEditComponent {
     office: [''],
     vinculation_type: ['', [Validators.required]],
     department_id : [NaN, Validators.required],
-    rol_id: [NaN, Validators.required],
+    rol_id: [this.selectedItems],
     scale: ['', Validators.required],
+    changes_rol: [this.flag_rol]
   });
 
 
   get f() {
     return this.updateUserBase.controls;
+  }
+
+  onItemSelect(item:any){
+    this.flag_rol = true;
   }
 
   submitUpdate() {
@@ -89,8 +117,20 @@ export class UserEditComponent {
       console.log('error form')
       return;
     }
-    const user = this.updateUserBase.value as UserUpdate;
-    this.userSvc.putUser(user, this.getId as number)
+    //Review number of rols
+    if(this.selectedItems.length==0){
+      Swal.fire({
+        title: 'Debe agregar al menos un cargo',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        return;
+      })
+    }
+    let user = this.updateUserBase.value as UserUpdate;
+    user.changes_rol = this.flag_rol;
+    console.log(user);
+    this.userSvc.putUser(user, this.getId as number, this.flag_rol)
     .subscribe({
       next: (res: any) => {
         Swal.fire({

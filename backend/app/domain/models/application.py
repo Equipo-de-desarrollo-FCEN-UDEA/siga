@@ -20,7 +20,9 @@ class Application(Base):
     start_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
     end_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
     filed = Column(Boolean, default=False)
-    
+    start_date = Column(DateTime(timezone=True), nullable=True)
+    end_date = Column(DateTime(timezone=True), nullable=True)
+
     #Relaciones
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="applications")

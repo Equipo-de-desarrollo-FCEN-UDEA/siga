@@ -18,7 +18,8 @@ class CRUDDepartment(CRUDBase[Department, DepartmentCreate, DeparmentUpdate, Dep
         limit: int = 100
     ) -> List[Department]:
         self.policy.get_multi(who=who)
-        scope = who.rol.scope
+        #scope = who.rol.scope
+        scope = who.userrol[0].rol.scope
         if scope <= 3:
             db_objs = db.query(Department).offset(skip).limit(limit).all()
         else:

@@ -50,11 +50,11 @@ export class ViewComponent implements AfterViewChecked {
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
+
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
     this.applicationStatusSvc.isApproved(this.id)
-
   }
 
 
@@ -86,7 +86,8 @@ export class ViewComponent implements AfterViewChecked {
     const method = this.applicationStatusSvc.postApplicationStatus({
       application_id: this.id,
       observation: this.form.value.observation!,
-      amount_approved: this.form.value.amount_approved!,
+      //Verify this line
+      amount_approved: this.form.value.amount_approved||0,
       status_id: 1,
     } as ApplicationStatusCreate);
     console.log(this.form.value);

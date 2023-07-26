@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.api.versions.v1.routes import (
     documents,
     user,
+    userrol,
     auth,
     department,
     extra,
@@ -33,6 +34,8 @@ api_route.include_router(school.router,
                          prefix='/school', tags=["schools"])
 api_route.include_router(rol.router,
                          prefix="/rol", tags=["rol"])
+api_route.include_router(userrol.router,
+                         prefix="/userrol", tags=["userrol"])
 
 # Type Applications
 api_route.include_router(application_type.router,
