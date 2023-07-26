@@ -93,3 +93,4 @@ win32-setctime==1.1.0 ; python_version >= "3.9" and python_version < "4.0" and s
 wrapt==1.14.1 ; python_version >= "3.9" and python_version < "4.0"
 zopfli==0.2.2 ; python_version >= "3.9" and python_version < "4.0"
 #apscheduler==3.9.1.post1 ; python_version >= "3.9" and python_version < "4.0"
+pytest==6.2.4 ; python_version >= "3.9" and python_version < "4.0"
