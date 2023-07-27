@@ -10,8 +10,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ResendEmailComponent } from './pages/resend-email/resend-email.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { RolSelectionComponent } from '@modules/users/pages/rol-selection/rol-selection.component';
-
+import { RolSelectionComponent } from '@modules/rol-selection/pages/login-selection/login-selection.component';
 
 const ROUTES: Routes = [
   { 

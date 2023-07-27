@@ -10,15 +10,12 @@ import { UserEditComponent } from './pages/user-edit/user-edit.component';
 
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';  
-import { RolSelectionComponent } from './pages/rol-selection/rol-selection.component';
-
 
 @NgModule({
   declarations: [
     UserListComponent,
     UserViewComponent,
     UserEditComponent,
-    RolSelectionComponent,
     NewPasswordComponent
   ],
   imports: [

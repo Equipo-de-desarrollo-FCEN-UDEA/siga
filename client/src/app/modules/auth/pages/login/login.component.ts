@@ -51,25 +51,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.activateRoute.params.pipe(
-        switchMap(params => this.userService.getUser(params['id']))
-      ).subscribe({
-        next: (user: UserResponse) => {
-          this.userRoles = user.userrol;
-          console.log(this.userRoles);
-        },
-        error: (error: any) => {
-          console.log('Error al obtener el usuario', error);
-        }
-        
-      });
+      this.router.navigate(['/home']);
     }
   }
     
 
   onSubmitLogin() {
-    //this.router.navigate(['/usuarios/seleccionar-rol']);
-    //return;
     this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
