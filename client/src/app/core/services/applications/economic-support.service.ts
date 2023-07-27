@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
+import { ComplimentCreate } from '@interfaces/applications/commission';
 import {
   IEconomicSupportCreate,
   IEconomicSupportResponse,
@@ -35,6 +36,10 @@ export class EconomicSupportService {
 
   deleteEconomicSupport(id: number): Observable<Msg> {
     return this.http.delete<Msg>(this.urlEndPoint + id);
+  }
+
+  putCompliment(body: ComplimentCreate, id: number) {
+    return this.http.put(this.urlEndPoint + 'compliment/' + id, body);
   }
 
   downloadZipFile(id: number): void {
