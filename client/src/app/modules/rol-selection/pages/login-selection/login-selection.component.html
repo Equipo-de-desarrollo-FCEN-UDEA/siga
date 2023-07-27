@@ -20,6 +20,15 @@
       </button>
     </div>
     <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+      <ng-container>
+        <select [(ngModel)]="selectedRol.rol_id" (change)="onSelec($event)">
+          <option *ngFor="let userrol of userRol" [value]="userrol.rol_id">
+            {{ userrol.rol_id }}
+          </option>
+        </select>
+      </ng-container>
+    </div>
+    <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">      
       <button
         class="btn btn-submit"
         type="submit"

@@ -5,14 +5,18 @@ import { RouterModule } from '@angular/router';
 import { RolSelectionRoutingModule } from './rol-selection-routing.module';
 import { RolSelectionComponent } from './pages/login-selection/login-selection.component';
 import { SharedModule } from "../../shared/shared.module";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [RolSelectionComponent],
+    declarations: [
+        RolSelectionComponent
+    ],
     imports: [
         CommonModule,
         RolSelectionRoutingModule,
         RouterModule,
-        SharedModule
+        SharedModule,
+        FormsModule
     ]
 })
   export class RolSelectionModule { }
