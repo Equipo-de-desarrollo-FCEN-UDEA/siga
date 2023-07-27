@@ -54,11 +54,23 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-    
 
   onSubmitLogin() {
     this.submitted = true;
     // stop here if form is invalid
+    
+    this.activateRoute.params.pipe(
+      switchMap(params => this.userService.getUser(params['id']))
+    ).subscribe({
+      next: (user: UserResponse) => {
+        this.userRoles = user.userrol;
+        console.log(this.userRoles);
+      },
+      error: (error: any) => {
+        console.log('Error al obtener el usuario', error);
+      }
+    });
+
     if (this.loginForm.invalid) { return; }
     this.loading = true;  
 
