@@ -29,6 +29,11 @@ const ROUTES: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: 'seleccionar-rol',
+    loadChildren: () =>
+      import('./modules/rol-selection/rol-selection.module').then((m) => m.RolSelectionModule),
+  },
+  {
     path: '',
     canActivate: [EmpleadoGuard],
     loadChildren: () =>
