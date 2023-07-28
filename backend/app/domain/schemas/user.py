@@ -51,7 +51,7 @@ class UserBase(BaseModel):
     office: Optional[str] = Field(max_length=5)
     vinculation_type: str = Field(max_length=50)
     department_id: int = Field(gt=0)
-    active_rol: Optional[int] = Field(gt=0)
+    active_rol: Optional[int] = Field(gt=-1)
     #rol_id: int = Field(gt=0)
 
 

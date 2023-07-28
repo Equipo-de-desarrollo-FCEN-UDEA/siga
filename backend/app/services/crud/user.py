@@ -166,9 +166,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         db_obj: User,
         who: User
     ) -> User:
-        self.policy.update_active_rol(
-            who=who, to=db_obj, new_active_rol=new_active_rol, assigned_roles=assigned_roles
-        )
+        # self.policy.update_active_rol(
+        #     who=who, to=db_obj, new_active_rol=new_active_rol, assigned_roles=assigned_roles
+        # )
         update_data = {
             "active_rol": new_active_rol
         }
