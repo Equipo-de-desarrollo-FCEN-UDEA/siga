@@ -12,9 +12,9 @@ import { UserRolResponse } from '@interfaces/userrol';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login-selection',
-  templateUrl: './login-selection.component.html',
-  styleUrls: ['./login-selection.component.scss']
+  selector: 'app-rol-selection',
+  templateUrl: './rol-selection.component.html',
+  styleUrls: ['./rol-selection.component.scss']
 })
 export class RolSelectionComponent implements OnInit{
 
