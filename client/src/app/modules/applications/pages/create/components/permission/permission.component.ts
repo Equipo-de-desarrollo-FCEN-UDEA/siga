@@ -33,7 +33,7 @@ import { Holiday } from '@interfaces/holiday';
 })
 export class PermissionComponent implements AfterViewInit{
   // Dates
-  hiddenIds: number[] = [3,4,7];
+  public hiddenIds: number[] = [3,4,7];
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
