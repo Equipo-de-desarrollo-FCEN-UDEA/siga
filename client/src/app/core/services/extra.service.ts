@@ -13,7 +13,11 @@ export class ExtraService {
 
   constructor( private http: HttpClient ) { }
 
-  getInvestigationGroups(): Observable<any> {
-    return this.http.get(this.urlEndPoint)
+  getSubdepartments(): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint)
+  }
+
+  getSubdepartmentsByDepartment(id: number): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint + '/department/' + id)
   }
 }

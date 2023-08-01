@@ -4,10 +4,9 @@ from typing import Optional
 
 
 class UserRolBase(BaseModel):
-    rol_id: int
+    rol_id: int #SE CAMBIO A OPTIONAL PORQUE SALIA UN ERROR MIRAR BIEN
     user_id: int
     description: Optional[str]
-    
 
 
 class UserRolCreate(UserRolBase):

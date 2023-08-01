@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { APPLICATION_FOR } from '@modules/applications/pages/create/components/economic-support/data/economic-support';
@@ -9,7 +9,7 @@ import { EconomicSupportService } from '@services/applications/economic-support.
   templateUrl: './personal-data.component.html',
   styleUrls: ['./personal-data.component.scss'],
 })
-export class PersonalDataComponent implements OnInit {
+export class PersonalDataComponent {
   public APPLICATION_FOR = APPLICATION_FOR;
 
   public id: number = 0;
@@ -38,9 +38,7 @@ export class PersonalDataComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private economicSupportSvc: EconomicSupportService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {

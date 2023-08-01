@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
-import { ApplicationStatusCreate } from '@interfaces/application_status';
+import { ApplicationStatus, ApplicationStatusCreate } from '@interfaces/application_status';
 import { Subject } from 'rxjs/internal/Subject';
 import { ApplicationService } from './application.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class ApplicationStatusService {
 
   postApplicationStatus(body: ApplicationStatusCreate) {
     return this.http.post(this.urlEndpoint, body)
+  }
+
+  getApplicationStatus(id: number): Observable<ApplicationStatus[]> {
+    return this.http.get<ApplicationStatus[]>(this.urlEndpoint + id)
   }
 
   isApproved(id: number) {

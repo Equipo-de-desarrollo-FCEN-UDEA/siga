@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Integer, String, ForeignKey, Column, DateTime
+from sqlalchemy import Integer, String, ForeignKey, Column, DateTime, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -15,6 +15,7 @@ class Application_status(Base):
     id = Column(Integer, primary_key=True)
     observation = Column(String(255), nullable=True)
     amount_approved = Column(Integer, nullable=True)
+    document = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), default=func.now())
 
     # relations

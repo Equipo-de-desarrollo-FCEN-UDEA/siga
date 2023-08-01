@@ -84,8 +84,7 @@
           <div class="mt-4 row regular-row align-items-baseline">
             <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
               >Fechas de ida y fecha de regreso
-              <span style="color: red">*</span></span
-            >
+            </span>
             <div
               class="col-sm-12 col-xs-12 col-md-8"
               style="margin-bottom: 5px"
@@ -98,7 +97,7 @@
                   (click)="datepicker.toggle(); clicked = clicked + 1"
                   placeholder="aaaa-mm-dd - aaaa-mm-dd"
                   name="dpFromDate"
-                  formControlName="departure_place"
+                  formControlName="departure_date"
                   (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
                   [value]="
                     formatter.format(fromDate)
@@ -137,7 +136,7 @@
           <!-- LUGAR DE ORIGEN -->
           <div class="row mt-3">
             <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-              <span>Lugar de origen <span style="color: red">*</span></span>
+              <span>Lugar de origen </span>
             </div>
 
             <div class="col-sm-12 col-xs-12 col-md-8">
@@ -159,7 +158,7 @@
           <!-- LUGAR DE DESTINO -->
           <div class="row mt-3">
             <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-              <span>Lugar de destino <span style="color: red">*</span></span>
+              <span>Lugar de destino </span>
             </div>
 
             <div class="col-sm-12 col-xs-12 col-md-8">
@@ -181,7 +180,7 @@
           <!-- LUGAR DE NACIMIENTO -->
           <div class="row mt-3">
             <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-              <span>Lugar de nacimiento <span style="color: red">*</span></span>
+              <span>Lugar de nacimiento </span>
             </div>
 
             <div class="col-sm-12 col-xs-12 col-md-8">
@@ -199,26 +198,6 @@
               </div>
             </div>
           </div>
-
-          <!-- FECHA DE NACIMIENTO -->
-          <!-- <div class="mt-4 row regular-row align-items-baseline">
-            <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
-              >Fechas de nacimiento <span style="color: red">*</span></span
-            >
-            <div
-              class="col-sm-12 col-xs-12 col-md-8"
-              style="margin-bottom: 5px"
-            >
-              <div class="formfloatig">
-                <input
-                  formControlName="birthdate"
-                  class="form-control"
-                  placeholder="aaaa-mm-dd"
-                />
-              </div>
-            </div>
-          </div> -->
-          
         </div>
       </div>
     </div>

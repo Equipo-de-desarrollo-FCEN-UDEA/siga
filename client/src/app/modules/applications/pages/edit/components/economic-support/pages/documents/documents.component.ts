@@ -21,17 +21,16 @@ export class DocumentsComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {}
 
+  // --------------------------------------
+  // -------- ARCHIVOS - ANEXOS -----------
+  // --------------------------------------
+
   send() {
     this.sendForm.emit(this.form.value);
   }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() {
-    if (this.files.length > 0) {
-      return this.files;
-    }
-    return;
-  }
+  sendForms() { return this.files; }
 
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
@@ -41,31 +40,35 @@ export class DocumentsComponent implements OnInit {
     const element = event.target as HTMLInputElement;
     const file = element.files?.item(0);
     if (file) {
-      this.files.splice(index, 1, file);
+      this.files[index] = file;
     }
+    console.log(this.files);
   }
 
   removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
-    }
-    this.files.splice(index, 1);
+    this.files[index] = undefined;
+    console.log(this.files);
   }
 
   validSize() {
-    const size = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 1024 * 1024;
+    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
+    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
+      (a, b) => a + b,
+      0
+    );
+    return SIZE < 2 * 1024 * 1024;
   }
 
   validFileType() {
-    const extensionesValidas = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
-
+    const validExtensions = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
     let flag = true;
     this.files.forEach((file) => {
-      flag = extensionesValidas.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
+      const fileExtension = file?.name.split('.').pop()?.toLowerCase();
+      if (!validExtensions.includes(fileExtension)) {
+        flag = false;
+      }
     });
+
     return flag;
   }
 

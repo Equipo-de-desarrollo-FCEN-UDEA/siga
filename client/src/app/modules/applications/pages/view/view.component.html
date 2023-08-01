@@ -78,22 +78,32 @@
     >
       <div
         class="row regular-row mt-4 align-items-baseline"
-        *ngIf="
-          application.application_sub_type.name == 'ApoyoEE Pregrado' ||
-          application.application_sub_type.name == 'ApoyoEE Posgrado' ||
-          application.application_sub_type.name == 'ApoyoEE Grupo de Investigación' ||
-          application.application_sub_type.name == 'ApoyoEE Bienestar de la Facultad'
-        "
+        *ngIf="application.application_sub_type.name == 'Apoyo Económico'" 
       >
-        <div class="alert alert-warning">
-          <li>
-            En el campo "Monto Aprobado" ingrese el valor en numeros, ejemplo:
-            200000
-          </li>
-          <li>
-            En el campo "Observación" ingrese el valor en letras, ejemplo:
-            Doscientos mil Pesos
-          </li>
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+        Acta *
+      </div>
+        <div
+          *ngFor="let producto of document_new; last as isLast; let i = index"
+          class="col-xs-12 col-sm-12 col-xs-12 col-12 col-lg-5"
+        >
+          <div class="document_new">
+            <label class="btn-btn-default cursor is-hoverable">
+              <div class="fa fa-upload fa-2x"></div>
+              <input
+                [id]="i"
+                class="file-upload"
+                type="file"
+                (change)="onUpload($event, i)"
+              />
+              <label
+                [for]="i"
+                class="is-hoverable cursor link-success"
+                style="margin-left: 10px"
+                >{{ files[i] ? files[i].name : "Subir acta" }}</label
+              >
+            </label>
+          </div>
         </div>
         <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
           Monto Aprobado *

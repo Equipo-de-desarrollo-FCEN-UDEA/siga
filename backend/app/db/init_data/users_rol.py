@@ -65,6 +65,7 @@ init_users_rol: List[schemas.UserRolCreate] = [
         description="Coordinador de Pregrado de Matemáticas"
     ),
      schemas.UserRolCreate(
+        rol_id = 5,
         user_id = 11,
         description="Director Física"
     ),

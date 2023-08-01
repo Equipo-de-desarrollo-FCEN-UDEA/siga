@@ -54,6 +54,13 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
         db.refresh(db_obj)
         return db_obj
 
+    def get_application_status(
+            self,
+            db: Session,
+            *,
+            id: int) -> list[Application_status]:
+        return db.query(Application_status).filter(Application_status.application_id == id).all()
+
 
 policy = Application_statusPolicy()
 

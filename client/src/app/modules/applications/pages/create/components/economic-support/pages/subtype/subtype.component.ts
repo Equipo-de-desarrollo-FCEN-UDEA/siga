@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { IDependence, ISubdepartment } from '@interfaces/applications/economic_support-interface';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { ExtraService } from '@services/extra.service';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-subtype',
@@ -10,55 +12,54 @@ import { ExtraService } from '@services/extra.service';
 })
 export class SubtypeComponent {
   public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
-  public investigationGroup$ = this.extraSvc.getInvestigationGroups();
 
-  public subtype: number[] = [];
+  public dependencies: IDependence[] = [];
+  public subdeparments: ISubdepartment[] = [];
 
   @Output() sendForm = new EventEmitter<any>();
   @Output() submitted = false;
 
-  get f() {
-    return this.form.controls;
+  constructor(
+    private applicationTypeSvc: ApplicationTypesService,
+    private userSvc: UserService,
+    private extraSvc: ExtraService
+  ) {
+    this.userSvc.getUser().subscribe((data) => {
+      this.extraSvc.getSubdepartmentsByDepartment(data.department_id).subscribe((data) => {
+        this.subdeparments = data;
+        console.log(this.subdeparments);
+      });
+    });
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private applicationTypeSvc: ApplicationTypesService,
-    private extraSvc: ExtraService
-  ) {}
-
-  public form = this.fb.group({
-    name: [''],
-  });
-
-  onCheckboxChange(event: any, id: number) {
+  onCheckboxChange(event: any, dependence: ISubdepartment) {
+    let newDependence = {
+      id: dependence.coordinador_id,
+      name: dependence.name
+    };
+  
     if (event.target.checked) {
-      if (!this.subtype.includes(id)) {
-        this.subtype.push(id);
-        //onsole.log(this.subtype);
+      if (!this.dependencies.includes(newDependence)) {
+        this.dependencies.push(newDependence);
       }
     } else {
-      if (this.subtype.includes(id)) {
-        this.subtype.splice(this.subtype.indexOf(id), 1);
-        //console.log(this.subtype);
+      const index = this.dependencies.findIndex(dep => dep.id === newDependence.id);
+      if (index !== -1) {
+        this.dependencies.splice(index, 1);
       }
-      //console.log(id);
     }
-    console.log(this.subtype);
+  
+    console.log(this.dependencies);
   }
+  
 
   send() {
-    this.sendForm.emit(this.subtype);
+    this.sendForm.emit(this.dependencies);
   }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
     this.submitted = true;
-    //this.form.get('application_sub_type_id')?.setValue(this.subtype);
-    return this.subtype;
-  }
-
-  sendInvestigationGroup() {
-    return this.form.value;
+    return this.dependencies;
   }
 }
