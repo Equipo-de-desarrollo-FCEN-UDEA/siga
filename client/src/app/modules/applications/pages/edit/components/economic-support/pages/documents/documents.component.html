@@ -47,45 +47,35 @@
                   afiliados por el respectivo Instituto a la ARL
                 </li>
               </ul>
-              Y algun documento extra que considere necesario.
             </div>
-
             <div class="col-12 col-lg-7 mt-3">
-              <div
-                class="alert alert-danger"
-                *ngIf="files.length > 0 && !validFileType()"
-              >
-                Ese tipo de archivo no es permitido.
-              </div>
-              <div
-                class="alert-danger alert"
-                *ngIf="files.length > 0 && !validSize()"
-              >
-                Los archivos no deben pesar más de 2 MB.
-              </div>
               <div class="formfloatig" style="flex-direction: column">
+                <div class="alert alert-danger" *ngIf="!validFileType()">
+                  Ese tipo de archivo no es permitido.
+                </div>
+                <div class="alert-danger alert" *ngIf="!validSize()">
+                  Los archivos no deben pesar más de 2 MB.
+                </div>
+                <!-- Carta de invitación -->
                 <div
-                  *ngFor="
-                    let producto of archivos;
-                    last as isLast;
-                    let i = index
-                  "
-                  class="arrayLike formfloatig d-flex justify-content-between"
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
                 >
                   <div class="document_new">
                     <label class="btn-btn-default cursor is-hoverable">
                       <div class="fa fa-upload fa-2x"></div>
                       <input
-                        [id]="i"
+                        [id]="0"
                         class="file-upload"
                         type="file"
-                        (change)="onUpload($event, i)"
+                        (change)="onUpload($event, 0)"
                       />
                       <label
-                        [for]="i"
+                        [for]="0"
                         class="is-hoverable cursor link-success"
                         style="margin-left: 10px"
-                        >{{ files[i] ? files[i].name : "Subir archivo" }}</label
+                        >{{
+                          files[0] ? files[0].name : "Subir carta de invitación"
+                        }}</label
                       >
                     </label>
                   </div>
@@ -93,20 +83,218 @@
                     <button
                       class="btn btn-circle btn-remove btn-sm m-1"
                       type="button"
-                      (click)="removeFile(i)"
+                      (click)="removeFile(0)"
                     >
                       <i class="fa fa-minus"></i>
                     </button>
+                  </div>
+                </div>
+                <!-- AFILIACION A SALUD -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="1"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 1)"
+                      />
+                      <label
+                        [for]="1"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{
+                          files[1] ? files[1].name : "Subir afiliación a salud"
+                        }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
                     <button
-                      class="btn btn-circle btn-add btn-sm m-1"
+                      class="btn btn-circle btn-remove btn-sm m-1"
                       type="button"
-                      (click)="archivos.push(1)"
-                      *ngIf="isLast && archivos.length < 7"
+                      (click)="removeFile(1)"
                     >
-                      <i class="fa fa-plus"></i>
+                      <i class="fa fa-minus"></i>
                     </button>
                   </div>
                 </div>
+                <!-- Certificación bancaria -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="2"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 2)"
+                      />
+                      <label
+                        [for]="2"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{
+                          files[2]
+                            ? files[2].name
+                            : "Subir certificación bancaria"
+                        }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(2)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Copia del documento de identidad -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="3"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 3)"
+                      />
+                      <label
+                        [for]="3"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{
+                          files[3]
+                            ? files[3].name
+                            : "Subir documento de identidad"
+                        }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(3)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- poliza estudiantial -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="4"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 4)"
+                      />
+                      <label
+                        [for]="4"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{
+                          files[4] ? files[4].name : "Subir poliza estudiantial"
+                        }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(4)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ARL -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="5"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 5)"
+                      />
+                      <label
+                        [for]="5"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{ files[5] ? files[5].name : "Subir ARL" }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(5)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- CONSTANCIA DE MATRICULA -->
+                <div
+                  class="arrayLike formfloatig d-flex justify-content-between mt-2"
+                >
+                  <div class="document_new">
+                    <label class="btn-btn-default cursor is-hoverable">
+                      <div class="fa fa-upload fa-2x"></div>
+                      <input
+                        [id]="6"
+                        class="file-upload"
+                        type="file"
+                        (change)="onUpload($event, 6)"
+                      />
+                      <label
+                        [for]="6"
+                        class="is-hoverable cursor link-success"
+                        style="margin-left: 10px"
+                        >{{
+                          files[6]
+                            ? files[6].name
+                            : "Subir constancia de matrícula"
+                        }}</label
+                      >
+                    </label>
+                  </div>
+                  <div class="buttons">
+                    <button
+                      class="btn btn-circle btn-remove btn-sm m-1"
+                      type="button"
+                      (click)="removeFile(6)"
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                
               </div>
             </div>
           </div>

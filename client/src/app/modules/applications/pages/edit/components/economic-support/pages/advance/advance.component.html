@@ -122,8 +122,7 @@
                       placeholder=" "
                       [ngClass]="{
                         'is-invalid':
-                          (submitted && f['id'].errors) ||
-                          isInvalidForm('id')
+                          (submitted && f['id'].errors) || isInvalidForm('id')
                       }"
                     />
                   </div>
@@ -215,13 +214,10 @@
                           isInvalidForm('account_type')
                       }"
                     >
-                      <option value="" selected disabled >
+                      <option value="" selected disabled>
                         Selecciona el tipo de cuenta
                       </option>
-                      <option 
-                        *ngFor="let tipo of ACCOUNT_TYPE"
-                        [value]="tipo"
-                        >
+                      <option *ngFor="let tipo of ACCOUNT_TYPE" [value]="tipo">
                         {{ tipo }}
                       </option>
                     </select>
@@ -253,12 +249,26 @@
                       "
                       [value]="
                         formatter.format(fromDate)
-                          ? formatter.format(fromDate) +
-                            ' - ' +
-                            formatter.format(toDate)
+                          ? formatter.format(fromDate)
                           : null
                       "
                     />
+
+                    <div class="col-sm-6 col-xs-6 col-md-6">
+                      <div class="input-group" (click)="datepicker.toggle()">
+                        <input
+                          #dpToDate
+                          class="form-control"
+                          placeholder="yyyy-mm-dd"
+                          name="dpToDate"
+                          formControlName="end_date"
+                          [value]="formatter.format(toDate)"
+                          (input)="
+                            toDate = validateInput(toDate, dpToDate.value)
+                          "
+                        />
+                      </div>
+                    </div>
                     <button
                       #buttonEl
                       class="btn btn-outline-secondary"
@@ -268,20 +278,6 @@
                       <i class="fa fa-calendar"> </i>
                     </button>
                   </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-xs-6 col-md-6" hidden>
-                <div class="input-group" (click)="datepicker.toggle()">
-                  <input
-                    #dpToDate
-                    class="form-control"
-                    placeholder="yyyy-mm-dd"
-                    name="dpToDate"
-                    formControlName="end_date"
-                    [value]="formatter.format(toDate)"
-                    (input)="toDate = validateInput(toDate, dpToDate.value)"
-                  />
                 </div>
               </div>
             </div>

@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
-from app.domain.models import Application, User, ApplicationSubType, Application_status, Department, ApplicationType, ApplicationSubType
+from app.domain.models import Application, User, ApplicationSubType, Application_status, Department, ApplicationSubType, UserApplication
 from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_statusCreate
 from app.domain.policies import ApplicationPolicy
 from app.core.logging import get_logging
@@ -26,8 +26,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         )
         self.policy.get(who=who, to=application)
         return application
-    
-    
+
     def get_multi(
         self,
         db: Session,
@@ -51,12 +50,16 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
+        
+        if who.rol.scope == 7:
+            queries.append(UserApplication.user_id == who.id)
 
-        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
-            queries += [User.department_id == who.department.id]
+        if (who.rol.scope == 6):
+            queries.append(Department.school_id == who.department.school_id)
+        
+        if who.rol.scope == 5:
+            queries.append(Department.school_id == who.department.school_id)
 
-        if userrol.rol.scope == 5:
-            queries += [Department.school_id == who.department.school_id]
 
 
         # if who.rol.scope >= 9:
@@ -96,7 +99,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return [*set(res)]
+            return list(*set(res))
 
         objs_db = (db.query(Application)
                    .order_by(desc(Application.id))
@@ -109,7 +112,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .all())
 
         return objs_db
-    
+
     def get_all(
         self,
         db: Session,
@@ -130,8 +133,11 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
-        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
-            queries += [User.department_id == who.department.id]
+        if who.rol.scope == 7:
+            queries += [Department.school_id == who.department.school_id]
+
+        if (who.rol.scope == 6):
+            queries += [Department.school_id == who.department.school_id]
 
         if userrol.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
@@ -183,8 +189,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .all())
 
         return objs_db
-    
-    
 
     def create(
         self,
@@ -203,7 +207,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         )
         if status == 1:
             create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
@@ -228,7 +232,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         )
         if status == 1:
             create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()

@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any
 from app.core.logging import get_logging
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
@@ -18,6 +18,7 @@ from .base import CRUDBase
 
 log = get_logging(__name__)
 
+
 class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, EconomicSupportUpdate, EconomicSupportPolicy]):
 
     # ---------- CREATE ECONOMIC SUPPORT ----------
@@ -30,13 +31,13 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
         obj_in: EconomicSupport,
     ) -> EconomicSupport:
 
-        
-        self.policy.create(who=who,application_sub_type_id=application_sub_type_id)
+        self.policy.create(
+            who=who, application_sub_type_id=application_sub_type_id)
 
         log.debug('salio de la policy', obj_in)
-    
+
         return await db.save(obj_in)
-    
+
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
         economic_support = await db.find_one(EconomicSupport, EconomicSupport.id == id)
         log.debug(economic_support.dict())
@@ -50,7 +51,13 @@ class CRUDEconomicSupport(CRUDBase[EconomicSupport, EconomicSupportCreate, Econo
         await db.save(economic_support)
         return None
 
+    async def compliment(self, db: AIOSession, *, id: ObjectId, compliment: Any) -> EconomicSupport:
+        economic_support = await db.find_one(EconomicSupport, EconomicSupport.id == id)
+        self.policy.compliment(economic_support=economic_support)
+        economic_support.compliment = compliment
+        db_obj = await db.save(economic_support)
+        return db_obj
 
 
-policy   = EconomicSupportPolicy()
+policy = EconomicSupportPolicy()
 economic_support = CRUDEconomicSupport(EconomicSupport, policy=policy)

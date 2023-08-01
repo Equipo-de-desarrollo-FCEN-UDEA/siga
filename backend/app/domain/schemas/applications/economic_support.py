@@ -6,9 +6,9 @@ from pydantic import BaseModel, Field
 from app.domain.schemas.application import ApplicationResponse
 
 class ApplicationData(BaseModel):
-    application_type: str = Field(min_length=5, max_length=255)
-    project: str = Field(min_length=5, max_length=255) 
-    goal: str = Field(min_length=5, max_length=255) 
+    application_type: str = Field(max_length=255)
+    project: str = Field(max_length=255) 
+    goal: str = Field(max_length=255) 
 
 class PersonalData(BaseModel):
     application_for: str = Field(max_length=255)
@@ -19,16 +19,16 @@ class PersonalData(BaseModel):
     landline: str = Field(max_length=255) 
     email: str = Field(max_length=255)
     phone: str = Field(max_length=255)
-    institution: str | None = Field(max_length=255)
-    academic_unit: str | None = Field(max_length=255)
+    institution: str | None
+    academic_unit: str | None 
 
 class tickets(BaseModel):
     #birthdate: datetime
-    place_birth: str = Field(max_length=255)
-    departure_date: datetime
-    departure_place: str = Field(max_length=255)
+    place_birth: str | None
+    departure_date: datetime | None
+    departure_place: str | None
     arrival_date: datetime
-    arrival_place: str = Field(max_length=255)
+    arrival_place: str | None
 
 #Avances, viaticos y apoyos economicos
 class AdvancePayment(BaseModel):
@@ -58,6 +58,11 @@ class EconomicSupportBase(BaseModel):
     tickets: tickets
     payment: AdvancePayment
     documents: list[Any]
+
+class Compliment(BaseModel):
+    documents: list[Any]
+    emails: list[str]
+    observation: str = Field(max_length=300)
 
 
 class EconomicSupportCreate(EconomicSupportBase):

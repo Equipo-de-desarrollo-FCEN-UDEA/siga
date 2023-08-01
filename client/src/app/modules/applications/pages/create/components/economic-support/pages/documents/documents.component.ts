@@ -27,12 +27,7 @@ export class DocumentsComponent {
   }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() {
-    if (this.files.length > 0) {
-      return this.files;
-    }
-    return;
-  }
+  sendForms() { return this.files; }
 
   // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
@@ -48,13 +43,16 @@ export class DocumentsComponent {
   }
 
   removeFile(index: number) {
-    this.files[index] = undefined
+    this.files[index] = undefined;
     console.log(this.files);
   }
 
   validSize() {
-    const FILTERED_FILES = this.files.filter(file => file !== undefined);
-    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce((a, b) => a + b, 0);
+    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
+    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
+      (a, b) => a + b,
+      0
+    );
     return SIZE < 2 * 1024 * 1024;
   }
 
@@ -68,7 +66,6 @@ export class DocumentsComponent {
       }
     });
 
-  
     return flag;
   }
 }

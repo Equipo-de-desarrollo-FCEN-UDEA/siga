@@ -10,7 +10,9 @@ from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
+
 class CRUDExtra(CRUDBase[Extra, ExtraCreate, ExtraUpdate, ExtraPolicy]):
+
     def get_multi_intern(
         self,
         db: Session,
@@ -29,10 +31,19 @@ class CRUDExtra(CRUDBase[Extra, ExtraCreate, ExtraUpdate, ExtraPolicy]):
                 offset(skip).\
                 limit(limit).\
                 all()
-                #filter(Extra.department_id == who.department.id).\
+            # filter(Extra.department_id == who.department.id).\
             log.debug(db_objs)
         return db_objs
 
-policy = ExtraPolicy()
+    def get_by_department(
+            self,
+            db: Session,
+            who: User,
+            *,
+            department_id: int,
+    ):
+        return db.query(Extra).filter(Extra.department_id == department_id).all()
 
+
+policy = ExtraPolicy()
 extra = CRUDExtra(Extra, policy=policy)

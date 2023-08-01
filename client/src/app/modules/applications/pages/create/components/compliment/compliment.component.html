@@ -61,8 +61,8 @@
               <div class="archivos" style="width:auto; margin-left: 10px;">
                   <label class="btn-btn-default">
                       <div class="fa fa-upload fa-2x "></div>
-                      <input [id]="i" class="file-upload" type="file" (change)='onUpload($event,i)'/>
-                      <label [for]="i"  style="margin-left: 10px;">{{files[i] ? files[i].name : 'Subir archivo' }}</label>
+                      <input [id]="i" class="file-upload cursor" type="file" (change)='onUpload($event,i)'/>
+                      <label [for]="i" class='cursor' style="margin-left: 10px;">{{files[i] ? files[i].name : 'Subir archivo' }}</label>
                   </label>
 
               </div>
