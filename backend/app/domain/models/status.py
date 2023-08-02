@@ -16,4 +16,3 @@ class Status(Base):
 
     # relations
     application_status = relationship("Application_status", back_populates="status")
-    user_application = relationship("UserApplication", back_populates="status")

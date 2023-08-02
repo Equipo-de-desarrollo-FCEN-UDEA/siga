@@ -1,10 +1,18 @@
-from pydantic import BaseModel, Field
+import json
+from pydantic import BaseModel, validator
 
 class UserApplicationBase(BaseModel):
     user_id: int
     application_id: int
     response: int
-    amout: int
+    amount: int
+    document: list
+
+    @validator("document", pre=True)
+    def parse_document(cls, value):
+        if isinstance(value, str):
+            return json.loads(value)
+        return value
 
 class UserApplicationCreate(UserApplicationBase):
     pass
@@ -19,10 +27,17 @@ class UserApplicationInDB(UserApplicationBase):
         orm_mode = True
 
 class UserApplicationResponse(BaseModel):
-    user_id: int
     application_id: int
+    user_id: int
     response: int
-    amout: int
+    amount: int
+    document: list
+    
+    @validator("document", pre=True)
+    def parse_document(cls, value):
+        if isinstance(value, str):
+            return json.loads(value)
+        return value
 
     class Config:
         orm_mode = True

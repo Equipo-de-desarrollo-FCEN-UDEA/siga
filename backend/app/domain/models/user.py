@@ -29,17 +29,16 @@ class User(Base):
     hashed_password = Column(String(300), nullable=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    active_rol = Column(Integer, nullable=True)
 
     # relations
     department_id = Column(Integer, ForeignKey("department.id"))
     department = relationship("Department", back_populates="users")
+
+    user_application = relationship("UserApplication", back_populates="user")
     
     applications = relationship("Application", back_populates="user")
 
     extra = relationship("Extra", back_populates="coordinador")
 
-    user_application = relationship("UserApplication", back_populates="user")
     userrol = relationship("UserRol", back_populates="users")
-    # rol_id = Column(Integer, ForeignKey("rol.id"))
-    # rol = relationship("Rol", back_populates="users")
-    applications = relationship("Application", back_populates="user")

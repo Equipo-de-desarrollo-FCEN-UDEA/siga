@@ -5,6 +5,7 @@ from pydantic import BaseModel, validator
 
 from .application_subtype import ApplicationSubTypeInside
 from .application_status import Application_statusResponse
+from .user_application import UserApplicationResponse
 from .user import UserResponse
 
 
@@ -37,6 +38,7 @@ class ApplicationInDB(ApplicationUpdate):
 
 class ApplicationResponse(ApplicationInDB):
     application_sub_type: Optional[ApplicationSubTypeInside]
+    user_application: Optional[List[UserApplicationResponse]]
     application_status: Optional[List[Application_statusResponse]]
     user: UserResponse
 

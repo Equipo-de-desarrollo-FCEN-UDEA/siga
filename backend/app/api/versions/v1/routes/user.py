@@ -120,10 +120,37 @@ def update_user(
     Endpoint to update an user.
     """
     try:
-        user = crud.user.get(db=db, id=id, who=current_user)
+        user = crud.user.get(db=db, id=id, who=current_user)    
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
-
+    
+    #This part works when you have done changes in rol select
+    if (user_in.get('changes_rol',True)):
+        try:
+            db_obj = crud.userrol.get_rol_by_iduser(db=db, who=current_user, user_id=id)
+        except BaseErrors as e:
+            raise HTTPException(status_code=e.code, detail=e.detail)
+        for obj in db_obj:
+            try:
+                delete_rol = crud.userrol.delete(db=db, id=obj.id, who=current_user)
+            except BaseErrors as e:
+                raise HTTPException(status_code=e.code, detail=e.detail)
+        
+        userroles = user_in.get('rol_id')
+        for roles in userroles:
+            try:
+                createrol = crud.userrol.create(db=db, user = user, 
+                                                rol_id = roles.get("id"),
+                                                 description = roles.get("description")+ 
+                                                 " de " + user.department.description,
+                                                   current_user=current_user)
+            except BaseErrors as e:
+                raise HTTPException(status_code=e.code, detail=e.detail)
+            except KeyError as e:
+                raise HTTPException(status_code=422, detail=str(e))
+            except ValueError as e:
+                raise HTTPException(status_code=422, detail=str(e))
+       
     return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
 
 
@@ -148,6 +175,30 @@ def update_user_password(
 
     return crud.user.update_password(
         db=db, db_obj=user, password=password, confirmPassword=confirmpassword, who=current_user
+    )
+
+@router.patch("/change-active-rol", status_code=200,
+              response_model=schemas.UserResponse)
+def select_active_rol(
+    active_rol: int,
+    *,
+    db: Session = Depends(db.get_db),
+    current_user: schemas.UserInDB = Depends(
+        jwt_bearer.get_current_active_user)
+)-> schemas.UserResponse:
+    """
+    Endpoint to select user's active rol.
+    """
+    try:
+        user = crud.user.get(db=db, id=current_user.id, who=current_user)
+        #user_roles = crud.user.get_middleware(db, id=user.id).__dict__['assigned_roles']
+        user_roles = crud.user.get_middleware(db, id=user.id).assigned_roles
+        log.debug(user.__dict__)
+        log.debug(user_roles)
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    return crud.user.update_active_role(db=db, db_obj=user, new_active_rol=active_rol, assigned_roles=user_roles, who=current_user
     )
 
 

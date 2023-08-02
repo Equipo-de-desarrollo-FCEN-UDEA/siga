@@ -14,7 +14,9 @@ import { DocumentsResponse, file_path } from '@interfaces/documents';
 import {
   IAdvancePayment,
   IApplicationData,
+  IDependence,
   IEconomicSupportCreate,
+  IEconomicSupportResponse,
   IPersonalData,
   ITickets,
 } from '@interfaces/applications/economic_support-interface';
@@ -30,6 +32,7 @@ import { PersonalDataComponent } from './pages/personal-data/personal-data.compo
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { AdvanceComponent } from './pages/advance/advance.component';
 import { DocumentsComponent } from './pages/documents/documents.component';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-economic-support',
@@ -68,7 +71,7 @@ export class EconomicSupportComponent implements OnInit {
   ) {}
 
   public form = this.fb.group({
-    application_sub_type_id: [this.applicationSubtype],
+    application_sub_type_id: [this.applicationSubtype.dependencies],
     application_data: [this.applicationData.form.value],
     personal_data: [this.personalData.form.value],
     tickets: [this.tickets.form.value],
@@ -102,22 +105,19 @@ export class EconomicSupportComponent implements OnInit {
   }
 
   submit() {
-    this.submitted = true;
-    //ALMACENA LOS DATOS DE LOS COMPONENTES HIJOS EN CONSTANTES
-    const APPLICATION_DATA: IApplicationData = Object(
-      this.application_data_form.sendForms()
-    );
-    const PERSONAL_DATA: IPersonalData = Object(
-      this.personal_data_form.sendForms()
-    );
-    const TICKETS: ITickets = Object(this.tickets_form.sendForms());
-    const PAYMENT: IAdvancePayment = Object(this.advance_form.sendForms());
-    const DOCUMENTS: file_path[] = Object(this.documents_form.sendForms());
-    const APPLICATION_SUB_TYPE =  this.application_sub_type_form.sendForms();
+    const DEPENDENCIES =
+      this.application_sub_type_form.sendForms() as IDependence[];
+    const APPLICATION_DATA =
+      this.application_data_form.sendForms() as IApplicationData;
+    const PERSONAL_DATA = this.personal_data_form.sendForms() as IPersonalData;
+    const TICKETS = this.tickets_form.sendForms() as ITickets;
+    const PAYMENT = this.advance_form.sendForms() as IAdvancePayment;
+    const DOCUMENTS = this.documents_form.sendForms() as file_path[];
+    const APPLICATION_SUB_TYPE = 14;
 
-
-    let economic_support: any = {
+    let economic_support: IEconomicSupportCreate = {
       application_sub_type_id: APPLICATION_SUB_TYPE,
+      dependence: DEPENDENCIES,
       application_data: APPLICATION_DATA,
       personal_data: PERSONAL_DATA,
       tickets: TICKETS,
@@ -125,11 +125,16 @@ export class EconomicSupportComponent implements OnInit {
       documents: DOCUMENTS,
     };
 
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+    let economicSupportForm: Observable<IEconomicSupportResponse>;
+
+    // Validar que se hayan llenado todos los campos
+    const IS_INVALID_DOCUMENT = DOCUMENTS.length < 7;
+    const IS_INVALID_DEPENDENCE = DEPENDENCIES.length === 0;
+
+    if (IS_INVALID_DEPENDENCE) {
       Swal.fire({
         title: 'Error',
-        text: '¡Revise que haya llenado todos los campos que el Formato sugiere!',
+        text: '¡Debe seleccionar al menos una dependencia!',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
@@ -137,36 +142,45 @@ export class EconomicSupportComponent implements OnInit {
       return;
     }
 
-    let economic_support_form = this.economicSupportSvc.putEconomicSupport(
+    if (IS_INVALID_DOCUMENT) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Revise que haya llenado todos los campos y subidos todos los documentos que la solicitud sugiere!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
+    economicSupportForm = this.economicSupportSvc.putEconomicSupport(
       economic_support as IEconomicSupportCreate,
       this.id
     );
 
     console.log(economic_support);
-    if (DOCUMENTS.length > 0) {
-      economic_support_form = this.documentSvc
-        .postDocument(DOCUMENTS as unknown as File[])
-        .pipe(
-          switchMap((data: any) => {
-            if (data) {
-              //console.log(DOCUMENTS);
-              console.log(data);
-              this.form.patchValue({
-                documents: data.files_paths,
-              });
-            }
-            economic_support.documents = data.files_paths;
-            console.log(economic_support);
-            return (economic_support_form =
-              this.economicSupportSvc.putEconomicSupport(
-                economic_support as IEconomicSupportCreate,
-                this.id
-              ));
-          })
-        );
-    }
+    economicSupportForm = this.documentSvc
+      .postDocument(DOCUMENTS as unknown as File[])
+      .pipe(
+        switchMap((data: any) => {
+          if (data) {
+            //console.log(DOCUMENTS);
+            console.log(data);
+            this.form.patchValue({
+              documents: data.files_paths,
+            });
+          }
+          economic_support.documents = data.files_paths;
+          console.log(economic_support);
+          return (economicSupportForm =
+            this.economicSupportSvc.putEconomicSupport(
+              economic_support as IEconomicSupportCreate,
+              this.id
+            ));
+        })
+      );
 
-    economic_support_form.subscribe({
+    economicSupportForm.subscribe({
       next: (data) => {
         Swal.fire({
           title: '¡Solicitud actualizada!',

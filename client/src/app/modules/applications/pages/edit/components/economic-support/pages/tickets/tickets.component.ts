@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbDate, NgbDateStruct, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +9,7 @@ import { EconomicSupportService } from '@services/applications/economic-support.
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss'],
 })
-export class TicketsComponent implements OnInit {
+export class TicketsComponent {
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -48,9 +48,7 @@ export class TicketsComponent implements OnInit {
 
     private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
@@ -66,6 +64,7 @@ export class TicketsComponent implements OnInit {
       });
     });
   }
+
 
   send() {
     this.sendForm.emit(this.form.value);
@@ -100,6 +99,10 @@ export class TicketsComponent implements OnInit {
       this.toDate = null;
       this.fromDate = date;
     }
+    this.form.patchValue({
+      departure_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
+      arrival_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+    });
   }
 
   isHovered(date: NgbDate) {

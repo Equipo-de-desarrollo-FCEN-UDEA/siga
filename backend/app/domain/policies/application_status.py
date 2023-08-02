@@ -14,7 +14,7 @@ class Application_statusPolicy(Base[Application_status, Application_statusCreate
     def create(self, who: User, to: Application) -> tuple[str, list[int]]:
         status_fluxes = to.application_sub_type.application_type.status_flux
         actual_status = to.application_status[-1].status.name
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         for i, flux in enumerate(status_fluxes):
             if actual_status == flux["status"]:
                 next_status = i+1

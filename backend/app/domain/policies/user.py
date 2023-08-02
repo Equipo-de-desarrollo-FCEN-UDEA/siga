@@ -1,4 +1,4 @@
-from typing import Union, Dict, Any
+from typing import Union, Dict, Any, List
 
 from app.domain.models import User
 from app.domain.schemas.user import UserCreate
@@ -22,8 +22,8 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     def get(self, who: User, to: User) -> None:
 
         #Aquí es donde se debe elegir el rol         
-        userrol = who.userrol[0]
-        touser = to.userrol[0]
+        userrol = who.userrol[who.active_rol]
+        touser = to.userrol[to.active_rol]
 
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
@@ -42,7 +42,7 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     # This policie decide who can see the list of users
     def get_multi(self, who: User) -> None:
         #Aquí es donde se debe elegir el rol
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
 
         if not (userrol.rol.scope < 9):
             raise user_401
@@ -58,7 +58,7 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
         #if not (who.rol.scope < 9) and not (who.id == to.id):
             raise user_401
@@ -69,7 +69,7 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
 
     # This policie handle update password, maybe it will be removed
     def update_password(self, who: User, to: User, password, confirmpassword) -> None:
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         #if not (who.rol.scope < 9) and not (who.id == to.id):
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
@@ -77,9 +77,19 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
             raise user_diferent_password
         return None
 
+    # This policie handle update password, maybe it will be removed
+    def update_active_rol(self, who: User, to: User, new_active_rol: int, assigned_roles: List[int]) -> None:
+        userrol = who.userrol[who.active_rol]
+        #if not (who.rol.scope < 9) and not (who.id == to.id):
+        if not (userrol.rol.scope < 9) and not (who.id == to.id):
+            raise user_401
+        if new_active_rol not in assigned_roles:
+            raise user_selecting_rol
+        return None
+
     # This policie handle who can delete an user, it will be removed
     def delete(self, who: User, to: User | None) -> None:
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         if not (userrol.rol.scope < 9):
         #if not (who.rol.scope < 9):
             raise user_401

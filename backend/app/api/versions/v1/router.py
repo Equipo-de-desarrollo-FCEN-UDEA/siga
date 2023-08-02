@@ -14,7 +14,8 @@ from app.api.versions.v1.routes import (
     application_subtype,
     application,
     application_status,
-    holiday
+    holiday,
+    user_application
 )
 
 from app.api.versions.v1.routes.applications import permission, commission, full_time, hour_aval, vacation, economic_support
@@ -57,6 +58,9 @@ api_route.include_router(holiday.router,
 
 api_route.include_router(extra.router,
                          prefix="/extra", tags=['extra'])
+
+api_route.include_router(user_application.router,
+                         prefix="/user_application", tags=['user_application'])
 
 # Applications
 api_route.include_router(commission.router,
