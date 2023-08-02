@@ -338,11 +338,11 @@ async def generate_act(
                      'backres': (back.names + ' ' + back.last_names).title()
                      }]
         log.debug(backres)
-        if current_user.userrol[0].rol.scope in [6, 7]:
+        if current_user.userrol[current_user.active_rol].rol.scope in [6, 7]:
             path = documents.hour_aval_act_generation(
                 user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')
             await crud.hour_aval.update_document(engine, id=mongo_id, name='aval-instituto.pdf', path=path)
-        elif current_user.userrol[0].rol.scope == 5:
+        elif current_user.userrol[current_user.active_rol].rol.scope == 5:
             path = documents.hour_aval_act_generation(
                 user, hour_aval, act, users, backres, 'houraval.act.school.html.j2')
             await crud.hour_aval.update_document(engine, id=mongo_id, name='aval-facultad.pdf', path=path)

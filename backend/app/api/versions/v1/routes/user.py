@@ -124,6 +124,8 @@ def update_user(
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     
+    userupdate = crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
+    #print(user_in)
     #This part works when you have done changes in rol select
     if (user_in.get('changes_rol',True)):
         try:
@@ -151,7 +153,7 @@ def update_user(
             except ValueError as e:
                 raise HTTPException(status_code=422, detail=str(e))
        
-    return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
+    return userupdate
 
 
 @router.patch("/new-password", status_code=200,

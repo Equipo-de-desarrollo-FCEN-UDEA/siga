@@ -39,7 +39,7 @@ export class UserViewComponent {
       (user) => {
         console.log(user)
         this.user = user
-        this.userrol=this.user.userrol[0].rol.name;
+        this.userrol=this.user.userrol[user.active_rol].rol.name;
       }
     );
   }
