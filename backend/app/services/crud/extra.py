@@ -22,7 +22,7 @@ class CRUDExtra(CRUDBase[Extra, ExtraCreate, ExtraUpdate, ExtraPolicy]):
         limit: int = 100
     ) -> List[Department]:
         self.policy.get_multi(who=who)
-        scope = who.userrol[0].rol.scope
+        scope = who.userrol[who.active_rol].rol.scope
         if scope <= 3:
             db_objs = db.query(Extra).offset(skip).limit(limit).all()
         else:

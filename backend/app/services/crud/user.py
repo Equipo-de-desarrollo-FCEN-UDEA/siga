@@ -60,7 +60,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         self.policy.get_multi(who=who)
         
         #Verify the rol for current user
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         # queries = [User.active == active, Rol.scope >= who.userrol.rol.scope]
 
         # if (who.userrol.rol.scope == 7) or (who.userrol.rol.scope == 6):
