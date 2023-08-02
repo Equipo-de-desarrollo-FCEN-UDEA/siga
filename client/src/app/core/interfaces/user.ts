@@ -4,6 +4,7 @@ import { UserRolResponse } from "./userrol";
 export interface UserBase {
     last_names: string;
     names: string;
+    active_rol: number;
     identification_number: string;
     email: string;
     identification_type: string;
