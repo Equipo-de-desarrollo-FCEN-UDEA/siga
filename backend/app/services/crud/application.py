@@ -57,6 +57,13 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if who.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)
 
+        ### Para usuarios asignados como coordinadores de grupos de investigación.
+        for_coordinators = (db.query(UserApplication)
+                            .filter(UserApplication.user_id == who.id)
+                            .limit(limit)
+                            .offset(skip)
+                            .all())
+        coordinator_queries = [Application.id==application.application_id for application in for_coordinators]
 
         if search is not None:
             columns = [
@@ -92,7 +99,18 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .limit(limit)
                    .offset(skip)
                    .all())
+        
+        coordinators_objs_db = (db.query(Application)
+                   .order_by(desc(Application.id))
+                   .join(User)
+                   .join(ApplicationSubType)
+                   .join(Department)
+                   .filter(*coordinator_queries)
+                   .limit(limit)
+                   .offset(skip)
+                   .all())
 
+        objs_db += coordinators_objs_db
         return objs_db
 
     def get_all(
