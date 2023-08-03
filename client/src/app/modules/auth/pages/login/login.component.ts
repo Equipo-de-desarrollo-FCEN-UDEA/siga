@@ -49,26 +49,54 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/home']);
-    }
+      this.activateRoute.params.pipe(
+        switchMap(params => this.userService.getUser(params['id']))
+      ).subscribe({
+        next: (user: UserResponse) => {
+          this.userRoles = user.userrol;
+          console.log(this.userRoles);
+        },
+        error: (error: any) => {
+          console.log('Error al obtener el usuario', error);
+          this.router.navigate(['/seleccionar-rol']);
+        }
 
-    this.activateRoute.params.pipe(
-      switchMap(params => this.userService.getUser(params['id']))
-    ).subscribe({
-      next: (user: UserResponse) => {
-        this.userRoles = user.userrol;
-        console.log(this.userRoles);
-      },
-      error: (error: any) => {
-        console.log('Error al obtener el usuario', error);
-      }
-    });
+      });
+    }
   }
 
   onSubmitLogin() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
+    this.loading = true;
+
+    this.authService.login(this.loginForm.value as Auth).subscribe({
+      next: () => {
+        // El usuario ya ha iniciado sesión y ahora podemos usar el ID para obtener los roles.
+        if (this.userRoles == undefined) { return; }
+  
+        if (this.userRoles.length > 1) {
+          console.log('Hemos entrado');
+          this.router.navigate(['/seleccionar-rol']);
+        } else {
+          this.router.navigate(['/home']);
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        this.activation = true;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
+
+    /* this.submitted = true;
+    // stop here if form is invalid
+    if (this.loginForm.invalid) { return; }
+
     this.loading = true;  
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
@@ -86,5 +114,5 @@ export class LoginComponent implements OnInit {
       }
     })
     this.loading = false;
-  }
+  } */
 }
