@@ -1,18 +1,21 @@
 //angular
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 //sweetalert2
 import Swal from 'sweetalert2';
 
 //interfaces
 import { Auth } from '@interfaces/auth';
+import { UserResponse } from '@interfaces/user';
+import { UserRolResponse } from '@interfaces/userrol';
 
 //service
 import { AuthService } from '@services/auth.service';
 import { LoaderService } from '@services/loader.service';
-import { UserRolResponse } from '@interfaces/userrol';
+import { UserService } from '@services/user.service';
+import { switchMap } from 'rxjs';
 
 
 @Component({
@@ -39,13 +42,27 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private userService: UserService,
     private authService: AuthService,
+    private activateRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
     }
+
+    this.activateRoute.params.pipe(
+      switchMap(params => this.userService.getUser(params['id']))
+    ).subscribe({
+      next: (user: UserResponse) => {
+        this.userRoles = user.userrol;
+        console.log(this.userRoles);
+      },
+      error: (error: any) => {
+        console.log('Error al obtener el usuario', error);
+      }
+    });
   }
 
   onSubmitLogin() {
@@ -55,7 +72,14 @@ export class LoginComponent implements OnInit {
     this.loading = true;  
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        if (this.userRoles == undefined) {return;}
+
+        if (this.userRoles.length > 1) {
+          console.log('Hemos entrado');
+          this.router.navigate(['/seleccionar-rol']);
+        } else { 
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         this.activation = true;

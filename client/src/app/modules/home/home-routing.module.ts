@@ -12,7 +12,7 @@ import { RolSelectionComponent } from './pages/rol-selection/rol-selection.compo
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'create-application', component: CreateApplicationComponent },
-  { path: 'seleccionar-role', component: RolSelectionComponent },
+  { path: 'seleccionar-rol', component: RolSelectionComponent },
 ];
 
 @NgModule({
