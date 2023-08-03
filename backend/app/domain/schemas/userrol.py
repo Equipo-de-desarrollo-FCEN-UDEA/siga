@@ -4,7 +4,7 @@ from typing import Optional
 
 
 class UserRolBase(BaseModel):
-    rol_id: int #SE CAMBIO A OPTIONAL PORQUE SALIA UN ERROR MIRAR BIEN
+    rol_id: int
     user_id: int
     description: Optional[str]
 

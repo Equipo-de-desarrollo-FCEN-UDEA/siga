@@ -9,14 +9,16 @@ import { UserViewComponent } from './pages/user-view/user-view.component';
 import { UserEditComponent } from './pages/user-edit/user-edit.component';
 
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';  
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ChangeRoleComponent } from './pages/change-role/change-role.component';  
 
 @NgModule({
   declarations: [
     UserListComponent,
     UserViewComponent,
     UserEditComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    ChangeRoleComponent
   ],
   imports: [
     CommonModule,
