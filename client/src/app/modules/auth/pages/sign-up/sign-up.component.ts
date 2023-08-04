@@ -97,7 +97,7 @@ export class SignUpComponent {
     // verificacion de errores
     if (this.createUserForm.invalid) { return; }
 
-    this.userService.postUser(this.createUserForm.value as UserCreate).subscribe({
+    this.userService.postUser(this.createUserForm.value as UserCreate, this.createUserForm.value.rol_id as string).subscribe({
       next: (res: any) => {
         Swal.fire({
           title: 'Creado',
@@ -111,6 +111,7 @@ export class SignUpComponent {
       error: (err) => {
       },
     });
+    
   }
 
   // Departamentos dependiendo de la facultad

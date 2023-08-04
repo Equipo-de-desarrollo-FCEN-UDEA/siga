@@ -53,8 +53,8 @@ export class UserService {
   }
 
   // service to create a new user
-  postUser(body: UserCreate): Observable<UserResponse> {
-    return this.http.post<UserResponse>(this.urlEndpoint, body)
+  postUser(body: UserCreate,rol_id:string): Observable<UserResponse> {
+    return this.http.post<UserResponse>(this.urlEndpoint+'?rol_id='+rol_id, body)
   }
 
   // service to update a user
