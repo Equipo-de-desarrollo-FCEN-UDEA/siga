@@ -15,9 +15,11 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
         pass
 
     # This policie handle who can create a userrrol and if himself is trying to deactive
-    def create(self, who: UserResponse, to: User) -> None:
+    def create(self, who: UserResponse, to: User, rol_id: int) -> None:
         if (who.userrol == []):
             pass
+        if rol_id in [rol.rol_id for rol in who.userrol]:
+            raise user_exist_rol
         else:
             userrol = to.userrol[0]
             if not (userrol.rol.scope < 9):

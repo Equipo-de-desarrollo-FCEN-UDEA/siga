@@ -26,7 +26,7 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
             user_id = user.id, description = description)
 
         db_obj = UserRol(**dict(data))
-        self.policy.create(user,current_user)
+        self.policy.create(user,current_user,rol_id)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
