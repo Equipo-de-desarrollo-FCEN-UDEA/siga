@@ -43,6 +43,7 @@ import { forkJoin } from 'rxjs';
 export class EconomicSupportComponent implements OnInit {
   public application_id: number = 0;
   public user_id: number = 0;
+  public activeRole: number = 0;
   public userRol: string = '';
 
   public dependecies: any[] = [];
@@ -111,8 +112,9 @@ export class EconomicSupportComponent implements OnInit {
     );
     USER_SVC.subscribe((user) => {
       this.user_id = user.id;
-      this.userRol = 'Coordinador';
-      console.log(user.userrol)
+      this.activeRole = user.active_rol;
+      this.userRol = user.userrol[this.activeRole].rol.name;
+      console.log(this.userRol)
       if (this.userRol === 'Coordinador') {
         this.userApplicationSvc
           .getUserApplication(this.application_id)

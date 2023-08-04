@@ -41,7 +41,7 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
         skip: int = 0,
         limit: int = 100
     ) -> List[UserRol]:
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         objs_db = db.\
             query(UserRol).\
             filter(UserRol.user_id >= userrol.user_id).\
@@ -78,7 +78,7 @@ class CRUDUserRol(CRUDBase[UserRol, UserRolCreate, UserRolUpdate, UserRolPolicy]
         return (db.
                 query(UserRol).
                 filter(UserRol.rol_id <= lookrol).
-                filter(UserRol.rol_id > who.userrol[0].rol_id).
+                filter(UserRol.rol_id > who.userrol[who.active_rol].rol_id).
                 offset(skip).
                 limit(limit).
                 all())

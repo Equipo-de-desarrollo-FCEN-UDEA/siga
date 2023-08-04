@@ -19,7 +19,7 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
         if (who.userrol == []):
             pass
         else:
-            userrol = to.userrol[0]
+            userrol = to.userrol[to.active_rol]
             if not (userrol.rol.scope < 9):
                 raise user_401
             # if 'active' in update_data:
@@ -29,7 +29,7 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
 
     # This policie handle who can delete an user, it will be removed
     def delete(self, who: User, to: UserRolCreate | None) -> None:
-        userrol = to.userrol[0]
+        userrol = who.userrol[who.active_rol]
         if not (userrol.rol.scope < 9):
                 raise user_401
         return None
@@ -39,15 +39,7 @@ class UserRolPolicy(Base[UserRol, UserRolCreate, UserRolUpdate]):
          return super().get_multi(who)
     
     def get_users(self,who:User) -> None:
-         userrol = who.userrol[0]
+         userrol = who.userrol[who.active_rol]
          if not (userrol.rol.scope < 9):
                 raise user_401
          return None
-    
-    # This policie handle who can delete an user, it will be removed
-    def delete(self, who: User, to: User | None) -> None:
-        userrol = who.userrol[0]
-        if not (userrol.rol.scope < 9):
-        #if not (who.rol.scope < 9):
-            raise user_401
-        return None

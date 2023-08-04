@@ -24,7 +24,7 @@
           >
             <option value="" disabled selected>Seleciona un rol</option>
             <option [value]="i" *ngFor="let rol of roles; let i = index">
-              {{ rol.description | uppercase }}
+              {{ rol.rol.name | uppercase }}
             </option>
           </select>
         </div>

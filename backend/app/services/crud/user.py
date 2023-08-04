@@ -60,7 +60,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         self.policy.get_multi(who=who)
         
         #Verify the rol for current user
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         # queries = [User.active == active, Rol.scope >= who.userrol.rol.scope]
 
         # if (who.userrol.rol.scope == 7) or (who.userrol.rol.scope == 6):
@@ -126,7 +126,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         hashed_password = get_password_hash(obj_in.password)
         data = dict(obj_in)
         del data['password']
-        del data['rol_id']
         data['hashed_password'] = hashed_password
         db_obj = User(**data)
         self.policy.create(to=user)

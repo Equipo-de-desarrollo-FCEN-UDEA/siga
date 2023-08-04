@@ -15,8 +15,8 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
     # who can see an Application of another user
     def get(self, who: User, to: Application) -> None:
 
-        userrol = who.userrol[0]
-        torol = to.user.userrol[0]
+        userrol = who.userrol[who.active_rol]
+        torol = to.user.userrol[to.user.active_rol]
 
         if not to:
             raise application_404
@@ -55,7 +55,7 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
     # Who can create a application of a subtype
     def create(self, who: User, to: ApplicationCreate) -> None:
 
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
         application_sub_type = to.application_sub_type_id
 
         # Permiso

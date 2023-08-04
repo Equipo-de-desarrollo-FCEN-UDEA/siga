@@ -19,7 +19,7 @@ class CRUDSchool(CRUDBase[School, SchoolCreate, SchoolUpdate, SchoolPolicy]):
     ) -> List[School]:
         self.policy.get_multi(who=who)
         #scope = who.rol.scope
-        scope = who.userrol[0].rol.scope
+        scope = who.userrol[who.active_rol].rol.scope
         if scope <= 3:
             db_objs = db.query(School).offset(skip).limit(limit).all()
         else:
