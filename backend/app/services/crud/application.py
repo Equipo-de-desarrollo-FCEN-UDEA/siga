@@ -43,10 +43,10 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         userrol = who.userrol[who.active_rol]
 
 
-        if userrol.rol.scope >= 9:
+        if (userrol.rol.scope >= 9):
             queries += [User.id == who.id]
 
-        if userrol.rol.scope < 9:
+        if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
@@ -125,10 +125,10 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         userrol = who.userrol[who.active_rol]
 
-        if userrol.rol.scope >= 9:
+        if( userrol.rol.scope >= 9):
             queries += [User.id == who.id]
 
-        if userrol.rol.scope < 9:
+        if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
@@ -139,7 +139,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if (userrol.rol.scope == 6):
             queries += [Department.school_id == who.department.school_id]
 
-        if userrol.rol.scope == 5:
+        if (userrol.rol.scope == 5):
             queries += [Department.school_id == who.department.school_id]
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
