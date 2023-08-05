@@ -17,27 +17,27 @@ import { LoaderService } from '@services/loader.service';
 import { UserService } from '@services/user.service';
 import { switchMap } from 'rxjs';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   public submitted: boolean = false;
   public loading: boolean = false;
   public form!: FormGroup;
-  public error:string = '';
+  public error: string = '';
   public activation: boolean = false;
   public loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(2)]],
     password: ['', [Validators.required, Validators.minLength(2)]],
   });
-  public userRoles: UserRolResponse[] | undefined = undefined ;
+  public userRoles: UserRolResponse[] = [];
   public selectedRole: UserRolResponse | undefined = undefined;
 
-  get f() { return this.loginForm.controls;}
+  get f() {
+    return this.loginForm.controls;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -49,39 +49,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.activateRoute.params.pipe(
-        switchMap(params => this.userService.getUser(params['id']))
-      ).subscribe({
-        next: (user: UserResponse) => {
-          this.userRoles = user.userrol;
-          console.log(this.userRoles);
-        },
-        error: (error: any) => {
-          console.log('Error al obtener el usuario', error);
-          this.router.navigate(['/seleccionar-rol']);
-        }
-
-      });
+      this.router.navigate(['/home']);
     }
   }
 
   onSubmitLogin() {
     this.submitted = true;
     // stop here if form is invalid
-    if (this.loginForm.invalid) { return; }
+    if (this.loginForm.invalid) {
+      return;
+    }
     this.loading = true;
 
     this.authService.login(this.loginForm.value as Auth).subscribe({
       next: () => {
-        // El usuario ya ha iniciado sesión y ahora podemos usar el ID para obtener los roles.
-        if (this.userRoles == undefined) { return; }
-  
-        if (this.userRoles.length > 1) {
-          console.log('Hemos entrado');
-          this.router.navigate(['/seleccionar-rol']);
-        } else {
-          this.router.navigate(['/home']);
-        }
+        this.router.navigate(['/seleccionar-rol']);
+        // if (this.userRoles.length > 1) {
+        //   console.log('Hemos entrado');
+        //   this.router.navigate(['/seleccionar-rol']);
+          
+        // } else {
+        //   this.router.navigate(['/home']);
+        // }
         this.loading = false;
       },
       error: (err) => {
@@ -89,11 +78,11 @@ export class LoginComponent implements OnInit {
       },
       complete: () => {
         this.loading = false;
-      }
+      },
     });
   }
 
-    /* this.submitted = true;
+  /* this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) { return; }
 
