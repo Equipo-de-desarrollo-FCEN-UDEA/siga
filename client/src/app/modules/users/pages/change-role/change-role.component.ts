@@ -46,7 +46,7 @@ export class ChangeRoleComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-          window.location.reload(); // Reload the page 
+          this.router.navigate(['/home']); 
         },
       });
   }

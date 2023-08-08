@@ -16,7 +16,6 @@ const routes: Routes = [
   {
     path: 'ver/:id',
     component: UserViewComponent
-
   },
   {
     path: 'editar/:id',
@@ -30,7 +29,6 @@ const routes: Routes = [
     path: 'cambiar-rol',
     component: ChangeRoleComponent
   }
-
 ];
 
 @NgModule({
