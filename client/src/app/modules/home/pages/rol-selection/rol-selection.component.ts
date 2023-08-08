@@ -26,7 +26,11 @@ export class RolSelectionComponent {
       console.log(res);
       this.roles = res.userrol;
       if (this.roles.length <= 1) {
-        this.router.navigate(['/home']);
+        this.userSvc.changeActiveRole(0).subscribe({
+          next: () => {
+            this.router.navigate(['/home']);
+          },
+        });
       }
     });
   }
@@ -36,7 +40,7 @@ export class RolSelectionComponent {
   });
 
   onSubmit() {
-    console.log(this.selectRolForm.value);
+    console.log(this.selectRolForm.value.active_rol);
     this.userSvc
       .changeActiveRole(this.selectRolForm.value.active_rol)
       .subscribe({
@@ -52,7 +56,6 @@ export class RolSelectionComponent {
         },
       });
   }
-  
 
   onCancel() {
     this.location.back();
