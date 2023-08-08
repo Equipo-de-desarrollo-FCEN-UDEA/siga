@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 // interfaces and services
 import { UserService } from '@services/user.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-rol-selection',
@@ -20,6 +21,7 @@ export class RolSelectionComponent {
     private fb: FormBuilder,
     private router: Router,
     private userSvc: UserService,
+    private authService: AuthService,
     private location: Location
   ) {
     this.userSvc.getUser().subscribe((res: any) => {
@@ -58,6 +60,6 @@ export class RolSelectionComponent {
   }
 
   onCancel() {
-    this.location.back();
+      this.authService.logOut();
   }
 }

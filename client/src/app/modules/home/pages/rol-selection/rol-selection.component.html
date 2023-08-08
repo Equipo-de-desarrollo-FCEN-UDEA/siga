@@ -32,18 +32,28 @@
 
       <hr />
       <!-- buttons -->
-      <div class="footer-row d-md-flex justify-content-md-end mb-3">
+      <div class="footer-row d-md-flex justify-content-between align-items-center mb-3">
         <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
-          <button
-            id="btn-sub"
-            class="btn btn-submit"
-            type="submit"
-            (submit)="(true)"
-          >
+          <button 
+            id="btn-cancel" 
+            class="btn btn-secondary" 
+            type="button" 
+            (click)="onCancel()">
+            Cancelar
+          </button>
+        </div>
+        <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+          <button 
+            id="btn-sub" 
+            class="btn btn-submit" 
+            type="submit" 
+            (submit)="(true)">
             Continuar
           </button>
         </div>
       </div>
+      
+
     </div>
   </div>
 </form>
