@@ -68,7 +68,6 @@ export class EconomicSupportComponent implements OnInit {
 
   @Input() status: ApplicationStatus[] | undefined;
 
-
   public today = new Date();
   public end_date = new Date();
 
@@ -114,7 +113,7 @@ export class EconomicSupportComponent implements OnInit {
       this.user_id = user.id;
       this.activeRole = user.active_rol;
       this.userRol = user.userrol[this.activeRole].rol.name;
-      console.log(this.userRol)
+      console.log(this.userRol);
       if (this.userRol === 'Coordinador') {
         this.userApplicationSvc
           .getUserApplication(this.application_id)
@@ -201,7 +200,7 @@ export class EconomicSupportComponent implements OnInit {
           application.application_status
         ).status.name;
         this.comSvc.push(this.application);
-        this.end_date = new Date(economic_support.payment.end_date)
+        this.end_date = new Date(economic_support.payment.end_date);
       });
 
     this.applicationStatusSvc;
