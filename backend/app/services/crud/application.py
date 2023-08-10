@@ -40,8 +40,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         queries = []
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        userrol = who.userrol[0]
-
+        userrol = who.userrol[who.active_rol]
+        log.debug(userrol.rol.__dict__)
 
         if userrol.rol.scope >= 9:
             queries += [User.id == who.id]
@@ -51,16 +51,23 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
         
-        if who.rol.scope == 7:
+        if userrol.rol.scope == 7:
             queries.append(UserApplication.user_id == who.id)
 
-        if (who.rol.scope == 6):
+        if (userrol.rol.scope == 6):
             queries.append(Department.school_id == who.department.school_id)
         
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)
 
-
+        if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
+            for_coordinators = (db.query(UserApplication)
+                                .filter(UserApplication.user_id == who.id)
+                                .limit(limit)
+                                .offset(skip)
+                                .all())
+            for application in for_coordinators:
+                queries.append(Application.id==application.application_id)
 
         # if who.rol.scope >= 9:
         #     queries += [User.id == who.id]
@@ -123,7 +130,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
     ) -> List[Application]:
         queries = []
 
-        userrol = who.userrol[0]
+        userrol = who.userrol[who.active_rol]
 
         if userrol.rol.scope >= 9:
             queries += [User.id == who.id]
@@ -133,10 +140,10 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
-        if who.rol.scope == 7:
+        if userrol.rol.scope == 7:
             queries += [Department.school_id == who.department.school_id]
 
-        if (who.rol.scope == 6):
+        if (userrol.rol.scope == 6):
             queries += [Department.school_id == who.department.school_id]
 
         if userrol.rol.scope == 5:
