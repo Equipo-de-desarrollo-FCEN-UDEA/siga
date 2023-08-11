@@ -23,7 +23,8 @@ log = get_logging(__name__)
 def create_user(
     *,
     db: Session = Depends(db.get_db),
-    user_in: schemas.UserCreate
+    user_in: schemas.UserCreate,
+    rol_id: str,
 ) -> schemas.UserResponse:
     """
     Endpoint to create a new user.
@@ -43,7 +44,7 @@ def create_user(
     token = email_token(db_user.email)
     confirm_email.apply_async(args=(db_user.names, token, db_user.email))
     try:
-        userrol = crud.userrol.create(db=db, user = db_user,rol_id = user_in.rol_id, description=db_user.vinculation_type+" de "+db_user.department.description, current_user=user_in)
+        userrol = crud.userrol.create(db=db, user = db_user,rol_id = rol_id, description=db_user.vinculation_type+" de "+db_user.department.description, current_user=user_in)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     except KeyError as e:
@@ -124,6 +125,8 @@ def update_user(
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     
+    userupdate = crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
+    #print(user_in)
     #This part works when you have done changes in rol select
     if (user_in.get('changes_rol',True)):
         try:
@@ -151,7 +154,7 @@ def update_user(
             except ValueError as e:
                 raise HTTPException(status_code=422, detail=str(e))
        
-    return crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
+    return userupdate
 
 
 @router.patch("/new-password", status_code=200,

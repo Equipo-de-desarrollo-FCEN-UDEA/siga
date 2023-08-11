@@ -10,6 +10,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ResendEmailComponent } from './pages/resend-email/resend-email.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { RolSelectionComponent } from '@modules/home/pages/rol-selection/rol-selection.component';
 
 const ROUTES: Routes = [
   { 
@@ -39,6 +40,10 @@ const ROUTES: Routes = [
   {
     path: 'reenviar-correo-activacion',
     component: ResendEmailComponent
+  },
+  {
+    path: 'seleccionar-role',
+    component: RolSelectionComponent
   }
 ];
 
