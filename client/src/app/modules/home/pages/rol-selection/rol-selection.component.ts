@@ -16,6 +16,7 @@ import { AuthService } from '@services/auth.service';
 })
 export class RolSelectionComponent {
   public roles: any[] = [];
+  public formSend: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -53,6 +54,7 @@ export class RolSelectionComponent {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           }).then(() => {
+            this.formSend = true;
             this.router.navigate(['/home']);
           });
         },
@@ -60,6 +62,7 @@ export class RolSelectionComponent {
   }
 
   onCancel() {
-      this.authService.logOut();
+    this.formSend = true;
+    this.authService.logOut();
   }
 }
