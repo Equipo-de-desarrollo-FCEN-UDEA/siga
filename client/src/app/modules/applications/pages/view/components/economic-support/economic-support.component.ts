@@ -298,6 +298,7 @@ export class EconomicSupportComponent implements OnInit {
         });
       }
     });
+    this.userApplicationSvc.deleteUserApplication(id).subscribe();
   }
 
   //FUNCTION TO ACCEPT A DEPENDENCY-APPLICATION NOT THE APPLICATION
