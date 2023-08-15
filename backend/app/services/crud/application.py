@@ -60,20 +60,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if userrol.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)
 
-        # if who.rol.scope >= 9:
-        #     queries += [User.id == who.id]
-
-        # if who.rol.scope < 9:
-        #     # queries += [Application_status.status_id.not_in((6,7))]
-        #     if filed is not None:
-        #         queries += [Application.filed.is_(filed)]
-
-        # if (who.rol.scope == 7) or (who.rol.scope == 6):
-        #     queries += [User.department_id == who.department.id]
-
-        # if who.rol.scope == 5:
-        #     queries += [Department.school_id == who.department.school_id]
-
         if search is not None:
             columns = [
                 'names',
@@ -129,7 +115,18 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .limit(limit)
                    .offset(skip)
                    .all())
+        
+        coordinators_objs_db = (db.query(Application)
+                   .order_by(desc(Application.id))
+                   .join(User)
+                   .join(ApplicationSubType)
+                   .join(Department)
+                   .filter(*coordinator_queries)
+                   .limit(limit)
+                   .offset(skip)
+                   .all())
 
+        objs_db += coordinators_objs_db
         return objs_db
 
     def get_all(
