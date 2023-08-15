@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
+
+from fastapi.responses import JSONResponse
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
@@ -96,3 +98,33 @@ async def update_application_by_coordinator(
         raise HTTPException(status_code=e.code, detail=e.detail)
 
     return update_user_application
+
+@router.delete("/{id}", status_code=200)
+async def delete_user_application(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+):
+    """
+    Endpoint to delete a user_application.
+
+        params: id: int
+    """
+    try:
+        db_user_application = crud.user_application.get_user_application(
+            db=db, id=id)   
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    try:
+         db_user_application = crud.user_application.delete(
+            db=db, who=current_user, id=id)
+         
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    
+    return JSONResponse(status_code=status.HTTP_200_OK, content={
+        'detail': 'user_application deleted'
+    })
