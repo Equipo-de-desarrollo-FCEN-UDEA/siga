@@ -26,5 +26,9 @@ export class UserApplicationService {
   putUserApplication(id: number, body: IUserApplication,): Observable<IUserApplication> {
     return this.http.put<IUserApplication>(this.urlEndPoint + id, body)
   }
+
+  deleteUserApplication(id: number) {
+    return this.http.delete(this.urlEndPoint + id)
+  }
   
 }
