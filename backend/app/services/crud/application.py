@@ -116,17 +116,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .offset(skip)
                    .all())
         
-        coordinators_objs_db = (db.query(Application)
-                   .order_by(desc(Application.id))
-                   .join(User)
-                   .join(ApplicationSubType)
-                   .join(Department)
-                   .filter(*coordinator_queries)
-                   .limit(limit)
-                   .offset(skip)
-                   .all())
-
-        objs_db += coordinators_objs_db
         return objs_db
 
     def get_all(
