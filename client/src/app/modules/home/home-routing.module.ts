@@ -8,11 +8,12 @@ import { CreateApplicationComponent } from './pages/create-application/create-ap
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 import { EmpleadoGuard } from 'src/app/core/guards/empleado.guard';
 import { RolSelectionComponent } from './pages/rol-selection/rol-selection.component';
+import { RolSelectionGuard } from 'src/app/core/guards/rol-selection.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'create-application', component: CreateApplicationComponent },
-  { path: 'seleccionar-rol', component: RolSelectionComponent },
+  { path: 'seleccionar-rol', component: RolSelectionComponent, canDeactivate: [RolSelectionGuard] },
 ];
 
 @NgModule({
