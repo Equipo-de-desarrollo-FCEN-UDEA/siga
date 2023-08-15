@@ -26,7 +26,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
     
     vacations_dict: dict = vacations.dict()
 
-    userrol = user.userrol[0]
+    userrol = user.userrol[user.active_rol]
 
     user = UserResponse.from_orm(user).dict(exclude_unset=True)
     

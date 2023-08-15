@@ -33,7 +33,12 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         status_flux=[
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status='EN VICERRECTORÍA', scope=[5]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9]
     ),
@@ -45,7 +50,8 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
                 status="VISTO BUENO", scope=[6, 7]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9]
     ),
@@ -73,7 +79,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],
-        who_can=[13, 14]
+        who_can=[9, 11, 13, 14]
     )
 ]
 

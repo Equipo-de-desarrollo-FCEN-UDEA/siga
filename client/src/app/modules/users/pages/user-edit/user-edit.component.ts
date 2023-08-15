@@ -75,7 +75,7 @@ export class UserEditComponent {
       next: res => {
         console.log(res)
         this.userResponse = res;
-        this.rol = String(this.userResponse.userrol[0].rol.name);
+        this.rol = String(this.userResponse.userrol[this.userResponse.active_rol].rol.name);
         this.updateUserBase.patchValue(this.userResponse);
         this.selectedItems = this.userResponse.userrol.map(rol => ({ id: rol.rol_id,
                                                                     name: rol.rol.name,
@@ -130,6 +130,7 @@ export class UserEditComponent {
     let user = this.updateUserBase.value as UserUpdate;
     user.changes_rol = this.flag_rol;
     console.log(user);
+    user.active_rol = 0;
     this.userSvc.putUser(user, this.getId as number, this.flag_rol)
     .subscribe({
       next: (res: any) => {

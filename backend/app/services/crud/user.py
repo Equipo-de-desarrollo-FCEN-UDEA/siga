@@ -126,7 +126,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         hashed_password = get_password_hash(obj_in.password)
         data = dict(obj_in)
         del data['password']
-        del data['rol_id']
         data['hashed_password'] = hashed_password
         db_obj = User(**data)
         self.policy.create(to=user)
