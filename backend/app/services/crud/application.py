@@ -51,36 +51,14 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
         
+        # if userrol.rol.scope == 7:
+        #     queries.append(UserApplication.user_id == who.id)
 
         if (userrol.rol.scope == 6):
             queries.append(Department.school_id == who.department.school_id)
         
         if userrol.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)
-
-        if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
-            for_coordinators = (db.query(UserApplication)
-                                .filter(UserApplication.user_id == who.id)
-                                .limit(limit)
-                                .offset(skip)
-                                .all())
-            for application in for_coordinators:
-                queries.append(Application.id==application.application_id)
-
-
-        # if who.rol.scope >= 9:
-        #     queries += [User.id == who.id]
-
-        # if who.rol.scope < 9:
-        #     # queries += [Application_status.status_id.not_in((6,7))]
-        #     if filed is not None:
-        #         queries += [Application.filed.is_(filed)]
-
-        # if (who.rol.scope == 7) or (who.rol.scope == 6):
-        #     queries += [User.department_id == who.department.id]
-
-        # if who.rol.scope == 5:
-        #     queries += [Department.school_id == who.department.school_id]
 
         if search is not None:
             columns = [
@@ -106,6 +84,27 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             ]
             res = [user for users in raw for user in users]
             return list(*set(res))
+        
+        if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
+            queries.append(Application.application_sub_type_id == 14) #Para futuras solicitudes, crear un arreglo.
+            
+            for_coordinators_subquery = (db.query(UserApplication.application_id)
+                                        .filter(UserApplication.user_id == who.id)
+                                        .limit(limit)
+                                        .offset(skip)
+                                        .subquery())
+
+            coordinators_applications = (db.query(Application)
+                    .order_by(desc(Application.id))
+                    .join(User)
+                    .join(ApplicationSubType)
+                    .join(Department)
+                    .filter(Application.id.in_(for_coordinators_subquery))
+                    .limit(limit)
+                    .offset(skip)
+                    .all())
+
+            return coordinators_applications
 
         objs_db = (db.query(Application)
                    .order_by(desc(Application.id))
@@ -117,8 +116,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .offset(skip)
                    .all())
         
-        log.debug(len(objs_db))
-
         return objs_db
 
     def get_all(
