@@ -61,15 +61,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         
         #Verify the rol for current user
         userrol = who.userrol[who.active_rol]
-        # queries = [User.active == active, Rol.scope >= who.userrol.rol.scope]
-
-        # if (who.userrol.rol.scope == 7) or (who.userrol.rol.scope == 6):
-        #     queries += [Department.id == who.department.id]
-
-        # if who.userrol.scope == 5:
-        #     queries += [Department.school_id == who.department.school_id]
-
-
 
         queries = [User.active == active, Rol.scope >= userrol.rol.scope]
         
@@ -92,7 +83,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             raw = [
                 db.query(User)
                 .order_by(desc(User.id))
-                .join(UserRol)
+                .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                 .join(Department)
                 .filter(getattr(User, col).contains(f"{search}"))
                 .filter(*queries)
@@ -104,7 +96,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
 
         objs_db = (db.query(User)
                    .order_by(desc(User.id))
-                   .join(UserRol)
+                   .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                    .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                    .join(Department)
                    .filter(*queries)
                    .limit(limit)
