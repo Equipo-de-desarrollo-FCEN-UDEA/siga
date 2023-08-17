@@ -60,14 +60,21 @@ async def create_application_status(
                 application.application_sub_type.application_type.name == "VACACIONES"):
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
+            
 
-        # ECONOMIC SUPPORT
-        if (response.status.name == 'SOLICITADA'
-           and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
-            log.debug('SOLICITADA')
+        #APOYO ECONOMICO
+        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
 
         if (response.status.name == 'APROBADA'
                 and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
+            
+
+        #DEDICACIÓN EXCLUSIVA
+        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
 
