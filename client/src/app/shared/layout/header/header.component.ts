@@ -41,6 +41,10 @@ export class HeaderComponent {
     });
   }
 
+  isRolSelectionRoute(): boolean {
+    return this.router.url.includes('/seleccionar-rol');
+  }
+
   logOut() {
     this.authService.logOut();
   }
