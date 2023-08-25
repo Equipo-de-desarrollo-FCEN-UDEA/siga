@@ -44,4 +44,5 @@ class ApplicationResponse(ApplicationInDB):
 class ApplicationMultiResponse(ApplicationResponse):
     @validator('application_status')
     def last_status(cls, v, values, **kwargs):
+        v = sorted(v, key = lambda x: x.created_at)
         return [v[-1]]
