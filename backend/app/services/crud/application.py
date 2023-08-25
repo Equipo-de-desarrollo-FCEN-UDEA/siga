@@ -1,11 +1,11 @@
 from typing import Any, Dict, List, Optional, Union
 from datetime import datetime
 
-from sqlalchemy import desc
+from sqlalchemy import desc, asc
 from sqlalchemy.orm import Session
 
 from app.domain.models import Application, User, ApplicationSubType, Application_status, Department, ApplicationType, ApplicationSubType
-from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_statusCreate
+from app.domain.schemas import ApplicationCreate, ApplicationUpdate, Application_statusCreate, ApplicationResponse
 from app.domain.policies import ApplicationPolicy
 from app.core.logging import get_logging
 from .base import CRUDBase
@@ -20,10 +20,16 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             db
             .query(Application)
             .filter(Application.id == id)
-            .join(Application_status)
-            .order_by(desc(Application_status.created_at))
             .first()
         )
+        application_status = (
+            db
+            .query(Application_status)
+            .filter(Application_status.application_id == application.id)
+            .all()
+            )
+        application_status = sorted(application_status, key = lambda x: x.created_at)
+        application.application_status = application_status
         self.policy.get(who=who, to=application)
         return application
     
