@@ -30,6 +30,7 @@ export class ViewComponent implements AfterViewChecked {
 
   public historyStatus = false;
 
+  public isCoordinador$ = this.authSvc.isCoordinador$;
   public isSuperUser$ = this.authSvc.isSuperUser$;
   public isApproved$ = this.applicationStatusSvc.isApproved$;
 
@@ -60,10 +61,11 @@ export class ViewComponent implements AfterViewChecked {
     this.title = this.route.snapshot.firstChild?.data['title'];
     this.application$ = this.comSvc.application;
     this.authSvc.isSuperUser();
+    this.authSvc.isCoordinador();
 
     this.route.params.subscribe((params) => {
       this.id = params['id'];
-    }); 
+    });
 
     this.applicationStatusSvc.isApproved(this.id);
   }
@@ -92,14 +94,14 @@ export class ViewComponent implements AfterViewChecked {
   submit() {
     this.submitted = true;
     const childRouteComp = this.activatedComponentReference;
-  
+
     if (this.files.length > 0) {
       this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data) => {
           this.form.patchValue({
             document: data.files_paths,
           });
-  
+
           return this.applicationStatusSvc.postApplicationStatus({
             application_id: this.id,
             observation: this.form.value.observation!,
@@ -113,7 +115,7 @@ export class ViewComponent implements AfterViewChecked {
         try {
           childRouteComp.submit().subscribe();
         } catch {}
-  
+
         Swal.fire({
           title: 'Se cambió el estado correctamente',
           icon: 'success',
@@ -137,7 +139,7 @@ export class ViewComponent implements AfterViewChecked {
         try {
           childRouteComp.submit().subscribe();
         } catch {}
-  
+
         Swal.fire({
           title: 'Se cambió el estado correctamente',
           icon: 'success',
@@ -150,7 +152,7 @@ export class ViewComponent implements AfterViewChecked {
       });
     }
   }
-  
+
 
 
   // -----------------------------
