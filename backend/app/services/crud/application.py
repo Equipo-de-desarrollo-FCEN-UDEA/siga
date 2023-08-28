@@ -30,6 +30,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             )
         application_status = sorted(application_status, key = lambda x: x.created_at)
         application.application_status = application_status
+        
         self.policy.get(who=who, to=application)
         return application
     
