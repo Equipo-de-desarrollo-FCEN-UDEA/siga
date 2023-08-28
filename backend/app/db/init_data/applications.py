@@ -33,7 +33,12 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         status_flux=[
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status='EN VICERRECTORÍA', scope=[5]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9]
     ),
@@ -45,7 +50,8 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status="SOLICITADA", scope=[0]),
             schemas.application_type.StatusFlux(
                 status="VISTO BUENO", scope=[6, 7]),
-            schemas.application_type.StatusFlux(status='APROBADA', scope=[5])
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
         ],
         who_can=[9]
     ),
@@ -64,7 +70,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
     ),
     schemas.ApplicationTypeCreate(
         name="APOYO ECONÓMICO PARA ESTUDIANTES",
-        description="apoyo economico",
+        description="apoyo-economico",
         status_flux=[
             schemas.application_type.StatusFlux(
                 status="SOLICITADA", scope=[0]),
@@ -73,90 +79,85 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status='APROBADA', scope=[5])
         ],
-        who_can=[13, 14]
+        who_can=[9, 11, 13, 14]
     )
 ]
 
 init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
-    #PERMISSION
+    # PERMISSION
+    # 1
     schemas.ApplicationSubTypeCreate(
         name="Licencia de maternidad",
         application_type_id=1,
         extra={"days": 126}
-    ),
+    ),  # 2
     schemas.ApplicationSubTypeCreate(
         name="Licencia de paternidad",
         application_type_id=1,
         extra={"days": 8}
-    ),
+    ),  # 3
     schemas.ApplicationSubTypeCreate(
         name="Cumpleaños",
         application_type_id=1,
         extra={"days": 1}
-    ),
+    ),  # 4
     schemas.ApplicationSubTypeCreate(
         name="Luto",
         application_type_id=1,
         extra={"days": 5}
-    ),
+    ),  # 5
     schemas.ApplicationSubTypeCreate(
         name="Calamidad doméstica",
         application_type_id=1,
         extra={"days": 12}
-    ),
+    ),  # 6
     schemas.ApplicationSubTypeCreate(
         name="Licencia no remunerada",
         application_type_id=1,
         extra={"days": 60}
-    ),
+    ),  # 7
     schemas.ApplicationSubTypeCreate(
         name="Licencia remunerada",
         application_type_id=1,
         extra={"days": 3}
     ),
-    #COMMISSION
+    # COMMISSION
+    # 8
     schemas.ApplicationSubTypeCreate(
         name="Comisión de servicios",
         application_type_id=2
-    ),
+    ),  # 9
     schemas.ApplicationSubTypeCreate(
         name="Comisión de estudios",
         application_type_id=2
     ),
-    #FULL TIME
+    # FULL TIME
+    # 10
     schemas.ApplicationSubTypeCreate(
         name="Dedicación",
         application_type_id=3
     ),
-    #HOURS AVAL
+    # HOURS AVAL
+    # 11
     schemas.ApplicationSubTypeCreate(
         name="Aval de horas",
         application_type_id=4
     ),
-    #VACATION
+    # VACATION
+    # 12
     schemas.ApplicationSubTypeCreate(
         name="Dias hábiles",
         application_type_id=5
     ),
+    # 13
     schemas.ApplicationSubTypeCreate(
         name="Dias calendario",
         application_type_id=5
     ),
-    #ECONOMIC SUPPORT 
+    # ECONOMIC SUPPORT
+    # 14
     schemas.ApplicationSubTypeCreate(
-        name="Pregrado",
-        application_type_id=6
+        name="Apoyo Económico",
+        application_type_id=6,
     ),
-    schemas.ApplicationSubTypeCreate(
-        name="Posgrado",
-        application_type_id=6
-    ),
-    schemas.ApplicationSubTypeCreate(
-        name="Grupo de Investigación",
-        application_type_id=6
-    ),
-    schemas.ApplicationSubTypeCreate(
-        name="Bienestar de la Facultad",
-        application_type_id=6
-    )
 ]

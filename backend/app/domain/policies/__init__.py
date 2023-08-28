@@ -2,6 +2,7 @@ from .rol import RolPolicy
 from .deparment import DepartmentPolicy
 from .school import SchoolPolicy
 from .user import UserPolicy
+from .userrol import UserRolPolicy
 from .extra import ExtraPolicy
 from .status import StatusPolicy
 from .application import ApplicationPolicy
@@ -10,3 +11,5 @@ from .application_type import ApplicationTypePolicy
 from .application_status import Application_statusPolicy
 from .holiday import HolidayPolicy
 from .cron_job import CronJobPolicy
+from .extra import ExtraPolicy
+from .user_application import UserApplicationPolicy

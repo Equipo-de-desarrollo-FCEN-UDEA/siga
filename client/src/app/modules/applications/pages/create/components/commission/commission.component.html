@@ -90,115 +90,11 @@
           *ngIf="isInvalidForm('application_sub_type_id')"
           class="invalid-feedback"
         >
-          <!-- <div *ngIf="f['application_sub_type_id'].errors['required']">
-              Elige un tipo de comisión
-            </div> -->
         </div>
       </div>
     </div>
     <hr />
-    <!-- 
-      <div
-        class="row regular-row mt-4 align-items-baseline align-items-baseline"
-      >
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Pais *</div>
-        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-          <div class="formfloatig">
-            <select
-              class="form-select form-select-lg mb-3"
-              id="floatingpais"
-              formControlName="pais"
-              [ngClass]="{ 'is-invalid': isInvalidForm('pais') }"
-              (change)="onChangePais($event)"
-              placeholder=" "
-            >
-              <option [value]="i" *ngFor="let country of paises; let i = index">
-                {{ country.name }}
-              </option>
-            </select>
 
-            <label
-              for="floatingpais"
-              class="selectLabel"
-              [ngClass]="{ isFill: form.controls['pais'].valid }"
-            >
-              País de la comisión
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Departamento o Provincia</div>
-        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-          <div class="formfloatig">
-            <select
-              class="form-select form-select-lg mb-3"
-              id="floatingestado"
-              formControlName="provincia"
-              [ngClass]="{ 'is-invalid': isInvalidForm('provincia') }"
-              (change)="onChangeEstado($event)"
-              placeholder=" "
-            >
-              <option
-                [value]="i"
-                *ngFor="let provincia of provincias; let i = index"
-              >
-                {{ provincia.name }}
-              </option>
-            </select>
-            <label
-              for="floatingestado"
-              class="selectLabel"
-              [ngClass]="{
-                isFill: form.controls['provincia'].touched
-              }"
-            >
-              <span
-                *ngIf="isLoading | async"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              >
-              </span>
-              Provincia de la comisión</label
-            >
-          </div>
-        </div>
-      </div>
-
-      <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Ciudad</div>
-        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-          <div class="formfloatig">
-            <select
-              class="form-select form-select-lg mb-3"
-              id="floatingciudad"
-              formControlName="ciudad"
-              [ngClass]="{ 'is-invalid': isInvalidForm('ciudad') }"
-              [disabled]="!form.controls['pais'].valid"
-              placeholder=" "
-            >
-              <option [value]="ciudad.name" *ngFor="let ciudad of ciudades">
-                {{ ciudad.name }}
-              </option>
-            </select>
-            <label
-              for="floatingpais"
-              class="selectLabel"
-              [ngClass]="{ isFill: form.controls['ciudad'].touched }"
-            >
-              <span
-                *ngIf="isLoading | async"
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              Ciudad de la comisión
-            </label>
-          </div>
-        </div>
-      </div> -->
 
     <!-- DATES -->
     <div class="mt-4 row regular-row align-items-baseline">

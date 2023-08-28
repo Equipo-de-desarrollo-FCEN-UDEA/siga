@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 export class HeaderComponent {
 
   public user$: Observable<UserResponse>;
+  public activeRol: number = 0;
   public currentURL: any;
   public isSuperUser = this.authService.isSuperUser$;
 
@@ -35,6 +36,13 @@ export class HeaderComponent {
       });
 
     this.user$ = this.userService.getUser()
+    this.userService.getUser().subscribe((user: UserResponse) => {
+        this.activeRol = user.active_rol;
+    });
+  }
+
+  isRolSelectionRoute(): boolean {
+    return this.router.url.includes('/seleccionar-rol');
   }
 
   logOut() {

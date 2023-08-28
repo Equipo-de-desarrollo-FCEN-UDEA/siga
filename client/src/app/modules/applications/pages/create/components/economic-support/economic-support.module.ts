@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { EconomicSupportRoutingModule } from './economic-support-routing.module';
+import { CommonModule } from '@angular/common'
 import { ApplicationDataComponent } from './pages/application-data/application-data.component';
 import { EconomicSupportComponent } from './economic-support.component';
 import { PersonalDataComponent } from './pages/personal-data/personal-data.component';
@@ -12,7 +10,6 @@ import { DocumentsComponent } from './pages/documents/documents.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SubtypeComponent } from './pages/subtype/subtype.component';
 
-
 @NgModule({
   declarations: [
     EconomicSupportComponent,
@@ -21,11 +18,10 @@ import { SubtypeComponent } from './pages/subtype/subtype.component';
     TicketsComponent,
     AdvanceComponent,
     DocumentsComponent,
-    SubtypeComponent
+    SubtypeComponent,
   ],
   imports: [
     CommonModule,
-    EconomicSupportRoutingModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule

@@ -18,6 +18,8 @@ export class UserViewComponent {
   public user: UserResponse | undefined;
   public userResponse!: UserResponse;
   public id: number | string = 0;
+  public userrol: string ="";
+
   constructor(
     private userService: UserService,
 
@@ -37,6 +39,7 @@ export class UserViewComponent {
       (user) => {
         console.log(user)
         this.user = user
+        this.userrol=this.user.userrol[user.active_rol].rol.name;
       }
     );
   }

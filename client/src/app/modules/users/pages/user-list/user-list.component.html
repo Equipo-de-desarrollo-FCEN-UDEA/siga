@@ -63,7 +63,7 @@
         >
           <th>{{ user.id }}</th>
           <td>{{ user.names + " " + user.last_names | titlecase }}</td>
-          <td>{{ user.rol.name }}</td>
+          <td>{{ user.userrol[user.active_rol].rol.name }}</td>
           <td>{{ user.email | lowercase }}</td>
           <td>{{ user.identification_number | lowercase }}</td>
           <td>{{ user.department.name }}</td>
@@ -84,9 +84,10 @@
                     </button> -->
           </td>
         </tr>
+        <br/>
       </tbody>
+      
       <tfoot>
-        <tr style="width: 100%">
           <td colspan="7">
             <button
               [disabled]="page == 1"
@@ -97,8 +98,7 @@
               <i class="fas fa-arrow-left"></i>
             </button>
             {{ page }}
-            <button
-              [disabled]="users.length != limit"
+            <button 
               class="btn btn-outline-primary btn-sm"
               type="button"
               (click)="nextPage()"
@@ -106,7 +106,7 @@
               <i class="fas fa-arrow-right"></i>
             </button>
           </td>
-        </tr>
+      
       </tfoot>
     </table>
   </div>

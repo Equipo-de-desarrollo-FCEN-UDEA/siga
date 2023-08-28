@@ -62,7 +62,7 @@ export class CommissionComponent implements OnInit {
 
         this.current_status = lastElement(application.application_status).status.name;
         this.comSvc.push(this.application);
-        this.end_date = new Date(commission.end_date)
+        this.end_date = new Date(commission.end_date);
       }
     )
   }

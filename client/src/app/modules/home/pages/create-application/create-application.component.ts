@@ -50,6 +50,8 @@ export class CreateApplicationComponent {
     this.submitted = true;
     if (this.create_application_form.invalid) { return; }
 
+    console.log(this.create_application_form.value.application_type);
+
     this.applicationTypeSvc.getApplicationTypes().subscribe({
       next: () => {
         this.router.navigate([

@@ -136,8 +136,8 @@ export class VacationComponent implements OnInit {
           ...data.vacation,
           application_sub_type_id: data.application_sub_type_id,
         });
-        let status_app = data.application_status[data.application_status.length-1].status.name;
         this.documents = data.vacation.documents!;
+        let status_app = data.application_status[data.application_status.length-1].status.name;
         if (status_app != 'APROBADA'){
           this.documents.pop();
         }else{
@@ -148,6 +148,7 @@ export class VacationComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
+          
           return;
         }
         this.SubTypeSvc.getApplicationSubType(
@@ -241,6 +242,52 @@ export class VacationComponent implements OnInit {
         });
         return;
       }
+    }else{
+      if (this.documents.length > 0){
+        if (this.signatureImg!=""){
+          vacation.subscribe({
+            next: (res) => {
+              console.log('vacation updated', vacation);
+              Swal.fire({
+                title: 'Actualizado',
+                text: '¡El registro de vacaciones se actualizó con éxito!',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#3AB795',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate([
+                    'solicitudes/ver/' + this.id + '/vacaciones',
+                  ]);
+                }
+              });
+            },
+            error: (err) => {
+              console.log('salio error', err);
+              this.error = err;
+            },
+          });
+        }else{
+          Swal.fire({
+            title: 'Firmar',
+            html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#3AB795',
+          });
+          return;
+        }
+      }else{
+        Swal.fire({
+          title: 'Adjuntar documento',
+          html: 'Por favor adjunte documento de aval de talento humano.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3AB795',
+        });
+        return;
+      }
+
     }
 
    

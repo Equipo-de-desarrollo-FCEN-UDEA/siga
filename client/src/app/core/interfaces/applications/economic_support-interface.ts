@@ -1,5 +1,8 @@
 import { Application } from "@interfaces/application";
+import { DepartmentBase } from "@interfaces/department";
 import { file_path } from "@interfaces/documents";
+import { UserBase } from "@interfaces/user";
+import { ComplimentCreate } from "./commission";
 
 export interface IApplicationData { 
   application_type: string;
@@ -40,22 +43,35 @@ export interface IAdvancePayment {
   end_date: Date;
 }
 
-export interface IEconomicSupport {
+export interface IDependence { 
+  id: number;
+  name: string;
+}
+
+export interface ISubdepartment { 
+  id: number;
+  ccrg_code: string;
+  coordinador_id: number;
+  coordinador: UserBase;
+  deparment_id: number;
+  deparment: DepartmentBase;
+  name: string;
+}
+
+export interface IEconomicSupportCreate {
   application_sub_type_id: number;
+  dependence: IDependence[];
   application_data: IApplicationData;
   personal_data: IPersonalData;
   tickets: ITickets;
   payment: IAdvancePayment;
-  documents: file_path;
-}
-
-export interface IEconomicSupportCreate {
-  economic_support: IEconomicSupport;
+  documents?: file_path[];
 }
 
 
 export interface IEconomicSupportInDB extends IEconomicSupportCreate {
-  documents: file_path[];
+  id: string;
+  compliment?: ComplimentCreate;
 }
 
 export interface IEconomicSupportResponse extends Application {

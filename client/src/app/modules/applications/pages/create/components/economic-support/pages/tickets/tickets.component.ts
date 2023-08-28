@@ -17,8 +17,9 @@ import {
 export class TicketsComponent {
   // Dates
   public fromDate: NgbDate | null = null;
-  public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
+
+  public hoveredDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
 
@@ -33,11 +34,11 @@ export class TicketsComponent {
   }
 
   public form = this.fb.group({
-    departure_date: [new Date(), [Validators.required]],
-    arrival_date: [new Date(), [Validators.required]],
-    departure_place: ['', [Validators.required]],
-    arrival_place: ['', [Validators.required]],
-    place_birth: ['', [Validators.required]],
+    departure_date: [new Date()],
+    arrival_date: [new Date()],
+    departure_place: ['', [Validators.minLength(1), Validators.maxLength(50)]],
+    arrival_place: ['', [Validators.minLength(1), Validators.maxLength(50)]],
+    place_birth: ['', [Validators.minLength(1), Validators.maxLength(50)]],
     //birthdate: ['', [Validators.required]],
   });
 
@@ -81,6 +82,10 @@ export class TicketsComponent {
       this.toDate = null;
       this.fromDate = date;
     }
+    this.form.patchValue({
+      departure_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
+      arrival_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+    });
   }
 
   isHovered(date: NgbDate) {

@@ -6,6 +6,7 @@ from .base import Base
 
 if TYPE_CHECKING:
     from .application_status import Application_status
+    from .user_application import UserApplication
 
 
 class Status(Base):

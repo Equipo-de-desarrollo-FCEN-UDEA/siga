@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from .user import User
     from .application_status import Application_status
     from .application_subtype import ApplicationSubType
+    from .user_application import UserApplication
 
 
 class Application(Base):
@@ -19,11 +20,16 @@ class Application(Base):
     start_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
     end_date = Column(DateTime(timezone=True), nullable= True, default=func.now())
     filed = Column(Boolean, default=False)
-    
+    start_date = Column(DateTime(timezone=True), nullable=True)
+    end_date = Column(DateTime(timezone=True), nullable=True)
+
     #Relaciones
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="applications")
+
     application_sub_type_id = Column(Integer, ForeignKey("applicationsubtype.id"))
     application_sub_type = relationship("ApplicationSubType", back_populates="applications")
 
+    user_application = relationship("UserApplication", back_populates="application")
+    
     application_status = relationship("Application_status", back_populates="application")
