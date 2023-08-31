@@ -38,6 +38,9 @@ RUN poetry config virtualenvs.options.system-site-packages true
 
 RUN poetry install --only main
 
+RUN pip install python-docx
+
+
 FROM python-base as production
 ENV FASTAPI_ENV=production
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH

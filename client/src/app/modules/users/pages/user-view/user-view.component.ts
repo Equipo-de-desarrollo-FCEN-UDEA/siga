@@ -37,7 +37,6 @@ export class UserViewComponent {
     );
     userSvc.subscribe(
       (user) => {
-        console.log(user)
         this.user = user
         this.userrol=this.user.userrol[user.active_rol].rol.name;
       }
