@@ -1,5 +1,6 @@
 from .msg import Msg
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB
+from .userrol import UserRolBase, UserRolCreate, UserRolResponse, UserRolUpdate, UserRolInDB, UserRolInDBBase
 from .token import Token, TokenPayload
 from .department import DeparmentUpdate, DepartmentCreate, DeparmentInDB, DepartmentResponse
 from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse
@@ -10,9 +11,9 @@ from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiR
 from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
                                ApplicationTypeUpdate, ApplicationTypeResponse)
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,
-                                  ApplicationSubTypeInDB)
+                                  ApplicationSubTypeInDB, )
 from .application_status import (Application_statusCreate, Application_statusInDB,
-                                 Application_statusUpdate)
+                                 Application_statusUpdate, Application_statusResponse)
 from .applications import (
     #COMMISSION
     CommissionCreate,
@@ -55,3 +56,9 @@ from .applications import (
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
 
 from .cron_job import (CronJobBase, CronJobCreate, CronJobUpdate)
+
+from .extra import (ExtraBase, ExtraCreate, ExtraUpdate, ExtraInDBBase, ExtraResponse)
+
+from .user_application import (UserApplicationBase, UserApplicationCreate, 
+                               UserApplicationUpdate, UserApplicationInDB,
+                               UserApplicationResponse)

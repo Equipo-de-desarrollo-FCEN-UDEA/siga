@@ -122,6 +122,8 @@ async def get_permission(
         **dict(application),
         permission=permission
     )
+    log.debug("ESTE ES EL ROL ACTIVO DEL USUARIO...")
+    log.debug(current_user.active_rol)
     log.debug(application)
     log.info(response)
     return response

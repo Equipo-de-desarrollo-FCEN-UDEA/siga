@@ -1,61 +1,101 @@
 <div class="card">
-    <div class="card-body">
-        <form [formGroup]="user" class="mb-2 p-3" (submit)="userSubmit()">
-            <div class="row">
-                <div class="formfloatig col">
-                    <input id="usuario" class="form-control" type="text" placeholder="Correo participante"
-                        formControlName="email">
-
-                </div>
-                <div class="col">
-                    <button class="btn btn-warning" type="submit" [disabled]="user.invalid" (submit)="(true)">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-        <div *ngIf="userBypass">
-            <div class="card md-2">
-                <div class="card-body">
-                    <div class="text-center">
-                        <span class="user-pic">
-                            <i class="fa-solid fa-user-circle fa-2xl"></i>
-                        </span>
-                    </div>
-                    <div class="card-text text-center">
-                        {{userBypass.email.toLowerCase()}} <br>
-                        {{userBypass.names + ' '+ userBypass.last_names}}
-                    </div>
-                </div>
-
-            </div>
-            <form class="p-3" [formGroup]="role" (submit)="submit()">
-                <div class="row">
-                    <div class="formfloatig col-6">
-                        <input id="rol" class="form-control" type="text" formControlName="role"
-                        placeholder="Rol ejm: Co-investigador, Investigador principal">
-                    <p *ngIf="isInvalidForm('role')" class="inputError">El rol debe tener entre 1 y 50 caracteres</p>
-                    </div>
-                    <div class="formfloatig col-6">
-                        <input id="time" class="form-control" type="number" formControlName="time"
-                            placeholder="Dedicación en horas semanales">
-                            <p *ngIf="isInvalidForm('time')" class="inputError">Las horas deben estar entre 1 y 168</p>
-                    </div>
-                    <div class="formfloatig col" *ngIf="userBypass.vinculation_type.toUpperCase() == 'PROFESOR OCASIONAL'">
-                        <input id="rol" class="form-control" type="text" formControlName="backrest"
-                            placeholder="Respaldo ejm: ejemplo@udea.edu.co">
-                            <p *ngIf="isInvalidForm('backrest')" class="inputError">El correo debe ser institucional</p>
-                    </div>
-                </div>
-            </form>
+  <div class="card-body">
+    <form [formGroup]="user" class="mb-2 p-3" (submit)="userSubmit()">
+      <div class="row">
+        <div class="formfloatig col">
+          <input
+            id="usuario"
+            class="form-control"
+            type="text"
+            placeholder="Correo participante"
+            formControlName="email"
+          />
         </div>
+        <div class="col">
+          <button
+            class="btn btn-warning"
+            type="submit"
+            [disabled]="user.invalid"
+            (submit)="(true)"
+          >
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="userBypass">
+      <div class="card md-2">
+        <div class="card-body">
+          <div class="text-center">
+            <span class="user-pic">
+              <i class="fa-solid fa-user-circle fa-2xl"></i>
+            </span>
+          </div>
+          <div class="card-text text-center">
+            {{ userBypass.email.toLowerCase() }} <br />
+            {{ userBypass.names + " " + userBypass.last_names }}
+          </div>
+        </div>
+      </div>
+      <form class="p-3" [formGroup]="role" (submit)="submit()">
+        <div class="row">
+          <div class="formfloatig col-6">
+            <input
+              id="rol"
+              class="form-control"
+              type="text"
+              formControlName="role"
+              placeholder="Rol ejm: Co-investigador, Investigador principal"
+            />
+            <p *ngIf="isInvalidForm('role')" class="inputError">
+              El rol debe tener entre 1 y 50 caracteres
+            </p>
+          </div>
+          <div class="formfloatig col-6">
+            <input
+              id="time"
+              class="form-control"
+              type="number"
+              formControlName="time"
+              placeholder="Dedicación en horas semanales"
+            />
+            <p *ngIf="isInvalidForm('time')" class="inputError">
+              Las horas deben estar entre 1 y 168
+            </p>
+          </div>
+          <div
+            class="formfloatig col"
+            *ngIf="
+              userBypass.vinculation_type.toUpperCase() == 'PROFESOR OCASIONAL'
+            "
+          >
+            <input
+              id="rol"
+              class="form-control"
+              type="text"
+              formControlName="backrest"
+              placeholder="Respaldo ejm: ejemplo@udea.edu.co"
+            />
+            <p *ngIf="isInvalidForm('backrest')" class="inputError">
+              El correo debe ser institucional
+            </p>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="text-end m-2">
-        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-            Cancelar
-        </button>
-        <button [disabled]="user.invalid || role.invalid" class="btn btn-success" (submit)="false" type="submit"
-            (click)="submit()">Agregar</button>
-    </div>
-
+  </div>
+  <div class="text-end m-2">
+    <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+      Cancelar
+    </button>
+    <button
+      [disabled]="user.invalid || role.invalid"
+      class="btn btn-success"
+      (submit)="(false)"
+      type="submit"
+      (click)="submit()"
+    >
+      Agregar
+    </button>
+  </div>
 </div>

@@ -9,9 +9,8 @@ import { SharedModule } from '@shared/shared.module';
 import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
-import {  SignaturePadModule } from 'angular2-signaturepad';
-import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
-
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { EconomicSupportModule } from './components/economic-support/economic-support.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +20,13 @@ import { EconomicSupportComponent } from './components/economic-support/economic
     FullTimeComponent,
     HourAvalComponent,
     VacationComponent,
-    EconomicSupportComponent
   ],
   imports: [
     CommonModule,
     EditRoutingModule,
     SharedModule,
-    SignaturePadModule
-  ]
+    SignaturePadModule,
+    EconomicSupportModule,
+  ],
 })
-export class EditModule { }
+export class EditModule {}

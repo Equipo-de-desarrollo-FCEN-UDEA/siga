@@ -23,7 +23,7 @@ import { Msg } from '@interfaces/msg';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   private urlEndPoint = environment.route + 'login/';
   private cookieToken = environment.cookieToken;
 
@@ -31,7 +31,8 @@ export class AuthService {
   public Logged = new Subject<boolean>();
   public isSuperUser$ = new Subject<boolean>();
   public isDirector$ = new Subject<boolean>();
-  
+  public isCoordinador$ = new Subject<boolean>();
+
 
 
   constructor(
@@ -81,7 +82,7 @@ export class AuthService {
   activateEmail(token: string): Observable<Msg> {
     return this.http.post<Msg>(this.urlEndPoint + 'activate-account/', token)
   }
-  
+
 
   isLoggedIn() {
     const TOKEN_CHECK = this.cookieSvc.check(`_${this.cookieToken}`)
@@ -104,13 +105,20 @@ export class AuthService {
 
   isSuperUser() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isSuperUser$.next(data.rol.scope < 9)
+      data => this.isSuperUser$.next(data?.userrol[data?.active_rol]?.rol?.scope < 9)
     )
   }
 
+  isCoordinador() {
+    this.userSvc.getUser(0).subscribe(
+      data => this.isCoordinador$.next(data?.userrol[data?.active_rol]?.rol?.scope == 7)
+    )
+  }
+
+
   isDirector() {
     this.userSvc.getUser(0).subscribe(
-      data => this.isDirector$.next(data.rol.scope < 9 && data.rol.scope > 5)
+      data => this.isDirector$.next(data?.userrol[data?.active_rol]?.rol?.scope < 9 && data?.userrol[data?.active_rol]?.rol?.scope > 5)
     )
   }
 

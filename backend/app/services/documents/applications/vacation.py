@@ -23,16 +23,21 @@ settings = get_app_settings()
 log = get_logging(__name__)
 
 def fill_vacations_format(user: User, vacations: VacationResponse):
-
+    
     vacations_dict: dict = vacations.dict()
 
+    userrol = user.userrol[user.active_rol]
+
     user = UserResponse.from_orm(user).dict(exclude_unset=True)
+    
+    
 
     #Rellenar la parte del profesor.
     data_user = {
         "identification": user['identification_number'],
         "full_name": ' '.join([user['names'], user['last_names']]).title(),
-        "position": user['rol']['name'],
+        "position": userrol.rol.name,
+        #"position": user['rol']['name'],
         "school": user['department']['school']['description'],
         "phone": user['phone'],
         "vinculation_type": user['vinculation_type'],

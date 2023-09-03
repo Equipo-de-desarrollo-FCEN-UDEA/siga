@@ -7,6 +7,7 @@ class Token(BaseModel):
     access_token: str
     token_type: str
     expires: int
+    #rol_id: int
 
 
 class TokenPayload(BaseModel):

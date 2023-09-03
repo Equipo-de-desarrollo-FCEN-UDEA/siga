@@ -15,44 +15,78 @@ class ApplicationPolicy(Base[Application, ApplicationCreate, ApplicationUpdate])
     # who can see an Application of another user
     def get(self, who: User, to: Application) -> None:
 
+        userrol = who.userrol[who.active_rol]
+        torol = to.user.userrol[to.user.active_rol]
+
         if not to:
             raise application_404
 
-        elif not (who.rol.scope < 9) and not (who.id == to.user.id):
+
+        elif not (userrol.rol.scope < 9) and not (who.id == to.user.id):
             raise application_401
 
-        elif not (who.rol.scope <= to.user.rol.scope):
+        elif not (userrol.rol.scope <= torol.rol.scope):
             raise application_401
 
-        elif (who.rol.scope == 7) or (who.rol.scope == 6):
+        elif (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
             if not (to.user.department_id == who.department_id):
                 raise application_401
 
-        elif who.rol.scope == 5:
+        elif userrol.rol.scope == 5:
             if not (to.user.department.school_id == who.department.school_id):
                 raise application_401
+
+        # elif not (who.rol.scope < 9) and not (who.id == to.user.id):
+        #     raise application_401
+
+        # elif not (who.rol.scope <= to.user.rol.scope):
+        #     raise application_401
+
+        # elif (who.rol.scope == 7) or (who.rol.scope == 6):
+        #     if not (to.user.department_id == who.department_id):
+        #         raise application_401
+
+        # elif who.rol.scope == 5:
+        #     if not (to.user.department.school_id == who.department.school_id):
+        #         raise application_401
 
         return None
 
     # Who can create a application of a subtype
     def create(self, who: User, to: ApplicationCreate) -> None:
 
+        userrol = who.userrol[who.active_rol]
         application_sub_type = to.application_sub_type_id
 
         # Permiso
         if (application_sub_type in [1, 2, 3, 4, 5, 6, 7] and
-                not (who.rol.scope == 11 or who.rol.scope == 9)):
+                not (userrol.rol.scope == 11 or userrol.rol.scope == 9)):
 
             raise application_401
-
+        
         # Comisión
         if (application_sub_type in [8, 9]
-                and not (who.rol.scope == 11 or who.rol.scope == 9)):
+                and not (userrol.rol.scope == 11 or userrol.rol.scope == 9)):
             raise application_401
 
         # Dedicación
-        if (application_sub_type == 10 and not (who.rol.scope == 9)):
+        if (application_sub_type == 10 and not (userrol.rol.scope == 9)):
             raise application_401
+
+        # # Permiso
+        # if (application_sub_type in [1, 2, 3, 4, 5, 6, 7] and
+        #         not (who.rol.scope == 11 or who.rol.scope == 9)):
+
+        #     raise application_401
+
+        # # Comisión
+        # if (application_sub_type in [8, 9]
+        #         and not (who.rol.scope == 11 or who.rol.scope == 9)):
+        #     raise application_401
+
+        # # Dedicación
+        # if (application_sub_type == 10 and not (who.rol.scope == 9)):
+        #     raise application_401
 
         # Aval horas grupos de investigación
         # if (application_sub_type == 11) and not (who.rol.scope == 9):

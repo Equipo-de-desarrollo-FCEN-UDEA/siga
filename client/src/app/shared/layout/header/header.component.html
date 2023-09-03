@@ -12,7 +12,7 @@
 
     <div [routerLink]="['/home']" class="cursor">
       <span style="color: #fff">
-        Bienvenido(a) {{ user?.names + ' ' + user?.last_names | titlecase}}
+        Bienvenido(a) {{ user?.names + " " + user?.last_names | uppercase }}
       </span>
     </div>
     <div
@@ -20,6 +20,7 @@
       tabindex="-1"
       id="offcanvasDarkNavbar"
       aria-labelledby="offcanvasDarkNavbarLabel"
+      *ngIf="!isRolSelectionRoute()"
     >
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel"></h5>
@@ -37,7 +38,10 @@
             <div>
               <div>
                 <div class="sidebar-header">
-                  <span class="user-pic cursor" [routerLink]="['/usuarios/ver/0']">
+                  <span
+                    class="user-pic cursor"
+                    [routerLink]="['/usuarios/ver/0']"
+                  >
                     <i class="fas fa-user-circle"></i>
                   </span>
                 </div>
@@ -49,13 +53,15 @@
                   </span>
                   <br />
                   <span class="user-role">
-                    <span [ngClass]="{
-                      'user-status-active': user?.active, 
-                      'user-status-inactive': !user?.active
-                    }">
+                    <span
+                      [ngClass]="{
+                        'user-status-active': user?.active,
+                        'user-status-inactive': !user?.active
+                      }"
+                    >
                       <i class="fa fa-circle"></i>
                     </span>
-                    {{user?.rol?.name}}
+                    {{user.userrol[activeRol].rol.name}}
                   </span>
                 </div>
                 <!-- sidebar-header  -->
@@ -115,13 +121,14 @@
                       </span>
                     </li>
                   </ul>
-                  <div *ngIf="(isSuperUser | async)">
+                  <div>
                     <hr />
                     <div class="header-menu">
                       <span class="text-secondary"> ESPECÍFICO </span>
                     </div>
                     <ul>
                       <li
+                        *ngIf="isSuperUser | async"
                         type="button"
                         data-bs-dismiss="offcanvas"
                         aria-label="Close"
@@ -130,6 +137,17 @@
                         <span>
                           <i class="fa-solid fa-users"></i>
                           Usuarios
+                        </span>
+                      </li>
+                      <li
+                        type="button"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                        [routerLink]="['/usuarios/cambiar-rol']"
+                      >
+                        <span>
+                          <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                          Cambiar Rol
                         </span>
                       </li>
                     </ul>

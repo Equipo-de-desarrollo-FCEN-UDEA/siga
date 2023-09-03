@@ -4,7 +4,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.domain.schemas.user import UserCreate, UserUpdate
-from app.domain.models import User, Rol, Department
+from app.domain.models import User, Rol, Department, UserRol
 from app.domain.policies.user import UserPolicy
 from app.services.security import get_password_hash, check_password
 from app.domain.errors.user import user_diferent_password
@@ -21,6 +21,12 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         self, db: Session, id: int
     ) -> Optional[User]:
         obj_db = db.query(User).filter(User.id == id).first()
+
+        #Se añade una lista con los roles asociados al usuario.
+        roles = db.query(UserRol).filter(UserRol.user_id == id).with_entities(UserRol.rol_id).all()
+        roles_list = [roles[i][0] for i in range(len(roles))]
+        setattr(obj_db, 'assigned_roles', roles_list)
+
         return obj_db
 
     #
@@ -52,14 +58,20 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         active: bool = True,
     ) -> List[User]:
         self.policy.get_multi(who=who)
-        queries = [User.active == active, Rol.scope >= who.rol.scope]
+        
+        #Verify the rol for current user
+        userrol = who.userrol[who.active_rol]
 
-        if (who.rol.scope == 7) or (who.rol.scope == 6):
-            queries += [Department.id == who.department.id]
+        queries = [User.active == active, Rol.scope >= userrol.rol.scope]
+        
+        if (userrol.rol.scope == 7) or (userrol.rol.scope == 6):
+             queries += [Department.id == who.department.id]
 
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 5:
             queries += [Department.school_id == who.department.school_id]
 
+        
+        
         if search:
             columns = [
                 'names',
@@ -71,7 +83,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
             raw = [
                 db.query(User)
                 .order_by(desc(User.id))
-                .join(Rol)
+                .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                 .join(Department)
                 .filter(getattr(User, col).contains(f"{search}"))
                 .filter(*queries)
@@ -83,7 +96,8 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
 
         objs_db = (db.query(User)
                    .order_by(desc(User.id))
-                   .join(Rol)
+                   .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                    .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                    .join(Department)
                    .filter(*queries)
                    .limit(limit)
@@ -133,6 +147,22 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate, UserPolicy]):
         )
         update_data = {
             "hashed_password": get_password_hash(password)
+        }
+        return super().update(db=db, who=who, db_obj=db_obj, obj_in=update_data)
+    
+    def update_active_role(
+        self,
+        db: Session,
+        new_active_rol: int,
+        assigned_roles: List[int],
+        db_obj: User,
+        who: User
+    ) -> User:
+        # self.policy.update_active_rol(
+        #     who=who, to=db_obj, new_active_rol=new_active_rol, assigned_roles=assigned_roles
+        # )
+        update_data = {
+            "active_rol": new_active_rol
         }
         return super().update(db=db, who=who, db_obj=db_obj, obj_in=update_data)
 

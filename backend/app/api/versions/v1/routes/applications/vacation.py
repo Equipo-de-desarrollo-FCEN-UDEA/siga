@@ -44,14 +44,12 @@ async def create_vacation(
             db=engine,
             obj_in=Vacation(**dict(vacation))
         )
-
-        log.debug(' vacation_create',  vacation_create)
-
-        # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(vacation_create.id),
             application_sub_type_id=vacation.application_sub_type_id,
-            user_id=current_user.id
+            user_id=current_user.id,
+            start_date= vacation_create.start_date,
+            end_date= vacation_create.end_date
         )
 
         application = crud.application.create(
@@ -59,10 +57,9 @@ async def create_vacation(
             who=current_user,
             obj_in=application
         )
-
+ 
         mongo_id = ObjectId(application.mongo_id)
         
-
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
         log.error('BaseErrors')
@@ -164,8 +161,8 @@ async def update_vacation(
             response = VacationResponse(
             **dict(application, vacation=update_vacation))
 
-            #path = documents.fill_vacations_format(current_user, response)
-            #await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+            path = documents.fill_vacations_format(current_user, response)
+            await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
             
             log.debug('application update', application_updated)
 

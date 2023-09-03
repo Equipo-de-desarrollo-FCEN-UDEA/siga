@@ -1,0 +1,62 @@
+<form
+  class="container containerInside card shadow mt-5 bg-white rounded"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="selectRolForm"
+>
+  <div class="p-2">
+    <div class="card-body">
+      <div class="row header-row P-2">
+        <div class="col">
+          <span class="text-secondary">SELECCIONAR ROL</span>
+        </div>
+      </div>
+
+      <hr />
+
+      <span class="mt-4">Selecciona el rol</span>
+      <div class="row regular-row">
+        <div class="col-12">
+          <select
+            class="form-select form-select-lg"
+            id="active_rol"
+            formControlName="active_rol"
+            required
+          >
+            <option value="" disabled selected>Seleciona un rol</option>
+            <option [value]="i" *ngFor="let rol of roles; let i = index">
+              {{ rol.rol.name | uppercase }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <hr />
+      <!-- buttons -->
+      <div class="footer-row d-md-flex justify-content-between align-items-center mb-3">
+        <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+          <button 
+            id="btn-cancel" 
+            class="btn btn-secondary" 
+            type="button" 
+            (click)="onCancel()">
+            Cancelar
+          </button>
+        </div>
+        <div class="d-grid gap-2 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2">
+          <button 
+            id="btn-sub" 
+            class="btn btn-submit" 
+            type="submit" 
+            (submit)="(true)">
+            Continuar
+          </button>
+        </div>
+      </div>
+      
+
+    </div>
+  </div>
+</form>
+
+<!-- SPINNER ALL PAGE -->
+<app-loader></app-loader>

@@ -17,9 +17,9 @@ export class ApplicationDataComponent {
   public ECONOMIC_SUPPORT_TYPE = ECONOMIC_SUPPORT_TYPE;
 
   public form = this.fb.group({
-    application_type: ['', [Validators.required]],
-    project: ['', [Validators.required]],
-    goal: ['', [Validators.required]],
+    application_type: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    project: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    goal: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
   });
 
   @Output() submitted = false;

@@ -30,10 +30,10 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             )
         application_status = sorted(application_status, key = lambda x: x.created_at)
         application.application_status = application_status
+        
         self.policy.get(who=who, to=application)
         return application
-    
-    
+
     def get_multi(
         self,
         db: Session,
@@ -47,19 +47,25 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         queries = []
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        if who.rol.scope >= 9:
+        userrol = who.userrol[who.active_rol]
+        log.debug(userrol.rol.__dict__)
+
+        if (userrol.rol.scope >= 9):
             queries += [User.id == who.id]
 
-        if who.rol.scope < 9:
+        if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
+        
+        # if userrol.rol.scope == 7:
+        #     queries.append(UserApplication.user_id == who.id)
 
-        if (who.rol.scope == 7) or (who.rol.scope == 6):
-            queries += [User.department_id == who.department.id]
-
-        if who.rol.scope == 5:
-            queries += [Department.school_id == who.department.school_id]
+        if (userrol.rol.scope == 6):
+            queries.append(Department.school_id == who.department.school_id)
+        
+        if userrol.rol.scope == 5:
+            queries.append(Department.school_id == who.department.school_id)
 
         if search is not None:
             columns = [
@@ -84,7 +90,28 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return [*set(res)]
+            return list(*set(res))
+        
+        if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
+            queries.append(Application.application_sub_type_id == 14) #Para futuras solicitudes, crear un arreglo.
+            
+            for_coordinators_subquery = (db.query(UserApplication.application_id)
+                                        .filter(UserApplication.user_id == who.id)
+                                        .limit(limit)
+                                        .offset(skip)
+                                        .subquery())
+
+            coordinators_applications = (db.query(Application)
+                    .order_by(desc(Application.id))
+                    .join(User)
+                    .join(ApplicationSubType)
+                    .join(Department)
+                    .filter(Application.id.in_(for_coordinators_subquery))
+                    .limit(limit)
+                    .offset(skip)
+                    .all())
+
+            return coordinators_applications
 
         objs_db = (db.query(Application)
                    .order_by(desc(Application.id))
@@ -95,9 +122,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .limit(limit)
                    .offset(skip)
                    .all())
-
+        
         return objs_db
-    
+
     def get_all(
         self,
         db: Session,
@@ -108,20 +135,39 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
     ) -> List[Application]:
         queries = []
 
-        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        if who.rol.scope >= 9:
+        userrol = who.userrol[who.active_rol]
+
+        if( userrol.rol.scope >= 9):
             queries += [User.id == who.id]
 
-        if who.rol.scope < 9:
+        if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
-        if (who.rol.scope == 7) or (who.rol.scope == 6):
-            queries += [User.department_id == who.department.id]
-
-        if who.rol.scope == 5:
+        if userrol.rol.scope == 7:
             queries += [Department.school_id == who.department.school_id]
+
+        if (userrol.rol.scope == 6):
+            queries += [Department.school_id == who.department.school_id]
+
+        if (userrol.rol.scope == 5):
+            queries += [Department.school_id == who.department.school_id]
+
+        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
+        # if who.rol.scope >= 9:
+        #     queries += [User.id == who.id]
+
+        # if who.rol.scope < 9:
+        #     # queries += [Application_status.status_id.not_in((6,7))]
+        #     if filed is not None:
+        #         queries += [Application.filed.is_(filed)]
+
+        # if (who.rol.scope == 7) or (who.rol.scope == 6):
+        #     queries += [User.department_id == who.department.id]
+
+        # if who.rol.scope == 5:
+        #     queries += [Department.school_id == who.department.school_id]
 
         if search is not None:
             columns = [
@@ -155,8 +201,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                    .all())
 
         return objs_db
-    
-    
 
     def create(
         self,
@@ -175,7 +219,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         )
         if status == 1:
             create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
@@ -200,7 +244,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         )
         if status == 1:
             create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                     'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
@@ -211,3 +255,4 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 policy = ApplicationPolicy()
 
 application = CRUDApplication(Application, policy=policy)
+

@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from odmantic.session import AIOSession
 
+from typing import Any
+
 from dateutil.relativedelta import relativedelta
 
 from bson.objectid import ObjectId
@@ -28,20 +30,21 @@ async def create_application_status(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     # ) -> Application_statusInDB:
 ):
-    application_status.observation += f' por {current_user.rol.description}'
+    application_status.observation += f' por {current_user.userrol[current_user.active_rol].rol.description}'
     try:
         application = crud.application.get(
             db, current_user, id=application_status.application_id)
+
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
-
+        
         # Cases of document generations
-        # Commision
+        #  Commision
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):
             await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                     application_status.observation, response.status.name, application.id, [application.user.email]))
+                                                         application_status.observation, response.status.name, application.id, [application.user.email]))
 
         # Permission
         if (response.status.name == 'APROBADA' and
@@ -49,24 +52,36 @@ async def create_application_status(
             await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
             log.debug('GENERADA RESOLUCION')
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                     application_status.observation, response.status.name, application.id, application.user.email))
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
             log.debug('CORREO...')
-        
-        # Vacations
-        #TODO: AL MOMENTO QUE SE APRUEBA LA SOLICITUD SE TIEsNE QUE GENERAR EL FORMATO
+
+        #  Vacations
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "VACACIONES"):
-            log.debug('VACATION APRROVED!!!!')
-            #await documents.fill_vacations_format(user=application.user, application=vacation)
-        # emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                    # application_status.observation, response.status.name, application.id, application.user.email))
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
+            
+
+        #APOYO ECONOMICO
+        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
+
+        if (response.status.name == 'APROBADA'
+                and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
+            
+
+        #DEDICACIÓN EXCLUSIVA
+        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, application.user.email))
 
         # Full time
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
-
             full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-
             dates_to_save = []
 
             # Tomar solo las fechas del plan de trabajo
@@ -119,9 +134,23 @@ async def create_application_status(
         # status Visto bueno:
         if response.status == 'VISTO BUENO':
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                        application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
-            
-    
+                                                         application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
+    except BaseErrors as e:
+        raise HTTPException(status_code=e.code, detail=e.detail)
+    return response
+
+
+@router.get('/{id}', response_model=list[Application_statusInDB])
+def get_application_status(
+    *,
+    db: Session = Depends(db.get_db),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    id: int,
+) -> list[Application_statusInDB]:
+    try:
+        response = crud.application_status.get_application_status(
+            db, id=id)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response

@@ -2,12 +2,9 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from .userrol import UserRol
 
 from .base import Base
-
-if TYPE_CHECKING:
-    from .user import User
-
 
 class Rol(Base):
     id = Column(Integer, primary_key=True)
@@ -16,4 +13,5 @@ class Rol(Base):
     scope = Column(Integer)
 
     # relations
-    users = relationship("User", back_populates="rol")
+    userrol = relationship("UserRol",back_populates="rol")
+    #users = relationship("User", back_populates="rol")

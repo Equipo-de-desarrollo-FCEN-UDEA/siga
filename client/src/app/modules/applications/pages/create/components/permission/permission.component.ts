@@ -56,7 +56,7 @@ export class PermissionComponent implements AfterViewInit{
 
   // holidays
   public holidays: Holiday[] = [];
-mouseOvered: any;
+  mouseOvered: any;
 
   constructor(
     private formBuilder: FormBuilder,

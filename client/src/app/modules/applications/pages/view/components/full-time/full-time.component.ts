@@ -30,6 +30,8 @@ export class FullTimeComponent implements OnInit {
 
   public current_status: string = '';
 
+  public isSuperUser$ = this.authSvc.isSuperUser$;
+
   public fullTime$!: Observable<FulltimeResponse>;
   private id: number = 0;
   

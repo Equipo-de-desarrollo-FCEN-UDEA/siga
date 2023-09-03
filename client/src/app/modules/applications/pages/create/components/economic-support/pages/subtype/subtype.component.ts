@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { IDependence, ISubdepartment } from '@interfaces/applications/economic_support-interface';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { ExtraService } from '@services/extra.service';
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-subtype',
@@ -10,35 +13,53 @@ import { ApplicationTypesService } from '@services/application-types.service';
 export class SubtypeComponent {
   public applicationType$ = this.applicationTypeSvc.getApplicationType(6);
 
-  public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required]],
-  });
+  public dependencies: IDependence[] = [];
+  public subdeparments: ISubdepartment[] = [];
 
   @Output() sendForm = new EventEmitter<any>();
   @Output() submitted = false;
+
+  constructor(
+    private applicationTypeSvc: ApplicationTypesService,
+    private userSvc: UserService,
+    private extraSvc: ExtraService
+  ) {
+    this.userSvc.getUser().subscribe((data) => {
+      this.extraSvc.getSubdepartmentsByDepartment(data.department_id).subscribe((data) => {
+        this.subdeparments = data;
+        console.log(this.subdeparments);
+      });
+    });
+  }
+
+  onCheckboxChange(event: any, dependence: ISubdepartment) {
+    let newDependence = {
+      id: dependence.coordinador_id,
+      name: dependence.name
+    };
   
-  get f() {
-    return this.form.controls;
+    if (event.target.checked) {
+      if (!this.dependencies.includes(newDependence)) {
+        this.dependencies.push(newDependence);
+      }
+    } else {
+      const index = this.dependencies.findIndex(dep => dep.id === newDependence.id);
+      if (index !== -1) {
+        this.dependencies.splice(index, 1);
+      }
+    }
+  
+    console.log(this.dependencies);
   }
   
-  constructor(
-    private fb: FormBuilder,
-    private applicationTypeSvc: ApplicationTypesService
-  ) {}
 
   send() {
-    this.sendForm.emit(this.form.value.application_sub_type_id);
+    this.sendForm.emit(this.dependencies);
   }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
   sendForms() {
     this.submitted = true;
-    return this.form.value.application_sub_type_id;
-  }
-
-  isInvalidForm(controlName: string) {
-    return (
-      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
-    );
+    return this.dependencies;
   }
 }

@@ -4,6 +4,7 @@ from app.domain.models import (
     Department,
     School,
     Rol,
+    UserRol,
     Status,
     Application,
     ApplicationSubType,

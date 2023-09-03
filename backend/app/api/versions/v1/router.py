@@ -3,16 +3,19 @@ from fastapi import APIRouter
 from app.api.versions.v1.routes import (
     documents,
     user,
+    userrol,
     auth,
     department,
     extra,
     school,
     rol,
+    extra,
     application_type,
     application_subtype,
     application,
     application_status,
-    holiday
+    holiday,
+    user_application
 )
 
 from app.api.versions.v1.routes.applications import permission, commission, full_time, hour_aval, vacation, economic_support
@@ -32,6 +35,8 @@ api_route.include_router(school.router,
                          prefix='/school', tags=["schools"])
 api_route.include_router(rol.router,
                          prefix="/rol", tags=["rol"])
+api_route.include_router(userrol.router,
+                         prefix="/userrol", tags=["userrol"])
 
 # Type Applications
 api_route.include_router(application_type.router,
@@ -50,6 +55,12 @@ api_route.include_router(documents.router,
 # Holidays
 api_route.include_router(holiday.router,
                          prefix="/holiday", tags=["holiday"])
+
+api_route.include_router(extra.router,
+                         prefix="/extra", tags=['extra'])
+
+api_route.include_router(user_application.router,
+                         prefix="/user_application", tags=['user_application'])
 
 # Applications
 api_route.include_router(commission.router,
