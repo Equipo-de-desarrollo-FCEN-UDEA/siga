@@ -20,9 +20,8 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
             obj_in_data['status_id'] = status.id
             queries = [Department.school_id ==
                        who.department.school_id, Rol.scope.in_(scope)]
-            to_notify: list[User] = db.query(User).join(
-                UserRol).join(Department).filter(*queries).all()
-            log.debug(scope)
+            # to_notify: list[User] = db.query(User).join(UserRol).join(Department).filter(*queries).all()
+            to_notify: list[User] = db.query(User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).join(Department).filter(*queries).all()
             for to_user in to_notify:
                 log.debug(to_user.__dict__)
                 create_application_email.apply_async(args=(to_user.names.lower(), to_user.last_names.lower(

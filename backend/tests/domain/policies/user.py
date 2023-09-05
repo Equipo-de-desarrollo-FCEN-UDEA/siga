@@ -1,3 +1,4 @@
+from backend.app.domain.models.userrol import UserRol
 from pytest import raises
 
 from app.domain.models import User, Rol
@@ -12,11 +13,11 @@ log = get_logging(__name__)
 class TestUserPolicy(TestBaseDB):
     def test_user_policy(self):
         admin: User = self.session.query(
-            User).join(Rol).where(Rol.scope== 1).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).where(Rol.scope== 1).first()
         student: User = self.session.query(
-            User).join(Rol).where(Rol.scope == 13).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).where(Rol.scope == 13).first()
         professor: User = self.session.query(
-            User).join(Rol).where(Rol.scope == 9).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).where(Rol.scope == 9).first()
 
         log.debug(admin.__dict__)
 
