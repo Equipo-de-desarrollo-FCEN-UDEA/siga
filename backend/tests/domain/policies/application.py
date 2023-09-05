@@ -1,3 +1,4 @@
+from backend.app.domain.models.userrol import UserRol
 from pytest import raises
 
 from app.domain.models import User, Application, Rol, Application_status
@@ -13,13 +14,13 @@ log = get_logging(__name__)
 class TestApplicationPolicy(TestBaseDB):
     def test_application_policy(self):
         admin: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 1).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 1).first()
         student: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 13).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 13).first()
         employee: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 11).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 11).first()
         professor: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 9).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 9).first()
 
         # application type permission, cant be schedule by student
         application_permission = ApplicationCreate(
