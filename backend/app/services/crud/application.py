@@ -97,7 +97,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return list(*set(res))
+            return list(set(res))
         
         if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
             queries.append(Application.application_sub_type_id == 14) #Para futuras solicitudes, crear un arreglo.
