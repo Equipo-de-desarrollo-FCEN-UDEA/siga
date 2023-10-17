@@ -42,7 +42,8 @@ export class ComplimentComponent implements OnInit {
     { nombre: 'Fondo de Pasajes Internacionales', value: 'fondosinvestigacion@udea.edu.co' },
     { nombre: 'Vicerrectoría de Investigación', value: 'fondosinvestigacion@udea.edu.co' },
     { nombre: 'Centro de Investigaciones SIU', value: 'viaticostiquetesanticipos.siu@udea.edu.co' },
-    { nombre: 'Fondos de Vicerrectoría de Docencia', value: 'comisionesdocencia@udea.edu.co' }
+    { nombre: 'Fondos de Vicerrectoría de Docencia', value: 'comisionesdocencia@udea.edu.co' },
+    { nombre: 'Secretaria Decanatura FCEN', value: 'apoyodecanatoexactas@udea.edu.co' }
   ];
 
   constructor(
