@@ -14,5 +14,5 @@ from .cron_job import CronJob
 from .extra import Extra
 from .user_application import UserApplication
 from .applications import (Commission, Permission, Consecutive, 
-                           FullTime, HourAval, Vacation, 
+                           FullTime, ReportFullTime, HourAval, Vacation, 
                            EconomicSupport)
