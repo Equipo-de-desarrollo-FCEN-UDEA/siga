@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
@@ -18,12 +19,13 @@ from app.domain.schemas import (ApplicationCreate,
                                 Application_statusCreate
                                 )
 from app.domain.errors.applications.report_full_time import ReportFullTimeErrors
-from app.domain.errors import BaseErrors
+from app.domain.errors.base import BaseErrors
 
 router = APIRouter()
 
 log = get_logging(__name__)
 settings = get_app_settings()
+
 
 @router.post("/", response_model=ReportFullTimeResponse)
 async def create_report_full_time(
@@ -46,11 +48,8 @@ async def create_report_full_time(
         report_full_time_created = await crud.report_full_time.create(db=engine,
                                                                       obj_in=ReportFullTime(**dict(report_full_time)))
         if report_full_time_created.from_full_time:
-            try:
-                crud.application.get(db, current_user, id=report_full_time_created.full_time_id)
-            except ReportFullTimeErrors as e:
-                raise HTTPException(e.code, e.detail)
-
+            crud.application.get(
+                db, current_user, id=report_full_time_created.full_time_id)
         application = ApplicationCreate(
             mongo_id=str(report_full_time_created.id),
             application_sub_type_id=report_full_time.application_sub_type_id,
@@ -67,6 +66,7 @@ async def create_report_full_time(
         log.error('ValueError')
         await engine.remove(ReportFullTime, ReportFullTime.id == report_full_time_created.id)
         raise HTTPException(422, e)
+    
     except Exception as e:
         log.error('Exception')
         log.error(e)
@@ -102,8 +102,12 @@ async def get_report_full_time(
         mongo_id = ObjectId(application.mongo_id)
         if application:
             report_full_time = await crud.report_full_time.get(engine, id=mongo_id)
-    except BaseErrors as e:
-        raise HTTPException(e.code, e.detail)
+    except (BaseErrors, OSError) as e:
+        log.error(e, type(e))
+        raise (
+            HTTPException(e.code, e.detail)
+            if isinstance(BaseErrors)
+            else HTTPException(422, "La dedicación exclusiva que busca no existe."))
     application_response = ApplicationResponse.from_orm(application)
     response = ReportFullTimeResponse(
         **dict(application_response),

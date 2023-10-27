@@ -28,6 +28,8 @@ class AppSettings(BaseAppSettings):
 
     secret_key: SecretStr
 
+    DEBUGGER: bool = True
+
     backend_cors_origins: list[AnyHttpUrl] = []
 
     @validator("backend_cors_origins", pre=True)
