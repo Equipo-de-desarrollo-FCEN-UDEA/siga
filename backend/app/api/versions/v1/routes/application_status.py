@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from odmantic.session import AIOSession
+from datetime import datetime
 
 from typing import Any
 
@@ -42,48 +43,74 @@ async def create_application_status(
         #  Commision
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "COMISIÓN"):
-            await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
+            await documents.commission_resolution_generation(user=application.user,
+                                                              application=application, mong_db=engine)
+            
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, [application.user.email]))
+
 
         # Permission
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "PERMISO"):
-            await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
+            await documents.permission_resolution_generation(user=application.user,
+                                                              application=application, mong_db=engine)
+            
             log.debug('GENERADA RESOLUCION')
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
             log.debug('CORREO...')
 
+
         #  Vacations
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "VACACIONES"):
+            
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
             
 
         #APOYO ECONOMICO
-        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+        if (response.status.name == 'SOLICITADA' and
+             application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
 
         if (response.status.name == 'APROBADA'
                 and application.application_sub_type.application_type.name == "APOYO ECONÓMICO"):
+            
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
             
 
         #DEDICACIÓN EXCLUSIVA
-        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+        if (response.status.name == 'SOLICITADA' and
+             application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                         application_status.observation, response.status.name, application.id, application.user.email))
+                                                         application_status.observation, response.status.name,
+                                                            application.id, application.user.email))
 
-        # Full time
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            
             full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-            dates_to_save = []
+            
+            log.debug("SOLICITUD...")
 
+            # Subiendo las fechas a la base de datos
+            duration = full_time.vice_format['time']
+            aprobation_date = datetime.today()
+
+            log.debug(type(duration), type(aprobation_date))
+            application.start_date = aprobation_date
+            application.end_date = aprobation_date + relativedelta(months=+duration)
+
+            #crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
+
+            dates_to_save = []
+ 
             # Tomar solo las fechas del plan de trabajo
             if full_time.work_plan['teaching_activities']:
                 for activity in full_time.work_plan['teaching_activities']:
@@ -124,7 +151,7 @@ async def create_application_status(
             for date in dates_to_save:
                 # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
                 cron_obj = CronJobCreate(
-                    send_date=date - relativedelta(months=1),
+                    send_date=date,
                     template="email.report.full.time.html.j2",
                     user_email=application.user.email,
                     id_application=application.id
