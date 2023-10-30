@@ -38,7 +38,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
             schemas.application_type.StatusFlux(
                 status='EN VICERRECTORÍA', scope=[5]),
             schemas.application_type.StatusFlux(
-                status='APROBADA', scope=[6])
+                status='APROBADA', scope=[6,5])
         ],
         who_can=[9]
     ),
