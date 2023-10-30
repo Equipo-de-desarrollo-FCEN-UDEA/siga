@@ -195,7 +195,7 @@ export class CommissionComponent {
 
   validSize() {
     const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 6000 * 6000;
+    return size < 6 * 1024 * 1024;
   }
 
   validFileType() {
