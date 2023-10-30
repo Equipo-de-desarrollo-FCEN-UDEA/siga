@@ -250,7 +250,7 @@ export class CommissionComponent implements OnInit {
 
   validSize() {
     const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 1024 * 1024;
+    return size < 6 * 1024 * 1024;
   }
 
   validTipoArchivo() {
