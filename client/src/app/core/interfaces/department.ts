@@ -4,6 +4,7 @@ export interface DepartmentBase {
     name: string;
     description: string;
     coord_email: string;
+    secre_email: string;
     school_id: number;
     cost_center?: number;
 }
