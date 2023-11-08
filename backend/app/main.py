@@ -14,6 +14,7 @@ log = get_logging(__name__)
 
 def run_app():
     settings = get_app_settings()
+    initialize_fastapi_server_debugger_if_needed()
     application = FastAPI(**settings.fastapi_kwargs)
     application.add_middleware(
         CORSMiddleware,
@@ -26,7 +27,7 @@ def run_app():
     )
     application.include_router(api_route, prefix=settings.api_prefix_v1)
     init_db()
-    initialize_fastapi_server_debugger_if_needed()
+    
     return application
 
 

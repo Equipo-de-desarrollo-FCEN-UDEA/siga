@@ -221,8 +221,11 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             observation=observation
         )
         if status == 1:
-            create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+            create_application_email.apply_async(args=(who.names, 
+                                                       who.last_names, 
+                                                       db_obj.application_sub_type.name,
+                                                       'http://siga-fcen.com/solicitudes/lista', 
+                                                       who.department.coord_email))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()

@@ -48,7 +48,12 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
 
 
 @celery_app.task
-def create_application_email(to_name: str, to_lname: str, tipo_solicitud: str, token: str, email: str):
+def create_application_email(
+    to_name: str, 
+    to_lname: str, 
+    tipo_solicitud: str, 
+    token: str, 
+    email: str):
     template = env.get_template("email.creacion.solicitud.html.j2")
 
     context = {
