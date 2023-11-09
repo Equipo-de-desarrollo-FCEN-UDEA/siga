@@ -114,6 +114,7 @@ services:
       - local-net
     ports:
       - "8001:8000"
+      - "10001:10001"
     volumes:
       - ./backend:/app
 
