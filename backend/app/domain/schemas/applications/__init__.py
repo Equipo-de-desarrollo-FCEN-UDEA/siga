@@ -7,6 +7,9 @@ from .commission import (CommissionCreate, CommissionResponse,
 from .full_time import (FullTimeCreate, FullTimeUpdate, FullTimeResponse,
                         FullTimeInDB, WorkPlan, ViceFormat, InitialLetter)
 
+from .report_full_time import (ReportFullTimeCreate, ReportFullTimeUpdate, ReportFullTimeResponse,
+                               ReportFullTimeInDB)
+
 from .hour_aval import (HourAvalCreate, HourAvalUpdate,
                         HourAvalResponse, HourAvalInDB, Act)
 

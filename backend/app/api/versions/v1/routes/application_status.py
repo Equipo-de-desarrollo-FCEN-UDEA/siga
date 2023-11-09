@@ -37,6 +37,7 @@ async def create_application_status(
 
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
+        log.debug(response.status.name)
         
         # Cases of document generations
         #  Commision
@@ -72,12 +73,13 @@ async def create_application_status(
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
             
-
+        
         #DEDICACIÓN EXCLUSIVA
         if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            log.debug(application.user.email)
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                         application_status.observation, response.status.name, application.id, application.user.email))
-
+                                                         application_status.observation, response.status.name, application.id, []))
+            
         # Full time
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
