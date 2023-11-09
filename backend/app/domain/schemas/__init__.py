@@ -51,6 +51,11 @@ from .applications import (
     EconomicSupportUpdate,
     EconomicSupportResponse,
     EconomicSupportInDB,
+    ##REPORTFULLTIME
+    ReportFullTimeCreate,
+    ReportFullTimeUpdate,
+    ReportFullTimeResponse,
+    ReportFullTimeInDB
 )
 
 from .holiday import (HolidayBase, HolidayCreate, HolidayUpdate, HolidayInDB)
