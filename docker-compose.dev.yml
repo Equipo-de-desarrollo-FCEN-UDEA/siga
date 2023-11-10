@@ -3,7 +3,11 @@ version: '3'
 services:
   db: 
     container_name: 'db'
+<<<<<<< HEAD
     image: postgres:15.0
+=======
+    image: postgres:16
+>>>>>>> task002b-jhon
     ports:
       - '5432:5432'
     env_file:
@@ -114,6 +118,7 @@ services:
       - local-net
     ports:
       - "8001:8000"
+      - "10001:10001"
     volumes:
       - ./backend:/app
 

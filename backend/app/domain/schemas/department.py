@@ -7,6 +7,7 @@ class DepartmentBase(BaseModel):
     name: str
     description: str
     coord_email: str
+    secre_email: str
     school_id: int
     cost_center: int | None
     director: str | None

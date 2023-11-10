@@ -23,6 +23,7 @@ settings = get_app_settings()
 log = get_logging(__name__)
 
 def fill_economic_support_form(user: User, economic_support:EconomicSupportResponse):
+    ...
 
     economic_support_dict: dict = economic_support.dict()
     log.debug("ESTE ES EL DICCIONARIO...")
@@ -101,6 +102,7 @@ def generate_support_format_to_aws(data_application: dict, path: str):
 
 @celery_app.task
 def create_zip_documents(user: User, economic_support:EconomicSupportResponse):
+    ...
     regex = r"user_[0-9]+/([\w.-]+)"
     economic_support_dict: dict = economic_support.dict()
     files = economic_support_dict['economic_support']['documents']

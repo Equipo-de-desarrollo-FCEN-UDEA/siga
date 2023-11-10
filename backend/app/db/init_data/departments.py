@@ -8,6 +8,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='ADMIN',
         description='Administradores',
         coord_email='simongarcia3640@gmail.com',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=1
     ),
     # FCEN
@@ -16,6 +17,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='DECANATURA FCEN',
         description='Departamento Decanatura de la Facultad de Ciencias Exactas y Naturales',
         coord_email='decaexactas@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=2,
         cost_center=21460001
     ),
@@ -24,6 +26,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='VICEDECANATURA FCEN',
         description='Departamento Vicedecanatura de la Facultad de Ciencias Exactas y Naturales',
         coord_email='vicedecacen@udea.edu.co',
+        secre_email='apoyovicedecaexactas@udea.edu.co',
         school_id=2,
         cost_center=21402601
     ),
@@ -32,14 +35,16 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='MATEMÁTICAS',
         description='Instituto de Matemáticas',
         coord_email="institutomatematicas@udea.edu.co",
+        secre_email='apoyo.departamento@udea.edu.co',
         cost_center=21420001,
         school_id=2,
     ),
     schemas.DepartmentCreate(
-        director='Leonardo A. Pachón',
+        director='Director Física',
         name='FÍSICA',
         description='Instituto de Física',
         coord_email='institutofisica@udea.edu.co',
+        secre_email='clara.martinez@udea.edu.co',
         school_id=2,
         cost_center=21420002
     ),
@@ -48,6 +53,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='BIOLOGÍA',
         description='Instituto de Biología',
         coord_email="institutobiologia@udea.edu.co",
+        secre_email='sonia.zapata@udea.edu.co',
         cost_center=21420003,
         school_id=2,
     ),
@@ -56,6 +62,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='QUÍMICA',
         description='Instituto de Química',
         coord_email="institutoquimica@udea.edu.co",
+        secre_email='yuliana.rivera@udea.edu.co',
         cost_center=21420004,
         school_id=2
     ),
@@ -64,6 +71,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='EXTENSION FCEN',
         description='Centreo de Extensión',
         coord_email="coordinacionextensionfcen@udea.edu.co",
+        secre_email='apoyoextension.fcen@udea.edu.co',
         cost_center=21460002,
         school_id=2
     ),
@@ -71,7 +79,8 @@ init_departments: List[schemas.DepartmentCreate] = [
         director='nombre del director',
         name='CIEN FCEN',
         description='Centreo de Investigación',
-        coord_email="cien@udea.edu.co",
+        coord_email="jcien@udea.edu.co",
+        secre_email='cien@udea.edu.co',
         cost_center=21430002,
         school_id=2
     ),
@@ -81,6 +90,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='DECANATURA FING',
         description='Departamento Decanatura de la Facultad de Ingeniería',
         coord_email='decaingenieria@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301601
     ),
@@ -89,6 +99,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='VICEDECANATURA FING',
         description='Departamento Vicedecanatura de la Facultad de Ingeniería',
         coord_email='vicedecaingenieria@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301601
     ),
@@ -97,6 +108,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='SISTEMAS',
         description='Departamento de Ingeniería de Sistemas',
         coord_email='jingsistemas@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301209
     ),
@@ -105,6 +117,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='QUÍMICA',
         description='Departamento de Ingeniería Química',
         coord_email='pregradoingquimica@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301205
     ),
@@ -113,6 +126,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='BIOINGENIERÍA',
         description='Departamento de Bioingeniería',
         coord_email='john.ochoa@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301211
     ),
@@ -121,6 +135,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='INDUSTRIAL',
         description='Departamento de Ingeniería Industrial',
         coord_email='pregradoingindustrial@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301203
     ),
@@ -129,6 +144,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='ELECTRÓNICA',
         description='Departamento de Ingeniería Electrónica',
         coord_email='augusto.salazar@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301210
     ),
@@ -137,6 +153,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='ELÉCTRICA',
         description='Departamento de Ingeniería Eléctrica',
         coord_email='jingelectrica@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301208
     ),
@@ -145,6 +162,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='AMBIENTAL',
         description='Departamento de Ingeniería Sanitaria y Ambiental',
         coord_email='jambiental@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301206
     ),
@@ -153,6 +171,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='TELECOMUNICACIONES',
         description='Programa de Ingeniería de Telecomunicaciones',
         coord_email='augusto.salazar@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301202
     ),
@@ -161,6 +180,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='MECÁNICA',
         description='Programa de Ingeniería Mecánica',
         coord_email='pedro.leon@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301207
     ),
@@ -169,6 +189,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='MATERIALES',
         description='Programa de Ingeniería de Materiales',
         coord_email='francisco.herrera@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301204
     ),
@@ -177,6 +198,7 @@ init_departments: List[schemas.DepartmentCreate] = [
         name='CIVIL',
         description='Programa de Ingeniería Civil',
         coord_email='jambiental@udea.edu.co',
+        secre_email='apoyo.departamento@udea.edu.co',
         school_id=3,
         cost_center=21301201
     ),
