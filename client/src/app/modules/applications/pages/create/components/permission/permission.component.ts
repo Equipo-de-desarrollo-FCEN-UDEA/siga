@@ -33,7 +33,7 @@ import { Holiday } from '@interfaces/holiday';
 })
 export class PermissionComponent implements AfterViewInit{
   // Dates
-  public hiddenIds: number[] = [3,4,7];
+  public hiddenIds: number[] = [3,4,6,7];
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
@@ -294,7 +294,7 @@ export class PermissionComponent implements AfterViewInit{
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
   validSize() {
     const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return SIZE < 2 * 1024 * 1024;
+    return SIZE < 6 * 1024 * 1024;
   }
 
   // Verifica que el archivo a adjuntar sea de un tipo valido

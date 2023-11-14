@@ -200,7 +200,7 @@ export class ViewComponent implements AfterViewChecked {
       (a, b) => a + b,
       0
     );
-    return SIZE < 2 * 1024 * 1024;
+    return SIZE < 6 * 1024 * 1024;
   }
 
   validFileType() {

@@ -1,0 +1,86 @@
+{% extends "letter.base.html.j2" %}
+{% block content %}
+
+<div>
+    <header>
+        <div class="header">
+            <img src="{{image}}" class="logo">
+        </div>
+
+    </header>
+    <section class="section">
+        <p class="text-center"><strong>RESOLUCIÓN DECANATURA C-{{consecutive}}</strong></p>
+        <p class="text-center">
+            Por la cual se concede una {{application.application_sub_type.name}}
+        </p>
+        <p class="text-justify">
+            EL(LA) DECANO(A) DE LA {{school.description.upper()}}, en uso de sus
+            facultades legales y estatutarias y en especial las conferidas por el literal ñ, artículo 53
+            del Acuerdo Superior 1 de 1994; y los artículos 106 y 107 del Acuerdo Superior 083
+            del 22 de julio de 1996 (modificado por el Acuerdo Superior 441 del 28 de marzo de
+            2017) y
+        </p>
+        <br>
+        <p class="text-center"><strong>CONSIDERANDO</strong></p>
+        <p class="text-justify">
+            1. Que en los artículos 106 y 107 del Acuerdo Superior 083 del 22 de julio de 1996
+            (modificado por el Acuerdo Superior 441 del 28 de marzo de 2017), se estipulan las
+            condiciones para otorgar una {{application.application_sub_type.name}}.
+            2. Que el artículo 53, literal ñ del Acuerdo Superior 1 de 1994, estipula que entre las
+            funciones del Decano de la Facultad, está la de “Autorizar permisos hasta por tres días
+            y hasta por dos veces al año, y conceder comisiones y licencias hasta por treinta días”
+            3. Que el(la) Decano(a) de la Facultad, una vez revisada la solicitud, así como los
+            compromisos asumidos por el(la) profesor(a) con la Universidad, recomendó
+            conceder la {{application.application_sub_type.name}} al (a la) Profesor(a) {{(user.names + ' ' + user.last_names).title()}}.
+            En consecuencia,
+        </p>
+        <br>
+        <p class="text-center"><strong>RESUELVE</strong></p>
+
+        <p class="text-justify">
+            ARTÍCULO UNICO: Conceder al (a la) señor(a) {{(user.names + ' ' + user.last_names).title()}}, con
+            {{user.identification_type}} {{user.identification_number}}, adscrito al (a la) {{user.department.description}},
+            {{application.application_sub_type.name}} desde el dia {{commission.start_date}}
+            hasta el dia {{commission.end_date}}, para {{commission.reason}}.
+
+        </p>
+
+        <p>
+            Al reintegrarse a sus actividades deberá presentar ante la oficina de Decanato de la
+            Facultad, constancias que acrediten su cumplimiento.
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p> Dada en Medellín el {{last_status}}</p>
+        <div class="signature">
+            <img src="{{signature}}" class="signature">
+            <hr style="width:50%;text-align:left;margin-left:0">
+            <p>
+                {{school.dean.title()}}.
+                <br>
+                Vicedecano(a) en funciones de Decano(a) de la {{school.description.upper()}}. 
+            </p>
+        </div>
+    </section>
+</div>
+
+<div class="footer" style="color:#026937;">
+    <div class="text-center">
+        <h6>
+            DECANATO
+            <br>
+            {{school.direction}}
+            <br>
+            Contacto: {{school.contact}}
+            <br>
+            Medellín, Colombia
+        </h6>
+    </div>
+</div>
+
+{% endblock %}

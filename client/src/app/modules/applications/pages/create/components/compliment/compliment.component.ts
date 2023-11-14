@@ -42,7 +42,8 @@ export class ComplimentComponent implements OnInit {
     { nombre: 'Fondo de Pasajes Internacionales', value: 'fondosinvestigacion@udea.edu.co' },
     { nombre: 'Vicerrectoría de Investigación', value: 'fondosinvestigacion@udea.edu.co' },
     { nombre: 'Centro de Investigaciones SIU', value: 'viaticostiquetesanticipos.siu@udea.edu.co' },
-    { nombre: 'Fondos de Vicerrectoría de Docencia', value: 'comisionesdocencia@udea.edu.co' }
+    { nombre: 'Fondos de Vicerrectoría de Docencia', value: 'comisionesdocencia@udea.edu.co' },
+    { nombre: 'Secretaria Decanatura FCEN', value: 'apoyodecanatoexactas@udea.edu.co' }
   ];
 
   constructor(
@@ -118,7 +119,7 @@ export class ComplimentComponent implements OnInit {
 
   validSize() {
     const size = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return size < 2 * 1024 * 1024;
+    return size < 6 * 1024 * 1024;
   }
 
   isInvalidForm(controlName: string) {
@@ -166,9 +167,8 @@ export class ComplimentComponent implements OnInit {
           emails: this.emails,
           observation: this.form.value.observation,
         };
-        console.log(body);
 
-        if (this.applicationType == 'COMISION') {
+        if (this.applicationType == 'COMISIÓN') {
           return this.commissionSvc.putCompliment(body, this.getId);
         }
 
