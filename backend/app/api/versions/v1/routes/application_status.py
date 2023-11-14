@@ -134,7 +134,7 @@ async def create_application_status(
                 crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
 
         # status Visto bueno:
-        if response.status == 'VISTO BUENO':
+        if response.status.name == 'VISTO BUENO':
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
     except BaseErrors as e:
