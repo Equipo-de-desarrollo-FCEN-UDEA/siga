@@ -80,6 +80,19 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
                 status='APROBADA', scope=[5])
         ],
         who_can=[9, 11, 13, 14]
+    ),
+    schemas.ApplicationTypeCreate(
+        name="INFORME FINAL DEDICACIÓN EXCLUSIVA",
+        description="informe-dedicacion",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[5, 6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[9, 11, 13, 14]
     )
 ]
 
@@ -159,5 +172,11 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     schemas.ApplicationSubTypeCreate(
         name="Apoyo Económico",
         application_type_id=6,
+    ),
+    # REPORT FULL TIME
+    # 15
+    schemas.ApplicationSubTypeCreate(
+        name="Informe Dedicación",
+        application_type_id=7
     ),
 ]
