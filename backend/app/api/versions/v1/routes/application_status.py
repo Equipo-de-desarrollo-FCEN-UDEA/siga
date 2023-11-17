@@ -137,10 +137,10 @@ async def create_application_status(
         if response.status.name == 'VISTO BUENO':
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
+        
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response
-
 
 @router.get('/{id}', response_model=list[Application_statusInDB])
 def get_application_status(

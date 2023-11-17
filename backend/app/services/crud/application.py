@@ -264,6 +264,15 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                                                        [who.department.coord_email, 
                                                         who.department.secre_email] 
                                                        ))
+            
+        if status == 4:
+            create_application_email.apply_async(args=(who.names, 
+                                                       who.last_names, 
+                                                       db_obj.application_sub_type.name,
+                                                       'http://siga-fcen.com/solicitudes/lista', 
+                                                       [who.email] 
+                                                       ))
+            
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()

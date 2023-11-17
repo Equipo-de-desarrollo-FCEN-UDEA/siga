@@ -12,14 +12,19 @@ log = get_logging(__name__)
 
 
 class CRUDApplication_status(CRUDBase[Application_status, Application_statusCreate, Application_statusUpdate, Application_statusPolicy]):
+    
     def create(self, db: Session, who: User, *, obj_in: Application_statusCreate, to: Application) -> Application_status:
         next_status, scope = self.policy.create(who=who, to=to)
         status = db.query(Status).where(Status.name == next_status).first()
         obj_in_data = dict(obj_in)
+        log.debug(f"Scope::::{scope}")
+        log.debug(f"School_id:::{who.department.school_id}")
         if not (obj_in.status_id == 4):
             obj_in_data['status_id'] = status.id
             queries = [Department.school_id ==
                        who.department.school_id, Rol.scope.in_(scope)]
+            if to.application_sub_type.application_type.name == 'DEDICACIÓN EXCLUSIVA':
+                queries.append(Department.id == who.department_id)
             # to_notify: list[User] = db.query(User).join(UserRol).join(Department).filter(*queries).all()
             to_notify: list[User] = db.query(User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).join(Department).filter(*queries).all()
             for to_user in to_notify:
