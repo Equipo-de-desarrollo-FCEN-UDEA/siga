@@ -51,10 +51,16 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
         userrol = who.userrol[who.active_rol]
+        log.debug("ROL ACTUAL...")
         log.debug(userrol.rol.__dict__)
+        log.debug("ROL SCOPE ACTUAL...")
+        log.debug(userrol.rol.scope)
+        
 
         if (userrol.rol.scope >= 9):
             queries += [User.id == who.id]
+            log.debug("ROL SCOPE ACTUAL...")
+            log.debug(userrol.rol.scope)
 
         if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
@@ -65,7 +71,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         #     queries.append(UserApplication.user_id == who.id)
 
         if (userrol.rol.scope == 6):
-            queries.append(Department.school_id == who.department.school_id)
+            queries.append(Department.id == who.department.id)
+            log.debug(userrol.rol.scope)
         
         if userrol.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)
@@ -77,7 +84,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 'identification_number',
                 'email'
             ]
-            log.debug('Entrando en search')
+            # log.debug('Entrando en search')
             search = search.upper()
             raw = [
                 db.query(Application)
@@ -93,7 +100,7 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 for col in columns
             ]
             res = [user for users in raw for user in users]
-            return list(*set(res))
+            return list(set(res))
         
         if userrol.rol.id == 7: #Si el usuario es coordinador de subdepartamento.
             queries.append(Application.application_sub_type_id == 14) #Para futuras solicitudes, crear un arreglo.
@@ -225,7 +232,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                                                        who.last_names, 
                                                        db_obj.application_sub_type.name,
                                                        'http://siga-fcen.com/solicitudes/lista', 
-                                                       who.department.coord_email))
+                                                       [who.department.coord_email, who.department.secre_email],
+                                                       ))
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()
@@ -249,8 +257,22 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             observation=observation
         )
         if status == 1:
-            create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+            create_application_email.apply_async(args=(who.names, 
+                                                       who.last_names, 
+                                                       db_obj.application_sub_type.name,
+                                                       'http://siga-fcen.com/solicitudes/lista', 
+                                                       [who.department.coord_email, 
+                                                        who.department.secre_email] 
+                                                       ))
+            
+        if status == 4:
+            create_application_email.apply_async(args=(who.names, 
+                                                       who.last_names, 
+                                                       db_obj.application_sub_type.name,
+                                                       'http://siga-fcen.com/solicitudes/lista', 
+                                                       [who.email] 
+                                                       ))
+            
         status_obj = Application_status(**dict(application_status))
         db.add(status_obj)
         db.commit()

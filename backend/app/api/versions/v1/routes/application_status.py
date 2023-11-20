@@ -82,6 +82,7 @@ async def create_application_status(
             
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
+<<<<<<< HEAD
             
 
         #DEDICACIÓN EXCLUSIVA
@@ -98,6 +99,25 @@ async def create_application_status(
             full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
             
             log.debug("SOLICITUD...")
+=======
+        
+        #DEDICACIÓN EXCLUSIVA
+        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            log.debug(application.user.email)
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, []))
+           
+        if (response.status.name == 'APROBADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            log.debug(application.user.email)
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, [application.user.email]))
+        # Full time
+        
+        # if (response.status.name == 'APROBADA' and
+        #         application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+        #     full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
+        #     dates_to_save = []
+>>>>>>> task02b
 
             # Subiendo las fechas a la base de datos
             duration = full_time.vice_format['time']
@@ -122,41 +142,42 @@ async def create_application_status(
             dates_to_save = []
  
             # Tomar solo las fechas del plan de trabajo
-            if full_time.work_plan['teaching_activities']:
-                for activity in full_time.work_plan['teaching_activities']:
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_1'])
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_2'])
+            # if full_time.work_plan['teaching_activities']:
+            #     for activity in full_time.work_plan['teaching_activities']:
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_1'])
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_2'])
 
-            if full_time.work_plan['investigation_activities']:
-                for activity in full_time.work_plan['investigation_activities']:
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_1'])
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_2'])
+            # if full_time.work_plan['investigation_activities']:
+            #     for activity in full_time.work_plan['investigation_activities']:
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_1'])
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_2'])
 
-            if full_time.work_plan['extension_activities']:
-                for activity in full_time.work_plan['extension_activities']:
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_1'])
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_2'])
+            # if full_time.work_plan['extension_activities']:
+            #     for activity in full_time.work_plan['extension_activities']:
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_1'])
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_2'])
 
-            if full_time.work_plan['academic_admin_activities']:
-                for activity in full_time.work_plan['academic_admin_activities']:
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_1'])
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_2'])
+            # if full_time.work_plan['academic_admin_activities']:
+            #     for activity in full_time.work_plan['academic_admin_activities']:
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_1'])
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_2'])
 
-            if full_time.work_plan['other_activities']:
-                for activity in full_time.work_plan['other_activities']:
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_1'])
-                    dates_to_save.append(
-                        activity['activity_tracking']['date_2'])
+            # if full_time.work_plan['other_activities']:
+            #     for activity in full_time.work_plan['other_activities']:
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_1'])
+            #         dates_to_save.append(
+            #             activity['activity_tracking']['date_2'])
 
+<<<<<<< HEAD
             log.debug('dates_to_save', dates_to_save)
             for date in dates_to_save:
                 # Transformando a datetime la fecha
@@ -169,15 +190,27 @@ async def create_application_status(
                     id_application=application.id
                 )
                 crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
+=======
+            # log.debug('dates_to_save', dates_to_save)
+            # for date in dates_to_save:
+            #     # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
+            #     cron_obj = CronJobCreate(
+            #         send_date=date - relativedelta(months=1),
+            #         template="email.report.full.time.html.j2",
+            #         user_email=application.user.email,
+            #         id_application=application.id
+            #     )
+            #     crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
+>>>>>>> task02b
 
         # status Visto bueno:
-        if response.status == 'VISTO BUENO':
+        if response.status.name == 'VISTO BUENO':
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
+        
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response
-
 
 @router.get('/{id}', response_model=list[Application_statusInDB])
 def get_application_status(

@@ -1,3 +1,4 @@
+from backend.app.domain.models.userrol import UserRol
 from pytest import raises
 
 from app.domain.models import User, Application, Rol, Application_status, Department
@@ -13,14 +14,16 @@ log = get_logging(__name__)
 class TestApplication_statusPolicy(TestBaseDB):
     def test_application_status_policy(self):
         professor: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 9).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rolfilter(Rol.scope == 9).first()
         dean: User = (self.session.query(User)
-                      .join(Rol)
+                      .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                      .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                       .join(Department)
                       .filter(Rol.scope == 5, Department.school_id == professor.department.school_id)
                       .first())
         coord: User = (self.session.query(User)
-                       .join(Rol)
+                       .join(UserRol, UserRol.user_id == User.id)  # Unir User con UserRol
+                       .join(Rol, Rol.id == UserRol.rol_id)  # Unir UserRol con Rol
                        .join(Department)
                        .filter(Rol.scope == 7, Department.school_id == professor.department.school_id)
                        .first())

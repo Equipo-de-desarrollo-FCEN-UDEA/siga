@@ -17,6 +17,7 @@ class Department(Base):
     name = Column(String(50), nullable=False)
     description = Column(String(100), nullable=False)
     coord_email = Column(String(100), nullable=False)
+    secre_email = Column(String(100), nullable=False)
     cost_center = Column(Integer, nullable=True)
     director = Column(String, nullable=True)
 
