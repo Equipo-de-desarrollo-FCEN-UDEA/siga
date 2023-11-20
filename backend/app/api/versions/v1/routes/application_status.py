@@ -82,24 +82,6 @@ async def create_application_status(
             
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
-<<<<<<< HEAD
-            
-
-        #DEDICACIÓN EXCLUSIVA
-        if (response.status.name == 'SOLICITADA' and
-             application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
-            
-            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                         application_status.observation, response.status.name,
-                                                            application.id, application.user.email))
-
-        if (response.status.name == 'APROBADA' and
-                application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
-            
-            full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-            
-            log.debug("SOLICITUD...")
-=======
         
         #DEDICACIÓN EXCLUSIVA
         if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
@@ -117,7 +99,6 @@ async def create_application_status(
         #         application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
         #     full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
         #     dates_to_save = []
->>>>>>> task02b
 
             # Subiendo las fechas a la base de datos
             duration = full_time.vice_format['time']
@@ -177,20 +158,6 @@ async def create_application_status(
             #         dates_to_save.append(
             #             activity['activity_tracking']['date_2'])
 
-<<<<<<< HEAD
-            log.debug('dates_to_save', dates_to_save)
-            for date in dates_to_save:
-                # Transformando a datetime la fecha
-                date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
-                # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
-                cron_obj = CronJobCreate(
-                    send_date=date - relativedelta(months=1),
-                    template="email.report.full.time.html.j2",
-                    user_email=application.user.email,
-                    id_application=application.id
-                )
-                crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
-=======
             # log.debug('dates_to_save', dates_to_save)
             # for date in dates_to_save:
             #     # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
@@ -201,7 +168,6 @@ async def create_application_status(
             #         id_application=application.id
             #     )
             #     crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj)
->>>>>>> task02b
 
         # status Visto bueno:
         if response.status.name == 'VISTO BUENO':
