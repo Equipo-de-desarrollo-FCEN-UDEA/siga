@@ -78,6 +78,12 @@ async def create_application_status(
             log.debug(application.user.email)
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, []))
+            
+        if (response.status.name == 'EN CONSEJO' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            log.debug(application.user.email)
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, [application.user.email, application.user.department.secre_email]))
+                
            
         if (response.status.name == 'APROBADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
             log.debug(application.user.email)
