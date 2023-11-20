@@ -17,8 +17,7 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
         next_status, scope = self.policy.create(who=who, to=to)
         status = db.query(Status).where(Status.name == next_status).first()
         obj_in_data = dict(obj_in)
-        log.debug(f"Scope::::{scope}")
-        log.debug(f"School_id:::{who.department.school_id}")
+        
         if not (obj_in.status_id == 4):
             obj_in_data['status_id'] = status.id
             queries = [Department.school_id ==
