@@ -38,7 +38,6 @@ async def create_application_status(
 
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
-        log.debug(response.status.name)
         
         # Cases of document generations
         #  Commision
@@ -84,13 +83,15 @@ async def create_application_status(
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.email))
             
-        
-        #DEDICACIÓN EXCLUSIVA
-        if (response.status.name == 'SOLICITADA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
-            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                         application_status.observation, response.status.name, application.id, application.user.email))
 
-        # Full time
+        #DEDICACIÓN EXCLUSIVA
+        if (response.status.name == 'SOLICITADA' and
+             application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name,
+                                                            application.id, application.user.email))
+
         if (response.status.name == 'APROBADA' and
                 application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
             
@@ -106,7 +107,17 @@ async def create_application_status(
             application.start_date = aprobation_date
             application.end_date = aprobation_date + relativedelta(months=+duration)
 
-            #crud.application.update(db=db, who=current_user, db_obj=application, obj_in=application)
+            #Creando el cronjob para la fecha de finalización
+            cron_obj_fin = CronJobCreate(
+                    send_date=application.end_date - relativedelta(months=1),
+                    template="email.report.full.time.fin.html.j2",
+                    user_email=application.user.email,
+                    id_application=application.id
+                )
+            
+            crud.cron_job.create(db=db, who=current_user, obj_in=cron_obj_fin)
+
+            # Creando los cronjob para cada una de las actividades
 
             dates_to_save = []
  
@@ -148,9 +159,11 @@ async def create_application_status(
 
             log.debug('dates_to_save', dates_to_save)
             for date in dates_to_save:
+                # Transformando a datetime la fecha
+                date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S")
                 # se crea una tarea a ejecutar con un CRON con las fechas del work_plan
                 cron_obj = CronJobCreate(
-                    send_date=date,
+                    send_date=date - relativedelta(months=1),
                     template="email.report.full.time.html.j2",
                     user_email=application.user.email,
                     id_application=application.id
