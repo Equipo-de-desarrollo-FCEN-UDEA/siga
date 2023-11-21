@@ -1,4 +1,5 @@
 from typing import Any
+from datetime import datetime
 
 from odmantic import Model
 
@@ -10,3 +11,5 @@ class FullTime(Model):
     vice_format: Any | None
     initial_letter: Any | None
     documents: list[Any] | None
+    start_date: datetime | None
+    end_date: datetime | None

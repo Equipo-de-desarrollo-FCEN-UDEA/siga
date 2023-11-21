@@ -11,16 +11,16 @@ from bson.objectid import ObjectId
 
 from app.api.middlewares import db, jwt_bearer, mongo_db
 from app.services import crud, documents, emails
-from app.domain.schemas import Application_statusCreate, Application_statusInDB, CronJobCreate
-from app.domain.models import User
+from app.domain.schemas import Application_statusCreate, Application_statusInDB, CronJobCreate, FullTimeUpdate
+from app.domain.models import User, FullTime
 from app.domain.errors import BaseErrors
+
 
 from app.core.logging import get_logging
 
 log = get_logging(__name__)
 
 router = APIRouter()
-
 
 @router.post('/', response_model=Application_statusInDB)
 async def create_application_status(
@@ -38,6 +38,9 @@ async def create_application_status(
 
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
+        
+      
+        
         
         # Cases of document generations
         #  Commision
@@ -105,15 +108,36 @@ async def create_application_status(
         #         application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
         #     full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
         #     dates_to_save = []
+        
+        
 
+            full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
+                     
+            
             # Subiendo las fechas a la base de datos
             duration = full_time.vice_format['time']
             aprobation_date = datetime.today()
+            
 
             log.debug(type(duration), type(aprobation_date))
             application.start_date = aprobation_date
             application.end_date = aprobation_date + relativedelta(months=+duration)
+            
 
+# Crea un objeto FullTimeUpdate con las nuevas fechas
+            full_time_update = FullTimeUpdate( title=full_time.title,
+                                              start_date=aprobation_date, 
+                                              end_date=aprobation_date + relativedelta(months=+duration))
+
+# Actualiza el objeto FullTime en la base de datos
+            updated_full_time = await crud.full_time.update(engine, db_obj=full_time, obj_in=full_time_update)
+           
+            
+                                        
+            
+           
+            
+            
             #Creando el cronjob para la fecha de finalización
             cron_obj_fin = CronJobCreate(
                     send_date=application.end_date - relativedelta(months=1),
