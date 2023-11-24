@@ -147,9 +147,10 @@ class InitialLetter(BaseModel):
 # Model
 
 class FullTimeBase(BaseModel):
-    title: str
+    title: str 
     documents: list[Any] | None = Field(default_factory=list)
-
+    start_date: datetime | None
+    end_date: datetime | None
 
 class FullTimeCreate(FullTimeBase):
     application_sub_type_id: int = 10

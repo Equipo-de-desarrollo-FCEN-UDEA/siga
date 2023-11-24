@@ -15,6 +15,7 @@ from .application_status import application_status
 from .applications import (commission,
                            permission,
                            full_time,
+                           report_full_time,
                            hour_aval,
                            vacation,
                            economic_support)

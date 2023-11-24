@@ -8,6 +8,8 @@ import { file_path } from "@interfaces/documents";
 
 export interface FullTimeCreate {
     title: string;
+    start_date: Date;
+    end_date: Date;
     documents?: file_path[];
 }
 

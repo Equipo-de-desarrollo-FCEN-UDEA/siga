@@ -26,5 +26,8 @@ init_status: List[schemas.StatusCreate] = [
     ),
     schemas.StatusCreate(
         name='EN VICERRECTORÍA'
+    ),
+     schemas.StatusCreate(
+        name='EN CONSEJO'
     )
 ]

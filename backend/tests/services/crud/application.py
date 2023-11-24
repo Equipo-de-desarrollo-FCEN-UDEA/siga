@@ -3,6 +3,7 @@ from app.domain.schemas import ApplicationCreate
 from app.domain.models import User, Rol
 from app.core.config import get_app_settings
 from app.core.logging import get_logging
+from backend.app.domain.models.userrol import UserRol
 from tests.db.base import TestBaseDB
 
 settings = get_app_settings()
@@ -14,15 +15,15 @@ class TestApplicationCrud(TestBaseDB):
 
     def test_application_service(self):
         admin: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 1).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 1).first()
         professor: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 9).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 9).first()
         student: User = self.session.query(
-            User).join(Rol).filter(Rol.scope == 13).first()
+            User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).filter(Rol.scope == 13).first()
         coord: User = (self
                        .session
                        .query(User)
-                       .join(Rol)
+                       .join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id)
                        .filter(Rol.scope == 7)
                        .filter(User.department_id != professor.department_id)
                        .first())

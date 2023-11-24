@@ -10,8 +10,8 @@
             },
             "pathMappings": [
                 {
-                    "localRoot": "${workspaceFolder}/backend",
-                    "remoteRoot": "/app"
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/usr/src/backend/app"
                 }
             ]
         }

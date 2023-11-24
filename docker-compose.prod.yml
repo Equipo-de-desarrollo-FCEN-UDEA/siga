@@ -50,7 +50,7 @@ services:
 
   db: 
     container_name: 'db'
-    image: postgres:latest
+    image: postgres:15.0
     ports:
       - '5432:5432'
     env_file:

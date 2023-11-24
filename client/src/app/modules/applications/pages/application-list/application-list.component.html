@@ -98,11 +98,11 @@
               class="badge badge-pill pill"
               [ngClass]="{
                 'bg-requested':
-                  application.application_status[0].status.name ===
-                  'SOLICITADA',
+                  application.application_status[0].status.name == 'SOLICITADA',
                 'bg-ok':
-                  application.application_status[0].status.name ===
-                  'VISTO BUENO',
+                  application.application_status[0].status.name === 'VISTO BUENO',
+                  'bg-consejo':
+                  application.application_status[0].status.name === 'EN CONSEJO',
                 'bg-approved':
                   application.application_status[0].status.name === 'APROBADA',
                 'bg-rejected':

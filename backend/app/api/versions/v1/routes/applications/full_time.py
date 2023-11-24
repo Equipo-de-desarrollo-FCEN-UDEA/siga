@@ -189,8 +189,7 @@ async def delete_full_time(
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    return Msg(msg="Comisión eliminada correctamente")
-
+    return Msg(msg="Dedicación exclusiva eliminada correctamente")
 
 @router.put('/request/{id}')
 def solicite_full_time(
@@ -239,7 +238,6 @@ async def update_letter(
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return full_time
-
 
 @router.put('/vice-format/{id}')
 async def update_vice_format(

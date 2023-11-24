@@ -207,9 +207,11 @@ async def update_compliment(
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
                                                       id=mongo_id, compliment=compliment)
+        log.debug(compliment.dict())
         if commission:
             status = Application_statusCreate(
                 application_id=application.id, status_id=5, observation="El usuario subió el cumplido")
+            log.debug(commission)
             crud.application_status.finalize(db, obj_in=status)
         emails.applications.commission.compliment_email.apply_async(args=(
             current_user.names,

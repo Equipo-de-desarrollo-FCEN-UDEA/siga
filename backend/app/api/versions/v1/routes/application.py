@@ -126,7 +126,7 @@ def filed(
     Endpoint to file an application
     """
     try:
-        if not current_user.rol.scope == 5:
+        if not current_user.userrol[current_user.active_rol].rol.scope == 5:
             raise HTTPException(status_code=401, detail="Solo puede archivar la secretaria de decanato")
         db_obj = crud.application.get(db, current_user, id=id)
         db_obj.filed = not db_obj.filed
