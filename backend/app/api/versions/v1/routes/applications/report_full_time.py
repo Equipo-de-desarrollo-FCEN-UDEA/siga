@@ -114,3 +114,93 @@ async def get_report_full_time(
         report_full_time=report_full_time
     )
     return response
+
+@router.delete("/{id}", response_model=Msg)
+async def delete_report_full_time(
+    id: int,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> Msg:
+    """
+    Endpoint to delete an application of type full_time
+
+        params:
+            -id: int, this is the id of the application and not of mongo
+
+        response:
+            -msg: Msg
+    """
+    try:
+        # First get the application from postgresql
+        application = crud.application.get(db, current_user, id=id)
+        # get id from the model sql
+        mongo_id = ObjectId(application.mongo_id)
+        # Delete object in postgresql
+        delete = crud.application.delete(db, current_user, id=id)
+        log.debug(delete)
+        if delete:
+            log.debug('Estamos en delete')
+            # delete object on Mongo
+            await crud.report_full_time.delete(engine, id=mongo_id)
+
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    return Msg(msg="Informe de dedicación exclusiva eliminado correctamente")
+
+@router.put("/{id}", status_code=200)
+async def update_report_full_time(
+    id: int,
+    report_full_time: ReportFullTimeUpdate,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> ReportFullTime:
+    """
+    Endpoint to update an application of type economic support
+
+        params:
+            -body: EconomicSupportUpdate
+
+        path-params:
+            -id: int, this is the id of the application and not the mongo_id
+
+        response:
+            -body: EconomicSupport
+    """
+    try:
+
+        application: Application = crud.application.get(
+            db=db, id=id, who=current_user)
+
+        if application:
+            log.debug('obj_in que es', report_full_time)
+
+            # In MongoDB
+            mongo_id = ObjectId(application.mongo_id)
+
+            current_report_full_time = await crud.report_full_time.get(engine, id=mongo_id)
+            update_report_full_time = await crud.report_full_time.update(engine, db_obj=current_report_full_time, obj_in=report_full_time)
+
+            log.debug('update_report_full_time', update_report_full_time)
+
+            # In PostgreSQL
+            application_updated = crud.application.update(
+                db, current_user, db_obj=application, obj_in=report_full_time)
+
+            # Asegurar que es application_update.
+            application = ApplicationResponse.from_orm(application_updated)
+
+            log.debug('application update', application_updated)
+
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+
+    response = ReportFullTimeResponse(
+        **dict(application),
+        report_full_time=update_report_full_time
+    )
+
+    return update_report_full_time
