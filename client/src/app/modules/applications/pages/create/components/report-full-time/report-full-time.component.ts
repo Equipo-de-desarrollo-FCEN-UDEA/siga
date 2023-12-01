@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ReportFullTimeCreate } from '@interfaces/applications/report-full-time';
@@ -30,6 +30,7 @@ export class ReportFullTimeComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private ChangeDetectorRef: ChangeDetectorRef,
 
     private applicationTypeSvc: ApplicationTypesService,
     private reportFullTimeSvc: ReportFullTimeService,
@@ -38,6 +39,8 @@ export class ReportFullTimeComponent {
    }
 
    public form = this.fb.group({
+    from_full_time: [true],
+    title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
     justification: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
     documents: [this.documents]
    
@@ -89,6 +92,11 @@ export class ReportFullTimeComponent {
     )
 
   }
+
+  onChangeSolicitud(e: any): void {
+    this.ChangeDetectorRef.detectChanges();
+  }
+
 
    // --------------------------------------------------
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
