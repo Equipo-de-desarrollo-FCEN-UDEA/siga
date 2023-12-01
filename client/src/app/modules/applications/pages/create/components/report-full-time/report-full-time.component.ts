@@ -24,6 +24,7 @@ export class ReportFullTimeComponent {
   public clicked = 0;
   public error = '';
   public submitted = false;
+  public selectedOption: boolean | null = null;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(7);
   
@@ -46,6 +47,10 @@ export class ReportFullTimeComponent {
    
   })
 
+  selectOption(option: boolean) {
+    this.selectedOption = option;
+  }
+  
   submit() {
     this.submitted = true;
 
@@ -153,9 +158,4 @@ export class ReportFullTimeComponent {
     });
     return flag;
   }
-
-  
-
-
-
 }
