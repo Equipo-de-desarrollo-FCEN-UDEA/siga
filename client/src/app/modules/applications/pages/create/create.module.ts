@@ -14,6 +14,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { EconomicSupportModule } from './components/economic-support/economic-support.module';
 import { ReportFullTimeComponent } from './components/report-full-time/report-full-time.component';
+import { ReportfulltimeListComponent } from './components/report-full-time/pages/reportfulltime-list/reportfulltime-list.component';
 
 
 
@@ -26,6 +27,7 @@ import { ReportFullTimeComponent } from './components/report-full-time/report-fu
     HourAvalComponent,
     VacationComponent,
     ReportFullTimeComponent,
+    ReportfulltimeListComponent,
   ],
   imports: [
     CommonModule,

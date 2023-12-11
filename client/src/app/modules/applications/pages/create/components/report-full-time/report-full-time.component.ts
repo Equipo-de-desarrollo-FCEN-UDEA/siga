@@ -1,12 +1,14 @@
 import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FullTimeCreate } from '@interfaces/applications/full_time/full-time';
 import { ReportFullTimeCreate } from '@interfaces/applications/report-full-time';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ReportFullTimeService } from '@services/applications/report-full-time.service';
 import { DocumentService } from '@services/document.service';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,6 +17,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./report-full-time.component.scss']
 })
 export class ReportFullTimeComponent {
+  public fullTime$ = new Observable<FullTimeCreate>();
+
+  public historyFullTime = false;
 
   // Files
   public files: any[] = [];
@@ -35,6 +40,7 @@ export class ReportFullTimeComponent {
 
     private applicationTypeSvc: ApplicationTypesService,
     private reportFullTimeSvc: ReportFullTimeService,
+    private FullTimeSvc: FullTimeService,
     private documentService: DocumentService
   ) {
    }
