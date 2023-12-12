@@ -48,6 +48,11 @@ async def create_report_full_time(
         report_full_time_created = await crud.report_full_time.create(db=engine,
                                                                       obj_in=ReportFullTime(**dict(report_full_time)))
         if report_full_time_created.from_full_time:
+            user_applications = crud.application.get_multi(db=db, who=current_user)# if application.__dict__['application_sub_type_id']==10]
+            user_full_times = []
+            for app in user_applications:
+                if (app.__dict__['application_sub_type_id'] == 10):
+                    user_full_times.append(crud.application.get(db, current_user, id=app.__dict__['id']))
             crud.application.get(
                 db, current_user, id=report_full_time_created.full_time_id)
         application = ApplicationCreate(
