@@ -51,16 +51,9 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
         userrol = who.userrol[who.active_rol]
-        log.debug("ROL ACTUAL...")
-        log.debug(userrol.rol.__dict__)
-        log.debug("ROL SCOPE ACTUAL...")
-        log.debug(userrol.rol.scope)
-        
 
         if (userrol.rol.scope >= 9):
             queries += [User.id == who.id]
-            log.debug("ROL SCOPE ACTUAL...")
-            log.debug(userrol.rol.scope)
 
         if (userrol.rol.scope < 9):
             # queries += [Application_status.status_id.not_in((6,7))]
@@ -72,7 +65,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
 
         if (userrol.rol.scope == 6):
             queries.append(Department.id == who.department.id)
-            log.debug(userrol.rol.scope)
         
         if userrol.rol.scope == 5:
             queries.append(Department.school_id == who.department.school_id)

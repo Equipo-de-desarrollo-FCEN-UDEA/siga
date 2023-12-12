@@ -1,3 +1,4 @@
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
@@ -16,7 +17,8 @@ from app.domain.schemas import (ApplicationCreate,
                                 ReportFullTimeResponse,
                                 FullTimeResponse,
                                 ApplicationResponse,
-                                Application_statusCreate
+                                Application_statusCreate,
+                                UserInDB
                                 )
 from app.domain.errors.applications.report_full_time import ReportFullTimeErrors
 from app.domain.errors.base import BaseErrors

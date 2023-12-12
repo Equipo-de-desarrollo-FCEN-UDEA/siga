@@ -1,16 +1,31 @@
-from typing import Any
+from typing import Any, Dict, List
 from json import loads
 
 from odmantic import ObjectId
 from odmantic.session import AIOSession
 
-from app.domain.models import FullTime
-from app.domain.schemas import FullTimeUpdate, FullTimeCreate, WorkPlan
+from app.domain.models import FullTime, User
+from app.domain.schemas import FullTimeUpdate, FullTimeCreate, WorkPlan, UserInDB
 from app.domain.policies.applications.full_time import FullTimePolicy
 from .base import CRUDBase
 
 
 class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePolicy]):
+    async def get_multi(
+    self,
+    engine: AIOSession,
+    who: UserInDB,
+    *,
+    skip: int = 0,
+    limit: int = 20,
+) -> List[FullTime]:
+        db_full_time = []
+        #if who.userrol == who.active_rol:
+        
+        db_full_time = engine.find(FullTime, skip=skip, limit=limit)
+        return db_full_time
+
+
     async def letter(self, db: AIOSession, *, id: ObjectId, letter: Any) -> FullTime:
         full_time = await db.find_one(FullTime, FullTime.id == id)
         full_time.initial_letter = letter
