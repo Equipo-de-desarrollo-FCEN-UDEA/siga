@@ -204,6 +204,11 @@ async def create_application_status(
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                          application_status.observation, response.status.name, application.id, application.user.department.school.email_dean))
         
+        if (response.status.name == 'DEVUELTA' and application.application_sub_type.application_type.name == "DEDICACIÓN EXCLUSIVA"):
+            log.debug(application.user.email)
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                         application_status.observation, response.status.name, application.id, [application.user.email]))
+            
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response

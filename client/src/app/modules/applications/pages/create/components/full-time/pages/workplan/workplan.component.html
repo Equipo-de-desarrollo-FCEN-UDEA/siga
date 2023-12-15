@@ -1,41 +1,77 @@
-<form novalidate [formGroup]="f_workplan" (ngSubmit)="submit()" class="need-validation">
+<form
+  novalidate
+  [formGroup]="f_workplan"
+  (ngSubmit)="submit()"
+  class="need-validation"
+>
   <div class="accordion" id="accordionExample">
-
     <!-- Información del plan de trabajo general -->
     <div class="accordion-item">
-
-
       <h6 class="accordion-header" id="headingOne">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-          aria-expanded="true" aria-controls="collapseOne">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle" title="Información sobre cómo llenar estos campos del formu"></i>
+            <i
+              class="fa fa-info-circle"
+              title="Información sobre cómo llenar estos campos del formu"
+            ></i>
             Información general del plan de trabajo
           </span>
         </button>
       </h6>
 
-      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show"
+        aria-labelledby="headingOne"
+      >
         <div class="accordion-body">
           <div class="row justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-5 mt-3">
               <div class="formfloatig">
-                <input id="floating_semester" type="text" formControlName="period" class="form-control" />
-                <label for="floating_semester" class="formLabel">Semestre</label>
+                <input
+                  id="floating_semester"
+                  type="text"
+                  formControlName="period"
+                  class="form-control"
+                />
+                <label for="floating_semester" class="formLabel"
+                  >Semestre</label
+                >
               </div>
             </div>
 
             <div class="col-sm-12 col-md-12 col-lg-5 mt-3">
               <div class="formfloatig">
-                <input id="floating_registro" type="number" formControlName="registro" class="form-control" />
-                <label for="floating_registro" class="formLabel">Registro</label>
+                <input
+                  id="floating_registro"
+                  type="number"
+                  formControlName="registro"
+                  class="form-control"
+                />
+                <label for="floating_registro" class="formLabel"
+                  >Registro</label
+                >
               </div>
             </div>
 
             <div class="col-sm-12 col-md-12 col-lg-10 mt-3">
               <div class="formfloatig">
-                <input id="floating_part_time" type="number" formControlName="partial_time" class="form-control" />
-                <label for="floating_part_time" class="formLabel">Tiempo parcial horas mes</label>
+                <input
+                  id="floating_part_time"
+                  type="number"
+                  formControlName="partial_time"
+                  class="form-control"
+                />
+                <label for="floating_part_time" class="formLabel"
+                  >Tiempo parcial horas mes</label
+                >
               </div>
             </div>
           </div>
@@ -45,30 +81,48 @@
 
     <!-- /.actividades_docencia -->
     <div class="accordion-item">
-
       <!-- header -->
       <h6 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-          aria-expanded="false" aria-controls="collapseTwo">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de docencia, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de docencia, por cada actividad haga click sobre el botón +"
+            ></i>
             Actividades de docencia
           </span>
         </button>
       </h6>
 
       <!-- content -->
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+      <div
+        id="collapseTwo"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingTwo"
+      >
         <div class="accordion-body" formArrayName="teaching_activities">
-          <div *ngFor="
-            let activity of teachingActivitiesArr.controls;
-            last as isLast;
-            let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
+          <div
+            *ngFor="
+              let activity of teachingActivitiesArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
             <div class="row activity_form">
-
               <!-- Identificación actividad -->
-              <div class="lineGroup col-xs-12 col-md-12 col-lg-6" formGroupName="activity_identification">
+              <div
+                class="lineGroup col-xs-12 col-md-12 col-lg-6"
+                formGroupName="activity_identification"
+              >
                 <div class="row">
                   <div class="col-12">
                     <span class="fw-bold">Identificación actividad</span>
@@ -76,18 +130,39 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_code{{ i }}">Código</label>
+                    <input
+                      type="text"
+                      formControlName="code"
+                      id="floating_code{{ i }}"
+                      class="form-control"
+                    />
+                    <label class="formLabel" id="floating_code{{ i }}"
+                      >Código</label
+                    >
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="group" id="floating_group{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_group{{ i }}">Grupo</label>
+                    <input
+                      type="text"
+                      formControlName="group"
+                      id="floating_group{{ i }}"
+                      class="form-control"
+                    />
+                    <label class="formLabel" id="floating_group{{ i }}"
+                      >Grupo</label
+                    >
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                    <input type="text" formControlName="name" id="floating_name{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_name{{ i }}">Nombre</label>
+                    <input
+                      type="text"
+                      formControlName="name"
+                      id="floating_name{{ i }}"
+                      class="form-control"
+                    />
+                    <label class="formLabel" id="floating_name{{ i }}"
+                      >Nombre</label
+                    >
                   </div>
                 </div>
               </div>
@@ -101,36 +176,79 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="student_quantity" id="floating_student_quantity{{ i }}"
-                      class="form-control" />
-                    <label class="formLabel" id="floating_number_students{{ i }}">Cantidad</label>
+                    <input
+                      type="number"
+                      formControlName="student_quantity"
+                      id="floating_student_quantity{{ i }}"
+                      class="form-control"
+                    />
+                    <label
+                      class="formLabel"
+                      id="floating_number_students{{ i }}"
+                      >Cantidad</label
+                    >
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="level" id="floating_level{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_level{{ i }}">Nivel</label>
+                    <select
+                      class="form-select"
+                      formControlName="level"
+                      id="floating_level{{ i }}"
+                      required
+                      [ngClass]="{ 'is-invalid': isInvalidForm('level') }"
+                    >
+                      <option value="" disabled selected hidden>Nivel</option>
+                      <!-- Agrega opciones según tus necesidades -->
+                      <option value="opcion1">Pregrado</option>
+                      <option value="opcion2">Posgrado</option>
+                      <!-- Puedes repetir esta estructura según la cantidad de opciones que necesites -->
+                    </select>
+                    <label
+                      for="floating_level{{ i }}"
+                      class="formLabel"
+                      [ngClass]="{ isFill: f_workplan.controls['level'].valid }"
+                      >Nivel</label
+                    >
                   </div>
                 </div>
               </div>
 
               <!-- Horas semana -->
-              <div class="lineGroup col-sm-12 col-md-12 col-lg-6" formGroupName="week_hours">
+              <div
+                class="lineGroup col-sm-12 col-md-12 col-lg-6"
+                formGroupName="week_hours"
+              >
                 <div class="row" style="margin-left: 0">
                   <div class="col-12" style="text-align: center">
                     <span class="fw-bold">Horas semana</span>
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="t" class="form-control" id="floating_t{{ i }}" />
+                    <input
+                      type="number"
+                      formControlName="t"
+                      class="form-control"
+                      id="floating_t{{ i }}"
+                    />
                     <label class="formLabel" id="floating_t{{ i }}">T</label>
                   </div>
 
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="tp" id="floating_tp{{ i }}" class="form-control" />
+                    <input
+                      type="number"
+                      formControlName="tp"
+                      id="floating_tp{{ i }}"
+                      class="form-control"
+                    />
                     <label class="formLabel" id="floating_tp{{ i }}">TP</label>
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="p" id="floating_p{{ i }}" class="form-control" />
+                    <input
+                      type="number"
+                      formControlName="p"
+                      id="floating_p{{ i }}"
+                      class="form-control"
+                    />
                     <label class="formLabel" id="floating_p{{ i }}">P</label>
                   </div>
                 </div>
@@ -145,17 +263,24 @@
                   </div>
 
                   <div class="formfloatig col-12">
-                    <input type="number" formControlName="total_hours" id="floating_total_hours{{ i }}"
-                      class=" form-control" />
-                    <label class="formLabel" id="floating_total_hours{{ i }}">Horas total</label>
+                    <input
+                      type="number"
+                      formControlName="total_hours"
+                      id="floating_total_hours{{ i }}"
+                      class="form-control"
+                    />
+                    <label class="formLabel" id="floating_total_hours{{ i }}"
+                      >Horas total</label
+                    >
                   </div>
-
                 </div>
               </div>
 
               <!-- seguimiento de actividades -->
-              <div class="row justify-content-center lineGroup" formGroupName="activity_tracking">
-
+              <div
+                class="row justify-content-center lineGroup"
+                formGroupName="activity_tracking"
+              >
                 <div class="col-10 text-center">
                   <span class="fw-bold">seguimiento de actividades</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -163,48 +288,80 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_1" id="floating_date_1{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_1"
+                      id="floating_date_1{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_1{{ i }}" class="formLabel"
+                      >Fecha 1</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_2" id="floating_date_2{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_2"
+                      id="floating_date_2{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_2{{ i }}" class="formLabel"
+                      >Fecha 2</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="formfloatig">
-                    <input type="text" formControlName="other" id="floating_other{{ i }}" class="form-control" />
-                    <label id="floating_other{{ i }}" class="formLabel">Otros</label>
+                    <input
+                      type="text"
+                      formControlName="other"
+                      id="floating_other{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_other{{ i }}" class="formLabel"
+                      >Otros</label
+                    >
                   </div>
                 </div>
               </div>
 
-
               <!-- buttons -->
-              <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-                <button (click)="removeInput('teaching_activities', i)" class="btn btn-remove" type="button">
-                  <i class=" fa fa-minus"></i>
+              <div
+                class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+              >
+                <button
+                  (click)="removeInput('teaching_activities', i)"
+                  class="btn btn-remove"
+                  type="button"
+                >
+                  <i class="fa fa-minus"></i>
                 </button>
-                <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
+                <button
+                  (click)="addTeachingActivities()"
+                  class="btn btn-add"
+                  type="button"
+                >
                   <i class="fa fa-plus"></i>
                 </button>
-
               </div>
-
             </div>
           </div>
-          <div *ngIf="teachingActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button (click)="addTeachingActivities()" class="btn btn-add" type="button">
+          <div
+            *ngIf="teachingActivitiesArr.controls.length == 0"
+            class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+          >
+            <button
+              (click)="addTeachingActivities()"
+              class="btn btn-add"
+              type="button"
+            >
               Agregar actividad de docencia
             </button>
           </div>
-
         </div>
       </div>
     </div>
@@ -213,25 +370,41 @@
     <div class="accordion-item">
       <!-- header -->
       <h6 class="accordion-header" id="headingThree">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseThree"
+          aria-expanded="false"
+          aria-controls="collapseThree"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Actividades de investigación
           </span>
         </button>
       </h6>
 
       <!-- content -->
-      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+      <div
+        id="collapseThree"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingThree"
+      >
         <div class="accordion-body" formArrayName="investigation_activities">
-          <div *ngFor="
-          let activity of investigationActivitiesArr.controls;
-          last as isLast;
-          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
+          <div
+            *ngFor="
+              let activity of investigationActivitiesArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
             <div class="row formActividades">
-
               <!-- Identificación actividad -->
               <div class="col-xs-12 col-md-12 col-lg-12 lineGroup">
                 <div class="col-12" style="text-align: center">
@@ -241,15 +414,29 @@
 
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-2">
-                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control" />
-                    <label id="floating_code{{ i }}" class="formLabel">Código</label>
+                    <input
+                      type="text"
+                      formControlName="code"
+                      id="floating_code{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_code{{ i }}" class="formLabel"
+                      >Código</label
+                    >
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-6 col-lg-10">
-                    <input type="text" formControlName="project_identification"
-                      id="floating_project_identification{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_project_identification{{ i }}">Identificación del
-                      proyecto</label>
+                    <input
+                      type="text"
+                      formControlName="project_identification"
+                      id="floating_project_identification{{ i }}"
+                      class="form-control"
+                    />
+                    <label
+                      class="formLabel"
+                      id="floating_project_identification{{ i }}"
+                      >Identificación del proyecto</label
+                    >
                   </div>
                 </div>
               </div>
@@ -263,20 +450,43 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input type="text" formControlName="responsibilities" id="floating_responsibilities{{ i }}"
-                      class="form-control" />
-                    <label id="floating_responsibilities{{ i }}" class="formLabel">Responsabilidad</label>
+                    <input
+                      type="text"
+                      formControlName="responsibilities"
+                      id="floating_responsibilities{{ i }}"
+                      class="form-control"
+                    />
+                    <label
+                      id="floating_responsibilities{{ i }}"
+                      class="formLabel"
+                      >Responsabilidad</label
+                    >
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-6 col-lg-4">
-                    <input type="text" formControlName="cost" id="floating_cost{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_cost{{ i }}">Costo</label>
+                    <input
+                      type="text"
+                      formControlName="cost"
+                      id="floating_cost{{ i }}"
+                      class="form-control"
+                    />
+                    <label class="formLabel" id="floating_cost{{ i }}"
+                      >Costo</label
+                    >
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-4">
-                    <input type="text" formControlName="supporting_document" id="floating_supporting_document{{ i }}"
-                      class="form-control" />
-                    <label id="floating_supporting_document{{ i }}" class="formLabel">Acta</label>
+                    <input
+                      type="text"
+                      formControlName="supporting_document"
+                      id="floating_supporting_document{{ i }}"
+                      class="form-control"
+                    />
+                    <label
+                      id="floating_supporting_document{{ i }}"
+                      class="formLabel"
+                      >Acta</label
+                    >
                   </div>
                 </div>
               </div>
@@ -290,15 +500,23 @@
                   </div>
 
                   <div class="formfloatig col-lg-12 col-md-12">
-                    <input type="number" formControlName="period_hours" id="floating_period_hours{{ i }}"
-                      class="form-control" />
-                    <label id="floating_period_hours{{ i }}" class="formLabel"> Semestre</label>
+                    <input
+                      type="number"
+                      formControlName="period_hours"
+                      id="floating_period_hours{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_period_hours{{ i }}" class="formLabel">
+                      Semestre</label
+                    >
                   </div>
                 </div>
               </div>
               <!-- seguimiento de actividades -->
-              <div class="row justify-content-center lineGroup" formGroupName="activity_tracking">
-
+              <div
+                class="row justify-content-center lineGroup"
+                formGroupName="activity_tracking"
+              >
                 <div class="col-10 text-center">
                   <span class="fw-bold">seguimiento de actividades</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -306,45 +524,80 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_1" id="floating_date_1{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_1"
+                      id="floating_date_1{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_1{{ i }}" class="formLabel"
+                      >Fecha 1</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_2" id="floating_date_2{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_2"
+                      id="floating_date_2{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_2{{ i }}" class="formLabel"
+                      >Fecha 2</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="formfloatig">
-                    <input type="text" formControlName="other" id="floating_other{{ i }}" class="form-control" />
-                    <label id="floating_other{{ i }}" class="formLabel">Otros</label>
+                    <input
+                      type="text"
+                      formControlName="other"
+                      id="floating_other{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_other{{ i }}" class="formLabel"
+                      >Otros</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- buttons -->
-            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-              <button (click)="addInvestigationActivities()" class="btn btn-add" type="button">
+            <div
+              class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+            >
+              <button
+                (click)="addInvestigationActivities()"
+                class="btn btn-add"
+                type="button"
+              >
                 <i class="fa fa-plus"></i>
               </button>
-              <button (click)="removeInput('investigation_activities', i)" class="btn btn-remove" type="button">
-                <i class=" fa fa-minus"></i>
+              <button
+                (click)="removeInput('investigation_activities', i)"
+                class="btn btn-remove"
+                type="button"
+              >
+                <i class="fa fa-minus"></i>
               </button>
             </div>
           </div>
-          <div *ngIf="investigationActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button (click)="addInvestigationActivities()" class="btn btn-add" type="button">
+          <div
+            *ngIf="investigationActivitiesArr.controls.length == 0"
+            class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+          >
+            <button
+              (click)="addInvestigationActivities()"
+              class="btn btn-add"
+              type="button"
+            >
               Agregar actividad de investigación
             </button>
           </div>
-
         </div>
       </div>
     </div>
@@ -353,25 +606,41 @@
     <div class="accordion-item">
       <!-- header -->
       <h6 class="accordion-header" id="headingFour">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseFour"
+          aria-expanded="false"
+          aria-controls="collapseFour"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Actividades de extensión
           </span>
         </button>
       </h6>
 
       <!-- content -->
-      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingSix">
+      <div
+        id="collapseFour"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingSix"
+      >
         <div class="accordion-body" formArrayName="extension_activities">
-          <div *ngFor="
-          let activity of extensionActivitiesArr.controls;
-          last as isLast;
-          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
+          <div
+            *ngFor="
+              let activity of extensionActivitiesArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
             <div class="row formActividades">
-
               <!-- identificación actividad -->
               <div class="col-xs-12 col-md-12 col-lg-12 lineGroup">
                 <div class="col-12" style="text-align: center">
@@ -380,14 +649,29 @@
                 </div>
                 <div class="row" style="margin-left: 0">
                   <div class="formfloatig col-xs-12 col-md-4 col-lg-2">
-                    <input type="text" formControlName="code" id="floating_code{{ i }}" class="form-control" />
-                    <label id="floating_code{{ i }}" class="formLabel">Código</label>
+                    <input
+                      type="text"
+                      formControlName="code"
+                      id="floating_code{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_code{{ i }}" class="formLabel"
+                      >Código</label
+                    >
                   </div>
                   <div class="formfloatig col-xs-12 col-md-8 col-lg-10">
-                    <input type="text" formControlName="activity_identification"
-                      id="floating_activity_identification{{ i }}" class="form-control" />
-                    <label id="floating_activity_identification{{ i }}" class="formLabel">
-                      Identificación de la actividad</label>
+                    <input
+                      type="text"
+                      formControlName="activity_identification"
+                      id="floating_activity_identification{{ i }}"
+                      class="form-control"
+                    />
+                    <label
+                      id="floating_activity_identification{{ i }}"
+                      class="formLabel"
+                    >
+                      Identificación de la actividad</label
+                    >
                   </div>
                 </div>
               </div>
@@ -401,15 +685,25 @@
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="responsibility" id="floating_responsibility{{ i }}"
-                      class="form-control" />
+                    <input
+                      type="text"
+                      formControlName="responsibility"
+                      id="floating_responsibility{{ i }}"
+                      class="form-control"
+                    />
                     <label class="formLabel">Responsabilidad</label>
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="cost" id="floating_responsibility{{ i }}"
-                      class="form-control" />
-                    <label id="floating_responsibility{{ i }}" class="formLabel">Costo</label>
+                    <input
+                      type="text"
+                      formControlName="cost"
+                      id="floating_responsibility{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_responsibility{{ i }}" class="formLabel"
+                      >Costo</label
+                    >
                   </div>
                 </div>
               </div>
@@ -423,21 +717,35 @@
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="week_hours" id="floating_week_hours{{ i }}"
-                      class="form-control" />
-                    <label id="floating_week_hours{{ i }}" class="formLabel">Semestre</label>
+                    <input
+                      type="number"
+                      formControlName="week_hours"
+                      id="floating_week_hours{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_week_hours{{ i }}" class="formLabel"
+                      >Semestre</label
+                    >
                   </div>
 
                   <div class="formfloatig col-xs-12 col-md-12 col-lg-6">
-                    <input type="number" formControlName="period_hours" id="floating_period_hours{{ i }}"
-                      class="form-control" />
-                    <label id="floating_period_hours{{ i }}" class="formLabel">Semana</label>
+                    <input
+                      type="number"
+                      formControlName="period_hours"
+                      id="floating_period_hours{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_period_hours{{ i }}" class="formLabel"
+                      >Semana</label
+                    >
                   </div>
                 </div>
               </div>
               <!-- seguimiento de actividades -->
-              <div class="row justify-content-center lineGroup" formGroupName="activity_tracking">
-
+              <div
+                class="row justify-content-center lineGroup"
+                formGroupName="activity_tracking"
+              >
                 <div class="col-10 text-center">
                   <span class="fw-bold">seguimiento de actividades</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -445,110 +753,184 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_1" id="floating_date_1{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_1"
+                      id="floating_date_1{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_1{{ i }}" class="formLabel"
+                      >Fecha 1</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_2" id="floating_date_2{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_2"
+                      id="floating_date_2{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_2{{ i }}" class="formLabel"
+                      >Fecha 2</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="formfloatig">
-                    <input type="text" formControlName="other" id="floating_other{{ i }}" class="form-control" />
-                    <label id="floating_other{{ i }}" class="formLabel">Otros</label>
+                    <input
+                      type="text"
+                      formControlName="other"
+                      id="floating_other{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_other{{ i }}" class="formLabel"
+                      >Otros</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
 
-
             <!-- buttons -->
-            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-              <button (click)="addExtensionActivities()" class="btn btn-add" type="button">
+            <div
+              class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+            >
+              <button
+                (click)="addExtensionActivities()"
+                class="btn btn-add"
+                type="button"
+              >
                 <i class="fa fa-plus"></i>
               </button>
-              <button (click)="removeInput('extension_activities', i)" class="btn btn-remove" type="button">
-                <i class=" fa fa-minus"></i>
+              <button
+                (click)="removeInput('extension_activities', i)"
+                class="btn btn-remove"
+                type="button"
+              >
+                <i class="fa fa-minus"></i>
               </button>
             </div>
-
           </div>
-          <div *ngIf="extensionActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button (click)="addExtensionActivities()" class="btn btn-add" type="button">
+          <div
+            *ngIf="extensionActivitiesArr.controls.length == 0"
+            class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+          >
+            <button
+              (click)="addExtensionActivities()"
+              class="btn btn-add"
+              type="button"
+            >
               Agregar actividad de docencia
             </button>
           </div>
-
         </div>
       </div>
     </div>
 
-
     <!-- /.actividades-administracion -->
     <div class="accordion-item">
-
       <!-- header -->
       <h6 class="accordion-header" id="headingFive">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseFive"
+          aria-expanded="false"
+          aria-controls="collapseFive"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Administración académica
           </span>
         </button>
       </h6>
 
       <!-- content -->
-      <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive">
+      <div
+        id="collapseFive"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingFive"
+      >
         <div class="accordion-body" formArrayName="academic_admin_activities">
-          <div *ngFor="
-          let activity of academicAdministrationArr.controls;
-          last as isLast;
-          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
+          <div
+            *ngFor="
+              let activity of academicAdministrationArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
             <div class="row formActividades" style="width: 100%">
-
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="text" formControlName="position" id="floating_position{{ i }}" class="form-control" />
-                  <label id="floating_position{{ i }}" class="formLabel">Cargo</label>
+                  <input
+                    type="text"
+                    formControlName="position"
+                    id="floating_position{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_position{{ i }}" class="formLabel"
+                    >Cargo</label
+                  >
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="number" formControlName="week_hours" id="floating_week_hours{{ i }}"
-                    class="form-control" />
-                  <label id="floating_week_hours{{ i }}" class="formLabel">Horas semestre</label>
+                  <input
+                    type="number"
+                    formControlName="week_hours"
+                    id="floating_week_hours{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_week_hours{{ i }}" class="formLabel"
+                    >Horas semestre</label
+                  >
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="text" formControlName="activities" id="floating_activities{{ i }}"
-                    class="form-control" />
-                  <label id="floating_activities{{ i }}" class="formLabel">Otras actividades</label>
+                  <input
+                    type="text"
+                    formControlName="activities"
+                    id="floating_activities{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_activities{{ i }}" class="formLabel"
+                    >Otras actividades</label
+                  >
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-6 col-lg-6">
                 <div class="formfloatig">
-                  <input type="number" formControlName="period_hours" id="floating_period_hours{{ i }}"
-                    class="form-control" />
-                  <label id="floating_period_hours{{ i }}" class="formLabel">Horas semestre</label>
+                  <input
+                    type="number"
+                    formControlName="period_hours"
+                    id="floating_period_hours{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_period_hours{{ i }}" class="formLabel"
+                    >Horas semestre</label
+                  >
                 </div>
               </div>
 
               <!-- seguimiento de actividades -->
-              <div class="row justify-content-center lineGroup" formGroupName="activity_tracking">
-
+              <div
+                class="row justify-content-center lineGroup"
+                formGroupName="activity_tracking"
+              >
                 <div class="col-10 text-center">
                   <span class="fw-bold">seguimiento de actividades</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -556,95 +938,156 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_1" id="floating_date_1{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_1"
+                      id="floating_date_1{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_1{{ i }}" class="formLabel"
+                      >Fecha 1</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_2" id="floating_date_2{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_2"
+                      id="floating_date_2{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_2{{ i }}" class="formLabel"
+                      >Fecha 2</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="formfloatig">
-                    <input type="text" formControlName="other" id="floating_other{{ i }}" class="form-control" />
-                    <label id="floating_other{{ i }}" class="formLabel">Otros</label>
+                    <input
+                      type="text"
+                      formControlName="other"
+                      id="floating_other{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_other{{ i }}" class="formLabel"
+                      >Otros</label
+                    >
                   </div>
                 </div>
               </div>
-
             </div>
-
 
             <!-- buttons -->
-            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-              <button (click)="addAcademicAdministration()" class="btn btn-add" type="button">
+            <div
+              class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+            >
+              <button
+                (click)="addAcademicAdministration()"
+                class="btn btn-add"
+                type="button"
+              >
                 <i class="fa fa-plus"></i>
               </button>
-              <button (click)="removeInput('academic_admin_activities', i)" class="btn btn-remove" type="button">
-                <i class=" fa fa-minus"></i>
+              <button
+                (click)="removeInput('academic_admin_activities', i)"
+                class="btn btn-remove"
+                type="button"
+              >
+                <i class="fa fa-minus"></i>
               </button>
             </div>
-
           </div>
-          <div *ngIf="academicAdministrationArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button (click)="addAcademicAdministration()" class="btn btn-add" type="button">
+          <div
+            *ngIf="academicAdministrationArr.controls.length == 0"
+            class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+          >
+            <button
+              (click)="addAcademicAdministration()"
+              class="btn btn-add"
+              type="button"
+            >
               Agregar actividad de Administración académica
             </button>
           </div>
-
         </div>
       </div>
     </div>
 
     <!-- /.otras-actividades -->
     <div class="accordion-item">
-
       <!-- header -->
       <h6 class="accordion-header" id="headingSix">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix"
-          aria-expanded="false" aria-controls="collapseSix">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseSix"
+          aria-expanded="false"
+          aria-controls="collapseSix"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Otras actividades
           </span>
         </button>
       </h6>
 
       <!-- content -->
-      <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix">
+      <div
+        id="collapseSix"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingSix"
+      >
         <div class="accordion-body" formArrayName="other_activities">
-          <div *ngFor="
-          let activity of otherActivitiesArr.controls;
-          last as isLast;
-          let i = index" class="arrayLike formfloatig justify-content-center" [formGroupName]="i">
+          <div
+            *ngFor="
+              let activity of otherActivitiesArr.controls;
+              last as isLast;
+              let i = index
+            "
+            class="arrayLike formfloatig justify-content-center"
+            [formGroupName]="i"
+          >
             <div class="row formActividades" style="width: 100%">
-
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="formfloatig">
-                  <input type="text" formControlName="activity" id="floating_activity{{ i }}" class="form-control" />
-                  <label id="floating_activity{{ i }}" class="formLabel">Identificación de la
-                    actividad</label>
+                  <input
+                    type="text"
+                    formControlName="activity"
+                    id="floating_activity{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_activity{{ i }}" class="formLabel"
+                    >Identificación de la actividad</label
+                  >
                 </div>
               </div>
 
               <div class="col-sm-12 col-md-2 col-lg-12">
                 <div class="formfloatig">
-                  <input type="number" formControlName="period_hours" id="floating_period_hours{{ i }}"
-                    class="form-control" />
-                  <label id="floating_period_hours{{ i }}" class="formLabel">Horas semestre</label>
+                  <input
+                    type="number"
+                    formControlName="period_hours"
+                    id="floating_period_hours{{ i }}"
+                    class="form-control"
+                  />
+                  <label id="floating_period_hours{{ i }}" class="formLabel"
+                    >Horas semestre</label
+                  >
                 </div>
               </div>
 
               <!-- seguimiento de actividades -->
-              <div class="row justify-content-center lineGroup" formGroupName="activity_tracking">
-
+              <div
+                class="row justify-content-center lineGroup"
+                formGroupName="activity_tracking"
+              >
                 <div class="col-10 text-center">
                   <span class="fw-bold">seguimiento de actividades</span>
                   <hr style="margin: 0; margin-bottom: 3px" />
@@ -652,106 +1095,172 @@
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_1" id="floating_date_1{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_1{{ i }}" class="formLabel">Fecha 1</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_1"
+                      id="floating_date_1{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_1{{ i }}" class="formLabel"
+                      >Fecha 1</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-sm-12 col-md-3 col-lg-6">
                   <div class="formfloatig">
-                    <input type="datetime-local" formControlName="date_2" id="floating_date_2{{ i }}"
-                      class="form-control" />
-                    <label id="floating_date_2{{ i }}" class="formLabel">Fecha 2</label>
+                    <input
+                      type="datetime-local"
+                      formControlName="date_2"
+                      id="floating_date_2{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_date_2{{ i }}" class="formLabel"
+                      >Fecha 2</label
+                    >
                   </div>
                 </div>
 
                 <div class="col-12">
                   <div class="formfloatig">
-                    <input type="text" formControlName="other" id="floating_other{{ i }}" class="form-control" />
-                    <label id="floating_other{{ i }}" class="formLabel">Otros</label>
+                    <input
+                      type="text"
+                      formControlName="other"
+                      id="floating_other{{ i }}"
+                      class="form-control"
+                    />
+                    <label id="floating_other{{ i }}" class="formLabel"
+                      >Otros</label
+                    >
                   </div>
                 </div>
               </div>
             </div>
 
-
             <!-- buttons -->
-            <div class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-              <button (click)="addOtherActivities()" class="btn btn-add" type="button">
+            <div
+              class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+            >
+              <button
+                (click)="addOtherActivities()"
+                class="btn btn-add"
+                type="button"
+              >
                 <i class="fa fa-plus"></i>
               </button>
-              <button (click)="removeInput('other_activities', i)" class="btn btn-remove" type="button">
-                <i class=" fa fa-minus"></i>
+              <button
+                (click)="removeInput('other_activities', i)"
+                class="btn btn-remove"
+                type="button"
+              >
+                <i class="fa fa-minus"></i>
               </button>
             </div>
-
           </div>
-          <div *ngIf="otherActivitiesArr.controls.length == 0" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-            <button (click)="addOtherActivities()" class="btn btn-add" type="button">
+          <div
+            *ngIf="otherActivitiesArr.controls.length == 0"
+            class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+          >
+            <button
+              (click)="addOtherActivities()"
+              class="btn btn-add"
+              type="button"
+            >
               Agregar otro tipo de actividad
             </button>
           </div>
-
         </div>
-
       </div>
     </div>
 
-
     <!-- /.Observaciones generales -->
     <div class="accordion-item">
-
       <h6 class="accordion-header" id="headingEight">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseEight"
+          aria-expanded="false"
+          aria-controls="collapseEight"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Observaciones generales
           </span>
         </button>
       </h6>
 
-      <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight">
+      <div
+        id="collapseEight"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingEight"
+      >
         <div class="accordion-body">
           <div class="formfloatig col-12">
-            <textarea id="floating_observations" formControlName="observations" class="form-control" rows="3">
+            <textarea
+              id="floating_observations"
+              formControlName="observations"
+              class="form-control"
+              rows="3"
+            >
             </textarea>
-            <label for="floating_observations" class="formLabel">Observaciones</label>
+            <label for="floating_observations" class="formLabel"
+              >Observaciones</label
+            >
           </div>
         </div>
       </div>
     </div>
-
 
     <!-- Jornada de trabajo -->
 
     <div class="accordion-item">
       <!-- header -->
       <h6 class="accordion-header" id="headingNine">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseNine"
+          aria-expanded="false"
+          aria-controls="collapseNine"
+        >
           <span class="muted">
-            <i class="fa fa-info-circle"
-              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"></i>
+            <i
+              class="fa fa-info-circle"
+              title="A continuación llene los siguientes campos para cada actividad de investigación, por cada actividad haga click sobre el botón +"
+            ></i>
             Jornada de trabajo
           </span>
         </button>
       </h6>
       <!-- content -->
-      <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine">
+      <div
+        id="collapseNine"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingNine"
+      >
         <div class="accordion-body" formArrayName="working_week">
           <div class="formfloatig col-12">
-            <div *ngFor="
-            let activity of workDayArr.controls;
-            last as isLast;
-            let i = index
-            " class="arrayLike formfloatig justify-content-center d-inline" [formGroupName]="i">
-
+            <div
+              *ngFor="
+                let activity of workDayArr.controls;
+                last as isLast;
+                let i = index
+              "
+              class="arrayLike formfloatig justify-content-center d-inline"
+              [formGroupName]="i"
+            >
               <!-- Lunes -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="monday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="monday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Lunes
@@ -763,16 +1272,32 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Termina</label>
                       </div>
                     </div>
@@ -785,30 +1310,53 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start"
-                          id="floating_afternoon_start{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          id="floating_afternoon_start{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end"
-                          id="floating_afternoon_end{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          id="floating_afternoon_end{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
 
               <!-- Martes -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="tuesday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="tuesday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Martes
@@ -819,22 +1367,41 @@
                     <span class="fw-bold">Mañana</span>
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
-                        <label id="floating_morning_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
                   </div>
                 </div>
-
 
                 <div class="col-6">
                   <div class="row">
@@ -842,28 +1409,43 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start" class="form-control"
-                          value="13:00" start="13:00" end="17:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
                         <label class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end" class="form-control"
-                          value="13:00" start="13:00" end="17:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
                         <label class="formLabel">Termina</label>
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
 
               <!-- Miercoles -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="wednesday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="wednesday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Miercoles
@@ -875,16 +1457,32 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Termina</label>
                       </div>
                     </div>
@@ -897,30 +1495,53 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start"
-                          id="floating_afternoon_start{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          id="floating_afternoon_start{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end"
-                          id="floating_afternoon_end{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          id="floating_afternoon_end{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
 
               <!-- Jueves -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="thursday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="thursday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Jueves
@@ -932,18 +1553,38 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start" class="form-control"
-                          onlyHour="false" value="07:00" start="07:00" end="12:00" />
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
                         <label class="formLabel">Inicia</label>
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end"
-                          id="floating_morning_end{{ i }}" class="form-control" onlyHour="false" value="07:00"
-                          start="07:00" end="12:00" />
-                        <label id="floating_morning_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          id="floating_morning_end{{ i }}"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
                   </div>
@@ -955,31 +1596,53 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start"
-                          id="floating_afternoon_start{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          id="floating_afternoon_start{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end"
-                          id="floating_afternoon_end{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          id="floating_afternoon_end{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
 
-
               <!-- Viernes -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="friday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="friday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Viernes
@@ -991,19 +1654,43 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start"
-                          id="floating_morning_start{{ i }}" class="form-control" onlyHour="false" value="07:00"
-                          start="07:00" end="12:00" />
-                        <label id="floating_morning_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          id="floating_morning_start{{ i }}"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end"
-                          id="floating_morning_end{{ i }}" class="form-control" onlyHour="false" value="07:00"
-                          start="07:00" end="12:00" />
-                        <label id="floating_morning_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          id="floating_morning_end{{ i }}"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
                   </div>
@@ -1015,31 +1702,53 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start"
-                          id="floating_afternoon_start{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          id="floating_afternoon_start{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end"
-                          id="floating_afternoon_end{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          id="floating_afternoon_end{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
 
-
               <!-- Sabado -->
-              <div class="row formActividades shadow m-2 p-1" formGroupName="saturday"
-                style="width: 100%; margin: auto; min-width: 320px">
+              <div
+                class="row formActividades shadow m-2 p-1"
+                formGroupName="saturday"
+                style="width: 100%; margin: auto; min-width: 320px"
+              >
                 <span>
                   <i class="fa fa-clock"></i>
                   Sabado
@@ -1051,19 +1760,43 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_start"
-                          id="floating_morning_start{{ i }}" class="form-control" onlyHour="false" value="07:00"
-                          start="07:00" end="12:00" />
-                        <label id="floating_morning_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_start"
+                          id="floating_morning_start{{ i }}"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig" style="padding-right: 0">
-                        <input atp-time-picker type="time" formControlName="morning_end"
-                          id="floating_morning_end{{ i }}" class="form-control" onlyHour="false" value="07:00"
-                          start="07:00" end="12:00" />
-                        <label id="floating_morning_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="morning_end"
+                          id="floating_morning_end{{ i }}"
+                          class="form-control"
+                          onlyHour="false"
+                          value="07:00"
+                          start="07:00"
+                          end="12:00"
+                        />
+                        <label
+                          id="floating_morning_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
                   </div>
@@ -1075,33 +1808,50 @@
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_start"
-                          id="floating_afternoon_start{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_start{{ i }}" class="formLabel">Inicia</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_start"
+                          id="floating_afternoon_start{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_start{{ i }}"
+                          class="formLabel"
+                          >Inicia</label
+                        >
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="formfloatig">
-                        <input atp-time-picker type="time" formControlName="afternoon_end"
-                          id="floating_afternoon_end{{ i }}" class="form-control" value="13:00" start="13:00"
-                          end="17:00" />
-                        <label id="floating_afternoon_end{{ i }}" class="formLabel">Termina</label>
+                        <input
+                          atp-time-picker
+                          type="time"
+                          formControlName="afternoon_end"
+                          id="floating_afternoon_end{{ i }}"
+                          class="form-control"
+                          value="13:00"
+                          start="13:00"
+                          end="17:00"
+                        />
+                        <label
+                          id="floating_afternoon_end{{ i }}"
+                          class="formLabel"
+                          >Termina</label
+                        >
                       </div>
                     </div>
-
                   </div>
                 </div>
-
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </form>
