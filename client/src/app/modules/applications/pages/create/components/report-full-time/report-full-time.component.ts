@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FullTimeCreate } from '@interfaces/applications/full_time/full-time';
+import { Application } from '@interfaces/application';
+import { FullTimeCreate, FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { ReportFullTimeCreate } from '@interfaces/applications/report-full-time';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { ApplicationService } from '@services/application.service';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ReportFullTimeService } from '@services/applications/report-full-time.service';
 import { DocumentService } from '@services/document.service';
@@ -18,8 +20,9 @@ import Swal from 'sweetalert2';
 })
 export class ReportFullTimeComponent {
   public fullTime$ = new Observable<FullTimeCreate>();
-
   public historyFullTime = false;
+  public applications: Application [] = [];
+  public full_time: FullTimeInDB [] = [];
 
   // Files
   public files: any[] = [];
@@ -38,6 +41,7 @@ export class ReportFullTimeComponent {
     private router: Router,
     private ChangeDetectorRef: ChangeDetectorRef,
 
+    private applicationSvc: ApplicationService,
     private applicationTypeSvc: ApplicationTypesService,
     private reportFullTimeSvc: ReportFullTimeService,
     private FullTimeSvc: FullTimeService,
@@ -56,6 +60,29 @@ export class ReportFullTimeComponent {
   selectOption(option: boolean) {
     this.selectedOption = option;
   }
+
+  /* loadFullTimeList(mongoIds: number[]) {
+    mongoIds.forEach(mongoId => {
+      this.FullTimeSvc.getFullTime(mongoId).subscribe(
+        (full_time: FullTimeInDB) => {
+          this.full_time.push(full_time);
+        }
+      );
+    });
+  } */
+
+  loadApplications() {
+    this.applicationSvc.getApplications().subscribe(
+      (applications) => {
+        this.applications = applications.filter(application =>
+           application.application_sub_type_id === 10);
+        
+        const mongoIds = this.applications
+        .map(application => application.id);
+        
+        /* this.loadFullTimeList(mongoIds); */
+        });
+    }
   
   submit() {
     this.submitted = true;

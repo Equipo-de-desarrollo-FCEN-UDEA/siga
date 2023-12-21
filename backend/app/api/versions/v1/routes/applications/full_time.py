@@ -1,4 +1,5 @@
 from typing import Any, List
+from app.domain.schemas.applications.report_full_time import ReportFullTimeCreate, ReportFullTimeResponse
 
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
@@ -79,34 +80,6 @@ async def create_full_time(
         full_time=full_time_created
     )
     return response
-
-@router.get("/", status_code=200,
-            response_model=list[FullTimeResponse])
-async def read_full_time(
-    *,
-    db: Session = Depends(db.get_db),
-    current_user: UserInDB = Depends(
-        jwt_bearer.get_current_active_user),
-    skip: int = 0,
-    limit: int = 20,
-    engine: AIOSession = Depends(mongo_db.get_mongo_db)
-) -> Any:
-    """
-    Endpoint to read all full_time applications.
-
-        params: skip: int, limit: int
-    """
-    try:
-        db_full_time = await crud.full_time.get_multi(
-            engine=engine, skip=skip, limit=limit, who=current_user)
-    except BaseErrors as e:
-        raise HTTPException(status_code=e.code, detail=e.detail)
-    
-    if db_full_time is None:
-        db_full_time = []
-    
-    return db_full_time
-
 
 @router.get("/{id}", response_model=FullTimeResponse)
 async def get_full_time(

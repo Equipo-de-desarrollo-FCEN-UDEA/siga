@@ -34,11 +34,60 @@
     </div>
 
     <div class="mt-4 text-end" *ngIf="selectedOption === true">
-      <div>Contenido para dedicación exclusiva</div>
+      <button
+        type="button"
+        class="btn btn-status btn-block col-12 mt-3"
+        (click)="loadApplications(); historyFullTime = !historyFullTime"
+      >
+        Ver mis dedicaciones exclusivas en SIGA
+      </button>
     </div>
 
+    <!-- Tabla de Aplicaciones -->
+    <table
+      class="table mt-3"
+      *ngIf="selectedOption === true && applications && applications.length > 0"
+    >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let application of applications">
+          <td>{{ application.id }}</td>
+          <td>{{ application.mongo_id }}</td>
+        </tr>
+      </tbody>
+    </table>
+
     <div class="mt-4 text-end" *ngIf="selectedOption === false">
-      <div>Contenido para no dedicación exclusiva</div>
+      <!-- ALERT BOX -->
+      <div class="alert alert-warning mt-3 mb-0">
+        Como esta dedicación no se encuentra dentro de SIGA debes agregar el
+        título correspondiente para identificarla.
+      </div>
+      <!-- TITULO -->
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Titulo *</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingtitulo"
+              formControlName="title"
+              class="form-control"
+              type="title"
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  (submitted && f['title'].errors) || isInvalidForm('title')
+              }"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
