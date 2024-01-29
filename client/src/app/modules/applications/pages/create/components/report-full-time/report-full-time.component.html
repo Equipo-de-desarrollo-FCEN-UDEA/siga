@@ -46,7 +46,7 @@
     <!-- Tabla de Aplicaciones -->
     <table
       class="table mt-3"
-      *ngIf="selectedOption === true && applications && applications.length > 0"
+      *ngIf="selectedOption === true && applications && applications.length > 0 && full_time && full_time.length > 0"
     >
       <thead>
         <tr>
@@ -56,11 +56,20 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let application of applications">
+        <tr *ngFor="let application of applications; let i = index">
           <td>{{ application.id }}</td>
-          <td>{{ application.mongo_id }}</td>
+          <td>{{ full_time[i].full_time.title }}</td>
         </tr>
       </tbody>
+
+     <!--  <tbody>
+        <ng-container *ngFor="let application of applications">
+            <tr *ngFor="let fullTime of full_time">
+                <td>{{ application.id }}</td>
+                <td>{{ fullTime.full_time.title }}</td>
+            </tr>
+        </ng-container>
+      </tbody> -->
     </table>
 
     <div class="mt-4 text-end" *ngIf="selectedOption === false">

@@ -2,9 +2,11 @@ import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, } from '@an
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Application } from '@interfaces/application';
+import { ApplicationStatus } from '@interfaces/application_status';
 import { FullTimeCreate, FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { ReportFullTimeCreate } from '@interfaces/applications/report-full-time';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
+import { ApplicationStatusService } from '@services/application-status.service';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { ApplicationService } from '@services/application.service';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
@@ -22,7 +24,7 @@ export class ReportFullTimeComponent {
   public fullTime$ = new Observable<FullTimeCreate>();
   public historyFullTime = false;
   public applications: Application [] = [];
-  public full_time: FullTimeInDB [] = [];
+  public full_time: FulltimeResponse [] = [];
 
   // Files
   public files: any[] = [];
@@ -42,9 +44,10 @@ export class ReportFullTimeComponent {
     private ChangeDetectorRef: ChangeDetectorRef,
 
     private applicationSvc: ApplicationService,
+    private applicationStatusSvc: ApplicationStatusService,
     private applicationTypeSvc: ApplicationTypesService,
     private reportFullTimeSvc: ReportFullTimeService,
-    private FullTimeSvc: FullTimeService,
+    private fullTimeSvc: FullTimeService,
     private documentService: DocumentService
   ) {
    }
@@ -61,28 +64,26 @@ export class ReportFullTimeComponent {
     this.selectedOption = option;
   }
 
-  /* loadFullTimeList(mongoIds: number[]) {
-    mongoIds.forEach(mongoId => {
-      this.FullTimeSvc.getFullTime(mongoId).subscribe(
-        (full_time: FullTimeInDB) => {
-          this.full_time.push(full_time);
-        }
-      );
-    });
-  } */
 
   loadApplications() {
     this.applicationSvc.getApplications().subscribe(
       (applications) => {
         this.applications = applications.filter(application =>
-           application.application_sub_type_id === 10);
-        
-        const mongoIds = this.applications
-        .map(application => application.id);
-        
-        /* this.loadFullTimeList(mongoIds); */
-        });
-    }
+          application.application_sub_type_id === 10
+          && application.application_status[0].status.id === 3);
+  
+        this.full_time = []; 
+        for (let application of this.applications) {
+          this.fullTimeSvc.getFullTime(application.id).subscribe(
+            (full_time) => {
+              this.full_time.push(full_time);
+              if (this.full_time.length > 0) {
+                console.log(this.full_time[0].full_time.title);
+              }
+            });
+        }
+      });
+  }
   
   submit() {
     this.submitted = true;
