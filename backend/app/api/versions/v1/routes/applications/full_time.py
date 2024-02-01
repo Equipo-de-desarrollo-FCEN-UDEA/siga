@@ -1,3 +1,6 @@
+from typing import Any, List
+from app.domain.schemas.applications.report_full_time import ReportFullTimeCreate, ReportFullTimeResponse
+
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
@@ -18,7 +21,8 @@ from app.domain.schemas import (ApplicationCreate,
                                 WorkPlan,
                                 ViceFormat,
                                 CronJobCreate,
-                                Application_statusCreate
+                                Application_statusCreate,
+                                UserInDB
                                 )
 from app.domain.errors import BaseErrors
 
@@ -27,7 +31,6 @@ router = APIRouter()
 
 log = get_logging(__name__)
 settings = get_app_settings()
-
 
 @router.post("/", response_model=FullTimeResponse)
 async def create_full_time(
@@ -77,7 +80,6 @@ async def create_full_time(
         full_time=full_time_created
     )
     return response
-
 
 @router.get("/{id}", response_model=FullTimeResponse)
 async def get_full_time(

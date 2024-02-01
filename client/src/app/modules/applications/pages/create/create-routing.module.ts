@@ -29,6 +29,9 @@ import { VacationComponent } from './components/vacation/vacation.component';
 //ECONOMIC SUPPORT COMPONENT
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 
+//REPORTE FINAL DEDICACIÓN EXCLUSIVA
+import { ReportFullTimeComponent } from './components/report-full-time/report-full-time.component';
+
 
 
 const routes: Routes = [
@@ -85,6 +88,14 @@ const routes: Routes = [
         component: EconomicSupportComponent,
         data:{
           title: 'Apoyo Económico'
+        }
+      },
+      // INFORME FINAL DEDICACIÓN EXCLUSIVA
+      {
+        path: 'informe-dedicacion',
+        component: ReportFullTimeComponent,
+        data:{
+          title: 'Informe Final'
         }
       },
       //  Formularios extras

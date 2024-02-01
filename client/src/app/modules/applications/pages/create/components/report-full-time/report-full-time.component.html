@@ -1,0 +1,194 @@
+<form
+  class="need-validation"
+  need-validation
+  novalidate
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <!-- Elige si tienes o no una dedicación exclusiva -->
+
+  <div class="container mt-2">
+    <h5 class="text-begin">
+      ¿Este informe corresponde a una dedicación exclusiva aprobada en SIGA?
+    </h5>
+
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="selectedOption = true"
+        >
+          Si
+        </button>
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="selectedOption = false"
+        >
+          No
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-4 text-end" *ngIf="selectedOption === true">
+      <button
+        type="button"
+        class="btn btn-status btn-block col-12 mt-3"
+        (click)="loadApplications(); historyFullTime = !historyFullTime"
+      >
+        Ver mis dedicaciones exclusivas en SIGA
+      </button>
+    </div>
+
+    <!-- Tabla de Aplicaciones -->
+    <table
+      class="table mt-3"
+      *ngIf="selectedOption === true && applications && applications.length > 0 && full_time && full_time.length > 0"
+    >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let application of applications; let i = index">
+          <td>{{ application.id }}</td>
+          <td>{{ full_time[i].full_time.title }}</td>
+        </tr>
+      </tbody>
+
+     <!--  <tbody>
+        <ng-container *ngFor="let application of applications">
+            <tr *ngFor="let fullTime of full_time">
+                <td>{{ application.id }}</td>
+                <td>{{ fullTime.full_time.title }}</td>
+            </tr>
+        </ng-container>
+      </tbody> -->
+    </table>
+
+    <div class="mt-4 text-end" *ngIf="selectedOption === false">
+      <!-- ALERT BOX -->
+      <div class="alert alert-warning mt-3 mb-0">
+        Como esta dedicación no se encuentra dentro de SIGA debes agregar el
+        título correspondiente para identificarla.
+      </div>
+      <!-- TITULO -->
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Titulo *</div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig">
+            <input
+              id="floatingtitulo"
+              formControlName="title"
+              class="form-control"
+              type="title"
+              placeholder=" "
+              [ngClass]="{
+                'is-invalid':
+                  (submitted && f['title'].errors) || isInvalidForm('title')
+              }"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUSTIFICATION -->
+  <div class="row regular-row mt-4">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación *</div>
+    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+      <div class="form-group">
+        <textarea
+          id="floatingjustification"
+          formControlName="justification"
+          class="form-control"
+          type="justification"
+          placeholder=" "
+          [ngClass]="{ 'is-invalid': isInvalidForm('justification') }"
+          required
+          rows="5"
+        ></textarea>
+        <!-- errors justification -->
+        <div
+          *ngIf="
+            (submitted || f['justification'].touched) &&
+            f['justification'].errors
+          "
+          class="invalid"
+        >
+          <div
+            *ngIf="(submitted || f['justification'].touched) && (f['justification'].errors?.['required'] || 
+              f['justification'].errors?.['maxlength'] || f['justification'].errors?.['minlength'])"
+          >
+            La justificación debe tener al menos 5 caracteres y máximo 500
+            caracteres.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--ARCHIVOS-->
+  <h6 class="mt-3 text-center">
+    <span class="text-muted">Archivos adjuntos del permiso</span>
+  </h6>
+  <div class="alert alert-danger" *ngIf="files.length > 0 && !validFileType()">
+    Ese tipo de archivo no es permitido.
+  </div>
+  <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
+    Los archivos no deben pesar más de 2 MB.
+  </div>
+  <div class="formfloatig" style="flex-direction: column">
+    <div
+      *ngFor="let producto of archivos; last as isLast; let i = index"
+      class="arrayLike formfloatig d-flex justify-content-between"
+    >
+      <div class="document_new">
+        <label class="btn-btn-default cursor is-hoverable">
+          <div class="fa fa-upload fa-2x"></div>
+          <input
+            [id]="i"
+            class="file-upload"
+            type="file"
+            (change)="onUpload($event, i)"
+          />
+          <label
+            [for]="i"
+            class="is-hoverable cursor link-success"
+            style="margin-left: 10px"
+            >{{ files[i] ? files[i].name : "Subir archivo" }}</label
+          >
+        </label>
+      </div>
+      <div class="buttons">
+        <button
+          class="btn btn-circle btn-remove btn-sm m-1"
+          type="button"
+          (click)="removeFile(i)"
+        >
+          <i class="fa fa-minus"></i>
+        </button>
+        <button
+          class="btn btn-circle btn-add btn-sm m-1"
+          type="button"
+          (click)="archivos.push(1)"
+          *ngIf="isLast && archivos.length < 3"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+    {{ error }}
+  </div>
+  <hr />
+</form>
