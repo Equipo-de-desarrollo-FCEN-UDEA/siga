@@ -25,6 +25,9 @@ import { Location } from '@angular/common';
 })
 export class CreateApplicationComponent {
 
+ 
+  public hiddenIds: number[] = [1];
+
   public submitted: boolean = false;
 
   public application_types$: Observable<ApplicationType[]> =

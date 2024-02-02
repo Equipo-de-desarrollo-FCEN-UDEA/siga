@@ -27,12 +27,26 @@
                 f['application_type'].errors && f['application_type'].touched
             }"
           >
+<!-- 
+          <option 
+          [value]="0" disabled selected>Elige un tipo de solicitud</option> -->
+          <ng-container *ngFor="let tipo of application_types$ | async">
             <option
+              [ngValue]="tipo.description.toLowerCase()"
+              *ngIf="!hiddenIds.includes(tipo.id)"
+            >
+              {{ tipo.name}}
+            </option>
+          </ng-container>
+        
+
+            <!-- <option
               [value]="application_type.description"
               *ngFor="let application_type of application_types$ | async"
             >
-              {{ application_type.name | uppercase }}
-            </option>
+              {{ application_type.name }}
+            </option> -->
+
           </select>
         </div>
       </div>
