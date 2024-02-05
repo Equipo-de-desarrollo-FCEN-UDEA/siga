@@ -35,6 +35,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'informe-final-dedicacion',
+        component: FullTimeComponent,
+        data: {
+          title: 'Dedicación Exclusiva'
+        }
+      },
+      {
         path: 'avalhoras',
         component: HourAvalComponent,
         data: {
