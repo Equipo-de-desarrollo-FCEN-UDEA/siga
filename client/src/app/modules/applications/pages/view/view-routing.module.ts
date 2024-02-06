@@ -35,7 +35,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'informe-final-dedicacion',
+        path: 'informe-dedicacion',
         component: FullTimeComponent,
         data: {
           title: 'Dedicación Exclusiva'
