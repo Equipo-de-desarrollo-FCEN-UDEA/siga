@@ -3,22 +3,20 @@
 
   <div class="row regular-row mt-4">
     <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-      ¿Este informe corresponde a una dedicación exclusiva existente dentro de SIGA? *
-    </div>
+      ¿Corresponde a una dedicación exclusiva en SIGA? *</div>
+      
     <div class="col-sm-12 col-xs-12 col-md-8 col-12">
       <div class="form-group">
 
-        <div class="row">
+        <div class="row text-center justify-content-center"> <!-- Add the "justify-content-center" class here -->
           <div class="col-md-2 col-xs-6">
-            <button class="btn btn-success" type="button" 
-            (click)="selectedOption = true">
+            <button class="btn btn-success" type="button" (click)="selectedOption = true">
               Si
             </button>
           </div>
 
           <div class="col-md-2 col-xs-6">
-            <button class="btn btn-primary" type="button" 
-            (click)="selectedOption = false">
+            <button class="btn btn-primary" type="button" (click)="selectedOption = false">
               No
             </button>
           </div>
@@ -27,8 +25,10 @@
     </div>
   </div>
 
+  <hr>
+
   <!-- Container de la tabla de las dedicaciones -->
-  <div class="container mt-1">
+  <div class="row regular-row mt-4">
     <div class="mt-4 text-end" *ngIf="selectedOption === true">
       <button type="button" class="btn btn-status btn-block col-12 mt-3"
         (click)="loadApplications(); historyFullTime = !historyFullTime">
@@ -42,7 +42,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nombre</th>
+          <th>Título</th>
         </tr>
       </thead>
 
@@ -56,58 +56,47 @@
 
     
 
-    <div class="row regular-row mt-4" *ngIf="selectedOption === false">
+    <div class="row regular-row mt-4 align-items-baseline" *ngIf="selectedOption === false">
+      
       <!-- ALERT BOX -->
-      <div class="alert alert-warning mt-3 mb-0">
-        Como esta dedicación no se encuentra dentro de SIGA debes agregar el
-        título correspondiente para identificarla.
-      </div>
+      <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>
+
       
       <!-- TÍTULO -->
-      <div class="row regular-row mt-4">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título *</div>
-
-        <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-          <div class="formfloatig">
-            <input
-              id="floatingtitulo"
-              formControlName="title"
-              class="form-control"
-              type="title"
-              placeholder=" "
-              [ngClass]="{
-                'is-invalid':
-                  (submitted && f['title'].errors) || isInvalidForm('title')
-              }"
-            />
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig" style="margin-left:10px;">
+            <input id="title" formControlName="title" class="form-control"
+              placeholder="Título de la dedicación" type="text" [ngClass]="{
+            'is-invalid':
+               isInvalidForm('title')
+            }" />
           </div>
+          <p *ngIf="isInvalidForm('title')" class="inputError">
+            El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
         </div>
       </div>
       
     </div>
-  </div>
-
-  <!-- JUSTIFICATION -->
-  <div class="row regular-row mt-4">
-    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación *</div>
-    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-      <div class="form-group">
-        <textarea id="floatingjustification" formControlName="justification" class="form-control" type="justification"
-          placeholder=" " [ngClass]="{ 'is-invalid': isInvalidForm('justification') }" required rows="5"></textarea>
-        <!-- errors justification -->
-        <div *ngIf="
-            (submitted || f['justification'].touched) &&
-            f['justification'].errors
-          " class="invalid">
-          <div *ngIf="(submitted || f['justification'].touched) && (f['justification'].errors?.['required'] || 
-              f['justification'].errors?.['maxlength'] || f['justification'].errors?.['minlength'])">
-            La justificación debe tener al menos 5 caracteres y máximo 500
-            caracteres.
+<!-- JUSTIFICATION -->
+    <div class="row regular-row mt-4 align-items-baseline">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación <span style="color: red">*</span></div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig">
+          <textarea id="justification" formControlName="justification" class="form-control" placeholder="Justificación"
+                  [ngClass]="{
+              'is-invalid':
+                (submitted && f['justification'].errors) || isInvalidForm('justification')
+              }" rows="2"></textarea>
           </div>
-        </div>
+          <p *ngIf="isInvalidForm('justification')" class="inputError">
+              La descripción debe tener al menos 5 caracteres y máximo 100 caracteres.
+          </p>
       </div>
-    </div>
   </div>
+</div>
+
 
   <!--ARCHIVOS-->
   <h6 class="mt-3 text-center">
