@@ -55,7 +55,7 @@ export class ReportFullTimeComponent {
    public form = this.fb.group({
     from_full_time: [true],
     title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-    justification: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
+    justification: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
     documents: [this.documents]
    
   })
