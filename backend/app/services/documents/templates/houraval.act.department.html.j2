@@ -23,7 +23,7 @@
     <section class="section">
         {% if not hour_aval.another_applicants %}
         <p class="text-justify">
-            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}}{% if acta%} y soportado en el acta {{act}} {% endif %},
+            El Consejo de la {{(user.department.school.description).title()}} reunido el pasado {{date}}{% if acta%} y soportado en el acta {{act}} {% endif %},
             recibió por parte del
             profesor {{(user.names + ' ' + user.last_names).title()}}, una solicitud de aval para dedicación de
             {{hour_aval.hours_week}} horas semanales, en calidad
@@ -35,7 +35,7 @@
         {% if hour_aval.another_applicants %}
 
         <p class="text-justify">
-            El Consejo de la {{user.department.school.description.title()}} reunido el pasado {{date}} y soportado en el
+            El Consejo de la {{(user.department.school.description).title()}} reunido el pasado {{date}} y soportado en el
             acta {{act}},
             recibió por parte de los
             profesores que se relacionan a continuación, una solicitud de aval horaria, para el proyecto de
@@ -94,7 +94,7 @@
         <div class="signature text-left" style="margin-top: 2em;">
             <p>
                 <hr style="width:50%;text-align:left;margin-left:0">
-                {{user.department.school.dean.title()}} <br>
+                {{(user.department.school.dean).title()}} <br>
                 Decano(a) 
                 <br>
                 {{user.department.school.description}}
@@ -108,9 +108,9 @@
         <h6>
             DECANATO
             <br>
-            {{school.direction}}
+            {{user.department.school.direction}}
             <br>
-            Contacto: {{school.contact}}
+            Contacto: {{user.department.school.contact}}
             <br>
             Medellín, Colombia
         </h6>
