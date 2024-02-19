@@ -1,10 +1,29 @@
 <div *ngIf="full_time">
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
+
+    <div class="col-xs-12 col-sm-6">
+      {{ full_time.start_date | date : "fullDate" }}
+    </div>
+  </div>
+
+  <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ full_time.end_date | date : "fullDate" }}
+    </div>
+  </div>
+
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">Titulo</div>
     <div class="col-xs-12 col-sm-6">
       {{ full_time.title }}
     </div>
   </div>
+
+ 
+  
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">
       Estado actual de la dedicación
@@ -16,6 +35,7 @@
           'bg-creation': current_status === 'EN CREACIÓN',
           'bg-requested': current_status === 'SOLICITADA',
           'bg-ok': current_status === 'VISTO BUENO',
+          'bg-consejo': current_status === 'EN CONSEJO',
           'bg-approved': current_status === 'APROBADA',
           'bg-rejected': current_status === 'DEVUELTA'
         }"

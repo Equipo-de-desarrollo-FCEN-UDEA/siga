@@ -3,6 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.api.versions.v1.router import api_route
 from app.core.config import get_app_settings
+from app.core.debugger import initialize_fastapi_server_debugger_if_needed
 from app.db.init_db import init_db
 
 from app.core.logging import get_logging
@@ -13,6 +14,7 @@ log = get_logging(__name__)
 
 def run_app():
     settings = get_app_settings()
+    initialize_fastapi_server_debugger_if_needed()
     application = FastAPI(**settings.fastapi_kwargs)
     application.add_middleware(
         CORSMiddleware,
@@ -25,10 +27,13 @@ def run_app():
     )
     application.include_router(api_route, prefix=settings.api_prefix_v1)
     init_db()
+    
     return application
 
 
 app = run_app()
+
+
 
 
 # @app.on_event("startup")

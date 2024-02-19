@@ -77,7 +77,23 @@ services:
     depends_on:
       - redis
       - backend
-  
+
+  flower:
+    container_name: "flower"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: celery -A app.core.celery_worker.celery_app flower --port=5555
+    env_file:
+      - .env
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - celery_worker
+    
   backend:
     build:
       context: ./backend
@@ -101,14 +117,3 @@ services:
     depends_on:
       - backend
     mem_limit: 300m
-
-  
-  pgadmin:
-    container_name: 'pgadmin'
-    image: dpage/pgadmin4
-    ports:
-      - '81:80'
-    depends_on:
-      - db
-    env_file:
-      - .env

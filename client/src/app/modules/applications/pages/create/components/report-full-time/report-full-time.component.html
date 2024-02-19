@@ -1,0 +1,138 @@
+<form class="need-validation" need-validation novalidate [formGroup]="form" (ngSubmit)="submit()">
+  <!-- Elige si tienes o no una dedicación exclusiva -->
+
+  <div class="row regular-row mt-4">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      ¿Corresponde a una dedicación exclusiva en SIGA? *</div>
+      
+    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
+      <div class="form-group">
+
+        <div class="row text-center justify-content-center"> <!-- Add the "justify-content-center" class here -->
+          <div class="col-md-2 col-xs-6">
+            <button class="btn btn-success" type="button" (click)="selectedOption = true">
+              Si
+            </button>
+          </div>
+
+          <div class="col-md-2 col-xs-6">
+            <button class="btn btn-primary" type="button" (click)="selectedOption = false">
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Container de la tabla de las dedicaciones -->
+  <div class="row regular-row mt-4">
+    <div class="mt-4 text-end" *ngIf="selectedOption === true">
+      <button type="button" class="btn btn-status btn-block col-12 mt-3"
+        (click)="loadApplications(); historyFullTime = !historyFullTime">
+        Ver mis dedicaciones exclusivas en SIGA
+      </button>
+    </div>
+
+    <!-- Tabla de Aplicaciones -->
+    <table class="table mt-3"
+      *ngIf="selectedOption === true && applications && applications.length > 0 && full_time && full_time.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let application of applications; let i = index">
+          <td>{{ application.id }}</td>
+          <td>{{ full_time[i].full_time.title }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+
+    <div class="row regular-row mt-4 align-items-baseline" *ngIf="selectedOption === false">
+      
+      <!-- ALERT BOX -->
+      <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>
+
+      
+      <!-- TÍTULO -->
+      <div class="row regular-row mt-4 align-items-baseline">
+        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+          <div class="formfloatig" style="margin-left:10px;">
+            <input id="title" formControlName="title" class="form-control"
+              placeholder="Título de la dedicación" type="text" [ngClass]="{
+            'is-invalid':
+               isInvalidForm('title')
+            }" />
+          </div>
+          <p *ngIf="isInvalidForm('title')" class="inputError">
+            El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
+        </div>
+      </div>
+      
+    </div>
+<!-- JUSTIFICATION -->
+    <div class="row regular-row mt-4 align-items-baseline">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación <span style="color: red">*</span></div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig">
+          <textarea id="justification" formControlName="justification" class="form-control" placeholder="Justificación"
+                  [ngClass]="{
+              'is-invalid':
+                (submitted && f['justification'].errors) || isInvalidForm('justification')
+              }" rows="2"></textarea>
+          </div>
+          <p *ngIf="isInvalidForm('justification')" class="inputError">
+              La descripción debe tener al menos 5 caracteres y máximo 100 caracteres.
+          </p>
+      </div>
+  </div>
+</div>
+
+
+  <!--ARCHIVOS-->
+  <h6 class="mt-3 text-center">
+    <span class="text-muted">Archivos adjuntos del permiso</span>
+  </h6>
+  <div class="alert alert-danger" *ngIf="files.length > 0 && !validFileType()">
+    Ese tipo de archivo no es permitido.
+  </div>
+  <div class="alert-danger alert" *ngIf="files.length > 0 && !validSize()">
+    Los archivos no deben pesar más de 2 MB.
+  </div>
+  <div class="formfloatig" style="flex-direction: column">
+    <div *ngFor="let producto of archivos; last as isLast; let i = index"
+      class="arrayLike formfloatig d-flex justify-content-between">
+      <div class="document_new">
+        <label class="btn-btn-default cursor is-hoverable">
+          <div class="fa fa-upload fa-2x"></div>
+          <input [id]="i" class="file-upload" type="file" (change)="onUpload($event, i)" />
+          <label [for]="i" class="is-hoverable cursor link-success" style="margin-left: 10px">{{ files[i] ?
+            files[i].name : "Subir archivo" }}</label>
+        </label>
+      </div>
+      <div class="buttons">
+        <button class="btn btn-circle btn-remove btn-sm m-1" type="button" (click)="removeFile(i)">
+          <i class="fa fa-minus"></i>
+        </button>
+        <button class="btn btn-circle btn-add btn-sm m-1" type="button" (click)="archivos.push(1)"
+          *ngIf="isLast && archivos.length < 3">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+    {{ error }}
+  </div>
+  <hr />
+</form>

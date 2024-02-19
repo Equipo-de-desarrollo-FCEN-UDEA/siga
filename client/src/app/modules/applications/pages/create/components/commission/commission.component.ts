@@ -53,7 +53,7 @@ export class CommissionComponent {
     public formatter: NgbDateParserFormatter,
     private ngZone: NgZone,
     private router: Router,
-    private cd: ChangeDetectorRef,
+    private ChangeDetectorRef: ChangeDetectorRef,
 
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
@@ -165,7 +165,7 @@ export class CommissionComponent {
   // ----------- TIPO DE SOLICITUD ---------
   // --------------------------------------
   onChangeSolicitud(e: any): void {
-    this.cd.detectChanges();
+    this.ChangeDetectorRef.detectChanges();
   }
 
 

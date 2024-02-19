@@ -1,0 +1,21 @@
+.btn-success {
+    background-color: #43b649;
+}
+
+.btn-status {
+    color: #fff;
+    border-color: #fff;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 182, 73, 0.8) 0%,
+      rgba(67, 182, 73, 0.9) 35%,
+      rgba(141, 198, 63, 1) 100%
+    );
+  }.btn-status:hover {
+    color: #fff;
+    background-color:#04351f;
+  }
+
+.custom-margin {
+  margin-left: 20px; /* ajusta este valor según lo que necesites */
+}

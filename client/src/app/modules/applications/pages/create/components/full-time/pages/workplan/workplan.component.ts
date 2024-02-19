@@ -25,6 +25,7 @@ export class WorkplanComponent implements OnInit {
     registro: ['', [Validators.required]],
     partial_time: [NaN, [Validators.required]],
     teaching_activities: this.fb.array([]),
+    level: [null, [Validators.required]],
     investigation_activities: this.fb.array([]),
     extension_activities: this.fb.array([]),
     academic_admin_activities: this.fb.array([]),
@@ -163,7 +164,7 @@ export class WorkplanComponent implements OnInit {
         name: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(1)]],
       }),
       student_quantity: [NaN, [Validators.required]],
-      level: ['', [Validators.required, Validators.maxLength(255), Validators.minLength(1)]],
+      level: [null, [Validators.required]],
       week_hours: this.fb.group({
         t: [[Validators.required]],
         tp: [[Validators.required]],
@@ -177,6 +178,13 @@ export class WorkplanComponent implements OnInit {
       })
     });
   }
+
+  isInvalidForm(controlName: string): boolean {
+    const control = this.f_workplan.get(controlName);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
+  
+
 
   // --------- ADD CARDS -----------
 
