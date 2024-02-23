@@ -1,3 +1,55 @@
+<form action="nedd-validation"
+need-validation
+novalidate
+[formGroup]="form"
+(ngSubmit)="submit()">
+
+<!-- HAVE FULL TIME -->
+
+<div class="row"></div>
+  <div class="formfloating">
+    <label for="from_full_time" class="form-label">¿Tienes una Dedicación exclusiva en SIGA?</label>
+    <select formControlName="from_full_time" class="form-control form-select-lg mb-3 cursor">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
+  </div>
+
+  <div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
+
+    <!-- ALERT BOX -->
+    <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>
+
+      
+    <!-- TÍTULO -->
+    <div class="row regular-row mt-4 align-items-baseline">
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig" style="margin-left:10px;">
+          <input id="title" formControlName="title" class="form-control"
+            placeholder="Título de la dedicación" type="text" [ngClass]="{
+          'is-invalid':
+             isInvalidForm('title')
+          }" />
+        </div>
+        <p *ngIf="isInvalidForm('title')" class="inputError">
+          El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+</form>
+
+
+
+
+
+
+
+
 <form class="need-validation" need-validation novalidate [formGroup]="form" (ngSubmit)="submit()">
   <!-- Elige si tienes o no una dedicación exclusiva -->
 
@@ -10,13 +62,13 @@
 
         <div class="row text-center justify-content-center"> <!-- Add the "justify-content-center" class here -->
           <div class="col-md-2 col-xs-6">
-            <button class="btn btn-success" type="button" (click)="selectedOption = true">
+            <button class="btn btn-success" type="button" (click)="from_full_time = true">
               Si
             </button>
           </div>
 
           <div class="col-md-2 col-xs-6">
-            <button class="btn btn-primary" type="button" (click)="selectedOption = false">
+            <button class="btn btn-primary" type="button" (click)="from_full_time = false">
               No
             </button>
           </div>
@@ -29,7 +81,7 @@
 
   <!-- Container de la tabla de las dedicaciones -->
   <div class="row regular-row mt-4">
-    <div class="mt-4 text-end" *ngIf="selectedOption === true">
+    <div class="mt-4 text-end" *ngIf="from_full_time === true">
       <button type="button" class="btn btn-status btn-block col-12 mt-3"
         (click)="loadApplications(); historyFullTime = !historyFullTime">
         Ver mis dedicaciones exclusivas en SIGA
@@ -38,7 +90,7 @@
 
     <!-- Tabla de Aplicaciones -->
     <table class="table mt-3"
-      *ngIf="selectedOption === true && applications && applications.length > 0 && full_time && full_time.length > 0">
+      *ngIf="from_full_time === true && applications && applications.length > 0 && full_time && full_time.length > 0">
       <thead>
         <tr>
           <th>ID</th>
@@ -56,7 +108,7 @@
 
     
 
-    <div class="row regular-row mt-4 align-items-baseline" *ngIf="selectedOption === false">
+    <div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
       
       <!-- ALERT BOX -->
       <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>

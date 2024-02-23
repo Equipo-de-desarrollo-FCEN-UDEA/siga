@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, } from '@an
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Application } from '@interfaces/application';
-import { ApplicationStatus } from '@interfaces/application_status';
+
 import { FullTimeCreate, FullTimeInDB, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { ReportFullTimeCreate } from '@interfaces/applications/report-full-time';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
@@ -34,7 +34,7 @@ export class ReportFullTimeComponent {
   public clicked = 0;
   public error = '';
   public submitted = false;
-  public selectedOption: boolean | null = null;
+  public from_full_time: boolean = true;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(7);
   
@@ -49,6 +49,7 @@ export class ReportFullTimeComponent {
     private reportFullTimeSvc: ReportFullTimeService,
     private fullTimeSvc: FullTimeService,
     private documentService: DocumentService
+    
   ) {
    }
 
@@ -61,7 +62,7 @@ export class ReportFullTimeComponent {
   })
 
   selectOption(option: boolean) {
-    this.selectedOption = option;
+    this.from_full_time = option;
   }
 
 
