@@ -8,12 +8,14 @@ novalidate
 
 <div class="row"></div>
   <div class="formfloating">
-    <label for="from_full_time" class="form-label">¿Tienes una Dedicación exclusiva en SIGA?</label>
+    <label for="from_full_time" class="form-label">¿Corresponde el informe a una Dedicación exclusiva en SIGA?</label>
     <select formControlName="from_full_time" class="form-control form-select-lg mb-3 cursor">
       <option value="true">Sí</option>
       <option value="false">No</option>
     </select>
-  </div>
+  </div> 
+
+  <div><app-full-time-list></app-full-time-list></div>
 
   <div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
 
