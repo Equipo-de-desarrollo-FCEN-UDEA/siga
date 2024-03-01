@@ -1,12 +1,6 @@
-<form action="nedd-validation"
-need-validation
-novalidate
-[formGroup]="form"
-(ngSubmit)="submit()">
+<form class="need-validation" need-validation novalidate [formGroup]="form" (ngSubmit)="submit()">
+  <!-- Elige si tienes o no una dedicación exclusiva -->
 
-<!-- HAVE FULL TIME -->
-
-<div class="row"></div>
   <div class="formfloating">
     <label for="from_full_time" class="form-label">¿Corresponde el informe a una Dedicación exclusiva en SIGA?</label>
     <select formControlName="from_full_time" class="form-control form-select-lg mb-3 cursor">
@@ -15,124 +9,11 @@ novalidate
     </select>
   </div> 
 
-  <div><app-full-time-list></app-full-time-list></div>
-
-  <div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
-
-    <!-- ALERT BOX -->
-    <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>
-
-      
-    <!-- TÍTULO -->
-    <div class="row regular-row mt-4 align-items-baseline">
-      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
-      <div class="col-sm-12 col-xs-12 col-md-8">
-        <div class="formfloatig" style="margin-left:10px;">
-          <input id="title" formControlName="title" class="form-control"
-            placeholder="Título de la dedicación" type="text" [ngClass]="{
-          'is-invalid':
-             isInvalidForm('title')
-          }" />
-        </div>
-        <p *ngIf="isInvalidForm('title')" class="inputError">
-          El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
-      </div>
-    </div>
-  </div>
-
-
-
-  
-</form>
-
-
-
-
-
-
-
-
-<form class="need-validation" need-validation novalidate [formGroup]="form" (ngSubmit)="submit()">
-  <!-- Elige si tienes o no una dedicación exclusiva -->
-
   <div class="row regular-row mt-4">
-    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-      ¿Corresponde a una dedicación exclusiva en SIGA? *</div>
-      
-    <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-      <div class="form-group">
-
-        <div class="row text-center justify-content-center"> <!-- Add the "justify-content-center" class here -->
-          <div class="col-md-2 col-xs-6">
-            <button class="btn btn-success" type="button" (click)="from_full_time = true">
-              Si
-            </button>
-          </div>
-
-          <div class="col-md-2 col-xs-6">
-            <button class="btn btn-primary" type="button" (click)="from_full_time = false">
-              No
-            </button>
-          </div>
-        </div>
-      </div>
+      <app-full-time-list></app-full-time-list>
     </div>
-  </div>
-
   <hr>
 
-  <!-- Container de la tabla de las dedicaciones -->
-  <div class="row regular-row mt-4">
-    <div class="mt-4 text-end" *ngIf="from_full_time === true">
-      <button type="button" class="btn btn-status btn-block col-12 mt-3"
-        (click)="loadApplications(); historyFullTime = !historyFullTime">
-        Ver mis dedicaciones exclusivas en SIGA
-      </button>
-    </div>
-
-    <!-- Tabla de Aplicaciones -->
-    <table class="table mt-3"
-      *ngIf="from_full_time === true && applications && applications.length > 0 && full_time && full_time.length > 0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let application of applications; let i = index">
-          <td>{{ application.id }}</td>
-          <td>{{ full_time[i].full_time.title }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    
-
-    <div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
-      
-      <!-- ALERT BOX -->
-      <div class="alert alert-warning mt-3 mb-1">Por favor agregar el Título correspondiente para identificarla.</div>
-
-      
-      <!-- TÍTULO -->
-      <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-          <div class="formfloatig" style="margin-left:10px;">
-            <input id="title" formControlName="title" class="form-control"
-              placeholder="Título de la dedicación" type="text" [ngClass]="{
-            'is-invalid':
-               isInvalidForm('title')
-            }" />
-          </div>
-          <p *ngIf="isInvalidForm('title')" class="inputError">
-            El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
-        </div>
-      </div>
-      
-    </div>
 <!-- JUSTIFICATION -->
     <div class="row regular-row mt-4 align-items-baseline">
       <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Justificación <span style="color: red">*</span></div>
@@ -149,7 +30,6 @@ novalidate
           </p>
       </div>
   </div>
-</div>
 
 
   <!--ARCHIVOS-->
