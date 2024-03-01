@@ -12,7 +12,8 @@ import { ApplicationService } from '@services/application.service';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ReportFullTimeService } from '@services/applications/report-full-time.service';
 import { DocumentService } from '@services/document.service';
-import { Observable, switchMap } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Observable, from, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -61,30 +62,11 @@ export class ReportFullTimeComponent {
    
   })
 
-  selectOption(option: boolean) {
-    this.from_full_time = option;
-  }
-
-
-  loadApplications() {
-    this.applicationSvc.getApplications().subscribe(
-      (applications) => {
-        this.applications = applications.filter(application =>
-          application.application_sub_type_id === 10
-          && application.application_status[0].status.id === 3);
-  
-        this.full_time = []; 
-        for (let application of this.applications) {
-          this.fullTimeSvc.getFullTime(application.id).subscribe(
-            (full_time) => {
-              this.full_time.push(full_time);
-              if (this.full_time.length > 0) {
-                console.log(this.full_time[0].full_time.title);
-              }
-            });
-        }
-      });
-  }
+  updateFromFullTime(event: any) {
+    const value = event.target.value === 'true';
+    this.from_full_time = value;
+    console.log(this.from_full_time)
+  }  
   
   submit() {
     this.submitted = true;

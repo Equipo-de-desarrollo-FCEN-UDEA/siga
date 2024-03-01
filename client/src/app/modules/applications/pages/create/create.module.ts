@@ -15,6 +15,7 @@ import { EconomicSupportComponent } from './components/economic-support/economic
 import { EconomicSupportModule } from './components/economic-support/economic-support.module';
 import { ReportFullTimeComponent } from './components/report-full-time/report-full-time.component';
 import { FullTimeListComponent } from './components/report-full-time/components/full-time-list/full-time-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -36,6 +37,7 @@ import { FullTimeListComponent } from './components/report-full-time/components/
     FullTimeModule,
     EconomicSupportModule,
     SignaturePadModule,
+    ReactiveFormsModule
   ]
 })
 export class CreateModule { }

@@ -2,16 +2,23 @@
   <!-- Elige si tienes o no una dedicación exclusiva -->
 
   <div class="formfloating">
-    <label for="from_full_time" class="form-label">¿Corresponde el informe a una Dedicación exclusiva en SIGA?</label>
-    <select formControlName="from_full_time" class="form-control form-select-lg mb-3 cursor">
-      <option value="true">Sí</option>
-      <option value="false">No</option>
+    <label for="from_full_time" class="form-label">
+      ¿Corresponde el informe a una Dedicación exclusiva en SIGA?
+    </label>
+    <select
+      formControlName="from_full_time"
+      class="form-control form-select-lg mb-3 cursor"
+      (change)="updateFromFullTime($event)">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
     </select>
-  </div> 
 
-  <div class="row regular-row mt-4">
+    <div class="row regular-row mt-4">
       <app-full-time-list></app-full-time-list>
     </div>
+
+  </div> 
+
   <hr>
 
 <!-- JUSTIFICATION -->
