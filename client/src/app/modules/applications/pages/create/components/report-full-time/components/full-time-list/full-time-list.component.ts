@@ -15,6 +15,7 @@ export class FullTimeListComponent implements OnInit {
   public applications: Application [] = [];
   public full_time: FulltimeResponse [] = [];
   @Input() from_full_time: boolean = true;
+  public selectedRowIndex: number = -1;
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +30,14 @@ export class FullTimeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadApplications();
+  }
+
+  selectRow(index: number) {
+    this.selectedRowIndex = index;
+  }
+
+  isSelected(index: number): boolean {
+    return this.selectedRowIndex === index;
   }
 
   loadApplications() {

@@ -13,7 +13,8 @@
     </thead>
 
     <tbody>
-        <tr *ngFor="let application of applications; let i = index">
+        <tr *ngFor="let application of applications; let i = index"
+        (click)="selectRow(i)" [class.selected-row]="isSelected(i)">
             <td>{{ application.id }}</td>
             <td>{{ full_time[i].full_time.title }}</td>
         </tr>
