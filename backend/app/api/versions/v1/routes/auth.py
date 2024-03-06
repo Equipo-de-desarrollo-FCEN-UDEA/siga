@@ -135,7 +135,7 @@ def activate_email(email: str, *, db: Session = Depends(db.get_db)) -> dict:
 
 # Route for activate the account with the mailed token
 @router.post("/activate-account/", response_model=schemas.Msg)
-def reset_password(
+def activate_account(
     token: str = Body(...),
     *,
     db: Session = Depends(db.get_db)
