@@ -12,7 +12,6 @@ import { ApplicationService } from '@services/application.service';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ReportFullTimeService } from '@services/applications/report-full-time.service';
 import { DocumentService } from '@services/document.service';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Observable, from, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 

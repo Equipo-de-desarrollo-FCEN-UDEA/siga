@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Application } from '@interfaces/application';
 import { FulltimeResponse } from '@interfaces/applications/full_time/full-time';
@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class FullTimeListComponent implements OnInit {
   public applications: Application [] = [];
   public full_time: FulltimeResponse [] = [];
-  public from_full_time: boolean = true;
+  @Input() from_full_time: boolean = true;
 
   constructor(
     private fb: FormBuilder,

@@ -1,5 +1,8 @@
 <!-- Tabla de Aplicaciones -->
-<div class="mt-4 text-end" *ngIf="from_full_time === true">
+<div class="mt-4" *ngIf="from_full_time === true">
+    <div class="alert alert-warning mt-3 mb-1">
+        Seleccione una de las dedicaciones exclusivas que tiene aprobadas en SIGA.
+    </div>
 <table class="table mt-3"
 *ngIf="from_full_time === true && applications && applications.length > 0 && full_time && full_time.length > 0">
     <thead>
@@ -18,7 +21,7 @@
 </table>
 </div>
 
-<div class="row regular-row mt-4 align-items-baseline" *ngIf="from_full_time === false">
+<div class="mt-4" *ngIf="from_full_time === false">
     <div class="alert alert-warning mt-3 mb-1">
         Por favor agregar el Título correspondiente para identificarla.
     </div>
@@ -40,4 +43,4 @@
           El título debe tener como mínimo 5 caracteres y máximo 100 caracteres</p>
       </div>
     </div>
-  </div>
+</div>
