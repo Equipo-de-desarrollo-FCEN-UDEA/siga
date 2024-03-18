@@ -22,16 +22,16 @@ import { viewport } from '@popperjs/core';
 export class ViceFormatComponent implements OnInit, AfterViewInit {
 
   @Input() editable: any;
-  
-  
+
+
   //Description
   public field2fill: any = [
     'Docencia',
     'Extensión',
     'Investigación',
     'Administración'
-  ]; 
-  
+  ];
+
   public required_time: Number = 0;
   public description: string | null = null;
   public goals: any[]=[];
@@ -42,11 +42,11 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
 
   //For handle errors
   public submitted = false;
- 
+
 
   public id: number = 0;
   public applicationType$=this.applicationTypeSvc.getApplicationType(3);
-  
+
   get f() { return this.form.controls; }
 
   constructor(
@@ -86,18 +86,18 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
             this.patchProduct(data.full_time.vice_format.products)
             this.dev_action_plan = data.full_time.vice_format.dev_action_plan;
           }
-          
+
         }
       );
   }
 
   ngAfterViewInit(): void {
-    
+
   }
   submit(){
     this.submitted = true;
 
-    
+
 
     if (this.form.invalid) {
       Swal.fire({
@@ -107,7 +107,7 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
       });
-      return; 
+      return;
     }
     // let body : any= this.form.value;
     // body.goals = body.goals?.map((goal:any)=>goal.goal);
@@ -124,7 +124,9 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
             confirmButtonColor: '#3AB795',
           }).then((result) => {
             if (result.isConfirmed) {
-              this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+              this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`])
+              // this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`]);
+              // Ruta para editar/visualizar el estado de la solicitud completa.
             }
           });
         },
@@ -159,7 +161,7 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
         })
       }
     );
-    
+
   }
 
 
@@ -209,7 +211,7 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
    isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
-  
+
   // Delete control
     removeInput(controlName: string, index: number) {
       const control = this.form.get(controlName) as FormArray;

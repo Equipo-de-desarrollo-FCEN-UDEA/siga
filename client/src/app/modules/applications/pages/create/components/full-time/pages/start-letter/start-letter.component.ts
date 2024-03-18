@@ -25,14 +25,14 @@ export class StartLetterComponent implements OnInit {
     private loaderSvc: LoaderService,
     private formBuilder: FormBuilder,
 
-  ) { 
+  ) {
 
     this.route.params.subscribe((params)=> {
       this.id = params ['id']
     })
   }
 
-  // Form 
+  // Form
   public form = this.formBuilder.group({
     body: [
       '',
@@ -83,8 +83,8 @@ export class StartLetterComponent implements OnInit {
 
    }
    this.fullTimeSvc.putLetter(startLetter, this.id).subscribe(
-    
-    
+
+
     {
       next:(data:any) =>{
         Swal.fire({
@@ -95,13 +95,13 @@ export class StartLetterComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+            this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`]);
           }
         });
       }
     }
 
-    
+
     // (res:any)=> {
     //   if(res){
     //     Swal.fire(
@@ -111,18 +111,18 @@ export class StartLetterComponent implements OnInit {
     //         confirmButtonText:'Aceptar'
     //       }
     //     )
-       
+
     //   }
     // }
    )
 
     // let startLetter = this.fullTimeSvc.putLetter(
     //   this.form.value as InitialLetter,this.id
-      
-    
+
+
     console.log(startLetter)
-    
-    
+
+
   }
 
   isInvalidForm(controlName: string) {
@@ -137,7 +137,7 @@ export class StartLetterComponent implements OnInit {
   validFileType(){
     return true
   }
-  
+
 
 
 }

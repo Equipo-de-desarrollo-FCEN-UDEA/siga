@@ -76,7 +76,7 @@ export class WorkplanComponent implements OnInit {
       params => {
         this.id = params['id']
         this.fullTimeSvc.getFullTime(this.id).subscribe(data =>{
-          if(data.full_time.work_plan) { 
+          if(data.full_time.work_plan) {
             this.f_workplan.patchValue({
               period: data.full_time.work_plan.period,
               registro: data.full_time.work_plan.registro,
@@ -91,7 +91,7 @@ export class WorkplanComponent implements OnInit {
             this.patchAcademicAdministration(data.full_time.work_plan?.academic_admin_activities);
             this.patchOtherActivities(data.full_time.work_plan?.other_activities);
             // this.patchWorkDay(data.full_time.work_plan?.working_week);
-          }        
+          }
         });
       }
     )
@@ -101,7 +101,7 @@ export class WorkplanComponent implements OnInit {
 
   }
 
-  
+
 
   // ------------------------------
   // --------- ENVIAR -------------
@@ -119,7 +119,7 @@ export class WorkplanComponent implements OnInit {
     let work_plan: any = {
       ... this.f_workplan.value as any,
     }
-   
+
 
     work_plan.working_week = work_plan.working_week[0]
 
@@ -139,7 +139,7 @@ export class WorkplanComponent implements OnInit {
             }
           ).then((result) => {
             if (result.isConfirmed) {
-              this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+              this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`]);
             }
           });
         }
@@ -305,7 +305,7 @@ export class WorkplanComponent implements OnInit {
 
 
 
-  
+
   // --------------------------------
   // ----- OTRAS ACTIVIDADES  -------
   // --------------------------------
@@ -368,7 +368,7 @@ export class WorkplanComponent implements OnInit {
         afternoon_end: ['17:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
       }),
 
-      
+
       thursday: this.fb.group({
         morning_start: ['07:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
         morning_end: ['12:00', [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
@@ -391,14 +391,14 @@ export class WorkplanComponent implements OnInit {
       }),
 
     });
-    
+
   }
 
   // --------- PATCHS -----------
 
   patchWorkDay(activity: any) { this.workDayArr.patchValue(activity); }
 
-  
+
   // ------------------------------
   // -------- REMOVE CARDS --------
   // ------------------------------
