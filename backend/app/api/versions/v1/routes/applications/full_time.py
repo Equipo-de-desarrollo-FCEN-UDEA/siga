@@ -52,7 +52,6 @@ async def create_full_time(
     try:
         full_time_created = await crud.full_time.create(db=engine,
                                                         obj_in=FullTime(**dict(full_time)))
-        log.debug(' full_time_created',  full_time_created)
 
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
@@ -63,15 +62,11 @@ async def create_full_time(
             db=db, who=current_user, obj_in=application, status=6, observation='El usuario inició la dedicación')
     except BaseErrors as e:
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.error('ValueError')
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
         raise HTTPException(422, e)
     except Exception as e:
-        log.error('Exception')
-        log.error(e)
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
@@ -183,9 +178,7 @@ async def delete_full_time(
         mongo_id = ObjectId(application.mongo_id)
         # Delete object in postgresql
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             # delete object on Mongo
             await crud.full_time.delete(engine, id=mongo_id)
 
@@ -224,11 +217,9 @@ async def update_letter(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.get(engine, id=mongo_id)
-        log.debug(full_time.documents)
         for document in full_time.documents:
             if document['name'] == 'carta-inicio.pdf':
                 try:
-                    #delete = aws.s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=document['path'])
                     pass
                 except Exception as e:
                     pass

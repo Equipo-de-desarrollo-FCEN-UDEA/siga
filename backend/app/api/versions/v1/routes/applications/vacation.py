@@ -62,17 +62,13 @@ async def create_vacation(
         
     except BaseErrors as e:
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
 
     except ValueError as e:
-        log.error('ValueError')
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
         raise HTTPException(422, e)
 
     except Exception as e:
-        log.error('Exception')
-        log.error(e)
         await engine.remove(Vacation, Vacation.id == vacation_create.id)
         raise HTTPException(422, "Algo ocurrió mal")
     
@@ -141,16 +137,12 @@ async def update_vacation(
             db=db, id=id, who=current_user)
         
         if application:
-            log.debug('obj_in que es', vacation)
 
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
             current_vacation = await crud.vacation.get(engine, id=mongo_id)
             update_vacation = await crud.vacation.update(engine, db_obj=current_vacation, obj_in=vacation)
-
-            log.debug('updated_vacation', update_vacation)
-
 
             # In PostgreSQL
             application_updated = crud.application.update(
@@ -163,8 +155,6 @@ async def update_vacation(
 
             path = documents.fill_vacations_format(current_user, response)
             await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
-            
-            log.debug('application update', application_updated)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -193,9 +183,7 @@ async def delete_vacation(
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             await crud.vacation.delete(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)

@@ -68,7 +68,6 @@ def confirm_email(to_name: str, token: str, email: str):
     )
 
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-        log.debug(_my_pwd)
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
 

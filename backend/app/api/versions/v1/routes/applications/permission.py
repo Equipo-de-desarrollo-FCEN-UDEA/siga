@@ -43,8 +43,6 @@ async def create_permission(
             type_permission=permission.application_sub_type_id,
             start_date=permission.start_date)
 
-        log.debug('permission_created', permission_created)
-
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(permission_created.id),
@@ -69,15 +67,12 @@ async def create_permission(
 
     # 422 (Unprocessable Entity)
     except PermissionErrors as e:
-        log.debug('PermissionErrors', e)
         raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
-            log.debug('BaseErrors', e)
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.debug('ValueError', e)
         if permission_created is not None:
             await engine.remove(Permission, Permission.id == permission_created.id)
         raise HTTPException(422, e)
@@ -110,10 +105,6 @@ async def get_permission(
         mongo_id = ObjectId(application.mongo_id)
         if application:
             permission = await crud.permission.get(engine, id=mongo_id)
-            # log.debug('permission in mongo', permission)
-
-    # except ApplicationErrors as e:
-    #     raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
 
@@ -122,10 +113,7 @@ async def get_permission(
         **dict(application),
         permission=permission
     )
-    log.debug("ESTE ES EL ROL ACTIVO DEL USUARIO...")
-    log.debug(current_user.active_rol)
-    log.debug(application)
-    log.info(response)
+
     return response
 
 
@@ -156,8 +144,6 @@ async def put_permission(
 
         if application:
 
-            log.debug('obj_in que es', permission)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
@@ -172,24 +158,17 @@ async def put_permission(
                 type_permission=permission.application_sub_type_id,
                 start_date=permission.start_date)
 
-            log.debug('updated_permission', updated_permission)
-
             # In PostgreSQL
 
             application_updated = crud.application.update(
                 db=db, who=current_user, db_obj=application, obj_in=permission)
 
-            log.debug('application update', application_updated)
 
 
     except PermissionErrors as e:
-        log.debug('PermissionErrors', e)
         raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-    # except ValueError as e:
-    #     return HTTPException(422, e.args)
-
     return updated_permission
 
 

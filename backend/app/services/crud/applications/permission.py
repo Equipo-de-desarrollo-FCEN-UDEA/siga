@@ -36,18 +36,10 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
                                                          who=who,
                                                          type_permission=type_permission)
 
-        log.debug('permissions_user', permissions_user)
-
         remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
                                                                          permissions_user=permissions_user,
                                                                          start_date=start_date)
-
-        log.debug('remunerated_permissions', remunerated_permissions)
-
         self.policy.create(remunerated_permissions=remunerated_permissions)
-
-        log.debug('salio de la policy', obj_in)
-
         return await engine.save(obj_in)
 
     
@@ -69,19 +61,10 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         permissions_user = self.get_approved_permissions(db=db,
                                                          who=who,
                                                          type_permission=type_permission)
-
-        log.debug('permissions_user', permissions_user)
-
         remunerated_permissions = await self.get_remunerated_permissions(engine=engine,
                                                                          permissions_user=permissions_user,
                                                                          start_date=start_date)
-
-        log.debug('remunerated_permissions', remunerated_permissions)
-
         self.policy.create(remunerated_permissions=remunerated_permissions)
-
-        log.debug('salio de la policy', obj_in)
-
         db_obj.update(obj_in)
         return await engine.save(db_obj)
 
@@ -109,8 +92,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
             ids_mongo = [ObjectId(obj[0]) for obj in permissions_user]
 
-            log.debug('ids_mongo ObjectId', ids_mongo)
-
         return ids_mongo
 
     # ---------- GET REMUNERATED PERMISSIONS ----------
@@ -125,11 +106,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
         # Verificar numero de permisos remunerados aprobados en el semestre
         remunerated_permissions = 0
         if len(permissions_user) > 0:
-
-            #today = datetime.now()
-
-            log.debug('month: ', start_date, start_date.month, start_date.year)
-
             if start_date.month < 7:
                 begin_semester = dateutil.parser.isoparse(
                     f'{start_date.year}-01-01T00:00:00.000Z')
@@ -140,9 +116,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
                     f'{start_date.year}-07-01T00:00:00.000Z')
                 end_semester = dateutil.parser.isoparse(
                     f'{start_date.year}-12-31T00:00:00.000Z')
-
-            log.debug('begin and end semester ', begin_semester, end_semester)
-
             where = {
                 "_id": {"$in": permissions_user},
                 "start_date": {"$gt": begin_semester, "$lt": end_semester},
@@ -150,8 +123,6 @@ class CRUDPermission(CRUDBase[Permission, PermissionCreate, PermissionUpdate, Pe
 
             # Busca en MongoDB todos los permisos que empiezan en el semestre elegido
             remunerated_permissions = await engine.count(self.model, where)
-            log.debug('remunerated_permissions: ', remunerated_permissions)
-
         return remunerated_permissions
 
 policy = PermissionPolicy()

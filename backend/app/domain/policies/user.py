@@ -60,7 +60,6 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
             update_data = obj_in.dict(exclude_unset=True)
         userrol = who.userrol[who.active_rol]
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
-        #if not (who.rol.scope < 9) and not (who.id == to.id):
             raise user_401
         if 'active' in update_data:
             if who.id == to.id and update_data['active'] != to.active:
@@ -70,7 +69,6 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     # This policie handle update password, maybe it will be removed
     def update_password(self, who: User, to: User, password, confirmpassword) -> None:
         userrol = who.userrol[who.active_rol]
-        #if not (who.rol.scope < 9) and not (who.id == to.id):
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
         if not password == confirmpassword:
@@ -80,7 +78,6 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     # This policie handle update password, maybe it will be removed
     def update_active_rol(self, who: User, to: User, new_active_rol: int, assigned_roles: List[int]) -> None:
         userrol = who.userrol[who.active_rol]
-        #if not (who.rol.scope < 9) and not (who.id == to.id):
         if not (userrol.rol.scope < 9) and not (who.id == to.id):
             raise user_401
         if new_active_rol not in assigned_roles:
@@ -91,7 +88,6 @@ class UserPolicy(Base[User, UserCreate, UserUpdate]):
     def delete(self, who: User, to: User | None) -> None:
         userrol = who.userrol[who.active_rol]
         if not (userrol.rol.scope < 9):
-        #if not (who.rol.scope < 9):
             raise user_401
         return None
 

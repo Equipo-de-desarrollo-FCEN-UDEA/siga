@@ -11,11 +11,7 @@ log = get_logging(__name__)
 class PermissionPolicy(Base[Permission, PermissionCreate, PermissionUpdate]):
 
     def create(self, remunerated_permissions):
-
-        log.debug(remunerated_permissions)
-
         # Permisos remunerados son igual o mayor a 1
         if remunerated_permissions >= 1:
-            raise permission_403
-        
+            raise permission_403    
         return None

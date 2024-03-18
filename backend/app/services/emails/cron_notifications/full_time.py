@@ -30,8 +30,6 @@ env = Environment(loader=FileSystemLoader(templatesdir))
 @shared_task(bind=True)
 @celery_app.task(acks_late=True, queue="test-queue")
 def notifications(emails: list, today: datetime)-> str:
-    print("Task started")
-    log.info("celeryyyyyyyyy")
 
     template = env.get_template("email.report.full.time.html.j2")
     url = f"http://{settings.APP_DOMAIN}/solicitudes"

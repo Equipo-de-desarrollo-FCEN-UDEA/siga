@@ -72,9 +72,7 @@ def read_users(
 
         params: skip: int, limit: int
     """
-    try:# @router.post("/", status_code=201,
-#              response_model=schemas.UserRolBase)
-
+    try:
         db_user = crud.user.get_multi(
             db=db, skip=skip, limit=limit, who=user, search=search, active=active)
     except BaseErrors as e:
@@ -126,7 +124,6 @@ def update_user(
         raise HTTPException(status_code=e.code, detail=e.detail)
     
     userupdate = crud.user.update(db=db, db_obj=user, obj_in=user_in, who=current_user)
-    #print(user_in)
     #This part works when you have done changes in rol select
     if (user_in.get('changes_rol',True)):
         try:
@@ -172,7 +169,6 @@ def update_user_password(
     """
     try:
         user = crud.user.get(db=db, id=current_user.id, who=current_user)
-        log.debug(user.__dict__)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
 
@@ -194,10 +190,7 @@ def select_active_rol(
     """
     try:
         user = crud.user.get(db=db, id=current_user.id, who=current_user)
-        #user_roles = crud.user.get_middleware(db, id=user.id).__dict__['assigned_roles']
         user_roles = crud.user.get_middleware(db, id=user.id).assigned_roles
-        log.debug(user.__dict__)
-        log.debug(user_roles)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     

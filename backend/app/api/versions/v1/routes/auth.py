@@ -46,7 +46,6 @@ def login_access_token(
         )
         response = schemas.Token(access_token=access_token,
                                  token_type='bearer', expires=minutes/24/60)
-                                #,rol_id=user.userrol[0].rol_id)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return response

@@ -31,8 +31,6 @@ class CRUDExtra(CRUDBase[Extra, ExtraCreate, ExtraUpdate, ExtraPolicy]):
                 offset(skip).\
                 limit(limit).\
                 all()
-            # filter(Extra.department_id == who.department.id).\
-            log.debug(db_objs)
         return db_objs
 
     def get_by_department(

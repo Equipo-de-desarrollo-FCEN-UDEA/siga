@@ -60,10 +60,6 @@ class TestApplicationPolicy(TestBaseDB):
         self.session.add(visto_bueno_status)
         self.session.commit()
         self.session.refresh(visto_bueno_status)
-
-        log.debug(permission.application_status[-1].status.name)
-
-
         policy = ApplicationPolicy()
 
         with raises(BaseErrors):

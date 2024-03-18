@@ -44,29 +44,21 @@ async def create_commission(
         commission_created = await crud.commission.create(db=engine,
                                                           obj_in=Commission(**dict(commission)))
 
-        log.debug('commission_created', commission_created)
-        
         application = ApplicationCreate(
             mongo_id=str(commission_created.id),
             application_sub_type_id=commission.application_sub_type_id,
             start_date=commission.start_date,
             end_date= commission.end_date,
             user_id=current_user.id)
-        log.debug('commission_created', commission_created)
-        
         application = crud.application.create(
             db=db, who=current_user, obj_in=application)
     except BaseErrors as e:
         await engine.remove(Commission, Commission.id == commission_created.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.error('ValueError')
         await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, e)
     except Exception as e:
-        log.error('Exception')
-        log.error(e)
         await engine.remove(Commission, Commission.id == commission_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
@@ -138,8 +130,6 @@ async def update_commission(
 
         if application:
 
-            log.debug('obj_in que es', commission)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
@@ -147,13 +137,9 @@ async def update_commission(
 
             updated_commission = await crud.commission.update(engine, db_obj=current_commission, obj_in=commission)
 
-            log.debug('updated_commission', updated_commission)
-
             # In PostgreSQL
             application_updated = crud.application.update(
                 db, current_user, db_obj=application, obj_in=commission)
-
-            log.debug('application update', application_updated)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -182,9 +168,7 @@ async def delete_commission(
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             await crud.commission.delete(engine, id=mongo_id)
 
     except BaseErrors as e:
@@ -207,11 +191,9 @@ async def update_compliment(
         mongo_id = ObjectId(application.mongo_id)
         commission = await crud.commission.compliment(engine,
                                                       id=mongo_id, compliment=compliment)
-        log.debug(compliment.dict())
         if commission:
             status = Application_statusCreate(
                 application_id=application.id, status_id=5, observation="El usuario subió el cumplido")
-            log.debug(commission)
             crud.application_status.finalize(db, obj_in=status)
         emails.applications.commission.compliment_email.apply_async(args=(
             current_user.names,

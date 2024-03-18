@@ -20,7 +20,6 @@ def test_api_user():
             "username": settings.first_superemployee_email,
             "password": settings.first_superemployee_password}
     ).json()['access_token']
-    log.debug(token)
     user = {
         "last_names": "KRHWGMGVHOWW CCZXDCYOHFYH OLRXVIHEHIXDTIFEJGKZRRSD",
         "names": "JOUKWONLOUGKQUCZPGTQALAYF EEKWW MGYIELZAGUMNQHUUGD",
@@ -36,14 +35,10 @@ def test_api_user():
         "password": "string"
     }
 
-    log.debug(token)
-
     response = client.post(
         url=url,
         json=user
     )
-
-    log.debug(response.json())
 
     delete = client.delete(
         url=url+f"{response.json()['id']}", headers={'Authorization': f"Bearer {token}"})
@@ -53,12 +48,8 @@ def test_api_user():
         json=user
     )
 
-    log.debug(delete.json())
-
     userget = client.get(
         url=url+str(1), headers={'Authorization': f"Bearer {token}"})
-
-    log.debug(userget.json())
 
     assert response.status_code == 201
     assert delete.status_code == 200

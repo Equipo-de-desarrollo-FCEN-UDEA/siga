@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field, validator, SecretStr
 
 from .department import DepartmentResponse
 from app.core.logging import get_logging
-#from .rol import RolResponse
 from .userrol import UserRolResponse
 
 log = get_logging(__name__)
@@ -34,7 +33,6 @@ class UserBase(BaseModel):
     )
 
     email: str = Field(
-        # regex="^([a-zA-Z]+(.[a-zA-Z]+)+)@udea.edu.co$",
         min_length=1,
         max_length=100
     )
@@ -52,7 +50,6 @@ class UserBase(BaseModel):
     vinculation_type: str = Field(max_length=50)
     department_id: int = Field(gt=0)
     active_rol: Optional[int] = Field(gt=-1, default=0)
-    #rol_id: int = Field(gt=0)
 
 
 class UserCreate(UserBase):
