@@ -5,6 +5,7 @@ import { Topic } from '@interfaces/applications/full_time/development-plan';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { FormsStatusService } from "@services/applications/full_time/interaction-components/forms-status.service";
 import { DevelopmentPlanComponent } from  './development-plan/development-plan.component'
 import { FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 
@@ -58,6 +59,7 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
 
     private applicationTypeSvc: ApplicationTypesService,
 
+    public formsStatusService: FormsStatusService,
 
   ) { }
 
@@ -124,9 +126,8 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
             confirmButtonColor: '#3AB795',
           }).then((result) => {
             if (result.isConfirmed) {
+              this.formsStatusService.setViceFormatStatus(true);
               this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`])
-              // this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`]);
-              // Ruta para editar/visualizar el estado de la solicitud completa.
             }
           });
         },

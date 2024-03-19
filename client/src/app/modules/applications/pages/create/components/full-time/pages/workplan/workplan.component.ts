@@ -11,6 +11,7 @@ import { FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 //services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { LoaderService } from '@services/loader.service';
+import { FormsStatusService } from "@services/applications/full_time/interaction-components/forms-status.service";
 
 
 @Component({
@@ -68,7 +69,9 @@ export class WorkplanComponent implements OnInit {
     private fullTimeSvc: FullTimeService,
     private loaderSvc: LoaderService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+
+    public formsStatusService: FormsStatusService,
   ) {
 
     //busca el id de la dedicacion
@@ -139,6 +142,7 @@ export class WorkplanComponent implements OnInit {
             }
           ).then((result) => {
             if (result.isConfirmed) {
+              this.formsStatusService.setWorkPlanStatus(true);
               this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`]);
             }
           });

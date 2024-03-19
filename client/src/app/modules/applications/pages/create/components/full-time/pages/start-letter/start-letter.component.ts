@@ -5,6 +5,7 @@ import { FullTimeService } from '@services/applications/full_time/full-time.serv
 import Swal from 'sweetalert2';
 import { InitialLetter } from '../../../../../../../../core/interfaces/applications/full_time/letter';
 import { LoaderService } from '../../../../../../../../core/services/loader.service';
+import { FormsStatusService } from "../../../../../../../../core/services/applications/full_time/interaction-components/forms-status.service";
 
 @Component({
   selector: 'app-start-letter',
@@ -24,7 +25,7 @@ export class StartLetterComponent implements OnInit {
     private fullTimeSvc: FullTimeService,
     private loaderSvc: LoaderService,
     private formBuilder: FormBuilder,
-
+    public formsStatusService: FormsStatusService
   ) {
 
     this.route.params.subscribe((params)=> {
@@ -95,6 +96,7 @@ export class StartLetterComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
+            this.formsStatusService.setStartLetterStatus(true);
             this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`]);
           }
         });

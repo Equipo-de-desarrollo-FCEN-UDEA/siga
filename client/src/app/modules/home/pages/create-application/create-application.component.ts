@@ -25,7 +25,7 @@ import { Location } from '@angular/common';
 })
 export class CreateApplicationComponent {
 
- 
+
   public hiddenIds: number[] = [1];
 
   public submitted: boolean = false;
@@ -44,13 +44,14 @@ export class CreateApplicationComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    
+
     private applicationTypeSvc: ApplicationTypesService,
-    private location: Location
+    private location: Location,
   ) {}
 
   onSubmitApplication() {
     this.submitted = true;
+
     if (this.create_application_form.invalid) { return; }
 
     console.log(this.create_application_form.value.application_type);
