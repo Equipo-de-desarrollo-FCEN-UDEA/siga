@@ -80,8 +80,6 @@ def fill_work_plan_format(user: User, full_time: FullTime) -> str:
         ids_activities.append(act['activity_identification']['code'])
         total_hours[0] += 16*(act['week_hours']['t'] +
                               act['week_hours']['tp']+act['week_hours']['p'])
-
-    log.debug(tracking_acts)
     # Sec_3
     research_activities = []
     for act in full_time_dict['work_plan']['investigation_activities']:
@@ -229,7 +227,6 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
     target = wb['Cara.2']
 
     for activity in list(activities.keys())[-2:]:
-        print('falla cual es: ' + activity)
         index = cells['Cara.2']['multiple_rows'][activity]['range_cells']
         content = activities[activity]
         for i in range(len(content)):
@@ -237,11 +234,9 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
                 coord = cells['Cara.2']['multiple_rows'][activity][key]
                 if coord.find(':') < 0:
                     coord = coord+str(index+i)
-                    print(coord)
                     target[coord] = content[i][key]
                 else:
                     coord = ':'.join([l+str(index+i) for l in coord.split(':')])
-                    print(coord)
                     target.merge_cells(coord)
                     target[coord.split(':')[0]] = content[i][key]
 
@@ -281,8 +276,6 @@ def generate_work_plan_format_to_aws(user: dict, full_time: dict, activities: di
     with NamedTemporaryFile() as tmp:
         wb.save(tmp.name)
         file = BytesIO(tmp.read())
-    
-    print("Hecho el archivo.")
 
     aws.s3.push_data_to_s3_bucket(settings.aws_bucket_name, file,
                                   file_name=path, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

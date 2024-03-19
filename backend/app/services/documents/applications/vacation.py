@@ -70,7 +70,6 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
 
     generate_vacations_format_to_aws.apply_async(args=(data_user, data_vacations, path))
-    log.debug(path)
     return path
 
 @celery_app.task

@@ -59,7 +59,6 @@ def fill_vice_document(user: User, full_time: FullTime):
         "productos": Enumerate_list(list(map(lambda x: x['product'], full_time_dict['vice_format']['products']))),
         "modalidad": full_time_dict['vice_format']['field']
     }
-    log.debug(data_full_time)
 
     data_user = {
         'unidad_academica': '-'.join([user['department']['description'], user['department']['school']['description']]),
@@ -73,7 +72,6 @@ def fill_vice_document(user: User, full_time: FullTime):
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vicerrectoria.xlsx'
 
     generate_vice_format_to_aws.apply_async(args=(data_user, data_full_time, path))
-    log.debug(path)
     return path
 
 

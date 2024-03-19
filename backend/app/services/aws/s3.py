@@ -32,7 +32,6 @@ class AmazonS3:
         try:
             self.s3.Object(bucket_name, file_name).delete()
         except ClientError as e:
-            log.error(e)
             return False
         return True
 

@@ -49,7 +49,6 @@ async def create_hour_aval(
     try:
         hour_aval_created = await crud.hour_aval.create(db=engine,
                                                         obj_in=HourAval(**dict(hour_aval)))
-        log.debug(hour_aval_created.dict())
         application = ApplicationCreate(
             mongo_id=str(hour_aval_created.id),
             application_sub_type_id=hour_aval.application_sub_type_id,
@@ -77,16 +76,13 @@ async def create_hour_aval(
                 applicant.email)
             user = crud.user.get_by_email(
                 db, applicant.email) or crud.user.get_by_identification(db, applicant.email)
-            log.debug(hour_aval.dict())
             emails.hours_aval_email.apply_async(
                 args=(hour_aval.dict(), applicant.dict(), user.email, str(hour_aval_created.id), token))
     except BaseErrors as e:
         if hour_aval_created:
             await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.error('ValueError')
         if hour_aval_created:
             await engine.remove(HourAval, HourAval.id == hour_aval_created.id)
         raise HTTPException(422, e)
@@ -167,17 +163,12 @@ async def update_hour_aval(
 
         if application:
 
-            log.debug('obj_in que es', hour_aval)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
             current_hour_aval = await crud.hour_aval.get(engine, id=mongo_id)
 
             updated_hour_aval = await crud.hour_aval.update(engine, db_obj=current_hour_aval, obj_in=hour_aval)
-
-            log.debug('updated_hour_aval', updated_hour_aval)
-
 
             if not hour_aval.another_applicants:
                 application = crud.application.update(
@@ -202,7 +193,6 @@ async def update_hour_aval(
                         applicant.email)
                     user = crud.user.get_by_email(
                         db, applicant.email) or crud.user.get_by_identification(db, applicant.email)
-                    log.debug(hour_aval.dict())
                     emails.hours_aval_email.apply_async(
                         args=(hour_aval.dict(), applicant.dict(), user.email, str(updated_hour_aval.id), token))
 
@@ -236,9 +226,7 @@ async def delete_hour_aval(
         mongo_id = ObjectId(application.mongo_id)
         # Delete object in postgresql
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             # delete object on Mongo
             await crud.hour_aval.delete(engine, id=mongo_id)
 
@@ -337,7 +325,6 @@ async def generate_act(
                     {'user': (user_applicant.names + ' ' + user_applicant.last_names).title(),
                      'backres': (back.names + ' ' + back.last_names).title()
                      }]
-        log.debug(backres)
         if current_user.userrol[current_user.active_rol].rol.scope in [6, 7]:
             path = documents.hour_aval_act_generation(
                 user, hour_aval, act, users, backres, 'houraval.act.department.html.j2')

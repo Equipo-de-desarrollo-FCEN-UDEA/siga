@@ -49,7 +49,6 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Policy]):
         obj_in: CreateSchemaType
     ) -> ModelType:
         self.policy.create(who=who, to=obj_in)
-        log.debug(obj_in.__dict__)
         obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)  # Ignoramos el tipado
         db.add(db_obj)

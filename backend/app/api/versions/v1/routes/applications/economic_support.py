@@ -54,8 +54,6 @@ async def create_economic_support(
             obj_in=EconomicSupport(**dict(economic_support))
         )
 
-        log.debug(' economic_support_create',  economic_support_create)
-
         # En la BD de PostgreSQL
         application = ApplicationCreate(
             mongo_id=str(economic_support_create.id),
@@ -81,16 +79,13 @@ async def create_economic_support(
 
     # 422 (Unprocessable Entity)
     except EconomicSupportErrors as e:
-        log.debug('EconomicSupportErrors', e)
         raise HTTPException(e.code, e.detail)
     except BaseErrors as e:
         if economic_support_create is not None:
             await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
-            log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
 
     except ValueError as e:
-        log.error('ValueError')
         if economic_support_create is not None:
             await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
         raise HTTPException(422, e)
@@ -98,8 +93,6 @@ async def create_economic_support(
     except Exception as e:
         if economic_support_create is not None:
             await engine.remove(EconomicSupport, EconomicSupport.id == economic_support_create.id)
-        log.error('Exception')
-        log.error(e)
         raise HTTPException(422, "Algo ocurrió mal")
 
     response = EconomicSupportResponse(
@@ -167,15 +160,12 @@ async def update_economic_support(
             db=db, id=id, who=current_user)
 
         if application:
-            log.debug('obj_in que es', economic_support)
 
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
             current_economic_support = await crud.economic_support.get(engine, id=mongo_id)
             update_economic_support = await crud.economic_support.update(engine, db_obj=current_economic_support, obj_in=economic_support)
-
-            log.debug('update_economic_support', update_economic_support)
 
             # In PostgreSQL
             application_updated = crud.application.update(
@@ -184,7 +174,6 @@ async def update_economic_support(
             # Asegurar que es application_update.
             application = ApplicationResponse.from_orm(application_updated)
 
-            log.debug('application update', application_updated)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -222,9 +211,7 @@ async def delete_economic_support(
         application = crud.application.get(db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             await crud.economic_support.delete(engine, id=mongo_id)
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
@@ -258,7 +245,6 @@ async def update_compliment(
                 current_user.last_names,
                 compliment.observation,
                 compliment.documents,
-                # + [current_user.department.school.email_dean]
                 compliment.emails
             ))
 
@@ -289,6 +275,5 @@ async def get_zip_economic_support(
     response = EconomicSupportResponse(
         **dict(application_response), economic_support=economic_support)
     zip_file = documents.create_zip_documents(current_user, response)
-    log.debug(zip_file.getbuffer().nbytes)
     zip_file.seek(0)
     return StreamingResponse(content=zip_file, media_type="application/x-zip-compressed")

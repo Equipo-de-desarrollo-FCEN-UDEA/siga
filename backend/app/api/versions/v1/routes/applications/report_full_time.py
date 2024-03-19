@@ -67,16 +67,12 @@ async def create_report_full_time(
         )
     except BaseErrors as e:
         await engine.remove(ReportFullTime, ReportFullTime.id == report_full_time_created.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.error('ValueError')
         await engine.remove(ReportFullTime, ReportFullTime.id == report_full_time_created.id)
         raise HTTPException(422, e)
     
     except Exception as e:
-        log.error('Exception')
-        log.error(e)
         await engine.remove(ReportFullTime, ReportFullTime.id == report_full_time_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
@@ -110,7 +106,6 @@ async def get_report_full_time(
         if application:
             report_full_time = await crud.report_full_time.get(engine, id=mongo_id)
     except (BaseErrors, OSError) as e:
-        log.error(e, type(e))
         raise (
             HTTPException(e.code, e.detail)
             if isinstance(BaseErrors)
@@ -146,9 +141,7 @@ async def delete_report_full_time(
         mongo_id = ObjectId(application.mongo_id)
         # Delete object in postgresql
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             # delete object on Mongo
             await crud.report_full_time.delete(engine, id=mongo_id)
 
@@ -183,15 +176,11 @@ async def update_report_full_time(
             db=db, id=id, who=current_user)
 
         if application:
-            log.debug('obj_in que es', report_full_time)
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
 
             current_report_full_time = await crud.report_full_time.get(engine, id=mongo_id)
             update_report_full_time = await crud.report_full_time.update(engine, db_obj=current_report_full_time, obj_in=report_full_time)
-
-            log.debug('update_report_full_time', update_report_full_time)
 
             # In PostgreSQL
             application_updated = crud.application.update(
@@ -199,8 +188,6 @@ async def update_report_full_time(
 
             # Asegurar que es application_update.
             application = ApplicationResponse.from_orm(application_updated)
-
-            log.debug('application update', application_updated)
 
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)

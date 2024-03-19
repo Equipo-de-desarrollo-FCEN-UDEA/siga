@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 from celery import Celery
 from celery.schedules import crontab
-# from app.services.emails.cron_notifications.full_time import notifications
 
 
 from app.core.logging import get_logging
@@ -20,7 +19,6 @@ include = [
     "app.services.documents.applications.permission",
     "app.services.emails.application",
     "app.services.emails.applications.commission",
-    #"app.services.emails.cron_notifications.full_time"
     "app.core.tasks"
 ]
 

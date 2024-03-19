@@ -32,12 +32,3 @@ def run_app():
 
 
 app = run_app()
-
-
-
-
-# @app.on_event("startup")
-# @repeat_every(seconds=60, wait_first=True)
-# async def setup_periodic_tasks():
-
-#     log.debug('cron')

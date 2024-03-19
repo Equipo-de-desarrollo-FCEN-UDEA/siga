@@ -17,7 +17,6 @@ class VacationUpdate(VacationBase):
     application_sub_type_id: int
 
 class VacationInDB(VacationBase):
-    #documents: list[Any] | None = Field(default_factory=list)
     resolution: str | None
     
 class VacationResponse(ApplicationResponse):

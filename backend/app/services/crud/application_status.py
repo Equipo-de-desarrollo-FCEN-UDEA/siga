@@ -27,8 +27,6 @@ class CRUDApplication_status(CRUDBase[Application_status, Application_statusCrea
             # to_notify: list[User] = db.query(User).join(UserRol).join(Department).filter(*queries).all()
             to_notify: list[User] = db.query(User).join(UserRol, UserRol.user_id == User.id).join(Rol, Rol.id == UserRol.rol_id).join(Department).filter(*queries).all()
             for to_user in to_notify:
-                log.debug(to_user.__dict__)
-                
                 create_application_email.apply_async(args=(to_user.names.lower(), to_user.last_names.lower(
                 ), to.application_sub_type.name, 'http://siga-fcen.com/solicitudes/lista', to_user.email))
                 

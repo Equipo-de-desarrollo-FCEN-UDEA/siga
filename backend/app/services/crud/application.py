@@ -56,12 +56,8 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             queries += [User.id == who.id]
 
         if (userrol.rol.scope < 9):
-            # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
-        
-        # if userrol.rol.scope == 7:
-        #     queries.append(UserApplication.user_id == who.id)
 
         if (userrol.rol.scope == 6):
             queries.append(Department.id == who.department.id)
@@ -76,7 +72,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 'identification_number',
                 'email'
             ]
-            # log.debug('Entrando en search')
             search = search.upper()
             raw = [
                 db.query(Application)
@@ -143,7 +138,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
             queries += [User.id == who.id]
 
         if (userrol.rol.scope < 9):
-            # queries += [Application_status.status_id.not_in((6,7))]
             if filed is not None:
                 queries += [Application.filed.is_(filed)]
 
@@ -156,21 +150,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         if (userrol.rol.scope == 5):
             queries += [Department.school_id == who.department.school_id]
 
-        # Cadena de filtros de acuerdo a el rol o la búsqueda del usuario
-        # if who.rol.scope >= 9:
-        #     queries += [User.id == who.id]
-
-        # if who.rol.scope < 9:
-        #     # queries += [Application_status.status_id.not_in((6,7))]
-        #     if filed is not None:
-        #         queries += [Application.filed.is_(filed)]
-
-        # if (who.rol.scope == 7) or (who.rol.scope == 6):
-        #     queries += [User.department_id == who.department.id]
-
-        # if who.rol.scope == 5:
-        #     queries += [Department.school_id == who.department.school_id]
-
         if search is not None:
             columns = [
                 'names',
@@ -178,7 +157,6 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
                 'identification_number',
                 'email'
             ]
-            log.debug('Entrando en search')
             search = search.upper()
             raw = [
                 db.query(Application)

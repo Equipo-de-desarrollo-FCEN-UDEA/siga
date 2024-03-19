@@ -20,8 +20,6 @@ class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePo
     limit: int = 20,
 ) -> List[FullTime]:
         db_full_time = []
-        #if who.userrol == who.active_rol:
-        
         db_full_time = engine.find(FullTime, skip=skip, limit=limit)
         return db_full_time
 

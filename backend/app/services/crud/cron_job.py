@@ -21,19 +21,13 @@ log = get_logging(__name__)
 class CRUDCronJob(CRUDBase[CronJob, CronJobCreate, CronJobUpdate, CronJobPolicy]):
 
     def get_multi(self, db: Session, today: datetime) -> List[CronJob]:
-
-        log.debug('today',today)
-        
         #Busca en cron_job todos mensajes que se deben enviar hoy
         db_objs = db.\
             query(CronJob).\
             filter(extract('month', CronJob.send_date) == today.month,
             extract('year', CronJob.send_date) == today.year,
             extract('day', CronJob.send_date) == today.day).\
-            all()
-
-        log.debug('db_objs',db_objs)
-        
+            all()        
         return db_objs
 
 

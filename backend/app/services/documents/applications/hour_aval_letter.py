@@ -22,11 +22,7 @@ settings = get_app_settings()
 def hour_aval_letter_generation(user: User, hour_aval: HourAvalInDB, users=list[dict]) -> str:
 
     user_response = UserResponse.from_orm(user)
-
-    log.debug(users)
-
     path = f'user_{user.id}/{uuid1()}' + 'aval-horas.pdf'
-
     data = {
         'image': f"logo_{user.department.school_id}.png",
         'date': datetime.now().strftime("%A %d de %B del %Y"),
