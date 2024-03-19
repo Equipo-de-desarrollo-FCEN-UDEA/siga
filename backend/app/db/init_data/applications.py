@@ -43,7 +43,7 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         who_can=[9]
     ),
     schemas.ApplicationTypeCreate(
-        name="AVAL DE HORAS PARA GRUPOS DE INVESTIGACIÓN",
+        name="AVAL DE HORAS PARA PROYECTOS DE INVESTIGACIÓN",
         description="avalhoras",
         status_flux=[
             schemas.application_type.StatusFlux(

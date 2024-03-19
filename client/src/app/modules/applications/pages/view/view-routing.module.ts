@@ -38,7 +38,7 @@ const routes: Routes = [
         path: 'avalhoras',
         component: HourAvalComponent,
         data: {
-          title: 'Aval de horas para grupos de investigación'
+          title: 'Aval de horas para proyectos de investigación'
         }
       },
       {
