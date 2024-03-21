@@ -21,8 +21,8 @@ export class FullTimeComponent {
     private formBuilder: FormBuilder,
 
     private fullTimeSvc: FullTimeService
-  ) { 
-  
+  ) {
+
   }
 
   // Form permiso
@@ -56,15 +56,11 @@ export class FullTimeComponent {
       return;
     }
 
-    console.log(this.form.value as FullTimeCreate)
-
     let fullTime = this.fullTimeSvc.postFullTime(
       this.form.value as FullTimeCreate
     );
-    console.log(this.form.value as FullTimeCreate);
     fullTime.subscribe({
       next: (data: FulltimeResponse) => {
-        console.log('data', data)
         Swal.fire({
           allowOutsideClick: false,
           title: 'Dedicación exclusiva en creación',
@@ -73,8 +69,8 @@ export class FullTimeComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion']) 
-          } 
+            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion'])
+          }
         })
       }
     });

@@ -26,7 +26,6 @@ export class RolSelectionComponent {
     private location: Location
   ) {
     this.userSvc.getUser().subscribe((res: any) => {
-      console.log(res);
       this.roles = res.userrol;
       if (this.roles.length <= 1) {
         this.userSvc.changeActiveRole(0).subscribe({
@@ -43,7 +42,6 @@ export class RolSelectionComponent {
   });
 
   onSubmit() {
-    console.log(this.selectRolForm.value.active_rol);
     this.userSvc
       .changeActiveRole(this.selectRolForm.value.active_rol)
       .subscribe({

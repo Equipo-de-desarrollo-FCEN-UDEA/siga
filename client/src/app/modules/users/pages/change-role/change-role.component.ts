@@ -17,7 +17,7 @@ export class ChangeRoleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    
+
     private userSvc: UserService,
 
     private location: Location
@@ -29,16 +29,14 @@ export class ChangeRoleComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSvc.getUser().subscribe((res: any) => {
-      console.log(res);
       this.roles = res.userrol;
     });
   }
 
   onSubmit() {
-    console.log(this.changeRoleForm.value);
     this.userSvc
       .changeActiveRole(this.changeRoleForm.value.active_rol)
-      .subscribe({    
+      .subscribe({
         next: () => {
           Swal.fire({
             title: '¡Rol cambiado!',
@@ -46,7 +44,7 @@ export class ChangeRoleComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-          this.router.navigate(['/home']); 
+          this.router.navigate(['/home']);
         },
       });
   }

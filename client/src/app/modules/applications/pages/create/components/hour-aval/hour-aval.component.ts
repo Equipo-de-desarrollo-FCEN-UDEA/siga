@@ -70,7 +70,7 @@ export class HourAvalComponent {
   }
 
 
-  submit() { 
+  submit() {
     if (this.form.invalid){
       Swal.fire({
         title: 'Error',
@@ -79,12 +79,9 @@ export class HourAvalComponent {
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
       });
-      console.log(this.form.value)
-      console.log(this.form.errors)
       this.submitted = true
       return;
     }
-    console.log(this.form.value)
 
     this.hourAvalSvc.postHourAval(this.form.value as HourAvalCreate).subscribe({
       next: data => {

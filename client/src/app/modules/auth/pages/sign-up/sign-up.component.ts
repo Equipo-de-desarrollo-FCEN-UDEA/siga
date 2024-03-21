@@ -91,9 +91,6 @@ export class SignUpComponent {
   }
 
   onSubmit() {
-
-    console.log(this.createUserForm.value)
-
     // verificacion de errores
     if (this.createUserForm.invalid) { return; }
 
@@ -111,7 +108,7 @@ export class SignUpComponent {
       error: (err) => {
       },
     });
-    
+
   }
 
   // Departamentos dependiendo de la facultad

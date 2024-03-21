@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Components
 
-
 const routes: Routes = [];
 
 @NgModule({

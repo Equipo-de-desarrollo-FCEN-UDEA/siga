@@ -58,7 +58,6 @@ export class HourAvalComponent {
     this.route.parent?.params.subscribe(params => { this.id = params['id'] })
     this.hourAvalSvc.getHourAval(this.id).subscribe(
       application => {
-        console.log(application.hour_aval);
         this.form.patchValue(application.hour_aval);
         this.applicants = application.hour_aval.another_applicants!;
         this.patchProducts(application.hour_aval.products)
@@ -84,12 +83,9 @@ export class HourAvalComponent {
 
   submit() {
     if (this.form.invalid) {
-      console.log(this.form.value)
-      console.log(this.form.errors)
       this.submitted = true
       return;
     }
-    console.log(this.form.value)
 
     this.hourAvalSvc.putHourAval(this.id, this.form.value as HourAvalCreate).subscribe({
       next: data => {
@@ -134,9 +130,7 @@ export class HourAvalComponent {
 
   // patch Products
   patchProducts(products: any[]) {
-    console.log('parchando actividades de docencia')
     for (let i = 0; i < products.length - 1; i++) {
-      console.log('activity')
       this.addInputproducts();
     }
     this.productsArr.patchValue(products);

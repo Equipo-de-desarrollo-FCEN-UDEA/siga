@@ -17,5 +17,4 @@ export class HomeComponent{
     this.authSvc.isSuperUser();
   }
 
-
 }

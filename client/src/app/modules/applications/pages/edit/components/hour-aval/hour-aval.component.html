@@ -1,207 +1,331 @@
 <form (ngSubmit)="submit()" [formGroup]="form">
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Tiempo(meses) <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatingtime" formControlName="time" class="form-control" placeholder="Ejemplo: 6"
-                    type="number" [ngClass]="{
-                'is-invalid':
-                   isInvalidForm('time')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('time')" class="inputError">El tiempo en meses debe ser mínimo 1 y máximo 300 </p>
-        </div>
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Tiempo(meses) <span style="color: red">*</span>
     </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatingtime"
+          formControlName="time"
+          class="form-control"
+          placeholder="Ejemplo: 6"
+          type="number"
+          [ngClass]="{
+            'is-invalid': isInvalidForm('time')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('time')" class="inputError">
+        El tiempo en meses debe ser mínimo 1 y máximo 300
+      </p>
+    </div>
+  </div>
 
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Horas por semana <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatinghours_week" formControlName="hours_week" class="form-control"
-                    placeholder="Ejemplo: 4" type="number" [ngClass]="{
-                'is-invalid':
-                 isInvalidForm('hours_week')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('hours_week')" class="inputError">Esta cantidad de horas semanales debe ser mínimo
-                1 y máximo 168</p>
-        </div>
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Horas por semana <span style="color: red">*</span>
     </div>
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Título <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatingentity" formControlName="title" class="form-control"
-                    placeholder="Título de la propuesta" type="text" [ngClass]="{
-                'is-invalid':
-                   isInvalidForm('title')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('title')" class="inputError">El título debe tener como mínimo 10 caracteres y máximo
-                255</p>
-        </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatinghours_week"
+          formControlName="hours_week"
+          class="form-control"
+          placeholder="Ejemplo: 4"
+          type="number"
+          [ngClass]="{
+            'is-invalid': isInvalidForm('hours_week')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('hours_week')" class="inputError">
+        Esta cantidad de horas semanales debe ser mínimo 1 y máximo 168
+      </p>
     </div>
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Convocatoria<span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatingannouncement" formControlName="announcement" class="form-control"
-                    placeholder="Convocatoria" type="text" [ngClass]="{
-                'is-invalid':
-                  (submitted && f['announcement'].errors) || isInvalidForm('announcement')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('announcement')" class="inputError">La convocatoria debe tener como mínimo 3
-                caracteres y máximo 1000 </p>
-        </div>
+  </div>
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Título <span style="color: red">*</span>
     </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatingentity"
+          formControlName="title"
+          class="form-control"
+          placeholder="Título de la propuesta"
+          type="text"
+          [ngClass]="{
+            'is-invalid': isInvalidForm('title')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('title')" class="inputError">
+        El título debe tener como mínimo 10 caracteres y máximo 255
+      </p>
+    </div>
+  </div>
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Convocatoria<span style="color: red">*</span>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatingannouncement"
+          formControlName="announcement"
+          class="form-control"
+          placeholder="Convocatoria"
+          type="text"
+          [ngClass]="{
+            'is-invalid':
+              (submitted && f['announcement'].errors) ||
+              isInvalidForm('announcement')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('announcement')" class="inputError">
+        La convocatoria debe tener como mínimo 3 caracteres y máximo 1000
+      </p>
+    </div>
+  </div>
 
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Descripción <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <textarea id="description" formControlName="description" class="form-control" placeholder="Descripción"
-                    [ngClass]="{
-                'is-invalid':
-                  (submitted && f['description'].errors) || isInvalidForm('description')
-                }" rows="5"></textarea>
-            </div>
-            <p *ngIf="isInvalidForm('description')" class="inputError">
-                La descripción debe tener al menos 30 caracteres y máximo 500
-                caracteres.
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Descripción <span style="color: red">*</span>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          placeholder="Descripción"
+          [ngClass]="{
+            'is-invalid':
+              (submitted && f['description'].errors) ||
+              isInvalidForm('description')
+          }"
+          rows="5"
+        ></textarea>
+      </div>
+      <p *ngIf="isInvalidForm('description')" class="inputError">
+        La descripción debe tener al menos 30 caracteres y máximo 500
+        caracteres.
+      </p>
+    </div>
+  </div>
+
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Entidad <span style="color: red">*</span>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatingentity"
+          formControlName="entity"
+          class="form-control"
+          placeholder="Entidad que realiza la convocatoria"
+          type="text"
+          [ngClass]="{
+            'is-invalid': isInvalidForm('entity')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('hours_week')" class="inputError">
+        La entidad debe tener como mínimo 3 caracteres y máximo 255
+      </p>
+    </div>
+  </div>
+
+  <div class="row regular-row mt-4 align-items-baseline">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+      Rol <span style="color: red">*</span>
+    </div>
+    <div class="col-sm-12 col-xs-12 col-md-8">
+      <div class="formfloatig">
+        <input
+          id="floatingrole"
+          formControlName="role"
+          class="form-control"
+          placeholder="Ejemplo: Investigador principal, Co-investigador"
+          type="text"
+          [ngClass]="{
+            'is-invalid': isInvalidForm('role')
+          }"
+        />
+      </div>
+      <p *ngIf="isInvalidForm('role')" class="inputError">
+        El rol debe tener como mínimo 1 caracter y máxino 50
+      </p>
+    </div>
+  </div>
+  <div class="row header-row mt-3">
+    <div class="col">
+      <span class="text-secondary">Objetivos o productos</span>
+    </div>
+  </div>
+  <hr />
+  <div
+    class="arrayLike formfloatig justify-content-center"
+    formArrayName="products"
+  >
+    <div
+      class="row activity_form mb-2"
+      *ngFor="
+        let product of productsArr.controls;
+        last as isLast;
+        let i = index
+      "
+      [formGroupName]="i"
+    >
+      <div
+        style="margin-right: 0.5em; margin-bottom: 0.5em"
+        class="lineGroup col-xs-12 col-md-12 col-lg-12"
+      >
+        <div class="row">
+          <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
+            <input
+              type="text"
+              [id]="'name' + i"
+              formControlName="name"
+              class="form-control"
+              placeholder=" "
+            />
+            <label class="formLabel" [for]="'name' + i">Nombre</label>
+            <p
+              *ngIf="
+                product.get('name')?.invalid == true &&
+                product.get('name')?.touched
+              "
+              class="inputError"
+            >
+              El nombre debe tener como mínimo 10 caracteres y máximo 50
             </p>
+          </div>
         </div>
+      </div>
+
+      <div
+        class="col-sm-12 col-md-12 col-lg-12"
+        style="margin-right: 0.5em; margin-bottom: 0.5em"
+      >
+        <div class="row" style="margin-left: 0px">
+          <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
+            <textarea
+              rows="5"
+              [id]="'description' + i"
+              formControlName="description"
+              class="form-control"
+              placeholder=" "
+            ></textarea>
+            <label class="formLabel" [for]="'description' + i"
+              >Descripción</label
+            >
+            <p
+              *ngIf="
+                product.get('description')?.invalid == true &&
+                product.get('description')?.touched
+              "
+              class="inputError"
+            >
+              La descripción debe tener como mínimo 10 caracteres y máximo 300
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr *ngIf="productsArr.length > 1" />
+      <div
+        style="width: 100%"
+        class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end"
+      >
+        <button
+          class="btn btn-add"
+          type="button"
+          (click)="addInputproducts()"
+          *ngIf="isLast"
+        >
+          <i class="fa fa-plus"></i>
+        </button>
+        <button
+          class="btn btn-remove"
+          type="button"
+          *ngIf="productsArr.length > 1"
+          (click)="removeInput('products', i)"
+        >
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
     </div>
+    <p *ngIf="isInvalidForm('products')" class="inputError">
+      El aval de horas debe contener al menos un producto
+    </p>
+  </div>
 
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Entidad <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatingentity" formControlName="entity" class="form-control"
-                    placeholder="Entidad que realiza la convocatoria" type="text" [ngClass]="{
-                'is-invalid':
-                 isInvalidForm('entity')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('hours_week')" class="inputError">La entidad debe tener como mínimo 3 caracteres y
-                máximo 255</p>
-        </div>
+  <div class="row header-row mt-3">
+    <div class="col">
+      <span class="text-secondary"
+        >Otros usuarios dentro del aval de horas</span
+      >
     </div>
-
-    <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Rol <span style="color: red">*</span></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input id="floatingrole" formControlName="role" class="form-control"
-                    placeholder="Ejemplo: Investigador principal, Co-investigador" type="text" [ngClass]="{
-                'is-invalid':
-                 isInvalidForm('role')
-              }" />
-            </div>
-            <p *ngIf="isInvalidForm('role')" class="inputError">El rol debe tener como mínimo 1 caracter y máxino
-                50</p>
+  </div>
+  <hr />
+  <!-- Participants -->
+  <div class="row m-2">
+    <div
+      *ngFor="let applicant of applicants; let i = index"
+      class="col col-md-6 col-sm-12 col-lg-4"
+    >
+      <div class="card">
+        <div class="text-end">
+          <button class="btn btn-remove" (click)="removeApplicant(i)">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
+        <div class="text-center">
+          <span class="user-pic">
+            <i class="fa-solid fa-user-circle fa-2xl"></i>
+          </span>
+        </div>
+        <div class="card-text text-center">
+          {{ applicant.email }} <br />
+          {{ applicant.role }}
+        </div>
+      </div>
     </div>
-    <div class="row header-row mt-3">
-        <div class="col">
-            <span class="text-secondary">Objetivos o productos</span>
+  </div>
+  <button
+    class="btn btn-success"
+    (submit)="(false)"
+    type="button"
+    (click)="open()"
+  >
+    Agregar participantes
+  </button>
+  <div *ngIf="user$ | async as context">
+    <div
+      *ngIf="context.vinculation_type.toUpperCase() != 'PROFESOR VINCULADO'"
+      class="row regular-row mt-4 align-items-baseline"
+    >
+      <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+        Respaldo <span style="color: red">*</span>
+      </div>
+      <div class="col-sm-12 col-xs-12 col-md-8">
+        <div class="formfloatig">
+          <input
+            id="floatingentity"
+            formControlName="backrest"
+            class="form-control"
+            placeholder="Correo del profesor que respaldará en caso de ausencia"
+            type="text"
+            [ngClass]="{
+              'is-invalid': isInvalidForm('backrest')
+            }"
+          />
         </div>
+      </div>
     </div>
-    <hr>
-    <div class="arrayLike formfloatig justify-content-center" formArrayName="products">
-        <div class="row activity_form mb-2" *ngFor="let product of productsArr.controls; last as isLast; let i=index "
-            [formGroupName]="i">
-            <div style="margin-right: 0.5em; margin-bottom: 0.5em" class="lineGroup col-xs-12 col-md-12 col-lg-12">
-                <div class="row">
-                    <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                        <input type="text" [id]="'name'+i" formControlName="name" class="form-control"
-                            placeholder=" " />
-                        <label class="formLabel" [for]="'name'+i">Nombre</label>
-                        <p *ngIf="product.get('name')?.invalid == true && product.get('name')?.touched"
-                            class="inputError">El nombre debe tener como
-                            mínimo 10 caracteres y máximo 50</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-md-12 col-lg-12" style="margin-right: 0.5em; margin-bottom: 0.5em">
-                <div class="row" style="margin-left: 0px">
-                    <div class="formfloatig col-sm-12 col-md-12 col-lg-12">
-                        <textarea rows="5" [id]="'description'+i" formControlName="description" class="form-control"
-                            placeholder=" "></textarea>
-                        <label class="formLabel" [for]="'description'+i">Descripción</label>
-                        <p *ngIf="product.get('description')?.invalid == true && product.get('description')?.touched"
-                            class="inputError">La descripción debe tener como mínimo 10 caracteres y máximo 300</p>
-                    </div>
-                </div>
-            </div>
-            <hr *ngIf="productsArr.length > 1" />
-            <div style="width: 100%;" class="buttons col-sm-12 col-md-12 col-lg-2 ms-4 justify-content-end">
-                <button class="btn btn-add" type="button" (click)="addInputproducts()" *ngIf="isLast">
-                    <i class="fa fa-plus"></i>
-                </button>
-                <button class="btn btn-remove" type="button" *ngIf="productsArr.length > 1"
-                    (click)="removeInput('products', i)">
-                    <i class="fa fa-minus"></i>
-                </button>
-            </div>
-        </div>
-        <p *ngIf="isInvalidForm('products')" class="inputError">El aval de horas debe contener al menos un producto</p>
-    </div>
-
-    <div class="row header-row mt-3">
-        <div class="col">
-            <span class="text-secondary">Otros usuarios dentro del aval de horas</span>
-        </div>
-    </div>
-    <hr />
-    <!-- Participants -->
-    <div class="row m-2">
-        <div *ngFor="let applicant of applicants; let i=index" class="col col-md-6 col-sm-12 col-lg-4">
-            <div class="card">
-                <div class="text-end">
-                    <button class="btn btn-remove" (click)="removeApplicant(i)">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-                <div class="text-center">
-                    <span class="user-pic">
-                        <i class="fa-solid fa-user-circle fa-2xl"></i>
-                    </span>
-                </div>
-                <div class="card-text text-center">
-                    {{applicant.email}} <br>
-                    {{applicant.role}}
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <button class="btn btn-success" (submit)="false" type="button" (click)="open()">Agregar participantes</button>
-    <div *ngIf="user$ | async as context">
-        <div *ngIf="context.vinculation_type.toUpperCase() != 'PROFESOR VINCULADO'"
-            class="row regular-row mt-4 align-items-baseline">
-            <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Respaldo <span style="color: red">*</span></div>
-            <div class="col-sm-12 col-xs-12 col-md-8">
-                <div class="formfloatig">
-                    <input id="floatingentity" formControlName="backrest" class="form-control"
-                        placeholder="Correo del profesor que respaldará en caso de ausencia" type="text" [ngClass]="{
-                'is-invalid': isInvalidForm('backrest')
-              }" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- <div class="row regular-row mt-4 align-items-baseline">
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Solicitante</div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="formfloatig">
-                <input class="form-control" type="text" formControlName="search" />
-            </div>
-        </div>
-    </div> -->
-
-
+  </div>
 </form>

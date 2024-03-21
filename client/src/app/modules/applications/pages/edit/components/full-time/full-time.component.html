@@ -1,16 +1,21 @@
 <!-- ALERT BOX -->
 <div class="alert alert-warning mt-3 mb-0">
-  Tu dedicación exclusiva está <strong>en creación</strong>. Para solicitarla debes diligenciar
-  los 3 formatos y dar clic en actualizar.
+  Tu dedicación exclusiva está <strong>en creación</strong>. Para solicitarla
+  debes diligenciar los 3 formatos y dar clic en actualizar.
 </div>
-
 
 <!-- CARTA -->
 <div class="row regular-row mt-4 align-items-baseline">
   <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Carta de Inicio *</div>
   <div class="col-sm-12 col-xs-12 col-md-8">
     <div class="formfloatig" (click)="navegateLetter()">
-      <button class="btn btn-outline-success">Carta de Inicio</button>
+      <button
+        class="btn btn-outline-success {{
+          formsStatusService.startLetterStatus ? 'form-filled' : ''
+        }}"
+      >
+        Carta de Inicio
+      </button>
     </div>
     <!-- errors -->
     <div *ngIf="submitted && isInvalidForm()" class="invalid">
@@ -20,11 +25,19 @@
 </div>
 
 <div class="row regular-row mt-4 align-items-baseline">
-  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Formato de vicerrectoría *</div>
+  <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+    Formato de vicerrectoría *
+  </div>
   <div class="col-sm-12 col-xs-12 col-md-8">
     <div class="formfloatig">
-      <button class="btn btn-outline-success"
-      [routerLink]="['/solicitudes/crear/formatovice/',id]">Formato de vicerrectoría</button>
+      <button
+        class="btn btn-outline-success {{
+          formsStatusService.viceFormatStatus ? 'form-filled' : ''
+        }}"
+        [routerLink]="['/solicitudes/crear/formatovice/', id]"
+      >
+        Formato de vicerrectoría
+      </button>
     </div>
     <!-- errors -->
     <div *ngIf="submitted && isInvalidForm()" class="invalid">
@@ -37,7 +50,13 @@
   <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Plan de trabajo *</div>
   <div class="col-sm-12 col-xs-12 col-md-8">
     <div class="formfloatig" (click)="navegateWorkplan()">
-      <button class="btn btn-outline-success">Plan de trabajo</button>
+      <button
+        class="btn btn-outline-success {{
+          formsStatusService.workPlanStatus ? 'form-filled' : ''
+        }}"
+      >
+        Plan de trabajo
+      </button>
     </div>
     <!-- errors -->
     <div *ngIf="submitted && isInvalidForm()" class="invalid">

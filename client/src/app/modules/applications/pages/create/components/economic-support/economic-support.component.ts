@@ -142,13 +142,11 @@ export class EconomicSupportComponent {
       .pipe(
         switchMap((data: any) => {
           if (data) {
-            console.log(data);
             this.form.patchValue({
               documents: data.files_paths,
             });
           }
           economic_support.documents = data.files_paths;
-          console.log(economic_support);
           return this.economicSupportSvc.postEconomicSupport(economic_support);
         })
       );

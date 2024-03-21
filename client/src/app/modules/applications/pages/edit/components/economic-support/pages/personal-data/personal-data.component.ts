@@ -42,7 +42,6 @@ export class PersonalDataComponent {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
-        //console.log(data);
         this.form.patchValue({
           application_for: data.economic_support.personal_data.application_for,
           name: data.economic_support.personal_data.name,
