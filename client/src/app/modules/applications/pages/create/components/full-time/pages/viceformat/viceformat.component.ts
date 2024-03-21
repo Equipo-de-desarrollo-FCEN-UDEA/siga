@@ -111,10 +111,7 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
       });
       return;
     }
-    // let body : any= this.form.value;
-    // body.goals = body.goals?.map((goal:any)=>goal.goal);
-    // body.products = body.products?.map((product:any)=>product.product);
-      console.log(this.form.value);
+
     this.fulltimesvc.putViceFormat(this.form.value as ViceFormat, this.id).subscribe(
       {
         next: (data) => {
@@ -148,8 +145,6 @@ export class ViceFormatComponent implements OnInit, AfterViewInit {
     modalRef.result.then(
       (res: any) => {
           this.dev_action_plan = res;
-          //console.log(this.dev_action_plan);
-          //console.log(this.form.value);
           this.form.controls['dev_action_plan'].setValue(this.dev_action_plan);
           this.dev_action_plan_first_take++;
       }

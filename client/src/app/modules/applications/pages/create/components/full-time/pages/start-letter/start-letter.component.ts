@@ -103,27 +103,7 @@ export class StartLetterComponent implements OnInit {
       }
     }
 
-
-    // (res:any)=> {
-    //   if(res){
-    //     Swal.fire(
-    //       {
-    //         title:'La carta se creo con exito',
-    //         icon:'success',
-    //         confirmButtonText:'Aceptar'
-    //       }
-    //     )
-
-    //   }
-    // }
    )
-
-    // let startLetter = this.fullTimeSvc.putLetter(
-    //   this.form.value as InitialLetter,this.id
-
-
-    console.log(startLetter)
-
 
   }
 

@@ -39,7 +39,7 @@ export class UserListComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    
+
   }
 
   // We use this function to manage the pagination
@@ -47,9 +47,9 @@ export class UserListComponent implements OnInit {
     this.page++;
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
-      this.skip, 
-      this.limit, 
-      this.form.value.activo!, 
+      this.skip,
+      this.limit,
+      this.form.value.activo!,
       this.form.value.search!
     );
   }
@@ -58,9 +58,9 @@ export class UserListComponent implements OnInit {
     this.page--;
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
-      this.skip, 
+      this.skip,
       this.limit,
-      this.form.value.activo!, 
+      this.form.value.activo!,
       this.form.value.search!
     );
   }
@@ -70,9 +70,9 @@ export class UserListComponent implements OnInit {
     this.page = 1
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
-      this.skip, 
+      this.skip,
       this.limit,
-      this.form.value.activo!, 
+      this.form.value.activo!,
       this.form.value.search!
     );
   }
@@ -80,34 +80,5 @@ export class UserListComponent implements OnInit {
   cancel() {
     this.location.back();
   }
-
-  // eliminar(id: number) {
-  //   Swal.fire({
-  //     text: "¿Está seguro de querer eliminar el user?",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     cancelButtonText: "Cancelar",
-  //     confirmButtonText: "Eliminar",
-  //     buttonsStyling: false,
-  //     customClass: {
-  //       confirmButton: "button is-danger is-rounded",
-  //       cancelButton: "button ml-2 is-dark is-rounded is-outlined"
-  //     }
-  //   }).then((res) => {
-  //     if (res.isConfirmed) {
-  //       this.userSvc.deleteuser(id).subscribe({
-  //         next: (data: any) => {
-  //           Swal.fire({
-  //             text: 'El user ha sido eliminado',
-  //             icon: 'success',
-  //             confirmButtonText: 'Continuar'
-  //           }).then(() => {
-  //             this.router.navigate(['/users']);
-  //           })
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
 
 }

@@ -27,7 +27,6 @@ export class SubtypeComponent {
     this.userSvc.getUser().subscribe((data) => {
       this.extraSvc.getSubdepartmentsByDepartment(data.department_id).subscribe((data) => {
         this.subdeparments = data;
-        console.log(this.subdeparments);
       });
     });
   }
@@ -37,7 +36,7 @@ export class SubtypeComponent {
       id: dependence.coordinador_id,
       name: dependence.name
     };
-  
+
     if (event.target.checked) {
       if (!this.dependencies.includes(newDependence)) {
         this.dependencies.push(newDependence);
@@ -48,10 +47,9 @@ export class SubtypeComponent {
         this.dependencies.splice(index, 1);
       }
     }
-  
-    console.log(this.dependencies);
+
   }
-  
+
 
   send() {
     this.sendForm.emit(this.dependencies);

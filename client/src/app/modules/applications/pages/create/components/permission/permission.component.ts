@@ -73,7 +73,7 @@ export class PermissionComponent implements AfterViewInit{
     this.fromDate = null;
     this.toDate = null;
   }
-  
+
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({
       next: (data) =>{
@@ -82,7 +82,7 @@ export class PermissionComponent implements AfterViewInit{
     })
   }
 
-  
+
   // Form permiso
   public form = this.formBuilder.group({
     application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
@@ -104,7 +104,6 @@ export class PermissionComponent implements AfterViewInit{
   // --------------------------------------
   submit() {
     this.submitted = true;
-    console.log(this.form.value)
 
     // Se detiene aqui si el formulario es invalido
     if (this.form.invalid || this.selectDays(this.fromDate, this.toDate)) {
@@ -129,14 +128,12 @@ export class PermissionComponent implements AfterViewInit{
               documents: data.files_paths,
             });
           }
-          console.log(this.form.value);
           return this.permissionSvc.postPermission(
             this.form.value as PermissionCreate
           );
         })
       );
     }
-    console.log(this.form.value as PermissionCreate);
     permission.subscribe({
       next: (data) => {
         Swal.fire({
@@ -164,7 +161,7 @@ export class PermissionComponent implements AfterViewInit{
   // --------------------------------------
 
   onApplicationSubType(event: Event) {
-    // Obtener el value antes de los ':'  
+    // Obtener el value antes de los ':'
     const ID_PERMISSION_TYPE = (event.target as HTMLSelectElement).value.split(':')[0]
     this.SubTypeSvc.getApplicationSubType(+ID_PERMISSION_TYPE).subscribe({
       next: (res) => {

@@ -74,7 +74,6 @@ export class ComplimentComponent implements OnInit {
       next: (response) => {
         this.applicationType =
           response.application_sub_type.application_type.name;
-        console.log(this.applicationType);
       },
     });
   }
@@ -157,8 +156,6 @@ export class ComplimentComponent implements OnInit {
     let others_emails = this.form.value.others.split(',');
 
     this.emails = this.emails.concat(others_emails);
-
-    console.log(this.emails);
 
     let compliment = this.documentSvc.postDocument(this.files as File[]).pipe(
       switchMap((data: DocumentsResponse) => {

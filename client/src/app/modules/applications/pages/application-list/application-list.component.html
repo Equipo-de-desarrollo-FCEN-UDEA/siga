@@ -1,29 +1,19 @@
-
-
 <div
   class="container card shadow containerInside mt-5 p-3 pt-1 position-relative"
   *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
 >
-<!-- <div class="position-absolute top-0 start-0 p-1">
-  <button
-    type="button"
-    class="btn btn-outline-secondary"
-    (click)="cancel()">
-    <i class="fas fa-angle-left"> </i>
-  </button>
-</div> -->
-
   <form [formGroup]="form" (submit)="search()">
     <div class="row">
-      
       <div class="col-xs-12 col-sm-12 col-lg-8">
-
         <div class="row">
-
           <div class="col-md-auto">
-            <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
-                 <i class="fas fa-angle-left"> </i>
-           </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              (click)="cancel()"
+            >
+              <i class="fas fa-angle-left"> </i>
+            </button>
           </div>
 
           <div class="col-10 col-sm-6">
@@ -40,9 +30,7 @@
               <i class="fas fa-search"></i>
             </button>
           </div>
-
         </div>
-
       </div>
 
       <div class="col-xs-5 col-lg-2" *ngIf="context.isSuperUser">
@@ -141,9 +129,7 @@
             </button>
             <button
               *ngIf="context.isSuperUser"
-              (click)="
-                filed(application.id); $event.stopPropagation()
-              "
+              (click)="filed(application.id); $event.stopPropagation()"
               class="btn btn-light btn-sm"
               type="button"
             >
@@ -177,9 +163,7 @@
       </tfoot>
     </table>
   </div>
-    
 </div>
-
 
 <!-- SPINNER ALL PAGE -->
 <app-loader></app-loader>

@@ -33,7 +33,6 @@ const ROUTES: Routes = [
     canActivate: [EmpleadoGuard],
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
-    // pathMatch: 'full'
   },
   {
     path: '**',

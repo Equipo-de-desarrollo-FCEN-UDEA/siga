@@ -148,7 +148,7 @@ export class VacationComponent implements OnInit {
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#3AB795',
           });
-          
+
           return;
         }
         this.SubTypeSvc.getApplicationSubType(
@@ -188,10 +188,6 @@ export class VacationComponent implements OnInit {
     );
 
     this.form.value.signature = this.signatureImg;
-    console.log(this.form.value.signature);
-    // for (let path of this.documentsToDelete) {
-    //   this.documentSvc.deleteDocument(path).subscribe().unsubscribe();
-    // }
 
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
@@ -202,7 +198,6 @@ export class VacationComponent implements OnInit {
             });
           }
           this.form.value.signature = this.signatureImg;
-          console.log(this.form.value);
           return this.vacationSvc.putVacation(
             this.form.value as VacationCreate,
             this.id
@@ -212,7 +207,6 @@ export class VacationComponent implements OnInit {
       if (this.signatureImg!=""){
         vacation.subscribe({
           next: (res) => {
-            console.log('vacation updated', vacation);
             Swal.fire({
               title: 'Actualizado',
               text: '¡El registro de vacaciones se actualizó con éxito!',
@@ -228,7 +222,6 @@ export class VacationComponent implements OnInit {
             });
           },
           error: (err) => {
-            console.log('salio error', err);
             this.error = err;
           },
         });
@@ -247,7 +240,6 @@ export class VacationComponent implements OnInit {
         if (this.signatureImg!=""){
           vacation.subscribe({
             next: (res) => {
-              console.log('vacation updated', vacation);
               Swal.fire({
                 title: 'Actualizado',
                 text: '¡El registro de vacaciones se actualizó con éxito!',
@@ -263,7 +255,6 @@ export class VacationComponent implements OnInit {
               });
             },
             error: (err) => {
-              console.log('salio error', err);
               this.error = err;
             },
           });
@@ -290,7 +281,7 @@ export class VacationComponent implements OnInit {
 
     }
 
-   
+
   }
 
   // --------------------------------------
@@ -299,15 +290,12 @@ export class VacationComponent implements OnInit {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    //console.log(event);
     // works in device not in browser
   }
 
@@ -322,7 +310,6 @@ export class VacationComponent implements OnInit {
   savePad(event: any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    console.log(base64Data);
     Swal.fire({
       title: 'Firma a registrar',
       html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
@@ -386,12 +373,12 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
         //In this case is important to take the date as days:
         this.verify_date=this.verify_date/(1000*3600*24)+1;
       }
-      //If days in form does not equal to required, the form does not allow continue      
+      //If days in form does not equal to required, the form does not allow continue
       if (this.verify_date != entero_temp){
         return true;
       }
       this.form.value.end_date = new Date(this.formatter.format(toDate));
-      return false;       
+      return false;
 
     } else {
       return false;
@@ -400,7 +387,6 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
-      console.log('!this.fromDate && !this.toDate');
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -410,12 +396,6 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log(
-        'this.fromDate && !this.toDate && date',
-        this.fromDate,
-        this.toDate,
-        date
-      );
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -425,7 +405,6 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
         ),
       });
     } else {
-      console.log('else', this.fromDate, this.toDate);
       this.toDate = null;
       this.fromDate = date;
       this.form.patchValue({
@@ -516,7 +495,6 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       cancelButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
-        //this.documentsToDelete = this.documentsToDelete.concat([path]);
         this.documents.splice(i, 1);
       }
     });

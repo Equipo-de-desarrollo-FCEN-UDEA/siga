@@ -13,7 +13,7 @@ export class ApplicationDataComponent {
   get f() {
     return this.form.controls;
   }
-  
+
   public id:number = 0;
 
   public ECONOMIC_SUPPORT_TYPE = ECONOMIC_SUPPORT_TYPE;
@@ -35,7 +35,6 @@ export class ApplicationDataComponent {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
-        //console.log(data);
         this.form.patchValue({
           application_type: data.economic_support.application_data.application_type,
           project: data.economic_support.application_data.project,

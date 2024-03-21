@@ -113,7 +113,6 @@ export class EconomicSupportComponent implements OnInit {
       this.user_id = user.id;
       this.activeRole = user.active_rol;
       this.userRol = user.userrol[this.activeRole].rol.name;
-      console.log(this.userRol);
       if (this.userRol === 'Coordinador') {
         this.userApplicationSvc
           .getUserApplication(this.application_id)
@@ -190,8 +189,6 @@ export class EconomicSupportComponent implements OnInit {
         const { economic_support, ...application } = app;
         this.economic_support = economic_support;
         this.application = application;
-
-        console.log(this.economic_support);
 
         this.amount_approved = lastElement(
           application.application_status

@@ -11,14 +11,6 @@ margin-bottom: 8em!important;
   margin-bottom: 1em!important;
 }
 
-// .lineGroup{
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: space-between;
-//     align-items: center;
-//     margin-bottom: 10px;
-// }
-
 @media (max-width: 576px) {
 .container {
     width: 95%;
@@ -34,7 +26,7 @@ margin-bottom: 8em!important;
   height: 20em!important;
   align-items: center;
 }
-.card-plan-seguimiento { 
+.card-plan-seguimiento {
   height: 10.3em!important;
 }
 }
@@ -98,7 +90,7 @@ background-color: #43b649;
   }
 
 .btn-remove {
-background-color: #d45f57;  
+background-color: #d45f57;
 color: #fff;
 border-color: #fff;
 }.btn-remove:hover {

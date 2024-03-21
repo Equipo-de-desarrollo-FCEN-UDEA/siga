@@ -20,7 +20,6 @@ export class HoursAvalComponent {
     this.route.parent?.params.subscribe(params => this.id = params['id'])
     this.route.params.subscribe(params => this.token = params['token'])
     this.route.params.subscribe(params => this.acepted = params['acepted'])
-    console.log(this.id, this.token, this.acepted)
     this.hoursAvalSvc.confirmHourAval(this.id, this.token, this.acepted).subscribe({
       next: res => {
         Swal.fire({

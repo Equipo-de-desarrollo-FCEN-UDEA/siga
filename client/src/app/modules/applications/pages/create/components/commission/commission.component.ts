@@ -26,7 +26,7 @@ export class CommissionComponent {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
 
-  // Files 
+  // Files
   public files : any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
@@ -40,7 +40,7 @@ export class CommissionComponent {
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
-    
+
   // --------------------------------------------------
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
   // --------------------------------------------------
@@ -72,7 +72,7 @@ export class CommissionComponent {
     lenguage: ['', [Validators.required, Validators.maxLength(50)]],
     justification: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
     documents: [this.documents]
-   
+
   })
 
 
@@ -99,12 +99,10 @@ export class CommissionComponent {
               documents: data.files_paths
             })
           }
-          console.log(this.form.value)
           return this.commissionSvc.postCommission(this.form.value as CommissionCreate)
         })
       )
     }
-    console.log(this.form.value as CommissionCreate)
     commission.subscribe({
       next: data => {
         Swal.fire(
@@ -126,7 +124,7 @@ export class CommissionComponent {
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
-  
+
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
@@ -200,8 +198,8 @@ export class CommissionComponent {
 
   validFileType() {
     const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
-    
-    let flag = true; 
+
+    let flag = true;
     this.files.forEach((file) => {
       flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
     })

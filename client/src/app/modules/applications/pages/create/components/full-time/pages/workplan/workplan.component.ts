@@ -87,7 +87,6 @@ export class WorkplanComponent implements OnInit {
               observations: data.full_time.work_plan.observations
             });
 
-            console.log(data.full_time.work_plan)
             this.patchTeachingActivities(data.full_time.work_plan.teaching_activities);
             this.patchInvestigationActivities(data.full_time.work_plan?.investigation_activities);
             this.patchExtensionActivities(data.full_time.work_plan?.extension_activities);
@@ -127,8 +126,6 @@ export class WorkplanComponent implements OnInit {
     work_plan.working_week = work_plan.working_week[0]
 
     this.loaderSvc.show();
-
-    console.log(work_plan)
 
     //llamado del servicio y envio del plan de trabajo
     this.fullTimeSvc.putWorkPlan(work_plan, this.id).subscribe(
@@ -189,9 +186,7 @@ export class WorkplanComponent implements OnInit {
   // --------- PATCHS -----------
 
   patchTeachingActivities(activity: any) {
-    console.log('parchando actividades de docencia')
     for (let i = 0; i < activity.length; i++) {
-      console.log('activity')
       this.addTeachingActivities();
     }
     this.teachingActivitiesArr.patchValue(activity);

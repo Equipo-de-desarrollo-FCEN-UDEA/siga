@@ -25,7 +25,7 @@ export class CommissionComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
 
-  // Files 
+  // Files
   public files: any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
@@ -39,7 +39,7 @@ export class CommissionComponent implements OnInit {
   public comision_type$: any;
 
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
-  
+
 
   public id: number = 0;
 
@@ -110,7 +110,6 @@ export class CommissionComponent implements OnInit {
         })
       )
     }
-    console.log(this.form.value as CommissionCreate)
     commission.subscribe(
       data => {
         Swal.fire(
@@ -144,7 +143,6 @@ export class CommissionComponent implements OnInit {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -154,7 +152,6 @@ export class CommissionComponent implements OnInit {
         ),
       });
     } else {
-      console.log('else',  this.fromDate, this.toDate)
       this.toDate = null;
       this.fromDate = date
       this.form.patchValue({

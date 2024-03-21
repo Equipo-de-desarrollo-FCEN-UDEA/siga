@@ -42,12 +42,10 @@ export class DocumentsComponent implements OnInit {
     if (file) {
       this.files[index] = file;
     }
-    console.log(this.files);
   }
 
   removeFile(index: number) {
     this.files[index] = undefined;
-    console.log(this.files);
   }
 
   validSize() {
