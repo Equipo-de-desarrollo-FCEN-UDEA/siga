@@ -15,9 +15,9 @@ class VacationBase(BaseModel):
     signature: str
 
 class VacationCreate(VacationBase):
-    application_sub_type_id: int 
+    application_sub_type_id = 12
 class VacationUpdate(VacationBase):
-    application_sub_type_id: int
+    application_sub_type_id = 12
 
 class VacationInDB(VacationBase):
     #documents: list[Any] | None = Field(default_factory=list)

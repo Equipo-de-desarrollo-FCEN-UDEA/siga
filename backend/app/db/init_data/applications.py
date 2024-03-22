@@ -60,34 +60,35 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
         who_can=[9, 11]
     ),
     
-    # schemas.ApplicationTypeCreate(
-    #     name="AVAL DE HORAS PARA GRUPOS DE INVESTIGACIÓN",
-    #     description="avalhoras",
-    #     status_flux=[
-    #         schemas.application_type.StatusFlux(
-    #             status="SOLICITADA", scope=[0]),
-    #         schemas.application_type.StatusFlux(
-    #             status="VISTO BUENO", scope=[6, 7]),
-    #         schemas.application_type.StatusFlux(
-    #             status='APROBADA', scope=[5])
-    #     ],
-    #     who_can=[9]
-    # ),
+    #5 AVAL DE HORAS PARA PROYECTOS DE INVESTIGACIÓN
+    schemas.ApplicationTypeCreate(
+        name="AVAL DE HORAS PARA GRUPOS DE INVESTIGACIÓN",
+        description="avalhoras",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[9]
+    ),
     
-    
-    # schemas.ApplicationTypeCreate(
-    #     name="APOYO ECONÓMICO PARA ESTUDIANTES",
-    #     description="apoyo-economico",
-    #     status_flux=[
-    #         schemas.application_type.StatusFlux(
-    #             status="SOLICITADA", scope=[0]),
-    #         schemas.application_type.StatusFlux(
-    #             status="VISTO BUENO", scope=[5, 6, 7]),
-    #         schemas.application_type.StatusFlux(
-    #             status='APROBADA', scope=[5])
-    #     ],
-    #     who_can=[9, 11, 13, 14]
-    # )
+    #6 APOYO ECONÓMICO PARA ESTUDIANTES
+    schemas.ApplicationTypeCreate(
+        name="APOYO ECONÓMICO PARA ESTUDIANTES",
+        description="apoyo-economico",
+        status_flux=[
+            schemas.application_type.StatusFlux(
+                status="SOLICITADA", scope=[0]),
+            schemas.application_type.StatusFlux(
+                status="VISTO BUENO", scope=[5, 6, 7]),
+            schemas.application_type.StatusFlux(
+                status='APROBADA', scope=[5])
+        ],
+        who_can=[9, 11, 13, 14]
+    )
 ]
 
 init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
@@ -144,12 +145,14 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         name="Dedicación",
         application_type_id=3
     ),
-    # # HOURS AVAL
-    # # 11
-    # schemas.ApplicationSubTypeCreate(
-    #     name="Aval de horas",
-    #     application_type_id=4
-    # ),
+    
+    # HOURS AVAL
+    # 11
+    schemas.ApplicationSubTypeCreate(
+        name="Aval de horas",
+        application_type_id=5
+    ),
+    
     # VACATION
     # 12
     schemas.ApplicationSubTypeCreate(
@@ -157,10 +160,12 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
         application_type_id=4
     ),
     
+    
+    
     # ECONOMIC SUPPORT
     # 13
-    # schemas.ApplicationSubTypeCreate(
-    #     name="Apoyo Económico",
-    #     application_type_id=6,
-    # ),
+    schemas.ApplicationSubTypeCreate(
+        name="Apoyo Económico",
+        application_type_id=6
+    ),
 ]

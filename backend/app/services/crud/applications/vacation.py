@@ -17,8 +17,9 @@ class CRUDVacation(CRUDBase[Vacation, VacationCreate, VacationUpdate, VacationPo
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: str, path: str) -> None:
         vacation = await db.find_one(Vacation, Vacation.id == id)
         log.debug(vacation.dict())
-        
+        log.debug("ESTE NO ES")
         for i, document in enumerate(vacation.documents):
+            
             if document['name'] == name:
                 del vacation.documents[i]
         if vacation.documents is not None:

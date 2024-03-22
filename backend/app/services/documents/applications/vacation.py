@@ -55,7 +55,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
     initial_calendar_date = vacations_dict['vacation']['start_calendar_date']
     final_calendar_date = vacations_dict['vacation']['end_calendar_date']
     data_vacations = {
-        "days_type": vacations_dict['application_sub_type']['name'],
+        # "days_type": vacations_dict['application_sub_type']['name'],
         "date_day": str(today.day),
         "date_month": str(today.month),
         "date_year": str(today.year),
