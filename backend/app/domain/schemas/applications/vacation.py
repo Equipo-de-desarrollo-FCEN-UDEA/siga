@@ -7,10 +7,10 @@ from app.domain.schemas.application import ApplicationResponse
 class VacationBase(BaseModel):
     total_working_days: int
     total_calendar_days: int
-    start_date_working: datetime
-    end_date_working: datetime
-    start_date_calendar: datetime
-    end_date_calendar: datetime
+    start_working_date: datetime
+    end_working_date: datetime
+    start_calendar_date: datetime
+    end_calendar_date: datetime
     documents: list[Any]
     signature: str
 
@@ -27,7 +27,7 @@ class VacationResponse(ApplicationResponse):
     vacation: VacationInDB
 
 class VacationDocument(VacationBase):
-    @validator("start_date_working", "end_date_working", "start_date_calendar", "end_date_calendar")
+    @validator("start_working_date", "end_working_date", "start_calendar_date", "end_calendar_date")
     def stringdate(cls, v, values, **kwargs):
         return v.strftime("%A %d de %B del %Y")
 

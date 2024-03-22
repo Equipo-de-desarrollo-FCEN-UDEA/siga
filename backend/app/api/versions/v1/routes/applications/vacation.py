@@ -48,10 +48,10 @@ async def create_vacation(
             mongo_id=str(vacation_create.id),
             application_sub_type_id=vacation.application_sub_type_id,
             user_id=current_user.id,
-            start_date_working= vacation_create.start_date_working,
-            end_date_working= vacation_create.end_date_working,
-            start_date_calendar= vacation_create.start_date_calendar,
-            end_date_calendar= vacation_create.end_date_calendar
+            start_working_date= vacation_create.start_working_date,
+            end_working_date= vacation_create.end_working_date,
+            start_calendar_date= vacation_create.start_calendar_date,
+            end_calendar_date= vacation_create.end_calendar_date
         )
 
         application = crud.application.create(

@@ -6,10 +6,10 @@ from odmantic import Model
 class Vacation(Model):
     total_working_days: int
     total_calendar_days: int
-    start_date_working: datetime
-    end_date_working: datetime
-    start_date_calendar: datetime
-    end_date_calendar: datetime
+    start_working_date: datetime
+    end_working_date: datetime
+    start_calendar_date: datetime
+    end_calendar_date: datetime
     documents: list[Any]
     signature: str
     resolution: str | None
