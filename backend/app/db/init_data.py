@@ -1070,14 +1070,10 @@ init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
     ),
     #10
     schemas.ApplicationSubTypeCreate(
-        name="Dias hábiles",
+        name="Vacaciones",
         application_type_id=5
     ),
-    #11
-    schemas.ApplicationSubTypeCreate(
-        name="Dias calendario",
-        application_type_id=5
-    )
+    
     #12 Pregrado
     #13 Posgrado
     #14 Grupo de Investigación

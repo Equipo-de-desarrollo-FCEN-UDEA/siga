@@ -48,8 +48,10 @@ async def create_vacation(
             mongo_id=str(vacation_create.id),
             application_sub_type_id=vacation.application_sub_type_id,
             user_id=current_user.id,
-            start_date= vacation_create.start_date,
-            end_date= vacation_create.end_date
+            start_date_working= vacation_create.start_date_working,
+            end_date_working= vacation_create.end_date_working,
+            start_date_calendar= vacation_create.start_date_calendar,
+            end_date_calendar= vacation_create.end_date_calendar
         )
 
         application = crud.application.create(
@@ -81,8 +83,8 @@ async def create_vacation(
     response = VacationResponse(
             **dict(application, vacation=vacation_create))
     
-    path = documents.fill_vacations_format(current_user, response)
-    await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
+    # path = documents.fill_vacations_format(current_user, response)
+    # await crud.vacation.create_format(engine, id=mongo_id, name='formato-vacaciones.xlsx', path=path)
 
     return response
 

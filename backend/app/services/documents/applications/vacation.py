@@ -50,8 +50,8 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
 
     #Rellenar datos de la solicitud.
     today = vacations_dict['created_at']
-    initial_date = vacations_dict['vacation']['start_date']
-    final_date = vacations_dict['vacation']['end_date']
+    initial_date = vacations_dict['vacation']['start_date_working']
+    final_date = vacations_dict['vacation']['end_date_working']
     data_vacations = {
         "days_type": vacations_dict['application_sub_type']['name'],
         "date_day": str(today.day),
@@ -63,7 +63,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
         "final_date_day": str(final_date.day),
         "final_date_month": str(final_date.month),
         "final_date_year": str(final_date.year),
-        "total_days": str(vacations_dict['vacation']['total_days']),
+        # "total_days": str(vacations_dict['vacation']['total_days']),
         "user_signature": vacations_dict['vacation']['signature']
     }
 
