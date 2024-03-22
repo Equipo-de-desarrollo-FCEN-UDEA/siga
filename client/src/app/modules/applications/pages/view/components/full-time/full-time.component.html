@@ -6,6 +6,12 @@
     </div>
   </div>
   <div class="row regular-row mt-2">
+    <div class="col-xs-12 col-sm-6 label fw-bold">Fecha de Inicio</div>
+    <div class="col-xs-12 col-sm-6">
+      {{ full_time.start_date | date : "fullDate" }}
+    </div>
+  </div>
+  <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">
       Estado actual de la dedicación
     </div>

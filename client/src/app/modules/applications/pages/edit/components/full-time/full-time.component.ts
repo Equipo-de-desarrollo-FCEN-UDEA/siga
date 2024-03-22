@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   FullTimeCreate,
   FulltimeResponse,
 } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
+import { Holiday } from '@interfaces/holiday';
+import { NgbDate, NgbDateStruct, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { DocumentService } from '@services/document.service';
 import Swal from 'sweetalert2';
@@ -22,13 +25,39 @@ export class FullTimeComponent implements OnInit {
   // Files
   public documents: file_path[] = [];
 
+  // Dates
+  public fromDate: NgbDate | null = null;
+  public hoveredDate: NgbDate | null = null;
+  public toDate: NgbDate | null = null;
+  public model: NgbDateStruct | null = null;
+  public today = this.calendar.getToday();
+  public laboralDay: number = 0;
+  public laboralflag: boolean = true;
+  public verify_date: number = 0;
+
+  // For handle errors
+  public clicked = 0;
+
+  // holidays
+  public holidays: Holiday[] = [];
+
+  public form: FormGroup;
+
   constructor(
+    // Datepicker
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+
     private router: Router,
     private route: ActivatedRoute,
 
-    private fullTimeSvc: FullTimeService,
-    private documentSvc: DocumentService
-  ) {}
+    private formBuilder: FormBuilder,
+    private fullTimeSvc: FullTimeService
+  ) {
+    this.form = this.formBuilder.group({
+      start_date: [new Date(), [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
     this.route.parent?.params.subscribe((params) => {
@@ -127,5 +156,40 @@ export class FullTimeComponent implements OnInit {
         });
       },
     });
+  }
+  // --------------------------------------
+  // ------------- DATEPICKER -------------
+  // --------------------------------------
+
+  onDateSelection(date: NgbDate) {
+    this.fromDate = date;
+    this.form.patchValue({
+      start_date: new Date(
+        this.fromDate.year,
+        this.fromDate.month - 1,
+        this.fromDate.day
+      ),
+    });
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && this.hoveredDate && date.equals(this.fromDate);
+  }
+
+  isInside(date: NgbDate) {
+    return date.equals(this.fromDate);
+  }
+
+  isRange(date: NgbDate) {
+    return (
+      date.equals(this.fromDate) || this.isInside(date) || this.isHovered(date)
+    );
+  }
+
+  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
+    const PARSED = this.formatter.parse(input);
+    return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
+      ? NgbDate.from(PARSED)
+      : currentValue;
   }
 }
