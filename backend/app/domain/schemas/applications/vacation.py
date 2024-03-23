@@ -5,6 +5,8 @@ from pydantic import BaseModel, Field, validator
 
 from app.domain.schemas.application import ApplicationResponse
 class VacationBase(BaseModel):
+    start_date: datetime
+    end_date:datetime
     total_working_days: int
     total_calendar_days: int
     start_working_date: datetime
