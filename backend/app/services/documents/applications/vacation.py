@@ -83,6 +83,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
 
     generate_vacations_format_to_aws.apply_async(args=(data_user, data_vacations, path))
     log.debug(path)
+    log.debug("CADENA VACATIONS", vacations)
     return path
 
 @celery_app.task
@@ -93,6 +94,7 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str, sch
 
     wb = load_workbook(filename = templates_dir + '/formato_vacaciones.xlsm')
     target = wb.active
+    
 
     for datos in [user, vacations]:
         for key in datos.keys():
