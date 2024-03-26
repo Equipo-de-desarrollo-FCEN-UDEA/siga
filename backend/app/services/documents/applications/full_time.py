@@ -106,6 +106,9 @@ def generate_vice_format_to_aws(user: dict, full_time: dict, path: str):
         target.merge_cells(cells)
         target[cells.split(':')[0]] = info
 
+    print("Valor de full_time['modalidad']: ", full_time["modalidad"])
+    log.debug(full_time["modalidad"])
+
     for modalidad in lone_cells['modalidad']:
         if modalidad == full_time["modalidad"]:
             target[lone_cells['modalidad'][modalidad]] = 'X'

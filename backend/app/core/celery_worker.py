@@ -28,6 +28,7 @@ celery_app = Celery('tasks', broker=settings.redis_uri,
                 backend=settings.redis_uri, include=include)
 
 celery_app.conf.update(
+    CELERY_LOG_LEVEL="DEBUG",
     task_serializer="json",
     result_serializer="json",
     accept_content=["json"],
