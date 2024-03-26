@@ -50,7 +50,7 @@ export class VacationComponent implements OnInit {
       this.application = application;
       let status_app = this.application.application_status[this.application.application_status.length-1].status.name;
       this.vacation.documents = this.vacation.documents!;
-      if (status_app != 'APROBADA'){
+      if (status_app != 'SOLICITADA'){
         this.vacation.documents.pop();
       }
       this.current_status = lastElement(
