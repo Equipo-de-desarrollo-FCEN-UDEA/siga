@@ -1010,79 +1010,75 @@ init_application_type: List[schemas.ApplicationTypeCreate] = [
 ]
 
 
-init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
-    #1
-    schemas.ApplicationSubTypeCreate(
-        name="Licencia de maternidad",
-        application_type_id=1,
-        extra={"days": 126}
-    ),
-    #2
-    schemas.ApplicationSubTypeCreate(
-        name="Licencia de paternidad",
-        application_type_id=1,
-        extra={"days": 8}
-    ),
-    #3
-    schemas.ApplicationSubTypeCreate(
-        name="Cumpleaños",
-        application_type_id=1,
-        extra={"days": 1}
-    ),
-    #4
-    schemas.ApplicationSubTypeCreate(
-        name="Luto",
-        application_type_id=1,
-        extra={"days": 5}
-    ),
-    #5
-    schemas.ApplicationSubTypeCreate(
-        name="Calamidad doméstica",
-        application_type_id=1,
-        extra={"days": 12}
-    ),
-    #6
-    schemas.ApplicationSubTypeCreate(
-        name="Licencia no remunerada",
-        application_type_id=1,
-        extra={"days": 60}
-    ),
-    #6
-    schemas.ApplicationSubTypeCreate(
-        name="Licencia remunerada",
-        application_type_id=1,
-        extra={"days": 3}
-    ),
-    #7
-    schemas.ApplicationSubTypeCreate(
-        name="Comisión de servicios",
-        application_type_id=2
-    ),
-    #8
-    schemas.ApplicationSubTypeCreate(
-        name="Comisión de estudios",
-        application_type_id=2
-    ),
-    #9
-    schemas.ApplicationSubTypeCreate(
-        name="Dedicación",
-        application_type_id=3
-    ),
-    #10
-    schemas.ApplicationSubTypeCreate(
-        name="Dias hábiles",
-        application_type_id=5
-    ),
-    #11
-    schemas.ApplicationSubTypeCreate(
-        name="Dias calendario",
-        application_type_id=5
-    )
+# init_application_sub_type: List[schemas.ApplicationSubTypeCreate] = [
+#     #1
+#     schemas.ApplicationSubTypeCreate(
+#         name="Licencia de maternidad",
+#         application_type_id=1,
+#         extra={"days": 126}
+#     ),
+#     #2
+#     schemas.ApplicationSubTypeCreate(
+#         name="Licencia de paternidad",
+#         application_type_id=1,
+#         extra={"days": 8}
+#     ),
+#     #3
+#     schemas.ApplicationSubTypeCreate(
+#         name="Cumpleaños",
+#         application_type_id=1,
+#         extra={"days": 1}
+#     ),
+#     #4
+#     schemas.ApplicationSubTypeCreate(
+#         name="Luto",
+#         application_type_id=1,
+#         extra={"days": 5}
+#     ),
+#     #5
+#     schemas.ApplicationSubTypeCreate(
+#         name="Calamidad doméstica",
+#         application_type_id=1,
+#         extra={"days": 12}
+#     ),
+#     #6
+#     schemas.ApplicationSubTypeCreate(
+#         name="Licencia no remunerada",
+#         application_type_id=1,
+#         extra={"days": 60}
+#     ),
+#     #6
+#     schemas.ApplicationSubTypeCreate(
+#         name="Licencia remunerada",
+#         application_type_id=1,
+#         extra={"days": 3}
+#     ),
+#     #7
+#     schemas.ApplicationSubTypeCreate(
+#         name="Comisión de servicios",
+#         application_type_id=2
+#     ),
+#     #8
+#     schemas.ApplicationSubTypeCreate(
+#         name="Comisión de estudios",
+#         application_type_id=2
+#     ),
+#     #9
+#     schemas.ApplicationSubTypeCreate(
+#         name="Dedicación",
+#         application_type_id=3
+#     ),
+#     #10
+#     schemas.ApplicationSubTypeCreate(
+#         name="Vacaciones",
+#         application_type_id=5
+#     ),
+    
     #12 Pregrado
     #13 Posgrado
     #14 Grupo de Investigación
     #15 Bienestar de Facultad
-]
+
 
 init_holiday: List[schemas.HolidayCreate] = [
     schemas.HolidayCreate(holiday_date=datetime.datetime(2023,1,1)),

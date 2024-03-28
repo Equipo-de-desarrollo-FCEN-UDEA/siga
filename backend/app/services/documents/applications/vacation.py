@@ -50,20 +50,32 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
 
     #Rellenar datos de la solicitud.
     today = vacations_dict['created_at']
-    initial_date = vacations_dict['vacation']['start_date']
-    final_date = vacations_dict['vacation']['end_date']
+    initial_working_date = vacations_dict['vacation']['start_working_date']
+    final_working_date = vacations_dict['vacation']['end_working_date']
+    initial_calendar_date = vacations_dict['vacation']['start_calendar_date']
+    final_calendar_date = vacations_dict['vacation']['end_calendar_date']
     data_vacations = {
-        "days_type": vacations_dict['application_sub_type']['name'],
+        # "days_type": vacations_dict['application_sub_type']['name'],
         "date_day": str(today.day),
         "date_month": str(today.month),
         "date_year": str(today.year),
-        "initial_date_day": str(initial_date.day),
-        "initial_date_month": str(initial_date.month),
-        "initial_date_year": str(initial_date.year),
-        "final_date_day": str(final_date.day),
-        "final_date_month": str(final_date.month),
-        "final_date_year": str(final_date.year),
-        "total_days": str(vacations_dict['vacation']['total_days']),
+        
+        "initial_working_date_day": str(initial_working_date.day),
+        "initial_working_date_month": str(initial_working_date.month),
+        "initial_working_date_year": str(initial_working_date.year),
+        "final_working_date_day": str(final_working_date.day),
+        "final_working_date_month": str(final_working_date.month),
+        "final_working_date_year": str(final_working_date.year),
+        
+        "initial_calendar_date_day": str(initial_calendar_date.day),
+        "initial_calendar_date_month": str(initial_calendar_date.month),
+        "initial_calendar_date_year": str(initial_calendar_date.year),
+        "final_calendar_date_day": str(final_calendar_date.day),
+        "final_calendar_date_month": str(final_calendar_date.month),
+        "final_calendar_date_year": str(final_calendar_date.year),
+        
+        "total_working_days": str(vacations_dict['vacation']['total_working_days']),
+        "total_calendar_days": str(vacations_dict['vacation']['total_calendar_days']),
         "user_signature": vacations_dict['vacation']['signature']
     }
 
@@ -71,6 +83,7 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
 
     generate_vacations_format_to_aws.apply_async(args=(data_user, data_vacations, path))
     log.debug(path)
+    log.debug("CADENA VACATIONS", vacations)
     return path
 
 @celery_app.task
@@ -81,6 +94,7 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str, sch
 
     wb = load_workbook(filename = templates_dir + '/formato_vacaciones.xlsm')
     target = wb.active
+    
 
     for datos in [user, vacations]:
         for key in datos.keys():
@@ -100,8 +114,8 @@ def generate_vacations_format_to_aws(user: dict, vacations: dict, path: str, sch
     target.merge_cells('A21:C24')
     img_sign.anchor = 'A21'
     target.add_image(img_sign)
-    target.merge_cells('H23:M23')
-    sign_dean.anchor = 'H23'
+    target.merge_cells('I23:M23')
+    sign_dean.anchor = 'I23'
     target.add_image(sign_dean)
 
     with NamedTemporaryFile() as tmp:
