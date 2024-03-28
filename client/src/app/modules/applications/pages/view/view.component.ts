@@ -40,6 +40,7 @@ export class ViewComponent implements AfterViewChecked {
   public isDelete: boolean = false;
   public submitted: boolean = false;
   public isDecline: boolean = false;
+  public isButtonDisabled: boolean = false;
 
   // Files
   public files: any[] = [];
@@ -79,6 +80,8 @@ export class ViewComponent implements AfterViewChecked {
   cancel() {
     this.location.back();
   }
+
+
 
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges();
@@ -153,7 +156,7 @@ export class ViewComponent implements AfterViewChecked {
     }
   }
 
-
+  
 
   // -----------------------------
   // ---- DECLINE APPLICATION -----
