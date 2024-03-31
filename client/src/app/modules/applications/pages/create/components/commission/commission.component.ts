@@ -20,6 +20,7 @@ export class CommissionComponent {
 
 
   // Dates
+  public hiddenIds: number[] = [9];
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
