@@ -60,33 +60,6 @@
   </div>
 
   <!-- TYPE DAY VACATION -->
-  <div class="row">
-    <div class="formfloatig">
-      <select
-        formControlName="application_sub_type_id"
-        class="form-control form-select-lg mb-3 cursor"
-        (change)="onApplicationSubType($event)"
-        [ngClass]="{
-          'is-invalid':
-            (submitted && f['application_sub_type_id'].errors) ||
-            isInvalidForm('application_sub_type_id')
-        }"
-        *ngIf="applicationType$ | async as applicationType"
-      >
-        <option value="0" disabled selected>
-          Elige un tipo de días para Vacaciones
-        </option>
-        <option
-          [ngValue]="tipo.id | number"
-          *ngFor="let tipo of applicationType.application_sub_type"
-        >
-          {{ tipo.name }}
-        </option>
-      </select>
-    </div>
-  </div>
-
-  <hr />
 
   <!-- ALERT BOX -->
   <div class="alert alert-warning mt-3 mb-0">
