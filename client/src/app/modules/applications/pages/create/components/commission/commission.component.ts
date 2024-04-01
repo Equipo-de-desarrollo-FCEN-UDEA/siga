@@ -20,6 +20,7 @@ export class CommissionComponent {
 
 
   // Dates
+  public hiddenIds: number[] = [9];
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
@@ -192,8 +193,12 @@ export class CommissionComponent {
   }
 
   validSize() {
-    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 6 * 1024 * 1024;
+    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
+    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
+      (a, b) => a + b,
+      0
+    );
+    return SIZE < 6 * 1024 * 1024;
   }
 
   validFileType() {

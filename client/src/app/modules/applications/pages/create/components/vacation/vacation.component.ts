@@ -217,26 +217,6 @@ export class VacationComponent {
     }
   }
 
-  // --------------------------------------
-  // --------- VACATION TYPES  ---------
-  // --------------------------------------
-
-  onApplicationSubType(event: Event) {
-    // Obtener el value antes de los ':'
-    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
-      ':'
-    )[0];
-    this.laboralflag=false;
-    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
-      next: (res) => {
-        this.laboralDay = res.extra.days;
-      },
-    });
-    if (ID_VACATION_TYPE=="1"){
-      this.laboralflag=true;
-    }
-  }
-
   isInvalidForm(controlName: string) {
     return (
       this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
