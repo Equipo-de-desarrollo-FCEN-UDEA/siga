@@ -158,7 +158,7 @@ export class VacationComponent {
       return;
     }
     this.form.value.signature = this.signatureImg;
-    
+
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
@@ -177,7 +177,6 @@ export class VacationComponent {
         })
       );
       if (this.signatureImg!=""){
-        //console.log(vacation);
         vacation.subscribe({
           next: (data) => {
             Swal.fire({
@@ -205,7 +204,7 @@ export class VacationComponent {
         });
         return;
       }
-      
+
     }else{
       Swal.fire({
         title: 'Adjuntar documento',
@@ -291,15 +290,12 @@ export class VacationComponent {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    //console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    //console.log(event);
     // works in device not in browser
   }
 
@@ -314,7 +310,6 @@ export class VacationComponent {
   savePad(event: any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    //console.log(base64Data);
     Swal.fire({
       title: 'Firma a registrar',
       html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
@@ -336,7 +331,7 @@ export class VacationComponent {
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
-  
+
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
     const tot_days = this.form.value.total_days;
     const entero_temp=tot_days;
@@ -357,12 +352,12 @@ export class VacationComponent {
         //In this case is important to take the date as days:
         this.verify_date=this.verify_date/(1000*3600*24)+1;
       }
-      //If days in form does not equal to required, the form does not allow continue      
+      //If days in form does not equal to required, the form does not allow continue
       if (this.verify_date != entero_temp){
         return true;
       }
       this.form.value.end_date = new Date(this.formatter.format(toDate));
-      return false;       
+      return false;
 
     } else {
       return false;
@@ -371,7 +366,6 @@ export class VacationComponent {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
-      console.log('!this.fromDate && !this.toDate');
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -381,12 +375,6 @@ export class VacationComponent {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log(
-        'this.fromDate && !this.toDate && date',
-        this.fromDate,
-        this.toDate,
-        date
-      );
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -396,7 +384,6 @@ export class VacationComponent {
         ),
       });
     } else {
-      console.log('else', this.fromDate, this.toDate);
       this.toDate = null;
       this.fromDate = date;
       this.form.patchValue({

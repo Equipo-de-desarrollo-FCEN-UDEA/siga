@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 //routing
 import { AppRoutingModule } from './app-routing.module';
 
-
 import { SignaturePadModule } from 'angular2-signaturepad';
 //component
 import { AppComponent } from './app.component';
@@ -28,7 +27,7 @@ registerLocaleData(localeEs, 'es');
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    
+
   ],
   imports: [
     BrowserModule,

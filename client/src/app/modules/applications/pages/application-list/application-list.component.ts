@@ -9,10 +9,6 @@ import { AuthService } from '@services/auth.service';
 import { Location } from '@angular/common';
 import { ApplicationTypesService } from '@services/application-types.service';
 
-
-
-
-
 @Component({
   selector: 'app-application-list',
   templateUrl: './application-list.component.html',
@@ -35,7 +31,7 @@ export class ApplicationListComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private location: Location,
-    
+
     private authSvc: AuthService,
     private applicationsSvc: ApplicationService,
     private applicationTypeSvc: ApplicationTypesService
@@ -77,7 +73,6 @@ export class ApplicationListComponent implements OnInit {
 
   // We use this for get with a search criteria
   search() {
-    console.log(this.form.value)
     this.page = 1
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(

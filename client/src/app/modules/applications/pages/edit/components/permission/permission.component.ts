@@ -89,12 +89,10 @@ export class PermissionComponent implements OnInit, AfterViewInit {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.permissionSvc.getPermission(this.id).subscribe((data) => {
-        // console.log(data);
         this.form.patchValue({
           ...data.permission,
           application_sub_type_id: data.application_sub_type_id,
         });
-        // console.log(data.permission);
         this.documents = data.permission.documents!;
 
         this.SubTypeSvc.getApplicationSubType(+data.application_sub_type_id).subscribe({
@@ -143,7 +141,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
               documents: data.files_paths,
             });
           }
-          console.log(this.form.value);
           return this.permissionSvc.putPermission(
             this.form.value as PermissionCreate,
             this.id
@@ -153,7 +150,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
     }
     permission.subscribe({
       next: (res) => {
-        console.log('permission updated', permission);
         Swal.fire({
           title: 'Actualizado',
           text: '¡El permiso se actualizó con éxito!',
@@ -167,7 +163,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
         });
       },
       error: (err) => {
-        console.log('salio error', err);
         this.error = err;
       },
     });
@@ -209,7 +204,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
-      console.log('!this.fromDate && !this.toDate')
       this.fromDate = date;
       this.form.patchValue({
         start_date: new Date(
@@ -219,7 +213,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
         ),
       });
     } else if (this.fromDate && !this.toDate && date) {
-      console.log('this.fromDate && !this.toDate && date', this.fromDate, this.toDate, date)
       this.toDate = date;
       this.form.patchValue({
         end_date: new Date(
@@ -229,7 +222,6 @@ export class PermissionComponent implements OnInit, AfterViewInit {
         ),
       });
     } else {
-      console.log('else',  this.fromDate, this.toDate)
       this.toDate = null;
       this.fromDate = date
       this.form.patchValue({

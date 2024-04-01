@@ -5,6 +5,7 @@ import { FullTimeService } from '@services/applications/full_time/full-time.serv
 import Swal from 'sweetalert2';
 import { InitialLetter } from '../../../../../../../../core/interfaces/applications/full_time/letter';
 import { LoaderService } from '../../../../../../../../core/services/loader.service';
+import { FormsStatusService } from "../../../../../../../../core/services/applications/full_time/interaction-components/forms-status.service";
 
 @Component({
   selector: 'app-start-letter',
@@ -24,15 +25,15 @@ export class StartLetterComponent implements OnInit {
     private fullTimeSvc: FullTimeService,
     private loaderSvc: LoaderService,
     private formBuilder: FormBuilder,
-
-  ) { 
+    public formsStatusService: FormsStatusService
+  ) {
 
     this.route.params.subscribe((params)=> {
       this.id = params ['id']
     })
   }
 
-  // Form 
+  // Form
   public form = this.formBuilder.group({
     body: [
       '',
@@ -83,8 +84,8 @@ export class StartLetterComponent implements OnInit {
 
    }
    this.fullTimeSvc.putLetter(startLetter, this.id).subscribe(
-    
-    
+
+
     {
       next:(data:any) =>{
         Swal.fire({
@@ -95,34 +96,15 @@ export class StartLetterComponent implements OnInit {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${this.id}/dedicacion`])
+            this.formsStatusService.setStartLetterStatus(true);
+            this.router.navigate([`/solicitudes/editar/${this.id}/dedicacion`]);
           }
         });
       }
     }
 
-    
-    // (res:any)=> {
-    //   if(res){
-    //     Swal.fire(
-    //       {
-    //         title:'La carta se creo con exito',
-    //         icon:'success',
-    //         confirmButtonText:'Aceptar'
-    //       }
-    //     )
-       
-    //   }
-    // }
    )
 
-    // let startLetter = this.fullTimeSvc.putLetter(
-    //   this.form.value as InitialLetter,this.id
-      
-    
-    console.log(startLetter)
-    
-    
   }
 
   isInvalidForm(controlName: string) {
@@ -137,7 +119,7 @@ export class StartLetterComponent implements OnInit {
   validFileType(){
     return true
   }
-  
+
 
 
 }

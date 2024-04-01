@@ -10,6 +10,7 @@ import { Holiday } from '@interfaces/holiday';
 import { NgbDate, NgbDateStruct, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { DocumentService } from '@services/document.service';
+import { FormsStatusService } from "@services/applications/full_time/interaction-components/forms-status.service";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -52,7 +53,8 @@ export class FullTimeComponent implements OnInit {
     private route: ActivatedRoute,
 
     private formBuilder: FormBuilder,
-    private fullTimeSvc: FullTimeService
+    private fullTimeSvc: FullTimeService,
+    public formsStatusService: FormsStatusService
   ) {
     this.form = this.formBuilder.group({
       start_date: [new Date(), [Validators.required]],
@@ -65,8 +67,19 @@ export class FullTimeComponent implements OnInit {
 
       this.fullTimeSvc.getFullTime(this.id).subscribe((data) => {
         this.application = data;
+
+        data.full_time.initial_letter !== null ?
+          this.formsStatusService.setStartLetterStatus(true):
+          this.formsStatusService.setStartLetterStatus(false);
+        data.full_time.vice_format !== null ?
+          this.formsStatusService.setViceFormatStatus(true):
+          this.formsStatusService.setViceFormatStatus(false);
+        data.full_time.work_plan !== null ?
+          this.formsStatusService.setWorkPlanStatus(true):
+          this.formsStatusService.setWorkPlanStatus(false);
       });
     });
+
   }
 
   isInvalidForm() {
@@ -143,7 +156,7 @@ export class FullTimeComponent implements OnInit {
       next: (res) => {
         Swal.fire({
           title: 'Actualizado',
-          text: '¡La dedicación se solicitó con éxito con éxito!',
+          text: '¡La dedicación se solicitó con éxito!',
           icon: 'success',
           confirmButtonText: 'Aceptar',
           confirmButtonColor: '#3AB795',

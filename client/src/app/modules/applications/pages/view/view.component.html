@@ -1,7 +1,7 @@
 <div
   class="containerInside container card shadow mt-5 bg-white rounded p-5"
-  *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
-
+  *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
+>
   <div class="row header-row">
     <div class="col-md-auto">
       <button
@@ -63,7 +63,10 @@
     </div>
   </div>
 
-  <div class="row header-row mt-3" *ngIf="{ isCoordinador: isCoordinador$ | async } as context">
+  <div
+    class="row header-row mt-3"
+    *ngIf="{ isCoordinador: isCoordinador$ | async } as context"
+  >
     <div class="col">
       <span class="text-secondary">ACCIONES</span>
     </div>
@@ -71,7 +74,10 @@
   <hr />
 
   <div *ngIf="{ isCoordinador: isCoordinador$ | async } as newcontext">
-    <div class="status-control" *ngIf="context.isSuperUser && !newcontext.isCoordinador">
+    <div
+      class="status-control"
+      *ngIf="context.isSuperUser && !newcontext.isCoordinador"
+    >
       <form
         [formGroup]="form"
         (submit)="submit()"
@@ -81,9 +87,7 @@
           class="row regular-row mt-4 align-items-baseline"
           *ngIf="application.application_sub_type.name == 'Apoyo Económico'"
         >
-        <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-          Acta *
-        </div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Acta *</div>
           <div
             *ngFor="let producto of document_new; last as isLast; let i = index"
             class="col-xs-12 col-sm-12 col-xs-12 col-12 col-lg-5"
@@ -118,7 +122,9 @@
           </div>
         </div>
         <div class="row regular-row mt-4 align-items-baseline">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Observación *</div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Observación *
+          </div>
           <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="formfloatig">
               <textarea
@@ -145,10 +151,7 @@
         </div>
       </form>
     </div>
-
   </div>
-
-
 
   <div class="user-control" *ngIf="!context.isSuperUser">
     <div

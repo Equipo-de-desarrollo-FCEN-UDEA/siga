@@ -14,7 +14,6 @@ import { switchMap} from 'rxjs';
 
 
 export class UserViewComponent {
-  // public rol : string = localStorage.getItem('rol') || '';
   public user: UserResponse | undefined;
   public userResponse!: UserResponse;
   public id: number | string = 0;
