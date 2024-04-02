@@ -19,7 +19,6 @@ import { LaboralDays } from '@shared/utils';
 })
 export class DatePickerComponent implements OnInit {
   @Input() form!: FormGroup;
-
   @Input() total_days!: String;
 
   public fromDate: NgbDate | null = null;
@@ -46,9 +45,7 @@ export class DatePickerComponent implements OnInit {
     return this.form.controls;
   }
 
-  ngOnInit(): void {
-    console.log(this.total_days);
-  }
+  ngOnInit(): void {}
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
     const tot_days = this.form.value.total_days;
