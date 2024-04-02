@@ -114,8 +114,6 @@ export class VacationComponent {
   // holidays
   public holidays: Holiday[] = [];
 
-  form: FormGroup;
-
   constructor(
     private fb: FormBuilder,
     private calendar: NgbCalendar,
@@ -130,22 +128,22 @@ export class VacationComponent {
     private vacationSvc: VacationService,
     private documentSvc: DocumentService,
     private holidaySvc: HolidayService
-  ) {
-    this.form = this.fb.group({
-      application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
+  ) {}
 
-      total_days_laboral: [0, [Validators.required]],
-      start_date_laboral: [new Date(), [Validators.required]],
-      end_date_laboral: [new Date(), [Validators.required]],
+  public form = this.fb.group({
+    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
 
-      total_days_calendar: [0, [Validators.required]],
-      start_date_calendar: [new Date(), [Validators.required]],
-      end_date_calendar: [new Date(), [Validators.required]],
+    total_days_laboral: [0, [Validators.required]],
+    start_date_laboral: [new Date(), [Validators.required]],
+    end_date_laboral: [new Date(), [Validators.required]],
 
-      documents: [this.documents],
-      signature: [this.signatureImg],
-    });
-  }
+    total_days_calendar: [0, [Validators.required]],
+    start_date_calendar: [new Date(), [Validators.required]],
+    end_date_calendar: [new Date(), [Validators.required]],
+
+    documents: [this.documents],
+    signature: [this.signatureImg],
+  });
 
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({

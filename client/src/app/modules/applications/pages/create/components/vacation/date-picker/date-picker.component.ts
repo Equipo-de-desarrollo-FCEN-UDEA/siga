@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
@@ -11,15 +17,21 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { LaboralDays } from '@shared/utils';
+import { log } from 'console';
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerComponent implements OnInit, OnChanges {
   @Input() form!: FormGroup;
-  @Input() total_days!: String;
+  @Input() total_days: any;
+  @Input() start_date: any;
+  @Input() end_date: any;
+  @Input() formControlNameStart?: string;
+  @Input() formControlNameEnd?: string;
+  @Input() laboralflag: boolean = true;
 
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -27,7 +39,6 @@ export class DatePickerComponent implements OnInit {
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
-  public laboralflag: boolean = true;
   public verify_date: number = 0;
   public holidays: Holiday[] = [];
 
@@ -45,11 +56,17 @@ export class DatePickerComponent implements OnInit {
     return this.form.controls;
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.total_days);
+  }
+
   ngOnInit(): void {}
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
-    const tot_days = this.form.value.total_days;
+    const tot_days = this.total_days;
     const entero_temp = tot_days;
+
+    console.log({ entero_temp });
 
     if (fromDate || toDate) {
       //Verify between laboral days and calendar days
@@ -99,7 +116,6 @@ export class DatePickerComponent implements OnInit {
         ),
       });
     } else {
-      console.log('else', this.fromDate, this.toDate);
       this.toDate = null;
       this.fromDate = date;
       this.form.patchValue({

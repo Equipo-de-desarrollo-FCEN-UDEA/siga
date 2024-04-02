@@ -25,7 +25,6 @@
       <div class="col-12">
         <div class="formfloatig">
           <input
-            id="floatinghours_week"
             formControlName="total_days_laboral"
             max="21"
             min="1"
@@ -50,7 +49,57 @@
 
       <app-date-picker
         [form]="form"
-        [total_days]="'total_days_laboral'"
+        [total_days]="f['total_days_laboral'].value"
+        [start_date]="f['start_date_laboral'].value"
+        [end_date]="f['end_date_laboral'].value"
+        [formControlNameStart]="'start_date_laboral'"
+        [formControlNameEnd]="'end_date_laboral'"
+        [laboralflag]="true"
+      ></app-date-picker>
+    </div>
+
+    <div class="mt-4 col-md-6 col-xs-12 col-sm-12 col-12 mb-3">
+      <h6>
+        <strong>Días Calendario</strong>
+      </h6>
+      <hr style="margin-top: 0" />
+
+      <span class="col-md-4 col-xs-12 col-sm-12 label"
+        >Número de días<span style="color: red">*</span></span
+      >
+      <div class="col-12">
+        <div class="formfloatig">
+          <input
+            formControlName="total_days_calendar"
+            max="21"
+            min="1"
+            class="form-control"
+            placeholder="Ejemplo: 4"
+            type="number"
+            [ngClass]="{
+              'is-invalid': isInvalidForm('total_days_calendar')
+            }"
+          />
+        </div>
+        <p
+          *ngIf="isInvalidForm('total_days_calendar')"
+          class="inputError text-danger"
+        >
+          Esta cantidad de días debe ser mínimo de 1 y máximo de 21
+        </p>
+      </div>
+      <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
+        >Fecha inicial <span style="color: red">*</span></span
+      >
+
+      <app-date-picker
+        [form]="form"
+        [total_days]="f['total_days_calendar'].value"
+        [start_date]="f['start_date_calendar'].value"
+        [end_date]="f['end_date_calendar'].value"
+        [formControlNameStart]="'start_date_calendar'"
+        [formControlNameEnd]="'end_date_calendar'"
+        [laboralflag]="false"
       ></app-date-picker>
     </div>
 

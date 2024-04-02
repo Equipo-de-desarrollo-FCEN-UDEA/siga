@@ -63,7 +63,7 @@
         (click)="datepicker.toggle(); clicked = clicked + 1"
         placeholder="yyyy-mm-dd"
         name="dpFromDate"
-        formControlName="start_date_laboral"
+        formControlName="{{ formControlNameStart }}"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
         [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
         [ngClass]="{
@@ -72,14 +72,30 @@
             ((!fromDate || !toDate) && clicked !== 0) ||
             selectDays(fromDate, toDate)
         }"
-        [attr.disabled]="f['total_days_laboral'].errors ? '' : null"
+        [attr.disabled]="
+          laboralflag
+            ? f['total_days_laboral'].errors
+              ? ''
+              : null
+            : f['total_days_calendar'].errors
+            ? ''
+            : null
+        "
       />
       <button
         #buttonEl
         class="btn btn-outline-secondary"
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
-        [attr.disabled]="f['total_days_laboral'].errors ? '' : null"
+        [attr.disabled]="
+          laboralflag
+            ? f['total_days_laboral'].errors
+              ? ''
+              : null
+            : f['total_days_calendar'].errors
+            ? ''
+            : null
+        "
       >
         <i class="fa fa-calendar"> </i>
       </button>
@@ -107,7 +123,7 @@
         class="form-control"
         placeholder="yyyy-mm-dd"
         name="dpToDate"
-        formControlName="end_date_laboral"
+        formControlName="{{ formControlNameEnd }}"
         [value]="formatter.format(toDate)"
         (input)="toDate = validateInput(toDate, dpToDate.value)"
       />
