@@ -46,7 +46,7 @@ export class AdvanceComponent {
 
   constructor(
     private route: ActivatedRoute,
-    
+
     private fb: FormBuilder,
 
     private economicSupportSvc: EconomicSupportService,
@@ -57,7 +57,6 @@ export class AdvanceComponent {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
-        //console.log(data);
         this.form.patchValue({
           name: data.economic_support.payment.name,
           id: data.economic_support.payment.id,
@@ -72,14 +71,14 @@ export class AdvanceComponent {
     });
   }
 
-  
+
 
   send() { this.sendForm.emit(this.form.value); }
 
   //ENVIA EL FORMULARIO AL COMPONENTE PADRE EN ESTE CASO ECONOMIC SUPPORT COMPONENT
-  sendForms() { 
+  sendForms() {
     this.submitted = true;
-    return this.form.value; 
+    return this.form.value;
   }
 
 

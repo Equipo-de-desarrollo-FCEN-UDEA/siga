@@ -40,6 +40,7 @@ export class ViewComponent implements AfterViewChecked {
   public isDelete: boolean = false;
   public submitted: boolean = false;
   public isDecline: boolean = false;
+  public isButtonDisabled: boolean = false;
 
   // Files
   public files: any[] = [];
@@ -79,6 +80,8 @@ export class ViewComponent implements AfterViewChecked {
   cancel() {
     this.location.back();
   }
+
+
 
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges();
@@ -153,7 +156,7 @@ export class ViewComponent implements AfterViewChecked {
     }
   }
 
-
+  
 
   // -----------------------------
   // ---- DECLINE APPLICATION -----
@@ -196,10 +199,8 @@ export class ViewComponent implements AfterViewChecked {
 
   validSize() {
     const FILTERED_FILES = this.files.filter((file) => file !== undefined);
-    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
-      (a, b) => a + b,
-      0
-    );
+    const SIZE = FILTERED_FILES.map((file) => 
+    file?.size || 0).reduce((a, b) => a + b,0);
     return SIZE < 6 * 1024 * 1024;
   }
 

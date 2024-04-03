@@ -58,7 +58,6 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
     private modalSvc: NgbModal,
     private router: Router
   ) {
-    //this.usuarioSvc.getUsuario().subscribe(resp => this.Usuario = resp);
   }
 
 
@@ -71,10 +70,7 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
 
   public Usuario: UsuarioResponse | undefined;
 
-
-
   fBasicInfo = this.fb.group({
-    // titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
     tiempo_solicitado: [NaN, [Validators.required, Validators.min(1), Validators.max(12)]],
     campo_modalidad: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50000)]],
     descripcion_comprobante: ['', [Validators.minLength(3), Validators.maxLength(255)]],
@@ -127,9 +123,6 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    // let Dedicacion = this.fBasicInfo.value as FormatoVice;
-
-
     let metas = this.fBasicInfo.value.metas?.map(meta => {
       return { "metaproducto": meta.meta, "tipo": "meta" }
     })
@@ -202,7 +195,6 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
       (res: any) => {
         this.acciones = res.acciones;
         this.objetivos_has_indicador = res.objetivos_has_indicador;
-        console.log(this.acciones, this.objetivos_has_indicador);
         this.PlanDesarrolloFirstTake++;
       }
     ).catch(
@@ -216,11 +208,7 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
     );
   }
 
-
-
-
   // Metas
-
   metasgroup() {
     return this.fb.group({
       meta: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
@@ -267,15 +255,11 @@ export class FDedicacionComponent implements OnInit, AfterViewInit {
     this.productosArr.patchValue(productos);
   }
 
-
   // Eliminar del control
   removeInput(controlName: string, index: number) {
     const control = this.fBasicInfo.get(controlName) as FormArray;
     control.removeAt(index);
   }
-
-
-
 
   isInvalidForm(controlName: string) {
     return this.fBasicInfo.get(controlName)?.invalid && this.fBasicInfo.get(controlName)?.touched;

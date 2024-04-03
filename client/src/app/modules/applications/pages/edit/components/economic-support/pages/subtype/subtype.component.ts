@@ -37,7 +37,6 @@ export class SubtypeComponent implements OnInit {
         .getSubdepartmentsByDepartment(data.department_id)
         .subscribe((data) => {
           this.subdeparments = data;
-          //console.log(this.subdeparments);
         });
     });
   }
@@ -69,8 +68,6 @@ export class SubtypeComponent implements OnInit {
         this.dependencies.splice(index, 1);
       }
     }
-
-    console.log(this.dependencies);
   }
   send() {
     this.sendForm.emit(this.dependencies);

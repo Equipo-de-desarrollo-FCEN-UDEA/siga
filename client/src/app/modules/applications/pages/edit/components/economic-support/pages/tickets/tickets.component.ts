@@ -42,7 +42,7 @@ export class TicketsComponent {
 
   constructor(
     private fb: FormBuilder,
-    
+
     private route: ActivatedRoute,
     private economicSupportSvc: EconomicSupportService,
 
@@ -52,14 +52,12 @@ export class TicketsComponent {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.economicSupportSvc.getEconomicSupport(this.id).subscribe((data) => {
-        //console.log(data);
         this.form.patchValue({
           departure_date: data.economic_support.tickets.departure_date,
           arrival_date: data.economic_support.tickets.arrival_date,
           departure_place: data.economic_support.tickets.departure_place,
           arrival_place: data.economic_support.tickets.arrival_place,
           place_birth: data.economic_support.tickets.place_birth,
-          //birthdate: data.economic_support.tickets.birthdate,
         });
       });
     });

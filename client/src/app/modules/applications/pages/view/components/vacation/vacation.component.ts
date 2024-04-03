@@ -50,7 +50,7 @@ export class VacationComponent implements OnInit {
       this.application = application;
       let status_app = this.application.application_status[this.application.application_status.length-1].status.name;
       this.vacation.documents = this.vacation.documents!;
-      if (status_app != 'APROBADA'){
+      if (status_app != 'SOLICITADA'){
         this.vacation.documents.pop();
       }
       this.current_status = lastElement(
@@ -69,9 +69,7 @@ export class VacationComponent implements OnInit {
         window.open(window.URL.createObjectURL(res));
       },
       error: (err) => {
-        // if (err.status === 404 || err.status === 401) {
-        //   this.error = err.error.msg;
-        // }
+
       },
     });
   }
@@ -80,7 +78,7 @@ export class VacationComponent implements OnInit {
   // ----------- DELETE PERMISSION ------------
   // -----------------------------------------
   delete(id: number): void {
-    
+
     Swal.fire({
       title: '¿Seguro que quieres eliminar esta solicitud?',
       text: 'No podrás revertir esta acción',
@@ -105,9 +103,7 @@ export class VacationComponent implements OnInit {
             });
           },
           error: (err) => {
-            // if (err.status === 404 || err.status === 401) {
-            //   this.error = err
-            // }
+
           },
         });
       }

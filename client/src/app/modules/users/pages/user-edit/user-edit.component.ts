@@ -31,7 +31,7 @@ export class UserEditComponent {
   public typesId = id_type;
   public vinculation_types = vinculation_type;
   public scale = scale;
-  
+
   public error: string = "";
   public submitted: boolean = false;
   //public rol: string = localStorage.getItem('rol') || '';
@@ -57,7 +57,7 @@ export class UserEditComponent {
     private location: Location
   ) {
     this.activateRoute.params.subscribe(params => this.getId = params['id']);
-    //List of rols 
+    //List of rols
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -73,7 +73,6 @@ export class UserEditComponent {
 
     this.userSvc.getUser(this.getId as number).subscribe({
       next: res => {
-        console.log(res)
         this.userResponse = res;
         this.rol = String(this.userResponse.userrol[this.userResponse.active_rol].rol.name);
         this.updateUserBase.patchValue(this.userResponse);
@@ -113,8 +112,6 @@ export class UserEditComponent {
   submitUpdate() {
     // verificacion de errores
     if (this.updateUserBase.invalid) {
-      console.log(this.updateUserBase.value)
-      console.log('error form')
       return;
     }
     //Review number of rols
@@ -129,7 +126,6 @@ export class UserEditComponent {
     }
     let user = this.updateUserBase.value as UserUpdate;
     user.changes_rol = this.flag_rol;
-    console.log(user);
     user.active_rol = 0;
     this.userSvc.putUser(user, this.getId as number, this.flag_rol)
     .subscribe({

@@ -303,15 +303,12 @@ export class VacationComponent {
 
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
-    //console.log(this.signaturePad.toDataURL());
   }
 
   drawStart() {
     // will be notified of szimek/signature_pad's onBegin event
-    //console.log('begin drawing');
   }
   startDrawing(event: Event) {
-    //console.log(event);
     // works in device not in browser
   }
 
@@ -326,7 +323,6 @@ export class VacationComponent {
   savePad(event: any) {
     const base64Data = this.signaturePad?.toDataURL();
     this.signatureImg = base64Data;
-    //console.log(base64Data);
     Swal.fire({
       title: 'Firma a registrar',
       html: 'Por políticas institucionales, la firma aquí consignada <strong>es obligatoria</strong>,pero solo se usará para emitir el formato.',
