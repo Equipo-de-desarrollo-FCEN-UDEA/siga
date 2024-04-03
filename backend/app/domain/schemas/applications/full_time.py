@@ -148,6 +148,7 @@ class InitialLetter(BaseModel):
 
 class FullTimeBase(BaseModel):
     title: str
+    start_date: datetime
     documents: list[Any] | None = Field(default_factory=list)
 
 
@@ -164,7 +165,6 @@ class FullTimeInDB(FullTimeBase):
     vice_format: ViceFormat | None
     initial_letter: InitialLetter | None
     
-
 
 class FullTimeResponse(ApplicationResponse):
     full_time: FullTimeInDB
