@@ -344,6 +344,9 @@ export class VacationComponent {
       confirmButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(typeof this.signatureImg);
+        console.log(this.signatureImg);
+
         this.isButtonDisabled = true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.isButtonDisabled = false;
