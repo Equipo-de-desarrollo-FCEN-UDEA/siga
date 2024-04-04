@@ -68,16 +68,16 @@
         [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
         [ngClass]="{
           'is-invalid':
-            (submitted && f['total_days_laboral'].errors) ||
+            (submitted && f['end_working_date'].errors) ||
             ((!fromDate || !toDate) && clicked !== 0) ||
             selectDays(fromDate, toDate)
         }"
         [attr.disabled]="
           laboralflag
-            ? f['total_days_laboral'].errors
+            ? f['total_working_days'].errors
               ? ''
               : null
-            : f['total_days_calendar'].errors
+            : f['total_calendar_days'].errors
             ? ''
             : null
         "
@@ -89,10 +89,10 @@
         type="button"
         [attr.disabled]="
           laboralflag
-            ? f['total_days_laboral'].errors
+            ? f['total_working_days'].errors
               ? ''
               : null
-            : f['total_days_calendar'].errors
+            : f['total_calendar_days'].errors
             ? ''
             : null
         "

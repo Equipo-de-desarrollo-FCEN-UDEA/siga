@@ -1,22 +1,25 @@
-import { Application } from "@interfaces/application";
-import { file_path } from "@interfaces/documents";
+import { Application } from '@interfaces/application';
+import { file_path } from '@interfaces/documents';
 
 export interface VacationCreate {
-    application_sub_type_id: number;
-    total_days: number;
-    vacationType: boolean;
-    start_date: Date;
-    end_date: Date;
-    signature: string;
-    documents?: file_path[];
-    }
-
+  start_date: Date;
+  end_date: Date;
+  total_working_days: number;
+  start_working_date: Date;
+  end_working_date: Date;
+  total_calendar_days: number;
+  start_calendar_date: Date;
+  end_calendar_date: Date;
+  documents?: file_path[];
+  signature: string;
+  application_sub_type_id: number;
+}
 
 export interface VacationInDB extends VacationCreate {
-    id: string;
-    resolution?: string;
+  id: string;
+  resolution?: string;
 }
 
 export interface VacationResponse extends Application {
-    vacation: VacationInDB;
+  vacation: VacationInDB;
 }

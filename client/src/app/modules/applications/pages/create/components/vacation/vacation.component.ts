@@ -129,17 +129,23 @@ export class VacationComponent {
     private documentSvc: DocumentService,
     private holidaySvc: HolidayService
   ) {}
+  public start_date_string = new Date();
 
   public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
+    start_date: new Date(
+      'Tue Apr 16 2024 19:00:00 GMT-0500 (Colombia Standard Time)'
+    ),
+    end_date: new Date(
+      'Tue Apr 16 2024 19:00:00 GMT-0500 (Colombia Standard Time)'
+    ),
+    application_sub_type_id: [12],
+    total_working_days: [0, [Validators.required]],
+    start_working_date: [new Date(), [Validators.required]],
+    end_working_date: [new Date(), [Validators.required]],
 
-    total_days_laboral: [0, [Validators.required]],
-    start_date_laboral: [new Date(), [Validators.required]],
-    end_date_laboral: [new Date(), [Validators.required]],
-
-    total_days_calendar: [0, [Validators.required]],
-    start_date_calendar: [new Date(), [Validators.required]],
-    end_date_calendar: [new Date(), [Validators.required]],
+    total_calendar_days: [0, [Validators.required]],
+    start_calendar_date: [new Date(), [Validators.required]],
+    end_calendar_date: [new Date(), [Validators.required]],
 
     documents: [this.documents],
     signature: [this.signatureImg],
@@ -170,9 +176,13 @@ export class VacationComponent {
     }
     this.form.value.signature = this.signatureImg;
 
+    console.log('this.form.value');
+    console.log(this.form.value);
+
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
+
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
@@ -187,10 +197,11 @@ export class VacationComponent {
           );
         })
       );
+
       if (this.signatureImg != '') {
-        //console.log(vacation);
         vacation.subscribe({
           next: (data) => {
+            console.log({ data });
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -340,8 +351,4 @@ export class VacationComponent {
     });
     return;
   }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
 }

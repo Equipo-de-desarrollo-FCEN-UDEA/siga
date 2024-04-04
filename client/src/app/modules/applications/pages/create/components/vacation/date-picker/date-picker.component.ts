@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
@@ -24,7 +18,7 @@ import { log } from 'console';
   templateUrl: './date-picker.component.html',
   styleUrls: ['./date-picker.component.scss'],
 })
-export class DatePickerComponent implements OnInit, OnChanges {
+export class DatePickerComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() total_days: any;
   @Input() start_date: any;
@@ -56,17 +50,11 @@ export class DatePickerComponent implements OnInit, OnChanges {
     return this.form.controls;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.total_days);
-  }
-
   ngOnInit(): void {}
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
     const tot_days = this.total_days;
     const entero_temp = tot_days;
-
-    console.log({ entero_temp });
 
     if (fromDate || toDate) {
       //Verify between laboral days and calendar days
