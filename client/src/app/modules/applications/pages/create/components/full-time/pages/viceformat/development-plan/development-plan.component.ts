@@ -48,9 +48,8 @@ export class DevelopmentPlanComponent implements OnInit {
     public activeModal: NgbActiveModal
   ) { }
 
-  
+
   ngOnInit(): void {
-    console.log(this.planTrabajo);
     if (this.planTrabajo) {
       this.selectedplanTrabajo = this.planTrabajo;
       this.selectedTema = this.selectedplanTrabajo.map(tema => tema.id);
@@ -80,8 +79,8 @@ export class DevelopmentPlanComponent implements OnInit {
       }).flat()
     }
  }
-  
- 
+
+
  selectTema(value: number, tema: Topic) {
   if (this.selectedTema.indexOf(value) != -1) {
     let index = this.selectedTema.indexOf(value);
@@ -130,7 +129,7 @@ selectAccion(accion: Action, objetivo: ObjectiveTopicId) {
   let indexOfTema = this.selectedTema.indexOf(objetivo.idTopic);
   let indexObjective = this.selectedObjetivo.indexOf(objetivo.id);
   let indexObjetivo = this.selectedplanTrabajo[indexOfTema].objectives!.map(objetivo=>this.selectedObjetivo[indexObjective]).indexOf(objetivo.id);
-  
+
   if (index != -1) {
     this.selectedAccion.splice(index, 1);
     this.acciones.splice(index, 1);
@@ -142,7 +141,7 @@ selectAccion(accion: Action, objetivo: ObjectiveTopicId) {
     this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].actions!.push(accion);
 
   }
-  
+
 }
 
 
@@ -153,7 +152,7 @@ selectIndicador(indicador: Indicator, objetivo: ObjectiveTopicId) {
   let indexObjective = this.selectedObjetivo.indexOf(objetivo.id);
   //let indexObjetivo = this.selectedTemas[indexOfTema].objectives!.map(objetivo => objetivo.id).indexOf(objetivo.id);
   let indexObjetivo = this.selectedplanTrabajo[indexOfTema].objectives!.map(objetivo=>this.selectedObjetivo[indexObjective]).indexOf(objetivo.id);
- 
+
   if (index != -1) {
     this.selectedIndicadores.splice(index, 1);
     this.indicadores.slice(index, 1);
@@ -164,10 +163,10 @@ selectIndicador(indicador: Indicator, objetivo: ObjectiveTopicId) {
     this.indicadores.push(indicador);
     this.selectedplanTrabajo[indexOfTema].objectives![indexObjetivo].indicators!.push(indicador);
   }
-  
+
 }
 
-  
+
 
   submit() {
     this.activeModal.close(this.selectedplanTrabajo);

@@ -44,13 +44,6 @@
     <span class="fw-bold">Información general</span>
   </div>
 
-  <!-- <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Tipo de solicitud</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ economic_support.application_data.application_type }}
-    </div>
-  </div> -->
-
   <div class="row regular-row mt-2">
     <div class="col-6">
       <div class="col-xs-12 col-sm-6 col-lg-6 col-md-6 label text-secondary">
@@ -73,13 +66,6 @@
   <div class="row mt-2">
     <span class="fw-bold">Información del Solicitante</span>
   </div>
-
-  <!-- <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Solicitud Para</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ economic_support.personal_data.application_for }}
-    </div>
-  </div> -->
 
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label text-secondary">
@@ -138,21 +124,6 @@
     <div class="col-xs-12 col-sm-6">
       ${{ amountApprovedResearchGroup }} Pesos Colombianos
     </div>
-
-    <!-- <ng-container *ngIf="hasCoordinator()">
-      <hr class="mt-4" />
-      <div class="col-xs-12 col-sm-6 label text-secondary">
-        Acta Comité de Instituto
-      </div>
-      <div
-        scope="row"
-        class="link-success cursor col-xs-12 col-sm-6"
-        *ngFor="let act of applicationStatus[1].document"
-        (click)="openDocument(act.path)"
-      >
-        {{ act.name }}
-      </div>
-    </ng-container> -->
   </div>
 
   <ng-container class="table-responsive-lg">
@@ -228,7 +199,6 @@
 
   <ng-container *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
     <div *ngIf="userRol === 'Coordinador'">
-
       <ng-container class="table-responsive-lg">
         <table
           class="table table-striped table-hover table-borderless table-responsive"
@@ -363,14 +333,6 @@
       </table>
     </div>
   </ng-container>
-
-
-  <!-- <div class="row regular-row mt-2" *ngIf="current_status == 'APROBADA'">
-    <div class="col-xs-12 col-sm-6 label text-secondary">Monto Aprobado</div>
-    <div class="col-xs-12 col-sm-6">
-      ${{ amount_approved }} Pesos Colombianos
-    </div>
-  </div> -->
 
   <div *ngIf="economic_support.compliment">
     <div class="row header-row mt-3">

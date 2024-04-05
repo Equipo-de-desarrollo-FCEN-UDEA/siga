@@ -45,7 +45,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
             )
             break;
           case 403:
-            console.log(_error);
             Swal.fire({
               title: 'Error',
               text: _error.error.detail,
@@ -66,7 +65,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
             // )
             break;
           case 422:
-            console.log(_error);
             Swal.fire({
               title: 'Error',
               text: _error.error.detail[0].msg,
@@ -117,81 +115,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
             break;
         }
 
-        // if (_error.status == 500) {
-        //   Swal.fire({
-        //     title: 'Error del servidor',
-        //     text: _error.error.detail,
-        //     confirmButtonText: 'Aceptar',
-        //     icon: 'error',
-        //   });
-        // } else {
-        //   if (_error.status == 422) {
-        //     console.log(_error);
-        //     Swal.fire({
-        //       title: 'Error',
-        //       text: _error.error.detail[0].msg,
-        //       confirmButtonText: 'Aceptar',
-        //       icon: 'error',
-        //       confirmButtonColor: '#3AB795',
-        //     });
-        //   } else {
-        //     if (_error.status == 401 || _error.status == 403) {
-        //       console.log(_error);
-        //       Swal.fire({
-        //         title: 'Error',
-        //         text: _error.error.detail,
-        //         confirmButtonText: 'Aceptar',
-        //         icon: 'error',
-        //         confirmButtonColor: '#3AB795',
-        //       });
-        //     } else {
-        //       if (_error.status == 404) {
-        //         this.router.navigate(['/not-found']);
-        //       }else{
-        //         Swal.fire({
-        //           title: 'Error',
-        //           text: _error.error.detail,
-        //           confirmButtonText: 'Aceptar',
-        //           icon: 'error',
-        //           confirmButtonColor: '#3AB795',
-        //         }).then((result) => {
-        //           if (result.isConfirmed) {
-        //             if (
-        //               _error.error.detail ==
-        //               'Tu cuenta no se encuentra activa, recuerda revisar tu correo para activarla o pide correo de activación nuevamente'
-        //             ) {
-        //               Swal.fire({
-        //                 title: 'Enviar correo de activación',
-        //                 text: 'Correo o cédula:',
-        //                 input: 'text',
-        //                 inputAttributes: {
-        //                   autocapitalize: 'off',
-        //                 },
-        //                 showCancelButton: true,
-        //                 confirmButtonText: 'Enviar',
-        //                 showLoaderOnConfirm: true,
-        //                 preConfirm: (email) => {
-        //                   return this.authService
-        //                     .sendActivateEmail(email)
-        //                     .subscribe((res: Msg) => {
-        //                       Swal.fire({
-        //                         title: 'Correo de activación',
-        //                         text: res.msg,
-        //                         icon: 'success',
-        //                       });
-        //                     });
-        //                 },
-        //                 allowOutsideClick: () => !Swal.isLoading(),
-        //               });
-        //             }
-        //           }
-        //         });
-        //       }
-
-        //     }
-
-        //   }
-        // }
         return throwError(_error.error.message);
       })
     );

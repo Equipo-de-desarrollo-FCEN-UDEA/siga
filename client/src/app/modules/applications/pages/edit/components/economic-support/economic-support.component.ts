@@ -158,20 +158,16 @@ export class EconomicSupportComponent implements OnInit {
       this.id
     );
 
-    console.log(economic_support);
     economicSupportForm = this.documentSvc
       .postDocument(DOCUMENTS as unknown as File[])
       .pipe(
         switchMap((data: any) => {
           if (data) {
-            //console.log(DOCUMENTS);
-            console.log(data);
             this.form.patchValue({
               documents: data.files_paths,
             });
           }
           economic_support.documents = data.files_paths;
-          console.log(economic_support);
           return (economicSupportForm =
             this.economicSupportSvc.putEconomicSupport(
               economic_support as IEconomicSupportCreate,

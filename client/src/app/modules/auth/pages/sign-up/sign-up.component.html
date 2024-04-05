@@ -75,7 +75,7 @@
               class="invalid"
             >
               <div
-                *ngIf="f['email'].touched && (f['email'].errors?.['required'] || 
+                *ngIf="f['email'].touched && (f['email'].errors?.['required'] ||
             f['email'].errors?.['pattern'])"
               >
                 Debes ingresar tu correo institucional sin espacios
@@ -83,7 +83,6 @@
             </div>
           </div>
         </div>
-
 
         <!-- tipo ID -->
         <div class="row regular-row mt-4">
@@ -130,22 +129,6 @@
             />
           </div>
         </div>
-
-        <!-- Telefono -->
-        <!-- <div class="row regular-row mt-4">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Teléfono</div>
-          <div class="col-sm-12 col-xs-12 col-md-8 col-12">
-            <input
-              id="phone"
-              formControlName="phone"
-              type="number"
-              class="form-control"
-              [ngClass]="{
-                'is-invalid': f['phone'].errors && f['phone'].touched
-              }"
-            />
-          </div>
-        </div> -->
 
         <!-- Vinculación -->
         <div class="row regular-row mt-4">
@@ -216,9 +199,7 @@
 
         <!-- Facultad -->
         <div class="row regular-row mt-4" *ngIf="schools$ | async as schools">
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
-            Facultad
-          </div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Facultad</div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <select
               class="form-select form-select-lg"
@@ -228,7 +209,9 @@
               placeholder=" "
               (change)="nextDepartment($event)"
             >
-              <option [value]="null" selected disabled>Elige tu facultad</option>
+              <option [value]="null" selected disabled>
+                Elige tu facultad
+              </option>
               <option
                 *ngFor="let school of schools; let i = index"
                 [value]="school.id"
@@ -289,13 +272,13 @@
               <div
                 class="invalid-feedback"
                 [ngClass]="{
-                  'is-invalid': (f['password'].errors?.['required'] || 
+                  'is-invalid': (f['password'].errors?.['required'] ||
                   f['password'].errors?.['maxlength']) && f['password'].touched
                 }"
               >
                 <div
                   class="invalid"
-                  *ngIf="(f['password'].errors?.['required'] || 
+                  *ngIf="(f['password'].errors?.['required'] ||
                   f['password'].errors?.['minlength']) && f['password'].touched"
                 >
                   La contraseña debe contener mínimo 8 caracteres

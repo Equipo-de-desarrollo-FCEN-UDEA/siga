@@ -7,6 +7,7 @@ import {
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { DocumentService } from '@services/document.service';
+import { FormsStatusService } from "@services/applications/full_time/interaction-components/forms-status.service";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,7 +28,9 @@ export class FullTimeComponent implements OnInit {
     private route: ActivatedRoute,
 
     private fullTimeSvc: FullTimeService,
-    private documentSvc: DocumentService
+    private documentSvc: DocumentService,
+
+    public formsStatusService: FormsStatusService
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +39,19 @@ export class FullTimeComponent implements OnInit {
 
       this.fullTimeSvc.getFullTime(this.id).subscribe((data) => {
         this.application = data;
+
+        data.full_time.initial_letter !== null ?
+          this.formsStatusService.setStartLetterStatus(true):
+          this.formsStatusService.setStartLetterStatus(false);
+        data.full_time.vice_format !== null ?
+          this.formsStatusService.setViceFormatStatus(true):
+          this.formsStatusService.setViceFormatStatus(false);
+        data.full_time.work_plan !== null ?
+          this.formsStatusService.setWorkPlanStatus(true):
+          this.formsStatusService.setWorkPlanStatus(false);
       });
     });
+
   }
 
   isInvalidForm() {

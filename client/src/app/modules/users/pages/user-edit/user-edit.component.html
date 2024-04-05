@@ -9,7 +9,6 @@
     <div class="card-body">
       <div class="row header-row P-2">
         <div class="col">
-          <!-- <p class="ptitle ">Editar mi perfil</p> -->
           <span class="text-secondary">EDITAR PERFIL</span>
         </div>
       </div>
@@ -64,7 +63,7 @@
               for="floatingcampo_modalidad"
               class="selectLabel"
               [ngClass]="{
-                'is-invalid': f['identification_type'].errors 
+                'is-invalid': f['identification_type'].errors
               }"
             ></label>
           </div>
@@ -155,26 +154,14 @@
           class="row regular-row m-2 align-items-baseline"
           *ngIf="!(rol == 'PROFESOR' || rol == 'EMPLEADO')"
         >
-          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Cargo(s) ocupado(s)</div>
+          <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">
+            Cargo(s) ocupado(s)
+          </div>
           <div class="col-sm-12 col-xs-12 col-md-8 col-12">
             <div class="formfloatig">
-              <!-- <select
-                class="form-select form-select-lg"
-                id="rol_id"
-                formControlName="rol_id"
-                required
-                placeholder=" "
-                [ngClass]="{
-                  'is-invalid': f['rol_id'].errors && f['rol_id'].touched
-                }"
-              >
-                <option [value]="rol.id" *ngFor="let rol of rol$ | async">
-                  {{ rol.name | uppercase }}
-                </option>
-              </select> -->
               <ng-multiselect-dropdown
                 formControlName="rol_id"
-                [placeholder]=rol.toUpperCase()
+                [placeholder]="rol.toUpperCase()"
                 [data]="dropdownList"
                 [(ngModel)]="selectedItems"
                 (onSelect)="onItemSelect($event)"
