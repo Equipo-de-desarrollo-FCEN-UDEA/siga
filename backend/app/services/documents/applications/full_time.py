@@ -76,17 +76,25 @@ def fill_vice_document(user: User, full_time: FullTime):
     log.debug(path)
     return path
 
-
+from sys import exit
 @celery_app.task
 def generate_vice_format_to_aws(user: dict, full_time: dict, path: str):
+    """
+Generates a vice rectory format with the user and full-time information, and saves it to AWS S3.
+
+Args:
+    user (dict): A dictionary containing the user information.
+    full_time (dict): A dictionary containing the full-time information.
+    path (str): The path where the file will be saved.
+"""
 
     cells = open(templates_dir + '/cells_vice.json')
     cells = json.load(cells)
     lone_cells = cells['lone_cells'].copy()
     cells_dic = cells['merge_cells'].copy()
     cells_str = json.dumps(cells_dic)
-    cells_str = json.dumps(cells_dic)
 
+    # Replace the tags in the JSON file with the user and full-time information
     for field, info in zip(full_time.keys(), full_time.values()):
         if info is None:
             continue
@@ -105,14 +113,15 @@ def generate_vice_format_to_aws(user: dict, full_time: dict, path: str):
     for cells, info in zip(json_info.values(), json_info.keys()):
         target.merge_cells(cells)
         target[cells.split(':')[0]] = info
-
-    print("Valor de full_time['modalidad']: ", full_time["modalidad"])
-    log.debug(full_time["modalidad"])
-
+    
+    # Convert modalities to lowercase and mark with 'X' those that match the full-time modality
     for modalidad in lone_cells['modalidad']:
-        if modalidad == full_time["modalidad"]:
+        modalidad = modalidad.lower()
+        full_time_modality = full_time["modalidad"].lower()
+        if modalidad == full_time_modality:
             target[lone_cells['modalidad'][modalidad]] = 'X'
 
+    # Save the file temporarily and send it to AWS S3
     with NamedTemporaryFile() as tmp:
         wb.save(tmp.name)
         file = BytesIO(tmp.read())
