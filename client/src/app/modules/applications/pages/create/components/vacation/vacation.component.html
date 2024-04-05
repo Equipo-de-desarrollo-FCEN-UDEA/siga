@@ -47,7 +47,7 @@
         >Fecha inicial <span style="color: red">*</span></span
       >
 
-      <app-date-picker
+      <app-date-picker-range
         [form]="form"
         [total_days]="f['total_working_days'].value"
         [start_date]="f['start_working_date'].value"
@@ -55,7 +55,7 @@
         [formControlNameStart]="'start_working_date'"
         [formControlNameEnd]="'end_working_date'"
         [laboralflag]="true"
-      ></app-date-picker>
+      ></app-date-picker-range>
     </div>
 
     <div class="mt-4 col-md-6 col-xs-12 col-sm-12 col-12 mb-3">
@@ -92,7 +92,7 @@
         >Fecha inicial <span style="color: red">*</span></span
       >
 
-      <app-date-picker
+      <app-date-picker-range
         [form]="form"
         [total_days]="f['total_calendar_days'].value"
         [start_date]="f['start_calendar_date'].value"
@@ -100,7 +100,7 @@
         [formControlNameStart]="'start_calendar_date'"
         [formControlNameEnd]="'end_calendar_date'"
         [laboralflag]="false"
-      ></app-date-picker>
+      ></app-date-picker-range>
     </div>
 
     <!--ARCHIVOS-->

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
@@ -11,14 +11,13 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { LaboralDays } from '@shared/utils';
-import { log } from 'console';
 
 @Component({
-  selector: 'app-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss'],
+  selector: 'app-date-picker-range',
+  templateUrl: './date-picker-range.component.html',
+  styleUrls: ['./date-picker-range.component.scss'],
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerRangeComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() total_days: any;
   @Input() start_date: any;
