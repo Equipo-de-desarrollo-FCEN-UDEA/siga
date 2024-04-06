@@ -115,6 +115,22 @@ export class VacationComponent {
   // holidays
   public holidays: Holiday[] = [];
 
+  public form = this.fb.group({
+    start_date: new Date(),
+    end_date: new Date(),
+    application_sub_type_id: [12],
+    total_working_days: [0],
+    start_working_date: [Date()],
+    end_working_date: [Date()],
+
+    total_calendar_days: [0],
+    start_calendar_date: [Date()],
+    end_calendar_date: [Date()],
+
+    documents: [this.documents],
+    signature: [this.signatureImg],
+  });
+
   constructor(
     private fb: FormBuilder,
     private calendar: NgbCalendar,
@@ -130,27 +146,6 @@ export class VacationComponent {
     private documentSvc: DocumentService,
     private holidaySvc: HolidayService
   ) {}
-  public start_date_string = new Date();
-
-  public form = this.fb.group({
-    start_date: new Date(
-      'Tue Apr 16 2024 19:00:00 GMT-0500 (Colombia Standard Time)'
-    ),
-    end_date: new Date(
-      'Tue Apr 16 2024 19:00:00 GMT-0500 (Colombia Standard Time)'
-    ),
-    application_sub_type_id: [12],
-    total_working_days: [0, [Validators.required]],
-    start_working_date: [new Date(), [Validators.required]],
-    end_working_date: [new Date(), [Validators.required]],
-
-    total_calendar_days: [0, [Validators.required]],
-    start_calendar_date: [new Date(), [Validators.required]],
-    end_calendar_date: [new Date(), [Validators.required]],
-
-    documents: [this.documents],
-    signature: [this.signatureImg],
-  });
 
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({
@@ -177,17 +172,23 @@ export class VacationComponent {
 
   submit() {
     this.submitted = true;
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+
+    const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
+    const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
+
+    if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
-        text: '¡Revise que haya llenado todos los campos que el Formato sugiere',
+        text: '¡Debe seleccionar un rago de fechas en al menos en un tipo de vacaciones!',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
       });
       return;
     }
+
+    // Se detiene aqui si el formulario es invalido
+
     this.form.value.signature = this.signatureImg;
 
     let vacation = this.vacationSvc.postVacation(

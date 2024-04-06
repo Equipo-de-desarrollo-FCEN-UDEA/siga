@@ -5,11 +5,11 @@ export interface VacationCreate {
   start_date: Date;
   end_date: Date;
   total_working_days: number;
-  start_working_date: Date;
-  end_working_date: Date;
+  start_working_date: Date | null;
+  end_working_date: Date | null;
   total_calendar_days: number;
-  start_calendar_date: Date;
-  end_calendar_date: Date;
+  start_calendar_date: Date | null;
+  end_calendar_date: Date | null;
   documents?: file_path[];
   signature: string;
   application_sub_type_id: number;
