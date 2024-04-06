@@ -40,6 +40,7 @@ import { ApplicationSubTypeService } from '@services/application-sub-type.servic
 //utils
 import { LaboralDays } from '@shared/utils';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { log } from 'console';
 
 @Component({
   selector: 'app-vacation',
@@ -160,6 +161,19 @@ export class VacationComponent {
   }
 
   // Form vacation
+  setDates(event: any) {
+    this.form.patchValue({
+      start_working_date: event.start_date,
+      end_working_date: event.end_date,
+    });
+  }
+
+  setDatesCalendar(event: any) {
+    this.form.patchValue({
+      start_calendar_date: event.start_date,
+      end_calendar_date: event.end_date,
+    });
+  }
 
   submit() {
     this.submitted = true;
@@ -175,9 +189,6 @@ export class VacationComponent {
       return;
     }
     this.form.value.signature = this.signatureImg;
-
-    console.log('this.form.value');
-    console.log(this.form.value);
 
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
@@ -201,7 +212,7 @@ export class VacationComponent {
       if (this.signatureImg != '') {
         vacation.subscribe({
           next: (data) => {
-            console.log({ data });
+            console.log(this.form.value);
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -344,9 +355,6 @@ export class VacationComponent {
       confirmButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(typeof this.signatureImg);
-        console.log(this.signatureImg);
-
         this.isButtonDisabled = true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.isButtonDisabled = false;

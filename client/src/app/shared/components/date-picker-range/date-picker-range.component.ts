@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
 //ngBootstrap imports
@@ -18,13 +18,13 @@ import { LaboralDays } from '@shared/utils';
   styleUrls: ['./date-picker-range.component.scss'],
 })
 export class DatePickerRangeComponent implements OnInit {
-  @Input() form!: FormGroup;
+  @Input() formParent: FormGroup | undefined;
   @Input() total_days: any;
-  @Input() start_date: any;
-  @Input() end_date: any;
-  @Input() formControlNameStart?: string;
-  @Input() formControlNameEnd?: string;
   @Input() laboralflag: boolean = true;
+
+  @Output() datePickerValues = new EventEmitter<any>();
+
+  public form: FormGroup;
 
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -40,13 +40,25 @@ export class DatePickerRangeComponent implements OnInit {
   public error = '';
   public submitted = false;
 
-  constructor(
-    private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter
-  ) {}
-
   get f() {
     return this.form.controls;
+  }
+
+  constructor(
+    private calendar: NgbCalendar,
+    private fb: FormBuilder,
+    public formatter: NgbDateParserFormatter
+  ) {
+    this.form = this.fb.group({
+      start_date: [new Date(), [Validators.required]],
+      end_date: [new Date(), [Validators.required]],
+    });
+  }
+
+  onChanged(): void {
+    console.log('onChanged');
+
+    this.datePickerValues.emit(this.form.value);
   }
 
   ngOnInit(): void {}
@@ -120,6 +132,8 @@ export class DatePickerRangeComponent implements OnInit {
         ),
       });
     }
+
+    this.onChanged();
   }
 
   isHovered(date: NgbDate) {
@@ -158,6 +172,7 @@ export class DatePickerRangeComponent implements OnInit {
 
   validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
     const PARSED = this.formatter.parse(input);
+
     return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
       ? NgbDate.from(PARSED)
       : currentValue;
