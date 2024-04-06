@@ -18,7 +18,6 @@ import { LaboralDays } from '@shared/utils';
   styleUrls: ['./date-picker-range.component.scss'],
 })
 export class DatePickerRangeComponent implements OnInit {
-  @Input() formParent: FormGroup | undefined;
   @Input() total_days: any;
   @Input() laboralflag: boolean = true;
 
@@ -56,8 +55,6 @@ export class DatePickerRangeComponent implements OnInit {
   }
 
   onChanged(): void {
-    console.log('onChanged');
-
     this.datePickerValues.emit(this.form.value);
   }
 

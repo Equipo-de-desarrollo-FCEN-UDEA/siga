@@ -71,12 +71,14 @@
             ((!fromDate || !toDate) && clicked !== 0) ||
             selectDays(fromDate, toDate)
         }"
+        [attr.disabled]="!total_days ? true : null"
       />
       <button
         #buttonEl
         class="btn btn-outline-secondary"
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
+        [attr.disabled]="!total_days ? true : null"
       >
         <i class="fa fa-calendar"> </i>
       </button>

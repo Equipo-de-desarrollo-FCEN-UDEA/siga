@@ -88,18 +88,9 @@
         >Fecha inicial <span style="color: red">*</span></span
       >
 
-      <!-- <app-date-picker-range
-        [form]="form"
-        [total_days]="f['total_calendar_days'].value"
-        [start_date]="f['start_calendar_date'].value"
-        [end_date]="f['end_calendar_date'].value"
-        [formControlNameStart]="'start_calendar_date'"
-        [formControlNameEnd]="'end_calendar_date'"
-        [laboralflag]="false"
-      ></app-date-picker-range> -->
       <app-date-picker-range
         [total_days]="f['total_calendar_days'].value"
-        [laboralflag]="true"
+        [laboralflag]="false"
         (datePickerValues)="setDatesCalendar($event)"
       ></app-date-picker-range>
     </div>
