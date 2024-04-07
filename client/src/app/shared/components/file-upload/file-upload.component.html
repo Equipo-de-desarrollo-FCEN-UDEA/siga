@@ -1,0 +1,49 @@
+<h6 class="mt-3">
+    <strong>Archivos adjuntos de la solicitud</strong>
+  </h6>
+  <hr style="margin-top: 0" />
+
+  <div
+    class="alert alert-danger"
+    *ngIf="files.length > 0 && !validFileType()"
+  >
+    Ese tipo de archivo no es permitido.
+  </div>
+
+  <div class="formfloatig mb-3" style="flex-direction: column">
+    <div
+      *ngFor="let producto of document_new; last as isLast; let i = index"
+      class="arrayLike formfloatig d-flex justify-content-between"
+    >
+      <div class="document_new">
+        <label class="btn-btn-default cursor is-hoverable">
+          <div class="fa fa-upload fa-2x"></div>
+          <input
+            [id]="i"
+            class="file-upload"
+            type="file"
+            (change)="onUpload($event, i)"
+          />
+          <label
+            [for]="i"
+            class="is-hoverable cursor link-success"
+            style="margin-left: 10px"
+            >{{
+              files[i]
+                ? files[i].name
+                : "Subir aval de vacaciones de Talento Humano"
+            }}</label
+          >
+        </label>
+      </div>
+      <div class="buttons">
+        <button
+          class="btn btn-circle btn-remove btn-sm m-1"
+          type="button"
+          (click)="removeFile(i)"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
