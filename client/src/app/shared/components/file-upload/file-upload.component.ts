@@ -7,19 +7,16 @@ import { DocumentsResponse, file_path } from '@interfaces/documents';
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.scss']
+  styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent implements OnInit {
-
-  
-
   // Files
   public files: any[] = [];
   public document_new = [1];
   @Input() documents: file_path[] | any = [];
-  
+
   @Output() documentsValues = new EventEmitter<any>();
-  @Output() filesValues: EventEmitter <any[]>= new EventEmitter<any[]>();
+  @Output() filesValues: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   // arrayEmitter: EventEmitter<any[]> = new EventEmitter<any[]>();
 
@@ -29,16 +26,13 @@ export class FileUploadComponent implements OnInit {
     return this.form.controls;
   }
 
-
-  constructor(
-    private fb: FormBuilder,
-  ) { 
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       documents: [],
     });
   }
 
-   // --------------------------------------
+  // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
   // --------------------------------------
 
@@ -48,7 +42,6 @@ export class FileUploadComponent implements OnInit {
     const FILE = ELEMENT.files?.item(0);
     if (FILE) {
       this.files.splice(index, 1, FILE);
-      console.log("ONUPLOAD"+this.files);
     }
   }
 
@@ -88,7 +81,5 @@ export class FileUploadComponent implements OnInit {
     this.filesValues.emit(this.files);
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

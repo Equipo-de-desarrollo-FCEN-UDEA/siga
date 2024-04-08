@@ -176,8 +176,6 @@ export class VacationComponent {
     const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
     const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
 
-
-
     if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
@@ -189,7 +187,7 @@ export class VacationComponent {
       return;
     }
 
-    console.log(this.form.get('documents')?.value);
+    console.log('this.form.get(documents)', this.form.get('documents')?.value);
 
     // Se detiene aqui si el formulario es invalido
 
@@ -198,10 +196,6 @@ export class VacationComponent {
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
-
-    console.log(this.files);
-
-
 
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
@@ -222,7 +216,6 @@ export class VacationComponent {
       if (this.signatureImg != '') {
         vacation.subscribe({
           next: (data) => {
-            console.log(this.form.value);
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -250,7 +243,6 @@ export class VacationComponent {
         });
         return;
       }
-    
     } else {
       Swal.fire({
         title: 'Adjuntar documento',
@@ -272,11 +264,8 @@ export class VacationComponent {
   }
 
   SetFiles(event: any) {
-    this.files = ["hola.pdf"];
-    console.log(event);
-
+    this.files = event;
   }
-
 
   // --------------------------------------
   // --------- VACATION TYPES  ---------
@@ -326,7 +315,7 @@ export class VacationComponent {
   // }
 
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
-  
+
   validSize() {
     const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
     return SIZE < 6 * 1024 * 1024;
