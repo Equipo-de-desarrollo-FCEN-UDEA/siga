@@ -120,7 +120,7 @@ export class VacationComponent {
     end_date: new Date(),
     application_sub_type_id: [12],
     total_working_days: [0],
-    start_working_date: [Date()],
+    start_working_date: [new Date()],
     end_working_date: [Date()],
 
     total_calendar_days: [0],
