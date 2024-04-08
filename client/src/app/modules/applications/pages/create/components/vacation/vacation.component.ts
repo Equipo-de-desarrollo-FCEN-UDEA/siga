@@ -64,7 +64,7 @@ export class VacationComponent {
 
   // Files
   public files: any[] = [];
-  public document_new = [1];
+  // public document_new = [1];
   public documents: file_path[] = [];
 
   // For handle errors
@@ -176,6 +176,8 @@ export class VacationComponent {
     const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
     const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
 
+
+
     if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
@@ -187,6 +189,8 @@ export class VacationComponent {
       return;
     }
 
+    console.log(this.form.get('documents')?.value);
+
     // Se detiene aqui si el formulario es invalido
 
     this.form.value.signature = this.signatureImg;
@@ -194,6 +198,10 @@ export class VacationComponent {
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
+
+    console.log(this.files);
+
+
 
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
@@ -203,6 +211,7 @@ export class VacationComponent {
               documents: data.files_paths,
             });
           }
+
           this.form.value.signature = this.signatureImg;
           return this.vacationSvc.postVacation(
             this.form.value as VacationCreate
@@ -241,10 +250,11 @@ export class VacationComponent {
         });
         return;
       }
+    
     } else {
       Swal.fire({
         title: 'Adjuntar documento',
-        html: 'Por favor adjunte documento de aval de talento humano.',
+        html: 'Por favor adjunte documento de talento humano.',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
@@ -252,6 +262,21 @@ export class VacationComponent {
       return;
     }
   }
+
+  // Resivir valores del output para ponerlos en el componente padre
+
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
+    });
+  }
+
+  SetFiles(event: any) {
+    this.files = ["hola.pdf"];
+    console.log(event);
+
+  }
+
 
   // --------------------------------------
   // --------- VACATION TYPES  ---------
@@ -284,29 +309,30 @@ export class VacationComponent {
   // --------------------------------------
 
   // Subir un archivo
-  onUpload(event: Event, index: number) {
-    const ELEMENT = event.target as HTMLInputElement;
-    const FILE = ELEMENT.files?.item(0);
-    if (FILE) {
-      this.files.splice(index, 1, FILE);
-    }
-  }
+  // onUpload(event: Event, index: number) {
+  //   const ELEMENT = event.target as HTMLInputElement;
+  //   const FILE = ELEMENT.files?.item(0);
+  //   if (FILE) {
+  //     this.files.splice(index, 1, FILE);
+  //   }
+  // }
 
   // Eliminar achivos
-  removeFile(index: number) {
-    if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);
-    }
-    this.files.splice(index, 1);
-  }
+  // removeFile(index: number) {
+  //   if (this.document_new.length > 1) {
+  //     this.document_new.splice(index, 1);
+  //   }
+  //   this.files.splice(index, 1);
+  // }
 
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
+  
   validSize() {
     const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
     return SIZE < 6 * 1024 * 1024;
   }
 
-  // Verifica que el archivo a adjuntar sea de un tipo valido
+  // // Verifica que el archivo a adjuntar sea de un tipo valido
   validFileType() {
     const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 

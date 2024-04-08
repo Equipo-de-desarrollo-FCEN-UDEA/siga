@@ -99,7 +99,12 @@
 
     <!--FILE-UPLOAD-->
 
-    <app-file-upload></app-file-upload>
+    <app-file-upload
+      [documents]="f['documents'].value"
+      (documentsValues)="SetDocuments($event)"
+      (filesValues)="SetFiles($event)">
+    
+      </app-file-upload>
 
     <!--ARCHIVOS-->
 

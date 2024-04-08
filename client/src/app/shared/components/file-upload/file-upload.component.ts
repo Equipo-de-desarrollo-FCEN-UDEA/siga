@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //interfaces
 import { DocumentsResponse, file_path } from '@interfaces/documents';
@@ -10,13 +11,32 @@ import { DocumentsResponse, file_path } from '@interfaces/documents';
 })
 export class FileUploadComponent implements OnInit {
 
+  
+
   // Files
   public files: any[] = [];
   public document_new = [1];
-  public documents: file_path[] = [];
+  @Input() documents: file_path[] | any = [];
+  
+  @Output() documentsValues = new EventEmitter<any>();
+  @Output() filesValues: EventEmitter <any[]>= new EventEmitter<any[]>();
+
+  // arrayEmitter: EventEmitter<any[]> = new EventEmitter<any[]>();
+
+  public form: FormGroup;
+
+  get f() {
+    return this.form.controls;
+  }
 
 
-  constructor() { }
+  constructor(
+    private fb: FormBuilder,
+  ) { 
+    this.form = this.fb.group({
+      documents: [],
+    });
+  }
 
    // --------------------------------------
   // -------- ARCHIVOS - ANEXOS -----------
@@ -28,6 +48,7 @@ export class FileUploadComponent implements OnInit {
     const FILE = ELEMENT.files?.item(0);
     if (FILE) {
       this.files.splice(index, 1, FILE);
+      console.log("ONUPLOAD"+this.files);
     }
   }
 
@@ -57,6 +78,14 @@ export class FileUploadComponent implements OnInit {
       );
     });
     return flag;
+  }
+
+  onChanged(): void {
+    this.documentsValues.emit(this.form.value);
+  }
+
+  EmitFiles(): void {
+    this.filesValues.emit(this.files);
   }
 
   ngOnInit(): void {
