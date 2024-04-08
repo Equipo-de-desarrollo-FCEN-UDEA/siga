@@ -6,7 +6,7 @@ import {
   ViewChild,
   HostListener,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentObserver } from '@angular/cdk/observers';
 import { SignaturePad } from 'angular2-signaturepad';
@@ -49,8 +49,12 @@ import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 export class VacationComponent {
   // Dates
   public fromDate: NgbDate | null = null;
-  public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
+
+  public fromDateCalendar: NgbDate | null = null;
+  public toDateCalendar: NgbDate | null = null;
+
+  public hoveredDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
@@ -126,23 +130,30 @@ export class VacationComponent {
     private holidaySvc: HolidayService
   ) {}
 
-  ngAfterViewInit(): void {
-    this.holidaySvc.getHolidays().subscribe({
-      next: (data) =>{
-        this.holidays = data;
-      }
-    })
-  }
-
-  // Form vacation
   public form = this.fb.group({
     application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
-    total_days: [0, [Validators.required]],
-    start_date: [new Date(), [Validators.required]],
-    end_date: [new Date(), [Validators.required]],
+
+    total_days_laboral: [0, [Validators.required]],
+    start_date_laboral: [new Date(), [Validators.required]],
+    end_date_laboral: [new Date(), [Validators.required]],
+
+    total_days_calendar: [0, [Validators.required]],
+    start_date_calendar: [new Date(), [Validators.required]],
+    end_date_calendar: [new Date(), [Validators.required]],
+
     documents: [this.documents],
     signature: [this.signatureImg],
   });
+
+  ngAfterViewInit(): void {
+    this.holidaySvc.getHolidays().subscribe({
+      next: (data) => {
+        this.holidays = data;
+      },
+    });
+  }
+
+  // Form vacation
 
   submit() {
     this.submitted = true;
@@ -176,7 +187,8 @@ export class VacationComponent {
           );
         })
       );
-      if (this.signatureImg!=""){
+      if (this.signatureImg != '') {
+        //console.log(vacation);
         vacation.subscribe({
           next: (data) => {
             Swal.fire({
@@ -186,7 +198,9 @@ export class VacationComponent {
             }).then((result) => {
               if (result.isConfirmed) {
                 //redirect to the view component of the application
-                this.router.navigate([`/solicitudes/ver/${data.id}/vacaciones`]);
+                this.router.navigate([
+                  `/solicitudes/ver/${data.id}/vacaciones`,
+                ]);
               }
             });
           },
@@ -194,7 +208,7 @@ export class VacationComponent {
             this.error = err;
           },
         });
-      }else{
+      } else {
         Swal.fire({
           title: 'Firmar',
           html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
@@ -204,8 +218,7 @@ export class VacationComponent {
         });
         return;
       }
-
-    }else{
+    } else {
       Swal.fire({
         title: 'Adjuntar documento',
         html: 'Por favor adjunte documento de aval de talento humano.',
@@ -214,6 +227,26 @@ export class VacationComponent {
         confirmButtonColor: '#3AB795',
       });
       return;
+    }
+  }
+
+  // --------------------------------------
+  // --------- VACATION TYPES  ---------
+  // --------------------------------------
+
+  onApplicationSubType(event: Event) {
+    // Obtener el value antes de los ':'
+    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
+      ':'
+    )[0];
+    this.laboralflag = false;
+    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
+      next: (res) => {
+        this.laboralDay = res.extra.days;
+      },
+    });
+    if (ID_VACATION_TYPE == '1') {
+      this.laboralflag = true;
     }
   }
 
@@ -311,116 +344,4 @@ export class VacationComponent {
   // --------------------------------------
   // ------------- DATEPICKER -------------
   // --------------------------------------
-
-  selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
-    const tot_days = this.form.value.total_days;
-    const entero_temp=tot_days;
-
-    if (fromDate || toDate) {
-      //Verify between laboral days and calendar days
-      if (this.laboralflag){
-        this.laboralDay=LaboralDays(
-          new Date(this.formatter.format(fromDate)),
-          new Date(this.formatter.format(toDate)),
-          this.holidays
-        );
-        //Variable to verify (laboralDay)
-        this.verify_date=this.laboralDay;
-      }else{
-        this.verify_date=new Date(this.formatter.format(toDate)).getTime()-
-                        new Date(this.formatter.format(fromDate)).getTime();
-        //In this case is important to take the date as days:
-        this.verify_date=this.verify_date/(1000*3600*24)+1;
-      }
-      //If days in form does not equal to required, the form does not allow continue
-      if (this.verify_date != entero_temp){
-        return true;
-      }
-      this.form.value.end_date = new Date(this.formatter.format(toDate));
-      return false;
-
-    } else {
-      return false;
-    }
-  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate.year,
-          this.toDate.month - 1,
-          this.toDate.day
-        ),
-      });
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate.year,
-          this.fromDate.month - 1,
-          this.fromDate.day
-        ),
-      });
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate!.year,
-          this.toDate!.month - 1,
-          this.toDate!.day
-        ),
-      });
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return (
-      this.fromDate &&
-      !this.toDate &&
-      this.hoveredDate &&
-      date.after(this.fromDate) &&
-      date.before(this.hoveredDate)
-    );
-  }
-
-  isHoveredInvalid(date: NgbDate) {
-    return (
-      this.fromDate &&
-      !this.toDate &&
-      this.hoveredDate &&
-      this.selectDays(this.fromDate, this.hoveredDate) &&
-      date.after(this.fromDate) &&
-      date.before(this.hoveredDate)
-    );
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) ||
-      (this.toDate && date.equals(this.toDate)) ||
-      this.isInside(date) ||
-      this.isHovered(date)
-    );
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const PARSED = this.formatter.parse(input);
-    return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
-      ? NgbDate.from(PARSED)
-      : currentValue;
-  }
 }

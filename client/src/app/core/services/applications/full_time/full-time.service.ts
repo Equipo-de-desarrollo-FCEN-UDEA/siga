@@ -28,8 +28,8 @@ export class FullTimeService {
     return this.http.get<FulltimeResponse>(this.urlEndPoint + id)
   }
 
-  putFullTime(id: number) {
-    return this.http.put<FullTimeInDB>(this.urlEndPoint + id, id)
+  putFullTime(body: FullTimeCreate, id: number) {
+    return this.http.put<FullTimeInDB>(this.urlEndPoint + id, body)
   }
   
   deleteFullTime(id: number) {

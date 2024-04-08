@@ -54,6 +54,7 @@ async def create_full_time(
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
             application_sub_type_id=full_time.application_sub_type_id,
+            start_date=full_time.start_date,
             user_id=current_user.id
         )
         application = crud.application.create(

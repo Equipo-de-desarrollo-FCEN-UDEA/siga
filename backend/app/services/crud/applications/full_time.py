@@ -43,5 +43,4 @@ class CRUDFullTime(CRUDBase[FullTime, FullTimeCreate, FullTimeUpdate, FullTimePo
 
 
 policy = FullTimePolicy()
-
 full_time = CRUDFullTime(FullTime, policy=policy)

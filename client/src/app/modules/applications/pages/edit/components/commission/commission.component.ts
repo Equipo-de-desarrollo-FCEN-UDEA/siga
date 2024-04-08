@@ -7,7 +7,6 @@ import { NgbDate, NgbDateStruct, NgbCalendar, NgbDateParserFormatter } from '@ng
 import { ApplicationTypesService } from '@services/application-types.service';
 import { CommissionService } from '@services/applications/commission.service';
 import { DocumentService } from '@services/document.service';
-import { LoaderService } from '@services/loader.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 

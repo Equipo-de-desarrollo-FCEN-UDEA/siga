@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, Type, List
+from typing import Generic, TypeVar, Type
 
 from odmantic import Model, ObjectId
 from odmantic.session import AIOSession
