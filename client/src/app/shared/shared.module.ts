@@ -20,6 +20,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { UserApplicationStatusComponent } from './components/user-application-status/user-application-status.component';
 import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
 import { DatePickerBasicComponent } from './components/date-picker-basic/date-picker-basic.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DatePickerBasicComponent } from './components/date-picker-basic/date-pi
     UserApplicationStatusComponent,
     DatePickerRangeComponent,
     DatePickerBasicComponent,
+    FileUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,7 @@ import { DatePickerBasicComponent } from './components/date-picker-basic/date-pi
     FormsModule,
     CdkStepperModule,
     SignaturePadModule,
-    NgbModule,
+    NgbModule
   ],
   exports: [
     HttpClientModule,
@@ -55,6 +57,7 @@ import { DatePickerBasicComponent } from './components/date-picker-basic/date-pi
     ApplicantsComponent,
     SignaturePadModule,
     DatePickerRangeComponent,
+    FileUploadComponent
   ],
 })
 export class SharedModule {}

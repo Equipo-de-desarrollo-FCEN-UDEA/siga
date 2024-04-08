@@ -95,21 +95,27 @@
       ></app-date-picker-range>
     </div>
 
+    <hr>
+
+    <!--FILE-UPLOAD-->
+
+    <app-file-upload></app-file-upload>
+
     <!--ARCHIVOS-->
 
-    <h6 class="mt-3">
+    <!-- <h6 class="mt-3">
       <strong>Archivos adjuntos de la solicitud</strong>
     </h6>
-    <hr style="margin-top: 0" />
+    <hr style="margin-top: 0" /> -->
 
-    <div
+    <!-- <div
       class="alert alert-danger"
       *ngIf="files.length > 0 && !validFileType()"
     >
       Ese tipo de archivo no es permitido.
-    </div>
+    </div> -->
 
-    <div class="formfloatig mb-3" style="flex-direction: column">
+    <!-- <div class="formfloatig mb-3" style="flex-direction: column">
       <div
         *ngFor="let producto of document_new; last as isLast; let i = index"
         class="arrayLike formfloatig d-flex justify-content-between"
@@ -145,14 +151,16 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
+
+    <!-- FIRMA -->
 
     <h6 class="mt-3">
       <strong>Firma</strong>
     </h6>
     <hr />
 
-    <!-- FIRMA -->
+    
     <div class="col-md-4 col-xs-12 col-sm-12 col-12">
       <div
         id="div-signature"
