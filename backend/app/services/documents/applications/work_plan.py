@@ -81,7 +81,6 @@ def fill_work_plan_format(user: User, full_time: FullTime) -> str:
         total_hours[0] += 16*(act['week_hours']['t'] +
                               act['week_hours']['tp']+act['week_hours']['p'])
 
-    log.debug(tracking_acts)
     # Sec_3
     research_activities = []
     for act in full_time_dict['work_plan']['investigation_activities']:
