@@ -50,6 +50,7 @@
       <app-date-picker-range
         [total_days]="f['total_working_days'].value"
         [laboralflag]="true"
+        [holidays]="holidays"
         (datePickerValues)="setDates($event)"
       ></app-date-picker-range>
     </div>

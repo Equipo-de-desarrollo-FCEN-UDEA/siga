@@ -20,6 +20,7 @@ import { LaboralDays } from '@shared/utils';
 export class DatePickerRangeComponent implements OnInit {
   @Input() total_days: any;
   @Input() laboralflag: boolean = true;
+  @Input() holidays: Holiday[] = [];
 
   @Output() datePickerValues = new EventEmitter<any>();
 
@@ -32,7 +33,6 @@ export class DatePickerRangeComponent implements OnInit {
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
   public verify_date: number = 0;
-  public holidays: Holiday[] = [];
 
   // For handle errors
   public clicked = 0;
