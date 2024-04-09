@@ -21,6 +21,7 @@ export class FileUploadComponent implements OnInit {
   // arrayEmitter: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   public form: FormGroup;
+  activatedComponentReference: any;
 
   get f() {
     return this.form.controls;
@@ -80,6 +81,15 @@ export class FileUploadComponent implements OnInit {
   EmitFiles(): void {
     this.filesValues.emit(this.files);
   }
+
+  invalidForm() {
+    const childRouteComp = this.activatedComponentReference;
+    let validSize = !childRouteComp.validSize();
+    let validFileType = !childRouteComp.validFileType();
+
+    return validSize || validFileType
+  }
+
 
   ngOnInit(): void {}
 }
