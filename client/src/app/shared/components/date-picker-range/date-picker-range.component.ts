@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
@@ -17,10 +25,13 @@ import { LaboralDays } from '@shared/utils';
   templateUrl: './date-picker-range.component.html',
   styleUrls: ['./date-picker-range.component.scss'],
 })
-export class DatePickerRangeComponent implements OnInit {
+export class DatePickerRangeComponent implements OnInit, OnChanges {
   @Input() total_days: any;
   @Input() laboralflag: boolean = true;
   @Input() holidays: Holiday[] = [];
+
+  @Input() initStartDate: Date | null = null;
+  @Input() initEndDate: Date | null = null;
 
   @Output() datePickerValues = new EventEmitter<any>();
 
@@ -54,11 +65,20 @@ export class DatePickerRangeComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.initStartDate && this.initEndDate) {
+      this.form.patchValue({
+        start_date: this.initStartDate,
+        end_date: this.initEndDate,
+      });
+    }
+  }
+
   onChanged(): void {
     this.datePickerValues.emit(this.form.value);
   }
-
-  ngOnInit(): void {}
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
     const tot_days = this.total_days;

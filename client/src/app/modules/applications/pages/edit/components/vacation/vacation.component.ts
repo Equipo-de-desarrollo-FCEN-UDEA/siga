@@ -127,11 +127,11 @@ export class VacationComponent implements OnInit {
 
     total_working_days: [0],
     start_working_date: [new Date()],
-    end_working_date: [Date()],
+    end_working_date: [new Date()],
 
     total_calendar_days: [0],
-    start_calendar_date: [Date()],
-    end_calendar_date: [Date()],
+    start_calendar_date: [new Date()],
+    end_calendar_date: [new Date()],
 
     documents: [this.documents],
     signature: [this.signatureImg],
@@ -157,17 +157,14 @@ export class VacationComponent implements OnInit {
       this.vacationSvc.getVacation(this.id).subscribe((data) => {
         this.documents = data.vacation.documents!;
 
-        console.log(typeof data.vacation.start_working_date);
-        console.log(data.vacation.start_working_date);
-
         this.form.patchValue({
           total_working_days: data.vacation.total_working_days,
           total_calendar_days: data.vacation.total_calendar_days,
           documents: data.vacation.documents,
-          start_working_date:
-            data.vacation.total_working_days === 0
-              ? data.vacation.start_working_date
-              : new Date(),
+          start_calendar_date: data.vacation.start_calendar_date,
+          end_calendar_date: data.vacation.end_calendar_date,
+          start_working_date: data.vacation.start_working_date,
+          end_working_date: data.vacation.end_working_date,
         });
         let status_app =
           data.application_status[data.application_status.length - 1].status

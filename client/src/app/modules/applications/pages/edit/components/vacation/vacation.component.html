@@ -49,12 +49,14 @@
         [laboralflag]="true"
         [holidays]="holidays"
         (datePickerValues)="setDates($event)"
+        [initStartDate]="f['start_working_date'].value"
+        [initEndDate]="f['end_working_date'].value"
       ></app-date-picker-range>
     </div>
 
     <div class="mt-4 col-md-6 col-xs-12 col-sm-12 col-12 mb-3">
       <h6>
-        <strong>Días hábiles</strong>
+        <strong>Días Calendario</strong>
       </h6>
       <hr style="margin-top: 0" />
 
@@ -87,6 +89,8 @@
         [total_days]="f['total_calendar_days'].value"
         [laboralflag]="false"
         (datePickerValues)="setDatesCalendar($event)"
+        [initStartDate]="f['start_calendar_date'].value"
+        [initEndDate]="f['end_calendar_date'].value"
       ></app-date-picker-range>
     </div>
 
