@@ -9,10 +9,10 @@ class VacationBase(BaseModel):
     end_date:datetime
     total_working_days: int
     total_calendar_days: int
-    start_working_date: datetime
-    end_working_date: datetime
-    start_calendar_date: datetime
-    end_calendar_date: datetime
+    start_working_date: datetime | None
+    end_working_date: datetime | None
+    start_calendar_date: datetime | None
+    end_calendar_date: datetime | None
     documents: list[Any]
     signature: str
 

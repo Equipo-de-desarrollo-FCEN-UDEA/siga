@@ -49,8 +49,8 @@ export class DatePickerRangeComponent implements OnInit {
     public formatter: NgbDateParserFormatter
   ) {
     this.form = this.fb.group({
-      start_date: [new Date(), [Validators.required]],
-      end_date: [new Date(), [Validators.required]],
+      start_date: [null, [Validators.required]],
+      end_date: [null, [Validators.required]],
     });
   }
 
