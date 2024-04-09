@@ -20,42 +20,39 @@
       <hr style="margin-top: 0" />
 
       <span class="col-md-4 col-xs-12 col-sm-12 label"
-        >Número de días<span style="color: red">*</span></span
+        >Número de días<span style="color: blue">*</span></span
       >
       <div class="col-12">
         <div class="formfloatig">
           <input
-            formControlName="total_days_laboral"
+            formControlName="total_working_days"
             max="21"
             min="1"
             class="form-control"
             placeholder="Ejemplo: 4"
             type="number"
             [ngClass]="{
-              'is-invalid': isInvalidForm('total_days_laboral')
+              'is-invalid': isInvalidForm('total_working_days')
             }"
           />
         </div>
         <p
-          *ngIf="isInvalidForm('total_days_laboral')"
+          *ngIf="isInvalidForm('total_working_days')"
           class="inputError text-danger"
         >
           Esta cantidad de días debe ser mínimo de 1 y máximo de 21
         </p>
       </div>
-      <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
-        >Fecha inicial <span style="color: red">*</span></span
-      >
 
-      <app-date-picker
-        [form]="form"
-        [total_days]="f['total_days_laboral'].value"
-        [start_date]="f['start_date_laboral'].value"
-        [end_date]="f['end_date_laboral'].value"
-        [formControlNameStart]="'start_date_laboral'"
-        [formControlNameEnd]="'end_date_laboral'"
+      <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
+        >Fecha inicial <span style="color: blue">*</span></span
+      >
+      <app-date-picker-range
+        [total_days]="f['total_working_days'].value"
         [laboralflag]="true"
-      ></app-date-picker>
+        [holidays]="holidays"
+        (datePickerValues)="setDates($event)"
+      ></app-date-picker-range>
     </div>
 
     <div class="mt-4 col-md-6 col-xs-12 col-sm-12 col-12 mb-3">
@@ -65,42 +62,38 @@
       <hr style="margin-top: 0" />
 
       <span class="col-md-4 col-xs-12 col-sm-12 label"
-        >Número de días<span style="color: red">*</span></span
+        >Número de días<span style="color: blue">*</span></span
       >
       <div class="col-12">
         <div class="formfloatig">
           <input
-            formControlName="total_days_calendar"
+            formControlName="total_calendar_days"
             max="21"
             min="1"
             class="form-control"
             placeholder="Ejemplo: 4"
             type="number"
             [ngClass]="{
-              'is-invalid': isInvalidForm('total_days_calendar')
+              'is-invalid': isInvalidForm('total_calendar_days')
             }"
           />
         </div>
         <p
-          *ngIf="isInvalidForm('total_days_calendar')"
+          *ngIf="isInvalidForm('total_calendar_days')"
           class="inputError text-danger"
         >
           Esta cantidad de días debe ser mínimo de 1 y máximo de 21
         </p>
       </div>
       <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
-        >Fecha inicial <span style="color: red">*</span></span
+        >Fecha inicial <span style="color: blue">*</span></span
       >
 
-      <app-date-picker
-        [form]="form"
-        [total_days]="f['total_days_calendar'].value"
-        [start_date]="f['start_date_calendar'].value"
-        [end_date]="f['end_date_calendar'].value"
-        [formControlNameStart]="'start_date_calendar'"
-        [formControlNameEnd]="'end_date_calendar'"
+      <app-date-picker-range
+        [total_days]="f['total_calendar_days'].value"
         [laboralflag]="false"
-      ></app-date-picker>
+        (datePickerValues)="setDatesCalendar($event)"
+      ></app-date-picker-range>
     </div>
 
     <!--ARCHIVOS-->

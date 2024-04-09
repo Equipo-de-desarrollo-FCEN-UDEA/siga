@@ -1,8 +1,6 @@
 <div [formGroup]="form">
-  <!-- DATEPICKER -->
   <ng-template #footerTemplate>
     <hr class="my-0" />
-    <!-- <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p> -->
     <p *ngIf="!fromDate">Elige la fecha inicial</p>
     <button
       class="btn btn-primary btn-sm m-2 float-start"
@@ -63,39 +61,24 @@
         (click)="datepicker.toggle(); clicked = clicked + 1"
         placeholder="yyyy-mm-dd"
         name="dpFromDate"
-        formControlName="{{ formControlNameStart }}"
+        formControlName="start_date"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
+        (input)="onChanged()"
         [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
         [ngClass]="{
           'is-invalid':
-            (submitted && f['total_days_laboral'].errors) ||
+            (submitted && f['end_working_date'].errors) ||
             ((!fromDate || !toDate) && clicked !== 0) ||
             selectDays(fromDate, toDate)
         }"
-        [attr.disabled]="
-          laboralflag
-            ? f['total_days_laboral'].errors
-              ? ''
-              : null
-            : f['total_days_calendar'].errors
-            ? ''
-            : null
-        "
+        [attr.disabled]="!total_days ? true : null"
       />
       <button
         #buttonEl
         class="btn btn-outline-secondary"
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
-        [attr.disabled]="
-          laboralflag
-            ? f['total_days_laboral'].errors
-              ? ''
-              : null
-            : f['total_days_calendar'].errors
-            ? ''
-            : null
-        "
+        [attr.disabled]="!total_days ? true : null"
       >
         <i class="fa fa-calendar"> </i>
       </button>
@@ -123,9 +106,10 @@
         class="form-control"
         placeholder="yyyy-mm-dd"
         name="dpToDate"
-        formControlName="{{ formControlNameEnd }}"
+        formControlName="end_date"
         [value]="formatter.format(toDate)"
         (input)="toDate = validateInput(toDate, dpToDate.value)"
+        (input)="onChanged()"
       />
     </div>
   </div>

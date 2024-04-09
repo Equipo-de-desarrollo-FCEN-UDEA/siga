@@ -5,11 +5,9 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-
 //Modules
 import { SharedRoutingModule } from './shared-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
@@ -20,8 +18,8 @@ import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
 import { ApplicantsComponent } from './components/applicants/applicants.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { UserApplicationStatusComponent } from './components/user-application-status/user-application-status.component';
-
-
+import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
+import { DatePickerBasicComponent } from './components/date-picker-basic/date-picker-basic.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +28,9 @@ import { UserApplicationStatusComponent } from './components/user-application-st
     LoaderComponent,
     StepperComponent,
     ApplicantsComponent,
-    UserApplicationStatusComponent
+    UserApplicationStatusComponent,
+    DatePickerRangeComponent,
+    DatePickerBasicComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,8 @@ import { UserApplicationStatusComponent } from './components/user-application-st
     ReactiveFormsModule,
     FormsModule,
     CdkStepperModule,
-    SignaturePadModule
+    SignaturePadModule,
+    NgbModule,
   ],
   exports: [
     HttpClientModule,
@@ -52,7 +53,8 @@ import { UserApplicationStatusComponent } from './components/user-application-st
     StepperComponent,
     CdkStepperModule,
     ApplicantsComponent,
-    SignaturePadModule
-  ]
+    SignaturePadModule,
+    DatePickerRangeComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

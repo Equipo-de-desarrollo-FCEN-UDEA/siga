@@ -50,7 +50,7 @@ async def create_vacation(
             application_sub_type_id=vacation.application_sub_type_id,
             user_id=current_user.id,
             start_date=vacation_create.start_calendar_date if vacation_create.start_calendar_date else vacation_create.start_working_date,
-            end_date=vacation_create.end_calendar_date if vacation_create.end_calendar_date else end_date,
+            end_date=vacation_create.end_calendar_date if vacation_create.end_calendar_date else vacation_create.end_working_date,
             start_working_date=vacation_create.start_working_date,
             end_working_date=vacation_create.end_working_date,
             start_calendar_date=vacation_create.start_calendar_date,

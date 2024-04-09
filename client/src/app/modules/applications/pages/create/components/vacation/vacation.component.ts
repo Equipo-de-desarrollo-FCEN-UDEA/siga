@@ -40,6 +40,7 @@ import { ApplicationSubTypeService } from '@services/application-sub-type.servic
 //utils
 import { LaboralDays } from '@shared/utils';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { log } from 'console';
 
 @Component({
   selector: 'app-vacation',
@@ -114,6 +115,22 @@ export class VacationComponent {
   // holidays
   public holidays: Holiday[] = [];
 
+  public form = this.fb.group({
+    start_date: new Date(),
+    end_date: new Date(),
+    application_sub_type_id: [12],
+    total_working_days: [0],
+    start_working_date: [null],
+    end_working_date: [null],
+
+    total_calendar_days: [0],
+    start_calendar_date: [null],
+    end_calendar_date: [null],
+
+    documents: [this.documents],
+    signature: [this.signatureImg],
+  });
+
   constructor(
     private fb: FormBuilder,
     private calendar: NgbCalendar,
@@ -130,21 +147,6 @@ export class VacationComponent {
     private holidaySvc: HolidayService
   ) {}
 
-  public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
-
-    total_days_laboral: [0, [Validators.required]],
-    start_date_laboral: [new Date(), [Validators.required]],
-    end_date_laboral: [new Date(), [Validators.required]],
-
-    total_days_calendar: [0, [Validators.required]],
-    start_date_calendar: [new Date(), [Validators.required]],
-    end_date_calendar: [new Date(), [Validators.required]],
-
-    documents: [this.documents],
-    signature: [this.signatureImg],
-  });
-
   ngAfterViewInit(): void {
     this.holidaySvc.getHolidays().subscribe({
       next: (data) => {
@@ -154,25 +156,45 @@ export class VacationComponent {
   }
 
   // Form vacation
+  setDates(event: any) {
+    this.form.patchValue({
+      start_working_date: event.start_date,
+      end_working_date: event.end_date,
+    });
+  }
+
+  setDatesCalendar(event: any) {
+    this.form.patchValue({
+      start_calendar_date: event.start_date,
+      end_calendar_date: event.end_date,
+    });
+  }
 
   submit() {
     this.submitted = true;
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+
+    const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
+    const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
+
+    if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
-        text: '¡Revise que haya llenado todos los campos que el Formato sugiere',
+        text: '¡Debe seleccionar un rago de fechas en al menos en un tipo de vacaciones!',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
       });
       return;
     }
+
+    // Se detiene aqui si el formulario es invalido
+
     this.form.value.signature = this.signatureImg;
 
     let vacation = this.vacationSvc.postVacation(
       this.form.value as VacationCreate
     );
+
     if (this.files.length > 0) {
       vacation = this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
@@ -187,10 +209,11 @@ export class VacationComponent {
           );
         })
       );
+
       if (this.signatureImg != '') {
-        //console.log(vacation);
         vacation.subscribe({
           next: (data) => {
+            console.log(this.form.value);
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -340,8 +363,4 @@ export class VacationComponent {
     });
     return;
   }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
 }
