@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //interfaces
-import { DocumentsResponse, file_path } from '@interfaces/documents';
+import { file_path } from '@interfaces/documents';
 
 @Component({
   selector: 'app-file-upload',
@@ -82,12 +82,8 @@ export class FileUploadComponent implements OnInit {
     this.filesValues.emit(this.files);
   }
 
-  invalidForm() {
-    const childRouteComp = this.activatedComponentReference;
-    let validSize = !childRouteComp.validSize();
-    let validFileType = !childRouteComp.validFileType();
-
-    return validSize || validFileType
+  invalidFile() {
+    return this.validSize() && this.validFileType();
   }
 
 

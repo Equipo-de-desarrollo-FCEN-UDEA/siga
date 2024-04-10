@@ -17,6 +17,7 @@ import { VacationService } from '@services/applications/vacation.service';
 import { DocumentService } from '@services/document.service';
 import { HolidayService } from '@services/holiday.service';
 import { ApplicationSubTypeService } from '@services/application-sub-type.service';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-vacation',
@@ -40,6 +41,7 @@ export class VacationComponent {
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
   // Signature
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   signatureImg: string = '';
   signaturePadOptions: Object = {
     minWidth: 2,
@@ -238,8 +240,12 @@ export class VacationComponent {
 
   isInvalidForm(controlName: string) {
     return (
-      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched 
     );
+  }
+
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
 
   // --------------------------------------
