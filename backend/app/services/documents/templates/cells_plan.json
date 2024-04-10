@@ -88,6 +88,6 @@
         "friday_afternoon": "C40",
         "saturday_morning": "B41",
         "saturday_afternoon": "C41",
-        "observations": "D35:L39"
+        "observations": "D35:L39",
+        "total_hours_work_plan": "C42"
     }
-}

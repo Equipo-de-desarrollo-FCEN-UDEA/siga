@@ -18,8 +18,8 @@ Recuerde que en el archivo example.env está la configuración necesaria para ej
 Ahora bien para ejecutar el docker compose ejecute en su bash los siguientes comandos:
 
 ```bash
-docker compose -f docker-compose.dev.yml build
-docker compose -f docker-compose.dev.yml up
+docker compose -f docker/docker-compose.dev.yml build
+docker compose -f docker/docker-compose.dev.yml up
 ```
 
 Una vez se ejecute todos los contenedores asegurese de que no salgan errores inesperados, en algunos casos la primera vez que ejecutamos el segundo comando el backend no se conecta a la base de datos porque no espera a que esta se inicie correctamente, si le sucede esto detenga los contenedores y vuelva a ejecutar el segundo comando.
