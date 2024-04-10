@@ -39,9 +39,11 @@ export class VacationComponent {
   public submitted = false;
   // Obtener el type de vacaciones
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   // Signature
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
+  
   signatureImg: string = '';
   signaturePadOptions: Object = {
     minWidth: 2,
@@ -219,24 +221,6 @@ export class VacationComponent {
   SetFiles(event: any) {
     this.files = event;
   }
-
-  // --------- VACATION TYPES  ---------
-
-  // onApplicationSubType(event: Event) {
-  //   // Obtener el value antes de los ':'
-  //   const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
-  //     ':'
-  //   )[0];
-  //   this.laboralflag = false;
-  //   this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
-  //     next: (res) => {
-  //       this.laboralDay = res.extra.days;
-  //     },
-  //   });
-  //   if (ID_VACATION_TYPE == '1') {
-  //     this.laboralflag = true;
-  //   }
-  // }
 
   isInvalidForm(controlName: string) {
     return (

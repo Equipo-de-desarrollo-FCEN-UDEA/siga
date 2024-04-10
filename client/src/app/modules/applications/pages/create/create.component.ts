@@ -43,8 +43,7 @@ export class CreateComponent {
 
   invalidForm() {
     const childRouteComp = this.activatedComponentReference;
-    console.log(childRouteComp.invalidFile());
-    return !childRouteComp.invalidFile();
+    return childRouteComp.invalidFile? !childRouteComp.invalidFile(): false;
     
   }
 

@@ -1,24 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 //ng-bootstrap imports
-import {
-  NgbCalendar,
-  NgbDate,
-  NgbDateParserFormatter,
-  NgbDateStruct,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter,NgbDateStruct
+  } from '@ng-bootstrap/ng-bootstrap';
 
-import {
-  FullTimeCreate,
-  FulltimeResponse,
+import {FullTimeCreate, FulltimeResponse,
 } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday';
-import { LaboralDays } from '@shared/utils';
+import { Holiday } from '@interfaces/holiday'
 
 @Component({
   selector: 'app-full-time',
@@ -41,6 +34,9 @@ export class FullTimeComponent {
 
   // holidays
   public holidays: Holiday[] = [];
+
+  // FileUpload
+  
 
   public submitted: boolean = false;
   public documents: file_path[] = [];
@@ -104,6 +100,7 @@ export class FullTimeComponent {
       }
     });
   }
+  
   validSize() {
     return true;
   }
