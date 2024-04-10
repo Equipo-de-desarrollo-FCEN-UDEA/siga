@@ -27,7 +27,7 @@ services:
   nginx:
     build:
       context: ./nginx
-      dockerfile: Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
     expose:
       - "80"
     ports:
@@ -52,7 +52,7 @@ services:
     container_name: "celery_worker"
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info -Q test-queue -c 1
     env_file:
       - prod.env
@@ -67,7 +67,7 @@ services:
     container_name: 'celery_beat'
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
       - prod.env
@@ -82,7 +82,7 @@ services:
     container_name: "flower"
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     command: celery -A app.core.celery_worker.celery_app flower --port=5555
     env_file:
       - .env
@@ -97,7 +97,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
     depends_on:
       - db
       - mongo
@@ -112,7 +112,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.prod
+      dockerfile: docker/Dockerfile.prod
     container_name: client
     depends_on:
       - backend
