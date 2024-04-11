@@ -1,12 +1,12 @@
 //angular imports
-import {Component, ViewChild,HostListener} from '@angular/core';
-import { FormBuilder} from '@angular/forms';
+import { Component, ViewChild, HostListener } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignaturePad } from 'angular2-signaturepad';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 //ng-bootstrap imports
-import {NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 //interfaces
 import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { Holiday } from '@interfaces/holiday';
@@ -24,7 +24,6 @@ import { FileUploadComponent } from '@shared/components/file-upload/file-upload.
   templateUrl: './vacation.component.html',
   styleUrls: ['./vacation.component.scss'],
 })
-
 export class VacationComponent {
   // Date picker
   public laboralDay: number = 0;
@@ -43,7 +42,7 @@ export class VacationComponent {
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   // Signature
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-  
+
   signatureImg: string = '';
   signaturePadOptions: Object = {
     minWidth: 2,
@@ -85,12 +84,12 @@ export class VacationComponent {
     end_date: new Date(),
     application_sub_type_id: [12],
     total_working_days: [0],
-    start_working_date: [Date()],
-    end_working_date: [Date()],
+    start_working_date: [null],
+    end_working_date: [null],
 
     total_calendar_days: [0],
-    start_calendar_date: [Date()],
-    end_calendar_date: [Date()],
+    start_calendar_date: [null],
+    end_calendar_date: [null],
 
     documents: [this.documents],
     signature: [this.signatureImg],
@@ -146,7 +145,7 @@ export class VacationComponent {
       });
       return;
     }
-    
+
     // Se detiene aqui si el formulario es invalido
     this.form.value.signature = this.signatureImg;
 
@@ -173,6 +172,7 @@ export class VacationComponent {
       if (this.signatureImg != '') {
         vacation.subscribe({
           next: (data) => {
+            console.log(this.form.value);
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -200,13 +200,15 @@ export class VacationComponent {
         });
         return;
       }
-    } else { Swal.fire({
-              title: 'Adjuntar documento',
-              html: 'Por favor adjunte documento de talento humano.',
-              icon: 'error',
-              confirmButtonText: 'Aceptar',
-              confirmButtonColor: '#3AB795',});
-            return;
+    } else {
+      Swal.fire({
+        title: 'Adjuntar documento',
+        html: 'Por favor adjunte documento de talento humano.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
     }
   }
 
@@ -224,7 +226,7 @@ export class VacationComponent {
 
   isInvalidForm(controlName: string) {
     return (
-      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched 
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
     );
   }
 

@@ -68,7 +68,7 @@ services:
   celery-beat:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     container_name: 'celery_beat'
     command: celery -A app.core.celery_worker.celery_app beat --loglevel=info
     env_file:
@@ -86,7 +86,7 @@ services:
     container_name: "flower"
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     command: celery -A app.core.celery_worker.celery_app flower --port=5555
     env_file:
       - .env
@@ -104,7 +104,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     depends_on:
       - db
       - mongo

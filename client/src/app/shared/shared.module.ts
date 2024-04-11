@@ -41,7 +41,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     FormsModule,
     CdkStepperModule,
     SignaturePadModule,
-    NgbModule
+    NgbModule,
   ],
   exports: [
     HttpClientModule,
@@ -57,7 +57,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     ApplicantsComponent,
     SignaturePadModule,
     DatePickerRangeComponent,
-    FileUploadComponent
+    FileUploadComponent,
   ],
 })
 export class SharedModule {}

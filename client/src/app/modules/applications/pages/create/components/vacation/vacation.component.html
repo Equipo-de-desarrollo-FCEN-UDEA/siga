@@ -43,21 +43,15 @@
           Esta cantidad de días debe ser mínimo de 1 y máximo de 21
         </p>
       </div>
+
       <span class="col-md-4 col-xs-12 col-sm-12 label mt-2"
         >Fecha inicial <span style="color: blue">*</span></span
       >
-
       <app-date-picker-range
-<<<<<<< HEAD
-=======
-        [form]="form"
->>>>>>> 6232087 (:art: Se modulariza el componente date-picker-range y se pocisiona en la carpeta shared, adicionalmente se crea el directorio date-picker-basic que queda pendiente de crear el otro tipo de date picker que puede existir en la aplicació)
         [total_days]="f['total_working_days'].value"
         [laboralflag]="true"
-<<<<<<< HEAD
+        [holidays]="holidays"
         (datePickerValues)="setDates($event)"
-=======
->>>>>>> 6232087 (:art: Se modulariza el componente date-picker-range y se pocisiona en la carpeta shared, adicionalmente se crea el directorio date-picker-basic que queda pendiente de crear el otro tipo de date picker que puede existir en la aplicació)
       ></app-date-picker-range>
     </div>
 
@@ -102,20 +96,21 @@
       ></app-date-picker-range>
     </div>
 
-    <hr>
+    <hr />
 
     <!-- ALERT BOX -->
-  <div class="alert alert-warning mt-3 mb-0" style="max-height: 3em;">
-    <strong>¡Importante!</strong>
-    Subir aval de Talento Humano.
-  </div>
+    <div class="alert alert-warning mt-3 mb-0" style="max-height: 3em">
+      <strong>¡Importante!</strong>
+      Subir aval de Talento Humano.
+    </div>
 
     <!--FILE-UPLOAD-->
     <app-file-upload
       [documents]="f['documents'].value"
       (documentsValues)="SetDocuments($event)"
-      (filesValues)="SetFiles($event)">
-      </app-file-upload>
+      (filesValues)="SetFiles($event)"
+    >
+    </app-file-upload>
 
     <!-- FIRMA -->
 
@@ -124,7 +119,6 @@
     </h6>
     <hr />
 
-    
     <div class="col-md-4 col-xs-12 col-sm-12 col-12">
       <div
         id="div-signature"
