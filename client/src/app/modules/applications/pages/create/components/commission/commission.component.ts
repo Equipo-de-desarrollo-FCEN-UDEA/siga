@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
@@ -10,6 +10,8 @@ import { DocumentService } from '@services/document.service';
 import { LoaderService } from '@services/loader.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
+
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-commission',
@@ -29,13 +31,15 @@ export class CommissionComponent {
 
   // Files
   public files : any[] = [];
-  public archivos = [1];
   public documents: file_path[] = []
 
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
+
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   public comision_type$: any;
 
@@ -63,7 +67,6 @@ export class CommissionComponent {
    }
 
    public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
@@ -166,76 +169,26 @@ export class CommissionComponent {
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
-
-
-
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.
     invalid && this.form.get(controlName)?.touched;
   }
 
   // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
+  // ----------- upload file ---------
   // --------------------------------------
+  // Resivir valores del output para ponerlos en el componente padre
 
-  onUpload(event:Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
-    }
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
+    });
   }
-
-  removeFile(index: number) {
-    if (this.archivos.length > 1) {
-    this.archivos.splice(index, 1);};
-    this.files.splice(index, 1);
+  SetFiles(event: any) {
+    this.files = event;
   }
-
-  validSize() {
-    const FILTERED_FILES = this.files.filter((file) => file !== undefined);
-    const SIZE = FILTERED_FILES.map((file) => file?.size || 0).reduce(
-      (a, b) => a + b,
-      0
-    );
-    return SIZE < 6 * 1024 * 1024;
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
-
-  validFileType() {
-    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
-    })
-    return flag;
-
-  }
-
-
-
-  // --------------------------------------
-  // -------- LUGAR - PAISES - CIUDAD -----
-  // --------------------------------------
-
-  // onChangePais(event:any) {
-  //   const paisId = event.target.value;
-  //   this.pais = this.paises[paisId];
-  //   this.paisesCiudadesSvc.getEstados(this.pais).subscribe(
-  //     (data:Estado[]) => {
-  //       this.provincias = data;
-  //     }
-  //   )
-  // }
-
-  // onChangeEstado(event:any) {
-  //   const estadoId = event.target.value;
-  //   this.provincia = this.provincias[estadoId];
-  //   this.paisesCiudadesSvc.getCiudades(this.pais, this.provincia).subscribe(
-  //     (data:Ciudad[]) => {
-  //       this.ciudades = data;
-  //     }
-  //   );
-  // }
 
 }

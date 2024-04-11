@@ -43,10 +43,8 @@ export class CreateComponent {
 
   invalidForm() {
     const childRouteComp = this.activatedComponentReference;
-    let validSize = !childRouteComp.validSize();
-    let validFileType = !childRouteComp.validFileType();
-
-    return validSize || validFileType
+    return childRouteComp.invalidFile? !childRouteComp.invalidFile(): false;
+    
   }
 
 }

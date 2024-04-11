@@ -1,46 +1,23 @@
 //angular imports
-import {
-  ChangeDetectorRef,
-  Component,
-  NgZone,
-  ViewChild,
-  HostListener,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ContentObserver } from '@angular/cdk/observers';
+import { Component, ViewChild, HostListener } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SignaturePad } from 'angular2-signaturepad';
-
-//rxjs imports
-import { from, switchMap } from 'rxjs';
-
-//sweetalert2
+import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
-
 //ng-bootstrap imports
-import {
-  NgbCalendar,
-  NgbDate,
-  NgbDateParserFormatter,
-  NgbDateStruct,
-} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 //interfaces
 import { DocumentsResponse, file_path } from '@interfaces/documents';
 import { Holiday } from '@interfaces/holiday';
 import { VacationCreate } from '@interfaces/applications/vacation';
-
 //services
 import { ApplicationTypesService } from '@services/application-types.service';
 import { VacationService } from '@services/applications/vacation.service';
 import { DocumentService } from '@services/document.service';
 import { HolidayService } from '@services/holiday.service';
 import { ApplicationSubTypeService } from '@services/application-sub-type.service';
-
-//utils
-import { LaboralDays } from '@shared/utils';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
-import { log } from 'console';
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-vacation',
@@ -48,38 +25,25 @@ import { log } from 'console';
   styleUrls: ['./vacation.component.scss'],
 })
 export class VacationComponent {
-  // Dates
-  public fromDate: NgbDate | null = null;
-  public toDate: NgbDate | null = null;
-
-  public fromDateCalendar: NgbDate | null = null;
-  public toDateCalendar: NgbDate | null = null;
-
-  public hoveredDate: NgbDate | null = null;
-  public model: NgbDateStruct | null = null;
-  public today = this.calendar.getToday();
+  // Date picker
   public laboralDay: number = 0;
   public laboralflag: boolean = true;
   public verify_date: number = 0;
-
   // Files
   public files: any[] = [];
-  public document_new = [1];
   public documents: file_path[] = [];
-
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
-
-  public id: number = 0;
-
+  // Obtener el type de vacaciones
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
-
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   // Signature
   @ViewChild(SignaturePad) signaturePad!: SignaturePad;
-  signatureImg: string = '';
 
+  signatureImg: string = '';
   signaturePadOptions: Object = {
     minWidth: 2,
     canvasWidth: 300,
@@ -133,13 +97,8 @@ export class VacationComponent {
 
   constructor(
     private fb: FormBuilder,
-    private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
-    private ngZone: NgZone,
     private router: Router,
-    private route: ActivatedRoute,
-    private cd: ChangeDetectorRef,
-
     private applicationTypeSvc: ApplicationTypesService,
     private SubTypeSvc: ApplicationSubTypeService,
     private vacationSvc: VacationService,
@@ -188,7 +147,6 @@ export class VacationComponent {
     }
 
     // Se detiene aqui si el formulario es invalido
-
     this.form.value.signature = this.signatureImg;
 
     let vacation = this.vacationSvc.postVacation(
@@ -203,6 +161,7 @@ export class VacationComponent {
               documents: data.files_paths,
             });
           }
+
           this.form.value.signature = this.signatureImg;
           return this.vacationSvc.postVacation(
             this.form.value as VacationCreate
@@ -244,7 +203,7 @@ export class VacationComponent {
     } else {
       Swal.fire({
         title: 'Adjuntar documento',
-        html: 'Por favor adjunte documento de aval de talento humano.',
+        html: 'Por favor adjunte documento de talento humano.',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',
@@ -253,24 +212,16 @@ export class VacationComponent {
     }
   }
 
-  // --------------------------------------
-  // --------- VACATION TYPES  ---------
-  // --------------------------------------
+  // Resivir valores del output para ponerlos en el componente padre
 
-  onApplicationSubType(event: Event) {
-    // Obtener el value antes de los ':'
-    const ID_VACATION_TYPE = (event.target as HTMLSelectElement).value.split(
-      ':'
-    )[0];
-    this.laboralflag = false;
-    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
-      next: (res) => {
-        this.laboralDay = res.extra.days;
-      },
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
     });
-    if (ID_VACATION_TYPE == '1') {
-      this.laboralflag = true;
-    }
+  }
+
+  SetFiles(event: any) {
+    this.files = event;
   }
 
   isInvalidForm(controlName: string) {
@@ -279,45 +230,8 @@ export class VacationComponent {
     );
   }
 
-  // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
-  // --------------------------------------
-
-  // Subir un archivo
-  onUpload(event: Event, index: number) {
-    const ELEMENT = event.target as HTMLInputElement;
-    const FILE = ELEMENT.files?.item(0);
-    if (FILE) {
-      this.files.splice(index, 1, FILE);
-    }
-  }
-
-  // Eliminar achivos
-  removeFile(index: number) {
-    if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);
-    }
-    this.files.splice(index, 1);
-  }
-
-  // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
-  validSize() {
-    const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return SIZE < 6 * 1024 * 1024;
-  }
-
-  // Verifica que el archivo a adjuntar sea de un tipo valido
-  validFileType() {
-    const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      // separa el último punto del nombre del archivo para verificar su tipo
-      flag = VALID_EXTENSIONS.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
-    });
-    return flag;
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
 
   // --------------------------------------
@@ -356,6 +270,9 @@ export class VacationComponent {
       confirmButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log(typeof this.signatureImg);
+        console.log(this.signatureImg);
+
         this.isButtonDisabled = true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.isButtonDisabled = false;

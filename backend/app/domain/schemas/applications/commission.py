@@ -18,11 +18,11 @@ class CommissionBase(BaseModel):
     documents: list[Any] | None
 
 class CommissionCreate(CommissionBase):
-    application_sub_type_id: int = Field(gt=0, lt=100)
+    application_sub_type_id: int = 8
 
 
 class CommissionUpdate(CommissionBase):
-    application_sub_type_id: int
+    application_sub_type_id: int = 8
 
 
 class Compliment(BaseModel):
