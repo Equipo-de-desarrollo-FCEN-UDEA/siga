@@ -124,7 +124,6 @@ class WorkPlan(BaseModel):
     academic_admin_activities: list[AcademicAdminActivities] | None
     other_activities: list[OtherActivities] | None
     working_week: WorkingWeek
-    total_hours: int
     observations: str
 
 class Goal(BaseModel):
