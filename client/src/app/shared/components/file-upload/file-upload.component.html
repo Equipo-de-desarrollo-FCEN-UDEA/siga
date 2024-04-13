@@ -1,4 +1,31 @@
 <div [formGroup]="form">
+
+  <!-- DOCUMENTS EDIT -->
+  <div class="row regular-row mt-4" *ngIf="documents && documents.length > 0">
+    <div class="col-md-4 col-xs-12 col-sm-6 label mb-2">Documentos</div>
+    <div class="col-sm-8">
+      <ul
+        *ngFor="let doc of documents; let i = index"
+        class="list-group"
+      >
+        <li [id]="i" class="list-group-item d-flex justify-content-between">
+          <span>{{ doc.name }}</span>
+          <span
+            style="width: fit-content; margin: 0"
+          >
+          <button
+          class="btn btn-circle"
+          type="button"
+          (click)="deleteDocument(doc.path, i)"
+        >
+          <i class="fa fa-times-circle"></i>
+          </button>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <h6 class="mt-3">
     <strong>Archivos adjuntos de la solicitud</strong>
   </h6>
@@ -30,7 +57,6 @@
             [id]="i"
             class="file-upload"
             type="file"
-            formControlName="document_new"
             (change)="onUpload($event, i)"
             (change)="onChanged()"
             (change)="EmitFiles()"
@@ -39,7 +65,7 @@
             [for]="i"
             class="is-hoverable cursor link-success"
             style="margin-left: 10px"
-            >{{ files[i]? files[i].name: "Subir archivos de la solicitud"}}
+            >{{ files[i] && files[i].name ? files[i].name : "Subir archivos de la solicitud"}}
             </label>
         </label>
       </div>
@@ -66,70 +92,5 @@
     </div>
   </div>
 </div>
-
-<!-- <div [formGroup]="form">
-  <h6 class="mt-3">
-    <strong>Archivos adjuntos de la solicitud</strong>
-  </h6>
-  <hr style="margin-top: 0" />
-
-  </div>
-
-<h6 class="mt-3 text-center">
-  <span class="text-muted">Archivos adjuntos a la solicitud</span>
-</h6>
-<div
-  class="alert alert-danger"
-  *ngIf="files.length > 0 && !validFileType()"
->
-  Ese tipo de archivo no es permitido.
-</div>
-<div class="alert alert-danger" *ngIf="files.length > 0 && !validSize()">
-  Los archivos no deben pesar más de 6 MB.
-</div>
-<div class="formfloatig" style="flex-direction: column">
-  <div
-    *ngFor="let producto of documents; last as isLast; let i = index"
-    class="arrayLike formfloatig d-flex justify-content-between"
-  >
-    <div class="document_new" style="width: auto; margin-left: 10px">
-      <label class="btn-btn-default cursor is-hoverable">
-        <div class="fa fa-upload fa-2x"></div>
-        <input
-        formControlName="documents"
-        (change)="onUpload($event, i)"
-        (change)="onChanged()"
-        (change)="EmitFiles()"
-        [id]="i"
-        class="file-upload"
-        type="file"
-        />
-        <label [for]="i" class="is-hoverable cursor link-success" style="margin-left: 10px">{{
-          files[i] ? files[i].name : "Subir archivo"
-        }}</label>
-      </label>
-    </div>
-    <div class="buttons">
-
-      <button
-        class="btn btn-circle btn-remove m-1"
-        type="button"
-        (click)="removeFile(i)"
-      >
-        <i class="fa fa-minus"></i>
-      </button>
-      
-      <button
-        class="btn btn-circle btn-add m-1"
-        type="button"
-        (click)="documents.push(1)"
-        *ngIf="isLast && documents.length < 3"
-      >
-        <i class="fa fa-plus"></i>
-      </button>
-
-    </div>
-  </div>
-</div> -->
 
 

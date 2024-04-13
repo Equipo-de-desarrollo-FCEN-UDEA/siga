@@ -1,8 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 //interfaces
 import { file_path } from '@interfaces/documents';
+import { filter, map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,6 +16,7 @@ export class FileUploadComponent implements OnInit {
   // Files
   public files: any[] = [];
   public document_new = [1];
+  public documentsToDelete: string[] = []
   @Input() documents: file_path[] | any = [];
 
   @Output() documentsValues = new EventEmitter<any>();
@@ -22,12 +26,17 @@ export class FileUploadComponent implements OnInit {
 
   public form: FormGroup;
   activatedComponentReference: any;
+  route: any;
 
   get f() {
     return this.form.controls;
   }
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router
+    ) {
     this.form = this.fb.group({
       documents: [],
     });
@@ -48,8 +57,8 @@ export class FileUploadComponent implements OnInit {
 
   // Eliminar achivos
   removeFile(index: number) {
-    if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);};
+    if (this.files.length > 1) {
+      this.files.splice(index, 1);};
     this.files.splice(index, 1);
   }
 
@@ -85,6 +94,30 @@ export class FileUploadComponent implements OnInit {
     return this.validSize() && this.validFileType();
   }
 
+  deleteDocument(path: string, i: number) {
+    Swal.fire({
+      title: "Eliminar documento",
+      text: "¿Está seguro de querer eliminar este documento?, no podrá recuperarlo",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Eliminar",
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3AB795'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.documentsToDelete = this.documentsToDelete.concat([path]);
+        this.documents.splice(i, 1);
+      }
+    })
 
-  ngOnInit(): void {}
+  }
+
+  public isEditRoute: boolean | undefined;
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.isEditRoute = this.router.url.includes('editar');
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
@@ -9,6 +9,8 @@ import { CommissionService } from '@services/applications/commission.service';
 import { DocumentService } from '@services/document.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
+
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-commission',
@@ -29,6 +31,9 @@ export class CommissionComponent implements OnInit {
   public archivos = [1];
   public documents: file_path[] = []
   public documentsToDelete: string[] = []
+
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   // For handle errors
   public clicked = 0;
@@ -206,26 +211,7 @@ export class CommissionComponent implements OnInit {
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
-
-  // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
-  // --------------------------------------
-
-  onUpload(event: Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
-    }
-  }
-
-  removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
-    };
-    this.files.splice(index, 1);
-  }
-
+  
   deleteDocument(path: string, i: number) {
     Swal.fire({
       title: "Eliminar documento",
@@ -243,48 +229,23 @@ export class CommissionComponent implements OnInit {
     })
 
   }
-
-  validSize() {
-    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 6 * 1024 * 1024;
-  }
-
-  validTipoArchivo() {
-    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
-    })
-    return flag;
-
-  }
-
-
-
+  
   // --------------------------------------
-  // -------- LUGAR - PAISES - CIUDAD -----
+  // ----------- upload file ---------
   // --------------------------------------
+  // Resivir valores del output para ponerlos en el componente padre
 
-  // onChangePais(event:any) {
-  //   const paisId = event.target.value;
-  //   this.pais = this.paises[paisId];
-  //   this.paisesCiudadesSvc.getEstados(this.pais).subscribe(
-  //     (data:Estado[]) => {
-  //       this.provincias = data;
-  //     }
-  //   )
-  // }
-
-  // onChangeEstado(event:any) {
-  //   const estadoId = event.target.value;
-  //   this.provincia = this.provincias[estadoId];
-  //   this.paisesCiudadesSvc.getCiudades(this.pais, this.provincia).subscribe(
-  //     (data:Ciudad[]) => {
-  //       this.ciudades = data;
-  //     }
-  //   );
-  // }
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
+    });
+  }
+  SetFiles(event: any) {
+    this.files = event;
+  }
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
+  }
 
 
 }

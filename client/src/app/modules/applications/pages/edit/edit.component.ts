@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class EditComponent implements OnInit {
 
   public title: string = '';
+  public button: string = '';
 
   private activatedComponentReference: any;
 
@@ -18,6 +19,7 @@ export class EditComponent implements OnInit {
     private location: Location
   ) { 
     // We take the titile from the child data
+    this.button = this.route.snapshot.firstChild?.data['button'];
     this.title = this.route.snapshot.firstChild?.data['title'];
   }
 
@@ -36,5 +38,12 @@ export class EditComponent implements OnInit {
     const childRouteComp = this.activatedComponentReference;
     childRouteComp.submit();
   }
+  invalidForm() {
+    const childRouteComp = this.activatedComponentReference;
+    return childRouteComp.invalidFile? !childRouteComp.invalidFile(): false;
+    
+  }
+
+  
 
 }
