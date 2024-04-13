@@ -61,43 +61,8 @@
     </div>
   </div>
 
-  <!-- COMMISSION TYPE -->
 
   <div class="row">
-    <!-- <div class="row">
-      <div class="formfloatig">
-        <select
-          formControlName="application_sub_type_id"
-          class="form-control form-select-lg mb-3 cursor"
-          (change)="onChangeSolicitud($event)"
-          [ngClass]="{
-            'is-invalid':
-              (submitted && f['application_sub_type_id'].errors) ||
-              isInvalidForm('application_sub_type_id')
-          }"
-          *ngIf="applicationType$ | async as applicationType"
-        >
-          <option value="0" disabled selected>Elige un tipo de comisión</option>
-          <ng-container *ngFor="let tipo of applicationType.application_sub_type">
-            <option
-              [ngValue]="tipo.id | number"
-              *ngIf="!hiddenIds.includes(tipo.id)"
-            >
-              {{ tipo.name }}
-            </option>
-          </ng-container>
-        </select>
-
-        <div
-          *ngIf="isInvalidForm('application_sub_type_id')"
-          class="invalid-feedback"
-        >
-        </div>
-      </div>
-    </div> -->
-    <!-- <hr /> -->
-
-
     <!-- DATES -->
     <div class="mt-4 row regular-row align-items-baseline">
       <span class="col-md-4 col-xs-12 col-sm-12 label mb-2">Fechas *</span>
@@ -299,20 +264,13 @@
         </div>
       </div>
     </div>
-
     
-
-    <!-- ARCHIVOS - DOCUMENTOS -->
-    
+    <!-- FILE UPLOAD -->
     <app-file-upload
     [documents]="f['documents'].value"
-      (documentsValues)="SetDocuments($event)"
-      (filesValues)="SetFiles($event)">
-
+    (documentsValues)="SetDocuments($event)"
+    (filesValues)="SetFiles($event)">
     </app-file-upload>
-        
-      
-    
   </div>
   <hr />
 </form>
