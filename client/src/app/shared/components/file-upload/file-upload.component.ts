@@ -49,8 +49,7 @@ export class FileUploadComponent implements OnInit {
   // Eliminar achivos
   removeFile(index: number) {
     if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);
-    }
+      this.document_new.splice(index, 1);};
     this.files.splice(index, 1);
   }
 
