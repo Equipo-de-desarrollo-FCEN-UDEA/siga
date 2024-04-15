@@ -411,63 +411,6 @@ export class VacationComponent implements OnInit {
   }
 
   // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
-  // --------------------------------------
-
-  // deleteDocument(path: string, i: number) {
-  //   Swal.fire({
-  //     title: 'Eliminar documento',
-  //     text: '¿Está seguro de querer eliminar este documento?, no podrá recuperarlo',
-  //     cancelButtonText: 'Cancelar',
-  //     confirmButtonText: 'Eliminar',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#d33',
-  //     cancelButtonColor: '#3AB795',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.documents.splice(i, 1);
-  //     }
-  //   });
-  // }
-
-  // Subir un archivo
-  // onUpload(event: Event, index: number) {
-  //   const ELEMENT = event.target as HTMLInputElement;
-  //   const FILE = ELEMENT.files?.item(0);
-  //   if (FILE) {
-  //     this.files.splice(index, 1, FILE);
-  //   }
-  // }
-
-  // Eliminar achivos
-  // removeFile(index: number) {
-  //   if (this.document_new.length > 1) {
-  //     this.document_new.splice(index, 1);
-  //   }
-  //   this.files.splice(index, 1);
-  // }
-
-  // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
-  // validSize() {
-  //   const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-  //   return SIZE < 6 * 1024 * 1024;
-  // }
-
-  // Verifica que el archivo a adjuntar sea de un tipo valido
-  // validFileType() {
-  //   const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
-
-  //   let flag = true;
-  //   this.files.forEach((file) => {
-  //     // separa el último punto del nombre del archivo para verificar su tipo
-  //     flag = VALID_EXTENSIONS.includes(
-  //       file.name.split('.')[file.name.split('.').length - 1]
-  //     );
-  //   });
-  //   return flag;
-  // }
-
-  // --------------------------------------
   // ----------- upload file ---------
   // --------------------------------------
   // Resivir valores del output para ponerlos en el componente padre
