@@ -72,18 +72,20 @@ export class FileUploadComponent implements OnInit {
     return SIZE < 6 * 1024 * 1024;
   }
 
-  // Verifica que el archivo a adjuntar sea de un tipo valido
+// Verifica que el archivo a adjuntar sea de un tipo valido
   validFileType() {
     const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 
-    let flag = true;
-    this.files.forEach((file) => {
-      // separa el último punto del nombre del archivo para verificar su tipo
-      flag = VALID_EXTENSIONS.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
-    });
-    return flag;
+    const docs_subidos: string[] = [];
+    for (let eachfile of this.files){
+      if (VALID_EXTENSIONS.includes(eachfile.name.split('.')[eachfile.name.split('.').length - 1])) {
+        docs_subidos.push(eachfile);
+      }
+    }
+    if (docs_subidos.length == this.files.length){
+      return true;
+    }
+    return false; 
   }
 
   onChanged(): void {

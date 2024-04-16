@@ -177,7 +177,7 @@ export class CommissionComponent {
   // --------------------------------------
   // ----------- upload file ---------
   // --------------------------------------
-  // Resivir valores del output para ponerlos en el componente padre
+  // Recibir valores del output para ponerlos en el componente padre
 
   SetDocuments(event: any) {
     this.form.patchValue({
