@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ApplicationTypesService } from '@services/application-types.service';
+
 
 //interfaces
 import { file_path } from '@interfaces/documents';
@@ -18,6 +20,7 @@ export class FileUploadComponent implements OnInit {
   public document_new = [1];
   public documentsToDelete: string[] = []
   @Input() documents: file_path[] | any = [];
+  @Input() applycationType: number = 0;
 
   @Output() documentsValues = new EventEmitter<any>();
   @Output() filesValues: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -34,6 +37,7 @@ export class FileUploadComponent implements OnInit {
   
 
   constructor(
+    private applicationTypeSvc: ApplicationTypesService,
     private fb: FormBuilder,
     private router: Router
     ) {
@@ -119,5 +123,9 @@ export class FileUploadComponent implements OnInit {
     ).subscribe(() => {
       this.isEditRoute = this.router.url.includes('editar');
     });
+  }
+
+  consol() {
+    console.log(this.applycationType);
   }
 }

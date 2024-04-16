@@ -41,7 +41,7 @@ export class CommissionComponent implements OnInit {
   public submitted = false;
 
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
 

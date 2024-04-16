@@ -70,7 +70,10 @@
         </label>
       </div>
 
-      <div class="buttons">
+      <!-- Botones que solo funcionan en comisiones -->
+      <div 
+      class="buttons"
+      *ngIf="this.applycationType == 2">
         <button
           class="btn btn-circle btn-remove m-1"
           type="button"

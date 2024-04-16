@@ -68,7 +68,7 @@ export class VacationComponent implements OnInit {
   public submitted = false;
 
   public id: number = 0;
-
+  public application_type_number = 5;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
 
   // holidays

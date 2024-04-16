@@ -282,6 +282,7 @@
       <!-- ARCHIVOS - DOCUMENTOS -->
       <app-file-upload
       [documents]="f['documents'].value"
+      [applycationType]="application_type_number"
       (documentsValues)="SetDocuments($event)"
       (filesValues)="SetFiles($event)">
 

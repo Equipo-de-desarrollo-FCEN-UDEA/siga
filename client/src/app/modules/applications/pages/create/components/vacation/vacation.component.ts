@@ -37,6 +37,7 @@ export class VacationComponent {
   public error = '';
   public submitted = false;
   // Obtener el type de vacaciones
+  public application_type_number = 5;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
   // FileUpload
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
@@ -279,5 +280,9 @@ export class VacationComponent {
       }
     });
     return;
+  }
+
+  consol() {
+    console.log('hola');
   }
 }

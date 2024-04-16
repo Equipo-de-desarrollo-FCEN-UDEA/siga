@@ -42,7 +42,7 @@ export class CommissionComponent {
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
 
