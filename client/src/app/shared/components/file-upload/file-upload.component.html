@@ -75,6 +75,7 @@
       class="buttons"
       *ngIf="this.applycationType == 2"> 
         <button
+        *ngIf="document_new.length > 1"
           class="btn btn-circle btn-remove m-1"
           type="button"
           (click)="removeFile(i); document_new.splice(i, 1)"
