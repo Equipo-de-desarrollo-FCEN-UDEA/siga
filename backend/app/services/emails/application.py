@@ -15,7 +15,6 @@ _my_pwd = settings.smtp_user_password._secret_value
 
 env = Environment(loader=FileSystemLoader(templatesdir))
 
-
 @celery_app.task
 def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: list[str] | str):
     template = env.get_template("email.cambio.estado.html.j2")
@@ -39,12 +38,6 @@ def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: st
     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
         smtp.login(_my_email, _my_pwd)
         smtp.send_message(msg)
-
-             # server de pruebas udea
-
-    # with smtplib.SMTP("172.19.0.101", port=25) as smtp:
-    #     smtp.send_message(msg=msg, from_addr=_my_email, to_addrs= email)
-
 
 
 @celery_app.task

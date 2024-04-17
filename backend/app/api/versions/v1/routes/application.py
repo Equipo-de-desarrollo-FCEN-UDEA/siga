@@ -39,7 +39,6 @@ async def read_applications(
     try:
         db_application = crud.application.get_multi(
             db=db, skip=skip, limit=limit, who=current_user, search=search, filed=filed)
-        log.debug(len(db_application))
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     return db_application
@@ -158,10 +157,6 @@ def report(*,
             db=db, skip=skip, limit=limit, who=current_user, search=search, filed=filed)
         #Verificar cómo se devuelve el reporte.
         report_path = documents.fill_report_applications(current_user, db_application)
-        
-        #report = aws.s3.get_data_from_s3_bucket(settings.aws_bucket_name, report_path)
-
-        log.debug(report)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     

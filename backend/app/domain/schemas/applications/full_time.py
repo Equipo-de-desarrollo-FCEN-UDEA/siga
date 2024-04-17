@@ -148,7 +148,7 @@ class InitialLetter(BaseModel):
 
 class FullTimeBase(BaseModel):
     title: str
-    start_date: datetime
+    start_date: datetime | None
     documents: list[Any] | None = Field(default_factory=list)
 
 

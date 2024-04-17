@@ -25,8 +25,6 @@ log = get_logging(__name__)
 def fill_economic_support_form(user: User, economic_support:EconomicSupportResponse):
 
     economic_support_dict: dict = economic_support.dict()
-    log.debug("ESTE ES EL DICCIONARIO...")
-    log.debug(economic_support_dict)
 
     user = UserResponse.from_orm(user).dict(exclude_unset=True)
 
@@ -77,7 +75,6 @@ def fill_economic_support_form(user: User, economic_support:EconomicSupportRespo
     path = f'user_{user["id"]}/{uuid1()}'+'formato_apoyo_economico.docx'
 
     generate_support_format_to_aws.apply_async(args=(data_economic_support, path))
-    log.debug(path)
     return path
 
 @celery_app.task
@@ -112,15 +109,10 @@ def create_zip_documents(user: User, economic_support:EconomicSupportResponse):
     file_paths = [file['path'] for file in files]
     #Abrir una carpeta temporal.
     temp_dir = tempfile.TemporaryDirectory()
-    # log.debug("Está vacía la carpeta?")
-    # log.debug(os.listdir(temp_dir.name))
     destination = temp_dir.name
     binary_files = [os.path.join(destination, re.findall(regex, file)[0]) for file in file_paths]
     for file in file_paths:
         aws.s3.s3.meta.client.download_file(settings.aws_bucket_name, file, os.path.join(destination, re.findall(regex, file)[0]))
-
-    # log.debug("Está llena la carpeta?")
-    # log.debug(os.listdir(temp_dir.name))
 
     zip_buffer = BytesIO()
     with ZipFile(zip_buffer,'w', ZIP_DEFLATED) as zip:
