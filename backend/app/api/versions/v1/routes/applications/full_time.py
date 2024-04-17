@@ -82,6 +82,7 @@ async def create_full_time(
 @router.post('/copy-full-time/{id}', response_model=FullTimeResponse)
 async def copy_full_time(
     id: int,
+    full_time: FullTimeCreate,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
@@ -97,8 +98,8 @@ async def copy_full_time(
     """
     try:
         # Obtener la aplicación FullTime original
-        application: Application = crud.application.get(db, current_user, id=id)
-        original_mongo_id = ObjectId(application.mongo_id)
+        original_application: Application = crud.application.get(db, current_user, id=id)
+        original_mongo_id = ObjectId(original_application.mongo_id)
         original_full_time = await crud.full_time.get(engine, id=original_mongo_id)
         
         if original_full_time is None:
@@ -106,17 +107,19 @@ async def copy_full_time(
         
         # Crear una copia del objeto FullTime
         full_time_copied = original_full_time.copy()
-        # Guardar la copia en la base de datos
+        full_time_copied.title += "_copia"
+        
         full_time_copied = await crud.full_time.create(db=engine, obj_in=full_time_copied)
         
-        application = ApplicationCreate(
-            mongo_id=str(full_time_copied.id),
-            application_sub_type_id=application.application_sub_type_id,
-            start_date=application.start_date,
+        # Crear la nueva aplicación
+        new_application = ApplicationCreate(
+            mongo_id=str(original_full_time.id),
+            application_sub_type_id=original_application.application_sub_type_id,
+            start_date=original_application.start_date,
             user_id=current_user.id
         )
-        application = crud.application.create(
-            db=db, who=current_user, obj_in=application,
+        new_application = crud.application.create(
+            db=db, who=current_user, obj_in=new_application,
             status=6, observation=f'El usuario copió la dedicación exclusiva con id: {id}')
         
     except BaseErrors as e:
@@ -126,10 +129,10 @@ async def copy_full_time(
     except Exception as e:
         raise HTTPException(422, "Algo ocurrió mal")
     
-    # Formatting the response
-    application = ApplicationResponse.from_orm(application)
+    # Formatear la respuesta
+    new_application_response = ApplicationResponse.from_orm(new_application)
     response = FullTimeResponse(
-        **dict(application),
+        **dict(new_application_response),
         full_time=full_time_copied
     )
     return response
