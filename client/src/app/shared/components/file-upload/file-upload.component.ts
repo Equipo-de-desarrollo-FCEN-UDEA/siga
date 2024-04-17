@@ -61,9 +61,8 @@ export class FileUploadComponent implements OnInit {
 
   // Eliminar achivos
   removeFile(index: number) {
-    if (this.files.length > 1) {
+    if (this.files.length > 0) {
       this.files.splice(index, 1);};
-    this.files.splice(index, 1);
   }
 
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
@@ -72,7 +71,7 @@ export class FileUploadComponent implements OnInit {
     return SIZE < 6 * 1024 * 1024;
   }
 
-// Verifica que el archivo a adjuntar sea de un tipo valido
+// Verifica que el o los archivos a adjuntar sea de un tipo valido
   validFileType() {
     const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 
