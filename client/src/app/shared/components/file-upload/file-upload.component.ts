@@ -126,7 +126,4 @@ export class FileUploadComponent implements OnInit {
     });
   }
 
-  consol() {
-    console.log(this.applycationType);
-  }
 }
