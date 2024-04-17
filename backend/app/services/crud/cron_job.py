@@ -3,12 +3,7 @@ from datetime import datetime
 from sqlalchemy import exc, extract
 from dateutil.relativedelta import relativedelta
 
-# from odmantic import ObjectId
-# from odmantic.session import AIOSession
-
 from sqlalchemy.orm import Session
-
-from app.services.crud import base
 
 from app.domain.models import CronJob, User
 from app.domain.schemas import CronJobCreate, CronJobUpdate
