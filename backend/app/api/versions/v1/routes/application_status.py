@@ -30,7 +30,6 @@ async def create_application_status(
     db: Session = Depends(db.get_db),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     current_user: User = Depends(jwt_bearer.get_current_active_user),
-    # ) -> Application_statusInDB:
 ):
     """
         Endpoint to create an application status.
@@ -47,50 +46,57 @@ async def create_application_status(
         Returns:
             Application_statusInDB: Created application status.
     """
-    # Add user's role description to the observation
-    application_status.observation += f' por {current_user.userrol[current_user.active_rol].rol.description}'
     try:
+        # Add user's role description to the observation
+        application_status.observation += f' por {current_user.userrol[current_user.active_rol].rol.description}'
         # Get application from database
         application = crud.application.get(
             db, current_user, id=application_status.application_id)
+
+        # Get application name
+        app_type_name = application.application_sub_type.application_type.name
+        actual_status = application.application_status[-1].status.name
+
+        if actual_status == 'EN VICERRECTORÍA' and app_type_name == 'DEDICACIÓN EXCLUSIVA':
+            if application.start_date is None:
+                raise full_time_403
 
         # Create application status
         response = crud.application_status.create(
             db, current_user, obj_in=application_status, to=application)
 
-        # Get application and status names
+        # Get status name
         status_name = response.status.name
-        app_type_name = application.application_sub_type.application_type.name
-
+        
+        # List of application types
+        APPLICATIONS_NAMES = ["COMISIÓN", "PERMISO", "VACACIONES", "APOYO ECONÓMICO", "DEDICACIÓN EXCLUSIVA"]
+        
         # Process based on status and application type
         if status_name == 'APROBADA':
-            if app_type_name in ["COMISIÓN", "PERMISO", "VACACIONES", "APOYO ECONÓMICO"]:
-                # Send email for approved status
-                emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                              application_status.observation, status_name, application.id, application.user.email))
-                if app_type_name == "COMISIÓN":
-                    # generate commission resolution document
-                    await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
+            # Send email for approved status
+            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+                                                    application_status.observation, response.status.name, application.id, application.user.email))
+            if app_type_name == "COMISIÓN":
+                # generate commission resolution document
+                await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
 
-                elif app_type_name == "PERMISO":
-                    # generate permission resolution document
-                    await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
+            elif app_type_name == "PERMISO":
+                # generate permission resolution document
+                await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
                 
             elif app_type_name == "DEDICACIÓN EXCLUSIVA":
                 full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-                if full_time.start_date is None:
-                    raise full_time_403
-                # Send email for full time
+                # Set cron job for full time
                 await cron_job.create_cron_jobs(application, full_time, db, current_user)
 
-        elif status_name == 'SOLICITADA' and app_type_name in ["APOYO ECONÓMICO", "DEDICACIÓN EXCLUSIVA"]:
+        elif status_name == 'SOLICITADA' and app_type_name in APPLICATIONS_NAMES:
             # Send email for requested status
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                     application_status.observation, response.status.name, application.id, application.user.email))
 
         elif status_name == 'EN VICERRECTORIA' and app_type_name == "DEDICACIÓN EXCLUSIVA":
             # Send additional email for dedication exclusive
-            additional_observation = 'SE HA SOLICITADO UNA FECHA DE INICIO DE DEDICACIÓN EXCLUSIVA'
+            additional_observation = 'SE HA SOLICITADO UNA FECHA DE INICIO DE LA DEDICACIÓN EXCLUSIVA'
             application_status.observation += ' ' + additional_observation
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
                                                     application_status.observation, response.status.name, application.id, application.user.email))
@@ -113,6 +119,21 @@ def get_application_status(
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     id: int,
 ) -> list[Application_statusInDB]:
+    """
+        Endpoint to get an application status.
+        
+        Args:
+            db (Session, optional): Database session dependency. Defaults to Depends(db.get_db).
+            engine (AIOSession, optional): MongoDB session dependency. Defaults to Depends(mongo_db.get_mongo_db).
+            current_user (User, optional): Current authenticated user dependency. Defaults to Depends(jwt_bearer.get_current_active_user).
+            id (int): Application status id.
+            
+        Raises:
+            HTTPException: If there's an error during the process.
+        
+        Returns:
+            list[Application_statusInDB]: Application status.
+    """
     try:
         response = crud.application_status.get_application_status(
             db, id=id)
