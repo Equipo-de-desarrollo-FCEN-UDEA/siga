@@ -62,28 +62,6 @@
     </div>
 
     <div class="row">
-      <div class="row">
-        <div class="formfloatig">
-          <select
-            formControlName="application_sub_type_id"
-            class="form-control form-select-lg mb-3"
-            (change)="onChangeSolicitud($event)"
-            [ngClass]="{
-              'is-invalid': isInvalidForm('application_sub_type_id')
-            }"
-            *ngIf="applicationType$ | async as applicationType"
-          >
-            <option value="0" disabled selected>Tipo de comisión</option>
-            <option
-              [value]="tipo.id"
-              *ngFor="let tipo of applicationType.application_sub_type"
-            >
-              {{ tipo.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-
       <div class="row regular-row mt-4 ">
         <span class="col-md-4 col-xs-12 col-sm-12 label">Fechas *</span>
         <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
