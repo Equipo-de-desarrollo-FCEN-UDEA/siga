@@ -21,6 +21,7 @@ import { UserApplicationStatusComponent } from './components/user-application-st
 import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
 import { DatePickerBasicComponent } from './components/date-picker-basic/date-picker-basic.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     DatePickerRangeComponent,
     DatePickerBasicComponent,
     FileUploadComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     SignaturePadModule,
     DatePickerRangeComponent,
     FileUploadComponent,
+    PaginationComponent
   ],
 })
 export class SharedModule {}
