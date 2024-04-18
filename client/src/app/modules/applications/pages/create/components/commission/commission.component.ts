@@ -42,7 +42,7 @@ export class CommissionComponent {
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
 
@@ -177,7 +177,7 @@ export class CommissionComponent {
   // --------------------------------------
   // ----------- upload file ---------
   // --------------------------------------
-  // Resivir valores del output para ponerlos en el componente padre
+  // Recibir valores del output para ponerlos en el componente padre
 
   SetDocuments(event: any) {
     this.form.patchValue({

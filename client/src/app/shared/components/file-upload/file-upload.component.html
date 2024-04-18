@@ -70,11 +70,15 @@
         </label>
       </div>
 
-      <div class="buttons">
+      <!-- Botones que solo funcionan en comisiones (applycationType==2)-->
+      <div 
+      class="buttons"
+      *ngIf="this.applycationType == 2"> 
         <button
+        *ngIf="document_new.length > 1"
           class="btn btn-circle btn-remove m-1"
           type="button"
-          (click)="removeFile(i)"
+          (click)="removeFile(i); document_new.splice(i, 1)"
         >
         <i class="fa fa-minus"></i>
           </button>
