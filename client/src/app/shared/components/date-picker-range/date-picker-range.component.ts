@@ -26,6 +26,8 @@ import { LaboralDays } from '@shared/utils';
   styleUrls: ['./date-picker-range.component.scss'],
 })
 export class DatePickerRangeComponent implements OnInit, OnChanges {
+  
+  @Input() default_date_picker: any;
   @Input() total_days: any;
   @Input() laboralflag: boolean = true;
   @Input() holidays: Holiday[] = [];
