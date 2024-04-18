@@ -281,8 +281,4 @@ export class VacationComponent {
     });
     return;
   }
-
-  consol() {
-    console.log('hola');
-  }
 }
