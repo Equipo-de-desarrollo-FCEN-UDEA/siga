@@ -3,15 +3,21 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 //ng-bootstrap imports
-import { NgbCalendar, NgbDate, NgbDateParserFormatter,NgbDateStruct
-  } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
 
-import {FullTimeCreate, FulltimeResponse,
+import {
+  FullTimeCreate,
+  FulltimeResponse,
 } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday'
+import { Holiday } from '@interfaces/holiday';
 
 @Component({
   selector: 'app-full-time',
@@ -36,7 +42,6 @@ export class FullTimeComponent {
   public holidays: Holiday[] = [];
 
   // FileUpload
-  
 
   public submitted: boolean = false;
   public documents: file_path[] = [];
@@ -94,13 +99,15 @@ export class FullTimeComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion'])
+            this.router.navigate([
+              '/solicitudes/editar/' + data.id + '/dedicacion',
+            ]);
           }
-        })
-      }
+        });
+      },
     });
   }
-  
+
   validSize() {
     return true;
   }
@@ -119,35 +126,9 @@ export class FullTimeComponent {
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
-  onDateSelection(date: NgbDate) {
-    this.fromDate = date;
+  setStartDate(event: any) {
     this.form.patchValue({
-      start_date: new Date(
-        this.fromDate.year,
-        this.fromDate.month - 1,
-        this.fromDate.day
-      ),
+      start_date: event,
     });
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && this.hoveredDate && date.equals(this.fromDate);
-  }
-
-  isInside(date: NgbDate) {
-    return date.equals(this.fromDate);
-  }
-
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) || this.isInside(date) || this.isHovered(date)
-    );
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const PARSED = this.formatter.parse(input);
-    return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
-      ? NgbDate.from(PARSED)
-      : currentValue;
   }
 }

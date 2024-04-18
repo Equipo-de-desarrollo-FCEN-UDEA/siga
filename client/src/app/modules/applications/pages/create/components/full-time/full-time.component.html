@@ -5,59 +5,6 @@
   [formGroup]="form"
   (ngSubmit)="submit()"
 >
-  <!-- DATEPICKER -->
-  <ng-template #footerTemplate>
-    <hr class="my-0" />
-    <!-- <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p> -->
-    <p *ngIf="!fromDate">Elige la fecha inicial</p>
-    <button
-      class="btn btn-primary btn-sm m-2 float-start"
-      (click)="model = today; datepicker.close()"
-      type="button"
-    >
-      Hoy
-    </button>
-    <button
-      class="btn btn-secondary btn-sm m-2 float-end"
-      (click)="datepicker.close()"
-      type="button"
-    >
-      Cerrar
-    </button>
-  </ng-template>
-  <div class="dp-hidden position-absolute">
-    <div class="input-group">
-      <input
-        hidden
-        name="datepicker"
-        class="form-control"
-        ngbDatepicker
-        #datepicker="ngbDatepicker"
-        [autoClose]="'outside'"
-        (dateSelect)="onDateSelection($event)"
-        [displayMonths]="2"
-        [dayTemplate]="t"
-        outsideDays="hidden"
-        [startDate]="fromDate!"
-        tabindex="-1"
-        [footerTemplate]="footerTemplate"
-        placement="left"
-        [positionTarget]="buttonEl"
-      />
-      <ng-template #t let-date let-focused="focused">
-        <span
-          class="custom-day"
-          [class.focused]="focused"
-          [class.range]="isRange(date)"
-          [class.faded]="isHovered(date) || isInside(date)"
-          (mouseenter)="hoveredDate = date"
-          (mouseleave)="hoveredDate = null"
-        >
-          {{ date.day }}
-        </span>
-      </ng-template>
-    </div>
-  </div>
   <!-- ALERT BOX -->
   <div class="alert alert-warning mt-3 mb-0">
     Para comenzar a crear tu dedicación debes escribir un título de referencia.
@@ -84,31 +31,12 @@
   <!-- START DATE -->
   <!-- DATES -->
   <div class="mt-4 row regular-row align-items-baseline">
-    <span class="col-md-4 col-xs-12 col-sm-12 label mb-2">Fecha de Inicio *</span>
-    <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
-      <div class="input-group">
-        <input
-          #dpFromDate
-          class="form-control"
-          type="text"
-          (click)="datepicker.toggle(); clicked = clicked + 1"
-          placeholder="aaaa-mm-dd"
-          name="dpFromDate"
-          formControlName="start_date"
-          (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-          [value]="
-            formatter.format(fromDate) ? formatter.format(fromDate) : null
-          "
-        />
-        <button
-          #buttonEl
-          class="btn btn-outline-secondary"
-          (click)="datepicker.toggle(); clicked = clicked + 1"
-          type="button"
-        >
-          <i class="fa fa-calendar"> </i>
-        </button>
-      </div>
-    </div>
+    <span class="col-md-4 col-xs-12 col-sm-12 label mb-2"
+      >Fecha de Inicio *</span
+    >
+    <app-date-picker-basic
+      class="col-md-8 col-xs-12 col-sm-12"
+      (datePickerValues)="setStartDate($event)"
+    ></app-date-picker-basic>
   </div>
 </form>

@@ -86,7 +86,9 @@ export class CommissionComponent implements OnInit {
             this.form.patchValue(
               {
                 ...data.commission,
-                application_sub_type_id: data.application_sub_type_id
+                application_sub_type_id: data.application_sub_type_id,
+                start_date: new Date(data.commission.start_date),
+                end_date: new Date(data.commission.end_date),
               }
             )
             this.documents = data.commission.documents!
@@ -136,60 +138,11 @@ export class CommissionComponent implements OnInit {
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate.year,
-          this.toDate.month - 1,
-          this.toDate.day
-        ),
-      });
-    } else {
-      this.toDate = null;
-      this.fromDate = date
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate.year,
-          this.fromDate.month - 1,
-          this.fromDate.day
-        ),
-      });
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate!.year,
-          this.toDate!.month - 1,
-          this.toDate!.day
-        ),
-      });
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) &&
-      date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) { return this.toDate && date.after(this.fromDate) && date.before(this.toDate); }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) ||
-      this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  setDates(event: any) {
+    this.form.patchValue({
+      start_date: event.start_date,
+      end_date: event.end_date,
+    });
   }
 
   // --------------------------------------
