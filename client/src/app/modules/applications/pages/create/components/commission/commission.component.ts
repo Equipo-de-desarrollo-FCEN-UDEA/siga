@@ -42,7 +42,7 @@ export class CommissionComponent {
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
 
@@ -129,38 +129,11 @@ export class CommissionComponent {
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-
+  setDates(event: any) {
     this.form.patchValue({
-      start_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
-      end_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+      start_date: event.start_date,
+      end_date: event.end_date,
     });
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) &&
-        date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) { return this.toDate && date.after(this.fromDate) && date.before(this.toDate); }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) ||
-        this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
   // --------------------------------------
@@ -177,7 +150,7 @@ export class CommissionComponent {
   // --------------------------------------
   // ----------- upload file ---------
   // --------------------------------------
-  // Resivir valores del output para ponerlos en el componente padre
+  // Recibir valores del output para ponerlos en el componente padre
 
   SetDocuments(event: any) {
     this.form.patchValue({

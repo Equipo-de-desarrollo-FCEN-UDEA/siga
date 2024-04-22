@@ -1,8 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ApplicationTypesService } from '@services/application-types.service';
+
 
 //interfaces
 import { file_path } from '@interfaces/documents';
+import { filter, map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-file-upload',
@@ -13,7 +18,9 @@ export class FileUploadComponent implements OnInit {
   // Files
   public files: any[] = [];
   public document_new = [1];
+  public documentsToDelete: string[] = []
   @Input() documents: file_path[] | any = [];
+  @Input() applycationType: number = 0;
 
   @Output() documentsValues = new EventEmitter<any>();
   @Output() filesValues: EventEmitter<any[]> = new EventEmitter<any[]>();
@@ -22,12 +29,18 @@ export class FileUploadComponent implements OnInit {
 
   public form: FormGroup;
   activatedComponentReference: any;
+  route: any;
 
   get f() {
     return this.form.controls;
   }
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private applicationTypeSvc: ApplicationTypesService,
+    private fb: FormBuilder,
+    private router: Router
+    ) {
     this.form = this.fb.group({
       documents: [],
     });
@@ -48,10 +61,8 @@ export class FileUploadComponent implements OnInit {
 
   // Eliminar achivos
   removeFile(index: number) {
-    if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);
-    }
-    this.files.splice(index, 1);
+    if (this.files.length > 0) {
+      this.files.splice(index, 1);};
   }
 
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
@@ -60,18 +71,20 @@ export class FileUploadComponent implements OnInit {
     return SIZE < 6 * 1024 * 1024;
   }
 
-  // Verifica que el archivo a adjuntar sea de un tipo valido
+// Verifica que el o los archivos a adjuntar sea de un tipo valido
   validFileType() {
     const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
 
-    let flag = true;
-    this.files.forEach((file) => {
-      // separa el último punto del nombre del archivo para verificar su tipo
-      flag = VALID_EXTENSIONS.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
-    });
-    return flag;
+    const docs_subidos: string[] = [];
+    for (let eachfile of this.files){
+      if (VALID_EXTENSIONS.includes(eachfile.name.split('.')[eachfile.name.split('.').length - 1])) {
+        docs_subidos.push(eachfile);
+      }
+    }
+    if (docs_subidos.length == this.files.length){
+      return true;
+    }
+    return false; 
   }
 
   onChanged(): void {
@@ -86,6 +99,31 @@ export class FileUploadComponent implements OnInit {
     return this.validSize() && this.validFileType();
   }
 
+  deleteDocument(path: string, i: number) {
+    Swal.fire({
+      title: "Eliminar documento",
+      text: "¿Está seguro de querer eliminar este documento?, no podrá recuperarlo",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Eliminar",
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3AB795'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.documentsToDelete = this.documentsToDelete.concat([path]);
+        this.documents.splice(i, 1);
+      }
+    })
 
-  ngOnInit(): void {}
+  }
+
+  public isEditRoute: boolean | undefined;
+  ngOnInit(): void {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.isEditRoute = this.router.url.includes('editar');
+    });
+  }
+
 }

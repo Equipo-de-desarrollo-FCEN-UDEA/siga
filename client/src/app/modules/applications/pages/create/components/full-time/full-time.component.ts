@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import {FullTimeCreate, FulltimeResponse,
-} from '@interfaces/applications/full_time/full-time';
+import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday'
+import { Holiday } from '@interfaces/holiday';
 
 @Component({
   selector: 'app-full-time',
@@ -67,13 +66,15 @@ export class FullTimeComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion'])
+            this.router.navigate([
+              '/solicitudes/editar/' + data.id + '/dedicacion',
+            ]);
           }
-        })
-      }
+        });
+      },
     });
   }
-  
+
   validSize() {
     return true;
   }

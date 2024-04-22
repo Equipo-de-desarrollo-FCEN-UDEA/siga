@@ -57,6 +57,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     ApplicantsComponent,
     SignaturePadModule,
     DatePickerRangeComponent,
+    DatePickerBasicComponent,
     FileUploadComponent,
   ],
 })
