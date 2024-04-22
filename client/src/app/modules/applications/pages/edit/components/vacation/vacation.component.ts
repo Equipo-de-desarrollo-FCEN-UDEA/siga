@@ -170,6 +170,7 @@ export class VacationComponent implements OnInit {
           start_working_date: data.vacation.start_working_date,
           end_working_date: data.vacation.end_working_date,
         });
+
         let status_app =
           data.application_status[data.application_status.length - 1].status
             .name;
@@ -210,13 +211,6 @@ export class VacationComponent implements OnInit {
   // ------------ SUBMIT FORM  ------------
   // --------------------------------------
   submit() {
-    this.submitted = true;
-
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
-      return;
-    }
-
     const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
     const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
 
