@@ -236,21 +236,36 @@ class CRUDApplication(CRUDBase[Application, ApplicationCreate, ApplicationUpdate
         status: int = 1,
         observation: str = 'Solicitud actualizada'
     ) -> Application:
-        db_obj = super().update(db, who, db_obj=db_obj, obj_in=obj_in)
-        application_status = Application_statusCreate(
-            application_id=db_obj.id,
-            status_id=status,
-            observation=observation
-        )
-        if status == 1:
-            create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
-                                                       'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
-        status_obj = Application_status(**dict(application_status))
-        db.add(status_obj)
-        db.commit()
-        db.refresh(status_obj)
-        return db_obj
-
+        application_name = db_obj.application_sub_type.application_type.name
+        application_status_name = db_obj.application_status[-1].status.name
+        if application_name == 'DEDICACIÓN EXCLUSIVA' and application_status_name == "EN VICERRECTORÍA":
+            obj_data = db_obj.__dict__
+            if isinstance(obj_in, dict):
+                update_data = obj_in
+            else:
+                update_data = obj_in.dict(exclude_unset=True)
+            for field in obj_data:
+                if field in update_data:
+                    setattr(db_obj, field, update_data[field])
+            db.add(db_obj)
+            db.commit()
+            db.refresh(db_obj)
+            return db_obj
+        else:
+            db_obj = super().update(db, who, db_obj=db_obj, obj_in=obj_in)
+            application_status = Application_statusCreate(
+                application_id=db_obj.id,
+                status_id=status,
+                observation=observation
+            )
+            if status == 1:
+                create_application_email.apply_async(args=(who.names, who.last_names, db_obj.application_sub_type.name,
+                                                        'http://siga-fcen.com/solicitudes/lista', who.department.coord_email))
+            status_obj = Application_status(**dict(application_status))
+            db.add(status_obj)
+            db.commit()
+            db.refresh(status_obj)
+            return db_obj
 
 policy = ApplicationPolicy()
 
