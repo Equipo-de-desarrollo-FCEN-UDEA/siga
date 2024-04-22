@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
+from copy import deepcopy
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
@@ -79,6 +80,56 @@ async def create_full_time(
     )
     return response
 
+""" @router.post("/", response_model=FullTimeResponse)
+async def copy_full_time(
+    full_time: FullTimeCreate,
+    *,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> FullTimeResponse:
+    """
+"""     Endpoint to create a application type full_time
+
+        params:
+            - body: full_timeCreate
+
+        response:
+            - full_time """
+"""
+    try:
+        # Obtain the application from SQL using its id
+        application = crud.application.get(db, current_user, id=id)
+        
+        # Obtain the MongoDB id from the application
+        mongo_id = ObjectId(application.mongo_id)
+        
+        # Get the full_time model from MongoDB based on the mongo_id
+        full_time = await crud.full_time.get(engine, id=mongo_id)
+        
+        # Create a deep copy of the original full_time model
+        copied_full_time = deepcopy(full_time)
+        
+        # Modify the copied full_time model as needed (e.g., add "_copia" suffix to title)
+        copied_full_time.title += "_copia"
+        
+        # Change the id of the copied full_time model
+        copied_full_time.id = ObjectId()
+        
+        # Save the copied full_time model to MongoDB
+        await engine.save(copied_full_time)
+        
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    
+    # Create the response
+    application_response = ApplicationResponse.from_orm(application)
+    response = FullTimeResponse(
+        **dict(application_response),
+        full_time=copied_full_time
+    )
+    return response """
+
 @router.post('/copy-full-time/{id}', response_model=FullTimeResponse)
 async def copy_full_time(
     id: int,
@@ -105,15 +156,15 @@ async def copy_full_time(
         if original_full_time is None:
             raise HTTPException(status_code=404, detail="No se encontró la aplicación FullTime")
         
-        # Crear una copia del objeto FullTime
-        full_time_copied = original_full_time.copy()
+        # Crear una copia del objeto FullTime sin el id de Mongo
+        full_time_copied = FullTime(**{k: v for k, v in original_full_time.dict().items() if k != 'id'})
         full_time_copied.title += "_copia"
-        
+
+        # Guardar la copia en la base de datos
         full_time_copied = await crud.full_time.create(db=engine, obj_in=full_time_copied)
         
-        # Crear la nueva aplicación
         new_application = ApplicationCreate(
-            mongo_id=str(original_full_time.id),
+            mongo_id=str(full_time_copied.id),
             application_sub_type_id=original_application.application_sub_type_id,
             start_date=original_application.start_date,
             user_id=current_user.id
@@ -129,7 +180,6 @@ async def copy_full_time(
     except Exception as e:
         raise HTTPException(422, "Algo ocurrió mal")
     
-    # Formatear la respuesta
     new_application_response = ApplicationResponse.from_orm(new_application)
     response = FullTimeResponse(
         **dict(new_application_response),
