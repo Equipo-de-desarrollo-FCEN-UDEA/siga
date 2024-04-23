@@ -12,10 +12,9 @@ import { ApplicationTypesService } from '@services/application-types.service';
 @Component({
   selector: 'app-application-list',
   templateUrl: './application-list.component.html',
-  styleUrls: ['./application-list.component.scss']
+  styleUrls: ['./application-list.component.scss'],
 })
 export class ApplicationListComponent implements OnInit {
-
   public applications$ = new Observable<Application[]>();
 
   public page = 1;
@@ -25,6 +24,8 @@ export class ApplicationListComponent implements OnInit {
   private skip = (this.page - 1) * this.limit;
 
   public isSuperUser$ = this.authSvc.isSuperUser$;
+
+  p: number = 1;
 
   public application_types$ = this.applicationTypeSvc.getApplicationTypes();
   constructor(
@@ -37,17 +38,23 @@ export class ApplicationListComponent implements OnInit {
     private applicationTypeSvc: ApplicationTypesService
   ) {
     this.authSvc.isSuperUser();
-    this.applications$ = this.applicationsSvc.getApplications(this.skip, this.limit, false)
+    this.applications$ = this.applicationsSvc.getApplications(
+      this.skip,
+      this.limit,
+      false
+    );
   }
 
   form = this.fb.group({
-    search: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    search: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+    ],
     activo: [false],
-    type: [null]
-  })
+    type: [null],
+  });
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   nextPage() {
     this.page++;
@@ -73,7 +80,7 @@ export class ApplicationListComponent implements OnInit {
 
   // We use this for get with a search criteria
   search() {
-    this.page = 1
+    this.page = 1;
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(
       this.skip,
@@ -85,12 +92,10 @@ export class ApplicationListComponent implements OnInit {
   }
 
   filed(id: number) {
-    this.applicationsSvc.fileApplication(id).subscribe(data => this.search())
+    this.applicationsSvc.fileApplication(id).subscribe((data) => this.search());
   }
 
   cancel() {
     this.location.back();
   }
-
-
 }

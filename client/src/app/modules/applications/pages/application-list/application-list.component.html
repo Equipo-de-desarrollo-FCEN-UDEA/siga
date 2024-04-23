@@ -76,7 +76,10 @@
               '/' +
               application.application_sub_type.application_type.description
           ]"
-          *ngFor="let application of applications"
+          *ngFor="
+            let application of applications
+              | paginate : { itemsPerPage: 10, currentPage: p }
+          "
           class="cursor"
         >
           <td>{{ application.id }}</td>
@@ -140,25 +143,13 @@
       </tbody>
       <tfoot>
         <tr style="width: 100%">
-          <td colspan="7">
-            <button
-              [disabled]="page == 1"
-              class="btn btn-outline-primary btn-sm"
-              type="button"
-              (click)="prevPage()"
-            >
-              <i class="fas fa-arrow-left"></i>
-            </button>
-            {{ page }}
-            <button
-              [disabled]="applications.length != limit"
-              class="btn btn-outline-primary btn-sm"
-              type="button"
-              (click)="nextPage()"
-            >
-              <i class="fas fa-arrow-right"></i>
-            </button>
-          </td>
+          <pagination-controls
+            (pageChange)="p = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            [maxSize]="10"
+            class="pagination"
+          ></pagination-controls>
         </tr>
       </tfoot>
     </table>

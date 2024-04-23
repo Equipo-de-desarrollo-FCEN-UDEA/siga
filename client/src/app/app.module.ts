@@ -18,42 +18,32 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 
 import { registerLocaleData } from '@angular/common';
-import {LOCALE_ID } from '@angular/core';
+import { LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SharedModule,
-    ReactiveFormsModule,
-  ],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [
     CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorsInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,
-      multi: true
+      multi: true,
     },
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

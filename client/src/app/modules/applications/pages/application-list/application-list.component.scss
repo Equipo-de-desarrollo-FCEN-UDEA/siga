@@ -5,28 +5,28 @@
     min-height: 50vh;
     margin-top: 5em!important;
   }
-  
+
   @media screen and (max-width: 576px) {
     .containerInside {
         width: 95% !important;
-  
+
     }
   }
-  
+
   hr{
     margin: 0!important;
   }
-  
+
   .btn-light {
     color: #fff;
     background-color: #43b649;
   }
-  
-  
+
+
   .search{
     padding: 0!important;
   }
-  
+
 
   .btn-submit {
     color: #fff;
@@ -40,4 +40,8 @@
   }.btn-submit:hover {
     transition: all 0.5s ease-out;
     background-color: rgba(67, 182, 73, 0.8) 0%,;
+  }
+
+  .pagination ::ng-deep .ngx-pagination .current {
+    background: rgba(67, 182, 73, 0.9) 35%;
   }
