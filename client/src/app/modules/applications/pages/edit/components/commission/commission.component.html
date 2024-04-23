@@ -150,21 +150,16 @@
               caracteres.
             </div>
           </div>
-
-
-          </div>
         </div>
       </div>
+    </div>
       <!-- ARCHIVOS - DOCUMENTOS -->
       <app-file-upload
+      [files]="files"
       [documents]="f['documents'].value"
-      [applycationType]="application_type_number"
-      (documentsValues)="SetDocuments($event)"
-      (filesValues)="SetFiles($event)">
-
-    </app-file-upload>
-
+      [documentsToDelete]="documentsToDelete"
+      [applycationType]="application_type_number">
+      </app-file-upload>
     </div>
     <hr />
-
   </form>
