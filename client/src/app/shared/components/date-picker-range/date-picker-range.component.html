@@ -59,24 +59,25 @@
         class="form-control"
         type="text"
         (click)="datepicker.toggle(); clicked = clicked + 1"
-        placeholder="yyyy-mm-dd"
+        placeholder="aaaa-mm-dd - aaaa-mm-dd"
         name="dpFromDate"
         formControlName="start_date"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
         (input)="onChanged()"
-        [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
+        [value]="
+          formatter.format(fromDate)
+            ? formatter.format(fromDate) + ' - ' + formatter.format(toDate)
+            : null
+        "
         [ngClass]="{
           'is-invalid':
-          (submitted && f['end_working_date'].errors) ||
-          ((!fromDate || !toDate) && clicked !== 0) ||
-          (default_date_picker ? false : selectDays(fromDate, toDate))
-
+            (submitted && f['end_working_date'].errors) ||
+            ((!fromDate || !toDate) && clicked !== 0) ||
+            (default_date_picker ? false : selectDays(fromDate, toDate))
         }"
         [attr.disabled]="
-        !default_date_picker ?  
-          !total_days ? 
-            true : null
-          : null"
+          !default_date_picker ? (!total_days ? true : null) : null
+        "
       />
       <button
         #buttonEl
@@ -84,11 +85,8 @@
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
         [attr.disabled]="
-        !default_date_picker ?  
-          !total_days ? 
-            true : null
-          : null"
-          
+          !default_date_picker ? (!total_days ? true : null) : null
+        "
       >
         <i class="fa fa-calendar"> </i>
       </button>
