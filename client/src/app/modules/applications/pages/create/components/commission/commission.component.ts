@@ -157,9 +157,7 @@ export class CommissionComponent {
       documents: event.documents,
     });
   }
-  SetFiles(event: any) {
-    this.files = event;
-  }
+  
   invalidFile() {
     return this.fileUploadComponent?.invalidFile();
   }

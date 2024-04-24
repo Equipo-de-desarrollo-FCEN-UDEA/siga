@@ -18,33 +18,26 @@ import { FileUploadComponent } from '@shared/components/file-upload/file-upload.
   styleUrls: ['./commission.component.scss']
 })
 export class CommissionComponent implements OnInit {
-
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
-
   // Files
   public files: any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
   public documentsToDelete: string[] = []
-
   // FileUpload
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
-
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
-
   public comision_type$: any;
   public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
-
-
   public id: number = 0;
 
   constructor(
@@ -55,13 +48,11 @@ export class CommissionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-
+    // services
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService
-  ) {
-
-  }
+  ) {}
 
   public form = this.fb.group({
     application_sub_type_id: [0, [Validators.required]],
@@ -131,32 +122,19 @@ export class CommissionComponent implements OnInit {
         })
       }
     )
-
   }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
+  // DATEPICKER
   setDates(event: any) {
     this.form.patchValue({
       start_date: event.start_date,
       end_date: event.end_date,
     });
   }
-
-  // --------------------------------------
-  // ----------- TIPO DE SOLICITUD ---------
-  // --------------------------------------
+  // TIPO DE SOLICITUD
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
-
-
-
-  // --------------------------------------------------
-  // ----------- MANEJO DE ERRORES EN EL FORM ---------
-  // --------------------------------------------------
+  // MANEJO DE ERRORES EN EL FORM
   get f() {
     return this.form.controls;
   }
@@ -164,23 +142,8 @@ export class CommissionComponent implements OnInit {
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
-  
-  // --------------------------------------
-  // ----------- upload file ---------
-  // --------------------------------------
   // Resivir valores del output para ponerlos en el componente padre
-
-  SetDocuments(event: any) {
-    this.form.patchValue({
-      documents: event.documents,
-    });
-  }
-  SetFiles(event: any) {
-    this.files = event;
-  }
   invalidFile() {
     return this.fileUploadComponent?.invalidFile();
   }
-
-
 }
