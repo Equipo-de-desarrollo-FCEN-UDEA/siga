@@ -6,7 +6,6 @@ import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday';
 
 @Component({
   selector: 'app-full-time',
