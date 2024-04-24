@@ -4,11 +4,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Application } from '@interfaces/application';
 import { ApplicationStatusCreate } from '@interfaces/application_status';
-import { ApplicationStatusService } from '@services/application-status.service';
-import { ApplicationService } from '@services/application.service';
-import { AuthService } from '@services/auth.service';
 import { Observable, Subject, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
+
+
+// Services
+import { ApplicationStatusService } from '@services/application-status.service';
+import { ApplicationService } from '@services/application.service';
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
+import { AuthService } from '@services/auth.service';
 import { ComService } from './connection/com.service';
 import { UserService } from '@services/user.service';
 import { UserBase, UserResponse } from '@interfaces/user';
@@ -41,6 +45,7 @@ export class ViewComponent implements AfterViewChecked {
   public submitted: boolean = false;
   public isDecline: boolean = false;
   public isButtonDisabled: boolean = false;
+  public isCopy: boolean = false;
 
   // Files
   public files: any[] = [];
@@ -50,6 +55,7 @@ export class ViewComponent implements AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
+    private fullSvc: FullTimeService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private location: Location,
@@ -224,5 +230,15 @@ export class ViewComponent implements AfterViewChecked {
     this.isDelete = true;
     const childRouteComp = this.activatedComponentReference;
     childRouteComp.delete(this.id);
+  }
+
+  // -----------------------------
+  // ---- COPY APPLICATION -------
+  // -----------------------------
+
+  copy() {
+    this.isCopy = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.copy(this.id);
   }
 }
