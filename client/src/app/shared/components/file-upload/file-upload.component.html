@@ -42,6 +42,15 @@
     Los archivos no deben pesar más de 6 MB.
   </div>
 
+  <div class="alert alert-danger" *ngIf="documents.length > 3 && !validSize()">
+    Los archivos no deben pesar más de 6 MB.
+  </div>
+
+  <div class="alert alert-danger" *ngIf="files.length>0 && !validFileCount()">
+    No debe adjuntar más de 3 archivos.
+  </div>
+
+
   <div class="formfloatig mb-3" style="flex-direction: column">
     <div
       *ngFor="let producto of document_new; last as isLast; let i = index"

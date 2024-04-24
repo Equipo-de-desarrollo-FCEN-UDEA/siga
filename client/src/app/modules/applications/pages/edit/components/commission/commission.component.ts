@@ -90,6 +90,11 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
+    // Comprobar si la longitud de 'this.documents' y 'this.files' es exactamente 3
+    if (this.documents.length + this.files.length <= 3) {
+      return;
+    }
+  
     let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
     for (let path of this.documentsToDelete) {
       this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()

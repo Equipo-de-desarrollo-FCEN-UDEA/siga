@@ -19,6 +19,8 @@ export class FileUploadComponent implements OnInit {
   @Input() documentsToDelete: string[] = []
   @Input() applycationType: number = 0;
 
+  public errorMessage: string | null = null;
+
   public form: FormGroup;
   activatedComponentReference: any;
   route: any;
@@ -80,9 +82,17 @@ export class FileUploadComponent implements OnInit {
     }
     return false; 
   }
+// metodo que valida que el numero de archivos a subir no sea mayor a 3
+  validFileCount() {
+    // Comprobar si la longitud de 'this.documents' y 'this.files' es exactamente 3
+    if (this.documents.length + this.files.length <= 3) {
+      return true;
+    }
+    return false;
+  }
   
   invalidFile() {
-    return this.validSize() && this.validFileType();
+    return this.validSize() && this.validFileType() && this.validFileCount();
   }
 
   deleteDocument(path: string, i: number) {
