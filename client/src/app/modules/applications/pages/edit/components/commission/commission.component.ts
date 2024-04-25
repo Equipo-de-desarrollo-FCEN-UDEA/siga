@@ -90,44 +90,51 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
-    // Comprobar si la longitud de 'this.documents' y 'this.files' es exactamente 3
-    if (this.documents.length + this.files.length <= 3) {
-      return;
-    }
-  
-    let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-    for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
-    }
-    if (this.files.length > 0) {
-      commission = this.documentSvc.postDocument(this.files as File[]).pipe(
-        switchMap((data: DocumentsResponse) => {
-          if (data) {
-            this.documents = this.documents.concat(data.files_paths)
-            this.form.patchValue({
-              documents: this.documents
-            })
-          }
-          return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-        })
+    // Comprobar si la longitud de 'this.documents' y 'this.files' es al menos 1 y no más de 3
+    if (this.documents.length + this.files.length < 0 || this.documents.length + this.files.length > 3) {
+      Swal.fire(
+        {
+          title: 'Debes subir al menos un documento y no más de tres',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        }
       )
-    }
-    commission.subscribe(
-      data => {
-        Swal.fire(
-          {
-            title: 'La comisión se actualizó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }
-        ).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
-          }
-        })
+      return;
+}
+  
+    setTimeout(() => {
+      let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+      for (let path of this.documentsToDelete) {
+        this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
       }
-    )
+      if (this.files.length > 0) {
+        commission = this.documentSvc.postDocument(this.files as File[]).pipe(
+          switchMap((data: DocumentsResponse) => {
+            if (data) {
+              this.documents = this.documents.concat(data.files_paths)
+              this.form.patchValue({
+                documents: this.documents
+              })
+            }
+            return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+          })
+        )
+      }
+      commission.subscribe(
+        data => {
+          Swal.fire(
+            {
+              title: 'La comisión se actualizó correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }
+          )
+          this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
+        }
+      )
+    }, 0);
   }
+
   // DATEPICKER
   setDates(event: any) {
     this.form.patchValue({
