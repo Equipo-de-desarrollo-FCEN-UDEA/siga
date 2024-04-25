@@ -92,8 +92,15 @@ export class CommissionComponent implements OnInit {
   submit() {
     // Comprobar si la longitud de 'this.documents' y 'this.files' es al menos 1 y no más de 3
     if (this.documents.length + this.files.length < 0 || this.documents.length + this.files.length > 3) {
+      Swal.fire(
+        {
+          title: 'Debes subir al menos un documento y no más de tres',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        }
+      )
       return;
-    }
+}
   
     setTimeout(() => {
       let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
