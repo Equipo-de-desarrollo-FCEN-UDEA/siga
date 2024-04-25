@@ -11,6 +11,7 @@ import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { EconomicSupportModule } from './components/economic-support/economic-support.module';
+import { FullTimeSelectDateComponent } from './components/full-time-select-date/full-time-select-date.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { EconomicSupportModule } from './components/economic-support/economic-su
     FullTimeComponent,
     HourAvalComponent,
     VacationComponent,
+    FullTimeSelectDateComponent,
   ],
   imports: [
     CommonModule,

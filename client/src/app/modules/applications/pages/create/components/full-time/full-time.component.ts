@@ -1,23 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-//ng-bootstrap imports
-import {
-  NgbCalendar,
-  NgbDate,
-  NgbDateParserFormatter,
-  NgbDateStruct,
-} from '@ng-bootstrap/ng-bootstrap';
-
-import {
-  FullTimeCreate,
-  FulltimeResponse,
-} from '@interfaces/applications/full_time/full-time';
+import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday';
 
 @Component({
   selector: 'app-full-time',
@@ -25,32 +13,10 @@ import { Holiday } from '@interfaces/holiday';
   styleUrls: ['./full-time.component.scss'],
 })
 export class FullTimeComponent {
-  // Dates
-  public fromDate: NgbDate | null = null;
-  public hoveredDate: NgbDate | null = null;
-  public toDate: NgbDate | null = null;
-  public model: NgbDateStruct | null = null;
-  public today = this.calendar.getToday();
-  public laboralDay: number = 0;
-  public laboralflag: boolean = true;
-  public verify_date: number = 0;
-
-  // For handle errors
-  public clicked = 0;
-
-  // holidays
-  public holidays: Holiday[] = [];
-
-  // FileUpload
-
   public submitted: boolean = false;
   public documents: file_path[] = [];
 
   constructor(
-    // Datepicker
-    private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter,
-
     private router: Router,
     private formBuilder: FormBuilder,
 
@@ -120,15 +86,5 @@ export class FullTimeComponent {
     return (
       this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
     );
-  }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
-  setStartDate(event: any) {
-    this.form.patchValue({
-      start_date: event,
-    });
   }
 }

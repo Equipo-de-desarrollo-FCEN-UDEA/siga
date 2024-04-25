@@ -7,6 +7,7 @@ import { FullTimeComponent } from './components/full-time/full-time.component';
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
+import { FullTimeSelectDateComponent } from './components/full-time-select-date/full-time-select-date.component';
 
 const routes: Routes = [
   { 
@@ -60,6 +61,13 @@ const routes: Routes = [
         component: EconomicSupportComponent,
         data: {
           title: 'Apoyo Económico'
+        }
+      },
+      {
+        path: 'dedicacion-fecha-inicio',
+        component: FullTimeSelectDateComponent,
+        data: {
+          title: 'Dedicación Exclusiva'
         }
       },
       {

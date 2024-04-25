@@ -17,8 +17,6 @@ def full_time_notifications():
     # Conecta a BD
     database = SessionLocal()
 
-    log.info("RUNNING TASKKKKS")
-
     today = datetime.today()
 
     # Obtiene todos los mensajes del dia (today)
@@ -26,9 +24,6 @@ def full_time_notifications():
 
     # Obtiene todos los correos que se deben enviar 
     emails_to_send = [cron.user_email for cron in crons]
-
-    log.debug('crons', crons)
-    log.debug('emails_to_send', emails_to_send)
 
     # Si hay emails para enviar hoy, se llama la función que crea las noticaciones
     if emails_to_send:

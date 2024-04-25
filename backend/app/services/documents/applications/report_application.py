@@ -24,8 +24,6 @@ def fill_report_applications(user: User, applications: list[Application]):
     applications_list = []
     for application in applications:
         application: dict = ApplicationResponse.from_orm(application).dict()
-    
-        log.debug(application)
         data_application = {
             'id': application['id'],
             'application_type': application['application_sub_type']['name'],
