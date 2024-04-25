@@ -76,7 +76,10 @@
               '/' +
               application.application_sub_type.application_type.description
           ]"
-          *ngFor="let application of applications"
+          *ngFor="
+            let application of applications
+              | slice : (page - 1) * 5 : (page - 1) * 5 + 5
+          "
           class="cursor"
         >
           <td>{{ application.id }}</td>
@@ -161,7 +164,11 @@
           </td>
         </tr>
       </tfoot>
-      <app-pagination></app-pagination>
+      <app-pagination
+        [page]="page"
+        [items]="totalApplicationsArray"
+        [pageSize]="5"
+      ></app-pagination>
     </table>
   </div>
 </div>
