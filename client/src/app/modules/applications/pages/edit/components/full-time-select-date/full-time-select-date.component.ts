@@ -33,9 +33,12 @@ export class FullTimeSelectDateComponent {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.fullTimeService.getFullTime(this.id).subscribe((data) => {
+        console.log(data.full_time);
+
         this.form.patchValue({
           start_date: data.start_date,
-          //title: data.title,
+          title: data.full_time.title,
+          documents: data.full_time.documents,
         });
       });
     });
@@ -56,5 +59,9 @@ export class FullTimeSelectDateComponent {
     this.form.patchValue({
       start_date: event.start_date,
     });
+  }
+
+  submit() {
+    console.log('hola mundo');
   }
 }
