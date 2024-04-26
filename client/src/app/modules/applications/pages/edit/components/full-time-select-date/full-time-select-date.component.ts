@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FullTimeCreate } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
+import Swal from 'sweetalert2';
 
 /**
  * Angular component for selecting a start date for full time application.
@@ -27,7 +29,8 @@ export class FullTimeSelectDateComponent {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private fullTimeService: FullTimeService
+    private fullTimeService: FullTimeService,
+    private router: Router // Inyecta Router para la navegación entre rutas
   ) {
     // Gets the event ID from the route and loads event data when the component initializes.
     this.route.parent?.params.subscribe((params) => {
@@ -62,6 +65,26 @@ export class FullTimeSelectDateComponent {
   }
 
   submit() {
-    console.log('hola mundo');
+    let fullTime = this.fullTimeService.putFullTime(
+      this.form.value as FullTimeCreate, // Envía los datos del formulario al servicio FullTimeService
+      this.id // Envía el ID del evento al servicio FullTimeService
+    );
+    fullTime.subscribe({
+      next: (res) => {
+        // Suscripción al resultado de la operación
+        Swal.fire({
+          // Muestra un mensaje emergente utilizando Swal
+          allowOutsideClick: false,
+          title: 'Dedicación exclusiva en creación',
+          text: 'La fecha se actualizó con éxito',
+          confirmButtonText: 'Continuar',
+          confirmButtonColor: '#3AB795',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.router.navigate(['/solicitudes/lista']); // Navega a la lista de solicitudes después de la confirmación
+          }
+        });
+      },
+    });
   }
 }
