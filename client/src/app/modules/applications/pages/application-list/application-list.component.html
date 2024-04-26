@@ -98,7 +98,11 @@
                 'bg-ended':
                   application.application_status[0].status.name == 'FINALIZADA',
                 'bg-in-creation':
-                  application.application_status[0].status.name == 'EN CREACIÓN'
+                  application.application_status[0].status.name ==
+                  'EN CREACIÓN',
+                'bg-info':
+                  application.application_status[0].status.name ==
+                  'EN VICERRECTORÍA'
               }"
               >{{ application.application_status[0].status.name }}</span
             >
