@@ -6,16 +6,17 @@
     <div class="col-sm-8">
       <ul
         *ngFor="let doc of documents; let i = index"
-        class="list-group"
+        class="list-group "
       >
         <li [id]="i" class="list-group-item d-flex justify-content-between">
-          <span>{{ doc.name }}</span>
+          <span class="is-hoverable cursor link-success"
+          >{{ doc.name }} </span>
           <span
             style="width: fit-content; margin: 0"
           >
           <button
           class="btn btn-circle"
-          type="button"
+          type="button"          
           (click)="deleteDocument(doc.path, i)"
         >
           <i class="fa fa-times-circle"></i>
@@ -83,23 +84,31 @@
       class="buttons"
       *ngIf="this.applycationType == 2"> 
         <button
+        class="btn btn-circle btn-remove m-1"
+        type="button"
+        (click)="removeFile(i); document_new.splice(i, 1)"
         *ngIf="document_new.length > 1"
-          class="btn btn-circle btn-remove m-1"
-          type="button"
-          (click)="removeFile(i); document_new.splice(i, 1)"
         >
         <i class="fa fa-minus"></i>
-          </button>
+        </button>
+
+        <button
+        class="btn btn-circle btn-remove m-1"
+        type="button"
+        (click)="removeFile(i)"
+        *ngIf="document_new.length == 1"
+        >
+        <i class="fa fa-minus"></i>
+        </button>
 
         <button
         class="btn btn-circle btn-add m-1"
         type="button"
         (click)="document_new.push(1)"
         *ngIf="isLast && document_new.length < 3"
-      >
+        >
         <i class="fa fa-plus"></i>
-      </button>
-
+        </button>
       </div>
     </div>
   </div>
