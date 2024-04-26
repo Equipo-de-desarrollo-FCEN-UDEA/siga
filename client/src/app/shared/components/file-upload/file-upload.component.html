@@ -84,34 +84,32 @@
       class="buttons"
       *ngIf="this.applycationType == 2"> 
         <button
-        *ngIf="document_new.length > 0"
-          class="btn btn-circle btn-remove m-1"
-          type="button"
-          (click)="removeFile(i); document_new.splice(i, 1)"
+        class="btn btn-circle btn-remove m-1"
+        type="button"
+        (click)="removeFile(i); document_new.splice(i, 1)"
+        *ngIf="document_new.length > 1"
         >
         <i class="fa fa-minus"></i>
-          </button>
+        </button>
+
+        <button
+        class="btn btn-circle btn-remove m-1"
+        type="button"
+        (click)="removeFile(i)"
+        *ngIf="document_new.length == 1"
+        >
+        <i class="fa fa-minus"></i>
+        </button>
 
         <button
         class="btn btn-circle btn-add m-1"
         type="button"
         (click)="document_new.push(1)"
         *ngIf="isLast && document_new.length < 3"
-      >
+        >
         <i class="fa fa-plus"></i>
-      </button>
-
+        </button>
       </div>
-    </div>
-    <div style="text-align: right;">
-      <button
-      class="btn btn-circle btn-add m-1"
-      type="button"
-      (click)="document_new.push(1)"
-      *ngIf="document_new.length == 0"
-      >
-      <i class="fa fa-plus"></i>
-      </button>
     </div>
   </div>
 </div>
