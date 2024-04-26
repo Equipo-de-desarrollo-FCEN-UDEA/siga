@@ -60,9 +60,8 @@ export class FileUploadComponent implements OnInit {
 
   // Eliminar achivos
   removeFile(index: number) {
-    if (this.document_new.length > 1) {
-    this.document_new.splice(index, 1);};
-    this.files.splice(index, 1);
+    if (this.files.length > 0) {
+      this.files.splice(index, 1);};
   }
   // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
   validSize() {
