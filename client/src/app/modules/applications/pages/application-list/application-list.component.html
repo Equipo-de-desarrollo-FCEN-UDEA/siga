@@ -77,8 +77,8 @@
               application.application_sub_type.application_type.description
           ]"
           *ngFor="
-            let application of applications
-              | slice : (page - 1) * 5 : (page - 1) * 5 + 5
+            let application of applications | slice : (page - 1) * 5 : page * 5;
+            track: application
           "
           class="cursor"
         >
