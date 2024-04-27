@@ -103,7 +103,6 @@ export class ViewComponent implements AfterViewChecked {
   submit() {
     this.submitted = true;
     const childRouteComp = this.activatedComponentReference;
-
     if (this.files.length > 0) {
       this.documentSvc.postDocument(this.files as File[]).pipe(
         switchMap((data) => {

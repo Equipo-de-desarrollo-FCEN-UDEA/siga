@@ -115,8 +115,9 @@ export class FullTimeComponent implements OnInit {
       cancelButtonColor: '#3AB795',
       confirmButtonText: 'Copiar!',
     }).then((result) => {
-      if (result.isConfirmed) {
-        if (this.full_time) { // Verifica si this.full_time está definido
+      if (this.application?.application_status.length == 5){
+        if (result.isConfirmed) {
+        if (this.full_time ) { // Verifica si this.full_time está definido
           // Llama a la función postCopyFullTime del servicio FullTimeService
           this.fullTimeSvc.postCopyFullTime(id, this.full_time).subscribe({
             next: () => {
@@ -140,6 +141,11 @@ export class FullTimeComponent implements OnInit {
           console.error('Error: this.full_time está undefined');
         }
       }
+      }else {
+        console.log("solo se pueden copiar sol aprovadas") //se debe agregar un swal
+        
+      }
+      
     });
   }
 }  
