@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 //sweetalert2
@@ -19,7 +19,7 @@ import { FormsStatusService } from "@services/applications/full_time/interaction
   templateUrl: './workplan.component.html',
   styleUrls: ['./workplan.component.scss']
 })
-export class WorkplanComponent implements OnInit {
+export class WorkplanComponent {
 
   public f_workplan = this.fb.group({
     period: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
@@ -41,6 +41,8 @@ export class WorkplanComponent implements OnInit {
   public work_plan:any;
   public error: any = '';
 
+  public teachingForm!: FormGroup;
+
   @Input() editable: any;
 
 
@@ -49,21 +51,55 @@ export class WorkplanComponent implements OnInit {
   // --------- GETTERS ------------
   // ------------------------------
 
+  /**
+   * Getter for teaching activities array.
+   * @returns {FormArray} The FormArray containing teaching activities.
+   */
   get teachingActivitiesArr(): FormArray { return this.f_workplan.get('teaching_activities') as FormArray; }
 
+  /**
+  * Getter for investigation activities array.
+  * @returns {FormArray} The FormArray containing investigation activities.
+  */
   get investigationActivitiesArr(): FormArray { return this.f_workplan.get('investigation_activities') as FormArray; }
 
+  /**
+   * Getter for extension activities array.
+   * @returns {FormArray} The FormArray containing extension activities.
+   */
   get extensionActivitiesArr(): FormArray { return this.f_workplan.get('extension_activities') as FormArray; }
 
+  /**
+   * Getter for academic administration activities array.
+   * @returns {FormArray} The FormArray containing academic administration activities.
+   */
   get academicAdministrationArr(): FormArray { return this.f_workplan.get('academic_admin_activities') as FormArray; }
 
+  /**
+   * Getter for other activities array.
+   * @returns {FormArray} The FormArray containing other activities.
+   */
   get otherActivitiesArr(): FormArray { return this.f_workplan.get('other_activities') as FormArray;}
 
+  /**
+   * Getter for work day array.
+   * @returns {FormArray} The FormArray containing work day information.
+   */
   get workDayArr(): FormArray { return this.f_workplan.get('working_week') as FormArray; }
 
   //Accede al form
   get f() { return this.f_workplan.controls }
 
+  /**
+   * Constructs a new instance of the WorkplanComponent.
+   * @constructor
+   * @param {FormBuilder} fb - The FormBuilder service for creating form controls.
+   * @param {FullTimeService} fullTimeSvc - The FullTimeService for fetching full-time data.
+   * @param {LoaderService} loaderSvc - The LoaderService for displaying loading indicators.
+   * @param {Router} router - The Router service for navigating between routes.
+   * @param {ActivatedRoute} route - The ActivatedRoute service for accessing route parameters.
+   * @param {FormsStatusService} formsStatusService - The FormsStatusService for managing form status.
+   */
   constructor(
     private fb: FormBuilder,
     private fullTimeSvc: FullTimeService,
@@ -92,23 +128,22 @@ export class WorkplanComponent implements OnInit {
             this.patchExtensionActivities(data.full_time.work_plan?.extension_activities);
             this.patchAcademicAdministration(data.full_time.work_plan?.academic_admin_activities);
             this.patchOtherActivities(data.full_time.work_plan?.other_activities);
-            // this.patchWorkDay(data.full_time.work_plan?.working_week);
           }
         });
       }
     )
   }
 
-  ngOnInit(): void {
-
-  }
-
-
 
   // ------------------------------
   // --------- ENVIAR -------------
   // ------------------------------
 
+  /**
+   * Submits the work plan form data.
+   * Displays an error message if any required fields are missing.
+   * Saves the work plan data and navigates to the next step upon successful submission.
+   */
   submit() {
     Swal.fire({
       title: 'Error',
@@ -149,7 +184,6 @@ export class WorkplanComponent implements OnInit {
   }
 
 
-
   // --------------------------------
   // ---- ACTIVIDADES DE DOCENCIA ---
   // --------------------------------
@@ -178,6 +212,19 @@ export class WorkplanComponent implements OnInit {
       })
     });
   }
+
+  /**
+   * Updates the total hours for a teaching activity group based on the values of "t", "tp", and "p".
+   * @param {number} groupIndex The index of the teaching activity group within the form array.
+   */
+  updateTotalHours(groupIndex: number) {
+    const group = this.teachingActivitiesArr.at(groupIndex) as FormGroup;
+    const weekHours = group.get('week_hours')?.value;
+    const totalHours = weekHours.t + weekHours.tp + weekHours.p;
+    group.patchValue({ total_hours: totalHours }, { emitEvent: false });
+  }
+
+
 
   // --------- ADD CARDS -----------
 

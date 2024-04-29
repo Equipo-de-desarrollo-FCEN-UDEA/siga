@@ -121,17 +121,17 @@
                     <hr style="margin: 0; margin-bottom: 3px" />
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="t" class="form-control" id="floating_t{{ i }}" />
-                    <label class="formLabel" id="floating_t{{ i }}">T</label>
+                    <input type="number" formControlName="t" class="form-control" id="floating_t{{ i }}" (input)="updateTotalHours(i)" />
+                    <label class="formLabel" id="floating_t{{ i }}">Teórico</label>
                   </div>
 
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="tp" id="floating_tp{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_tp{{ i }}">TP</label>
+                    <input type="number" formControlName="tp" id="floating_tp{{ i }}" class="form-control" (input)="updateTotalHours(i)" />
+                    <label class="formLabel" id="floating_tp{{ i }}">Teórico/Práctica</label>
                   </div>
                   <div class="formfloatig col-sm-4">
-                    <input type="number" formControlName="p" id="floating_p{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_p{{ i }}">P</label>
+                    <input type="number" formControlName="p" id="floating_p{{ i }}" class="form-control" (input)="updateTotalHours(i)" />
+                    <label class="formLabel" id="floating_p{{ i }}">Práctica</label>
                   </div>
                 </div>
               </div>
@@ -145,8 +145,7 @@
                   </div>
 
                   <div class="formfloatig col-12">
-                    <input type="number" formControlName="total_hours" id="floating_total_hours{{ i }}"
-                      class=" form-control" />
+                    <input type="number" formControlName="total_hours" id="floating_total_hours{{ i }}" class=" form-control" readonly/>
                     <label class="formLabel" id="floating_total_hours{{ i }}">Horas total</label>
                   </div>
 
