@@ -128,8 +128,7 @@ export class FullTimeComponent implements OnInit {
                 confirmButtonColor: '#3AB795',
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // Redirige a alguna página después de copiar
-                  // this.router.navigate([somePath]);
+                  this.router.navigate(['/home']);
                 }
               });
             },
@@ -142,8 +141,12 @@ export class FullTimeComponent implements OnInit {
         }
       }
       }else {
-        console.log("solo se pueden copiar sol aprovadas") //se debe agregar un swal
-        
+        Swal.fire({
+        title: '¡Atención!',
+        text: 'Solo se pueden copiar aplicaciones aprobadas',
+        icon: 'warning',
+        confirmButtonColor: '#3AB795',
+      });
       }
       
     });
