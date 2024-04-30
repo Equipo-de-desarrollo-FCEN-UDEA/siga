@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
@@ -83,7 +84,7 @@ async def create_full_time(
 @router.post('/copy-full-time/{id}', response_model=FullTimeResponse)
 async def copy_full_time(
     id: int,
-    full_time: FullTimeCreate,
+    title: Optional[str] = None,
     current_user: User = Depends(jwt_bearer.get_current_active_user),
     engine: AIOSession = Depends(mongo_db.get_mongo_db),
     db: Session = Depends(db.get_db)
@@ -93,7 +94,7 @@ async def copy_full_time(
 
         params:
             - id: int, this is the id of the full time to copy
-
+            - title: Optional[str], this is the new title for the copied full time
         response:
             - full_time
     """
@@ -108,8 +109,18 @@ async def copy_full_time(
         
         # Crear una copia del objeto FullTime sin el id de Mongo
         full_time_copied = FullTime(**{k: v for k, v in original_full_time.dict().items() if k != 'id'})
-        full_time_copied.title += "_copia"
+        num_copies = 0
+        
+        if "_copia" in full_time_copied.title:
+            num_copies += 1
 
+        log.debug(title)
+        
+        if title is not None:
+            full_time_copied.title = title
+        else:
+            full_time_copied.title += f"_copia_{num_copies}"
+            
         # Guardar la copia en la base de datos
         full_time_copied = await crud.full_time.create(db=engine, obj_in=full_time_copied)
         
