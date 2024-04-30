@@ -96,10 +96,10 @@
     
    <!-- ARCHIVOS - DOCUMENTOS -->
     <app-file-upload
+    [files]="files"
     [documents]="f['documents'].value"
-    (documentsValues)="SetDocuments($event)"
-    (filesValues)="SetFiles($event)">
-
+    [documentsToDelete]="documentsToDelete"
+    [applycationType]="application_type_number">
   </app-file-upload>
 
     <h6 class="mt-3">

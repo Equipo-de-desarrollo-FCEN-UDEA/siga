@@ -60,9 +60,9 @@ export class VacationComponent implements OnInit {
 
   // Files
   public files: any[] = [];
-  public document_new = [1];
+  public archivos = [1];
   public documents: file_path[] = [];
-  public documentsToDelete: file_path[] = [];
+  public documentsToDelete: string[] = [];
   // FileUpload
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
