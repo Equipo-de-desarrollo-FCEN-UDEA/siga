@@ -79,7 +79,7 @@ export class FullTimeSelectDateComponent {
         Swal.fire({
           // Muestra un mensaje emergente utilizando Swal
           allowOutsideClick: false,
-          title: 'Dedicación exclusiva en creación',
+          title: 'Dedicación exclusiva',
           text: 'La fecha se actualizó con éxito',
           confirmButtonText: 'Continuar',
           confirmButtonColor: '#3AB795',
