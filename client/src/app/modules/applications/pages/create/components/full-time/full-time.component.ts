@@ -29,7 +29,6 @@ export class FullTimeComponent {
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
     ],
-    start_date: [new Date(), [Validators.required]],
     documents: [this.documents],
   });
 
