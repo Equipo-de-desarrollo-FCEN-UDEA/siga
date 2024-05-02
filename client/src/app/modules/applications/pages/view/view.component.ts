@@ -7,11 +7,10 @@ import { ApplicationStatusCreate } from '@interfaces/application_status';
 import { ApplicationStatusService } from '@services/application-status.service';
 import { ApplicationService } from '@services/application.service';
 import { AuthService } from '@services/auth.service';
-import { Observable, Subject, switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ComService } from './connection/com.service';
-import { UserService } from '@services/user.service';
-import { UserBase, UserResponse } from '@interfaces/user';
+import { UserResponse } from '@interfaces/user';
 import { file_path } from '@interfaces/documents';
 import { DocumentService } from '@services/document.service';
 
@@ -40,6 +39,7 @@ export class ViewComponent implements AfterViewChecked {
   public isDelete: boolean = false;
   public submitted: boolean = false;
   public isDecline: boolean = false;
+  public isButtonDisabled: boolean = false;
 
   // Files
   public files: any[] = [];
@@ -54,7 +54,6 @@ export class ViewComponent implements AfterViewChecked {
     private location: Location,
 
     private authSvc: AuthService,
-    private userSvc: UserService,
     private documentSvc: DocumentService,
     private applicationStatusSvc: ApplicationStatusService
   ) {
@@ -66,18 +65,27 @@ export class ViewComponent implements AfterViewChecked {
     this.route.params.subscribe((params) => {
       this.id = params['id'];
     });
-
     this.applicationStatusSvc.isApproved(this.id);
   }
 
   public form = this.fb.group({
-    observation: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(300)]],
+    observation: [
+      '',
+      [Validators.required, Validators.minLength(2), Validators.maxLength(300)],
+    ],
     amount_approved: [0],
     document: [this.documents],
   });
 
   cancel() {
     this.location.back();
+  }
+
+  // Function to determine if application is of type 'DEDICACION EXCLUSIVA' and status is 'EN VICERRECTORIA'
+  isExclusiveDedication(application: Application): boolean {
+    const lastStatus = application.application_status[application.application_status.length - 1];
+    return application.application_sub_type.application_type.name === 'DEDICACIÓN EXCLUSIVA'
+      && lastStatus.status.name === 'EN VICERRECTORÍA';
   }
 
   ngAfterViewChecked(): void {
@@ -96,64 +104,65 @@ export class ViewComponent implements AfterViewChecked {
     const childRouteComp = this.activatedComponentReference;
 
     if (this.files.length > 0) {
-      this.documentSvc.postDocument(this.files as File[]).pipe(
-        switchMap((data) => {
-          this.form.patchValue({
-            document: data.files_paths,
+      this.documentSvc
+        .postDocument(this.files as File[])
+        .pipe(
+          switchMap((data) => {
+            this.form.patchValue({
+              document: data.files_paths,
+            });
+
+            return this.applicationStatusSvc.postApplicationStatus({
+              application_id: this.id,
+              observation: this.form.value.observation!,
+              amount_approved: this.form.value.amount_approved!,
+              document: this.form.value.document!,
+              status_id: 1,
+            } as ApplicationStatusCreate);
+          })
+        )
+        .subscribe(() => {
+          try {
+            childRouteComp.submit().subscribe();
+          } catch {}
+
+          Swal.fire({
+            title: 'Se cambió el estado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.location.back();
+            }
           });
-
-          return this.applicationStatusSvc.postApplicationStatus({
-            application_id: this.id,
-            observation: this.form.value.observation!,
-            amount_approved: this.form.value.amount_approved!,
-            document: this.form.value.document!,
-            status_id: 1,
-          } as ApplicationStatusCreate);
-        })
-      )
-      .subscribe(() => {
-        try {
-          childRouteComp.submit().subscribe();
-        } catch {}
-
-        Swal.fire({
-          title: 'Se cambió el estado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.location.back();
-          }
         });
-      });
     } else {
       // Handle the case when there are no files to upload
-      this.applicationStatusSvc.postApplicationStatus({
-        application_id: this.id,
-        observation: this.form.value.observation!,
-        amount_approved: this.form.value.amount_approved!,
-        document: this.form.value.document!,
-        status_id: 1,
-      } as ApplicationStatusCreate)
-      .subscribe(() => {
-        try {
-          childRouteComp.submit().subscribe();
-        } catch {}
+      this.applicationStatusSvc
+        .postApplicationStatus({
+          application_id: this.id,
+          observation: this.form.value.observation!,
+          amount_approved: this.form.value.amount_approved!,
+          document: this.form.value.document!,
+          status_id: 1,
+        } as ApplicationStatusCreate)
+        .subscribe(() => {
+          try {
+            childRouteComp.submit().subscribe();
+          } catch {}
 
-        Swal.fire({
-          title: 'Se cambió el estado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.location.back();
-          }
+          Swal.fire({
+            title: 'Se cambió el estado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.location.back();
+            }
+          });
         });
-      });
     }
   }
-
-
 
   // -----------------------------
   // ---- DECLINE APPLICATION -----

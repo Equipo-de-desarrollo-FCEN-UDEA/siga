@@ -7,7 +7,7 @@ from .school import SchoolCreate, SchoolUpdate, SchoolInDB, SchoolResponse
 from .extra import ExtraCreate, ExtraUpdate, ExtraInDBBase, ExtraResponse
 from .rol import RolInDB, RolCreate, RolUpdate, RolResponse
 from .status import StatusCreate, StatusUpdate, StatusInDB
-from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiResponse, ApplicationResponse
+from .application import ApplicationCreate, ApplicationUpdate, ApplicationMultiResponse, ApplicationResponse, ApplicationInDB
 from .application_type import (ApplicationTypeCreate, ApplicationTypeInDB,
                                ApplicationTypeUpdate, ApplicationTypeResponse)
 from .application_subtype import (ApplicationSubTypeCreate, ApplicationSubTypeUpdate,

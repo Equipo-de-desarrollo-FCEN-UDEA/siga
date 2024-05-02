@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
@@ -9,10 +10,9 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-full-time',
   templateUrl: './full-time.component.html',
-  styleUrls: ['./full-time.component.scss']
+  styleUrls: ['./full-time.component.scss'],
 })
 export class FullTimeComponent {
-
   public submitted: boolean = false;
   public documents: file_path[] = [];
 
@@ -21,19 +21,13 @@ export class FullTimeComponent {
     private formBuilder: FormBuilder,
 
     private fullTimeSvc: FullTimeService
-  ) {
-
-  }
+  ) {}
 
   // Form permiso
   public form = this.formBuilder.group({
     title: [
       '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(50),
-      ],
+      [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
     ],
     documents: [this.documents],
   });
@@ -42,8 +36,9 @@ export class FullTimeComponent {
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
   // --------------------------------------------------
 
-  get f() { return this.form.controls; }
-
+  get f() {
+    return this.form.controls;
+  }
 
   // --------------------------------------
   // ------------ SUBMIT FORM  ------------
@@ -69,23 +64,26 @@ export class FullTimeComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion'])
+            this.router.navigate([
+              '/solicitudes/editar/' + data.id + '/dedicacion',
+            ]);
           }
-        })
-      }
+        });
+      },
     });
-
-  }
-  validSize(){
-    return true
   }
 
-  validFileType(){
-    return true
+  validSize() {
+    return true;
+  }
+
+  validFileType() {
+    return true;
   }
 
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
   }
-
 }

@@ -14,8 +14,6 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { EconomicSupportModule } from './components/economic-support/economic-support.module';
 
-
-
 @NgModule({
   declarations: [
     CreateComponent,
@@ -32,6 +30,6 @@ import { EconomicSupportModule } from './components/economic-support/economic-su
     FullTimeModule,
     EconomicSupportModule,
     SignaturePadModule,
-  ]
+  ],
 })
-export class CreateModule { }
+export class CreateModule {}

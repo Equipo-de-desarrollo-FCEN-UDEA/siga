@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
@@ -11,6 +11,8 @@ import { LoaderService } from '@services/loader.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
+
 @Component({
   selector: 'app-commission',
   templateUrl: './commission.component.html',
@@ -20,6 +22,7 @@ export class CommissionComponent {
 
 
   // Dates
+  public hiddenIds: number[] = [9];
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
@@ -28,7 +31,6 @@ export class CommissionComponent {
 
   // Files
   public files : any[] = [];
-  public archivos = [1];
   public documents: file_path[] = []
 
   // For handle errors
@@ -36,8 +38,11 @@ export class CommissionComponent {
   public error = '';
   public submitted = false;
 
-  public comision_type$: any;
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
+  public comision_type$: any;
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
 
@@ -62,7 +67,6 @@ export class CommissionComponent {
    }
 
    public form = this.fb.group({
-    application_sub_type_id: [0, [Validators.required, Validators.min(1)]],
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
@@ -125,38 +129,11 @@ export class CommissionComponent {
   // ------------- DATEPICKER -------------
   // --------------------------------------
 
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
-
+  setDates(event: any) {
     this.form.patchValue({
-      start_date : (new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day)),
-      end_date : (new Date(this.toDate!.year, this.toDate!.month - 1, this.toDate!.day))
+      start_date: event.start_date,
+      end_date: event.end_date,
     });
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) &&
-        date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) { return this.toDate && date.after(this.fromDate) && date.before(this.toDate); }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) ||
-        this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
   // --------------------------------------
@@ -165,72 +142,24 @@ export class CommissionComponent {
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
-
-
-
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.
     invalid && this.form.get(controlName)?.touched;
   }
 
   // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
+  // ----------- upload file ---------
   // --------------------------------------
+  // Recibir valores del output para ponerlos en el componente padre
 
-  onUpload(event:Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
-    }
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
+    });
   }
-
-  removeFile(index: number) {
-    if (this.archivos.length > 1) {
-    this.archivos.splice(index, 1);};
-    this.files.splice(index, 1);
+  
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
-
-  validSize() {
-    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 6 * 1024 * 1024;
-  }
-
-  validFileType() {
-    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
-    })
-    return flag;
-
-  }
-
-
-
-  // --------------------------------------
-  // -------- LUGAR - PAISES - CIUDAD -----
-  // --------------------------------------
-
-  // onChangePais(event:any) {
-  //   const paisId = event.target.value;
-  //   this.pais = this.paises[paisId];
-  //   this.paisesCiudadesSvc.getEstados(this.pais).subscribe(
-  //     (data:Estado[]) => {
-  //       this.provincias = data;
-  //     }
-  //   )
-  // }
-
-  // onChangeEstado(event:any) {
-  //   const estadoId = event.target.value;
-  //   this.provincia = this.provincias[estadoId];
-  //   this.paisesCiudadesSvc.getCiudades(this.pais, this.provincia).subscribe(
-  //     (data:Ciudad[]) => {
-  //       this.ciudades = data;
-  //     }
-  //   );
-  // }
 
 }

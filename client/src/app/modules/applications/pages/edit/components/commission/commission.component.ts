@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
@@ -7,9 +7,10 @@ import { NgbDate, NgbDateStruct, NgbCalendar, NgbDateParserFormatter } from '@ng
 import { ApplicationTypesService } from '@services/application-types.service';
 import { CommissionService } from '@services/applications/commission.service';
 import { DocumentService } from '@services/document.service';
-import { LoaderService } from '@services/loader.service';
 import { switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
+
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-commission',
@@ -17,30 +18,26 @@ import Swal from 'sweetalert2';
   styleUrls: ['./commission.component.scss']
 })
 export class CommissionComponent implements OnInit {
-
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
-
   // Files
   public files: any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
   public documentsToDelete: string[] = []
-
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
-
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
-
-
   public id: number = 0;
 
   constructor(
@@ -51,13 +48,11 @@ export class CommissionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-
+    // services
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService
-  ) {
-
-  }
+  ) {}
 
   public form = this.fb.group({
     application_sub_type_id: [0, [Validators.required]],
@@ -82,7 +77,9 @@ export class CommissionComponent implements OnInit {
             this.form.patchValue(
               {
                 ...data.commission,
-                application_sub_type_id: data.application_sub_type_id
+                application_sub_type_id: data.application_sub_type_id,
+                start_date: new Date(data.commission.start_date),
+                end_date: new Date(data.commission.end_date),
               }
             )
             this.documents = data.commission.documents!
@@ -93,113 +90,63 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
-    let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-    for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
-    }
-    if (this.files.length > 0) {
-      commission = this.documentSvc.postDocument(this.files as File[]).pipe(
-        switchMap((data: DocumentsResponse) => {
-          if (data) {
-            this.documents = this.documents.concat(data.files_paths)
-            this.form.patchValue({
-              documents: this.documents
-            })
-          }
-          return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-        })
+    // Comprobar si la longitud de 'this.documents' y 'this.files' es al menos 1 y no más de 3
+    if (this.documents.length + this.files.length < 0 || this.documents.length + this.files.length > 3) {
+      Swal.fire(
+        {
+          title: 'Debes subir al menos un documento y no más de tres',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        }
       )
-    }
-    commission.subscribe(
-      data => {
-        Swal.fire(
-          {
-            title: 'La comisión se actualizó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }
-        ).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
-          }
-        })
+      return;
+}
+  
+    setTimeout(() => {
+      let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+      for (let path of this.documentsToDelete) {
+        this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
       }
-    )
-
+      if (this.files.length > 0) {
+        commission = this.documentSvc.postDocument(this.files as File[]).pipe(
+          switchMap((data: DocumentsResponse) => {
+            if (data) {
+              this.documents = this.documents.concat(data.files_paths)
+              this.form.patchValue({
+                documents: this.documents
+              })
+            }
+            return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+          })
+        )
+      }
+      commission.subscribe(
+        data => {
+          Swal.fire(
+            {
+              title: 'La comisión se actualizó correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }
+          )
+          this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
+        }
+      )
+    }, 0);
   }
 
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate.year,
-          this.toDate.month - 1,
-          this.toDate.day
-        ),
-      });
-    } else {
-      this.toDate = null;
-      this.fromDate = date
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate.year,
-          this.fromDate.month - 1,
-          this.fromDate.day
-        ),
-      });
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate!.year,
-          this.toDate!.month - 1,
-          this.toDate!.day
-        ),
-      });
-    }
+  // DATEPICKER
+  setDates(event: any) {
+    this.form.patchValue({
+      start_date: event.start_date,
+      end_date: event.end_date,
+    });
   }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) &&
-      date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) { return this.toDate && date.after(this.fromDate) && date.before(this.toDate); }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) ||
-      this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
-
-  // --------------------------------------
-  // ----------- TIPO DE SOLICITUD ---------
-  // --------------------------------------
+  // TIPO DE SOLICITUD
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
-
-
-
-  // --------------------------------------------------
-  // ----------- MANEJO DE ERRORES EN EL FORM ---------
-  // --------------------------------------------------
+  // MANEJO DE ERRORES EN EL FORM
   get f() {
     return this.form.controls;
   }
@@ -207,85 +154,8 @@ export class CommissionComponent implements OnInit {
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
-
-  // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
-  // --------------------------------------
-
-  onUpload(event: Event, index: number) {
-    const element = event.target as HTMLInputElement;
-    const file = element.files?.item(0);
-    if (file) {
-      this.files.splice(index, 1, file);
-    }
+  // Resivir valores del output para ponerlos en el componente padre
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
-
-  removeFile(index: number) {
-    if (this.archivos.length > 1) {
-      this.archivos.splice(index, 1);
-    };
-    this.files.splice(index, 1);
-  }
-
-  deleteDocument(path: string, i: number) {
-    Swal.fire({
-      title: "Eliminar documento",
-      text: "¿Está seguro de querer eliminar este documento?, no podrá recuperarlo",
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Eliminar",
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3AB795'
-    }).then(result => {
-      if (result.isConfirmed) {
-        this.documentsToDelete = this.documentsToDelete.concat([path]);
-        this.documents.splice(i, 1);
-      }
-    })
-
-  }
-
-  validSize() {
-    const size = this.files.map(a => a.size).reduce((a, b) => a + b, 0);
-    return size < 6 * 1024 * 1024;
-  }
-
-  validTipoArchivo() {
-    const extensionesValidas = ["png", "jpg", "gif", "jpeg", "pdf"];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      flag = extensionesValidas.includes(file.name.split(".")[file.name.split(".").length - 1]);
-    })
-    return flag;
-
-  }
-
-
-
-  // --------------------------------------
-  // -------- LUGAR - PAISES - CIUDAD -----
-  // --------------------------------------
-
-  // onChangePais(event:any) {
-  //   const paisId = event.target.value;
-  //   this.pais = this.paises[paisId];
-  //   this.paisesCiudadesSvc.getEstados(this.pais).subscribe(
-  //     (data:Estado[]) => {
-  //       this.provincias = data;
-  //     }
-  //   )
-  // }
-
-  // onChangeEstado(event:any) {
-  //   const estadoId = event.target.value;
-  //   this.provincia = this.provincias[estadoId];
-  //   this.paisesCiudadesSvc.getCiudades(this.pais, this.provincia).subscribe(
-  //     (data:Ciudad[]) => {
-  //       this.ciudades = data;
-  //     }
-  //   );
-  // }
-
-
 }
