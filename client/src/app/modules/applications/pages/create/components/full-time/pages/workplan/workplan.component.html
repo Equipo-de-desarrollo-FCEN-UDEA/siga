@@ -107,8 +107,23 @@
                   </div>
 
                   <div class="formfloatig col-sm-12 col-md-12 col-lg-6">
-                    <input type="text" formControlName="level" id="floating_level{{ i }}" class="form-control" />
-                    <label class="formLabel" id="floating_level{{ i }}">Nivel</label>
+                    <select
+                      class="form-select"
+                      formControlName="level"
+                      id="floating_level{{ i }}"
+                      required
+                      [ngClass]="{ 'is-invalid': isInvalidForm('level') }"
+                    >
+                      <option value="" disabled selected hidden>Nivel</option>
+                      <option value="opcion1">Pregrado</option>
+                      <option value="opcion2">Posgrado</option>
+                    </select>
+                    <label
+                      for="floating_level{{ i }}"
+                      class="formLabel"
+                      [ngClass]="{ isFill: f_workplan.controls['level'].valid }"
+                      >Nivel</label
+                    >
                   </div>
                 </div>
               </div>
