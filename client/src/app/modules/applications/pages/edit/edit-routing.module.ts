@@ -14,6 +14,7 @@ const routes: Routes = [
   {
     path: ':id',
     component: EditComponent,
+    canActivate: [EditViewGuard],
     children: [
       {
         path: 'permiso',
@@ -52,7 +53,6 @@ const routes: Routes = [
       },
       {
         path: 'vacaciones',
-        canActivate: [EditViewGuard],
         component: VacationComponent,
         data: {
           title: 'Vacaciones',
