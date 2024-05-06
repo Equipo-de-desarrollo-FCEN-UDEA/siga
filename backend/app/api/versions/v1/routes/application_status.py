@@ -83,7 +83,6 @@ async def create_application_status(
             elif app_type_name == "PERMISO":
                 # generate permission resolution document
                 await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
-
         elif status_name == 'SOLICITADA' and app_type_name in APPLICATIONS_NAMES:
             # Send email for requested status
             emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
