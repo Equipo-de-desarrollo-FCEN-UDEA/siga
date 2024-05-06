@@ -173,7 +173,6 @@ export class VacationComponent {
       if (this.signatureImg != '') {
         vacation.subscribe({
           next: (data) => {
-            console.log(this.form.value);
             Swal.fire({
               title: 'La solicitud se creó correctamente',
               icon: 'success',
@@ -271,9 +270,6 @@ export class VacationComponent {
       confirmButtonColor: '#3AB795',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(typeof this.signatureImg);
-        console.log(this.signatureImg);
-
         this.isButtonDisabled = true;
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         this.isButtonDisabled = false;

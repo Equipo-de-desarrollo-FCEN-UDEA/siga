@@ -8,84 +8,87 @@ import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { VacationComponent } from './components/vacation/vacation.component';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { FullTimeSelectDateComponent } from './components/full-time-select-date/full-time-select-date.component';
+import { EditViewGuard } from '../../../../core/guards/edit-view.guard';
 
 const routes: Routes = [
-  { 
-    path: ':id', 
+  {
+    path: ':id',
     component: EditComponent,
+    canActivate: [EditViewGuard],
     children: [
       {
         path: 'permiso',
         component: PermissionComponent,
         data: {
-          title: 'Permiso'
-        }
+          title: 'Permiso',
+        },
       },
       {
         path: 'comision',
         component: CommissionComponent,
         data: {
-          title: 'Comisión'
-        }
+          title: 'Comisión',
+        },
       },
       {
         path: 'dedicacion',
         component: FullTimeComponent,
         data: {
-          title: 'Dedicación Exclusiva'
-        }
+          title: 'Dedicación Exclusiva',
+        },
       },
       {
         path: 'carta-inicio',
         component: FullTimeComponent,
         data: {
-          title: 'Carta de Inicio'
-        }
+          title: 'Carta de Inicio',
+        },
       },
       {
         path: 'avalhoras',
         component: HourAvalComponent,
         data: {
-          title: 'Aval de horas para proyectos de investigación'
-        }
+          title: 'Aval de horas para proyectos de investigación',
+        },
       },
       {
         path: 'vacaciones',
         component: VacationComponent,
         data: {
-          title: 'Vacaciones'
-        }
+          title: 'Vacaciones',
+        },
       },
       {
         path: 'apoyo-economico',
         component: EconomicSupportComponent,
         data: {
-          title: 'Apoyo Económico'
-        }
+          title: 'Apoyo Económico',
+        },
       },
       {
         path: 'dedicacion-fecha-inicio',
         component: FullTimeSelectDateComponent,
         data: {
-          title: 'Dedicación Exclusiva'
-        }
+          title: 'Dedicación Exclusiva',
+        },
       },
       {
         path: '',
         redirectTo: '/home',
-        pathMatch: 'prefix'
+        pathMatch: 'prefix',
       },
     ],
   },
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'prefix'
+    pathMatch: 'prefix',
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [EditViewGuard],
 })
-export class EditRoutingModule { }
+export class EditRoutingModule {}
