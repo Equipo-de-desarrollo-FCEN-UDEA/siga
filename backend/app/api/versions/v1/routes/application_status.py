@@ -83,11 +83,6 @@ async def create_application_status(
             elif app_type_name == "PERMISO":
                 # generate permission resolution document
                 await documents.permission_resolution_generation(user=application.user, application=application, mong_db=engine)
-                
-            # elif app_type_name == "DEDICACIÓN EXCLUSIVA":
-            #     full_time = await crud.full_time.get(db=engine, id=ObjectId(application.mongo_id))
-            #     # Set cron job for full time
-            #     await cron_job.create_cron_jobs(application, full_time, db, current_user)
 
         elif status_name == 'SOLICITADA' and app_type_name in APPLICATIONS_NAMES:
             # Send email for requested status
