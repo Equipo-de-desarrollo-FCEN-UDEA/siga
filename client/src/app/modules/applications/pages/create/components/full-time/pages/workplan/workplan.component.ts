@@ -25,6 +25,7 @@ export class WorkplanComponent {
     period: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(6)]],
     registro: ['', [Validators.required]],
     partial_time: [NaN, [Validators.required]],
+    level: [null, [Validators.required]],
     teaching_activities: this.fb.array([]),
     investigation_activities: this.fb.array([]),
     extension_activities: this.fb.array([]),
@@ -224,7 +225,10 @@ export class WorkplanComponent {
     group.patchValue({ total_hours: totalHours }, { emitEvent: false });
   }
 
-
+  isInvalidForm(controlName: string): boolean {
+    const control = this.f_workplan.get(controlName);
+    return !!control && control.invalid && (control.dirty || control.touched);
+  }
 
   // --------- ADD CARDS -----------
 

@@ -51,10 +51,11 @@ def fill_work_plan_format(user: User, full_time: FullTime) -> str:
     # Sec_2
     teaching_activities = []
     for act in full_time_dict['work_plan']['teaching_activities']:
-        if act['level'] == 'pregrado':
+        level = act['level'].lower()
+        if level == 'pregrado':
             level_pre = 'X'
             level_pos = ''
-        elif act['level'] == 'posgrado':
+        elif level == 'posgrado':
             level_pre = ''
             level_pos = 'X'
         else:
