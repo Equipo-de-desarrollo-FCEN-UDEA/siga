@@ -7,13 +7,13 @@ services:
     ports:
       - '5432:5432'
     env_file:
-      - .env
+      - ../.env
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       - local-net
     volumes:
-      - ./db/postgres-data:/var/lib/postgresql/data
+      - ../db/postgres-data:/var/lib/postgresql/data
     
   mongo:
     container_name: 'mongo'
@@ -22,11 +22,11 @@ services:
     ports:
       - '27017:27017'
     env_file:
-      - .env
+      - ../.env
     networks:
       - local-net
     volumes:
-      - ./db/mongo-data:/data/db
+      - ../db/mongo-data:/data/db
   
   pgadmin:
     container_name: 'pgadmin'
@@ -36,7 +36,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env
+      - ../.env
 
   redis:
     container_name: 'redis'
@@ -51,11 +51,11 @@ services:
   celery_worker:
     container_name: "celery_worker"
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info -Q test-queue -c 1
     env_file:
-      - .env
+      - ../.env
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -68,11 +68,11 @@ services:
   celery-beat:
     container_name: 'celery_beat'
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
-      - .env
+      - ../.env
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
@@ -85,11 +85,11 @@ services:
   flower:
     container_name: "flower"
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app flower --port=5555
     env_file:
-      - .env
+      - ../.env
     ports:
       - "5555:5555"
     environment:
@@ -102,20 +102,20 @@ services:
   
   backend:
     build:
-      context: ./backend
+      context: ./
       dockerfile: Dockerfile
     depends_on:
       - db
       - mongo
     env_file:
-      - .env
+      - ../.env
     restart: on-failure
     networks:
       - local-net
     ports:
       - "8001:8000"
     volumes:
-      - ./backend:/app
+      - ../backend:/app
 
 networks:
   local-net:

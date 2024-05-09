@@ -7,7 +7,7 @@ La principal herramienta que usaremos para desarrollar en el lado del backend es
 
 Para la instalación de docker siga la guía oficial de docker https://docs.docker.com/engine/install/
 
-Con docker instalado procesa a instalar docker compose, yo recomiendo la instalación de docker desktop, las cuales se pueden encontrar en: https://docs.docker.com/compose/install/
+Con docker instalado proceda a instalar docker compose, yo recomiendo la instalación de docker desktop, las cuales se pueden encontrar en: https://docs.docker.com/compose/install/
 
 ### Ejecutar docker compose
 
@@ -31,7 +31,7 @@ Con lo anterior le bastaría para desarrollar sin ningún inconveniente, sin emb
 
 ### Para crear un ambiente virtual con poetry
 
-Lo primero que se debe hacer es instalar poetry https://ython-poetry.org/docs/#installation 
+Lo primero que se debe hacer es instalar poetry https://python-poetry.org/docs/#installation 
 
 Una vez tenga instalado poetry le recomiendo seguir la guía para añadir el bin a la terminal y poder ejecutar comandos de poetry, para verificar que poetry quedó bien instalado haga uso del comando
 
