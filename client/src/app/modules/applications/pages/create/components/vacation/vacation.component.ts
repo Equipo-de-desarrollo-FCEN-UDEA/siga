@@ -147,6 +147,28 @@ export class VacationComponent {
       return;
     }
 
+    if (this.isInvalidForm('total_working_days')) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de días hábiles debe ser mínimo de 1 y máximo de 21',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
+    if (this.isInvalidForm('total_calendar_days')) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de días calendario debe ser mínimo de 1 y máximo de 21',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
     // Se detiene aqui si el formulario es invalido
     this.form.value.signature = this.signatureImg;
 
