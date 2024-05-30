@@ -15,13 +15,15 @@ import { ApplicationTypesService } from '@services/application-types.service';
   styleUrls: ['./application-list.component.scss'],
 })
 export class ApplicationListComponent implements OnInit {
+  data: any[] = [];
+  totalItems: number = 0;
+  pageSize: number = 7;
+
   public applications$ = new Observable<Application[]>();
 
   public page = 1;
 
-  public totalApplicationsArray: any[] = [];
-
-  public limit = 10;
+  public limit = 100;
 
   private skip = (this.page - 1) * this.limit;
 
@@ -55,34 +57,33 @@ export class ApplicationListComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.applicationsSvc
-      .getApplications(2, 1000, true, '')
-      .subscribe((items) => this.totalApplicationsArray.push(...items));
+    this.loadPage(this.page);
 
-    console.log(this.totalApplicationsArray);
+    this.applicationsSvc.getApplications().subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+    });
   }
 
-  nextPage() {
-    this.page++;
-    this.skip = (this.page - 1) * this.limit;
+  // --------------- Pagination ----------------
+
+  loadPage(page: number) {
+    this.skip = (this.page - 1) * this.pageSize;
     this.applications$ = this.applicationsSvc.getApplications(
       this.skip,
       this.limit,
       this.form.value.activo!,
-      this.form.value.search!
+      this.form.value.search!,
+      this.form.value.type!
     );
   }
 
-  prevPage() {
-    this.page--;
-    this.skip = (this.page - 1) * this.limit;
-    this.applications$ = this.applicationsSvc.getApplications(
-      this.skip,
-      this.limit,
-      this.form.value.activo!,
-      this.form.value.search!
-    );
+  onPageChange(page: number) {
+    this.page = page;
+    this.loadPage(page);
   }
+
+  // --------------- Pagination ----------------
 
   // We use this for get with a search criteria
   search() {
@@ -95,9 +96,13 @@ export class ApplicationListComponent implements OnInit {
       this.form.value.search!,
       this.form.value.type!
     );
+
+    console.log('search');
   }
 
   filed(id: number) {
+    console.log('filed', id);
+
     this.applicationsSvc.fileApplication(id).subscribe((data) => this.search());
   }
 

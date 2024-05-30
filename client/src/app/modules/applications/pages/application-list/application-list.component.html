@@ -2,7 +2,7 @@
   class="container card shadow containerInside mt-5 p-3 pt-1 position-relative"
   *ngIf="{ isSuperUser: isSuperUser$ | async } as context"
 >
-  <form [formGroup]="form" (submit)="search()">
+  <form [formGroup]="form" (submit)="search()" class="my-3">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-lg-8">
         <div class="row">
@@ -77,8 +77,8 @@
               application.application_sub_type.application_type.description
           ]"
           *ngFor="
-            let application of applications | slice : (page - 1) * 5 : page * 5;
-            track: application
+            let application of applications
+              | slice : (page - 1) * pageSize : page * pageSize
           "
           class="cursor"
         >
@@ -144,31 +144,16 @@
       <tfoot>
         <tr style="width: 100%">
           <td colspan="7">
-            <button
-              [disabled]="page == 1"
-              class="btn btn-outline-primary btn-sm"
-              type="button"
-              (click)="prevPage()"
+            <app-pagination
+              [page]="page"
+              [pageSize]="pageSize"
+              [totalItems]="totalItems"
+              (pageChange)="onPageChange($event)"
             >
-              <i class="fas fa-arrow-left"></i>
-            </button>
-            {{ page }}
-            <button
-              [disabled]="applications.length != limit"
-              class="btn btn-outline-primary btn-sm"
-              type="button"
-              (click)="nextPage()"
-            >
-              <i class="fas fa-arrow-right"></i>
-            </button>
+            </app-pagination>
           </td>
         </tr>
       </tfoot>
-      <app-pagination
-        [page]="page"
-        [items]="totalApplicationsArray"
-        [pageSize]="5"
-      ></app-pagination>
     </table>
   </div>
 </div>

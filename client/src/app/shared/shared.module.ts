@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 
 //Modules
 import { SharedRoutingModule } from './shared-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
@@ -44,6 +44,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     CdkStepperModule,
     SignaturePadModule,
     NgbModule,
+    NgbPaginationModule,
   ],
   exports: [
     HttpClientModule,
@@ -60,7 +61,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     SignaturePadModule,
     DatePickerRangeComponent,
     FileUploadComponent,
-    PaginationComponent
+    PaginationComponent,
   ],
 })
 export class SharedModule {}
