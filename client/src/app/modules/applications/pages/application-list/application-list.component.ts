@@ -17,7 +17,7 @@ import { ApplicationTypesService } from '@services/application-types.service';
 export class ApplicationListComponent implements OnInit {
   data: any[] = [];
   totalItems: number = 0;
-  pageSize: number = 7;
+  pageSize: number = 10;
 
   public applications$ = new Observable<Application[]>();
 
@@ -68,7 +68,7 @@ export class ApplicationListComponent implements OnInit {
   // --------------- Pagination ----------------
 
   loadPage(page: number) {
-    this.skip = (this.page - 1) * this.pageSize;
+    this.skip = 0;
     this.applications$ = this.applicationsSvc.getApplications(
       this.skip,
       this.limit,
@@ -96,13 +96,9 @@ export class ApplicationListComponent implements OnInit {
       this.form.value.search!,
       this.form.value.type!
     );
-
-    console.log('search');
   }
 
   filed(id: number) {
-    console.log('filed', id);
-
     this.applicationsSvc.fileApplication(id).subscribe((data) => this.search());
   }
 
