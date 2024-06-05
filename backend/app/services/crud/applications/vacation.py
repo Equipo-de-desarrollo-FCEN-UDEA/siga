@@ -17,20 +17,14 @@ class CRUDVacation(CRUDBase[Vacation, VacationCreate, VacationUpdate, VacationPo
     async def create_format(self, db: AIOSession, *, id: ObjectId, name: int, path: str) -> None:
         vacation = await db.find_one(Vacation, Vacation.id == id)
         if vacation is None:
-            log.error("Vacation not found with id: %s", id)
             return None
         
         if not isinstance(vacation.documents, list):
-            log.error("Documents is not a list: %s", vacation.documents)
             return None
-
-        log.debug(vacation.dict())
-        log.debug("ESTE NO ES")
         
         documents = vacation.documents[:]  # Make a copy of the list to avoid issues while deleting items
         for document in documents:
             if not isinstance(document, dict):
-                log.error("Document is not a dictionary: %s", document)
                 continue
             
             if document.get('name') == name:

@@ -40,6 +40,8 @@ import { HolidayService } from '@services/holiday.service';
 import { LaboralDays } from '@shared/utils';
 import { SignaturePad } from 'angular2-signaturepad';
 
+import { FileUploadComponent } from '@shared/components/file-upload/file-upload.component';
+
 @Component({
   selector: 'app-vacation',
   templateUrl: './vacation.component.html',
@@ -58,9 +60,11 @@ export class VacationComponent implements OnInit {
 
   // Files
   public files: any[] = [];
-  public document_new = [1];
+  public archivos = [1];
   public documents: file_path[] = [];
-  public documentsToDelete: file_path[] = [];
+  public documentsToDelete: string[] = [];
+  // FileUpload
+  @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
   // For handle errors
   public clicked = 0;
@@ -68,7 +72,7 @@ export class VacationComponent implements OnInit {
   public submitted = false;
 
   public id: number = 0;
-
+  public application_type_number = 5;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
 
   // holidays
@@ -120,27 +124,59 @@ export class VacationComponent implements OnInit {
 
   // Form vacation
   public form = this.formBuilder.group({
-    application_sub_type_id: [0, [Validators.required]],
-    total_days: [1, [Validators.required]],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
+    total_days: [1, [Validators.required]],
+    application_sub_type_id: [12],
+
+    total_working_days: [0],
+    start_working_date: [new Date()],
+    end_working_date: [new Date()],
+
+    total_calendar_days: [0],
+    start_calendar_date: [new Date()],
+    end_calendar_date: [new Date()],
+
     documents: [this.documents],
     signature: [this.signatureImg],
   });
+
+  setDates(event: any) {
+    this.form.patchValue({
+      start_working_date: event.start_date,
+      end_working_date: event.end_date,
+    });
+  }
+
+  setDatesCalendar(event: any) {
+    this.form.patchValue({
+      start_calendar_date: event.start_date,
+      end_calendar_date: event.end_date,
+    });
+  }
 
   ngOnInit(): void {
     this.route.parent?.params.subscribe((params) => {
       this.id = params['id'];
       this.vacationSvc.getVacation(this.id).subscribe((data) => {
-        this.form.patchValue({
-          ...data.vacation,
-          application_sub_type_id: data.application_sub_type_id,
-        });
         this.documents = data.vacation.documents!;
-        let status_app = data.application_status[data.application_status.length-1].status.name;
-        if (status_app != 'APROBADA'){
+
+        this.form.patchValue({
+          total_working_days: data.vacation.total_working_days,
+          total_calendar_days: data.vacation.total_calendar_days,
+          documents: data.vacation.documents,
+          start_calendar_date: data.vacation.start_calendar_date,
+          end_calendar_date: data.vacation.end_calendar_date,
+          start_working_date: data.vacation.start_working_date,
+          end_working_date: data.vacation.end_working_date,
+        });
+
+        let status_app =
+          data.application_status[data.application_status.length - 1].status
+            .name;
+        if (status_app != 'APROBADA') {
           this.documents.pop();
-        }else{
+        } else {
           Swal.fire({
             title: 'Solicitud Aprobada',
             html: 'Su solicitud está aprobada, y por tal motivo no se puede editar',
@@ -175,10 +211,17 @@ export class VacationComponent implements OnInit {
   // ------------ SUBMIT FORM  ------------
   // --------------------------------------
   submit() {
-    this.submitted = true;
+    const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
+    const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
 
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
+    if (isWorkingDaysSet && isCalendarDaysSet) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡Debe seleccionar un rago de fechas en al menos en un tipo de vacaciones!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
       return;
     }
 
@@ -204,7 +247,7 @@ export class VacationComponent implements OnInit {
           );
         })
       );
-      if (this.signatureImg!=""){
+      if (this.signatureImg != '') {
         vacation.subscribe({
           next: (res) => {
             Swal.fire({
@@ -225,7 +268,7 @@ export class VacationComponent implements OnInit {
             this.error = err;
           },
         });
-      }else{
+      } else {
         Swal.fire({
           title: 'Firmar',
           html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
@@ -235,9 +278,9 @@ export class VacationComponent implements OnInit {
         });
         return;
       }
-    }else{
-      if (this.documents.length > 0){
-        if (this.signatureImg!=""){
+    } else {
+      if (this.documents.length > 0) {
+        if (this.signatureImg != '') {
           vacation.subscribe({
             next: (res) => {
               Swal.fire({
@@ -258,7 +301,7 @@ export class VacationComponent implements OnInit {
               this.error = err;
             },
           });
-        }else{
+        } else {
           Swal.fire({
             title: 'Firmar',
             html: 'Por favor agregue su firma en "Espacio para firma" y haga clic en la opción subir firma',
@@ -268,7 +311,7 @@ export class VacationComponent implements OnInit {
           });
           return;
         }
-      }else{
+      } else {
         Swal.fire({
           title: 'Adjuntar documento',
           html: 'Por favor adjunte documento de aval de talento humano.',
@@ -278,10 +321,7 @@ export class VacationComponent implements OnInit {
         });
         return;
       }
-
     }
-
-
   }
 
   // --------------------------------------
@@ -338,131 +378,15 @@ export class VacationComponent implements OnInit {
       ':'
     )[0];
     this.laboralflag = false;
-this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
+    this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
       next: (res) => {
         this.laboralDay = res.extra.days;
       },
     });
 
-    if (ID_VACATION_TYPE=="1"){
-      this.laboralflag=true;
+    if (ID_VACATION_TYPE == '1') {
+      this.laboralflag = true;
     }
-  }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
-  selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
-    const tot_days = this.form.value.total_days;
-    const entero_temp=tot_days;
-
-    if (fromDate || toDate) {
-      //Verify between laboral days and calendar days
-      if (this.laboralflag){
-        this.laboralDay=LaboralDays(
-          new Date(this.formatter.format(fromDate)),
-          new Date(this.formatter.format(toDate)),
-          this.holidays
-        );
-        //Variable to verify (laboralDay)
-        this.verify_date=this.laboralDay;
-      }else{
-        this.verify_date=new Date(this.formatter.format(toDate)).getTime()-
-                        new Date(this.formatter.format(fromDate)).getTime();
-        //In this case is important to take the date as days:
-        this.verify_date=this.verify_date/(1000*3600*24)+1;
-      }
-      //If days in form does not equal to required, the form does not allow continue
-      if (this.verify_date != entero_temp){
-        return true;
-      }
-      this.form.value.end_date = new Date(this.formatter.format(toDate));
-      return false;
-
-    } else {
-      return false;
-    }
-  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate.year,
-          this.toDate.month - 1,
-          this.toDate.day
-        ),
-      });
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate.year,
-          this.fromDate.month - 1,
-          this.fromDate.day
-        ),
-      });
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate!.year,
-          this.toDate!.month - 1,
-          this.toDate!.day
-        ),
-      });
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return (
-      this.fromDate &&
-      !this.toDate &&
-      this.hoveredDate &&
-      date.after(this.fromDate) &&
-      date.before(this.hoveredDate)
-    );
-  }
-
-  isHoveredInvalid(date: NgbDate) {
-    return (
-      this.fromDate &&
-      !this.toDate &&
-      this.hoveredDate &&
-      this.selectDays(this.fromDate, this.hoveredDate) &&
-      date.after(this.fromDate) &&
-      date.before(this.hoveredDate)
-    );
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) ||
-      (this.toDate && date.equals(this.toDate)) ||
-      this.isInside(date) ||
-      this.isHovered(date)
-    );
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const PARSED = this.formatter.parse(input);
-    return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
-      ? NgbDate.from(PARSED)
-      : currentValue;
   }
 
   // --------------------------------------------------
@@ -481,59 +405,19 @@ this.SubTypeSvc.getApplicationSubType(+ID_VACATION_TYPE).subscribe({
   }
 
   // --------------------------------------
-  // -------- ARCHIVOS - ANEXOS -----------
+  // ----------- upload file ---------
   // --------------------------------------
+  // Resivir valores del output para ponerlos en el componente padre
 
-  deleteDocument(path: string, i: number) {
-    Swal.fire({
-      title: 'Eliminar documento',
-      text: '¿Está seguro de querer eliminar este documento?, no podrá recuperarlo',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Eliminar',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3AB795',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.documents.splice(i, 1);
-      }
+  SetDocuments(event: any) {
+    this.form.patchValue({
+      documents: event.documents,
     });
   }
-
-  // Subir un archivo
-  onUpload(event: Event, index: number) {
-    const ELEMENT = event.target as HTMLInputElement;
-    const FILE = ELEMENT.files?.item(0);
-    if (FILE) {
-      this.files.splice(index, 1, FILE);
-    }
+  SetFiles(event: any) {
+    this.files = event;
   }
-
-  // Eliminar achivos
-  removeFile(index: number) {
-    if (this.document_new.length > 1) {
-      this.document_new.splice(index, 1);
-    }
-    this.files.splice(index, 1);
-  }
-
-  // Verifica el tamaño de los archivos que se van a adjuntar al permiso, max:2MB
-  validSize() {
-    const SIZE = this.files.map((a) => a.size).reduce((a, b) => a + b, 0);
-    return SIZE < 6 * 1024 * 1024;
-  }
-
-  // Verifica que el archivo a adjuntar sea de un tipo valido
-  validFileType() {
-    const VALID_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg', 'pdf'];
-
-    let flag = true;
-    this.files.forEach((file) => {
-      // separa el último punto del nombre del archivo para verificar su tipo
-      flag = VALID_EXTENSIONS.includes(
-        file.name.split('.')[file.name.split('.').length - 1]
-      );
-    });
-    return flag;
+  invalidFile() {
+    return this.fileUploadComponent?.invalidFile();
   }
 }

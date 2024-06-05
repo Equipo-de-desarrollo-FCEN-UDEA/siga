@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,9 +7,10 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class EditComponent implements OnInit {
+export class EditComponent {
 
   public title: string = '';
+  public button: string = '';
 
   private activatedComponentReference: any;
 
@@ -18,10 +19,8 @@ export class EditComponent implements OnInit {
     private location: Location
   ) { 
     // We take the titile from the child data
+    this.button = this.route.snapshot.firstChild?.data['button'];
     this.title = this.route.snapshot.firstChild?.data['title'];
-  }
-
-  ngOnInit(): void {
   }
 
   onActivate(componentRef: any) {
@@ -36,5 +35,12 @@ export class EditComponent implements OnInit {
     const childRouteComp = this.activatedComponentReference;
     childRouteComp.submit();
   }
+
+  invalidForm() {
+    const childRouteComp = this.activatedComponentReference;
+    return childRouteComp.invalidFile? !childRouteComp.invalidFile(): false;
+  }
+
+  
 
 }

@@ -1,8 +1,6 @@
 <div [formGroup]="form">
-  <!-- DATEPICKER -->
   <ng-template #footerTemplate>
     <hr class="my-0" />
-    <!-- <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p> -->
     <p *ngIf="!fromDate">Elige la fecha inicial</p>
     <button
       class="btn btn-primary btn-sm m-2 float-start"
@@ -61,25 +59,24 @@
         class="form-control"
         type="text"
         (click)="datepicker.toggle(); clicked = clicked + 1"
-        placeholder="yyyy-mm-dd"
+        placeholder="aaaa-mm-dd - aaaa-mm-dd"
         name="dpFromDate"
-        formControlName="{{ formControlNameStart }}"
+        formControlName="start_date"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-        [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
+        (input)="onChanged()"
+        [value]="
+          formatter.format(fromDate)
+            ? formatter.format(fromDate) + ' - ' + formatter.format(toDate)
+            : null
+        "
         [ngClass]="{
           'is-invalid':
-            (submitted && f['total_days_laboral'].errors) ||
+            (submitted && f['end_working_date'].errors) ||
             ((!fromDate || !toDate) && clicked !== 0) ||
-            selectDays(fromDate, toDate)
+            (default_date_picker ? false : selectDays(fromDate, toDate))
         }"
         [attr.disabled]="
-          laboralflag
-            ? f['total_days_laboral'].errors
-              ? ''
-              : null
-            : f['total_days_calendar'].errors
-            ? ''
-            : null
+          !default_date_picker ? (!total_days ? true : null) : null
         "
       />
       <button
@@ -88,30 +85,26 @@
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
         [attr.disabled]="
-          laboralflag
-            ? f['total_days_laboral'].errors
-              ? ''
-              : null
-            : f['total_days_calendar'].errors
-            ? ''
-            : null
+          !default_date_picker ? (!total_days ? true : null) : null
         "
       >
         <i class="fa fa-calendar"> </i>
       </button>
     </div>
     <!-- errors dates -->
-    <div
-      *ngIf="
-        (submitted && f['total_days'].errors) ||
-        ((!fromDate || !toDate) && clicked !== 0) ||
-        selectDays(fromDate, toDate)
-      "
-      class="invalid"
-    >
-      <div *ngIf="selectDays(fromDate, toDate)">
-        La cantidad de días elegidos de vacaciones no es igual a los escogidos
-        (tenga en cuenta si son hábiles o no)
+    <div *ngIf="!default_date_picker">
+      <div
+        *ngIf="
+          (submitted && f['total_days'].errors) ||
+          ((!fromDate || !toDate) && clicked !== 0) ||
+          selectDays(fromDate, toDate)
+        "
+        class="invalid"
+      >
+        <div *ngIf="selectDays(fromDate, toDate)">
+          La cantidad de días elegidos de vacaciones no es igual a los escogidos
+          (tenga en cuenta si son hábiles o no)
+        </div>
       </div>
     </div>
   </div>
@@ -123,9 +116,10 @@
         class="form-control"
         placeholder="yyyy-mm-dd"
         name="dpToDate"
-        formControlName="{{ formControlNameEnd }}"
+        formControlName="end_date"
         [value]="formatter.format(toDate)"
         (input)="toDate = validateInput(toDate, dpToDate.value)"
+        (input)="onChanged()"
       />
     </div>
   </div>

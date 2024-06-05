@@ -1,11 +1,13 @@
 import {
   Component,
-  Input,
   OnInit,
+  Input,
+  Output,
+  EventEmitter,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Holiday } from '@interfaces/holiday';
 
 //ngBootstrap imports
@@ -17,21 +19,24 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { LaboralDays } from '@shared/utils';
-import { log } from 'console';
 
 @Component({
-  selector: 'app-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['./date-picker.component.scss'],
+  selector: 'app-date-picker-range',
+  templateUrl: './date-picker-range.component.html',
+  styleUrls: ['./date-picker-range.component.scss'],
 })
-export class DatePickerComponent implements OnInit, OnChanges {
-  @Input() form!: FormGroup;
+export class DatePickerRangeComponent implements OnInit, OnChanges {
+  @Input() default_date_picker: any;
   @Input() total_days: any;
-  @Input() start_date: any;
-  @Input() end_date: any;
-  @Input() formControlNameStart?: string;
-  @Input() formControlNameEnd?: string;
   @Input() laboralflag: boolean = true;
+  @Input() holidays: Holiday[] = [];
+
+  @Input() initStartDate: Date | null = null;
+  @Input() initEndDate: Date | null = null;
+
+  @Output() datePickerValues = new EventEmitter<any>();
+
+  public form: FormGroup;
 
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
@@ -40,33 +45,52 @@ export class DatePickerComponent implements OnInit, OnChanges {
   public today = this.calendar.getToday();
   public laboralDay: number = 0;
   public verify_date: number = 0;
-  public holidays: Holiday[] = [];
 
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
 
-  constructor(
-    private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter
-  ) {}
-
   get f() {
     return this.form.controls;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.total_days);
+  constructor(
+    private calendar: NgbCalendar,
+    private fb: FormBuilder,
+    public formatter: NgbDateParserFormatter
+  ) {
+    this.form = this.fb.group({
+      start_date: [null, [Validators.required]],
+      end_date: [null, [Validators.required]],
+    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.total_days === 0) {
+      this.form.patchValue({
+        start_date: null,
+        end_date: null,
+      });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.initStartDate && this.initEndDate) {
+      this.form.patchValue({
+        start_date: this.initStartDate,
+        end_date: this.initEndDate,
+      });
+    }
+  }
+
+  onChanged(): void {
+    this.datePickerValues.emit(this.form.value);
+  }
 
   selectDays(fromDate: NgbDate | null, toDate: NgbDate | null): boolean {
     const tot_days = this.total_days;
     const entero_temp = tot_days;
-
-    console.log({ entero_temp });
 
     if (fromDate || toDate) {
       //Verify between laboral days and calendar days
@@ -133,6 +157,8 @@ export class DatePickerComponent implements OnInit, OnChanges {
         ),
       });
     }
+
+    this.onChanged();
   }
 
   isHovered(date: NgbDate) {
@@ -171,6 +197,7 @@ export class DatePickerComponent implements OnInit, OnChanges {
 
   validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
     const PARSED = this.formatter.parse(input);
+
     return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
       ? NgbDate.from(PARSED)
       : currentValue;

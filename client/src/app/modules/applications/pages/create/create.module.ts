@@ -10,7 +10,6 @@ import { ComplimentComponent } from './components/compliment/compliment.componen
 import { HourAvalComponent } from './components/hour-aval/hour-aval.component';
 import { FullTimeModule } from './components/full-time/full-time.module';
 import { VacationComponent } from './components/vacation/vacation.component';
-import { DatePickerComponent } from './components/vacation/date-picker/date-picker.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { EconomicSupportModule } from './components/economic-support/economic-support.module';
@@ -23,7 +22,6 @@ import { EconomicSupportModule } from './components/economic-support/economic-su
     ComplimentComponent,
     HourAvalComponent,
     VacationComponent,
-    DatePickerComponent,
   ],
   imports: [
     CommonModule,

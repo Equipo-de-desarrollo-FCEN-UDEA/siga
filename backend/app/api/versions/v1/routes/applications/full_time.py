@@ -19,8 +19,9 @@ from app.domain.schemas import (ApplicationCreate,
                                 InitialLetter,
                                 WorkPlan,
                                 ViceFormat,
-                                CronJobCreate,
-                                Application_statusCreate
+                                Application_statusCreate,
+                                ApplicationUpdate,
+                                ApplicationInDB
                                 )
 from app.domain.errors import BaseErrors
 
@@ -51,27 +52,21 @@ async def create_full_time(
     try:
         full_time_created = await crud.full_time.create(db=engine,
                                                         obj_in=FullTime(**dict(full_time)))
-        log.debug(' full_time_created',  full_time_created)
-
         application = ApplicationCreate(
             mongo_id=str(full_time_created.id),
             application_sub_type_id=full_time.application_sub_type_id,
-            start_date=full_time.start_date,
             user_id=current_user.id
         )
         application = crud.application.create(
             db=db, who=current_user, obj_in=application, status=6, observation='El usuario inició la dedicación')
     except BaseErrors as e:
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
-        log.error('BaseErrors')
         raise HTTPException(e.code, e.detail)
     except ValueError as e:
-        log.error('ValueError')
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
         raise HTTPException(422, e)
     except Exception as e:
-        log.error('Exception')
-        log.error(e)
+
         await engine.remove(FullTime, FullTime.id == full_time_created.id)
         raise HTTPException(422, "Algo ocurrió mal")
     application = ApplicationResponse.from_orm(application)
@@ -194,37 +189,62 @@ async def update_full_time(
     Endpoint to update an application of type full_time
 
         params:
-            -body: full_timeUpdate
+            - body: full_timeUpdate
 
         path-params:
-            -id: int, this is the id of the application and not the mongo_id
+            - id: int, this is the id of the application and not the mongo_id
 
         response:
-            -body: full_time
+            - body: full_time
     """
 
     try:
         # GET In PostgreSQL
         application: Application = crud.application.get(
-            db=db, id=id, who=current_user)
+                                    db=db, 
+                                    id=id, 
+                                    who=current_user)
 
         if application:
-
             # In MongoDB
             mongo_id = ObjectId(application.mongo_id)
-            current_full_time = await crud.full_time.get(engine, id=mongo_id)
+            current_full_time = await crud.full_time.get(
+                    engine, 
+                    id=mongo_id)
+            updated_full_time = await crud.full_time.update(
+                    engine, 
+                    db_obj=current_full_time, 
+                    obj_in=full_time)
 
-            updated_full_time = await crud.full_time.update(engine, db_obj=current_full_time, obj_in=full_time)
+            if application.application_status[-1].status.name == "EN CREACIÓN":
+                status = Application_statusCreate(
+                        application_id=application.id, 
+                        status_id=1, 
+                        observation="Dedicación exclusiva solicitada")
+                crud.application_status.request(
+                        db=db, 
+                        who=current_user, 
+                        obj_in=status, 
+                        to=application, 
+                        current=updated_full_time)
 
-            status = Application_statusCreate(
-                application_id=application.id, status_id=1, observation="Dedicación exclusiva solicitada")
-            crud.application_status.request(
-                db, who=current_user, obj_in=status, to=application, current=current_full_time)
-
+            elif application.application_status[-1].status.name == "EN VICERRECTORÍA":
+                application_update =  ApplicationInDB(
+                        id=id,
+                        created_at=application.created_at,
+                        mongo_id=str(mongo_id),
+                        application_sub_type_id=full_time.application_sub_type_id,
+                        start_date=full_time.start_date,
+                        user_id=current_user.id)
+                crud.application.update(
+                    db=db, 
+                    who=current_user, 
+                    db_obj=application, 
+                    obj_in=application_update)
+                return application_update
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
-
-    return application
+    return updated_full_time
 
 
 @router.delete("/{id}", response_model=Msg)
@@ -251,9 +271,7 @@ async def delete_full_time(
         mongo_id = ObjectId(application.mongo_id)
         # Delete object in postgresql
         delete = crud.application.delete(db, current_user, id=id)
-        log.debug(delete)
         if delete:
-            log.debug('Estamos en delete')
             # delete object on Mongo
             await crud.full_time.delete(engine, id=mongo_id)
 
@@ -272,12 +290,10 @@ def solicite_full_time(
     try:
         application = crud.application.get(db, current_user, id=id)
         update = crud.application.update(db, current_user, db_obj=application, obj_in={
-        }, status=1, observation='Usuario solocitó dedicación exclusiva')
+        }, status=1, observation='Usuario solicitó dedicación exclusiva')
     except BaseErrors as e:
         raise HTTPException(e.code, e.detail)
     return {'msg': 'La solicitud se solicitó correctamente'}
-
-
 
 @router.put('/letter/{id}')
 async def update_letter(
@@ -293,11 +309,9 @@ async def update_letter(
             db, current_user, id=id)
         mongo_id = ObjectId(application.mongo_id)
         full_time = await crud.full_time.get(engine, id=mongo_id)
-        log.debug(full_time.documents)
         for document in full_time.documents:
             if document['name'] == 'carta-inicio.pdf':
                 try:
-                    #delete = aws.s3.delete_contents_s3_bucket(settings.aws_bucket_name, file_name=document['path'])
                     pass
                 except Exception as e:
                     pass

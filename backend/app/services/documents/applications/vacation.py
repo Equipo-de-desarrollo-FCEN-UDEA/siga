@@ -56,34 +56,33 @@ def fill_vacations_format(user: User, vacations: VacationResponse):
     final_calendar_date = vacations_dict['vacation']['end_calendar_date']
     data_vacations = {
         # "days_type": vacations_dict['application_sub_type']['name'],
-        "date_day": str(today.day),
-        "date_month": str(today.month),
-        "date_year": str(today.year),
+        "date_day": str(today.day) if today else None,
+        "date_month": str(today.month) if today else None,
+        "date_year": str(today.year) if today else None,
         
-        "initial_working_date_day": str(initial_working_date.day),
-        "initial_working_date_month": str(initial_working_date.month),
-        "initial_working_date_year": str(initial_working_date.year),
-        "final_working_date_day": str(final_working_date.day),
-        "final_working_date_month": str(final_working_date.month),
-        "final_working_date_year": str(final_working_date.year),
-        
-        "initial_calendar_date_day": str(initial_calendar_date.day),
-        "initial_calendar_date_month": str(initial_calendar_date.month),
-        "initial_calendar_date_year": str(initial_calendar_date.year),
-        "final_calendar_date_day": str(final_calendar_date.day),
-        "final_calendar_date_month": str(final_calendar_date.month),
-        "final_calendar_date_year": str(final_calendar_date.year),
+        "initial_working_date_day": initial_working_date.day if initial_working_date and initial_working_date.day is not None else None,
+        "initial_working_date_month": initial_working_date.month if initial_working_date and initial_working_date.month is not None else None,
+        "initial_working_date_year": initial_working_date.year if initial_working_date and initial_working_date.year is not None else None,
+        "final_working_date_day": final_working_date.day if final_working_date and final_working_date.day is not None else None,
+        "final_working_date_month": final_working_date.month if final_working_date and final_working_date.month is not None else None,
+        "final_working_date_year": final_working_date.year if final_working_date and final_working_date.year is not None else None,
+        "initial_calendar_date_day": initial_calendar_date.day if initial_calendar_date and initial_calendar_date.day is not None else None,
+        "initial_calendar_date_month": initial_calendar_date.month if initial_calendar_date and initial_calendar_date.month is not None else None,
+        "initial_calendar_date_year": initial_calendar_date.year if initial_calendar_date and initial_calendar_date.year is not None else None,
+        "final_calendar_date_day": final_calendar_date.day if final_calendar_date and final_calendar_date.day is not None else None,
+        "final_calendar_date_month": final_calendar_date.month if final_calendar_date and final_calendar_date.month is not None else None,
+        "final_calendar_date_year": final_calendar_date.year if final_calendar_date and final_calendar_date.year is not None else None,
+
+
         
         "total_working_days": str(vacations_dict['vacation']['total_working_days']),
         "total_calendar_days": str(vacations_dict['vacation']['total_calendar_days']),
         "user_signature": vacations_dict['vacation']['signature']
-    }
+        }
 
     path = f'user_{user["id"]}/{uuid1()}' + 'formato_vacaciones.xlsx'
 
     generate_vacations_format_to_aws.apply_async(args=(data_user, data_vacations, path))
-    log.debug(path)
-    log.debug("CADENA VACATIONS", vacations)
     return path
 
 @celery_app.task

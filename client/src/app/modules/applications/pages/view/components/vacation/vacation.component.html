@@ -1,24 +1,71 @@
 <div *ngIf="vacation">
-  <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Inicia</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ vacation.start_date | date : "fullDate" }}
-    </div>
-  </div>
+  <h6 class="fw-bold">Vacaciones días hábiles:</h6>
+  <ul>
+    <li>
+      <div class="row regular-row mt-2">
+        <div class="col-xs-12 col-sm-6 label">Día que Inicia</div>
+        <div class="col-xs-12 col-sm-6">
+          <span *ngIf="vacation.total_working_days !== 0">
+            {{ vacation.start_working_date | date : "fullDate" }}
+          </span>
+        </div>
+      </div>
+    </li>
 
-  <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label fw-bold">Día que Termina</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ vacation.end_date | date : "fullDate" }}
-    </div>
-  </div>
+    <li>
+      <div class="row regular-row mt-2">
+        <div class="col-xs-12 col-sm-6 label">Día que Termina</div>
+        <div class="col-xs-12 col-sm-6">
+          <span *ngIf="vacation.total_working_days !== 0">
+            {{ vacation.end_working_date | date : "fullDate" }}
+          </span>
+        </div>
+      </div>
+    </li>
 
-  <div class="row regular-row mt-2">
-    <div class="col-xs-12 col-sm-6 label fw-bold">Días Solicitados</div>
-    <div class="col-xs-12 col-sm-6">
-      {{ vacation.total_days }}
-    </div>
-  </div>
+    <li>
+      <div class="row regular-row mt-2 mb-4">
+        <div class="col-xs-12 col-sm-6 label">Días Solicitados</div>
+        <div class="col-xs-12 col-sm-6">
+          {{ vacation.total_working_days }}
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <h6 class="fw-bold">Vacaciones días Calendario:</h6>
+  <ul class="mb-4">
+    <li>
+      <div class="row regular-row mt-2">
+        <div class="col-xs-12 col-sm-6 label">Día que Inicia:</div>
+        <div class="col-xs-12 col-sm-6">
+          <span *ngIf="vacation.total_calendar_days !== 0">
+            {{ vacation.start_calendar_date | date : "fullDate" }}
+          </span>
+        </div>
+      </div>
+    </li>
+
+    <li>
+      <div class="row regular-row mt-2">
+        <div class="col-xs-12 col-sm-6 label">Día que Termina</div>
+        <div class="col-xs-12 col-sm-6">
+          <span *ngIf="vacation.total_calendar_days !== 0">
+            {{ vacation.end_calendar_date | date : "fullDate" }}
+          </span>
+        </div>
+      </div>
+    </li>
+
+    <li>
+      <div class="row regular-row mt-2 mb-4">
+        <div class="col-xs-12 col-sm-6 label">Días Solicitados</div>
+        <div class="col-xs-12 col-sm-6">
+          {{ vacation.total_calendar_days }}
+        </div>
+      </div>
+    </li>
+  </ul>
 
   <div class="row regular-row mt-2">
     <div class="col-xs-12 col-sm-6 label fw-bold">
@@ -31,7 +78,8 @@
           'bg-requested': current_status === 'SOLICITADA',
           'bg-ok': current_status === 'VISTO BUENO',
           'bg-approved': current_status === 'APROBADA',
-          'bg-rejected': current_status === 'DEVUELTA'
+          'bg-rejected': current_status === 'DEVUELTA',
+          'bg-info': current_status == 'EN VICERRECTORÍA'
         }"
       >
         {{ current_status }}
