@@ -212,10 +212,13 @@ export class VacationComponent implements OnInit {
   // --------------------------------------
 
   coherenceDaysValidation(
-    start_day: Date,
-    end_day: Date,
+    start_day: Date | string,
+    end_day: Date | string,
     isWorkingDays: boolean
   ) {
+    start_day = new Date(start_day);
+    end_day = new Date(end_day);
+
     if (isWorkingDays) {
       const calcWorkingDays = end_day.getDate() - start_day.getDate() + 1;
       const totalWorkingDays = this.form.get('total_working_days')?.value;
