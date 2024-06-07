@@ -1,0 +1,13 @@
+<nav aria-label="Page navigation example">
+  <ngb-pagination
+    [collectionSize]="totalItems"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [maxSize]="5"
+    [rotate]="true"
+    [ellipses]="false"
+    [boundaryLinks]="true"
+    (pageChange)="onPageChange($event)"
+  >
+  </ngb-pagination>
+</nav>

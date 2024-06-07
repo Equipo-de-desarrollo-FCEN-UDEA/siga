@@ -12,15 +12,18 @@ import { ApplicationTypesService } from '@services/application-types.service';
 @Component({
   selector: 'app-application-list',
   templateUrl: './application-list.component.html',
-  styleUrls: ['./application-list.component.scss']
+  styleUrls: ['./application-list.component.scss'],
 })
 export class ApplicationListComponent implements OnInit {
+  data: any[] = [];
+  totalItems: number = 0;
+  pageSize: number = 10;
 
   public applications$ = new Observable<Application[]>();
 
   public page = 1;
 
-  public limit = 10;
+  public limit = 100;
 
   private skip = (this.page - 1) * this.limit;
 
@@ -37,43 +40,54 @@ export class ApplicationListComponent implements OnInit {
     private applicationTypeSvc: ApplicationTypesService
   ) {
     this.authSvc.isSuperUser();
-    this.applications$ = this.applicationsSvc.getApplications(this.skip, this.limit, false)
+    this.applications$ = this.applicationsSvc.getApplications(
+      this.skip,
+      this.limit,
+      false
+    );
   }
 
   form = this.fb.group({
-    search: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    search: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+    ],
     activo: [false],
-    type: [null]
-  })
+    type: [null],
+  });
 
   ngOnInit(): void {
+    this.loadPage(this.page);
+
+    this.applicationsSvc.getApplications().subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+    });
   }
 
-  nextPage() {
-    this.page++;
-    this.skip = (this.page - 1) * this.limit;
+  // --------------- Pagination ----------------
+
+  loadPage(page: number) {
+    this.skip = 0;
     this.applications$ = this.applicationsSvc.getApplications(
       this.skip,
       this.limit,
       this.form.value.activo!,
-      this.form.value.search!
+      this.form.value.search!,
+      this.form.value.type!
     );
   }
 
-  prevPage() {
-    this.page--;
-    this.skip = (this.page - 1) * this.limit;
-    this.applications$ = this.applicationsSvc.getApplications(
-      this.skip,
-      this.limit,
-      this.form.value.activo!,
-      this.form.value.search!
-    );
+  onPageChange(page: number) {
+    this.page = page;
+    this.loadPage(page);
   }
+
+  // --------------- Pagination ----------------
 
   // We use this for get with a search criteria
   search() {
-    this.page = 1
+    this.page = 1;
     this.skip = (this.page - 1) * this.limit;
     this.applications$ = this.applicationsSvc.getApplications(
       this.skip,
@@ -85,12 +99,10 @@ export class ApplicationListComponent implements OnInit {
   }
 
   filed(id: number) {
-    this.applicationsSvc.fileApplication(id).subscribe(data => this.search())
+    this.applicationsSvc.fileApplication(id).subscribe((data) => this.search());
   }
 
   cancel() {
     this.location.back();
   }
-
-
 }
