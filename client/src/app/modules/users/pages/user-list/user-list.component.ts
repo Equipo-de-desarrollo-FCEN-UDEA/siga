@@ -41,6 +41,16 @@ export class UserListComponent implements OnInit {
     activo: [true]
   })
 
+  // ngOnInit(): void {
+  //   this.loadPage(this.page);
+
+  //   this.userSvc.getUsers().subscribe((response) => {
+  //     this.data = response;
+  //     this.totalItems = response.length;
+  //     console.log(this.totalItems);
+  //   });
+  // }
+
   ngOnInit(): void {
     this.loadPage(this.page);
 
@@ -83,17 +93,20 @@ export class UserListComponent implements OnInit {
         this.form.value.activo!,
         this.form.value.search!,
       );
+
     }
   
     onPageChange(page: number) {
       this.page = page;
+      this.limit = 100 + this.page*10;
+      if (this.limit <= 110) {
+        this.limit = 100;
+    }
+      this.userSvc.getUsers(0, this.limit).subscribe((response) => {
+        this.data = response;
+        this.totalItems = response.length;
+      });
       this.loadPage(page);
-
-      console.log('page', this.page);
-      console.log('skip', this.skip);
-      console.log('data',this.data);
-      console.log('total', this.totalItems);
-      
     }
 
   // We use this for get with a search criteria
