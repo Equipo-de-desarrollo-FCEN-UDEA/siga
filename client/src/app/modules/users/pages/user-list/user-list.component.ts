@@ -14,6 +14,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  data: any[] = [];
+  totalItems: number = 0;
+  pageSize: number = 10;
 
   public users$ = new Observable<UserResponse[]>();
 
@@ -29,9 +32,9 @@ export class UserListComponent implements OnInit {
     private fb: FormBuilder,
     private location: Location
   ) {
-    this.users$ = this.userSvc.getUsers(this.skip, this.limit)
-
-  }
+    this.users$ = this.userSvc.getUsers(this.skip, this.limit,
+      false)
+    }
 
   form = this.fb.group({
     search: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -39,31 +42,64 @@ export class UserListComponent implements OnInit {
   })
 
   ngOnInit(): void {
+    this.loadPage(this.page);
 
+    this.userSvc.getUsers().subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+
+      console.log(this.data);
+      console.log(this.totalItems);
+      
+      
+    });
   }
 
   // We use this function to manage the pagination
-  nextPage(){
-    this.page++;
-    this.skip = (this.page - 1) * this.limit;
-    this.users$ = this.userSvc.getUsers(
-      this.skip,
-      this.limit,
-      this.form.value.activo!,
-      this.form.value.search!
-    );
-  }
+  // nextPage(){
+  //   this.page++;
+  //   this.skip = (this.page - 1) * this.limit;
+  //   this.users$ = this.userSvc.getUsers(
+  //     this.skip,
+  //     this.limit,
+  //     this.form.value.activo!,
+  //     this.form.value.search!
+  //   );
+  // }
 
-  prevPage(){
-    this.page--;
-    this.skip = (this.page - 1) * this.limit;
-    this.users$ = this.userSvc.getUsers(
-      this.skip,
-      this.limit,
-      this.form.value.activo!,
-      this.form.value.search!
-    );
-  }
+  // prevPage(){
+  //   this.page--;
+  //   this.skip = (this.page - 1) * this.limit;
+  //   this.users$ = this.userSvc.getUsers(
+  //     this.skip,
+  //     this.limit,
+  //     this.form.value.activo!,
+  //     this.form.value.search!
+  //   );
+  // }
+
+    // --------------- Pagination ----------------
+
+    loadPage(page: number) {
+      this.skip = 0;
+      this.users$ = this.userSvc.getUsers(
+        this.skip,
+        this.limit,
+        this.form.value.activo!,
+        this.form.value.search!,
+      );
+    }
+  
+    onPageChange(page: number) {
+      this.page = page;
+      this.loadPage(page);
+
+      console.log('page', this.page);
+      console.log('skip', this.skip);
+      console.log('data',this.data);
+      console.log('total', this.totalItems);
+      
+    }
 
   // We use this for get with a search criteria
   search() {
