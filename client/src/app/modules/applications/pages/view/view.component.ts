@@ -9,6 +9,10 @@ import { ApplicationService } from '@services/application.service';
 import { AuthService } from '@services/auth.service';
 import { Observable, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
+
+
+// Services
+import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ComService } from './connection/com.service';
 import { UserResponse } from '@interfaces/user';
 import { file_path } from '@interfaces/documents';
@@ -40,6 +44,7 @@ export class ViewComponent implements AfterViewChecked {
   public submitted: boolean = false;
   public isDecline: boolean = false;
   public isButtonDisabled: boolean = false;
+  public isCopy: boolean = false;
 
   // Files
   public files: any[] = [];
@@ -49,6 +54,7 @@ export class ViewComponent implements AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private comSvc: ComService,
+    private fullSvc: FullTimeService,
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private location: Location,
@@ -102,7 +108,6 @@ export class ViewComponent implements AfterViewChecked {
   submit() {
     this.submitted = true;
     const childRouteComp = this.activatedComponentReference;
-
     if (this.files.length > 0) {
       this.documentSvc
         .postDocument(this.files as File[])
@@ -232,5 +237,15 @@ export class ViewComponent implements AfterViewChecked {
     this.isDelete = true;
     const childRouteComp = this.activatedComponentReference;
     childRouteComp.delete(this.id);
+  }
+
+  // -----------------------------
+  // ---- COPY APPLICATION -------
+  // -----------------------------
+
+  copy() {
+    this.isCopy = true;
+    const childRouteComp = this.activatedComponentReference;
+    childRouteComp.copy(this.id);
   }
 }

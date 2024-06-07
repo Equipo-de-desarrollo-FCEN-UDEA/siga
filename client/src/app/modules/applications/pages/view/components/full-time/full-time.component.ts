@@ -112,4 +112,51 @@ export class FullTimeComponent implements OnInit {
       }
     });
   }
-}
+
+  copy(id: number): void {
+    Swal.fire({
+      title: '¿Seguro que quieres copiar esta dedicación?',
+      text: 'Este es un proceso irreversible',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3AB795',
+      confirmButtonText: 'Copiar!',
+    }).then((result) => {
+      if (this.application?.application_status.length == 5){
+        if (result.isConfirmed) {
+        if (this.full_time ) { // Verifica si this.full_time está definido
+          // Llama a la función postCopyFullTime del servicio FullTimeService
+          this.fullTimeSvc.postCopyFullTime(id, this.full_time).subscribe({
+            next: () => {
+              Swal.fire({
+                title: 'Copiada!',
+                text: '¡La dedicación exclusiva ha sido copiada correctamente!',
+                icon: 'success',
+                confirmButtonColor: '#3AB795',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate(['/home']);
+                }
+              });
+            },
+            error: (err) => {
+              console.error('Error al copiar la dedicación:', err);
+            },
+          });
+        } else {
+          console.error('Error: this.full_time está undefined');
+        }
+      }
+      }else {
+        Swal.fire({
+        title: '¡Atención!',
+        text: 'Solo se pueden copiar aplicaciones aprobadas',
+        icon: 'warning',
+        confirmButtonColor: '#3AB795',
+      });
+      }
+      
+    });
+  }
+}  

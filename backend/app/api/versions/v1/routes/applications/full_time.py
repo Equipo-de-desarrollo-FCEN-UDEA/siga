@@ -1,7 +1,9 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from odmantic import ObjectId
 from odmantic.session import AIOSession
 from sqlalchemy.orm import Session
+from copy import deepcopy
 
 from app.api.middlewares import mongo_db, db, jwt_bearer
 from app.core.logging import get_logging
@@ -71,6 +73,73 @@ async def create_full_time(
     response = FullTimeResponse(
         **dict(application),
         full_time=full_time_created
+    )
+    return response
+
+@router.post('/copy-full-time/{id}', response_model=FullTimeResponse)
+async def copy_full_time(
+    id: int,
+    title: Optional[str] = None,
+    current_user: User = Depends(jwt_bearer.get_current_active_user),
+    engine: AIOSession = Depends(mongo_db.get_mongo_db),
+    db: Session = Depends(db.get_db)
+) -> FullTimeResponse:
+    """
+    Endpoint to copy a FullTime application
+
+        params:
+            - id: int, this is the id of the full time to copy
+            - title: Optional[str], this is the new title for the copied full time
+        response:
+            - full_time
+    """
+    try:
+        # Obtener la aplicación FullTime original
+        original_application: Application = crud.application.get(db, current_user, id=id)
+        original_mongo_id = ObjectId(original_application.mongo_id)
+        original_full_time = await crud.full_time.get(engine, id=original_mongo_id)
+        
+        if original_full_time is None:
+            raise HTTPException(status_code=404, detail="No se encontró la aplicación FullTime")
+        
+        # Crear una copia del objeto FullTime sin el id de Mongo
+        full_time_copied = FullTime(**{k: v for k, v in original_full_time.dict().items() if k != 'id'})
+        num_copies = 0
+        
+        if "_copia" in full_time_copied.title:
+            num_copies += 1
+
+        log.debug(title)
+        
+        if title is not None:
+            full_time_copied.title = title
+        else:
+            full_time_copied.title += f"_copia_{num_copies}"
+            
+        # Guardar la copia en la base de datos
+        full_time_copied = await crud.full_time.create(db=engine, obj_in=full_time_copied)
+        
+        new_application = ApplicationCreate(
+            mongo_id=str(full_time_copied.id),
+            application_sub_type_id=original_application.application_sub_type_id,
+            start_date=original_application.start_date,
+            user_id=current_user.id
+        )
+        new_application = crud.application.create(
+            db=db, who=current_user, obj_in=new_application,
+            status=6, observation=f'El usuario copió la dedicación exclusiva con id: {id}')
+        
+    except BaseErrors as e:
+        raise HTTPException(e.code, e.detail)
+    except ValueError as e:
+        raise HTTPException(422, e)
+    except Exception as e:
+        raise HTTPException(422, "Algo ocurrió mal")
+    
+    new_application_response = ApplicationResponse.from_orm(new_application)
+    response = FullTimeResponse(
+        **dict(new_application_response),
+        full_time=full_time_copied
     )
     return response
 

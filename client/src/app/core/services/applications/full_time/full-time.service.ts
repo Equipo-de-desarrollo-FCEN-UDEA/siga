@@ -24,6 +24,10 @@ export class FullTimeService {
     return this.http.post<FulltimeResponse>(this.urlEndPoint, fullTime)
   }
 
+  postCopyFullTime(id: number, fullTime: FullTimeCreate) {
+    return this.http.post<FulltimeResponse>(this.urlEndPoint + 'copy-full-time/' + id, fullTime)
+  }
+
   getFullTime(id: number) {
     return this.http.get<FulltimeResponse>(this.urlEndPoint + id)
   }
@@ -39,7 +43,6 @@ export class FullTimeService {
   putLetter(letter: InitialLetter, id: number) {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'letter/' + id, letter)
   }
-  
   
   putViceFormat(viceFormat: ViceFormat, id: number) {
     return this.http.put<FullTimeInDB>(this.urlEndPoint + 'vice-format/' + id, viceFormat)
