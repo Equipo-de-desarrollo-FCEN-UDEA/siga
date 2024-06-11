@@ -113,4 +113,5 @@ export class ApplicationListComponent implements OnInit {
   cancel() {
     this.location.back();
   }
+  
 }
