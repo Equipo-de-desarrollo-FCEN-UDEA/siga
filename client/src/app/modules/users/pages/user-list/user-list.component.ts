@@ -31,7 +31,6 @@ export class UserListComponent implements OnInit {
     private fb: FormBuilder,
     private location: Location
   ) {
-
     this.users$ = this.userSvc.getUsers(this.skip, this.limit);
   }
 
@@ -57,20 +56,18 @@ export class UserListComponent implements OnInit {
     this.skip = 0;
     this.users$ = this.userSvc.getUsers(this.skip, this.limit);
   }
-
-    }
   
-    onPageChange(page: number) {
-      this.page = page;
-      this.limit = 100 + this.page*10;
-      if (this.limit <= 110) {
-        this.limit = 100;
+  onPageChange(page: number) {
+    this.page = page;
+    this.limit = 100 + this.page*10;
+    if (this.limit <= 110) {
+      this.limit = 100;
     }
-      this.userSvc.getUsers(0, this.limit).subscribe((response) => {
-        this.data = response;
-        this.totalItems = response.length;
-      });
-      this.loadPage(page);
+    this.userSvc.getUsers(0, this.limit).subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+    });
+    this.loadPage(page);
     }
 
   // We use this for get with a search criteria

@@ -83,7 +83,6 @@ export class ApplicationListComponent implements OnInit {
     this.limit = 100 + this.page*10;
     if (this.limit <= 110) {
       this.limit = 100;
-
   }
   this.applicationsSvc.getApplications(0, this.limit).subscribe((response) => {
     this.data = response;
@@ -91,8 +90,6 @@ export class ApplicationListComponent implements OnInit {
   });
     this.loadPage(page);
   }
-
-  // --------------- Pagination ----------------
 
   // --------------- Pagination ----------------
 
@@ -116,4 +113,5 @@ export class ApplicationListComponent implements OnInit {
   cancel() {
     this.location.back();
   }
+
 }
