@@ -80,8 +80,19 @@ export class ApplicationListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.page = page;
+    this.limit = 100 + this.page*10;
+    if (this.limit <= 110) {
+      this.limit = 100;
+
+  }
+  this.applicationsSvc.getApplications(0, this.limit).subscribe((response) => {
+    this.data = response;
+    this.totalItems = response.length;
+  });
     this.loadPage(page);
   }
+
+  // --------------- Pagination ----------------
 
   // --------------- Pagination ----------------
 
