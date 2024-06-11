@@ -41,16 +41,6 @@ export class UserListComponent implements OnInit {
     activo: [true]
   })
 
-  // ngOnInit(): void {
-  //   this.loadPage(this.page);
-
-  //   this.userSvc.getUsers().subscribe((response) => {
-  //     this.data = response;
-  //     this.totalItems = response.length;
-  //     console.log(this.totalItems);
-  //   });
-  // }
-
   ngOnInit(): void {
     this.loadPage(this.page);
 
@@ -59,30 +49,7 @@ export class UserListComponent implements OnInit {
       this.totalItems = response.length;
     });
   }
-
-  // We use this function to manage the pagination
-  // nextPage(){
-  //   this.page++;
-  //   this.skip = (this.page - 1) * this.limit;
-  //   this.users$ = this.userSvc.getUsers(
-  //     this.skip,
-  //     this.limit,
-  //     this.form.value.activo!,
-  //     this.form.value.search!
-  //   );
-  // }
-
-  // prevPage(){
-  //   this.page--;
-  //   this.skip = (this.page - 1) * this.limit;
-  //   this.users$ = this.userSvc.getUsers(
-  //     this.skip,
-  //     this.limit,
-  //     this.form.value.activo!,
-  //     this.form.value.search!
-  //   );
-  // }
-
+  
     // --------------- Pagination ----------------
 
     loadPage(page: number) {
