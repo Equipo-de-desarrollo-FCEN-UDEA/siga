@@ -22,10 +22,7 @@ class EconomicSupportPolicy(Base[EconomicSupport, EconomicSupportCreate, Economi
     
     #Check if the user(coordinador) can see the application
     def check_user(self, user_application: UserApplication) -> None:
-        log.debug('dentro de check_user')
-        
         if not (user_application.user_id and user_application.application_id):
-            log.debug('entro a la policy')
             raise economic_support_401
         
         return None

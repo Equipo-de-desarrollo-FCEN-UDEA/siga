@@ -23,7 +23,8 @@
           'bg-requested': current_status === 'SOLICITADA',
           'bg-ok': current_status === 'VISTO BUENO',
           'bg-approved': current_status === 'APROBADA',
-          'bg-rejected': current_status === 'DEVUELTA'
+          'bg-rejected': current_status === 'DEVUELTA',
+          'bg-info': current_status == 'EN VICERRECTORÍA'
         }"
       >
         {{ current_status }}
@@ -47,9 +48,8 @@
   <div *ngIf="{ isSuperUser: isSuperUser$ | async } as context">
     <span *ngIf="context.isSuperUser">
       <b>Importante:</b> Recuerde que estos documentos deben ser subidos a
-      <a href="https://ssofi.udea.edu.co/fcen/" target="_blank">ssofi</a> para que
-      la solicitud sea aprobada por el consejo</span
+      <a href="https://ssofi.udea.edu.co/fcen/" target="_blank">ssofi</a> para
+      que la solicitud sea aprobada por el consejo</span
     >
   </div>
-
 </div>

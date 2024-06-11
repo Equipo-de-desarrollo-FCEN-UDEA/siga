@@ -37,7 +37,7 @@
             }"
           />
         </div>
-        <p *ngIf="isInvalidForm('total_days')" class="inputError text-danger">
+        <p *ngIf="isInvalidForm('total_working_days')" class="inputError text-danger">
           Esta cantidad de días debe ser mínimo de 1 y máximo de 21
         </p>
       </div>
@@ -78,7 +78,7 @@
             }"
           />
         </div>
-        <p *ngIf="isInvalidForm('total_days')" class="inputError text-danger">
+        <p *ngIf="isInvalidForm('total_calendar_days')" class="inputError text-danger">
           Esta cantidad de días debe ser mínimo de 1 y máximo de 21
         </p>
       </div>
@@ -96,10 +96,10 @@
     
    <!-- ARCHIVOS - DOCUMENTOS -->
     <app-file-upload
+    [files]="files"
     [documents]="f['documents'].value"
-    (documentsValues)="SetDocuments($event)"
-    (filesValues)="SetFiles($event)">
-
+    [documentsToDelete]="documentsToDelete"
+    [applycationType]="application_type_number">
   </app-file-upload>
 
     <h6 class="mt-3">

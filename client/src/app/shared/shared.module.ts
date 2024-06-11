@@ -60,6 +60,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     ApplicantsComponent,
     SignaturePadModule,
     DatePickerRangeComponent,
+    DatePickerBasicComponent,
     FileUploadComponent,
     PaginationComponent,
   ],

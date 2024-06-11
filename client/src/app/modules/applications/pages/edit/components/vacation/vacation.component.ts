@@ -60,9 +60,9 @@ export class VacationComponent implements OnInit {
 
   // Files
   public files: any[] = [];
-  public document_new = [1];
+  public archivos = [1];
   public documents: file_path[] = [];
-  public documentsToDelete: file_path[] = [];
+  public documentsToDelete: string[] = [];
   // FileUpload
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
 
@@ -72,7 +72,7 @@ export class VacationComponent implements OnInit {
   public submitted = false;
 
   public id: number = 0;
-
+  public application_type_number = 5;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(5);
 
   // holidays
@@ -170,6 +170,7 @@ export class VacationComponent implements OnInit {
           start_working_date: data.vacation.start_working_date,
           end_working_date: data.vacation.end_working_date,
         });
+
         let status_app =
           data.application_status[data.application_status.length - 1].status
             .name;
@@ -209,21 +210,102 @@ export class VacationComponent implements OnInit {
   // --------------------------------------
   // ------------ SUBMIT FORM  ------------
   // --------------------------------------
-  submit() {
-    this.submitted = true;
 
-    // Se detiene aqui si el formulario es invalido
-    if (this.form.invalid) {
-      return;
+  coherenceDaysValidation(
+    start_day: Date | string,
+    end_day: Date | string,
+    isWorkingDays: boolean
+  ) {
+    start_day = new Date(start_day);
+    end_day = new Date(end_day);
+
+    if (isWorkingDays) {
+      const calcWorkingDays = end_day.getDate() - start_day.getDate() + 1;
+      const totalWorkingDays = this.form.get('total_working_days')?.value;
+
+      return calcWorkingDays === totalWorkingDays;
+    } else {
+      const calcCalendarDays = end_day.getDate() - start_day.getDate() + 1;
+      const totalCalendarDays = this.form.get('total_calendar_days')?.value;
+
+      return calcCalendarDays === totalCalendarDays;
+    }
+  }
+
+  getDaysCoherenceValidation() {
+    let validationCoherenceDays: boolean = true;
+
+    const start_date_w = this.form.get('start_working_date')
+      ?.value as Date | null;
+    const end_date_w = this.form.get('end_working_date')?.value as Date | null;
+    const start_date_c = this.form.get('start_calendar_date')
+      ?.value as Date | null;
+    const end_date_c = this.form.get('end_calendar_date')?.value as Date | null;
+
+    if (start_date_c && end_date_c) {
+      validationCoherenceDays = this.coherenceDaysValidation(
+        start_date_c,
+        end_date_c,
+        false
+      );
+
+      return validationCoherenceDays;
+    } else if (start_date_w && end_date_w) {
+      validationCoherenceDays = this.coherenceDaysValidation(
+        start_date_w,
+        end_date_w,
+        true
+      );
+
+      return validationCoherenceDays;
     }
 
+    return validationCoherenceDays;
+  }
+
+  submit() {
     const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
     const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
+
+    const validationCoherenceDays: boolean = this.getDaysCoherenceValidation();
 
     if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
         text: '¡Debe seleccionar un rago de fechas en al menos en un tipo de vacaciones!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
+    if (!validationCoherenceDays) {
+      Swal.fire({
+        title: 'Error',
+        text: '¡El rango de fechas no coincide con los días seleccionados!',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
+    if (this.isInvalidForm('total_working_days')) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de días hábiles debe ser mínimo de 1 y máximo de 21',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3AB795',
+      });
+      return;
+    }
+
+    if (this.isInvalidForm('total_calendar_days')) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de días calendario debe ser mínimo de 1 y máximo de 21',
         icon: 'error',
         confirmButtonText: 'Aceptar',
         confirmButtonColor: '#3AB795',

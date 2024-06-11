@@ -13,6 +13,7 @@ import { VacationComponent } from './components/vacation/vacation.component';
 import { EconomicSupportComponent } from './components/economic-support/economic-support.component';
 import { UserApplicationStatusPipe } from './components/economic-support/pipes/user-application-status.pipe';
 import { UserPerIdPipe } from './components/economic-support/pipes/user-per-id.pipe';
+import { CopyFullTimeComponent } from './components/full-time/pages/copy-full-time/copy-full-time.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { UserPerIdPipe } from './components/economic-support/pipes/user-per-id.p
     EconomicSupportComponent,
     UserApplicationStatusPipe,
     UserPerIdPipe,
+    CopyFullTimeComponent,
   ],
   imports: [
     CommonModule,
