@@ -59,7 +59,9 @@
         </tr>
         <tr
           [routerLink]="['/usuarios/ver/' + user.id]"
-          *ngFor="let user of users"
+          *ngFor="
+            let user of users | slice : (page - 1) * pageSize : page * pageSize
+          "
         >
           <th>{{ user.id }}</th>
           <td>{{ user.names + " " + user.last_names | titlecase }}</td>
@@ -85,22 +87,13 @@
 
       <tfoot>
         <td colspan="7">
-          <button
-            [disabled]="page == 1"
-            class="btn btn-outline-primary btn-sm"
-            type="button"
-            (click)="prevPage()"
+          <app-pagination
+            [page]="page"
+            [pageSize]="pageSize"
+            [totalItems]="totalItems"
+            (pageChange)="onPageChange($event)"
           >
-            <i class="fas fa-arrow-left"></i>
-          </button>
-          {{ page }}
-          <button
-            class="btn btn-outline-primary btn-sm"
-            type="button"
-            (click)="nextPage()"
-          >
-            <i class="fas fa-arrow-right"></i>
-          </button>
+          </app-pagination>
         </td>
       </tfoot>
     </table>

@@ -11,39 +11,58 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
+  data: any[] = [];
+  totalItems: number = 0;
+  pageSize: number = 10;
 
   public users$ = new Observable<UserResponse[]>();
 
   public page = 1;
 
-  public limit = 10;
+  public limit = 100;
 
   private skip = (this.page - 1) * this.limit;
-
 
   constructor(
     private userSvc: UserService,
     private fb: FormBuilder,
     private location: Location
   ) {
-    this.users$ = this.userSvc.getUsers(this.skip, this.limit)
-
+    this.users$ = this.userSvc.getUsers(this.skip, this.limit);
   }
 
   form = this.fb.group({
-    search: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-    activo: [true]
-  })
+    search: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+    ],
+    activo: [true],
+  });
 
   ngOnInit(): void {
+    this.userSvc.getUsers().subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+    });
+  }
 
+  // pagination
+
+  loadPage(page: number) {
+    this.skip = 0;
+    this.users$ = this.userSvc.getUsers(this.skip, this.limit);
+  }
+
+  onPageChange(page: number) {
+    this.page = page;
+    this.loadPage(page);
   }
 
   // We use this function to manage the pagination
-  nextPage(){
+  nextPage() {
     this.page++;
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
@@ -54,7 +73,7 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  prevPage(){
+  prevPage() {
     this.page--;
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
@@ -67,7 +86,7 @@ export class UserListComponent implements OnInit {
 
   // We use this for get with a search criteria
   search() {
-    this.page = 1
+    this.page = 1;
     this.skip = (this.page - 1) * this.limit;
     this.users$ = this.userSvc.getUsers(
       this.skip,
@@ -80,5 +99,4 @@ export class UserListComponent implements OnInit {
   cancel() {
     this.location.back();
   }
-
 }
