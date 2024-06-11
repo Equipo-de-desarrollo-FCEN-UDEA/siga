@@ -106,10 +106,9 @@
 
     <!--FILE-UPLOAD-->
     <app-file-upload
+      [files]="files"
       [documents]="f['documents'].value"
-      (documentsValues)="SetDocuments($event)"
-      (filesValues)="SetFiles($event)"
-    >
+      [applycationType]="application_type_number">
     </app-file-upload>
 
     <!-- FIRMA -->

@@ -18,33 +18,26 @@ import { FileUploadComponent } from '@shared/components/file-upload/file-upload.
   styleUrls: ['./commission.component.scss']
 })
 export class CommissionComponent implements OnInit {
-
   // Dates
   public fromDate: NgbDate | null = null;
   public hoveredDate: NgbDate | null = null;
   public toDate: NgbDate | null = null;
   public model: NgbDateStruct | null = null;
   public today = this.calendar.getToday();
-
   // Files
   public files: any[] = [];
   public archivos = [1];
   public documents: file_path[] = []
   public documentsToDelete: string[] = []
-
   // FileUpload
   @ViewChild(FileUploadComponent) fileUploadComponent!: FileUploadComponent;
-
   // For handle errors
   public clicked = 0;
   public error = '';
   public submitted = false;
-
   public comision_type$: any;
-
+  public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
-
-
   public id: number = 0;
 
   constructor(
@@ -55,13 +48,11 @@ export class CommissionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
-
+    // services
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentSvc: DocumentService
-  ) {
-
-  }
+  ) {}
 
   public form = this.fb.group({
     application_sub_type_id: [0, [Validators.required]],
@@ -86,7 +77,9 @@ export class CommissionComponent implements OnInit {
             this.form.patchValue(
               {
                 ...data.commission,
-                application_sub_type_id: data.application_sub_type_id
+                application_sub_type_id: data.application_sub_type_id,
+                start_date: new Date(data.commission.start_date),
+                end_date: new Date(data.commission.end_date),
               }
             )
             this.documents = data.commission.documents!
@@ -97,113 +90,63 @@ export class CommissionComponent implements OnInit {
   }
 
   submit() {
-    let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-    for (let path of this.documentsToDelete) {
-      this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
-    }
-    if (this.files.length > 0) {
-      commission = this.documentSvc.postDocument(this.files as File[]).pipe(
-        switchMap((data: DocumentsResponse) => {
-          if (data) {
-            this.documents = this.documents.concat(data.files_paths)
-            this.form.patchValue({
-              documents: this.documents
-            })
-          }
-          return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
-        })
+    // Comprobar si la longitud de 'this.documents' y 'this.files' es al menos 1 y no más de 3
+    if (this.documents.length + this.files.length < 0 || this.documents.length + this.files.length > 3) {
+      Swal.fire(
+        {
+          title: 'Debes subir al menos un documento y no más de tres',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        }
       )
-    }
-    commission.subscribe(
-      data => {
-        Swal.fire(
-          {
-            title: 'La comisión se actualizó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }
-        ).then((result) => {
-          if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
-          }
-        })
+      return;
+}
+  
+    setTimeout(() => {
+      let commission = this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+      for (let path of this.documentsToDelete) {
+        this.documentSvc.deleteDocument(path).subscribe(data => console.log(data, 'Documento eliminado')).unsubscribe()
       }
-    )
-
+      if (this.files.length > 0) {
+        commission = this.documentSvc.postDocument(this.files as File[]).pipe(
+          switchMap((data: DocumentsResponse) => {
+            if (data) {
+              this.documents = this.documents.concat(data.files_paths)
+              this.form.patchValue({
+                documents: this.documents
+              })
+            }
+            return this.commissionSvc.putCommission(this.form.value as CommissionCreate, this.id)
+          })
+        )
+      }
+      commission.subscribe(
+        data => {
+          Swal.fire(
+            {
+              title: 'La comisión se actualizó correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+            }
+          )
+          this.router.navigate([`/solicitudes/ver/${this.id}/comision`])
+        }
+      )
+    }, 0);
   }
 
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate!.year,
-          this.fromDate!.month - 1,
-          this.fromDate!.day
-        ),
-      });
-    } else if (this.fromDate && !this.toDate && date) {
-      this.toDate = date;
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate.year,
-          this.toDate.month - 1,
-          this.toDate.day
-        ),
-      });
-    } else {
-      this.toDate = null;
-      this.fromDate = date
-      this.form.patchValue({
-        start_date: new Date(
-          this.fromDate.year,
-          this.fromDate.month - 1,
-          this.fromDate.day
-        ),
-      });
-      this.form.patchValue({
-        end_date: new Date(
-          this.toDate!.year,
-          this.toDate!.month - 1,
-          this.toDate!.day
-        ),
-      });
-    }
+  // DATEPICKER
+  setDates(event: any) {
+    this.form.patchValue({
+      start_date: event.start_date,
+      end_date: event.end_date,
+    });
   }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) &&
-      date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) { return this.toDate && date.after(this.fromDate) && date.before(this.toDate); }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) ||
-      this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
-  }
-
-  // --------------------------------------
-  // ----------- TIPO DE SOLICITUD ---------
-  // --------------------------------------
+  // TIPO DE SOLICITUD
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
-
-
-
-  // --------------------------------------------------
-  // ----------- MANEJO DE ERRORES EN EL FORM ---------
-  // --------------------------------------------------
+  // MANEJO DE ERRORES EN EL FORM
   get f() {
     return this.form.controls;
   }
@@ -211,23 +154,8 @@ export class CommissionComponent implements OnInit {
   isInvalidForm(controlName: string) {
     return this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched;
   }
-  
-  // --------------------------------------
-  // ----------- upload file ---------
-  // --------------------------------------
   // Resivir valores del output para ponerlos en el componente padre
-
-  SetDocuments(event: any) {
-    this.form.patchValue({
-      documents: event.documents,
-    });
-  }
-  SetFiles(event: any) {
-    this.files = event;
-  }
   invalidFile() {
     return this.fileUploadComponent?.invalidFile();
   }
-
-
 }

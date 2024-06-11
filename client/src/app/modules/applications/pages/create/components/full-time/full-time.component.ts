@@ -1,17 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-//ng-bootstrap imports
-import { NgbCalendar, NgbDate, NgbDateParserFormatter,NgbDateStruct
-  } from '@ng-bootstrap/ng-bootstrap';
-
-import {FullTimeCreate, FulltimeResponse,
-} from '@interfaces/applications/full_time/full-time';
+import { FullTimeCreate, FulltimeResponse } from '@interfaces/applications/full_time/full-time';
 import { file_path } from '@interfaces/documents';
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import Swal from 'sweetalert2';
-import { Holiday } from '@interfaces/holiday'
 
 @Component({
   selector: 'app-full-time',
@@ -19,33 +13,10 @@ import { Holiday } from '@interfaces/holiday'
   styleUrls: ['./full-time.component.scss'],
 })
 export class FullTimeComponent {
-  // Dates
-  public fromDate: NgbDate | null = null;
-  public hoveredDate: NgbDate | null = null;
-  public toDate: NgbDate | null = null;
-  public model: NgbDateStruct | null = null;
-  public today = this.calendar.getToday();
-  public laboralDay: number = 0;
-  public laboralflag: boolean = true;
-  public verify_date: number = 0;
-
-  // For handle errors
-  public clicked = 0;
-
-  // holidays
-  public holidays: Holiday[] = [];
-
-  // FileUpload
-  
-
   public submitted: boolean = false;
   public documents: file_path[] = [];
 
   constructor(
-    // Datepicker
-    private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter,
-
     private router: Router,
     private formBuilder: FormBuilder,
 
@@ -58,7 +29,6 @@ export class FullTimeComponent {
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
     ],
-    start_date: [new Date(), [Validators.required]],
     documents: [this.documents],
   });
 
@@ -94,13 +64,15 @@ export class FullTimeComponent {
           confirmButtonColor: '#3AB795',
         }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate(['/solicitudes/editar/'+data.id+'/dedicacion'])
+            this.router.navigate([
+              '/solicitudes/editar/' + data.id + '/dedicacion',
+            ]);
           }
-        })
-      }
+        });
+      },
     });
   }
-  
+
   validSize() {
     return true;
   }
@@ -113,41 +85,5 @@ export class FullTimeComponent {
     return (
       this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
     );
-  }
-
-  // --------------------------------------
-  // ------------- DATEPICKER -------------
-  // --------------------------------------
-
-  onDateSelection(date: NgbDate) {
-    this.fromDate = date;
-    this.form.patchValue({
-      start_date: new Date(
-        this.fromDate.year,
-        this.fromDate.month - 1,
-        this.fromDate.day
-      ),
-    });
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && this.hoveredDate && date.equals(this.fromDate);
-  }
-
-  isInside(date: NgbDate) {
-    return date.equals(this.fromDate);
-  }
-
-  isRange(date: NgbDate) {
-    return (
-      date.equals(this.fromDate) || this.isInside(date) || this.isHovered(date)
-    );
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const PARSED = this.formatter.parse(input);
-    return PARSED && this.calendar.isValid(NgbDate.from(PARSED))
-      ? NgbDate.from(PARSED)
-      : currentValue;
   }
 }

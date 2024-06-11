@@ -21,6 +21,7 @@ from .applications import (commission,
 
 from .holiday import holiday
 from .cron_job import cron_job
+from .base import base
 
 
 

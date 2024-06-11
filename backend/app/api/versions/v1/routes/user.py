@@ -172,7 +172,6 @@ def update_user_password(
     """
     try:
         user = crud.user.get(db=db, id=current_user.id, who=current_user)
-        log.debug(user.__dict__)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
 
@@ -196,8 +195,6 @@ def select_active_rol(
         user = crud.user.get(db=db, id=current_user.id, who=current_user)
         #user_roles = crud.user.get_middleware(db, id=user.id).__dict__['assigned_roles']
         user_roles = crud.user.get_middleware(db, id=user.id).assigned_roles
-        log.debug(user.__dict__)
-        log.debug(user_roles)
     except BaseErrors as e:
         raise HTTPException(status_code=e.code, detail=e.detail)
     

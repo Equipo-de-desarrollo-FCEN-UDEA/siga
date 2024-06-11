@@ -5,7 +5,7 @@ from datetime import datetime
 
 class FullTime(Model):
     title: str
-    start_date: datetime
+    start_date: datetime | None
     work_plan: Any | None
     vice_format: Any | None
     initial_letter: Any | None

@@ -75,6 +75,7 @@
         <tr
           [routerLink]="['/usuarios/ver/' + user.id]"
           *ngFor="let user of users | slice : (page - 1) * pageSize : page * pageSize"
+
         >
           <th>{{ user.id }}</th>
           <td>{{ user.names + " " + user.last_names | titlecase }}</td>
