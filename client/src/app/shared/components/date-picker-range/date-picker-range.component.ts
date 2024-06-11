@@ -26,6 +26,7 @@ import { LaboralDays } from '@shared/utils';
   styleUrls: ['./date-picker-range.component.scss'],
 })
 export class DatePickerRangeComponent implements OnInit, OnChanges {
+  @Input() default_date_picker: any;
   @Input() total_days: any;
   @Input() laboralflag: boolean = true;
   @Input() holidays: Holiday[] = [];
@@ -65,7 +66,14 @@ export class DatePickerRangeComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.total_days === 0) {
+      this.form.patchValue({
+        start_date: null,
+        end_date: null,
+      });
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.initStartDate && this.initEndDate) {

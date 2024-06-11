@@ -5,120 +5,18 @@
     [formGroup]="form"
     (ngSubmit)="submit()"
   >
-    <!-- DATEPICKER -->
-
-    <ng-template #footerTemplate>
-      <hr class="my-0" />
-      <p *ngIf="fromDate && !toDate">Elige la segunda fecha</p>
-      <p *ngIf="!fromDate">Elige la primera fecha</p>
-      <button
-        class="btn btn-primary btn-sm m-2 float-start"
-        (click)="model = today; datepicker.close()"
-        type="button"
-      >
-        Hoy
-      </button>
-      <button
-        class="btn btn-secondary btn-sm m-2 float-end"
-        (click)="datepicker.close()"
-        type="button"
-      >
-        Cerrar
-      </button>
-    </ng-template>
-
-    <div class="dp-hidden position-absolute">
-      <div class="input-group">
-        <input
-          hidden
-          name="datepicker"
-          class="form-control"
-          ngbDatepicker
-          #datepicker="ngbDatepicker"
-          [autoClose]="'outside'"
-          (dateSelect)="onDateSelection($event)"
-          [displayMonths]="2"
-          [dayTemplate]="t"
-          outsideDays="hidden"
-          [startDate]="fromDate!"
-          tabindex="-1"
-          [footerTemplate]="footerTemplate"
-          placement="left"
-          [positionTarget]="buttonEl"
-        />
-        <ng-template #t let-date let-focused="focused">
-          <span
-            class="custom-day"
-            [class.focused]="focused"
-            [class.range]="isRange(date)"
-            [class.faded]="isHovered(date) || isInside(date)"
-            (mouseenter)="hoveredDate = date"
-            (mouseleave)="hoveredDate = null"
-          >
-            {{ date.day }}
-          </span>
-        </ng-template>
-      </div>
-    </div>
-
     <div class="row">
       <div class="row regular-row mt-4 ">
         <span class="col-md-4 col-xs-12 col-sm-12 label">Fechas *</span>
-        <div class="col-sm-12 col-xs-12 col-md-8" style="margin-bottom: 5px">
-          <div class="input-group">
-            <input
-              #dpFromDate
-              class="form-control"
-              type="text"
-              (click)="datepicker.toggle(); clicked = clicked + 1"
-              placeholder="yyyy-mm-dd"
-              name="dpFromDate"
-              formControlName="start_date"
-              (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
-              [value]="
-                formatter.format(fromDate) ? formatter.format(fromDate) : null
-              "
-              [ngClass]="{
-                'is-invalid':
-                  (submitted && f['start_date'].errors) ||
-                  (!fromDate && clicked !== 0)
-              }"
-            />
-            <input
-              #dpToDate
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dpToDate"
-              formControlName="end_date"
-              [value]="formatter.format(toDate)"
-              (input)="toDate = validateInput(toDate, dpToDate.value)"
-              [value]="formatter.format(toDate) ? formatter.format(toDate) : null"
-              [ngClass]="{
-                'is-invalid':
-                  (submitted && f['end_date'].errors) ||
-                  (!toDate && clicked !== 0)
-              }"
-          />
-            <span
-              #buttonEl
-              class="btn btn-outline-secondary">
-              <i class="fa fa-calendar"></i>
-            </span>
-          </div>
-        </div>
-        <div class="col-sm-6 col-xs-6 col-md-6" hidden>
-          <div class="input-group" (click)="datepicker.toggle()">
-            <input
-              #dpToDate
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dpToDate"
-              formControlName="end_date"
-              [value]="formatter.format(toDate)"
-              (input)="toDate = validateInput(toDate, dpToDate.value)"
-            />
-          </div>
-        </div>
+        <app-date-picker-range
+          class="col-sm-12 col-xs-12 col-md-8"
+          [laboralflag]="true"
+          [default_date_picker]="true"
+          (datePickerValues)="setDates($event)"
+          [initStartDate]="f['start_date'].value"
+          [initEndDate]="f['end_date'].value"
+          >
+        </app-date-picker-range>
       </div>
 
       <div class="row regular-row mt-4 align-items-baseline">
@@ -252,20 +150,16 @@
               caracteres.
             </div>
           </div>
-
-
-          </div>
         </div>
       </div>
+    </div>
       <!-- ARCHIVOS - DOCUMENTOS -->
       <app-file-upload
+      [files]="files"
       [documents]="f['documents'].value"
-      (documentsValues)="SetDocuments($event)"
-      (filesValues)="SetFiles($event)">
-
-    </app-file-upload>
-
+      [documentsToDelete]="documentsToDelete"
+      [applycationType]="application_type_number">
+      </app-file-upload>
     </div>
     <hr />
-
   </form>

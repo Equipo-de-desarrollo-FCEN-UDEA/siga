@@ -23,8 +23,6 @@ def hour_aval_letter_generation(user: User, hour_aval: HourAvalInDB, users=list[
 
     user_response = UserResponse.from_orm(user)
 
-    log.debug(users)
-
     path = f'user_{user.id}/{uuid1()}' + 'aval-horas.pdf'
 
     data = {

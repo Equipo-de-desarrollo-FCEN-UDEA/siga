@@ -59,42 +59,52 @@
         class="form-control"
         type="text"
         (click)="datepicker.toggle(); clicked = clicked + 1"
-        placeholder="yyyy-mm-dd"
+        placeholder="aaaa-mm-dd - aaaa-mm-dd"
         name="dpFromDate"
         formControlName="start_date"
         (input)="fromDate = validateInput(fromDate, dpFromDate.value)"
         (input)="onChanged()"
-        [value]="formatter.format(fromDate) ? formatter.format(fromDate) : null"
+        [value]="
+          formatter.format(fromDate)
+            ? formatter.format(fromDate) + ' - ' + formatter.format(toDate)
+            : null
+        "
         [ngClass]="{
           'is-invalid':
             (submitted && f['end_working_date'].errors) ||
             ((!fromDate || !toDate) && clicked !== 0) ||
-            selectDays(fromDate, toDate)
+            (default_date_picker ? false : selectDays(fromDate, toDate))
         }"
-        [attr.disabled]="!total_days ? true : null"
+        [attr.disabled]="
+          !default_date_picker ? (!total_days ? true : null) : null
+        "
       />
       <button
         #buttonEl
         class="btn btn-outline-secondary"
         (click)="datepicker.toggle(); clicked = clicked + 1"
         type="button"
-        [attr.disabled]="!total_days ? true : null"
+        [attr.disabled]="
+          !default_date_picker ? (!total_days ? true : null) : null
+        "
       >
         <i class="fa fa-calendar"> </i>
       </button>
     </div>
     <!-- errors dates -->
-    <div
-      *ngIf="
-        (submitted && f['total_days'].errors) ||
-        ((!fromDate || !toDate) && clicked !== 0) ||
-        selectDays(fromDate, toDate)
-      "
-      class="invalid"
-    >
-      <div *ngIf="selectDays(fromDate, toDate)">
-        La cantidad de días elegidos de vacaciones no es igual a los escogidos
-        (tenga en cuenta si son hábiles o no)
+    <div *ngIf="!default_date_picker">
+      <div
+        *ngIf="
+          (submitted && f['total_days'].errors) ||
+          ((!fromDate || !toDate) && clicked !== 0) ||
+          selectDays(fromDate, toDate)
+        "
+        class="invalid"
+      >
+        <div *ngIf="selectDays(fromDate, toDate)" class="text-danger">
+          La cantidad de días elegidos de vacaciones no es igual a los escogidos
+          (tenga en cuenta si son hábiles o no)
+        </div>
       </div>
     </div>
   </div>

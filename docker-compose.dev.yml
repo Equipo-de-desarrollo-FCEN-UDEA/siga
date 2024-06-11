@@ -52,7 +52,7 @@ services:
     container_name: "celery_worker"
     build:
       context: ./backend
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info -Q test-queue -c 1
     env_file:
       - .env
@@ -69,7 +69,7 @@ services:
     container_name: 'celery_beat'
     build:
       context: ./backend
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app worker --loglevel=info
     env_file:
       - .env
@@ -86,7 +86,7 @@ services:
     container_name: "flower"
     build:
       context: ./backend
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     command: celery -A app.core.celery_worker.celery_app flower --port=5555
     env_file:
       - .env
@@ -103,7 +103,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     depends_on:
       - db
       - mongo
