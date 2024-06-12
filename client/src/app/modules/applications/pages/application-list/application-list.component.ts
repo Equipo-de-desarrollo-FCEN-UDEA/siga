@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { Location } from '@angular/common';
 import { ApplicationTypesService } from '@services/application-types.service';
+import { keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-application-list',
@@ -58,12 +59,20 @@ export class ApplicationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPage(this.page);
+    // this.applications$.subscribe(applications => {
+    //   this.limit = applications.length;
+    // });
 
-    this.applicationsSvc.getApplications().subscribe((response) => {
+    // this.applicationsSvc.getApplications().subscribe((response) => {
+    //   this.data = response;
+    //   this.totalItems = response.length;
+    // });
+
+    this.applications$.subscribe(response => {
       this.data = response;
       this.totalItems = response.length;
     });
-  }
+  };
 
   // --------------- Pagination ----------------
 
@@ -80,14 +89,21 @@ export class ApplicationListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.page = page;
-    this.limit = 100 + this.page*10;
-    if (this.limit <= 110) {
-      this.limit = 100;
-  }
-  this.applicationsSvc.getApplications(0, this.limit).subscribe((response) => {
-    this.data = response;
-    this.totalItems = response.length;
-  });
+  //   this.limit = 100 + this.page*10;
+  //   if (this.limit <= 110) {
+  //     this.limit = 100;
+  // }
+
+  // this.applicationsSvc.getApplications(0, this.limit).subscribe((response) => {
+  //   this.data = response;
+  //   this.totalItems = response.length;
+  // });
+
+    this.applications$.subscribe(response => {
+      this.data = response;
+      this.totalItems = response.length;});
+    
+    console.log(this.limit);
     this.loadPage(page);
   }
 
@@ -102,8 +118,26 @@ export class ApplicationListComponent implements OnInit {
       this.limit,
       this.form.value.activo!,
       this.form.value.search!,
-      this.form.value.type!
-    );
+      this.form.value.type!,
+    )
+
+    this.applications$.subscribe(response => {
+      this.data = response;
+      this.totalItems = response.length;});
+
+    console.log(this.totalItems);
+
+    // if (this.form.value.activo == false) {
+    //   this.applications$.subscribe(applications => {
+    //     this.data = applications;
+    //     this.totalItems = applications.length;});
+    // }
+
+    // else {
+    //   this.applications$.subscribe(applications => {
+    //     this.data = applications;
+    //     this.totalItems = applications.length;})
+    // }
   }
 
   filed(id: number) {
