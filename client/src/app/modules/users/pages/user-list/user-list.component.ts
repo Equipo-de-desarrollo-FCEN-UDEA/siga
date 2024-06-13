@@ -17,6 +17,8 @@ export class UserListComponent implements OnInit {
   data: any[] = [];
   totalItems: number = 0;
   pageSize: number = 10;
+  state: boolean | null = false;
+  busqueda: string = '';
 
   public users$ = new Observable<UserResponse[]>();
 
@@ -50,16 +52,16 @@ export class UserListComponent implements OnInit {
       this.totalItems = response.length;
     });
   }
-  
-    // --------------- Pagination ----------------
+
+  // --------------- Pagination ----------------
   loadPage(page: number) {
     this.skip = 0;
     this.users$ = this.userSvc.getUsers(this.skip, this.limit);
   }
-  
+
   onPageChange(page: number) {
     this.page = page;
-    this.limit = 100 + this.page*10;
+    this.limit = 100 + this.page * 10;
     if (this.limit <= 110) {
       this.limit = 100;
     }
@@ -68,7 +70,7 @@ export class UserListComponent implements OnInit {
       this.totalItems = response.length;
     });
     this.loadPage(page);
-    }
+  }
 
   // We use this for get with a search criteria
   search() {
@@ -80,6 +82,20 @@ export class UserListComponent implements OnInit {
       this.form.value.activo!,
       this.form.value.search!
     );
+
+    this.users$.subscribe((response) => {
+      this.data = response;
+      this.totalItems = response.length;
+    });
+
+    this.state = this.form.value.activo!;
+
+    const searchControl = this.form.get('search');
+
+    if (searchControl) {
+      const searchValue = searchControl.value;
+      this.busqueda = searchValue!;
+    }
   }
 
   cancel() {
