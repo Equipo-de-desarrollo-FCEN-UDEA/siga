@@ -1,19 +1,17 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UserResponse } from '@interfaces/user';
-import { LoaderService } from '@services/loader.service';
 import { UserService } from '@services/user.service';
-import { Observable } from 'rxjs';
-import Swal from 'sweetalert2';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   data: any[] = [];
   totalItems: number = 0;
   pageSize: number = 10;
@@ -28,12 +26,19 @@ export class UserListComponent implements OnInit {
 
   private skip = (this.page - 1) * this.limit;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private userSvc: UserService,
     private fb: FormBuilder,
     private location: Location
   ) {
     this.users$ = this.userSvc.getUsers(this.skip, this.limit);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   form = this.fb.group({
@@ -47,10 +52,13 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.loadPage(this.page);
 
-    this.userSvc.getUsers().subscribe((response) => {
-      this.data = response;
-      this.totalItems = response.length;
-    });
+    this.userSvc
+      .getUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+        this.totalItems = response.length;
+      });
   }
 
   // --------------- Pagination ----------------
@@ -65,10 +73,13 @@ export class UserListComponent implements OnInit {
     if (this.limit <= 110) {
       this.limit = 100;
     }
-    this.userSvc.getUsers(0, this.limit).subscribe((response) => {
-      this.data = response;
-      this.totalItems = response.length;
-    });
+    this.userSvc
+      .getUsers(0, this.limit)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+        this.totalItems = response.length;
+      });
     this.loadPage(page);
   }
 
@@ -83,7 +94,7 @@ export class UserListComponent implements OnInit {
       this.form.value.search!
     );
 
-    this.users$.subscribe((response) => {
+    this.users$.pipe(takeUntil(this.destroy$)).subscribe((response) => {
       this.data = response;
       this.totalItems = response.length;
     });
