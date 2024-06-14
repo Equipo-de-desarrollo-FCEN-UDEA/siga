@@ -15,7 +15,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   data: any[] = [];
   totalItems: number = 0;
   pageSize: number = 10;
-  state: boolean | null = false;
+  state: boolean = true;
   busqueda: string = '';
 
   public users$ = new Observable<UserResponse[]>();
@@ -74,7 +74,7 @@ export class UserListComponent implements OnInit, OnDestroy {
       this.limit = 100;
     }
     this.userSvc
-      .getUsers(0, this.limit)
+      .getUsers(0, this.limit, this.state, this.busqueda)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response) => {
         this.data = response;
