@@ -22,6 +22,7 @@ import { DatePickerRangeComponent } from './components/date-picker-range/date-pi
 import { DatePickerBasicComponent } from './components/date-picker-basic/date-picker-basic.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { VoteComponent } from './components/vote/vote.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     DatePickerBasicComponent,
     FileUploadComponent,
     PaginationComponent,
+    VoteComponent,
   ],
   imports: [
     CommonModule,
