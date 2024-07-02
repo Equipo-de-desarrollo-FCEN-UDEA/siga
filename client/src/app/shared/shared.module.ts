@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 
 //Modules
 import { SharedRoutingModule } from './shared-routing.module';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 //Components
 import { StatusHistoryComponent } from './components/status-history/status-history.component';
@@ -21,6 +21,7 @@ import { UserApplicationStatusComponent } from './components/user-application-st
 import { DatePickerRangeComponent } from './components/date-picker-range/date-picker-range.component';
 import { DatePickerBasicComponent } from './components/date-picker-basic/date-picker-basic.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     DatePickerRangeComponent,
     DatePickerBasicComponent,
     FileUploadComponent,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     CdkStepperModule,
     SignaturePadModule,
     NgbModule,
+    NgbPaginationModule,
   ],
   exports: [
     HttpClientModule,
@@ -59,6 +62,7 @@ import { FileUploadComponent } from './components/file-upload/file-upload.compon
     DatePickerRangeComponent,
     DatePickerBasicComponent,
     FileUploadComponent,
+    PaginationComponent,
   ],
 })
 export class SharedModule {}

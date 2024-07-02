@@ -63,6 +63,23 @@
     </div>
   </div>
 
+  <form
+        [formGroup]="form"
+        (submit)="submit()"
+        *ngIf="application$ | async as application"
+      >
+  <div
+    class="row regular-row mt-4 align-items-baseline"
+    *ngIf="application.application_sub_type.name == 'Dedicación'"
+      >
+      <button type="button"
+       class="btn btn-success btn-block col-sm-12 col-md-4 col-lg-4 col-xl-3 mt-3"
+       (click)="copy()">
+       Copiar Dedicación
+      </button>
+    </div>
+  </form>
+
   <div
     class="row header-row mt-3"
     *ngIf="{ isCoordinador: isCoordinador$ | async } as context"
