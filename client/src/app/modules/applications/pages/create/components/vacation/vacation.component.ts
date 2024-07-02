@@ -185,8 +185,11 @@ export class VacationComponent {
     const isWorkingDaysSet = this.form.get('total_working_days')?.value === 0;
     const isCalendarDaysSet = this.form.get('total_calendar_days')?.value === 0;
 
+<<<<<<< HEAD
     const validationCoherenceDays: boolean = this.getDaysCoherenceValidation();
 
+=======
+>>>>>>> production
     if (isWorkingDaysSet && isCalendarDaysSet) {
       Swal.fire({
         title: 'Error',
@@ -198,6 +201,7 @@ export class VacationComponent {
       return;
     }
 
+<<<<<<< HEAD
     if (!validationCoherenceDays) {
       Swal.fire({
         title: 'Error',
@@ -231,6 +235,8 @@ export class VacationComponent {
       return;
     }
 
+=======
+>>>>>>> production
     // Se detiene aqui si el formulario es invalido
     this.form.value.signature = this.signatureImg;
 

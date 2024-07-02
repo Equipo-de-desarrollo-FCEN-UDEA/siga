@@ -120,6 +120,8 @@ export class VacationComponent implements OnInit {
   ) {
     this.fromDate = null;
     this.toDate = null;
+
+    
   }
 
   // Form vacation
