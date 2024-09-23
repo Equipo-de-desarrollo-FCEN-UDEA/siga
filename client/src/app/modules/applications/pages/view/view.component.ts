@@ -10,7 +10,6 @@ import { AuthService } from '@services/auth.service';
 import { Observable, switchMap } from 'rxjs';
 import Swal from 'sweetalert2';
 
-
 // Services
 import { FullTimeService } from '@services/applications/full_time/full-time.service';
 import { ComService } from './connection/com.service';
@@ -81,6 +80,7 @@ export class ViewComponent implements AfterViewChecked {
     ],
     amount_approved: [0],
     document: [this.documents],
+    approval_date: [new Date()],
   });
 
   cancel() {
@@ -89,9 +89,12 @@ export class ViewComponent implements AfterViewChecked {
 
   // Function to determine if application is of type 'DEDICACION EXCLUSIVA' and status is 'EN VICERRECTORIA'
   isExclusiveDedication(application: Application): boolean {
-    const lastStatus = application.application_status[application.application_status.length - 1];
-    return application.application_sub_type.application_type.name === 'DEDICACIÓN EXCLUSIVA'
-      && lastStatus.status.name === 'EN VICERRECTORÍA';
+    const lastStatus =
+      application.application_status[application.application_status.length - 1];
+    return (
+      application.application_sub_type.application_type.name ===
+        'DEDICACIÓN EXCLUSIVA' && lastStatus.status.name === 'EN VICERRECTORÍA'
+    );
   }
 
   ngAfterViewChecked(): void {
@@ -100,6 +103,16 @@ export class ViewComponent implements AfterViewChecked {
 
   isApproved(id: number) {
     this.applicationStatusSvc.isApproved(id);
+  }
+
+  // --------------------------------------
+  // ------------- DATEPICKER -------------
+  // --------------------------------------
+
+  setDates(event: any) {
+    this.form.patchValue({
+      approval_date: event,
+    });
   }
 
   // -----------------------------

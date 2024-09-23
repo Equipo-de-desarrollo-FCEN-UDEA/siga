@@ -3,7 +3,12 @@ import { FormBuilder, FormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommissionCreate } from '@interfaces/applications/commission';
 import { DocumentsResponse, file_path } from '@interfaces/documents';
-import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
 import { ApplicationTypesService } from '@services/application-types.service';
 import { CommissionService } from '@services/applications/commission.service';
 import { DocumentService } from '@services/document.service';
@@ -16,11 +21,9 @@ import { FileUploadComponent } from '@shared/components/file-upload/file-upload.
 @Component({
   selector: 'app-commission',
   templateUrl: './commission.component.html',
-  styleUrls: ['./commission.component.scss']
+  styleUrls: ['./commission.component.scss'],
 })
 export class CommissionComponent {
-
-
   // Dates
   public hiddenIds: number[] = [9];
   public fromDate: NgbDate | null = null;
@@ -30,8 +33,8 @@ export class CommissionComponent {
   public today = this.calendar.getToday();
 
   // Files
-  public files : any[] = [];
-  public documents: file_path[] = []
+  public files: any[] = [];
+  public documents: file_path[] = [];
 
   // For handle errors
   public clicked = 0;
@@ -45,16 +48,17 @@ export class CommissionComponent {
   public application_type_number = 2;
   public applicationType$ = this.applicationTypeSvc.getApplicationType(2);
 
-
   // --------------------------------------------------
   // ----------- MANEJO DE ERRORES EN EL FORM ---------
   // --------------------------------------------------
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   constructor(
     private fb: FormBuilder,
-    private calendar : NgbCalendar,
+    private calendar: NgbCalendar,
     public formatter: NgbDateParserFormatter,
     private ngZone: NgZone,
     private router: Router,
@@ -63,22 +67,25 @@ export class CommissionComponent {
     private applicationTypeSvc: ApplicationTypesService,
     private commissionSvc: CommissionService,
     private documentService: DocumentService
-  ) {
-   }
+  ) {}
 
-   public form = this.fb.group({
+  public form = this.fb.group({
     country: ['', [Validators.required]],
     state: [''],
     city: [''],
     start_date: [new Date(), [Validators.required]],
     end_date: [new Date(), [Validators.required]],
-    reason: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+    reason: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
+    ],
     lenguage: ['', [Validators.required, Validators.maxLength(50)]],
-    justification: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
-    documents: [this.documents]
-
-  })
-
+    justification: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(500)],
+    ],
+    documents: [this.documents],
+  });
 
   submit() {
     this.submitted = true;
@@ -94,35 +101,36 @@ export class CommissionComponent {
       });
       return;
     }
-    let commission = this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+    let commission = this.commissionSvc.postCommission(
+      this.form.value as CommissionCreate
+    );
     if (this.files.length > 0) {
       commission = this.documentService.postDocument(this.files as File[]).pipe(
         switchMap((data: DocumentsResponse) => {
           if (data) {
             this.form.patchValue({
-              documents: data.files_paths
-            })
+              documents: data.files_paths,
+            });
           }
-          return this.commissionSvc.postCommission(this.form.value as CommissionCreate)
+          return this.commissionSvc.postCommission(
+            this.form.value as CommissionCreate
+          );
         })
-      )
+      );
     }
     commission.subscribe({
-      next: data => {
-        Swal.fire(
-          {
-            title: 'La comisión se creó correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar',
-          }
-        ).then((result) => {
+      next: (data) => {
+        Swal.fire({
+          title: 'La comisión se creó correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
           if (result.isConfirmed) {
-            this.router.navigate([`/solicitudes/ver/${data.id}/comision`])
+            this.router.navigate([`/solicitudes/ver/${data.id}/comision`]);
           }
-        })
-      }}
-    )
-
+        });
+      },
+    });
   }
 
   // --------------------------------------
@@ -137,14 +145,15 @@ export class CommissionComponent {
   }
 
   // --------------------------------------
-  // ----------- TIPO DE SOLICITUD ---------
+  // ----------- TIPO DE SOLICITUD --------
   // --------------------------------------
   onChangeSolicitud(e: any): void {
     this.cd.detectChanges();
   }
   isInvalidForm(controlName: string) {
-    return this.form.get(controlName)?.
-    invalid && this.form.get(controlName)?.touched;
+    return (
+      this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched
+    );
   }
 
   // --------------------------------------
@@ -157,9 +166,8 @@ export class CommissionComponent {
       documents: event.documents,
     });
   }
-  
+
   invalidFile() {
     return this.fileUploadComponent?.invalidFile();
   }
-
 }
