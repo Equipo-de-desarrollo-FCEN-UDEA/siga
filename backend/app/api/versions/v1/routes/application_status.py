@@ -72,10 +72,11 @@ async def create_application_status(
         APPLICATIONS_NAMES = ["COMISIÓN", "PERMISO", "VACACIONES", "APOYO ECONÓMICO", "DEDICACIÓN EXCLUSIVA"]
         
         # Process based on status and application type
+        
         if status_name == 'APROBADA':
             # Send email for approved status
-            emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
-                                                    application_status.observation, response.status.name, application.id, application.user.email))
+            #emails.update_status_email.apply_async(args=(application.application_sub_type.application_type.description,
+             #                                       application_status.observation, response.status.name, application.id, application.user.email))
             if app_type_name == "COMISIÓN":
                 # generate commission resolution document
                 await documents.commission_resolution_generation(user=application.user, application=application, mong_db=engine)
