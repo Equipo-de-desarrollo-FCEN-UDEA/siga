@@ -15,29 +15,29 @@ _my_pwd = settings.smtp_user_password._secret_value
 
 env = Environment(loader=FileSystemLoader(templatesdir))
 
-@celery_app.task
-def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: list[str] | str):
-    template = env.get_template("email.cambio.estado.html.j2")
-    enlace = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
-    context = {
-        'req': {'tiposolicitud': tipo_solicitud, 'body': {'observacion': observacion}},
-        'estado': {'nombre': nombre_estado},
-        'Enlace': enlace
-    }
+# @celery_app.task
+# def update_status_email(tipo_solicitud: str, observacion: str, nombre_estado: str, id: int, email: list[str] | str):
+#     template = env.get_template("email.cambio.estado.html.j2")
+#     enlace = f"http://{settings.APP_DOMAIN}/solicitudes/ver/{id}/{tipo_solicitud.lower()}"
+#     context = {
+#         'req': {'tiposolicitud': tipo_solicitud, 'body': {'observacion': observacion}},
+#         'estado': {'nombre': nombre_estado},
+#         'Enlace': enlace
+#     }
 
-    render = template.render(context)
-    msg = EmailMessage()
-    msg["Subject"] = "Actualización de solicitud"
-    msg["From"] = _my_email
-    msg["To"] = ", ".join(email) if isinstance(email, list) else email
-    msg.set_content(
-        render,
-        subtype="html"
-    )
+#     render = template.render(context)
+#     msg = EmailMessage()
+#     msg["Subject"] = "Actualización de solicitud"
+#     msg["From"] = _my_email
+#     msg["To"] = ", ".join(email) if isinstance(email, list) else email
+#     msg.set_content(
+#         render,
+#         subtype="html"
+#     )
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
-        smtp.login(_my_email, _my_pwd)
-        smtp.send_message(msg)
+#     with smtplib.SMTP_SSL("smtp.gmail.com", port=465) as smtp:
+#         smtp.login(_my_email, _my_pwd)
+#         smtp.send_message(msg)
 
 
 @celery_app.task
